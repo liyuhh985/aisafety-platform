@@ -1,0 +1,23 @@
+# 复制此文件为 application-local.yml，填入真实值
+# application-local.yml 已在 .gitignore 中
+
+DB_HOST=106.53.219.214
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your-db-password
+
+REDIS_HOST=106.53.219.214
+REDIS_PORT=6379
+REDIS_PASSWORD=your-redis-password
+REDIS_DB=2
+
+MAIL_HOST=smtp.163.com
+MAIL_PORT=465
+MAIL_USERNAME=your-email@163.com
+MAIL_PASSWORD=your-smtp-password
+
+MINIO_ENDPOINT=http://106.53.219.214:9100
+MINIO_ACCESS_KEY=your-minio-access-key
+MINIO_SECRET_KEY=your-minio-secret-key
+MINIO_BUCKET=safety-images
+MINIO_BASE_URL=http://106.53.219.214:9100
