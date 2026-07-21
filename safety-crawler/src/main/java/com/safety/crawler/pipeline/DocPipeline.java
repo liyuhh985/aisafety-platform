@@ -40,6 +40,7 @@ public class DocPipeline {
             HazardKnowledge doc = new HazardKnowledge();
             doc.setCategory("POLICY");
             doc.setRegion("三明市");
+            doc.setPublishDate(item.getPublishDate());
             doc.setTitle(item.getTitle());
             doc.setContent(item.getContent().length() > 2000
                     ? item.getContent().substring(0, 2000)

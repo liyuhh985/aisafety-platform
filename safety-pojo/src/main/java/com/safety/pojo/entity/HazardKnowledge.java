@@ -16,6 +16,7 @@ public class HazardKnowledge {
     private String title;
     private String content;
     private String source;
+    private String publishDate;
     private String region;
     private LocalDateTime createTime;
 }
