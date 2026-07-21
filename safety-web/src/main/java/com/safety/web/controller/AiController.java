@@ -1,9 +1,9 @@
 package com.safety.web.controller;
 
 import com.safety.common.result.R;
-import com.safety.service.service.AiService;
-import lombok.RequiredArgsConstructor;
+import com.safety.web.service.AiService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,45 +14,52 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/api/ai")
-@RequiredArgsConstructor
 public class AiController {
 
-    private final AiService aiService;
+    @Autowired(required = false)
+    private AiService aiService;
 
-    /** 完整分析（非流式 JSON） */
+    @GetMapping("/health")
+    public R<String> health() {
+        return R.ok("ok");
+    }
+
     @PostMapping(value = "/analyze", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public R<Map<String, Object>> analyze(
             @RequestParam(required = false) MultipartFile file,
             @RequestParam(defaultValue = "请分析这张图片中的安全隐患，并生成报告") String text) {
+        if (aiService == null) return R.fail("AI 服务未就绪");
         try {
-            Map<String, Object> result = aiService.analyze(file, text);
-            return R.ok(result);
+            return R.ok(aiService.analyze(file, text));
         } catch (Exception e) {
             log.error("AI 分析失败", e);
             return R.fail("AI 分析失败: " + e.getMessage());
         }
     }
 
-    /** SSE 流式分析报告 */
     @PostMapping(value = "/analyze/stream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public SseEmitter analyzeStream(
             @RequestParam(required = false) MultipartFile file,
             @RequestParam(defaultValue = "请分析这张图片中的安全隐患，并生成报告") String text) {
+        if (aiService == null) {
+            SseEmitter e = new SseEmitter();
+            e.completeWithError(new RuntimeException("AI 服务未就绪"));
+            return e;
+        }
         try {
             return aiService.analyzeStream(file, text);
         } catch (Exception e) {
-            log.error("AI 流式分析失败", e);
             SseEmitter emitter = new SseEmitter();
             emitter.completeWithError(e);
             return emitter;
         }
     }
 
-    /** 多轮对话 */
     @PostMapping("/chat")
     public R<Map<String, Object>> chat(
             @RequestParam String message,
             @RequestParam String sessionId) {
+        if (aiService == null) return R.fail("AI 服务未就绪");
         try {
             return R.ok(aiService.chat(message, sessionId));
         } catch (Exception e) {
@@ -60,11 +67,15 @@ public class AiController {
         }
     }
 
-    /** 多轮对话（流式） */
     @PostMapping("/chat/stream")
     public SseEmitter chatStream(
             @RequestParam String message,
             @RequestParam String sessionId) {
+        if (aiService == null) {
+            SseEmitter e = new SseEmitter();
+            e.completeWithError(new RuntimeException("AI 服务未就绪"));
+            return e;
+        }
         try {
             return aiService.chatStream(message, sessionId);
         } catch (Exception e) {
@@ -74,15 +85,15 @@ public class AiController {
         }
     }
 
-    /** 会话历史 */
     @GetMapping("/history")
     public R<Map<String, Object>> history(@RequestParam String sessionId) {
+        if (aiService == null) return R.fail("AI 服务未就绪");
         return R.ok(aiService.getHistory(sessionId));
     }
 
-    /** 清除会话 */
     @DeleteMapping("/session")
     public R<Void> clearSession(@RequestParam String sessionId) {
+        if (aiService == null) return R.fail("AI 服务未就绪");
         aiService.clearSession(sessionId);
         return R.ok();
     }

@@ -48,7 +48,31 @@
       "Bash(git branch *)",
       "Bash(gh auth *)",
       "Bash(gh repo *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git rm *)",
+      "Bash(echo \"uploads/\")",
+      "Bash(echo \"demo.png\")",
+      "Bash(git commit *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(ssh *)",
+      "Bash(sshpass *)",
+      "Bash(ssh-keygen -t ed25519 -f ~/.ssh/cloud_server -N \"\" -q)",
+      "Bash(ssh-copy-id -i ~/.ssh/cloud_server.pub -o StrictHostKeyChecking=no root@106.53.219.214)",
+      "Bash(where mvn *)",
+      "Bash(unzip -q /tmp/maven.zip -d /tmp/)",
+      "Bash(/tmp/apache-maven-3.9.9/bin/mvn --version)",
+      "Bash(powershell *)",
+      "Bash(export MVN_HOME=\"E:/java/IntelliJ IDEA 2025.2.1/plugins/maven/lib/maven3\")",
+      "Bash(export PATH=\"$MVN_HOME/bin:$PATH\")",
+      "Bash(find /e -maxdepth 4 -path \"*/bin/java\" -not -path \"*/\\\\.*\")",
+      "Bash(export JAVA_HOME=$\\(find /e -maxdepth 4 -path \"*/bin/java\" -not -path \"*/\\\\.*\")",
+      "Bash(export JAVA_HOME=\"E:/java/IntelliJ IDEA 2025.2.1/jbr\")",
+      "Bash(export PATH=\"$JAVA_HOME/bin:$MVN_HOME/bin:$PATH\")",
+      "Bash(java --version)",
+      "Bash(mvn --version)",
+      "Bash('E:/java/IntelliJ IDEA 2025.2.1/jbr/bin/javap' -p E:/java/newProject/safety-web/target/classes/com/safety/web/controller/AiController.class)"
     ]
   }
 }

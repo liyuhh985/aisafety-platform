@@ -1,4 +1,4 @@
-package com.safety.service.service;
+package com.safety.web.service;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
