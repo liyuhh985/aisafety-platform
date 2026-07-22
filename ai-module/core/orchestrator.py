@@ -91,10 +91,7 @@ class Orchestrator:
             if mem:
                 mem.set_retrieval(cases, policy)
 
-        if cases:
-            yield self._sse("retrieval", cases)
-        if policy:
-            yield self._sse("retrieval", policy)
+        # 检索结果不单独输出，直接喂给 Report Agent
 
         # Step 4: Report → 流式生成
         yield self._sse("status", "正在生成分析报告...")
