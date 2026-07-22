@@ -50,7 +50,7 @@ public class AiService {
      * SSE 流式分析，返回 SseEmitter 供 Controller 直接推给前端。
      */
     public SseEmitter analyzeStream(MultipartFile file, String text) throws IOException {
-        SseEmitter emitter = new SseEmitter(300_000L); // 5 分钟超时
+        SseEmitter emitter = new SseEmitter(300_000L);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("text", text != null ? text : "请分析这张图片中的安全隐患，并生成报告");
@@ -61,29 +61,29 @@ public class AiService {
             });
         }
 
-        // 在新线程中调用 Python SSE 并转发
+        final MultiValueMap<String, Object> finalBody = body;
+
         new Thread(() -> {
             try {
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-                HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
+                HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(finalBody, headers);
 
                 rest.execute(
                         AI_BASE + "/analyze/stream",
                         HttpMethod.POST,
-                        request1 -> {
-                            headers.forEach((k, v) ->
-                                    request1.getHeaders().addAll(k, v));
+                        req -> {
+                            // 用 FormHttpMessageConverter 写 multipart body
+                            new org.springframework.http.converter.FormHttpMessageConverter()
+                                    .write(finalBody, MediaType.MULTIPART_FORM_DATA, req);
                         },
-                        response -> {
-                            // 逐行读取 Python 的 SSE 输出，直接转发给前端
+                        resp -> {
                             try (var reader = new java.io.BufferedReader(
-                                    new java.io.InputStreamReader(response.getBody()))) {
+                                    new java.io.InputStreamReader(resp.getBody()))) {
                                 String line;
                                 while ((line = reader.readLine()) != null) {
                                     if (!line.isEmpty()) {
-                                        emitter.send(SseEmitter.event()
-                                                .data(line));
+                                        emitter.send(SseEmitter.event().data(line));
                                     }
                                 }
                             }
@@ -92,9 +92,7 @@ public class AiService {
                         }
                 );
             } catch (Exception e) {
-                try {
-                    emitter.completeWithError(e);
-                } catch (Exception ignored) {}
+                try { emitter.completeWithError(e); } catch (Exception ignored) {}
             }
         }).start();
 
