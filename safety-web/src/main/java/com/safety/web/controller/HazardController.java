@@ -42,7 +42,7 @@ public class HazardController {
         return R.ok(hazardService.getStats());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public R<HazardVO> getById(@PathVariable Long id) {
         return R.ok(hazardService.getById(id));
     }

@@ -25,7 +25,7 @@ public class KnowledgeController {
     }
 
     /** 文书详情 */
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public R<HazardKnowledge> detail(@PathVariable Long id) {
         HazardKnowledge k = knowledgeService.getById(id);
         if (k == null) return R.fail("文书不存在");
