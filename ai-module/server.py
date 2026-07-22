@@ -89,8 +89,8 @@ def analyze_stream(
     orch = get_orch()
 
     def generate():
-        for sse_chunk in orch.analyze_stream(text, image_path=image_path, session_id=sid):
-            yield sse_chunk
+        for payload in orch.analyze_stream(text, image_path=image_path, session_id=sid):
+            yield f"data: {payload}\n\n"
         if image_path:
             try:
                 Path(image_path).unlink()

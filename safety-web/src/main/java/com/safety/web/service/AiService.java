@@ -82,8 +82,8 @@ public class AiService {
                                     new java.io.InputStreamReader(resp.getBody()))) {
                                 String line;
                                 while ((line = reader.readLine()) != null) {
-                                    if (!line.isEmpty()) {
-                                        emitter.send(SseEmitter.event().data(line));
+                                    if (line.startsWith("data: ")) {
+                                        emitter.send(SseEmitter.event().data(line.substring(6)));
                                     }
                                 }
                             }
@@ -139,8 +139,8 @@ public class AiService {
                                     new java.io.InputStreamReader(response.getBody()))) {
                                 String line;
                                 while ((line = reader.readLine()) != null) {
-                                    if (!line.isEmpty()) {
-                                        emitter.send(SseEmitter.event().data(line));
+                                    if (line.startsWith("data: ")) {
+                                        emitter.send(SseEmitter.event().data(line.substring(6)));
                                     }
                                 }
                             }

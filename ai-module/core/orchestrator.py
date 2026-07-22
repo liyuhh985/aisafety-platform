@@ -39,36 +39,75 @@ class Orchestrator:
     def analyze_stream(self, user_message: str, image_path: str = None,
                        session_id: str = None) -> Generator[str, None, None]:
         """
-        SSE 流式分析。前三步非流式，Report Agent 以 SSE 流式输出。
-        yield 格式:
-          data: {"type": "vision", "content": {...}}
-          data: {"type": "retrieval", "content": "..."}
-          data: {"type": "report", "content": "文本片段"}
-          data: [DONE]
+        SSE 流式分析。每一步都有进度提示，Report Agent 逐 token 流式输出。
         """
         mem = get_session(session_id) if session_id else None
 
-        # Step 1-3: 非流式
-        results = self._run_pipeline(user_message, image_path, mem, stream=False)
-        vision_result = results.get("vision")
+        # Step 1: Vision
+        yield self._sse("status", "正在识别图片中的安全隐患...")
+        vision_result = None
+        if image_path:
+            vision = self.specialists.get("vision")
+            if vision:
+                raw = vision.run(f"请分析这张图片中的安全隐患。图片路径: {image_path}")
+                vision_result = self._parse_vision(raw)
+                if vision_result:
+                    yield self._sse("vision", vision_result)
+                    if mem:
+                        mem.set_vision(vision_result)
+                else:
+                    yield self._sse("error", "视觉识别失败")
 
-        # 发送前几步结果
-        if vision_result:
-            v = vision_result
-            yield self._sse("vision", v if isinstance(v, dict) else str(v))
-        if results.get("cases"):
-            yield self._sse("retrieval", results["cases"])
-        if results.get("policy"):
-            yield self._sse("retrieval", results["policy"])
+        if not vision_result:
+            yield self._sse("done", "")
+            return
 
-        # Step 4: 流式生成报告
+        # Step 2: Router → 提取关键词
+        yield self._sse("status", "正在分析隐患特征...")
+        keywords = []
+        router = self.specialists.get("router")
+        if router:
+            router_input = (
+                f"用户请求: {user_message}\n"
+                f"视觉识别结果:\n{json.dumps(vision_result, ensure_ascii=False, indent=2)}\n"
+                f"请调用 delegate_to 工具委托检索专家搜索相关案例和法规。"
+            )
+            router_response = router.run(router_input)
+            keywords = self._extract_keywords(router_response) or [vision_result.get("hazard_category", "")]
+        else:
+            keywords = [vision_result.get("hazard_category", "")]
+
+        # Step 3: Retrieval → 混合检索
+        yield self._sse("status", f"正在搜索相关案例和法规（关键词: {', '.join(keywords)}）...")
+        cases, policy = "", ""
+        retrieval = self.specialists.get("retrieval")
+        if retrieval and keywords:
+            primary = keywords[0]
+            cases = retrieval.run(
+                f"请用 search_cases 工具搜索关键词「{primary}」相关的隐患案例。")
+            policy = retrieval.run(
+                f"请用 search_policy 工具搜索关键词「{primary}」相关的政策法规文书。")
+            if len(keywords) > 1:
+                extra = retrieval.run(
+                    f"请用 search_cases 工具搜索关键词「{keywords[1]}」相关的补充案例。")
+                cases += "\n\n--- 补充 ---\n" + extra
+            if mem:
+                mem.set_retrieval(cases, policy)
+
+        if cases:
+            yield self._sse("retrieval", cases)
+        if policy:
+            yield self._sse("retrieval", policy)
+
+        # Step 4: Report → 流式生成
+        yield self._sse("status", "正在生成分析报告...")
         report = self.specialists.get("report")
         full_report = ""
         if report:
-            # Report Agent 获取 Working Memory 上下文
-            wm_context = mem.get_context_for_agent(include_current=True) if mem else []
+            results = {"vision": vision_result, "cases": cases, "policy": policy}
             report_prompt = self._build_report_context(user_message, results)
             report_prompt += "\n\n请基于以上所有信息生成一份完整的安全隐患分析报告。\n报告中的「类似案例」章节必须引用上面提供的真实案例（含城市、伤亡、判决结果），不要自行编造。"
+            wm_context = mem.get_context_for_agent(include_current=True) if mem else []
 
             for token in report.run_stream(report_prompt, history=wm_context):
                 full_report += token
@@ -76,13 +115,10 @@ class Orchestrator:
 
         yield self._sse("done", "")
 
-        # 归档到历史记忆
+        # 归档
         if mem and full_report:
             mem.add_user(user_message)
             mem.add_report(full_report)
-            if not isinstance(vision_result, dict):
-                vis = vision_result
-                vision_result = {"hazard_category": "", "severity": "", "description": str(vis)[:200]} if vis else {}
             archive_working_to_historical(mem.session_id, full_report)
 
     # ====== 多轮对话 ======
@@ -264,8 +300,8 @@ class Orchestrator:
 
     @staticmethod
     def _sse(event_type: str, content) -> str:
-        """构造一行 SSE 数据。"""
+        """构造 SSE 数据（不含 data: 前缀，由调用方格式化）。"""
         if isinstance(content, dict):
             content = json.dumps(content, ensure_ascii=False)
         payload = json.dumps({"type": event_type, "content": content}, ensure_ascii=False)
-        return f"data: {payload}\n\n"
+        return payload
