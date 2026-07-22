@@ -3,6 +3,7 @@ package com.safety.pojo.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,14 +15,12 @@ public class HazardReport {
     private Long id;
     private Long userId;
     private String imageUrl;
-    private String vision;
-    private String report;
-    private Long hazardId;
-    private String aiAnalysis;
-    private String riskLevel;
-    private String suggestion;
-    private String similarCases;
-    private String modelUsed;
-    private Integer tokenCost;
+    private String hazardCategory;
+    private String severity;
+    private String description;
+    private String rectification;
+    private String reportText;
+
+    @JsonProperty("createdAt")
     private LocalDateTime createTime;
 }
