@@ -3,6 +3,7 @@ package com.safety.web.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.safety.common.result.R;
 import com.safety.pojo.dto.HazardDTO;
+import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
 import com.safety.service.service.HazardService;
 import jakarta.validation.Valid;
@@ -34,6 +35,11 @@ public class HazardController {
             @RequestParam(defaultValue = "1") int current,
             @RequestParam(defaultValue = "10") int size) {
         return R.ok(hazardService.page(current, size));
+    }
+
+    @GetMapping("/stats")
+    public R<HazardStatsVO> stats() {
+        return R.ok(hazardService.getStats());
     }
 
     @GetMapping("/{id}")

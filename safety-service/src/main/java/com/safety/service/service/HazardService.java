@@ -8,4 +8,5 @@ public interface HazardService {
     HazardVO create(Long userId, HazardDTO dto);
     Page<HazardVO> page(int current, int size);
     HazardVO getById(Long id);
+    HazardStatsVO getStats();
 }

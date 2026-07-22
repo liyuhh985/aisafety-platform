@@ -11,6 +11,7 @@ import com.safety.common.constant.RedisConstant;
 import com.safety.common.exception.BusinessException;
 import com.safety.pojo.dto.HazardDTO;
 import com.safety.pojo.entity.Hazard;
+import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
 import com.safety.service.mapper.HazardMapper;
 import com.safety.service.service.HazardService;
@@ -152,5 +153,19 @@ public class HazardServiceImpl implements HazardService {
                     default -> "未知";
                 },
                 hazard.getCreateTime());
+    }
+
+    @Override
+    public HazardStatsVO getStats() {
+        long total = hazardMapper.selectCount(null);
+        long processed = hazardMapper.selectCount(
+                new LambdaQueryWrapper<Hazard>().eq(Hazard::getStatus, 3));
+        long processing = hazardMapper.selectCount(
+                new LambdaQueryWrapper<Hazard>().eq(Hazard::getStatus, 2));
+        String rate = total == 0 ? "0.0%"
+                : String.format("%.1f%%", processed * 100.0 / total);
+        return HazardStatsVO.builder()
+                .total(total).processed(processed).processing(processing).rate(rate)
+                .build();
     }
 }
