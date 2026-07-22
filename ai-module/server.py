@@ -7,7 +7,7 @@ import shutil
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, Query, UploadFile
+from fastapi import FastAPI, File, Form, Query, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
@@ -75,21 +75,25 @@ def analyze(
 
 
 @app.post("/api/ai/analyze/stream")
-def analyze_stream(
+async def analyze_stream(
+    request: Request,
     file: UploadFile = File(None),
     text: str = Form(default="请分析这张图片中的安全隐患，并生成报告"),
     session_id: str = Form(default=""),
 ):
     """
     SSE 流式分析报告。
-    前端用 EventSource 或 fetch + ReadableStream 消费。
+    前端断开连接（取消分析）时自动停止，节省 Token。
     """
     image_path = _save_upload(file) if file else None
     sid = session_id or str(uuid.uuid4())
     orch = get_orch()
 
-    def generate():
+    async def generate():
         for payload in orch.analyze_stream(text, image_path=image_path, session_id=sid):
+            if await request.is_disconnected():
+                print("[SSE] 客户端断开，停止分析")
+                break
             yield f"data: {payload}\n\n"
         if image_path:
             try:
