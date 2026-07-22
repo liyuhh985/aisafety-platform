@@ -1,6 +1,7 @@
 package com.safety.web.config;
 
 import com.safety.common.constant.RedisConstant;
+import com.safety.common.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,11 +29,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws ServletException, IOException {
         String token = extractToken(request);
         if (StringUtils.hasText(token)) {
-            String userId = redisTemplate.opsForValue().get(RedisConstant.TOKEN_PREFIX + token);
-            if (StringUtils.hasText(userId)) {
+            // 1. 先用 JWT 解析（不依赖 Redis）
+            Long userId = JwtUtil.parseUserId(token);
+            // 2. JWT 解析失败，回退 Redis 查询（兼容旧 token）
+            if (userId == null) {
+                String uidStr = redisTemplate.opsForValue().get(RedisConstant.TOKEN_PREFIX + token);
+                if (StringUtils.hasText(uidStr)) {
+                    userId = Long.parseLong(uidStr);
+                }
+            }
+            if (userId != null) {
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
-                                Long.parseLong(userId), null, Collections.emptyList());
+                                userId, null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }

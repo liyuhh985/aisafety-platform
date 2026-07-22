@@ -17,15 +17,18 @@ public class ReportController {
     private final ReportService service;
 
     @PostMapping
-    public R<HazardReport> save(@RequestBody ReportSaveDTO dto) {
-        return R.ok(service.save(null, dto));
+    public R<HazardReport> save(@RequestBody ReportSaveDTO dto, Authentication auth) {
+        Long userId = auth != null ? (Long) auth.getPrincipal() : null;
+        return R.ok(service.save(userId, dto));
     }
 
     @GetMapping
     public R<Page<HazardReport>> list(
             @RequestParam(defaultValue = "1") int current,
-            @RequestParam(defaultValue = "10") int size) {
-        return R.ok(service.page(null, current, size));
+            @RequestParam(defaultValue = "10") int size,
+            Authentication auth) {
+        Long userId = auth != null ? (Long) auth.getPrincipal() : null;
+        return R.ok(service.page(userId, current, size));
     }
 
     @GetMapping("/{id:\\d+}")

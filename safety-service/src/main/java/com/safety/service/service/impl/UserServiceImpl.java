@@ -3,6 +3,7 @@ package com.safety.service.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.safety.common.constant.RedisConstant;
 import com.safety.common.exception.BusinessException;
+import com.safety.common.util.JwtUtil;
 import com.safety.pojo.dto.LoginDTO;
 import com.safety.pojo.dto.RegisterDTO;
 import com.safety.pojo.entity.User;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new BusinessException("密码错误");
         }
-        String token = UUID.randomUUID().toString().replace("-", "");
+        String token = JwtUtil.generate(user.getId());
         redisTemplate.opsForValue().set(
                 RedisConstant.TOKEN_PREFIX + token,
                 user.getId().toString(),
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
                 dto.getNickname() != null ? dto.getNickname() : dto.getEmail().split("@")[0]);
         userMapper.insert(user);
 
-        String token = UUID.randomUUID().toString().replace("-", "");
+        String token = JwtUtil.generate(user.getId());
         redisTemplate.opsForValue().set(
                 RedisConstant.TOKEN_PREFIX + token,
                 user.getId().toString(),
