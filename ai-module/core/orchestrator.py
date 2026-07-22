@@ -91,7 +91,10 @@ class Orchestrator:
             if mem:
                 mem.set_retrieval(cases, policy)
 
-        # 检索结果不单独输出，直接喂给 Report Agent
+        # 检索法规
+        reg = searcher.hybrid_search(primary, "tb_regulation", vector_k=3, keyword_k=3)
+        if mem:
+            mem.set_retrieval(cases + "\n\n--- 法规 ---\n" + reg, policy)
 
         # Step 4: Report → 流式生成
         yield self._sse("status", "正在生成分析报告...")
@@ -211,9 +214,12 @@ class Orchestrator:
             if len(keywords) > 1:
                 extra = searcher.hybrid_search(keywords[1], "tb_hazard_case")
                 results["cases"] += "\n\n--- 补充 ---\n" + extra
+            # 检索法规
+            results["regulations"] = searcher.hybrid_search(primary, "tb_regulation", vector_k=3, keyword_k=3)
             print("[Orchestrator] Retrieval 完成")
             if mem is not None:
-                mem.set_retrieval(results.get("cases", ""), results.get("policy", ""))
+                mem.set_retrieval(results.get("cases", "") + "\n\n--- 法规 ---\n" + results.get("regulations", ""),
+                                  results.get("policy", ""))
 
         # Step 4: Report（仅在非流式模式下直接执行）
         if not stream:

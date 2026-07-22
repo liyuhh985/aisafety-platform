@@ -124,6 +124,16 @@ class HybridSearcher:
         try:
             with conn.cursor() as cur:
                 like = f"%{keyword}%"
+                if table == "tb_regulation":
+                    cur.execute(
+                        "SELECT id, law_name, article, content, category, keywords "
+                        "FROM tb_regulation "
+                        "WHERE category LIKE %s OR law_name LIKE %s OR keywords LIKE %s "
+                        "OR content LIKE %s LIMIT %s",
+                        (like, like, like, like, limit),
+                    )
+                    return [{"id": r[0], "title": f"{r[1]} {r[2]}", "description": r[3],
+                             "category": r[4], "keywords": r[5]} for r in cur.fetchall()]
                 if table == "tb_hazard_case":
                     cur.execute(
                         "SELECT id, title, description, category, severity, city, "
@@ -206,7 +216,13 @@ class HybridSearcher:
 
         lines = [f"=== 混合检索结果: 「{query}」(语义{vector_k}+关键词{keyword_k}) ==="]
         for i, r in enumerate(merged[:max(vector_k, keyword_k) + 2], 1):
-            if table == "tb_hazard_case":
+            if table == "tb_regulation":
+                lines.append(
+                    f"\n【法规{i}】[{r['match_type']}匹配] {r.get('title', '')}\n"
+                    f"  类别: {r.get('category', '')}\n"
+                    f"  内容: {(r.get('description', '') or '')[:300]}"
+                )
+            elif table == "tb_hazard_case":
                 lines.append(
                     f"\n【结果{i}】[{r['match_type']}匹配] {r.get('title', '')}\n"
                     f"  类别: {r.get('category', '')} | 城市: {r.get('city', '')}"
@@ -235,6 +251,17 @@ class HybridSearcher:
         try:
             with conn.cursor() as cur:
                 placeholders = ",".join(["%s"] * len(ids))
+                if table == "tb_regulation":
+                    cur.execute(
+                        f"SELECT id, law_name, article, content, category, keywords "
+                        f"FROM tb_regulation WHERE id IN ({placeholders})",
+                        ids,
+                    )
+                    return [
+                        {"id": r[0], "title": f"{r[1]} {r[2]}", "description": r[3],
+                         "category": r[4] or "", "keywords": r[5] or ""}
+                        for r in cur.fetchall()
+                    ]
                 if table == "tb_hazard_case":
                     cur.execute(
                         f"SELECT id, title, description, category, severity, city, "
@@ -270,7 +297,9 @@ class HybridSearcher:
         conn = pymysql.connect(**DB_CONFIG)
         try:
             with conn.cursor() as cur:
-                if table == "tb_hazard_case":
+                if table == "tb_regulation":
+                    cur.execute("SELECT id, law_name, CONCAT(article, ' ', content) FROM tb_regulation")
+                elif table == "tb_hazard_case":
                     cur.execute("SELECT id, title, CONCAT(description, ' ', cause) FROM tb_hazard_case")
                 else:
                     cur.execute("SELECT id, title, content FROM tb_hazard_knowledge")

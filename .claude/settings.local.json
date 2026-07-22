@@ -72,7 +72,8 @@
       "Bash(export PATH=\"$JAVA_HOME/bin:$MVN_HOME/bin:$PATH\")",
       "Bash(java --version)",
       "Bash(mvn --version)",
-      "Bash('E:/java/IntelliJ IDEA 2025.2.1/jbr/bin/javap' -p E:/java/newProject/safety-web/target/classes/com/safety/web/controller/AiController.class)"
+      "Bash('E:/java/IntelliJ IDEA 2025.2.1/jbr/bin/javap' -p E:/java/newProject/safety-web/target/classes/com/safety/web/controller/AiController.class)",
+      "Bash(PYTHONIOENCODING=utf-8 python db/create_regulation.py)"
     ]
   }
 }
