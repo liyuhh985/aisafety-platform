@@ -2,6 +2,7 @@ package com.safety.service.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.safety.pojo.dto.HazardDTO;
+import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
 
 public interface HazardService {
