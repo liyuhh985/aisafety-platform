@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
 public class HazardReport {
     @TableId(type = IdType.AUTO)
     private Long id;
+    private Long userId;
+    private String imageUrl;
+    private String vision;
+    private String report;
     private Long hazardId;
     private String aiAnalysis;
     private String riskLevel;
