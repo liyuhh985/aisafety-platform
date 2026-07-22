@@ -44,15 +44,19 @@ def create_vision_agent(base_url: str, api_key: str, model: str) -> Agent:
 
 VISION_PROMPT = """你是一个城市安全隐患排查专家。请仔细分析这张图片，识别其中存在的安全隐患。
 
-请严格按照以下 JSON 格式返回分析结果（不要包含额外说明）：
+严格按以下 JSON 格式返回，不要加任何额外说明文字，只输出 JSON：
 
 {
-  "has_hazard": true或false,
-  "hazard_category": "隐患类别，如: 消防安全/建筑施工/电气安全/燃气安全/电梯安全/环境安全/交通安全/其他",
-  "severity": "严重程度: 高/中/低",
-  "description": "隐患的具体描述，说明看到什么、问题在哪、可能造成什么后果。",
-  "location_hint": "图片中隐患所在位置描述",
+  "has_hazard": true,
+  "hazard_category": "消防安全",
+  "severity": "高",
+  "description": "具体描述看到的隐患、问题所在、可能后果。",
+  "location_hint": "隐患位置",
   "rectification": ["整改建议1", "整改建议2"]
 }
 
-如果图片中没有明显安全隐患，has_hazard 设为 false，其余字段填空字符串或空数组。"""
+重要规则:
+- hazard_category 必须是以下之一: 消防安全 / 建筑施工 / 电气安全 / 燃气安全 / 电梯安全 / 环境安全 / 交通安全 / 其他。不许留空。
+- severity 必须是 高 / 中 / 低 之一。不许留空。
+- 图片中一定有某种安全相关问题，必须给出判断。
+- 只输出 JSON，不要输出 markdown 代码块。"""

@@ -5,6 +5,7 @@ from typing import Generator
 from core.agent import Agent
 from core.memory import (get_session, WorkingMemory, HistoricalMemory,
                          get_historical, archive_working_to_historical)
+from tools.hybrid_search import searcher
 from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
 
 
@@ -77,19 +78,15 @@ class Orchestrator:
         else:
             keywords = [vision_result.get("hazard_category", "")]
 
-        # Step 3: Retrieval → 混合检索
-        yield self._sse("status", f"正在搜索相关案例和法规（关键词: {', '.join(keywords)}）...")
+        # Step 3: Retrieval → 混合检索（直接调 searcher，不走 Agent LLM 总结）
+        yield self._sse("status", f"正在搜索相关案例和法规...")
         cases, policy = "", ""
-        retrieval = self.specialists.get("retrieval")
-        if retrieval and keywords:
+        if keywords:
             primary = keywords[0]
-            cases = retrieval.run(
-                f"请用 search_cases 工具搜索关键词「{primary}」相关的隐患案例。")
-            policy = retrieval.run(
-                f"请用 search_policy 工具搜索关键词「{primary}」相关的政策法规文书。")
+            cases = searcher.hybrid_search(primary, "tb_hazard_case")
+            policy = searcher.hybrid_search(primary, "tb_hazard_knowledge", vector_k=2, keyword_k=2)
             if len(keywords) > 1:
-                extra = retrieval.run(
-                    f"请用 search_cases 工具搜索关键词「{keywords[1]}」相关的补充案例。")
+                extra = searcher.hybrid_search(keywords[1], "tb_hazard_case")
                 cases += "\n\n--- 补充 ---\n" + extra
             if mem:
                 mem.set_retrieval(cases, policy)
@@ -208,18 +205,14 @@ class Orchestrator:
         else:
             keywords = [user_message]
 
-        # Step 3: Retrieval → 混合检索
-        retrieval = self.specialists.get("retrieval")
-        if retrieval and keywords:
-            print("[Orchestrator] → Retrieval Agent")
+        # Step 3: Retrieval → 混合检索（直接调 searcher）
+        if keywords:
+            print("[Orchestrator] → Retrieval (direct)")
             primary = keywords[0]
-            results["cases"] = retrieval.run(
-                f"请用 search_cases 工具搜索关键词「{primary}」相关的隐患案例。")
-            results["policy"] = retrieval.run(
-                f"请用 search_policy 工具搜索关键词「{primary}」相关的政策法规文书。")
+            results["cases"] = searcher.hybrid_search(primary, "tb_hazard_case")
+            results["policy"] = searcher.hybrid_search(primary, "tb_hazard_knowledge", vector_k=2, keyword_k=2)
             if len(keywords) > 1:
-                extra = retrieval.run(
-                    f"请用 search_cases 工具搜索关键词「{keywords[1]}」相关的补充案例。")
+                extra = searcher.hybrid_search(keywords[1], "tb_hazard_case")
                 results["cases"] += "\n\n--- 补充 ---\n" + extra
             print("[Orchestrator] Retrieval 完成")
             if mem is not None:
