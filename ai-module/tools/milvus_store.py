@@ -14,6 +14,10 @@ class MilvusDimensionError(ValueError):
     """Raised when a vector does not match the configured collection dimension."""
 
 
+class MilvusSchemaError(ValueError):
+    """Raised when an existing collection does not match the retrieval schema."""
+
+
 class MilvusVectorStore:
     def __init__(
         self,
@@ -55,6 +59,7 @@ class MilvusVectorStore:
         data_type = self._data_type()
         for collection_name in TABLE_TO_COLLECTION.values():
             if self.client.has_collection(collection_name=collection_name):
+                self._validate_existing_collection(collection_name, data_type)
                 continue
 
             schema = self.client.create_schema(
@@ -89,6 +94,67 @@ class MilvusVectorStore:
                 schema=schema,
                 index_params=index_params,
             )
+
+    def _validate_existing_collection(self, collection_name: str, data_type) -> None:
+        description = self.client.describe_collection(collection_name=collection_name)
+        if description.get("auto_id") is not False:
+            raise MilvusSchemaError(f"Collection {collection_name} must use auto_id=False")
+        if description.get("enable_dynamic_field") is not False:
+            raise MilvusSchemaError(
+                f"Collection {collection_name} must disable dynamic fields"
+            )
+
+        fields = {
+            self._field_value(field, "name", "field_name"): field
+            for field in description.get("fields", [])
+        }
+        required_fields = {"doc_id", "content_hash", "embedding"}
+        if set(fields) != required_fields:
+            raise MilvusSchemaError(
+                f"Collection {collection_name} fields do not match the retrieval schema"
+            )
+
+        doc_id = fields["doc_id"]
+        if self._field_value(doc_id, "type") != data_type.INT64:
+            raise MilvusSchemaError(f"Collection {collection_name} doc_id type is invalid")
+        if self._field_value(doc_id, "is_primary") is not True:
+            raise MilvusSchemaError(f"Collection {collection_name} doc_id must be primary")
+
+        content_hash = fields["content_hash"]
+        if self._field_value(content_hash, "type") != data_type.VARCHAR:
+            raise MilvusSchemaError(
+                f"Collection {collection_name} content_hash type is invalid"
+            )
+        if self._field_param(content_hash, "max_length") != 64:
+            raise MilvusSchemaError(
+                f"Collection {collection_name} content_hash length is invalid"
+            )
+
+        embedding = fields["embedding"]
+        if self._field_value(embedding, "type") != data_type.FLOAT_VECTOR:
+            raise MilvusSchemaError(
+                f"Collection {collection_name} embedding type is invalid"
+            )
+        if self._field_param(embedding, "dim") != self.embedding_dim:
+            raise MilvusSchemaError(
+                f"Collection {collection_name} embedding dimension is invalid"
+            )
+
+        for index_name in self.client.list_indexes(
+            collection_name=collection_name,
+            field_name="embedding",
+        ):
+            index = self.client.describe_index(
+                collection_name=collection_name,
+                index_name=index_name,
+            )
+            metric_type = self._field_value(index, "metric_type")
+            index_type = self._field_value(index, "index_type")
+            if metric_type == "COSINE" and index_type == "AUTOINDEX":
+                return
+        raise MilvusSchemaError(
+            f"Collection {collection_name} must have an AUTOINDEX COSINE embedding index"
+        )
 
     def healthcheck(self) -> bool:
         try:
@@ -181,6 +247,21 @@ class MilvusVectorStore:
         if isinstance(hit, dict):
             return hit.get(key, default)
         return getattr(hit, key, default)
+
+    @staticmethod
+    def _field_value(field, key, default=None):
+        if isinstance(field, dict):
+            return field.get(key, default)
+        return getattr(field, key, default)
+
+    @classmethod
+    def _field_param(cls, field, key):
+        params = cls._field_value(field, "params", {}) or {}
+        value = params.get(key) if isinstance(params, dict) else None
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            return value
 
     @classmethod
     def _normalize_hit(cls, hit) -> dict:

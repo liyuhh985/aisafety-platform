@@ -4,7 +4,11 @@ import unittest
 from unittest.mock import patch
 
 from tools.hybrid_search import TABLE_TO_COLLECTION
-from tools.milvus_store import MilvusDimensionError, MilvusVectorStore
+from tools.milvus_store import (
+    MilvusDimensionError,
+    MilvusSchemaError,
+    MilvusVectorStore,
+)
 
 
 class FakeSchema:
@@ -31,6 +35,8 @@ class FakeMilvusClient:
         self.delete_calls = []
         self.search_calls = []
         self.search_hits = search_hits or [[]]
+        self.collection_descriptions = {}
+        self.collection_indexes = {}
 
     def has_collection(self, collection_name):
         return collection_name in self.collections
@@ -46,6 +52,18 @@ class FakeMilvusClient:
     def create_collection(self, **kwargs):
         self.created_collections.append(kwargs)
         self.collections[kwargs["collection_name"]] = kwargs
+
+    def describe_collection(self, collection_name):
+        return self.collection_descriptions[collection_name]
+
+    def list_indexes(self, collection_name, field_name=None):
+        return self.collection_indexes.get(collection_name, [])
+
+    def describe_index(self, collection_name, index_name):
+        for index in self.collection_indexes[collection_name]:
+            if index["index_name"] == index_name:
+                return index
+        raise KeyError(index_name)
 
     def upsert(self, **kwargs):
         self.upsert_calls.append(kwargs)
@@ -130,6 +148,31 @@ class MilvusStoreTests(unittest.TestCase):
             )
         with self.assertRaises(MilvusDimensionError):
             store.search("tb_hazard_case", [0.1, 0.2], top_k=1)
+
+    def test_existing_collection_with_wrong_dimension_fails_fast(self):
+        client = FakeMilvusClient()
+        client.collections["hazard_cases"] = {"existing": True}
+        client.collection_descriptions["hazard_cases"] = {
+            "auto_id": False,
+            "enable_dynamic_field": False,
+            "fields": [
+                {"name": "doc_id", "type": "INT64", "is_primary": True},
+                {"name": "content_hash", "type": "VARCHAR", "params": {"max_length": "64"}},
+                {
+                    "name": "embedding",
+                    "type": "FLOAT_VECTOR",
+                    "params": {"dim": "2"},
+                },
+            ],
+        }
+        client.collection_indexes["hazard_cases"] = [
+            {"index_name": "embedding_index", "index_type": "AUTOINDEX", "metric_type": "COSINE"}
+        ]
+        store = MilvusVectorStore(client=client, embedding_dim=3)
+
+        with patch.dict(sys.modules, {"pymilvus": self.pymilvus}):
+            with self.assertRaises(MilvusSchemaError):
+                store.ensure_collections()
 
     def test_store_operations_reject_invalid_table_names(self):
         store = MilvusVectorStore(client=FakeMilvusClient(), embedding_dim=3)
