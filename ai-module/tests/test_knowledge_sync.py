@@ -1,6 +1,8 @@
 import hashlib
 import unittest
 
+import pymysql
+
 from tools.knowledge_sync import (
     EmbeddingServiceError,
     KnowledgeSynchronizer,
@@ -51,6 +53,19 @@ class FakeReader:
 
     def read(self, source):
         return list(self.records[source])
+
+
+class StreamingFakeReader:
+    def __init__(self, batches):
+        self.batches = batches
+        self.batch_sizes = []
+
+    def read(self, source):
+        raise AssertionError("synchronizer must use iter_batches")
+
+    def iter_batches(self, source, batch_size):
+        self.batch_sizes.append(batch_size)
+        yield from self.batches
 
 
 class FakeEmbedder:
@@ -133,6 +148,19 @@ class KnowledgeSyncTests(unittest.TestCase):
         self.assertEqual([[record["id"] for record in batch] for batch in batches], [[1], [2]])
         self.assertTrue(connection.closed)
 
+    def test_mysql_reader_uses_server_side_cursor(self):
+        connection = FakeConnection([(1, "标题", "描述", "原因", "整改")])
+        seen_kwargs = {}
+
+        def connection_factory(**kwargs):
+            seen_kwargs.update(kwargs)
+            return connection
+
+        reader = MySQLKnowledgeReader(connection_factory=connection_factory)
+        list(reader.iter_batches("case", batch_size=1))
+
+        self.assertIs(seen_kwargs["cursorclass"], pymysql.cursors.SSCursor)
+
     def test_mysql_reader_maps_policy_and_regulation_fields(self):
         policy_connection = FakeConnection([(1, "政策", "内容")])
         policy_reader = MySQLKnowledgeReader(
@@ -168,6 +196,24 @@ class KnowledgeSyncTests(unittest.TestCase):
         self.assertEqual(embedder.calls, [["changed"]])
         self.assertEqual(store.upsert_calls[0][1][0]["id"], 2)
         self.assertEqual(store.upsert_calls[0][1][0]["embedding"], [0.1, 0.2, 0.3])
+
+    def test_synchronizer_processes_reader_batches_without_loading_all_records(self):
+        reader = StreamingFakeReader(
+            [
+                [{"id": 1, "text": "one", "content_hash": "new-1"}],
+                [{"id": 2, "text": "two", "content_hash": "new-2"}],
+            ]
+        )
+        embedder = FakeEmbedder(vectors=[[0.1, 0.2, 0.3]])
+        store = FakeStore()
+        synchronizer = KnowledgeSynchronizer(reader, embedder, store, batch_size=1)
+
+        stats = synchronizer.synchronize("case")
+
+        self.assertEqual(reader.batch_sizes, [1])
+        self.assertEqual(stats.read_count, 2)
+        self.assertEqual(stats.upsert_count, 2)
+        self.assertEqual(len(store.upsert_calls), 2)
 
     def test_rebuild_recreates_only_selected_collection(self):
         reader = FakeReader(

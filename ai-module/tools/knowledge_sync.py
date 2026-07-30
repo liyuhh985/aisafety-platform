@@ -72,7 +72,11 @@ class MySQLKnowledgeReader:
         if batch_size <= 0:
             raise ValueError("batch_size must be positive")
         definition = self._definition(source)
-        conn = self.connection_factory(**self.db_config)
+        connection_options = {
+            **self.db_config,
+            "cursorclass": pymysql.cursors.SSCursor,
+        }
+        conn = self.connection_factory(**connection_options)
         try:
             with conn.cursor() as cursor:
                 cursor.execute(definition["query"])
@@ -185,8 +189,10 @@ class KnowledgeSynchronizer:
             self.store.recreate_collection(table)
 
         try:
+            active_batch_size = 0
             for records in self._iter_batches(source):
                 stats.read_count += len(records)
+                active_batch_size = len(records)
                 if rebuild:
                     pending = records
                 else:
@@ -200,6 +206,7 @@ class KnowledgeSynchronizer:
                     ]
                     stats.skipped_count += len(records) - len(pending)
                 if not pending:
+                    active_batch_size = 0
                     continue
 
                 texts = [record["text"] for record in pending]
@@ -233,11 +240,12 @@ class KnowledgeSynchronizer:
                     ],
                 )
                 stats.upsert_count += len(pending)
+                active_batch_size = 0
         except EmbeddingServiceError:
             self._log_stats(stats)
             raise
         except Exception:
-            stats.failure_count += 1
+            stats.failure_count += active_batch_size
             self._log_stats(stats)
             raise
 
