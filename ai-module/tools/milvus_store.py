@@ -62,38 +62,66 @@ class MilvusVectorStore:
                 self._validate_existing_collection(collection_name, data_type)
                 continue
 
-            schema = self.client.create_schema(
-                auto_id=False,
-                enable_dynamic_field=False,
-            )
-            schema.add_field(
-                field_name="doc_id",
-                datatype=data_type.INT64,
-                is_primary=True,
-                auto_id=False,
-            )
-            schema.add_field(
-                field_name="content_hash",
-                datatype=data_type.VARCHAR,
-                max_length=64,
-            )
-            schema.add_field(
-                field_name="embedding",
-                datatype=data_type.FLOAT_VECTOR,
-                dim=self.embedding_dim,
-            )
+            self._create_collection(collection_name, data_type)
 
-            index_params = self.client.prepare_index_params()
-            index_params.add_index(
-                field_name="embedding",
-                index_type="AUTOINDEX",
-                metric_type="COSINE",
-            )
-            self.client.create_collection(
-                collection_name=collection_name,
-                schema=schema,
-                index_params=index_params,
-            )
+    def recreate_collection(self, table: str) -> None:
+        """Drop and recreate one logical collection for a full rebuild."""
+        collection_name = self._collection_for(table)
+        self.connect()
+        if self.client.has_collection(collection_name=collection_name):
+            self.client.drop_collection(collection_name=collection_name)
+        self._create_collection(collection_name, self._data_type())
+
+    def get_content_hashes(self, table: str, doc_ids: list[int]) -> dict[int, str]:
+        """Read only the hashes needed to decide which MySQL rows changed."""
+        collection_name = self._collection_for(table)
+        if not doc_ids:
+            return {}
+        self.connect()
+        ids = ",".join(str(int(doc_id)) for doc_id in doc_ids)
+        rows = self.client.query(
+            collection_name=collection_name,
+            filter=f"doc_id in [{ids}]",
+            output_fields=["doc_id", "content_hash"],
+        )
+        return {
+            int(row["doc_id"]): row.get("content_hash", "")
+            for row in rows
+        }
+
+    def _create_collection(self, collection_name: str, data_type) -> None:
+        schema = self.client.create_schema(
+            auto_id=False,
+            enable_dynamic_field=False,
+        )
+        schema.add_field(
+            field_name="doc_id",
+            datatype=data_type.INT64,
+            is_primary=True,
+            auto_id=False,
+        )
+        schema.add_field(
+            field_name="content_hash",
+            datatype=data_type.VARCHAR,
+            max_length=64,
+        )
+        schema.add_field(
+            field_name="embedding",
+            datatype=data_type.FLOAT_VECTOR,
+            dim=self.embedding_dim,
+        )
+
+        index_params = self.client.prepare_index_params()
+        index_params.add_index(
+            field_name="embedding",
+            index_type="AUTOINDEX",
+            metric_type="COSINE",
+        )
+        self.client.create_collection(
+            collection_name=collection_name,
+            schema=schema,
+            index_params=index_params,
+        )
 
     def _validate_existing_collection(self, collection_name: str, data_type) -> None:
         description = self.client.describe_collection(collection_name=collection_name)

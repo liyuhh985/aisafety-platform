@@ -37,6 +37,8 @@ class FakeMilvusClient:
         self.search_hits = search_hits or [[]]
         self.collection_descriptions = {}
         self.collection_indexes = {}
+        self.query_calls = []
+        self.drop_calls = []
 
     def has_collection(self, collection_name):
         return collection_name in self.collections
@@ -67,6 +69,14 @@ class FakeMilvusClient:
             if index["index_name"] == index_name:
                 return index
         raise KeyError(index_name)
+
+    def query(self, **kwargs):
+        self.query_calls.append(kwargs)
+        return [{"doc_id": 1, "content_hash": "hash-1"}]
+
+    def drop_collection(self, **kwargs):
+        self.drop_calls.append(kwargs)
+        self.collections.pop(kwargs["collection_name"], None)
 
     def upsert(self, **kwargs):
         self.upsert_calls.append(kwargs)
@@ -215,6 +225,30 @@ class MilvusStoreTests(unittest.TestCase):
             store.delete_ids("tb_unknown", [1])
         with self.assertRaises(ValueError):
             store.search("tb_unknown", [0.1, 0.2, 0.3], top_k=1)
+
+    def test_get_content_hashes_reads_only_requested_ids(self):
+        client = FakeMilvusClient()
+        store = MilvusVectorStore(client=client, embedding_dim=3)
+
+        hashes = store.get_content_hashes("tb_hazard_case", [1, 2])
+
+        self.assertEqual(hashes, {1: "hash-1"})
+        self.assertEqual(client.query_calls[0]["collection_name"], "hazard_cases")
+        self.assertIn("doc_id in [1,2]", client.query_calls[0]["filter"])
+
+    def test_recreate_collection_drops_and_recreates_only_selected_collection(self):
+        client = FakeMilvusClient()
+        client.collections["hazard_cases"] = {"existing": True}
+        store = MilvusVectorStore(client=client, embedding_dim=3)
+
+        with patch.dict(sys.modules, {"pymilvus": self.pymilvus}):
+            store.recreate_collection("tb_hazard_case")
+
+        self.assertEqual(client.drop_calls, [{"collection_name": "hazard_cases"}])
+        self.assertEqual(
+            [call["collection_name"] for call in client.created_collections],
+            ["hazard_cases"],
+        )
 
 
 if __name__ == "__main__":
