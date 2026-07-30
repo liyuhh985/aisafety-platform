@@ -15,6 +15,12 @@ from db_config import DB_CONFIG
 
 EMBEDDING_CACHE_FILE = os.path.join(os.path.dirname(__file__), "..", "db", "case_embeddings.json")
 
+TABLE_TO_COLLECTION = {
+    "tb_hazard_case": "hazard_cases",
+    "tb_hazard_knowledge": "hazard_policies",
+    "tb_regulation": "hazard_regulations",
+}
+
 
 class HybridSearcher:
     """
@@ -191,6 +197,9 @@ class HybridSearcher:
         """
         混合检索入口：向量 + 关键词 → 合并去重 → 格式化输出。
         """
+        if table not in TABLE_TO_COLLECTION:
+            raise ValueError(f"Unsupported retrieval table: {table}")
+
         # 并行两种检索
         vector_results = self.vector_search(query, table, top_k=vector_k)
         keyword_results = self.keyword_search(query, table, limit=keyword_k)
