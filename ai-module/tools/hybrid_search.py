@@ -2,6 +2,7 @@
 混合检索：向量语义匹配 + 关键词精确匹配 → 合并去重排序。
 """
 import json
+import logging
 import math
 import os
 from typing import Optional
@@ -10,16 +11,30 @@ import numpy as np
 import pymysql
 import requests
 
-from config import MIMO_BASE_URL, MIMO_API_KEY, SF_BASE_URL, SF_API_KEY, SF_EMBED_MODEL
+from config import (
+    MILVUS_ENABLED,
+    MILVUS_FALLBACK_TO_MYSQL,
+    MIMO_BASE_URL,
+    MIMO_API_KEY,
+    SF_BASE_URL,
+    SF_API_KEY,
+    SF_EMBED_MODEL,
+    VECTOR_BACKEND,
+)
 from db_config import DB_CONFIG
 
 EMBEDDING_CACHE_FILE = os.path.join(os.path.dirname(__file__), "..", "db", "case_embeddings.json")
+LOGGER = logging.getLogger(__name__)
 
 TABLE_TO_COLLECTION = {
     "tb_hazard_case": "hazard_cases",
     "tb_hazard_knowledge": "hazard_policies",
     "tb_regulation": "hazard_regulations",
 }
+
+
+class MilvusRetrievalError(RuntimeError):
+    """Raised when Milvus retrieval fails and MySQL fallback is disabled."""
 
 
 class HybridSearcher:
@@ -30,15 +45,59 @@ class HybridSearcher:
     3. 合并去重 — 加权排序返回
     """
 
-    def __init__(self):
+    def __init__(
+        self,
+        vector_store=None,
+        embedding_client=None,
+        vector_backend: str | None = None,
+        milvus_enabled: bool | None = None,
+        milvus_fallback_to_mysql: bool | None = None,
+        logger=None,
+    ):
         self.embedding_cache: dict[int, list[float]] = {}
+        self.vector_store = vector_store
+        self.embedding_client = embedding_client
+        self.vector_backend = vector_backend or VECTOR_BACKEND
+        self.milvus_enabled = MILVUS_ENABLED if milvus_enabled is None else milvus_enabled
+        self.milvus_fallback_to_mysql = (
+            MILVUS_FALLBACK_TO_MYSQL
+            if milvus_fallback_to_mysql is None
+            else milvus_fallback_to_mysql
+        )
+        self.logger = logger or LOGGER
         self._load_cache()
 
     # ====== 向量检索 ======
 
     def vector_search(self, query: str, table: str, top_k: int = 3) -> list[dict]:
+        if table not in TABLE_TO_COLLECTION:
+            raise ValueError(f"Unsupported retrieval table: {table}")
+        if self.vector_backend == "mysql":
+            return self.mysql_vector_search(query, table, top_k)
+        if self.vector_backend != "milvus":
+            raise ValueError(f"Unsupported VECTOR_BACKEND: {self.vector_backend}")
+
+        try:
+            if not self.milvus_enabled:
+                raise MilvusRetrievalError("Milvus backend is disabled")
+            return self.milvus_vector_search(query, table, top_k)
+        except Exception as exc:
+            if self.milvus_fallback_to_mysql:
+                self.logger.warning(
+                    "Milvus unavailable source=%s reason_type=%s; using MySQL fallback",
+                    table,
+                    type(exc).__name__,
+                )
+                return self.mysql_vector_search(query, table, top_k)
+            if isinstance(exc, MilvusRetrievalError):
+                raise
+            raise MilvusRetrievalError(
+                f"Milvus vector retrieval failed for {table}: {type(exc).__name__}"
+            ) from exc
+
+    def mysql_vector_search(self, query: str, table: str, top_k: int = 3) -> list[dict]:
         """
-        用 embedding 做语义检索。
+        MySQL fallback: 用 embedding 做全表语义检索。
         table: "tb_hazard_case" | "tb_hazard_knowledge"
         """
         query_emb = self._embed(query)
@@ -72,6 +131,39 @@ class HybridSearcher:
             return []
         # 用 ID 回查完整字段
         return self._get_rows_by_ids(table, top_ids)
+
+    def milvus_vector_search(self, query: str, table: str, top_k: int = 3) -> list[dict]:
+        if self.vector_store is None:
+            from tools.milvus_store import MilvusVectorStore
+
+            self.vector_store = MilvusVectorStore()
+        query_vector = self._milvus_embed(query)
+        hits = self.vector_store.search(table, query_vector, top_k)
+        if not hits:
+            return []
+
+        ids = [int(hit["id"]) for hit in hits]
+        rows = self._get_rows_by_ids(table, ids)
+        rows_by_id = {int(row["id"]): row for row in rows}
+        hydrated = []
+        for hit in hits:
+            row = rows_by_id.get(int(hit["id"]))
+            if row is None:
+                continue
+            hydrated_row = dict(row)
+            hydrated_row["match_score"] = float(hit["distance"])
+            hydrated.append(hydrated_row)
+        return hydrated
+
+    def _milvus_embed(self, query: str) -> list[float]:
+        if self.embedding_client is None:
+            from tools.knowledge_sync import SiliconFlowEmbeddingClient
+
+            self.embedding_client = SiliconFlowEmbeddingClient()
+        vectors = self.embedding_client.embed([query])
+        if len(vectors) != 1:
+            raise MilvusRetrievalError("Embedding service returned no query vector")
+        return vectors[0]
 
     def _embed(self, text: str) -> Optional[list[float]]:
         """调用硅基流动 BAAI/bge-m3 embedding API 获取语义向量。"""
@@ -201,7 +293,10 @@ class HybridSearcher:
             raise ValueError(f"Unsupported retrieval table: {table}")
 
         # 并行两种检索
-        vector_results = self.vector_search(query, table, top_k=vector_k)
+        try:
+            vector_results = self.vector_search(query, table, top_k=vector_k)
+        except MilvusRetrievalError as exc:
+            return f"Milvus 向量检索不可用：{exc}。请暂时使用 MySQL 检索或稍后重试。"
         keyword_results = self.keyword_search(query, table, limit=keyword_k)
 
         # 合并去重（按 id）
