@@ -57,7 +57,10 @@ class FakeMilvusClient:
         return self.collection_descriptions[collection_name]
 
     def list_indexes(self, collection_name, field_name=None):
-        return self.collection_indexes.get(collection_name, [])
+        return [
+            index["index_name"]
+            for index in self.collection_indexes.get(collection_name, [])
+        ]
 
     def describe_index(self, collection_name, index_name):
         for index in self.collection_indexes[collection_name]:
@@ -173,6 +176,35 @@ class MilvusStoreTests(unittest.TestCase):
         with patch.dict(sys.modules, {"pymilvus": self.pymilvus}):
             with self.assertRaises(MilvusSchemaError):
                 store.ensure_collections()
+
+    def test_existing_collection_with_hnsw_cosine_index_is_accepted(self):
+        client = FakeMilvusClient()
+        client.collections["hazard_cases"] = {"existing": True}
+        client.collection_descriptions["hazard_cases"] = {
+            "auto_id": False,
+            "enable_dynamic_field": False,
+            "fields": [
+                {"name": "doc_id", "type": "INT64", "is_primary": True},
+                {"name": "content_hash", "type": "VARCHAR", "params": {"max_length": "64"}},
+                {
+                    "name": "embedding",
+                    "type": "FLOAT_VECTOR",
+                    "params": {"dim": "3"},
+                },
+            ],
+        }
+        client.collection_indexes["hazard_cases"] = [
+            {"index_name": "embedding_index", "index_type": "HNSW", "metric_type": "COSINE"}
+        ]
+        store = MilvusVectorStore(client=client, embedding_dim=3)
+
+        with patch.dict(sys.modules, {"pymilvus": self.pymilvus}):
+            store.ensure_collections()
+
+        self.assertEqual(
+            [call["collection_name"] for call in client.created_collections],
+            ["hazard_policies", "hazard_regulations"],
+        )
 
     def test_store_operations_reject_invalid_table_names(self):
         store = MilvusVectorStore(client=FakeMilvusClient(), embedding_dim=3)

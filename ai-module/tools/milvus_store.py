@@ -149,11 +149,10 @@ class MilvusVectorStore:
                 index_name=index_name,
             )
             metric_type = self._field_value(index, "metric_type")
-            index_type = self._field_value(index, "index_type")
-            if metric_type == "COSINE" and index_type == "AUTOINDEX":
+            if metric_type == "COSINE":
                 return
         raise MilvusSchemaError(
-            f"Collection {collection_name} must have an AUTOINDEX COSINE embedding index"
+            f"Collection {collection_name} must have a COSINE embedding index"
         )
 
     def healthcheck(self) -> bool:
