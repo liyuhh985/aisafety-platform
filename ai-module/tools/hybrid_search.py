@@ -14,6 +14,9 @@ import requests
 from config import (
     MILVUS_ENABLED,
     MILVUS_FALLBACK_TO_MYSQL,
+    MILVUS_CASE_COLLECTION,
+    MILVUS_POLICY_COLLECTION,
+    MILVUS_REGULATION_COLLECTION,
     MIMO_BASE_URL,
     MIMO_API_KEY,
     SF_BASE_URL,
@@ -27,9 +30,9 @@ EMBEDDING_CACHE_FILE = os.path.join(os.path.dirname(__file__), "..", "db", "case
 LOGGER = logging.getLogger(__name__)
 
 TABLE_TO_COLLECTION = {
-    "tb_hazard_case": "hazard_cases",
-    "tb_hazard_knowledge": "hazard_policies",
-    "tb_regulation": "hazard_regulations",
+    "tb_hazard_case": MILVUS_CASE_COLLECTION,
+    "tb_hazard_knowledge": MILVUS_POLICY_COLLECTION,
+    "tb_regulation": MILVUS_REGULATION_COLLECTION,
 }
 
 
@@ -140,7 +143,7 @@ class HybridSearcher:
         query_vector = self._milvus_embed(query)
         hits = self.vector_store.search(table, query_vector, top_k)
         if not hits:
-            return []
+            raise MilvusRetrievalError("Milvus collection returned no vector hits")
 
         ids = [int(hit["id"]) for hit in hits]
         rows = self._get_rows_by_ids(table, ids)
@@ -153,6 +156,10 @@ class HybridSearcher:
             hydrated_row = dict(row)
             hydrated_row["match_score"] = float(hit["distance"])
             hydrated.append(hydrated_row)
+        if not hydrated:
+            raise MilvusRetrievalError(
+                "Milvus hits could not be hydrated from MySQL"
+            )
         return hydrated
 
     def _milvus_embed(self, query: str) -> list[float]:

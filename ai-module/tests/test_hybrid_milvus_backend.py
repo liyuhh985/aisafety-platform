@@ -116,6 +116,21 @@ class HybridMilvusBackendTests(unittest.TestCase):
         self.assertEqual(results, [{"id": 3, "title": "回退案例"}])
         self.assertEqual(searcher.mysql_calls, [("查询", "tb_hazard_case", 3)])
 
+    def test_empty_milvus_collection_falls_back_to_mysql_vector_search(self):
+        searcher = BackendSearcher(
+            vector_backend="milvus",
+            milvus_enabled=True,
+            milvus_fallback_to_mysql=True,
+            vector_store=FakeMilvusStore(hits=[]),
+            embedding_client=FakeEmbeddingClient(),
+            mysql_results=[{"id": 5, "title": "空索引回退案例"}],
+        )
+
+        results = searcher.vector_search("查询", "tb_hazard_case", top_k=3)
+
+        self.assertEqual(results, [{"id": 5, "title": "空索引回退案例"}])
+        self.assertEqual(searcher.mysql_calls, [("查询", "tb_hazard_case", 3)])
+
     def test_milvus_failure_without_fallback_returns_clear_error(self):
         searcher = BackendSearcher(
             vector_backend="milvus",
