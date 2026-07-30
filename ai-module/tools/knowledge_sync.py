@@ -62,13 +62,25 @@ class MySQLKnowledgeReader:
         self.db_config = db_config or DB_CONFIG
 
     def read(self, source: str) -> list[dict]:
+        return [
+            record
+            for batch in self.iter_batches(source, batch_size=512)
+            for record in batch
+        ]
+
+    def iter_batches(self, source: str, batch_size: int):
+        if batch_size <= 0:
+            raise ValueError("batch_size must be positive")
         definition = self._definition(source)
         conn = self.connection_factory(**self.db_config)
         try:
             with conn.cursor() as cursor:
                 cursor.execute(definition["query"])
-                rows = cursor.fetchall()
-            return [self._record(source, row) for row in rows]
+                while True:
+                    rows = cursor.fetchmany(batch_size)
+                    if not rows:
+                        break
+                    yield [self._record(source, row) for row in rows]
         finally:
             conn.close()
 
@@ -168,45 +180,46 @@ class KnowledgeSynchronizer:
     def synchronize(self, source: str, rebuild: bool = False) -> SyncStats:
         definition = MySQLKnowledgeReader._definition(source)
         table = definition["table"]
-        records = self.reader.read(source)
-        stats = SyncStats(source=source, table=table, read_count=len(records))
-
+        stats = SyncStats(source=source, table=table)
         if rebuild:
             self.store.recreate_collection(table)
-            existing_hashes = {}
-            pending = records
-        else:
-            existing_hashes = self.store.get_content_hashes(
-                table, [record["id"] for record in records]
-            )
-            pending = [
-                record
-                for record in records
-                if existing_hashes.get(record["id"]) != record["content_hash"]
-            ]
-            stats.skipped_count = len(records) - len(pending)
 
         try:
-            for offset in range(0, len(pending), self.batch_size):
-                batch = pending[offset : offset + self.batch_size]
-                texts = [record["text"] for record in batch]
+            for records in self._iter_batches(source):
+                stats.read_count += len(records)
+                if rebuild:
+                    pending = records
+                else:
+                    existing_hashes = self.store.get_content_hashes(
+                        table, [record["id"] for record in records]
+                    )
+                    pending = [
+                        record
+                        for record in records
+                        if existing_hashes.get(record["id"]) != record["content_hash"]
+                    ]
+                    stats.skipped_count += len(records) - len(pending)
+                if not pending:
+                    continue
+
+                texts = [record["text"] for record in pending]
                 try:
                     vectors = self.embedder.embed(texts)
                 except Exception as exc:
-                    stats.failure_count += len(batch)
+                    stats.failure_count += len(pending)
                     self.logger.error(
                         "Embedding failed for source=%s batch_size=%d error_type=%s",
                         source,
-                        len(batch),
+                        len(pending),
                         type(exc).__name__,
                     )
                     raise EmbeddingServiceError(
                         f"Embedding failed for source {source}; use VECTOR_BACKEND=mysql until it recovers"
                     ) from exc
-                if len(vectors) != len(batch):
-                    stats.failure_count += len(batch)
+                if len(vectors) != len(pending):
+                    stats.failure_count += len(pending)
                     raise EmbeddingServiceError(
-                        f"Embedding returned {len(vectors)} vectors for {len(batch)} records"
+                        f"Embedding returned {len(vectors)} vectors for {len(pending)} records"
                     )
                 self.store.upsert(
                     table,
@@ -216,25 +229,39 @@ class KnowledgeSynchronizer:
                             "content_hash": record["content_hash"],
                             "embedding": vector,
                         }
-                        for record, vector in zip(batch, vectors)
+                        for record, vector in zip(pending, vectors)
                     ],
                 )
-                stats.upsert_count += len(batch)
+                stats.upsert_count += len(pending)
         except EmbeddingServiceError:
+            self._log_stats(stats)
             raise
         except Exception:
             stats.failure_count += 1
+            self._log_stats(stats)
             raise
 
+        self._log_stats(stats)
+        return stats
+
+    def _iter_batches(self, source: str):
+        iter_batches = getattr(self.reader, "iter_batches", None)
+        if iter_batches is not None:
+            yield from iter_batches(source, self.batch_size)
+            return
+        records = self.reader.read(source)
+        for offset in range(0, len(records), self.batch_size):
+            yield records[offset : offset + self.batch_size]
+
+    def _log_stats(self, stats: SyncStats) -> None:
         self.logger.info(
             "Knowledge sync source=%s read=%d skipped=%d upsert=%d failures=%d",
-            source,
+            stats.source,
             stats.read_count,
             stats.skipped_count,
             stats.upsert_count,
             stats.failure_count,
         )
-        return stats
 
 
 def _parse_args(argv=None):

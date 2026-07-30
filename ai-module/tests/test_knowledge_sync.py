@@ -13,6 +13,7 @@ class FakeCursor:
     def __init__(self, rows):
         self.rows = rows
         self.executed = []
+        self.offset = 0
 
     def __enter__(self):
         return self
@@ -25,6 +26,11 @@ class FakeCursor:
 
     def fetchall(self):
         return self.rows
+
+    def fetchmany(self, size):
+        rows = self.rows[self.offset : self.offset + size]
+        self.offset += len(rows)
+        return rows
 
 
 class FakeConnection:
@@ -85,6 +91,18 @@ class FakeStore:
         self.upsert_calls.append((table, records))
 
 
+class FakeLogger:
+    def __init__(self):
+        self.info_messages = []
+        self.error_messages = []
+
+    def info(self, message, *args):
+        self.info_messages.append(message % args)
+
+    def error(self, message, *args):
+        self.error_messages.append(message % args)
+
+
 class KnowledgeSyncTests(unittest.TestCase):
     def test_mysql_reader_normalizes_source_text_and_hashes_it(self):
         connection = FakeConnection([(7, "  标题 ", "描述", "原因", "整改")])
@@ -100,6 +118,36 @@ class KnowledgeSyncTests(unittest.TestCase):
         )
         self.assertTrue(connection.closed)
         self.assertIn("tb_hazard_case", connection.cursor_instance.executed[0])
+
+    def test_mysql_reader_streams_bounded_batches(self):
+        connection = FakeConnection(
+            [
+                (1, "标题1", "内容1", "原因1", "整改1"),
+                (2, "标题2", "内容2", "原因2", "整改2"),
+            ]
+        )
+        reader = MySQLKnowledgeReader(connection_factory=lambda **kwargs: connection)
+
+        batches = list(reader.iter_batches("case", batch_size=1))
+
+        self.assertEqual([[record["id"] for record in batch] for batch in batches], [[1], [2]])
+        self.assertTrue(connection.closed)
+
+    def test_mysql_reader_maps_policy_and_regulation_fields(self):
+        policy_connection = FakeConnection([(1, "政策", "内容")])
+        policy_reader = MySQLKnowledgeReader(
+            connection_factory=lambda **kwargs: policy_connection
+        )
+        regulation_connection = FakeConnection([(2, "法律", "第1条", "条文", "消防")])
+        regulation_reader = MySQLKnowledgeReader(
+            connection_factory=lambda **kwargs: regulation_connection
+        )
+
+        policy = policy_reader.read("policy")[0]
+        regulation = regulation_reader.read("regulation")[0]
+
+        self.assertEqual(policy["text"], "政策 内容")
+        self.assertEqual(regulation["text"], "法律 第1条 条文 消防")
 
     def test_incremental_sync_skips_unchanged_and_upserts_changed_records(self):
         records = {
@@ -141,12 +189,16 @@ class KnowledgeSyncTests(unittest.TestCase):
         )
         embedder = FakeEmbedder(error=RuntimeError("service unavailable"))
         store = FakeStore()
-        synchronizer = KnowledgeSynchronizer(reader, embedder, store, batch_size=1)
+        logger = FakeLogger()
+        synchronizer = KnowledgeSynchronizer(
+            reader, embedder, store, batch_size=1, logger=logger
+        )
 
         with self.assertRaises(EmbeddingServiceError):
             synchronizer.synchronize("regulation")
 
         self.assertEqual(store.upsert_calls, [])
+        self.assertIn("failures=1", logger.info_messages[0])
 
     def test_embedding_client_raises_on_service_failure_without_fallback_vector(self):
         client = SiliconFlowEmbeddingClient(
