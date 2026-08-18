@@ -1,40 +1,40 @@
-# Day 21 RAG and Report Evaluation Design
+# Day 21 RAG 与报告评估设计
 
-## Goal
+## 目标
 
-Extend the existing offline RAG evaluation from loose category hit-rate checks to reproducible ranking metrics and negative-sample analysis, then evaluate generated reports with deterministic key-point coverage checks.
+将现有离线 RAG 评估从宽松的“类别命中率”检查，扩展为可复现的排序指标与负样本分析；再以确定性的关键要点覆盖检查评估生成报告。
 
-## Scope
+## 范围
 
-The existing `ai-module/eval_rag.py` remains the executable entry point. The evaluation corpus will explicitly define positive queries, expected categories, and negative queries. Each retrieval result will expose enough ranked evidence to calculate:
+现有的 `ai-module/eval_rag.py` 继续作为可执行入口。评估集将明确区分正样本查询、期望类别和负样本查询。每次检索结果都需要保留足够的排序证据，以计算：
 
-- `Recall@k`: whether an expected-category result appears in the first `k` retrieved items.
-- `MRR`: reciprocal rank of the first expected-category result, or `0` when none is retrieved.
-- Negative false-positive rate: the proportion of negative queries that incorrectly retrieve the category explicitly marked as absent.
+- `Recall@k`：前 `k` 条检索结果中是否出现期望类别。
+- `MRR`：首个期望类别结果的倒数排名；没有命中时为 `0`。
+- 负样本误召回率：负样本错误检索到其明确不应出现类别的比例。
 
-The script will print each failure with its query, expected category, ranked categories, rank, and reason. Aggregate metrics must distinguish basic, difficult, and negative subsets so a high overall score cannot conceal poor edge-case behavior.
+脚本将逐项输出失败案例的查询、期望类别、排序后的类别、首次命中排名和失败原因。汇总指标必须分别展示基础、困难和负样本集合，避免总体高分掩盖边界案例表现不佳的问题。
 
-Report evaluation will use a small fixed fixture set. Each fixture defines required points and forbidden claims; `check_report()` returns missing required points, forbidden claims found, and pass/fail. This measures factual coverage and simple contradiction markers only. It does not claim to measure fluency, completeness beyond the fixture, or semantic faithfulness.
+报告评估使用一组固定样例。每个样例定义必须包含的要点和禁止出现的错误主张；`check_report()` 返回缺失要点、命中的错误主张和通过状态。它只评估事实覆盖与简单矛盾标记，不声称能评估语言流畅度、样例范围外的完整性或语义忠实度。
 
-## Design Choices
+## 方案选择
 
-The chosen approach is deterministic, offline evaluation against the current `hybrid_search` path. It is reproducible in local development and works without model credentials or a judge model.
+本日采用对当前 `hybrid_search` 链路进行确定性离线评估的方案。它可在本地稳定复现，不需要模型凭证或裁判模型。
 
-Two alternatives remain out of scope for this day:
+以下两种方案暂不纳入本日范围：
 
-- LLM-as-judge can assess semantic quality, but adds cost, prompt sensitivity, and judge calibration work.
-- Human annotation gives the strongest quality signal, but is not repeatable at every code change without a labeled review workflow.
+- `LLM-as-judge` 可以评估语义质量，但会增加成本、提示词敏感性和裁判校准工作。
+- 人工标注的质量信号最强，但在每次代码改动后都需要人工复核，不能作为当前阶段的可重复检查。
 
-## Files and Boundaries
+## 文件与边界
 
-- Modify `ai-module/eval_rag.py` to define cases, normalize ranked category evidence, calculate metrics, and report failures.
-- Add focused tests under `ai-module/tests/` for metric calculations and report-fixture behavior. Tests must use fixed ranked inputs and not require Milvus, a network connection, or model credentials.
-- Append the Day 21 learning record to `docs/superpowers/plans/2026-07-28-agent-application-learning-plan.md` after all code and test evidence is available.
+- 修改 `ai-module/eval_rag.py`，定义评估案例、标准化排序后的类别证据、计算指标并输出失败案例。
+- 在 `ai-module/tests/` 增加指标计算与报告样例行为的聚焦测试。测试必须使用固定排序输入，不依赖 Milvus、网络连接或模型凭证。
+- 在获得全部代码和测试证据后，将 Day 21 学习复盘追加到 `docs/superpowers/plans/2026-07-28-agent-application-learning-plan.md`。
 
-No production retrieval behavior, vector schema, model prompt, or historical-memory behavior changes in this work.
+本次不修改生产检索行为、向量库结构、模型提示词或历史记忆行为。
 
-## Error Handling and Evidence
+## 异常处理与证据
 
-Individual retrieval exceptions are reported as failed cases and excluded from neither the displayed case list nor the final failure analysis. Aggregate denominators include all planned cases so infrastructure failure cannot improve a metric.
+单个检索异常会作为失败案例输出，不能从展示列表或最终失败分析中排除。汇总指标的分母包含全部计划案例，避免基础设施异常虚高指标。
 
-Day 21 is complete only when the focused metric tests pass and the real evaluation script runs against the configured local retrieval backend. The final record must state actual metric values, false-positive observations, failure cases, and the limits of the report checker.
+只有聚焦指标测试通过，且真实评估脚本能在当前配置的本地检索后端完成运行后，Day 21 才算完成。最终复盘必须记录实际指标、误召回观察、失败案例和报告检查器的边界。
