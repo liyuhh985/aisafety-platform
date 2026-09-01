@@ -121,6 +121,46 @@ def _infer_categories(text, vision_category=""):
 def _merge_categories(new_cats, old_cats):
     return _sort_by_priority(_dedupe(list(old_cats or []) + list(new_cats or [])))
 
+
+def rebuild_missing(categories, category_slots) -> list[str]:
+    out = []
+    for cat in categories:
+        for s in SLOT_SCHEMAS.get(cat, []):
+            if s.critical and not (category_slots.get(cat, {}).get(s.key) or '').strip():
+                out.append(f"{cat}_{s.key}")
+    return _sort_by_priority(out)
+
+def add_category_slots(state_categories, category_slots, extracted) -> dict:
+    cs = {k: dict(v) for k, v in (category_slots or {}).items()}
+    for cat, slots in (extracted or {}).items():
+        if cat not in state_categories:
+            continue
+        cs.setdefault(cat, {})
+        for k, v in slots.items():
+            if v and str(v).strip():
+                cs[cat][k] = v
+    return cs
+
+def _detect_other_cats(value, from_cat) -> list[str]:
+    if not value:
+        return []
+    return [c for c in CATEGORIES if c != from_cat
+            and any(k in value for k in _CATEGORY_KEYWORDS.get(c, ()))]
+
+def _relocate(value, from_cat, key, categories, category_slots):
+    hit_cats = _detect_other_cats(value, from_cat)
+    if not hit_cats:
+        return None
+    new_cats = _merge_categories(hit_cats, categories)
+    cs = {k: dict(v) for k, v in (category_slots or {}).items()}
+    target = CROSS_SLOT_MAP.get((from_cat, key))
+    if target and target[0] in hit_cats:
+        tcat, tkey = target
+        cs.setdefault(tcat, {})[tkey] = value
+        if from_cat in cs and key in cs[from_cat]:
+            del cs[from_cat][key]
+    return {"categories": new_cats, "category_slots": cs}
+
 _CATEGORY_KEYWORDS = {
     "占道": ("占道", "摆摊", "摊位", "车占", "停车", "挡盲道", "占盲道", "盲道"),
     "危房": ("危房", "裂缝", "倾斜", "沉降", "塌", "危楼", "危墙"),
