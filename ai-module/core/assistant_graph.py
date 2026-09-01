@@ -392,11 +392,14 @@ def meta_clarify(state: AssistantState) -> dict:
 
 # ---------- search（类别化检索） ----------
 def search(state: AssistantState) -> dict:
-    category = state.get("category", "占道")
-    keyword = _pick_keyword(category, state.get("slots", {}))
-    reg = _run_tool("search_regulation", keyword)
-    case = _run_tool("search_cases", keyword)
-    return {"regulation_results": reg, "case_results": case}
+    cats = state.get("categories") or ([state["category"]] if state.get("category") else [])
+    results = dict(state.get("category_results") or {})
+    for cat in cats:
+        kw = _pick_keyword(cat, state.get("category_slots", {}).get(cat, {}))
+        reg = _run_tool("search_regulation", kw)
+        case = _run_tool("search_cases", kw)
+        results[cat] = {"regulation": reg, "case": case}
+    return {"category_results": results}
 
 
 def _pick_keyword(category: str, slots: dict) -> str:
@@ -421,17 +424,26 @@ def _run_tool(name: str, keyword: str) -> str:
 # ---------- report（流式生成） ----------
 def report(state: AssistantState) -> dict:
     messages = list(state.get("messages", []))
-    reg = state.get("regulation_results") or "[库内暂未检索到]"
-    case = state.get("case_results") or "[库内暂未检索到]"
+    cats = state.get("categories") or ([state["category"]] if state.get("category") else [])
+    results = state.get("category_results") or {}
     vision = state.get("vision_summary") or ""
-    category = state.get("category", "")
+    lines = []
+    for cat in cats:
+        r = results.get(cat, {})
+        reg = r.get("regulation") or "库内暂未检索到"
+        case = r.get("case") or "库内暂未检索到"
+        lines.append(
+            "[隐患类别] " + cat + "\n"
+            "[视觉分析] " + vision + "\n"
+            "[检索法规] " + reg + "\n"
+            "[检索案例] " + case
+        )
     ctx = (
-        f"[隐患类别] {category}\n"
-        f"[视觉分析] {vision}\n"
-        f"[检索法规] {reg}\n"
-        f"[检索案例] {case}\n"
-        "请依据上面的检索结果生成三段式：### 一、触犯法规 / ### 二、安全隐患 / ### 三、类似案例。"
-        "没有检索到的内容写「库内暂未检索到」，不要编造；最后加一句「需要我按这个情况生成一个整改建议吗？」"
+        "\n\n".join(lines) +
+        "\n请对每个隐患用一节输出：### 一、触犯法规 / ### 二、安全隐患 / ### 三、类似案例。" +
+        "法规和案例必须来自上面检索结果，没有就写「库内暂未检索到」，不编造。" +
+        "多隐患时每个隐患精炼、突出结论；法规引用完整准确。信息不足写「信息不足，未确认」。" +
+        "最后加一句「需要我按这个情况生成一个整改建议吗？」"
     )
     final_messages = messages + [HumanMessage(content=ctx)]
     emit = getattr(_stream_local, "emit", None)
@@ -443,7 +455,6 @@ def report(state: AssistantState) -> dict:
     return {"draft_report": "".join(buf)}
 
 
-# ---------- 图 ----------
 def build_graph():
     g = StateGraph(AssistantState)
     g.add_node("route", route)

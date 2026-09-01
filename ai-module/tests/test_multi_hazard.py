@@ -117,3 +117,12 @@ def test_meta_clarify_add(monkeypatch):
     up = ag.meta_clarify(st)
     assert up["messages"][-1].content == "这些是同一个地方的问题，还是另外单独一条？"
 
+def test_search_loops_categories(monkeypatch):
+    monkeypatch.setattr(ag, "_run_tool", lambda name, kw: f"[{name}] {kw}")
+    st = {"categories": ["消防通道", "占道"], "category_index": 1,
+          "category_slots": {"消防通道": {"blocker": "杂物"}, "占道": {"blocked": "完全堵死"}},
+          "category_results": {}, "messages": []}
+    up = ag.search(st)
+    assert set(up["category_results"].keys()) == {"消防通道", "占道"}
+    assert "完全堵死" in up["category_results"]["占道"]["case"]
+
