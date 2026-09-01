@@ -28,6 +28,16 @@ _llm = Agent(
     api_key=MIMO_API_KEY,
     model=MIMO_MODEL,
 )
+
+# report 用不带 tools 的轻量 Agent（流式生成纯文本报告，避免 tools 导致 400）
+_report_llm = Agent(
+    name="report",
+    system_prompt="",
+    tools=[],
+    base_url=MIMO_BASE_URL,
+    api_key=MIMO_API_KEY,
+    model=MIMO_MODEL,
+)
 _TOOL_MAP = {t.name: t for t in ASSISTANT_TOOLS}
 _stream_local = threading.local()
 
@@ -465,12 +475,13 @@ def report(state: AssistantState) -> dict:
     )
     # 把 langchain 消息转成 dict，供 _call_llm_stream_events 的 payload 序列化
     dict_msgs = []
+    _ROLE_MAP = {"system": "system", "human": "user", "ai": "assistant", "tool": "tool"}
     for m in messages:
-        dict_msgs.append({"role": getattr(m, "type", "user"), "content": getattr(m, "content", "")})
+        dict_msgs.append({"role": _ROLE_MAP.get(getattr(m, "type", "user"), "user"), "content": getattr(m, "content", "")})
     dict_msgs.append({"role": "user", "content": ctx})
     emit = getattr(_stream_local, "emit", None)
     buf = []
-    for kind, text in _llm._call_llm_stream_events(dict_msgs, cancellation=None):
+    for kind, text in _report_llm._call_llm_stream_events(dict_msgs, cancellation=None):
         if kind == "chunk":
             buf.append(text)
             if emit:
@@ -564,6 +575,11 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             content = getattr(last, "content", None) or ""
                             if content:
                                 emit("chunk", content)
+                    # report 节点：直接取 draft_report 作为 chunk 流出（不依赖节点线程的 emit）
+                    if node == "report":
+                        draft = (update or {}).get("draft_report") or ""
+                        if draft:
+                            emit("chunk", draft)
                 if cancellation:
                     cancellation.throw_if_cancelled()
             emit("done", "")
