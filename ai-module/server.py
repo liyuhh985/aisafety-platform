@@ -7,8 +7,9 @@ import shutil
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, Query, Request, UploadFile
+from fastapi import FastAPI, File, Form, Query, Request, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from fastapi.responses import StreamingResponse
 
 from agents import (
@@ -16,7 +17,11 @@ from agents import (
     create_retrieval_agent, create_report_agent,
 )
 from core import Orchestrator
+from core.agent import Agent
 from core.memory import get_session
+from core.cancellation import CancellationToken
+from core.assistant_graph import run_stream_events as assistant_graph_stream
+from core.assistant_agent import create_assistant_agent
 from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
 
 app = FastAPI(title="Safety AI", version="1.0")
@@ -130,6 +135,136 @@ def chat_stream(message: str = Form(...), session_id: str = Form(...)):
     return StreamingResponse(generate(), media_type="text/event-stream")
 
 
+
+# ===== Assistant (ReAct 一期：多轮澄清 + 法规/案例) =====
+_assistant: Agent = None
+
+def get_assistant() -> Agent:
+    global _assistant
+    if _assistant is None:
+        _assistant = create_assistant_agent(MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL)
+    return _assistant
+
+class AssistantRequest(BaseModel):
+    message: str
+    session_id: str = ""
+
+
+@app.post("/api/ai/assistant/stream")
+async def assistant_stream(
+    request: Request,
+    message: str = Form(None),
+    session_id: str = Form(None),
+    file: UploadFile = File(None),
+):
+    # 兼容 JSON 和 multipart：有 file 走 FormData，无 file 走 JSON
+    if message is None:
+        try:
+            body = await request.json()
+            message = body.get("message", "") or body.get("text", "")
+            session_id = body.get("session_id", "") or body.get("sessionId", "") or ""
+        except Exception:
+            message = ""
+            session_id = ""
+    message = (message or "").strip()
+    if not message and (file is None or not getattr(file, "filename", "")):
+        raise HTTPException(status_code=400, detail="message or file required")
+    sid = session_id or str(uuid.uuid4())
+    mem = get_session(sid)
+    history = mem.get_history() if mem else []
+    max_keep = getattr(mem, "max_turns", 10) * 2
+    if len(history) > max_keep:
+        history = history[-max_keep:]
+    # 有图写死必调：先跑视觉，结果注入历史，保证有图必看
+    image_path = None
+    vision_injected = False
+    if file is not None and getattr(file, "filename", ""):
+        try:
+            image_path = _save_upload(file)
+            # 同步注入视觉结果到 history（不依赖模型是否调工具）
+            try:
+                from mimo_client import MiMoVisionClient
+                from prompts import VISION_PROMPT
+                vc = MiMoVisionClient()
+                vision_json = vc.analyze_json(image_path, VISION_PROMPT)
+                if not vision_json:
+                    history = history + [{"role": "system", "content": "[视觉分析失败，请仅按用户文字描述判断，不要编造图中细节]"}]
+                    try:
+                        mem.messages.append({"role": "system", "content": "[视觉分析失败，请仅按用户文字描述判断，不要编造图中细节]"})
+                        mem._trim()
+                    except: pass
+                else:
+                    history = history + [{"role": "system", "content": f"[视觉分析] {vision_json}"}]
+                # 立刻落库，保证第二轮能读到
+                try:
+                    mem.messages.append({"role": "system", "content": f"[视觉分析] {vision_json}"})
+                    mem._trim()
+                except: pass
+                if len(history) > max_keep:
+                    history = history[-max_keep:]
+                vision_injected = True
+            except Exception as ve:
+                history = history + [{"role": "system", "content": f"[视觉分析失败] {ve}"}]
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"图片处理失败: {e}")
+
+    assistant = get_assistant()
+    # 若没有文字但有图，给个默认提示让模型基于图回答
+    if not message and image_path:
+        message = "请分析这张图片中的安全隐患"
+    # 立刻落库用户消息，保证第二轮多轮能读到（原来在 generate 结束后才落库，第二轮来得快就读不到）
+    if mem:
+        try:
+            mem.add_user(message + (" [含图片]" if image_path else ""))
+        except: pass
+
+    async def generate():
+        try:
+            sent_any = False
+            reply_parts = []
+            vision_summary = ""
+            for _h in history:
+                _c = (_h.get("content") or "")
+                if _c.startswith("[视觉分析]"):
+                    vision_summary = _c
+            cancel_token = CancellationToken()
+            async for kind, text in assistant_graph_stream(
+                message=message, history=history, slots={},
+                vision_summary=vision_summary, session_id=sid, max_rounds=5,
+                cancellation=cancel_token,
+            ):
+                if await request.is_disconnected():
+                    cancel_token.cancel()
+                    print("[Assistant] 客户端断开，停止")
+                    break
+                yield f"data: {json.dumps({'type': kind, 'content': text}, ensure_ascii=False)}\n\n"
+                sent_any = True
+                if kind in ("chunk", "error"):
+                    reply_parts.append(text)
+            if mem:
+                try:
+                    # 用户消息包含图时标注一下
+                    user_log = message + (" [含图片]" if image_path else "")
+                    mem.add_user(user_log)
+                    if vision_injected:
+                        # 避免重复存，history 已注入，这里只存一次
+                        pass
+                    if reply_parts:
+                        mem.add_assistant("".join(reply_parts))
+                except Exception:
+                    pass
+            if not sent_any:
+                yield f"data: {json.dumps({'type':'done','content':''}, ensure_ascii=False)}\n\n"
+        except Exception as e:
+            yield f"data: {json.dumps({'type':'error','content':str(e)}, ensure_ascii=False)}\n\n"
+        finally:
+            if image_path:
+                try:
+                    Path(image_path).unlink(missing_ok=True)
+                except Exception:
+                    pass
+    return StreamingResponse(generate(), media_type="text/event-stream", headers={"X-Session-Id": sid})
+
 @app.get("/api/ai/history")
 def history(session_id: str = Query(...)):
     """获取会话历史。"""
@@ -164,3 +299,8 @@ def _save_upload(file: UploadFile) -> str:
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+
+
+

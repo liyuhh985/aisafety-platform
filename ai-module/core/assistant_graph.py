@@ -215,8 +215,20 @@ def _llm_extract_slots(message: str, categories: list[str], category_slot_keys: 
         f"\n用户消息：{message}"
     )
     try:
-        resp = _llm._call_llm([SystemMessage(content="你是槽位抽取器"), HumanMessage(content=prompt)], cancellation=None)
+        resp = _llm._call_llm(
+            [{"role": "system", "content": "你是槽位抽取器"}, {"role": "user", "content": prompt}],
+            cancellation=None,
+        )
         content = (resp.get("content") or "").strip()
+        # 宽松解析：剥 markdown 代码块，截取 {...} 再 json.loads
+        if "```" in content:
+            content = content.split("```")[1] if content.find("```") < content.rfind("```") else content
+            if content.startswith("json"):
+                content = content[4:]
+        s = content.find("{")
+        e = content.rfind("}")
+        if s != -1 and e != -1:
+            return json.loads(content[s:e+1])
         return json.loads(content)
     except Exception:
         return {}
@@ -229,7 +241,7 @@ def _llm_classify(text: str) -> str:
     )
     try:
         resp = _llm._call_llm(
-            [SystemMessage(content="你是城市安全隐患分类器"), HumanMessage(content=prompt)],
+            [{"role": "system", "content": "你是城市安全隐患分类器"}, {"role": "user", "content": prompt}],
             cancellation=None,
         )
         content = (resp.get("content") or "").strip()
@@ -359,7 +371,10 @@ def _llm_phrase(slot_keys, context) -> str:
         f"当前上下文：{context}\n要问的槽：{'、'.join(slot_keys)}\n只输出问句。"
     )
     try:
-        resp = _llm._call_llm([SystemMessage(content="你是澄清问句生成器"), HumanMessage(content=prompt)], cancellation=None)
+        resp = _llm._call_llm(
+        [{"role": "system", "content": "你是澄清问句生成器"}, {"role": "user", "content": prompt}],
+        cancellation=None,
+    )
         return (resp.get("content") or "").strip() or "能再具体说说吗？"
     except Exception:
         return "能再具体说说吗？"
@@ -448,13 +463,18 @@ def report(state: AssistantState) -> dict:
         "多隐患时每个隐患精炼、突出结论；法规引用完整准确。信息不足写「信息不足，未确认」。" +
         "最后加一句「需要我按这个情况生成一个整改建议吗？」"
     )
-    final_messages = messages + [HumanMessage(content=ctx)]
+    # 把 langchain 消息转成 dict，供 _call_llm_stream_events 的 payload 序列化
+    dict_msgs = []
+    for m in messages:
+        dict_msgs.append({"role": getattr(m, "type", "user"), "content": getattr(m, "content", "")})
+    dict_msgs.append({"role": "user", "content": ctx})
     emit = getattr(_stream_local, "emit", None)
     buf = []
-    for tok in _llm._call_llm_stream_events(final_messages, cancellation=None):
-        buf.append(tok)
-        if emit:
-            emit("chunk", tok)
+    for kind, text in _llm._call_llm_stream_events(dict_msgs, cancellation=None):
+        if kind == "chunk":
+            buf.append(text)
+            if emit:
+                emit("chunk", text)
     return {"draft_report": "".join(buf)}
 
 
@@ -532,10 +552,18 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
         try:
             seen = set()
             for item in app.stream(initial, config, stream_mode="updates"):
-                for node in item.keys():
+                for node, update in item.items():
                     if node not in seen:
                         seen.add(node)
                         emit("status", STATUS_TEXT.get(node, "处理中..."))
+                    # 澄清节点：把新追加的询问作为 chunk 流出给前端
+                    if node in ("clarify", "meta_clarify"):
+                        msgs = (update or {}).get("messages") or []
+                        if msgs:
+                            last = msgs[-1]
+                            content = getattr(last, "content", None) or ""
+                            if content:
+                                emit("chunk", content)
                 if cancellation:
                     cancellation.throw_if_cancelled()
             emit("done", "")
