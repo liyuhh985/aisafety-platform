@@ -97,3 +97,23 @@ def test_route_can_search_at_limit(monkeypatch):
     up = ag.route(st)
     assert up["route_decision"] == "search"
 
+def test_clarify_chooses_top_slots_and_phrases(monkeypatch):
+    monkeypatch.setattr(ag, "_llm_phrase", lambda slots, ctx: "消防通道是被什么东西堵的？")
+    st = {"messages": [ag.HumanMessage(content="消防被堵")],
+          "missing": ["消防通道_blocker", "消防通道_persistence", "占道_blocked"],
+          "categories": ["消防通道", "占道"], "active_category": "消防通道",
+          "category_index": 0, "category_slots": {"消防通道": {}, "占道": {}},
+          "relationship": "", "clarify_count": 1, "clarify_stopped": False}
+    up = ag.clarify(st)
+    assert up["messages"][-1].content == "消防通道是被什么东西堵的？"
+    assert up["relationship"] == ""
+
+def test_meta_clarify_add(monkeypatch):
+    monkeypatch.setattr(ag, "_llm_phrase", lambda slots, ctx: "这些是同一个地方的问题，还是另外单独一条？")
+    st = {"messages": [ag.HumanMessage(content="那消防被堵呢")],
+          "missing": ["消防通道_blocker"], "categories": ["占道"],
+          "active_category": "占道", "category_index": 0,
+          "category_slots": {}, "relationship": "", "clarify_count": 0, "clarify_stopped": False}
+    up = ag.meta_clarify(st)
+    assert up["messages"][-1].content == "这些是同一个地方的问题，还是另外单独一条？"
+

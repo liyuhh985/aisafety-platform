@@ -350,15 +350,44 @@ def route_decider(state: AssistantState) -> str:
 
 
 # ---------- clarify（问该类别下一个缺失槽位） ----------
+def _llm_phrase(slot_keys, context) -> str:
+    prompt = (
+        "请把下面要问的槽位，措辞成一句自然、友好、一次只问一个问题的中文问句（不要列序号）。\n"
+        f"当前上下文：{context}\n要问的槽：{'、'.join(slot_keys)}\n只输出问句。"
+    )
+    try:
+        resp = _llm._call_llm([SystemMessage(content="你是澄清问句生成器"), HumanMessage(content=prompt)], cancellation=None)
+        return (resp.get("content") or "").strip() or "能再具体说说吗？"
+    except Exception:
+        return "能再具体说说吗？"
+
+
 def clarify(state: AssistantState) -> dict:
-    category = state.get("category", "其他")
-    schema = SLOT_SCHEMAS.get(category) or SLOT_SCHEMAS["其他"]
-    missing = state.get("missing") or [s.key for s in schema if not (state.get("slots", {}).get(s.key) or "").strip()]
-    if not missing:
-        return {"messages": list(state.get("messages", []))}
-    slot = next((s for s in schema if s.key == missing[0]), schema[0])
-    messages = list(state.get("messages", [])) + [AIMessage(content=slot.question)]
-    return {"messages": messages}
+    # 兼容旧单类别：无 categories 时走旧逻辑（slot.question 模板，不调 LLM）
+    if not state.get("categories") and not state.get("category_slots"):
+        category = state.get("category", "其他")
+        schema = SLOT_SCHEMAS.get(category) or SLOT_SCHEMAS["其他"]
+        missing = state.get("missing") or [s.key for s in schema if not (state.get("slots", {}).get(s.key) or "").strip()]
+        if not missing:
+            return {"messages": list(state.get("messages", []))}
+        slot = next((s for s in schema if s.key == missing[0]), schema[0])
+        return {"messages": list(state.get("messages", [])) + [AIMessage(content=slot.question)]}
+
+    # 多类别：代码选槽（优先当前 active 类别）+ LLM 措辞
+    cats = state.get("categories") or []
+    active = state.get("active_category") or (cats[0] if cats else "其他")
+    missing = state.get("missing") or []
+    active_slots = [m for m in missing if m.startswith(active + "_")]
+    chosen = active_slots[:2] if active_slots else missing[:2]
+    question = _llm_phrase(chosen, active)
+    msgs = list(state.get("messages", [])) + [AIMessage(content=question)]
+    return {"messages": msgs, "relationship": ""}
+
+
+def meta_clarify(state: AssistantState) -> dict:
+    question = _llm_phrase(["判断关系"], state.get("active_category", ""))
+    msgs = list(state.get("messages", [])) + [AIMessage(content=question)]
+    return {"messages": msgs, "relationship": "pending"}
 
 
 # ---------- search（类别化检索） ----------
