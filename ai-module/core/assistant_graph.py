@@ -207,6 +207,21 @@ def _infer_category(text: str, vision_category: str = "") -> str:
     return _llm_classify(text) or "其他"
 
 
+def _llm_extract_slots(message: str, categories: list[str], category_slot_keys: dict) -> dict:
+    prompt = (
+        "请从用户消息中，按类别抽取能填的槽位。只返回 JSON，没提到的填空字符串。\n"
+        "类别槽位定义：\n" +
+        "\n".join(f"{cat}: {keys}" for cat, keys in category_slot_keys.items()) +
+        f"\n用户消息：{message}"
+    )
+    try:
+        resp = _llm._call_llm([SystemMessage(content="你是槽位抽取器"), HumanMessage(content=prompt)], cancellation=None)
+        content = (resp.get("content") or "").strip()
+        return json.loads(content)
+    except Exception:
+        return {}
+
+
 def _llm_classify(text: str) -> str:
     prompt = (
         "请判断下面这句话主要反映的城市安全隐患类别，只返回一个类别词："
@@ -275,22 +290,60 @@ def _join_text(state) -> str:
 def route(state: AssistantState) -> dict:
     text = _join_text(state)
     vision_cat = _extract_vision_category(state.get("vision_summary", ""))
-    new_cat = _infer_category(text, vision_cat)
-    old_cat = state.get("category", "")
-    slots = dict(state.get("slots", {}))
 
-    # 类别切换：只保留公共槽（如 persistence），清掉旧类别专属槽（如 behavior/structure）
-    if new_cat != old_cat and old_cat:
-        old_keys = {s.key for s in SLOT_SCHEMAS.get(old_cat, [])}
-        new_keys = {s.key for s in SLOT_SCHEMAS.get(new_cat, [])}
-        common = old_keys & new_keys
-        slots = {k: v for k, v in slots.items() if k in common}
+    # ---- 兼容旧单类别路径：state 无 categories（旧链路/旧测试）----
+    if not state.get("categories"):
+        new_cat = _infer_category(text, vision_cat)
+        old_cat = state.get("category", "")
+        slots = dict(state.get("slots", {}))
+        if new_cat != old_cat and old_cat:
+            old_keys = {s.key for s in SLOT_SCHEMAS.get(old_cat, [])}
+            new_keys = {s.key for s in SLOT_SCHEMAS.get(new_cat, [])}
+            common = old_keys & new_keys
+            slots = {k: v for k, v in slots.items() if k in common}
+        slots.update(_slots_from_text(text, new_cat))
+        missing = _missing_in(new_cat, slots)
+        decision = "search" if not missing else "clarify"
+        return {"category": new_cat, "slots": slots, "missing": missing, "route_decision": decision}
 
-    slots.update(_slots_from_text(text, new_cat))
-    missing = _missing_in(new_cat, slots)
-    decision = "search" if not missing else "clarify"
-    return {"category": new_cat, "slots": slots, "missing": missing, "route_decision": decision}
+    # ---- 多类别路径（新）----
+    new_cats = _infer_categories(text, vision_cat)
+    old_cats = list(state.get("categories") or [])
+    if not old_cats and state.get("category"):
+        old_cats = [state["category"]]
+    cats = _merge_categories(new_cats, old_cats)
 
+    slot_keys = {c: [s.key for s in SLOT_SCHEMAS.get(c, [])] for c in cats}
+    extracted = _llm_extract_slots(text, cats, slot_keys)
+    category_slots = add_category_slots(cats, state.get("category_slots") or {}, extracted)
+
+    categories_after = cats
+    for from_cat in list(category_slots.keys()):
+        for key in list(category_slots[from_cat].keys()):
+            val = category_slots[from_cat].get(key)
+            if val:
+                res = _relocate(str(val), from_cat, key, categories_after, category_slots)
+                if res:
+                    categories_after = res["categories"]
+                    category_slots = res["category_slots"]
+
+    missing = rebuild_missing(categories_after, category_slots)
+    can_search = (not missing) or (state.get("clarify_count", 0) >= 3) or state.get("clarify_stopped", False)
+
+    ret = {
+        "categories": categories_after,
+        "category_slots": category_slots,
+        "missing": missing,
+        "route_decision": "search" if can_search else "clarify",
+    }
+    if categories_after and not state.get("active_category"):
+        ret["active_category"] = categories_after[0]
+        ret["category_index"] = 0
+    if len(categories_after) == 1:
+        c0 = categories_after[0]
+        ret["category"] = c0
+        ret["slots"] = category_slots.get(c0, {})
+    return ret
 
 def route_decider(state: AssistantState) -> str:
     return state.get("route_decision", "clarify")

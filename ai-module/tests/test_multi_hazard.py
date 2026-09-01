@@ -59,3 +59,41 @@ def test_relocate_redirects_not_drops():
     assert "消防通道" in out["categories"]
     assert out["category_slots"]["消防通道"].get("impact") is not None
     assert "blocked" not in out["category_slots"].get("占道", {})
+
+def test_route_multi_hazard_extract_and_rebuild(monkeypatch):
+    monkeypatch.setattr(ag, "_infer_categories", lambda t, v="": ["消防通道", "占道"])
+    monkeypatch.setattr(ag, "_llm_extract_slots",
+        lambda msg, cats, keys: {"消防通道": {"impact": "影响通行"}, "占道": {"persistence": "长期"}})
+    st = {"messages": [ag.HumanMessage(content="消防被堵，长期占道")],
+          "categories": ["消防通道", "占道"],
+          "active_category": "消防通道", "category_index": 0,
+          "category_slots": {"消防通道": {}, "占道": {}},
+          "missing": ["消防通道_blocker", "消防通道_persistence", "占道_blocked"],
+          "clarify_count": 0, "clarify_stopped": False, "vision_summary": ""}
+    up = ag.route(st)
+    assert up["category_slots"]["占道"]["persistence"] == "长期"
+    assert "占道_persistence" not in up["missing"]
+    assert "占道_blocked" in up["missing"]
+
+def test_route_can_search_when_missing_empty(monkeypatch):
+    monkeypatch.setattr(ag, "_infer_categories", lambda t, v="": ["占道"])
+    monkeypatch.setattr(ag, "_llm_extract_slots",
+        lambda msg, cats, keys: {"占道": {"behavior": "占道", "persistence": "长期", "blocked": "完全堵死"}})
+    st = {"messages": [ag.HumanMessage(content="长期占着盲道完全堵死")],
+          "categories": ["占道"], "active_category": "占道", "category_index": 0,
+          "category_slots": {}, "missing": ["占道_behavior","占道_persistence","占道_blocked"],
+          "clarify_count": 0, "clarify_stopped": False, "vision_summary": ""}
+    up = ag.route(st)
+    assert up["missing"] == []
+    assert up["route_decision"] == "search"
+
+def test_route_can_search_at_limit(monkeypatch):
+    monkeypatch.setattr(ag, "_infer_categories", lambda t, v="": ["占道"])
+    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {})
+    st = {"messages": [ag.HumanMessage(content="占道")], "categories": ["占道"],
+          "active_category": "占道", "category_index": 0, "category_slots": {},
+          "missing": ["占道_behavior"], "clarify_count": 3, "clarify_stopped": False,
+          "vision_summary": ""}
+    up = ag.route(st)
+    assert up["route_decision"] == "search"
+
