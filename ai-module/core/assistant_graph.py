@@ -346,6 +346,85 @@ def route(state: AssistantState) -> dict:
     return ret
 
 def route_decider(state: AssistantState) -> str:
+    if state.get("relationship") == "pending" and state.get("missing"):
+        return "meta_clarify"
+    if (not state.get("missing")) or state.get("clarify_count", 0) >= 3 or state.get("clarify_stopped"):
+        return "search"
+    return "clarify"
+
+
+def _missing_in(category: str, slots: dict) -> list:
+    schema = SLOT_SCHEMAS.get(category) or SLOT_SCHEMAS["其他"]
+    return [s.key for s in schema if not (slots.get(s.key) or "").strip()]
+
+
+# ---------- route（分类 → schema → missing → clarify/search） ----------
+def _join_text(state) -> str:
+    return " ".join(
+        getattr(m, "content", "") for m in state.get("messages", [])
+        if isinstance(m, (HumanMessage, AIMessage))
+    )
+
+
+def route(state: AssistantState) -> dict:
+    text = _join_text(state)
+    vision_cat = _extract_vision_category(state.get("vision_summary", ""))
+
+    # ---- 兼容旧单类别路径：state 无 categories（旧链路/旧测试）----
+    if not state.get("categories"):
+        new_cat = _infer_category(text, vision_cat)
+        old_cat = state.get("category", "")
+        slots = dict(state.get("slots", {}))
+        if new_cat != old_cat and old_cat:
+            old_keys = {s.key for s in SLOT_SCHEMAS.get(old_cat, [])}
+            new_keys = {s.key for s in SLOT_SCHEMAS.get(new_cat, [])}
+            common = old_keys & new_keys
+            slots = {k: v for k, v in slots.items() if k in common}
+        slots.update(_slots_from_text(text, new_cat))
+        missing = _missing_in(new_cat, slots)
+        decision = "search" if not missing else "clarify"
+        return {"category": new_cat, "slots": slots, "missing": missing, "route_decision": decision}
+
+    # ---- 多类别路径（新）----
+    new_cats = _infer_categories(text, vision_cat)
+    old_cats = list(state.get("categories") or [])
+    if not old_cats and state.get("category"):
+        old_cats = [state["category"]]
+    cats = _merge_categories(new_cats, old_cats)
+
+    slot_keys = {c: [s.key for s in SLOT_SCHEMAS.get(c, [])] for c in cats}
+    extracted = _llm_extract_slots(text, cats, slot_keys)
+    category_slots = add_category_slots(cats, state.get("category_slots") or {}, extracted)
+
+    categories_after = cats
+    for from_cat in list(category_slots.keys()):
+        for key in list(category_slots[from_cat].keys()):
+            val = category_slots[from_cat].get(key)
+            if val:
+                res = _relocate(str(val), from_cat, key, categories_after, category_slots)
+                if res:
+                    categories_after = res["categories"]
+                    category_slots = res["category_slots"]
+
+    missing = rebuild_missing(categories_after, category_slots)
+    can_search = (not missing) or (state.get("clarify_count", 0) >= 3) or state.get("clarify_stopped", False)
+
+    ret = {
+        "categories": categories_after,
+        "category_slots": category_slots,
+        "missing": missing,
+        "route_decision": "search" if can_search else "clarify",
+    }
+    if categories_after and not state.get("active_category"):
+        ret["active_category"] = categories_after[0]
+        ret["category_index"] = 0
+    if len(categories_after) == 1:
+        c0 = categories_after[0]
+        ret["category"] = c0
+        ret["slots"] = category_slots.get(c0, {})
+    return ret
+
+def route_decider(state: AssistantState) -> str:
     return state.get("route_decision", "clarify")
 
 
@@ -458,18 +537,19 @@ def report(state: AssistantState) -> dict:
 def build_graph():
     g = StateGraph(AssistantState)
     g.add_node("route", route)
+    g.add_node("meta_clarify", meta_clarify)
     g.add_node("clarify", clarify)
     g.add_node("search", search)
     g.add_node("report", report)
     g.set_entry_point("route")
     g.add_conditional_edges(
         "route", route_decider,
-        {"clarify": "clarify", "search": "search"},
+        {"meta_clarify": "meta_clarify", "clarify": "clarify", "search": "search"},
     )
+    g.add_edge("meta_clarify", "clarify")
     g.add_conditional_edges(
-        "clarify",
-        lambda s: "report" if not _missing_in(s.get("category", "其他"), s.get("slots", {})) else "route",
-        {"report": "report", "route": "route"},
+        "clarify", route_decider,
+        {"meta_clarify": "meta_clarify", "clarify": "clarify", "search": "search"},
     )
     g.add_edge("search", "report")
     g.add_edge("report", END)
@@ -512,7 +592,15 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
         "messages": hc_msgs,
         "slots": slots or {},
         "category": "",
+        "categories": [],
+        "active_category": "",
+        "category_index": 0,
+        "category_slots": {},
+        "category_results": {},
         "missing": [],
+        "relationship": "",
+        "clarify_count": 0,
+        "clarify_stopped": False,
         "vision_summary": vision_summary,
         "attempts": 0,
     }

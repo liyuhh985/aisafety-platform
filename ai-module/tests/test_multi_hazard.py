@@ -126,3 +126,9 @@ def test_search_loops_categories(monkeypatch):
     assert set(up["category_results"].keys()) == {"消防通道", "占道"}
     assert "完全堵死" in up["category_results"]["占道"]["case"]
 
+def test_graph_builds_with_meta_clarify():
+    g = ag.build_graph()
+    nodes = set(g.get_graph().nodes.keys())
+    assert "meta_clarify" in nodes
+    assert {"route", "clarify", "search", "report"} <= nodes
+
