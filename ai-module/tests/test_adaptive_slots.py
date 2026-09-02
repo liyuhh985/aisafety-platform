@@ -40,7 +40,3 @@ def test_existing_category_not_duplicated():
     cats = _merge_categories(["占道"], ["占道", "消防通道"])
     assert cats.count("占道") == 1
     assert cats == ["消防通道", "占道"]
-
-
-def test_cross_slot_map_has_blocked_to_impact():
-    assert ag.CROSS_SLOT_MAP.get(("占道", "blocked")) == ("消防通道", "impact")

@@ -33,10 +33,6 @@ def test_critical_flag_present():
     d = {s.key: s.critical for s in slots}
     assert d["source"] is True and d["target"] is False and d["exposure"] is False
 
-def test_cross_slot_map_has_blocked_to_impact():
-    assert ag.CROSS_SLOT_MAP.get(("占道", "blocked")) == ("消防通道", "impact")
-
-
 def test_rebuild_missing_only_critical_and_empty():
     slots = {"消防通道": {"blocker": "杂物"}}
     miss = ag.rebuild_missing(["消防通道"], slots)
@@ -52,13 +48,14 @@ def test_add_category_slots_merges_per_cat():
     assert out["消防通道"]["impact"] == "影响通行"
     assert out["占道"]["persistence"] == "长期"
 
-def test_relocate_redirects_not_drops():
-    cats = ["占道", "消防通道"]
-    cs = {"占道": {"blocked": "消防通道被堵"}, "消防通道": {}}
+def test_relocate_registers_cat_not_transfer():
+    # 简化版：只登记"串台"到的类别，不转发填槽、不删源
+    cats = ["占道"]
+    cs = {"占道": {"blocked": "消防通道被堵"}}
     out = ag._relocate("消防通道被堵", "占道", "blocked", cats, cs)
-    assert "消防通道" in out["categories"]
-    assert out["category_slots"]["消防通道"].get("impact") is not None
-    assert "blocked" not in out["category_slots"].get("占道", {})
+    assert "消防通道" in out["categories"]     # 登记了新类别
+    assert out["category_slots"]["占道"]["blocked"] == "消防通道被堵"  # 源没删
+    assert "impact" not in out["category_slots"].get("消防通道", {})  # 没转发填槽
 
 def test_route_multi_hazard_extract_and_rebuild(monkeypatch):
     monkeypatch.setattr(ag, "_infer_categories", lambda t, v="": ["消防通道", "占道"])

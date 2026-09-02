@@ -104,11 +104,6 @@ CATEGORY_PRIORITY = {
     "施工": 4, "占道": 5, "井盖/道路": 6, "其他": 9,
 }
 
-CROSS_SLOT_MAP = {
-    ("占道", "blocked"): ("消防通道", "impact"),
-    ("占道", "persistence"): ("消防通道", "persistence"),
-}
-
 def _dedupe(items):
     return list(dict.fromkeys(items))
 
@@ -169,18 +164,13 @@ def _detect_other_cats(value, from_cat) -> list[str]:
             and any(k in value for k in _CATEGORY_KEYWORDS.get(c, ()))]
 
 def _relocate(value, from_cat, key, categories, category_slots):
+    # 简化版：只登记"串台"到的类别，不转发填槽、不删源
+    # 防串类别的核心是"别让这个新类别被漏掉"，所以只把它加进 categories 即可
     hit_cats = _detect_other_cats(value, from_cat)
     if not hit_cats:
         return None
     new_cats = _merge_categories(hit_cats, categories)
-    cs = {k: dict(v) for k, v in (category_slots or {}).items()}
-    target = CROSS_SLOT_MAP.get((from_cat, key))
-    if target and target[0] in hit_cats:
-        tcat, tkey = target
-        cs.setdefault(tcat, {})[tkey] = value
-        if from_cat in cs and key in cs[from_cat]:
-            del cs[from_cat][key]
-    return {"categories": new_cats, "category_slots": cs}
+    return {"categories": new_cats, "category_slots": category_slots}
 
 _CATEGORY_KEYWORDS = {
     "占道": ("占道", "摆摊", "摊位", "车占", "停车", "挡盲道", "占盲道", "盲道"),
