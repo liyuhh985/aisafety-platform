@@ -118,18 +118,7 @@ def _sort_by_priority(cats):
 def _score_category(cat, text):
     return sum(1 for k in _CATEGORY_KEYWORDS.get(cat, ()) if k in text)
 
-# 否定/转折词：这些词说明类别判断有歧义（"不是X""虽然有X但Y"），交给 LLM 判别而非关键词硬判
-_NEGATION_WORDS = ("不是", "并非", "但有", "但是", "其实", "并不", "并不是", "要说")
-
-
 def _infer_categories(text, vision_category=""):
-    # 0) 含否定/转折词 → 交给 LLM 判别（不硬判，避免"不是占道"误判为占道）
-    if any(w in text for w in _NEGATION_WORDS):
-        llm_cats = _llm_infer_categories(text)
-        if llm_cats:
-            return llm_cats
-        # 模型没判出 → 回退到关键词
-
     # 晚融合：图算图的类别，文本算文本的类别，最后合并（不再图覆盖文）
     cats = []
     # 1) 图算一票（如果能映射到已知类别）
@@ -144,6 +133,11 @@ def _infer_categories(text, vision_category=""):
         return cats
     # 3) 两者都无命中 → 才 LLM 兜底
     return [_llm_classify(text) or "其他"]
+
+
+def _find_negated(text):
+    """找出被"不是X/并非X"否定的类别。"""
+    return [c for c in CATEGORIES if ("不是" + c) in text or ("并非" + c) in text]
 
 def _merge_categories(new_cats, old_cats):
     return _sort_by_priority(_dedupe(list(old_cats or []) + list(new_cats or [])))
@@ -233,26 +227,6 @@ def _llm_extract_slots(message: str, categories: list[str], category_slot_keys: 
         return {}
 
 
-def _llm_infer_categories(text: str) -> list[str]:
-    """判别一句话真正反映哪几个隐患类别（可返回多个）。用于含否定/转折的句子。"""
-    prompt = (
-        "请判断下面这句话反映的城市安全隐患类别，可以是一个或多个。"
-        "只返回类别名，用 / 分隔；没有提到的类别不要列。\n"
-        "可选类别：" + " / ".join(CATEGORIES) + "\n文本：" + text
-    )
-    try:
-        resp = _llm._call_llm(
-            [{"role": "system", "content": "你是城市安全隐患多类别判别器"}, {"role": "user", "content": prompt}],
-            cancellation=None,
-        )
-        content = (resp.get("content") or "").strip()
-    except Exception:
-        return []
-    # 解析出出现的类别（去重、按优先级排）
-    found = [c for c in CATEGORIES if c in content]
-    return _sort_by_priority(_dedupe(found))
-
-
 def _llm_classify(text: str) -> str:
     prompt = (
         "请判断下面这句话主要反映的城市安全隐患类别，只返回一个类别词："
@@ -307,12 +281,25 @@ def route(state: AssistantState) -> dict:
     # 识别（可能多个）类别，并并进已有清单（去重 + 按优先级）
     new_cats = _infer_categories(user_text, vision_cat)
     old_cats = list(state.get("categories") or [])
-    cats = _merge_categories(new_cats, old_cats)
+    negated = _find_negated(user_text)      # 被否定的旧类别（"不是占道" -> ["占道"]）
+    # 被否定的类别不应出现在"肯定识别"结果里（"不是占道"里的"占道"被关键词误命中）
+    if negated:
+        new_cats = [c for c in new_cats if c not in negated]
+    if negated:
+        # 替换/删除：先删掉被否定的旧类别，再并上本句肯定的新类别
+        cats = [c for c in old_cats if c not in negated]
+        cats = _merge_categories(new_cats, cats)
+    else:
+        # 新增：并集
+        cats = _merge_categories(new_cats, old_cats)
 
+    # 同步清理 category_slots 里已不在 cats 中的旧类别（切换/删除时清掉旧槽）
+    _prev = dict(state.get("category_slots") or {})
+    _valid = {k: dict(v) for k, v in _prev.items() if k in cats}
     # LLM 抽槽：用全文（含历史），信息越全越好
     slot_keys = {c: [s.key for s in SLOT_SCHEMAS.get(c, [])] for c in cats}
     extracted = _llm_extract_slots(full_text, cats, slot_keys)
-    category_slots = add_category_slots(cats, state.get("category_slots") or {}, extracted)
+    category_slots = add_category_slots(cats, _valid, extracted)
 
     # 分流转发：防止串类别（如占道槽值里提到 "消防" -> 转到消防）
     categories_after = cats

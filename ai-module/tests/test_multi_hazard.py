@@ -152,35 +152,36 @@ def test_latest_user_text_only_uses_last_user_msg():
     latest = ag._latest_user_text({"messages": msgs})
     assert latest == "不是占道，是消防通道被堵"
 
-def test_infer_categories_uses_latest_not_full_text(monkeypatch):
-    monkeypatch.setattr(ag, "_llm_classify", lambda t: (_ for _ in ()).throw(AssertionError("有命中不该调 LLM")))
-    # 最新一句是消防；历史有占道。若用全文会命中占道+消防，但只应命中消防
-    latest = "不是占道，是消防通道被堵"
-    cats = ag._infer_categories(latest, "")
-    assert cats == ["消防通道"]
+def test_find_negated_zhandao():
+    # "不是占道" → 找出被否定的类别 ["占道"]
+    assert ag._find_negated("不是占道，是消防通道被堵") == ["占道"]
 
-def test_negative_word_triggers_llm_infer(monkeypatch):
-    # 含"不是...是"否定/转折 → 走 LLM 判别，返回单一类别（排除占道）
-    seen = {}
-    def fake(text):
-        seen["text"] = text
-        return ["消防通道"]
-    monkeypatch.setattr(ag, "_llm_infer_categories", fake)
-    cats = ag._infer_categories("不是占道，是消防通道被堵")
-    assert cats == ["消防通道"]
-    assert seen["text"] == "不是占道，是消防通道被堵"
+def test_find_negated_returns_empty_when_no_negation():
+    assert ag._find_negated("消防通道被杂物堵死") == []
 
-def test_negative_word_returns_multiple(monkeypatch):
-    # 模型可以返回多个（如比较句两个都在）
-    def fake(text):
-        return ["消防通道", "占道"]
-    monkeypatch.setattr(ag, "_llm_infer_categories", fake)
-    cats = ag._infer_categories("虽然有占道，但是消防通道也被堵了")
-    assert cats == ["消防通道", "占道"]
+def test_route_negation_removes_old_category(monkeypatch):
+    # 旧状态有占道+消防，用户说"不是占道，是消防通道" → 只留消防
+    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {"消防通道": {"blocker": "杂物"}})
+    st = {"messages": [ag.HumanMessage(content="不是占道，是消防通道被堵")],
+          "categories": ["占道", "消防通道"],
+          "active_category": "占道", "category_index": 0,
+          "category_slots": {"占道": {"behavior": "摆摊"}, "消防通道": {}},
+          "category_results": {}, "missing": ["占道_blocked"],
+          "relationship": "", "clarify_count": 0, "clarify_stopped": False,
+          "vision_summary": ""}
+    up = ag.route(st)
+    assert up["categories"] == ["消防通道"]      # 占道被删
+    assert "占道" not in up["category_slots"]     # 占道的槽也被清
 
-def test_plain_text_no_llm(monkeypatch):
-    # 无否定/转折词，不触发 LLM 判别，走关键词打分
-    monkeypatch.setattr(ag, "_llm_infer_categories", lambda t: (_ for _ in ()).throw(AssertionError("普通句子不该走 LLM 判别")))
-    monkeypatch.setattr(ag, "_llm_classify", lambda t: (_ for _ in ()).throw(AssertionError("普通句子不该调 LLM")))
-    assert ag._infer_categories("消防通道被杂物堵死") == ["消防通道"]
-
+def test_route_no_negation_is_add(monkeypatch):
+    # 无否定 → 新增（并集），旧类别保留
+    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {"消防通道": {"blocker": "杂物"}})
+    st = {"messages": [ag.HumanMessage(content="消防通道也被杂物堵了")],
+          "categories": ["占道"],
+          "active_category": "占道", "category_index": 0,
+          "category_slots": {"占道": {"behavior": "摆摊"}},
+          "category_results": {}, "missing": ["占道_blocked"],
+          "relationship": "", "clarify_count": 0, "clarify_stopped": False,
+          "vision_summary": ""}
+    up = ag.route(st)
+    assert "占道" in up["categories"] and "消防通道" in up["categories"]
