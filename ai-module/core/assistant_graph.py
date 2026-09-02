@@ -119,13 +119,19 @@ def _score_category(cat, text):
     return sum(1 for k in _CATEGORY_KEYWORDS.get(cat, ()) if k in text)
 
 def _infer_categories(text, vision_category=""):
+    # 晚融合：图算图的类别，文本算文本的类别，最后合并（不再图覆盖文）
+    cats = []
+    # 1) 图算一票（如果能映射到已知类别）
     if vision_category:
         mapped = _VISION_CATEGORY_MAP.get(vision_category)
         if mapped:
-            return [mapped]
+            cats.append(mapped)
+    # 2) 文本算一票（关键词打分命中>0）
     hits = [c for c in CATEGORIES if _score_category(c, text) > 0]
-    if hits:
-        return _sort_by_priority(_dedupe(hits))
+    cats = _sort_by_priority(_dedupe(cats + hits))
+    if cats:
+        return cats
+    # 3) 两者都无命中 → 才 LLM 兜底
     return [_llm_classify(text) or "其他"]
 
 def _merge_categories(new_cats, old_cats):

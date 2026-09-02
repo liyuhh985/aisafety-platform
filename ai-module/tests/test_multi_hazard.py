@@ -132,3 +132,11 @@ def test_graph_builds_with_meta_clarify():
     assert "meta_clarify" in nodes
     assert {"route", "clarify", "search", "report"} <= nodes
 
+def test_infer_categories_merges_vision_and_text(monkeypatch):
+    # 图判占道经营 -> 占道；文本提到消防 -> 占道 + 消防通道 两个都保留（不再图覆盖文）
+    monkeypatch.setattr(ag, "_llm_classify", lambda t: (_ for _ in ()).throw(AssertionError("有命中不该调 LLM")))
+    cats = ag._infer_categories("旁边的消防通道也被堵了", vision_category="占道经营")
+    assert "占道" in cats and "消防通道" in cats
+    # 优先级：消防(1) < 占道(5)，消防应排前
+    assert cats.index("消防通道") < cats.index("占道")
+
