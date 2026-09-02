@@ -131,8 +131,26 @@ def _infer_categories(text, vision_category=""):
 
 
 def _find_negated(text):
-    """找出被"不是X/并非X"否定的类别。"""
-    return [c for c in CATEGORIES if ("不是" + c) in text or ("并非" + c) in text]
+    """找出被否定的类别。支持两类句式：
+    - 否定在前："不是占道" / "并非占道"
+    - 类别在前、否定在后："占道不是问题" / "占道不存在" / "占道不对" / "占道根本不是"
+    """
+    neg = []
+    for c in CATEGORIES:
+        # 1) 否定在前："不是X" / "并非X"
+        if ("不是" + c) in text or ("并非" + c) in text:
+            neg.append(c)
+            continue
+        # 2) 类别在前、否定在后："X + (不是问题/不存在/不对/根本不是/不是)"
+        pos_c = text.find(c)
+        if pos_c == -1:
+            continue
+        for tail in ("不是问题", "不存在", "不对", "根本不是", "不是"):
+            pos_t = text.find(tail)
+            if pos_t != -1 and pos_c < pos_t:
+                neg.append(c)
+                break
+    return _dedupe(neg)
 
 def _merge_categories(new_cats, old_cats):
     return _sort_by_priority(_dedupe(list(old_cats or []) + list(new_cats or [])))

@@ -182,3 +182,18 @@ def test_route_no_negation_is_add(monkeypatch):
           "vision_summary": ""}
     up = ag.route(st)
     assert "占道" in up["categories"] and "消防通道" in up["categories"]
+
+def test_find_negated_cat_first_negation_after():
+    # "占道不是问题" —— 类别在前，否定在后（B 方案）
+    assert ag._find_negated("占道不是问题") == ["占道"]
+
+def test_find_negated_cat_does_not_exist():
+    # "占道不存在" —— 类别 + 否定在后
+    assert ag._find_negated("占道不存在") == ["占道"]
+
+def test_find_negated_various_forms():
+    # 多种否定句式都能识别
+    assert ag._find_negated("占道不对") == ["占道"]
+    assert ag._find_negated("不是占道，是消防通道") == ["占道"]
+    assert ag._find_negated("消防通道根本不是问题") == ["消防通道"]
+
