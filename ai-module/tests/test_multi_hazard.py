@@ -140,3 +140,47 @@ def test_infer_categories_merges_vision_and_text(monkeypatch):
     # 优先级：消防(1) < 占道(5)，消防应排前
     assert cats.index("消防通道") < cats.index("占道")
 
+def test_latest_user_text_only_uses_last_user_msg():
+    # messages: 历史含"占道"，最新一句是"消防通道被堵" → 识别只出消防通道，不捞回占道
+    from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+    msgs = [
+        SystemMessage(content="系统提示"),
+        HumanMessage(content="占道长期摆摊"),
+        AIMessage(content="占道是完全堵死还是部分占用？"),
+        HumanMessage(content="不是占道，是消防通道被堵"),
+    ]
+    latest = ag._latest_user_text({"messages": msgs})
+    assert latest == "不是占道，是消防通道被堵"
+
+def test_infer_categories_uses_latest_not_full_text(monkeypatch):
+    monkeypatch.setattr(ag, "_llm_classify", lambda t: (_ for _ in ()).throw(AssertionError("有命中不该调 LLM")))
+    # 最新一句是消防；历史有占道。若用全文会命中占道+消防，但只应命中消防
+    latest = "不是占道，是消防通道被堵"
+    cats = ag._infer_categories(latest, "")
+    assert cats == ["消防通道"]
+
+def test_negative_word_triggers_llm_infer(monkeypatch):
+    # 含"不是...是"否定/转折 → 走 LLM 判别，返回单一类别（排除占道）
+    seen = {}
+    def fake(text):
+        seen["text"] = text
+        return ["消防通道"]
+    monkeypatch.setattr(ag, "_llm_infer_categories", fake)
+    cats = ag._infer_categories("不是占道，是消防通道被堵")
+    assert cats == ["消防通道"]
+    assert seen["text"] == "不是占道，是消防通道被堵"
+
+def test_negative_word_returns_multiple(monkeypatch):
+    # 模型可以返回多个（如比较句两个都在）
+    def fake(text):
+        return ["消防通道", "占道"]
+    monkeypatch.setattr(ag, "_llm_infer_categories", fake)
+    cats = ag._infer_categories("虽然有占道，但是消防通道也被堵了")
+    assert cats == ["消防通道", "占道"]
+
+def test_plain_text_no_llm(monkeypatch):
+    # 无否定/转折词，不触发 LLM 判别，走关键词打分
+    monkeypatch.setattr(ag, "_llm_infer_categories", lambda t: (_ for _ in ()).throw(AssertionError("普通句子不该走 LLM 判别")))
+    monkeypatch.setattr(ag, "_llm_classify", lambda t: (_ for _ in ()).throw(AssertionError("普通句子不该调 LLM")))
+    assert ag._infer_categories("消防通道被杂物堵死") == ["消防通道"]
+
