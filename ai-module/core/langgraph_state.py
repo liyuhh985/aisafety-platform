@@ -4,9 +4,6 @@ from typing import TypedDict
 class AssistantState(TypedDict, total=False):
     session_id: str                     # checkpointer 的 thread_id
     messages: list
-    # 旧兼容字段（单类别路径仍用）
-    slots: dict[str, str]
-    category: str
     # 多隐患字段
     categories: list[str]               # 有序、去重
     active_category: str                # 当前正在补哪张表

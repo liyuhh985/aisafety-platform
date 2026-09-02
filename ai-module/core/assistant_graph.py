@@ -189,34 +189,6 @@ _VISION_CATEGORY_MAP = {
 }
 
 
-def _infer_category(text: str, vision_category: str = "") -> str:
-    """类别推断：vision 优先 → 关键词打分 → 打平才 LLM 兜底。
-    - 有图：视觉类别能纠正文案歧义（visio 优先）。
-    - 关键词：统计每类命中数，唯一最高分且明显领先 → 直接用（省一次 LLM）。
-    - 平手/都零分：歧义或未知，调一次 LLM 分类。
-    """
-    # 0) 有图优先：视觉类别能纠正文案歧义
-    if vision_category:
-        mapped = _VISION_CATEGORY_MAP.get(vision_category)
-        if mapped:
-            return mapped
-        for cat, keys in _CATEGORY_KEYWORDS.items():
-            if any(k in vision_category for k in keys):
-                return cat
-    # 1) 关键词打分（不再先到先得）
-    scores = {}
-    for cat, keys in _CATEGORY_KEYWORDS.items():
-        scores[cat] = sum(1 for k in keys if k in text)
-    ranked = sorted(scores.items(), key=lambda x: -x[1])
-    best_cat, best_score = ranked[0]
-    second_score = ranked[1][1] if len(ranked) > 1 else 0
-    # 2) 唯一最高分且明显领先 → 用关键词（省一次 LLM）
-    if best_score > 0 and best_score > second_score:
-        return best_cat
-    # 3) 平手 / 都零分 → 一次 LLM 分类（消除歧义）
-    return _llm_classify(text) or "其他"
-
-
 def _llm_extract_slots(message: str, categories: list[str], category_slot_keys: dict) -> dict:
     prompt = (
         "请从用户消息中，按类别抽取能填的槽位。只返回 JSON，没提到的填空字符串。\n"
@@ -273,35 +245,6 @@ def _extract_vision_category(vision_summary: str) -> str:
         return ""
 
 
-def _slots_from_text(text: str, category: str) -> dict:
-    slots = {}
-    if category == "占道":
-        if any(k in text for k in ("长期", "天天", "每天都", "一直")):
-            slots["persistence"] = "长期"
-        if any(k in text for k in ("临时", "偶尔", "一次")):
-            slots["persistence"] = "临时"
-        if any(k in text for k in ("完全堵死", "堵死", "走不了", "完全占")):
-            slots["blocked"] = "完全堵死"
-        elif any(k in text for k in ("部分", "能走", "占了一半")):
-            slots["blocked"] = "部分占用"
-        if any(k in text for k in ("摊", "摆摊", "占道", "停车", "车占", "挡盲道", "占盲道")):
-            slots["behavior"] = text[:8]
-    elif category == "危房":
-        if any(k in text for k in ("裂缝", "开裂", "倾斜", "沉降")):
-            slots["structure"] = "有裂缝/倾斜"
-        if any(k in text for k in ("有人", "居住", "使用")):
-            slots["occupancy"] = "有人"
-        if any(k in text for k in ("塌", "坍塌", "危险", "随时")):
-            slots["risk"] = "有即时风险"
-    return slots
-
-
-def _missing_in(category: str, slots: dict) -> list:
-    schema = SLOT_SCHEMAS.get(category) or SLOT_SCHEMAS["其他"]
-    return [s.key for s in schema if not (slots.get(s.key) or "").strip()]
-
-
-# ---------- route（分类 → schema → missing → clarify/search） ----------
 def _join_text(state) -> str:
     return " ".join(
         getattr(m, "content", "") for m in state.get("messages", [])
@@ -313,32 +256,17 @@ def route(state: AssistantState) -> dict:
     text = _join_text(state)
     vision_cat = _extract_vision_category(state.get("vision_summary", ""))
 
-    # ---- 兼容旧单类别路径：state 既无 categories 也无 category_slots（旧链路/旧测试）----
-    if state.get("categories") is None and state.get("category_slots") is None:
-        new_cat = _infer_category(text, vision_cat)
-        old_cat = state.get("category", "")
-        slots = dict(state.get("slots", {}))
-        if new_cat != old_cat and old_cat:
-            old_keys = {s.key for s in SLOT_SCHEMAS.get(old_cat, [])}
-            new_keys = {s.key for s in SLOT_SCHEMAS.get(new_cat, [])}
-            common = old_keys & new_keys
-            slots = {k: v for k, v in slots.items() if k in common}
-        slots.update(_slots_from_text(text, new_cat))
-        missing = _missing_in(new_cat, slots)
-        decision = "search" if not missing else "clarify"
-        return {"category": new_cat, "slots": slots, "missing": missing, "route_decision": decision}
-
-    # ---- 多类别路径（新）----
+    # 识别（可能多个）类别，并并进已有清单（去重 + 按优先级）
     new_cats = _infer_categories(text, vision_cat)
     old_cats = list(state.get("categories") or [])
-    if not old_cats and state.get("category"):
-        old_cats = [state["category"]]
     cats = _merge_categories(new_cats, old_cats)
 
+    # LLM 抽槽：从用户话里抽出每个类别填的槽
     slot_keys = {c: [s.key for s in SLOT_SCHEMAS.get(c, [])] for c in cats}
     extracted = _llm_extract_slots(text, cats, slot_keys)
     category_slots = add_category_slots(cats, state.get("category_slots") or {}, extracted)
 
+    # 分流转发：防止串类别（如占道槽值里提到 "消防" -> 转到消防）
     categories_after = cats
     for from_cat in list(category_slots.keys()):
         for key in list(category_slots[from_cat].keys()):
@@ -349,6 +277,7 @@ def route(state: AssistantState) -> dict:
                     categories_after = res["categories"]
                     category_slots = res["category_slots"]
 
+    # 代码重算还缺哪些 critical 槽
     missing = rebuild_missing(categories_after, category_slots)
     can_search = (not missing) or (state.get("clarify_count", 0) >= 3) or state.get("clarify_stopped", False)
 
@@ -361,11 +290,8 @@ def route(state: AssistantState) -> dict:
     if categories_after and not state.get("active_category"):
         ret["active_category"] = categories_after[0]
         ret["category_index"] = 0
-    if len(categories_after) == 1:
-        c0 = categories_after[0]
-        ret["category"] = c0
-        ret["slots"] = category_slots.get(c0, {})
     return ret
+
 
 def route_decider(state: AssistantState) -> str:
     if state.get("relationship") == "pending" and state.get("missing"):
@@ -391,22 +317,13 @@ def _llm_phrase(slot_keys, context) -> str:
 
 
 def clarify(state: AssistantState) -> dict:
-    # 兼容旧单类别：无 categories 时走旧逻辑（slot.question 模板，不调 LLM）
-    if not state.get("categories") and not state.get("category_slots"):
-        category = state.get("category", "其他")
-        schema = SLOT_SCHEMAS.get(category) or SLOT_SCHEMAS["其他"]
-        missing = state.get("missing") or [s.key for s in schema if not (state.get("slots", {}).get(s.key) or "").strip()]
-        if not missing:
-            return {"messages": list(state.get("messages", []))}
-        slot = next((s for s in schema if s.key == missing[0]), schema[0])
-        return {"messages": list(state.get("messages", [])) + [AIMessage(content=slot.question)]}
-
-    # 多类别：代码选槽（优先当前 active 类别）+ LLM 措辞
     cats = state.get("categories") or []
     active = state.get("active_category") or (cats[0] if cats else "其他")
     missing = state.get("missing") or []
+    # 代码选槽：优先当前类别缺槽，取 top1-2
     active_slots = [m for m in missing if m.startswith(active + "_")]
     chosen = active_slots[:2] if active_slots else missing[:2]
+    # LLM 措辞成自然问句
     question = _llm_phrase(chosen, active)
     msgs = list(state.get("messages", [])) + [AIMessage(content=question)]
     return {"messages": msgs, "relationship": "", "clarify_count": state.get("clarify_count", 0) + 1}
@@ -420,7 +337,7 @@ def meta_clarify(state: AssistantState) -> dict:
 
 # ---------- search（类别化检索） ----------
 def search(state: AssistantState) -> dict:
-    cats = state.get("categories") or ([state["category"]] if state.get("category") else [])
+    cats = state.get("categories") or []
     results = dict(state.get("category_results") or {})
     for cat in cats:
         kw = _pick_keyword(cat, state.get("category_slots", {}).get(cat, {}))
@@ -452,7 +369,7 @@ def _run_tool(name: str, keyword: str) -> str:
 # ---------- report（流式生成） ----------
 def report(state: AssistantState) -> dict:
     messages = list(state.get("messages", []))
-    cats = state.get("categories") or ([state["category"]] if state.get("category") else [])
+    cats = state.get("categories") or []
     results = state.get("category_results") or {}
     vision = state.get("vision_summary") or ""
     lines = []
@@ -542,8 +459,6 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
     initial = {
         "session_id": session_id,
         "messages": hc_msgs,
-        "slots": slots or {},
-        "category": "",
         "categories": [],
         "active_category": "",
         "category_index": 0,
