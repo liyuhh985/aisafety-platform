@@ -277,3 +277,32 @@ def test_report_writes_custom_chunks(monkeypatch):
     assert up["draft_report"] == "## 占道被堵"
     assert sent == [{"chunk": "## "}, {"chunk": "占道"}, {"chunk": "被堵"}]
 
+def test_bridge_custom_chunk_from_report(monkeypatch):
+    import asyncio
+    import core.assistant_graph as ag
+    from langchain_core.messages import HumanMessage
+    # monkeypatch _report_llm 流式返回 token
+    class FakeStream:
+        def _call_llm_stream_events(self, msgs, cancellation=None):
+            for t in ["#", "报告", "正文"]:
+                yield ("chunk", t)
+    ag._report_llm = FakeStream()
+    monkeypatch.setattr(ag, "_infer_categories", lambda t, v="": ["占道"])
+    # 信息齐全：占道三槽全填 -> missing 空 -> 走 search -> report
+    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {"占道": {"behavior":"摆摊","persistence":"长期","blocked":"完全堵死"}})
+    monkeypatch.setattr(ag, "_llm_phrase", lambda slots, ctx: "占道是完全堵死吗？")
+    monkeypatch.setattr(ag, "_llm_classify", lambda t: "占道")
+    monkeypatch.setattr(ag, "_run_tool", lambda name, kw: f"[{name}] {kw}")
+    async def run():
+        out = []
+        async for kind, text in ag.run_stream_events(
+            message="长期占着盲道完全堵死", history=[], slots={}, vision_summary="", session_id="t", max_rounds=3):
+            out.append((kind, text))
+        return out
+    out = asyncio.run(run())
+    # 应收到来自 report 的 custom chunk（逐 token，出现"报告"/"正文"）
+    assert any(k == "chunk" and "正文" in t for k, t in out)
+    # 应收到多个 chunk 而不是一整块
+    chunks = [t for k, t in out if k == "chunk"]
+    assert len([c for c in chunks if c in ("#", "报告", "正文")]) == 3
+

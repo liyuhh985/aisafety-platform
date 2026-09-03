@@ -590,12 +590,18 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
         _stream_local.emit = emit
         try:
             seen = set()
-            for item in app.stream(initial, config, stream_mode="updates"):
+            for mode, item in app.stream(initial, config, stream_mode=["updates", "custom"]):
+                if mode == "custom":
+                    # report 逐 token 写的 {"chunk": text} -> 作为 chunk 流出
+                    if isinstance(item, dict) and "chunk" in item:
+                        emit("chunk", item["chunk"])
+                    continue
+                # mode == "updates"：节点级更新
                 for node, update in item.items():
                     if node not in seen:
                         seen.add(node)
                         emit("status", STATUS_TEXT.get(node, "处理中..."))
-                    # 澄清节点：把新追加的询问作为 chunk 流出给前端
+                    # 澄清节点：把新追加的追问作为 chunk 流出给前端
                     if node in ("clarify", "meta_clarify"):
                         msgs = (update or {}).get("messages") or []
                         if msgs:
@@ -603,11 +609,7 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             content = getattr(last, "content", None) or ""
                             if content:
                                 emit("chunk", content)
-                    # report 节点：直接取 draft_report 作为 chunk 流出（不依赖节点线程的 emit）
-                    if node == "report":
-                        draft = (update or {}).get("draft_report") or ""
-                        if draft:
-                            emit("chunk", draft)
+                    # 注意：report 正文现在走 custom 流，这里不再从 updates 取（避免重复）
                 if cancellation:
                     cancellation.throw_if_cancelled()
             emit("done", "")
