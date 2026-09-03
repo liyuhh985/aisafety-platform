@@ -269,6 +269,52 @@ def _join_text(state):
                     if isinstance(m, (HumanMessage, AIMessage)))
 ```
 
+### `report`（v3：get_stream_writer 真流式）
+
+```python
+def report(state: AssistantState) -> dict:
+    messages = list(state.get("messages", []))
+    cats = state.get("categories") or []
+    results = state.get("category_results") or {}
+    vision = state.get("vision_summary") or ""
+    lines = []
+    for cat in cats:
+        r = results.get(cat, {})
+        reg = r.get("regulation") or "库内暂未检索到"
+        case = r.get("case") or "库内暂未检索到"
+        lines.append("[隐患类别] " + cat + "\n[视觉分析] " + vision + "\n[检索法规] " + reg + "\n[检索案例] " + case)
+    ctx = (
+        "\n\n".join(lines) +
+        "\n请对每个隐患用一节输出：### 一、触犯法规 / ### 二、安全隐患 / ### 三、类似案例。" +
+        "法规和案例必须来自上面检索结果，没有就写「库内暂未检索到」，不编造。" +
+        "多隐患时每个隐患精炼、突出结论；法规引用完整准确。信息不足写「信息不足，未确认」。" +
+        "最后加一句「需要我按这个情况生成一个整改建议吗？」"
+    )
+    dict_msgs = []
+    _ROLE_MAP = {"system": "system", "human": "user", "ai": "assistant", "tool": "tool"}
+    for m in messages:
+        dict_msgs.append({"role": _ROLE_MAP.get(getattr(m, "type", "user"), "user"), "content": getattr(m, "content", "")})
+    dict_msgs.append({"role": "user", "content": ctx})
+
+    writer = get_stream_writer()          # 拿 writer（contextvar，跨线程可靠）
+    buf = []
+    for kind, text in _report_llm._call_llm_stream_events(dict_msgs, cancellation=None):
+        if kind == "chunk":
+            buf.append(text)
+            try:
+                writer({"chunk": text})   # 逐 token 写进 custom 流
+            except Exception:
+                pass                       # 非 custom 模式下 writer 可能不可用，忽略
+    return {"draft_report": "".join(buf)}
+```
+
+**关键点（v3 新增）**：
+- 用 `get_stream_writer()`（`contextvar`，**跨线程可靠**）取代旧的 `_stream_local.emit`（`threading.local()`，跨线程会空）。
+- 每吐一个 token 就 `writer({"chunk": text})` → 走 `stream_mode="custom"` 流，**真·逐 token**。
+- 仍返回 `draft_report`（整份），供非 custom 场景 / 测试用。
+
+---
+
 ---
 
 ## 7. 一图看懂分工
