@@ -152,6 +152,18 @@ def _find_negated(text):
                 break
     return _dedupe(neg)
 
+_SAME_PLACE_WORDS = ("同一处", "同一个地方", "同处", "同一", "一起")
+_SEPARATE_WORDS = ("单独", "分开", "另一条", "新的一条", "不是一起", "不一起", "无关")
+
+
+def _is_separate_answer(text: str) -> bool:
+    return any(w in (text or "") for w in _SEPARATE_WORDS)
+
+
+def _is_same_place_answer(text: str) -> bool:
+    return any(w in (text or "") for w in _SAME_PLACE_WORDS)
+
+
 def _merge_categories(new_cats, old_cats):
     return _sort_by_priority(_dedupe(list(old_cats or []) + list(new_cats or [])))
 
@@ -289,17 +301,50 @@ def route(state: AssistantState) -> dict:
     # 识别（可能多个）类别，并并进已有清单（去重 + 按优先级）
     new_cats = _infer_categories(user_text, vision_cat)
     old_cats = list(state.get("categories") or [])
-    negated = _find_negated(user_text)      # 被否定的旧类别（"不是占道" -> ["占道"]）
-    # 被否定的类别不应出现在"肯定识别"结果里（"不是占道"里的"占道"被关键词误命中）
+    negated = _find_negated(user_text)
     if negated:
         new_cats = [c for c in new_cats if c not in negated]
-    if negated:
+    pending_prev = list(state.get("pending_categories") or [])
+    pending_out = pending_prev
+    relationship_out = ""
+    if pending_prev:
+        # 上轮 meta 在等用户确认：先按本轮回答落子
+        if _is_separate_answer(user_text):
+            # SWITCH：焦点切到待定类别
+            cats = _merge_categories(new_cats, pending_prev)
+            pending_out = []
+            relationship_out = "switch"
+        elif _is_same_place_answer(user_text):
+            # ADD：待定并入已有清单
+            cats = _merge_categories(new_cats, old_cats + pending_prev)
+            pending_out = []
+            relationship_out = "add"
+        elif negated:
+            # 用户给了明确修正，待定问题已无意义
+            cats = [c for c in old_cats if c not in negated]
+            cats = _merge_categories(new_cats, cats)
+            pending_out = []
+            relationship_out = "switch"
+        else:
+            # 回答模糊：待定继续挂起，本轮仍不并入待定类别
+            cats = _merge_categories([c for c in new_cats if c not in pending_prev], old_cats)
+            relationship_out = "pending"
+    elif negated:
         # 替换/删除：先删掉被否定的旧类别，再并上本句肯定的新类别
         cats = [c for c in old_cats if c not in negated]
         cats = _merge_categories(new_cats, cats)
+        relationship_out = "switch"
     else:
-        # 新增：并集
-        cats = _merge_categories(new_cats, old_cats)
+        fresh = [c for c in new_cats if c not in old_cats]
+        if old_cats and fresh:
+            # 跨轮首次发现新类别：只登记待定，本轮不并入
+            pending_out = fresh
+            relationship_out = "pending"
+            cats = _sort_by_priority(_dedupe(old_cats))
+        else:
+            # 新增：并集（首轮多类别直接 ADD）
+            cats = _merge_categories(new_cats, old_cats)
+            relationship_out = ""
 
     # 同步清理 category_slots 里已不在 cats 中的旧类别（切换/删除时清掉旧槽）
     _prev = dict(state.get("category_slots") or {})
@@ -329,6 +374,8 @@ def route(state: AssistantState) -> dict:
         "category_slots": category_slots,
         "missing": missing,
         "route_decision": "search" if can_search else "clarify",
+        "pending_categories": pending_out,
+        "relationship": relationship_out,
     }
     if categories_after and not state.get("active_category"):
         ret["active_category"] = categories_after[0]
@@ -337,6 +384,8 @@ def route(state: AssistantState) -> dict:
 
 
 def route_decider(state: AssistantState) -> str:
+    if state.get("pending_categories"):
+        return "meta_clarify"
     if state.get("relationship") == "pending" and state.get("missing"):
         return "meta_clarify"
     if (not state.get("missing")) or state.get("clarify_count", 0) >= 3 or state.get("clarify_stopped"):
@@ -366,14 +415,31 @@ def clarify(state: AssistantState) -> dict:
     # 代码选槽：优先当前类别缺槽，取 top1-2
     active_slots = [m for m in missing if m.startswith(active + "_")]
     chosen = active_slots[:2] if active_slots else missing[:2]
+    # 如果实际改问别的类别，把 active_category/category_index 一起切过去
+    next_active = active
+    if chosen and "_" in chosen[0]:
+        next_active = chosen[0].split("_", 1)[0] or active
+    next_index = state.get("category_index", 0)
+    if next_active in cats:
+        next_index = cats.index(next_active)
     # LLM 措辞成自然问句
-    question = _llm_phrase(chosen, active)
+    question = _llm_phrase(chosen, next_active)
     msgs = list(state.get("messages", [])) + [AIMessage(content=question)]
-    return {"messages": msgs, "relationship": "", "clarify_count": state.get("clarify_count", 0) + 1}
+    ret = {"messages": msgs, "relationship": "", "clarify_count": state.get("clarify_count", 0) + 1}
+    if next_active != state.get("active_category") or next_index != state.get("category_index", 0):
+        ret["active_category"] = next_active
+        ret["category_index"] = next_index
+    return ret
 
 
 def meta_clarify(state: AssistantState) -> dict:
-    question = _llm_phrase(["判断关系"], state.get("active_category", ""))
+    active = state.get("active_category", "")
+    pending = state.get("pending_categories") or []
+    if pending:
+        context = f"{active}；新发现：{'、'.join(pending)}" if active else f"新发现：{'、'.join(pending)}"
+    else:
+        context = active
+    question = _llm_phrase(["判断关系"], context)
     msgs = list(state.get("messages", [])) + [AIMessage(content=question)]
     return {"messages": msgs, "relationship": "pending"}
 
@@ -509,6 +575,7 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
         "category_results": {},
         "missing": [],
         "relationship": "",
+        "pending_categories": [],
         "clarify_count": 0,
         "clarify_stopped": False,
         "vision_summary": vision_summary,

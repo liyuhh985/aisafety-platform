@@ -11,7 +11,8 @@ class AssistantState(TypedDict, total=False):
     category_slots: dict[str, dict]     # {类别: {slot_key: value}}
     category_results: dict[str, dict]   # {类别: {regulation, case}}
     missing: list[str]                  # 全局并集，形如 "{cat}_{key}"
-    relationship: str                   # "add"|"switch"|""
+    relationship: str                   # "add"|"switch"|"pending"|""
+    pending_categories: list[str]       # 待定新类别（meta 待用户确认）                   # "add"|"switch"|""
     clarify_count: int
     clarify_stopped: bool
     vision_summary: str

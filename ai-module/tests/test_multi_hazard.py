@@ -170,9 +170,9 @@ def test_route_negation_removes_old_category(monkeypatch):
     assert up["categories"] == ["消防通道"]      # 占道被删
     assert "占道" not in up["category_slots"]     # 占道的槽也被清
 
-def test_route_no_negation_is_add(monkeypatch):
-    # 无否定 → 新增（并集），旧类别保留
-    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {"消防通道": {"blocker": "杂物"}})
+def test_route_fresh_category_sets_pending(monkeypatch):
+    # 跨轮首次发现新类别：只登记待定，本轮不并入
+    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {})
     st = {"messages": [ag.HumanMessage(content="消防通道也被杂物堵了")],
           "categories": ["占道"],
           "active_category": "占道", "category_index": 0,
@@ -181,7 +181,69 @@ def test_route_no_negation_is_add(monkeypatch):
           "relationship": "", "clarify_count": 0, "clarify_stopped": False,
           "vision_summary": ""}
     up = ag.route(st)
-    assert "占道" in up["categories"] and "消防通道" in up["categories"]
+    assert up["pending_categories"] == ["消防通道"]
+    assert up["relationship"] == "pending"
+    assert up["categories"] == ["占道"]
+
+
+def test_route_pending_same_place_adds(monkeypatch):
+    # 待定 + “同一处” → ADD 并入
+    monkeypatch.setattr(ag, "_infer_categories", lambda text, vision_category="": [])
+    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {})
+    st = {"messages": [ag.HumanMessage(content="是同一处")],
+          "categories": ["占道"],
+          "pending_categories": ["消防通道"],
+          "active_category": "占道", "category_index": 0,
+          "category_slots": {"占道": {"behavior": "摆摊"}},
+          "category_results": {}, "missing": ["占道_blocked"],
+          "relationship": "pending", "clarify_count": 0, "clarify_stopped": False,
+          "vision_summary": ""}
+    up = ag.route(st)
+    assert up["pending_categories"] == []
+    assert up["relationship"] == "add"
+    assert up["categories"] == ["消防通道", "占道"]
+
+
+def test_route_pending_separate_switches(monkeypatch):
+    # 待定 + “单独一条” → SWITCH 切到待定，旧槽清理
+    monkeypatch.setattr(ag, "_infer_categories", lambda text, vision_category="": [])
+    monkeypatch.setattr(ag, "_llm_extract_slots", lambda msg, cats, keys: {})
+    st = {"messages": [ag.HumanMessage(content="单独一条")],
+          "categories": ["占道"],
+          "pending_categories": ["消防通道"],
+          "active_category": "占道", "category_index": 0,
+          "category_slots": {"占道": {"behavior": "摆摊"}},
+          "category_results": {}, "missing": ["占道_blocked"],
+          "relationship": "pending", "clarify_count": 0, "clarify_stopped": False,
+          "vision_summary": ""}
+    up = ag.route(st)
+    assert up["pending_categories"] == []
+    assert up["relationship"] == "switch"
+    assert up["categories"] == ["消防通道"]
+    assert "占道" not in up["category_slots"]
+
+
+def test_meta_clarify_includes_pending(monkeypatch):
+    seen = {}
+    def fake(slots, ctx):
+        seen["ctx"] = ctx
+        return "这些是同一个地方的问题，还是另外单独一条？"
+    monkeypatch.setattr(ag, "_llm_phrase", fake)
+    st = {"messages": [ag.HumanMessage(content="那消防被堵呢")],
+          "missing": ["消防通道_blocker"], "categories": ["占道", "消防通道"],
+          "pending_categories": ["消防通道"],
+          "active_category": "占道", "category_index": 0,
+          "category_slots": {}, "relationship": "", "clarify_count": 0, "clarify_stopped": False}
+    up = ag.meta_clarify(st)
+    assert "占道" in seen["ctx"] and "消防通道" in seen["ctx"]
+    assert up["relationship"] == "pending"
+
+
+def test_route_decider_pending_goes_meta():
+    st = {"pending_categories": ["消防通道"], "missing": [],
+          "relationship": "", "clarify_count": 0, "clarify_stopped": False}
+    assert ag.route_decider(st) == "meta_clarify"
+
 
 def test_find_negated_cat_first_negation_after():
     # "占道不是问题" —— 类别在前，否定在后（B 方案）
