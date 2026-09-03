@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import Generator
 
 from langgraph.graph import StateGraph, END
+from langgraph.config import get_stream_writer
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
@@ -505,13 +506,15 @@ def report(state: AssistantState) -> dict:
     for m in messages:
         dict_msgs.append({"role": _ROLE_MAP.get(getattr(m, "type", "user"), "user"), "content": getattr(m, "content", "")})
     dict_msgs.append({"role": "user", "content": ctx})
-    emit = getattr(_stream_local, "emit", None)
+    writer = get_stream_writer()
     buf = []
     for kind, text in _report_llm._call_llm_stream_events(dict_msgs, cancellation=None):
         if kind == "chunk":
             buf.append(text)
-            if emit:
-                emit("chunk", text)
+            try:
+                writer({"chunk": text})
+            except Exception:
+                pass
     return {"draft_report": "".join(buf)}
 
 

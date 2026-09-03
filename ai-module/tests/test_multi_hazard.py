@@ -259,3 +259,21 @@ def test_find_negated_various_forms():
     assert ag._find_negated("不是占道，是消防通道") == ["占道"]
     assert ag._find_negated("消防通道根本不是问题") == ["消防通道"]
 
+def test_report_writes_custom_chunks(monkeypatch):
+    import core.assistant_graph as ag
+    from langchain_core.messages import HumanMessage
+    class FakeStream:
+        def _call_llm_stream_events(self, msgs, cancellation=None):
+            for t in ["## ", "占道", "被堵"]:
+                yield ("chunk", t)
+    sent = []
+    monkeypatch.setattr("core.assistant_graph.get_stream_writer", lambda: (lambda d: sent.append(d)))
+    ag._report_llm = FakeStream()
+    st = {"messages": [HumanMessage(content="占道被堵")],
+          "categories": ["占道"],
+          "category_results": {"占道": {"regulation": "法", "case": "案例"}},
+          "vision_summary": "", "category": "", "category_index": 0, "active_category": "占道"}
+    up = ag.report(st)
+    assert up["draft_report"] == "## 占道被堵"
+    assert sent == [{"chunk": "## "}, {"chunk": "占道"}, {"chunk": "被堵"}]
+
