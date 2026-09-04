@@ -197,16 +197,82 @@ finally:
 
 ## 8. 断连取消（CancellationToken）
 
-`cancellation` 是 `CancellationToken`，用来感知「用户是否关页/断连」。
+### 8.1 它是什么
 
-- **`produce` 里**：每轮 `cancellation.throw_if_cancelled()` → 若断了，抛异常中止跑图。
-- **`main` 里**：`wait_for` 超时时检查 `cancellation.is_cancelled()` → 断了 break。
+`cancellation` 是 `CancellationToken`，用来感知「用户是否关页/断连」。核心是：**持有它的一方随时能检查"是不是该停了"**。
 
-`server.py` 的 `assistant_stream` 里，用户断连时调 `cancel_token.cancel()`，于是 `run_stream_events` 就会通过 `cancellation` 停止。
+```python
+class StreamCancelled(Exception):
+    """客户端关闭流时抛出的异常"""
 
-> 这跟之前学的「超时/取消链路」「谁先报异常、幂等」呼应。
+class CancellationToken:
+    def __init__(self):
+        self._event = threading.Event()   # 取消标志
+        self._lock = threading.Lock()     # 线程安全
+        self._closers = set()             # 注册的可中断请求（如 HTTP close）
 
----
+    def is_cancelled(self): return self._event.is_set()   # 是否被取消
+    def cancel(self):     # 触发取消
+        with self._lock:
+            if self._event.is_set(): return   # 幂等：已取消就返回
+            self._event.set()
+            closers = list(self._closers)
+            self._closers.clear()
+        for closer in closers:
+            try: closer()                     # 执行注册的 close（掐断 HTTP）
+            except Exception: pass
+    def register(self, closer):   # 注册一个可中断的 close 回调
+        with self._lock:
+            if not self._event.is_set():
+                self._closers.add(closer); return
+        try: closer()
+        except Exception: pass
+    def unregister(self, closer): ...
+    def throw_if_cancelled(self):  # 若已取消，抛 StreamCancelled
+        if self.is_cancelled(): raise StreamCancelled()
+```
+
+### 8.2 完整链路：用户断连 → 掐断 LLM 请求
+
+```
+① 用户关页面
+② server.py 的 assistant_stream 检测到 request.is_disconnected()
+③ 调 cancel_token.cancel()
+④ CancellationToken：_event.set() + 执行所有 register 的 closer
+⑤ closer = resp.close()  ← 把正在等 LLM 的 HTTP 连接关了
+⑥ requests.post 抛异常（连接被关）
+⑦ Agent._call_llm 的 except → 发现 is_cancelled() → 抛 StreamCancelled
+```
+
+### 8.3 server.py 怎么调（检测断连 → 取消）
+
+```python
+# server.py 的 assistant_stream generate()
+async for kind, text in assistant_graph_stream(..., cancellation=cancel_token):
+    if await request.is_disconnected():     # 每收到事件就检查用户是否断连
+        cancel_token.cancel()               # 触发取消
+        break
+```
+
+### 8.4 Agent._call_llm 里真正中断 HTTP（关键）
+
+```python
+resp = requests.post(...)      # 发起 LLM 请求（阻塞等待响应）
+close = resp.close             # 拿到关闭这个响应的方法
+if cancellation:
+    cancellation.register(close)       # ① 把 close 注册进 CancellationToken
+    cancellation.throw_if_cancelled()  # ② 发请求前检查是否已取消
+```
+
+**核心**：`register(close)` 把 `resp.close` 存进 `_closers`。用户断连时 `cancel()` 执行这些 `close`，**真正关掉正在等待的 HTTP 连接** → `requests.post` 抛异常 → `_call_llm` 捕获后因 `is_cancelled()` 抛 `StreamCancelled`。
+
+> 这就是"取消标志 + 注册 close 回调"配合，能掐断一个**正在阻塞等待**的 LLM 请求。
+
+### 8.5 幂等
+
+`cancel()` 里 `if self._event.is_set(): return`，多次触发只生效一次；`throw_if_cancelled`/`register` 也有保护。所以**多地方同时取消，只会抛一次异常，不会给前端发两条 error**。
+
+> 呼应之前学的「超时/取消链路」「谁先报异常、幂等」。
 
 ## 9. 完整事件流（以「追问」和「报告」为例）
 
