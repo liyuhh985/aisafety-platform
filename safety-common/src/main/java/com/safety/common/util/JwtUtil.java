@@ -18,10 +18,11 @@ public class JwtUtil {
         return new SecretKeySpec(keyBytes, "HmacSHA256");
     }
 
-    /** 生成 token，内含 userId */
-    public static String generate(Long userId) {
+    /** 生成 token，内含 userId + role（0 普通 / 1 管理员 / 2 处理人员） */
+    public static String generate(Long userId, Integer role) {
         return Jwts.builder()
                 .subject(String.valueOf(userId))
+                .claim("role", role == null ? 0 : role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRE_MS))
                 .signWith(getKey())
@@ -37,6 +38,21 @@ public class JwtUtil {
                     .parseSignedClaims(token)
                     .getPayload();
             return Long.valueOf(claims.getSubject());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /** 从 token 提取 role，缺失/非法返回 null */
+    public static Integer parseRole(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(getKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+            Object role = claims.get("role");
+            return role == null ? null : Integer.valueOf(role.toString());
         } catch (Exception e) {
             return null;
         }

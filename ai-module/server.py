@@ -155,6 +155,7 @@ async def assistant_stream(
     request: Request,
     message: str = Form(None),
     session_id: str = Form(None),
+    user_id: int = Form(None),
     file: UploadFile = File(None),
 ):
     # 兼容 JSON 和 multipart：有 file 走 FormData，无 file 走 JSON
@@ -163,6 +164,7 @@ async def assistant_stream(
             body = await request.json()
             message = body.get("message", "") or body.get("text", "")
             session_id = body.get("session_id", "") or body.get("sessionId", "") or ""
+            user_id = body.get("user_id")
         except Exception:
             message = ""
             session_id = ""
@@ -231,7 +233,7 @@ async def assistant_stream(
             async for kind, text in assistant_graph_stream(
                 message=message, history=history, slots={},
                 vision_summary=vision_summary, session_id=sid, max_rounds=5,
-                cancellation=cancel_token,
+                cancellation=cancel_token, user_id=user_id,
             ):
                 if await request.is_disconnected():
                     cancel_token.cancel()

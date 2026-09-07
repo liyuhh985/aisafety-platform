@@ -33,7 +33,7 @@ _llm = Agent(
 # report 用不带 tools 的轻量 Agent（流式生成纯文本报告，避免 tools 导致 400）
 _report_llm = Agent(
     name="report",
-    system_prompt="",
+    system_prompt="你是城市安全隐患报告撰写助手。只输出简洁的 Markdown 文本报告；禁止输出任何工具调用、<tool_call>、XML/HTML 标签或代码块；必须基于给定检索结果，不编造，没有就写'库内暂未检索到'。",
     tools=[],
     base_url=MIMO_BASE_URL,
     api_key=MIMO_API_KEY,
@@ -41,6 +41,7 @@ _report_llm = Agent(
 )
 _TOOL_MAP = {t.name: t for t in ASSISTANT_TOOLS}
 _stream_local = threading.local()
+_PENDING_ADDRESS = {}
 
 STATUS_TEXT = {
     "route": "正在分析您的咨询...",
@@ -223,10 +224,13 @@ _VISION_CATEGORY_MAP = {
 
 def _llm_extract_slots(message: str, categories: list[str], category_slot_keys: dict) -> dict:
     prompt = (
-        "请从用户消息中，按类别抽取能填的槽位。只返回 JSON，没提到的填空字符串。\n"
-        "类别槽位定义：\n" +
-        "\n".join(f"{cat}: {keys}" for cat, keys in category_slot_keys.items()) +
-        f"\n用户消息：{message}"
+        "你是槽位抽取器。请从用户消息中按类别抽取能填的槽位。只返回 JSON，格式为："
+        '{"类别名": {"槽key": "值或空字符串"}}。\n'
+        "槽位说明：\n" +
+        "\n".join(f" - {cat}: " + ", ".join(keys) for cat, keys in category_slot_keys.items()) +
+        "\n规则：用户消息里明确提到的就填对应槽的简体值；没提到的槽填空字符串；不要编造。\n"
+        '示例：{"消防通道": {"blocker": "私家车", "persistence": "长期", "impact": ""}}\n' +
+        f"用户消息：{message}"
     )
     try:
         resp = _llm._call_llm(
@@ -498,7 +502,7 @@ def report(state: AssistantState) -> dict:
         "\n请对每个隐患用一节输出：### 一、触犯法规 / ### 二、安全隐患 / ### 三、类似案例。" +
         "法规和案例必须来自上面检索结果，没有就写「库内暂未检索到」，不编造。" +
         "多隐患时每个隐患精炼、突出结论；法规引用完整准确。信息不足写「信息不足，未确认」。" +
-        "最后加一句「需要我按这个情况生成一个整改建议吗？」"
+        "最后必须以一句话询问用户：需要我帮你在系统建一条隐患任务吗？"
     )
     # 把 langchain 消息转成 dict，供 _call_llm_stream_events 的 payload 序列化
     dict_msgs = []
@@ -515,7 +519,16 @@ def report(state: AssistantState) -> dict:
                 writer({"chunk": text})
             except Exception:
                 pass
-    return {"draft_report": "".join(buf)}
+    draft = "".join(buf)
+    if "建一条隐患任务" not in draft:
+        tail = "\n\n需要我帮你在系统建一条隐患任务吗？"
+        buf.append(tail)
+        try:
+            writer({"chunk": tail})
+        except Exception:
+            pass
+        draft = "".join(buf)
+    return {"draft_report": draft}
 
 
 def build_graph():
@@ -545,11 +558,43 @@ def get_app():
     return _APP
 
 
+
+_CONFIRM_WORDS = ("要", "好", "可以", "建", "上报", "创建", "是的", "行", "没问题", "需要")
+
+
+def _is_confirmation(message: str) -> bool:
+    m = (message or "").strip()
+    if not m:
+        return False
+    return len(m) <= 12 and any(w in m for w in _CONFIRM_WORDS)
+
+
+def _asked_to_create(history) -> bool:
+    for h in reversed(history or []):
+        if h.get("role") == "assistant":
+            return "建一条隐患任务" in (h.get("content") or "")
+    return False
+
+
+def _handle_submit(result: dict, emit, session_id: str) -> None:
+    action = result.get("action")
+    if action == "created":
+        emit("chunk", "✅ 已创建隐患任务，任务编号 " + str(result.get("hazardId")))
+        _PENDING_ADDRESS.pop(session_id, None)
+    elif action == "ask_address":
+        emit("chunk", str(result.get("message")))
+        _PENDING_ADDRESS[session_id] = True
+    else:
+        emit("chunk", "⚠️ " + str(result.get("message")))
+        _PENDING_ADDRESS.pop(session_id, None)
+    emit("done", "")
+
 # ---------- SSE bridge（asyncio.Queue 真流式） ----------
 async def run_stream_events(message: str, history: list[dict], slots: dict,
                             vision_summary: str, session_id: str,
                             max_rounds: int = 5,
-                            cancellation: CancellationToken = None) -> Generator[tuple, None, None]:
+                            cancellation: CancellationToken = None,
+                            user_id: int = None) -> Generator[tuple, None, None]:
     app = get_app()
     loop = asyncio.get_running_loop()
     q: asyncio.Queue = asyncio.Queue()
@@ -579,8 +624,6 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
         "missing": [],
         "relationship": "",
         "pending_categories": [],
-        "clarify_count": 0,
-        "clarify_stopped": False,
         "vision_summary": vision_summary,
         "attempts": 0,
     }
@@ -589,6 +632,17 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
     def produce():
         _stream_local.emit = emit
         try:
+            # AI 上报闭环：确认建任务 / 等地址补充 -> 调 Python->Java 建库，跳过 graph
+            if user_id is not None:
+                from tools.hazard_submit import submit_from_history
+                result = None
+                if _PENDING_ADDRESS.get(session_id):
+                    result = submit_from_history(user_id, history, message)
+                elif _is_confirmation(message) and _asked_to_create(history):
+                    result = submit_from_history(user_id, history, message)
+                if result is not None:
+                    _handle_submit(result, emit, session_id)
+                    return
             seen = set()
             for mode, item in app.stream(initial, config, stream_mode=["updates", "custom"]):
                 if mode == "custom":

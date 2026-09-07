@@ -20,8 +20,11 @@ public class Hazard {
     private BigDecimal longitude;
     private BigDecimal latitude;
     private String address;
+    private String district;
     private Integer severity;
     private Integer status;
+    private Long handlerId;
+    private String report;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

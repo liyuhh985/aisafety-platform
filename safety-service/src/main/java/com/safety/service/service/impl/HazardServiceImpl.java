@@ -9,10 +9,13 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.safety.common.constant.RedisConstant;
 import com.safety.common.exception.BusinessException;
+import com.safety.pojo.dto.AiHazardDTO;
 import com.safety.pojo.dto.HazardDTO;
 import com.safety.pojo.entity.Hazard;
+import com.safety.pojo.entity.HazardAction;
 import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
+import com.safety.service.mapper.HazardActionMapper;
 import com.safety.service.mapper.HazardMapper;
 import com.safety.service.service.HazardService;
 import jakarta.annotation.PostConstruct;
@@ -31,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class HazardServiceImpl implements HazardService {
 
     private final HazardMapper hazardMapper;
+    private final HazardActionMapper hazardActionMapper;
     private final StringRedisTemplate redisTemplate;
     private final RedissonClient redissonClient;
     private static final ObjectMapper objectMapper = new ObjectMapper()
@@ -39,9 +43,11 @@ public class HazardServiceImpl implements HazardService {
     private Cache<Long, HazardVO> localCache;
 
     public HazardServiceImpl(HazardMapper hazardMapper,
+                             HazardActionMapper hazardActionMapper,
                              StringRedisTemplate redisTemplate,
                              RedissonClient redissonClient) {
         this.hazardMapper = hazardMapper;
+        this.hazardActionMapper = hazardActionMapper;
         this.redisTemplate = redisTemplate;
         this.redissonClient = redissonClient;
     }
@@ -59,9 +65,22 @@ public class HazardServiceImpl implements HazardService {
     public HazardVO create(Long userId, HazardDTO dto) {
         // 分布式锁: 防止同一用户并发重复上报
         String lockKey = RedisConstant.KEY_PREFIX + "lock:hazard:create:" + userId;
-        RLock lock = redissonClient.getLock(lockKey);
+        RLock lock;
         try {
-            if (!lock.tryLock(3, 10, TimeUnit.SECONDS)) {
+            lock = redissonClient.getLock(lockKey);
+        } catch (RuntimeException e) {
+            log.error("隐患创建分布式锁不可用, key={}", lockKey, e);
+            throw new BusinessException("hazard creation temporarily unavailable");
+        }
+        try {
+            boolean acquired;
+            try {
+                acquired = lock.tryLock(3, 10, TimeUnit.SECONDS);
+            } catch (RuntimeException e) {
+                log.error("隐患创建分布式锁获取失败, key={}", lockKey, e);
+                throw new BusinessException("hazard creation temporarily unavailable");
+            }
+            if (!acquired) {
                 throw new BusinessException("操作太频繁，请稍后再试");
             }
             Hazard hazard = new Hazard();
@@ -73,25 +92,184 @@ public class HazardServiceImpl implements HazardService {
             }
             hazardMapper.insert(hazard);
             hazard = hazardMapper.selectById(hazard.getId());
+            invalidateDetailCache(hazard.getId());
+            invalidateListCache();
             return toVO(hazard);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new BusinessException("系统繁忙，请重试");
         } finally {
-            if (lock.isHeldByCurrentThread()) {
-                lock.unlock();
+            try {
+                if (lock.isHeldByCurrentThread()) {
+                    lock.unlock();
+                }
+            } catch (RuntimeException e) {
+                log.warn("隐患创建分布式锁释放失败, key={}", lockKey, e);
             }
         }
     }
 
     @Override
-    public Page<HazardVO> page(int current, int size) {
-        Page<Hazard> page = new Page<>(current, size);
-        Page<Hazard> result = hazardMapper.selectPage(page,
-                new LambdaQueryWrapper<Hazard>().orderByDesc(Hazard::getCreateTime));
+    public HazardVO createAi(AiHazardDTO dto) {
+        if (dto.getUserId() == null) {
+            throw new BusinessException("missing user id");
+        }
+        // 分布式锁: 防止同一用户并发重复上报
+        String lockKey = RedisConstant.KEY_PREFIX + "lock:hazard:create:" + dto.getUserId();
+        RLock lock;
+        try {
+            lock = redissonClient.getLock(lockKey);
+        } catch (RuntimeException e) {
+            log.error("隐患创建分布式锁不可用, key={}", lockKey, e);
+            throw new BusinessException("hazard creation temporarily unavailable");
+        }
+        try {
+            boolean acquired;
+            try {
+                acquired = lock.tryLock(3, 10, TimeUnit.SECONDS);
+            } catch (RuntimeException e) {
+                log.error("隐患创建分布式锁获取失败, key={}", lockKey, e);
+                throw new BusinessException("hazard creation temporarily unavailable");
+            }
+            if (!acquired) {
+                throw new BusinessException("操作太频繁，请稍后再试");
+            }
+            Hazard hazard = new Hazard();
+            BeanUtils.copyProperties(dto, hazard);
+            hazard.setUserId(dto.getUserId());
+            hazard.setStatus(0);
+            if (hazard.getSeverity() == null) {
+                hazard.setSeverity(1);
+            }
+            // 4 类特化：hazard_type 承载类别（category 仅作入参，不落库）
+            if (dto.getCategory() != null && !dto.getCategory().isBlank()) {
+                hazard.setHazardType(dto.getCategory());
+            }
+            hazardMapper.insert(hazard);
+            hazard = hazardMapper.selectById(hazard.getId());
+            invalidateDetailCache(hazard.getId());
+            invalidateListCache();
+            return toVO(hazard);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new BusinessException("系统繁忙，请重试");
+        } finally {
+            try {
+                if (lock.isHeldByCurrentThread()) {
+                    lock.unlock();
+                }
+            } catch (RuntimeException e) {
+                log.warn("隐患创建分布式锁释放失败, key={}", lockKey, e);
+            }
+        }
+    }
+
+    @Override
+    public HazardVO accept(Long id, Long userId) {
+        return transition(id, 0, 1, "ACCEPT", userId, true);
+    }
+
+    @Override
+    public HazardVO start(Long id, Long userId) {
+        return transition(id, 1, 2, "START", userId, false);
+    }
+
+    @Override
+    public HazardVO complete(Long id, Long userId) {
+        return transition(id, 2, 3, "COMPLETE", userId, false);
+    }
+
+    private HazardVO transition(Long id, int from, int to, String actionType, Long userId, boolean setHandler) {
+        Hazard hazard = hazardMapper.selectById(id);
+        if (hazard == null) {
+            throw new BusinessException("隐患不存在");
+        }
+        Integer cur = hazard.getStatus();
+        if (cur == null || cur != from) {
+            throw new BusinessException("当前状态不允许流转到该状态");
+        }
+        hazard.setStatus(to);
+        if (setHandler) {
+            hazard.setHandlerId(userId);
+        }
+        hazardMapper.updateById(hazard);
+        saveAction(id, userId, actionType, "status " + from + " -> " + to);
+        invalidateDetailCache(id);
+        invalidateListCache();
+        Hazard updated = hazardMapper.selectById(id);
+        return toVO(updated);
+    }
+
+    private void saveAction(Long hazardId, Long operatorId, String actionType, String remark) {
+        try {
+            HazardAction action = new HazardAction();
+            action.setHazardId(hazardId);
+            action.setOperatorId(operatorId);
+            action.setActionType(actionType);
+            action.setRemark(remark);
+            hazardActionMapper.insert(action);
+        } catch (RuntimeException e) {
+            log.warn("记录隐患操作失败, hazardId={}, actionType={}", hazardId, actionType, e);
+        }
+    }
+
+    @Override
+    public Page<HazardVO> page(int current, int size, Long userId, Integer role) {
+        // 普通用户(role=0)只能看自己上报的；处理人员/管理员看全部
+        boolean restricted = (role != null && role == 0);
+        String scope = restricted ? ("u" + userId) : "all";
+        String cacheKey = RedisConstant.HAZARD_LIST_CACHE_PREFIX + current + ":" + size + ":" + scope;
+        String redisData = null;
+        try {
+            redisData = redisTemplate.opsForValue().get(cacheKey);
+        } catch (RuntimeException e) {
+            log.warn("列表缓存读取失败, key={}", cacheKey, e);
+        }
+        if (redisData != null) {
+            try {
+                return objectMapper.readValue(redisData, objectMapper.getTypeFactory()
+                        .constructParametricType(Page.class, HazardVO.class));
+            } catch (JsonProcessingException e) {
+                log.warn("列表缓存反序列化失败, key={}", cacheKey);
+            }
+        }
+
+        Page<Hazard> pg = new Page<>(current, size);
+        LambdaQueryWrapper<Hazard> qw = new LambdaQueryWrapper<Hazard>()
+                .orderByDesc(Hazard::getCreateTime);
+        if (restricted && userId != null) {
+            qw.eq(Hazard::getUserId, userId);
+        }
+        Page<Hazard> result = hazardMapper.selectPage(pg, qw);
         Page<HazardVO> voPage = new Page<>(current, size, result.getTotal());
         voPage.setRecords(result.getRecords().stream().map(this::toVO).toList());
+        try {
+            redisTemplate.opsForValue().set(cacheKey, objectMapper.writeValueAsString(voPage),
+                    RedisConstant.HAZARD_LIST_CACHE_TTL, TimeUnit.MINUTES);
+        } catch (JsonProcessingException | RuntimeException e) {
+            log.warn("列表缓存写入失败, key={}", cacheKey, e);
+        }
         return voPage;
+    }
+
+    private void invalidateListCache() {
+        try {
+            var keys = redisTemplate.keys(RedisConstant.HAZARD_LIST_CACHE_PREFIX + "*");
+            if (keys != null && !keys.isEmpty()) {
+                redisTemplate.delete(keys);
+            }
+        } catch (RuntimeException e) {
+            log.warn("地图列表缓存失效失败", e);
+        }
+    }
+
+    private void invalidateDetailCache(Long id) {
+        localCache.invalidate(id);
+        try {
+            redisTemplate.delete(RedisConstant.HAZARD_CACHE_PREFIX + id);
+        } catch (RuntimeException e) {
+            log.warn("隐患详情缓存失效失败, id={}", id, e);
+        }
     }
 
     @Override
@@ -105,7 +283,12 @@ public class HazardServiceImpl implements HazardService {
 
         // L2: Redis
         String cacheKey = RedisConstant.HAZARD_CACHE_PREFIX + id;
-        String redisData = redisTemplate.opsForValue().get(cacheKey);
+        String redisData = null;
+        try {
+            redisData = redisTemplate.opsForValue().get(cacheKey);
+        } catch (RuntimeException e) {
+            log.warn("L2 Redis 读取失败, key={}", cacheKey, e);
+        }
         if (redisData != null) {
             try {
                 HazardVO vo = objectMapper.readValue(redisData, HazardVO.class);
@@ -129,8 +312,8 @@ public class HazardServiceImpl implements HazardService {
             redisTemplate.opsForValue().set(cacheKey,
                     objectMapper.writeValueAsString(vo),
                     RedisConstant.HAZARD_CACHE_TTL, TimeUnit.MINUTES);
-        } catch (JsonProcessingException e) {
-            log.warn("L2 序列化失败, key={}", cacheKey);
+        } catch (JsonProcessingException | RuntimeException e) {
+            log.warn("L2 Redis 写入失败, key={}", cacheKey, e);
         }
         localCache.put(id, vo);
         log.debug("L3 MySQL 命中, 回填L2+L1: hazardId={}", id);
@@ -143,13 +326,13 @@ public class HazardServiceImpl implements HazardService {
                 hazard.getId(), hazard.getUserId(), hazard.getImageUrl(),
                 hazard.getHazardType(), hazard.getDescription(),
                 hazard.getLongitude(), hazard.getLatitude(), hazard.getAddress(),
+                hazard.getDistrict(), hazard.getReport(), hazard.getHandlerId(),
                 hazard.getSeverity(), hazard.getStatus(),
                 switch (hazard.getStatus()) {
-                    case 0 -> "待审核";
-                    case 1 -> "已确认";
-                    case 2 -> "处理中";
-                    case 3 -> "已处理";
-                    case 4 -> "已关闭";
+                    case 0 -> "待处理";
+                    case 1 -> "已接单";
+                    case 2 -> "整改中";
+                    case 3 -> "已完成";
                     default -> "未知";
                 },
                 hazard.getCreateTime());

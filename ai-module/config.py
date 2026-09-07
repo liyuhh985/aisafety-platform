@@ -27,6 +27,13 @@ SF_API_KEY = os.getenv("SF_API_KEY", "")
 SF_EMBED_MODEL = os.getenv("SF_EMBED_MODEL", "BAAI/bge-m3")
 AI_INTERNAL_TOKEN = os.getenv("AI_INTERNAL_TOKEN", "")
 
+# 高德 Web 服务 Key（地理编码，后端 Python 调用）
+AMAP_WEB_KEY = os.getenv("AMAP_WEB_KEY", "")
+
+# Java 后端地址（AI 上报 -> 建隐患）
+JAVA_BASE_URL = os.getenv("JAVA_BASE_URL", "http://127.0.0.1:8080")
+
+
 
 def _env_bool(name: str, default: str) -> bool:
     value = os.getenv(name, default).strip().lower()

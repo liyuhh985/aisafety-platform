@@ -21,6 +21,9 @@ public class HazardVO {
     private BigDecimal longitude;
     private BigDecimal latitude;
     private String address;
+    private String district;
+    private String report;
+    private Long handlerId;
     private Integer severity;
     private Integer status;
     private String statusText;
