@@ -165,21 +165,87 @@ public class HazardServiceImpl implements HazardService {
     }
 
     @Override
-    public HazardVO accept(Long id, Long userId) {
-        return transition(id, 0, 1, "ACCEPT", userId, true);
+    public HazardVO assign(Long id, Long adminId, Long handlerId) {
+        Hazard hazard = hazardMapper.selectById(id);
+        if (hazard == null) {
+            throw new BusinessException("隐患不存在");
+        }
+        if (hazard.getStatus() == null || (hazard.getStatus() != 0 && hazard.getStatus() != 4)) {
+            throw new BusinessException("仅待处理或已驳回任务可指派责任人");
+        }
+        hazard.setStatus(1);
+        hazard.setReviewed(0);
+        hazard.setHandlerId(handlerId);
+        hazardMapper.updateById(hazard);
+        saveAction(id, adminId, "ASSIGN", "status -> 1 (handler=" + handlerId + ")");
+        invalidateDetailCache(id);
+        invalidateListCache();
+        return toVO(hazardMapper.selectById(id));
     }
 
     @Override
-    public HazardVO start(Long id, Long userId) {
-        return transition(id, 1, 2, "START", userId, false);
+    public HazardVO start(Long id, Long userId, Integer role) {
+        return transition(id, 1, 2, "START", userId, false, role);
     }
 
     @Override
-    public HazardVO complete(Long id, Long userId) {
-        return transition(id, 2, 3, "COMPLETE", userId, false);
+    public HazardVO complete(Long id, Long userId, Integer role) {
+        return transition(id, 2, 3, "COMPLETE", userId, false, role);
     }
 
-    private HazardVO transition(Long id, int from, int to, String actionType, Long userId, boolean setHandler) {
+    @Override
+    public HazardVO review(Long id, Long adminId, boolean pass, String remark) {
+        Hazard hazard = hazardMapper.selectById(id);
+        if (hazard == null) {
+            throw new BusinessException("隐患不存在");
+        }
+        Integer st = hazard.getStatus();
+        Integer rev = hazard.getReviewed();
+        if (pass) {
+            if (st != null && st == 3 && rev != null && rev == 1) {
+                throw new BusinessException("该工单已办结归档，不可重复办结");
+            }
+            if (st == null || st != 3) {
+                throw new BusinessException("仅处于待验收状态的工单可执行终审办结");
+            }
+            hazard.setStatus(3);
+            hazard.setReviewed(1);
+            hazardMapper.updateById(hazard);
+            saveAction(id, adminId, "REVIEW_PASS", "验收通过; " + (remark == null ? "" : remark));
+        } else {
+            if (st != null && ((st == 3 && rev != null && rev == 1) || st == 4)) {
+                throw new BusinessException("已办结归档或已驳回的任务不可重复驳回");
+            }
+            if (st == null || st != 3) {
+                throw new BusinessException("仅处于待验收状态的工单可执行审查驳回");
+            }
+            hazard.setStatus(4);
+            hazard.setReviewed(1);
+            hazardMapper.updateById(hazard);
+            saveAction(id, adminId, "REVIEW_REJECT", "审查驳回; " + (remark == null ? "" : remark));
+        }
+        invalidateDetailCache(id);
+        invalidateListCache();
+        return toVO(hazardMapper.selectById(id));
+    }
+
+    @Override
+    public java.util.List<HazardVO> batchReview(java.util.List<Long> ids, Long adminId, boolean pass, String remark) {
+        if (ids == null || ids.isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+        java.util.List<HazardVO> results = new java.util.ArrayList<>();
+        for (Long id : ids) {
+            try {
+                results.add(review(id, adminId, pass, remark));
+            } catch (RuntimeException e) {
+                log.warn("批量审批工单跳过, id={}, error={}", id, e.getMessage());
+            }
+        }
+        return results;
+    }
+
+    private HazardVO transition(Long id, int from, int to, String actionType, Long userId, boolean setHandler, Integer role) {
         Hazard hazard = hazardMapper.selectById(id);
         if (hazard == null) {
             throw new BusinessException("隐患不存在");
@@ -188,16 +254,24 @@ public class HazardServiceImpl implements HazardService {
         if (cur == null || cur != from) {
             throw new BusinessException("当前状态不允许流转到该状态");
         }
+        boolean isAdmin = (role != null && role == 1);
+        if (!isAdmin) {
+            if (hazard.getHandlerId() == null || !hazard.getHandlerId().equals(userId)) {
+                throw new BusinessException("只能处理分配给自己的任务");
+            }
+        }
         hazard.setStatus(to);
         if (setHandler) {
             hazard.setHandlerId(userId);
+        }
+        if (to == 3) {
+            hazard.setReviewed(0); // 专员完成整改，流转为待验收(reviewed=0)
         }
         hazardMapper.updateById(hazard);
         saveAction(id, userId, actionType, "status " + from + " -> " + to);
         invalidateDetailCache(id);
         invalidateListCache();
-        Hazard updated = hazardMapper.selectById(id);
-        return toVO(updated);
+        return toVO(hazardMapper.selectById(id));
     }
 
     private void saveAction(Long hazardId, Long operatorId, String actionType, String remark) {
@@ -217,23 +291,6 @@ public class HazardServiceImpl implements HazardService {
     public Page<HazardVO> page(int current, int size, Long userId, Integer role) {
         // 普通用户(role=0)只能看自己上报的；处理人员/管理员看全部
         boolean restricted = (role != null && role == 0);
-        String scope = restricted ? ("u" + userId) : "all";
-        String cacheKey = RedisConstant.HAZARD_LIST_CACHE_PREFIX + current + ":" + size + ":" + scope;
-        String redisData = null;
-        try {
-            redisData = redisTemplate.opsForValue().get(cacheKey);
-        } catch (RuntimeException e) {
-            log.warn("列表缓存读取失败, key={}", cacheKey, e);
-        }
-        if (redisData != null) {
-            try {
-                return objectMapper.readValue(redisData, objectMapper.getTypeFactory()
-                        .constructParametricType(Page.class, HazardVO.class));
-            } catch (JsonProcessingException e) {
-                log.warn("列表缓存反序列化失败, key={}", cacheKey);
-            }
-        }
-
         Page<Hazard> pg = new Page<>(current, size);
         LambdaQueryWrapper<Hazard> qw = new LambdaQueryWrapper<Hazard>()
                 .orderByDesc(Hazard::getCreateTime);
@@ -243,24 +300,11 @@ public class HazardServiceImpl implements HazardService {
         Page<Hazard> result = hazardMapper.selectPage(pg, qw);
         Page<HazardVO> voPage = new Page<>(current, size, result.getTotal());
         voPage.setRecords(result.getRecords().stream().map(this::toVO).toList());
-        try {
-            redisTemplate.opsForValue().set(cacheKey, objectMapper.writeValueAsString(voPage),
-                    RedisConstant.HAZARD_LIST_CACHE_TTL, TimeUnit.MINUTES);
-        } catch (JsonProcessingException | RuntimeException e) {
-            log.warn("列表缓存写入失败, key={}", cacheKey, e);
-        }
         return voPage;
     }
 
     private void invalidateListCache() {
-        try {
-            var keys = redisTemplate.keys(RedisConstant.HAZARD_LIST_CACHE_PREFIX + "*");
-            if (keys != null && !keys.isEmpty()) {
-                redisTemplate.delete(keys);
-            }
-        } catch (RuntimeException e) {
-            log.warn("地图列表缓存失效失败", e);
-        }
+        // 列表已改为轻量直接查库，无需跨公网遍历 keys
     }
 
     private void invalidateDetailCache(Long id) {
@@ -322,19 +366,26 @@ public class HazardServiceImpl implements HazardService {
     }
 
     private HazardVO toVO(Hazard hazard) {
+        String statusText;
+        if (hazard.getStatus() == null) {
+            statusText = "未知";
+        } else {
+            statusText = switch (hazard.getStatus()) {
+                case 0 -> "待处理";
+                case 1 -> "已接单";
+                case 2 -> "整改中";
+                case 3 -> (hazard.getReviewed() != null && hazard.getReviewed() == 1) ? "已办结" : "待验收";
+                case 4 -> "已驳回";
+                default -> "未知";
+            };
+        }
         return new HazardVO(
                 hazard.getId(), hazard.getUserId(), hazard.getImageUrl(),
                 hazard.getHazardType(), hazard.getDescription(),
                 hazard.getLongitude(), hazard.getLatitude(), hazard.getAddress(),
                 hazard.getDistrict(), hazard.getReport(), hazard.getHandlerId(),
-                hazard.getSeverity(), hazard.getStatus(),
-                switch (hazard.getStatus()) {
-                    case 0 -> "待处理";
-                    case 1 -> "已接单";
-                    case 2 -> "整改中";
-                    case 3 -> "已完成";
-                    default -> "未知";
-                },
+                hazard.getSeverity(), hazard.getStatus(), hazard.getReviewed(),
+                statusText,
                 hazard.getCreateTime());
     }
 
@@ -342,9 +393,9 @@ public class HazardServiceImpl implements HazardService {
     public HazardStatsVO getStats() {
         long total = hazardMapper.selectCount(null);
         long processed = hazardMapper.selectCount(
-                new LambdaQueryWrapper<Hazard>().eq(Hazard::getStatus, 3));
+                new LambdaQueryWrapper<Hazard>().eq(Hazard::getStatus, 3).eq(Hazard::getReviewed, 1));
         long processing = hazardMapper.selectCount(
-                new LambdaQueryWrapper<Hazard>().eq(Hazard::getStatus, 2));
+                new LambdaQueryWrapper<Hazard>().in(Hazard::getStatus, 1, 2));
         String rate = total == 0 ? "0.0%"
                 : String.format("%.1f%%", processed * 100.0 / total);
         return HazardStatsVO.builder()

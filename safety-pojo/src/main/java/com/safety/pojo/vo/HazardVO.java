@@ -26,6 +26,7 @@ public class HazardVO {
     private Long handlerId;
     private Integer severity;
     private Integer status;
+    private Integer reviewed;
     private String statusText;
     private LocalDateTime createTime;
 }

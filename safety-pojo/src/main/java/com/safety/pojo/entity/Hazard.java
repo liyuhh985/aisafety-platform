@@ -24,6 +24,7 @@ public class Hazard {
     private Integer severity;
     private Integer status;
     private Long handlerId;
+    private Integer reviewed;
     private String report;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

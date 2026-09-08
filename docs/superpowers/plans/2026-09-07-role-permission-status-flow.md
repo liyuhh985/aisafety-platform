@@ -114,3 +114,15 @@
 - [x] 联调验证：处理人员 0→1→2→3、管理员流转、普通用户接单被拒 403、普通用户 page 只看自己、处理人员看全部、`HazardAction` 记录完整。
 
 > 说明：`mvn package` 用 `-Dmaven.test.skip=true`（部分旧测试引用了旧 `page(int,int)` 签名，待更新测试）；前端按钮显隐（按角色）放二期。
+
+---
+
+## 人工审查 / 派单 完成（2026-09-08）
+
+- [x] `tb_hazard.reviewed`（0未审/1通过）+ `Hazard/VO.reviewed` + `statusText` 补 `4 已驳回`。
+- [x] 流程调整为：**0→1 只能管理员派单**；处理人员只能 `1→2→3` 且必须 `handler_id==自己`（越权拒绝）；管理员可任意。
+- [x] 接口：
+  - `POST /api/hazard/{id}/assign {handlerId}`（ADMIN，0→1，写 ASSIGN）
+  - `POST /api/hazard/{id}/review {pass,remark}`（ADMIN，通过→reviewed=1；驳回→status=4）
+  - `POST /api/hazard/{id}/start|complete`（HANDLER/ADMIN，handler 绑定校验）
+- [x] 联调验证：派单 0→1、整改 1→2、完成 2→3、处理人被拒(处理别人)、审查通过/驳回、`HazardAction` 留痕。

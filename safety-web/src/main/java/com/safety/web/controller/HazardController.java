@@ -3,7 +3,10 @@ package com.safety.web.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.safety.common.exception.BusinessException;
 import com.safety.common.result.R;
+import com.safety.pojo.dto.AiAssignDTO;
+import com.safety.pojo.dto.AiBatchReviewDTO;
 import com.safety.pojo.dto.AiHazardDTO;
+import com.safety.pojo.dto.AiReviewDTO;
 import com.safety.pojo.dto.HazardDTO;
 import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
@@ -62,22 +65,51 @@ public class HazardController {
         return R.ok(hazardService.page(current, size, userId, role));
     }
 
+    /** 管理员派单：指定处理人，0 待处理 -> 1 已接单 */
+    @PostMapping("/{id:\\d+}/assign")
+    @PreAuthorize("hasRole('ADMIN')")
+    public R<HazardVO> assign(@PathVariable Long id, @Valid @RequestBody AiAssignDTO dto, Authentication auth) {
+        return R.ok(hazardService.assign(id, (Long) auth.getPrincipal(), dto.getHandlerId()));
+    }
+
+    /** 处理人员认领接单：0 待处理 -> 1 已接单（仅限处突专员） */
     @PostMapping("/{id:\\d+}/accept")
-    @PreAuthorize("hasAnyRole('HANDLER','ADMIN')")
+    @PreAuthorize("hasRole('HANDLER')")
     public R<HazardVO> accept(@PathVariable Long id, Authentication auth) {
-        return R.ok(hazardService.accept(id, (Long) auth.getPrincipal()));
+        Long userId = (Long) auth.getPrincipal();
+        return R.ok(hazardService.assign(id, userId, userId));
     }
 
+    /** 处理人员开始整改：1 -> 2（仅限处突专员） */
     @PostMapping("/{id:\\d+}/start")
-    @PreAuthorize("hasAnyRole('HANDLER','ADMIN')")
+    @PreAuthorize("hasRole('HANDLER')")
     public R<HazardVO> start(@PathVariable Long id, Authentication auth) {
-        return R.ok(hazardService.start(id, (Long) auth.getPrincipal()));
+        Long userId = (Long) auth.getPrincipal();
+        return R.ok(hazardService.start(id, userId, roleOf(auth)));
     }
 
+    /** 处理人员完成：2 -> 3（仅限处突专员） */
     @PostMapping("/{id:\\d+}/complete")
-    @PreAuthorize("hasAnyRole('HANDLER','ADMIN')")
+    @PreAuthorize("hasRole('HANDLER')")
     public R<HazardVO> complete(@PathVariable Long id, Authentication auth) {
-        return R.ok(hazardService.complete(id, (Long) auth.getPrincipal()));
+        Long userId = (Long) auth.getPrincipal();
+        return R.ok(hazardService.complete(id, userId, roleOf(auth)));
+    }
+
+    /** 管理员人工审核：通过/驳回 */
+    @PostMapping("/{id:\\d+}/review")
+    @PreAuthorize("hasRole('ADMIN')")
+    public R<HazardVO> review(@PathVariable Long id, @RequestBody AiReviewDTO dto, Authentication auth) {
+        return R.ok(hazardService.review(id, (Long) auth.getPrincipal(),
+                Boolean.TRUE.equals(dto.getPass()), dto.getRemark()));
+    }
+
+    /** 管理员批量审核：通过/驳回 */
+    @PostMapping("/batch-review")
+    @PreAuthorize("hasRole('ADMIN')")
+    public R<java.util.List<HazardVO>> batchReview(@Valid @RequestBody AiBatchReviewDTO dto, Authentication auth) {
+        return R.ok(hazardService.batchReview(dto.getIds(), (Long) auth.getPrincipal(),
+                Boolean.TRUE.equals(dto.getPass()), dto.getRemark()));
     }
 
     @GetMapping("/stats")
