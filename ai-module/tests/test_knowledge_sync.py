@@ -3,6 +3,7 @@ import unittest
 
 import pymysql
 
+from core.cancellation import CancellationToken, StreamCancelled
 from tools.knowledge_sync import (
     EmbeddingServiceError,
     KnowledgeSynchronizer,
@@ -254,6 +255,30 @@ class KnowledgeSyncTests(unittest.TestCase):
 
         with self.assertRaises(EmbeddingServiceError):
             client.embed(["text"])
+
+    def test_embedding_client_closes_cancelled_response_once(self):
+        token = CancellationToken()
+
+        class Response:
+            status_code = 200
+
+            def __init__(self):
+                self.close_calls = 0
+
+            def json(self):
+                token.cancel()
+                return {"data": [{"embedding": [0.1]}]}
+
+            def close(self):
+                self.close_calls += 1
+
+        response = Response()
+        client = SiliconFlowEmbeddingClient(http_post=lambda *args, **kwargs: response)
+
+        with self.assertRaises(StreamCancelled):
+            client.embed(["text"], cancellation=token)
+
+        self.assertEqual(response.close_calls, 1)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,8 @@ class MilvusConfigTests(unittest.TestCase):
         "MILVUS_HOST": "127.0.0.1",
         "MILVUS_PORT": "19530",
         "MILVUS_ALIAS": "safety_platform",
+        "MILVUS_USER": "root",
+        "MILVUS_PASSWORD": "test-secret",
         "MILVUS_EMBEDDING_DIM": "1024",
         "MILVUS_TIMEOUT_SECONDS": "5",
         "MILVUS_FALLBACK_TO_MYSQL": "true",
@@ -33,6 +35,8 @@ class MilvusConfigTests(unittest.TestCase):
         self.assertEqual(config.MILVUS_HOST, "127.0.0.1")
         self.assertEqual(config.MILVUS_PORT, 19530)
         self.assertEqual(config.MILVUS_ALIAS, "safety_platform")
+        self.assertEqual(config.MILVUS_USER, "root")
+        self.assertEqual(config.MILVUS_PASSWORD, "test-secret")
         self.assertEqual(config.MILVUS_EMBEDDING_DIM, 1024)
         self.assertEqual(config.MILVUS_TIMEOUT_SECONDS, 5.0)
         self.assertTrue(config.MILVUS_FALLBACK_TO_MYSQL)

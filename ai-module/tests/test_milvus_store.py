@@ -121,6 +121,29 @@ class MilvusStoreTests(unittest.TestCase):
             self.assertEqual(fields[2]["dim"], 3)
             self.assertEqual(call["index_params"].indexes[0]["metric_type"], "COSINE")
 
+    def test_connect_passes_configured_user_and_password(self):
+        captured = {}
+
+        class RecordingClient:
+            def __init__(self, **kwargs):
+                captured.update(kwargs)
+
+        store = MilvusVectorStore(
+            host="milvus.example",
+            port=19530,
+            user="root",
+            password="test-secret",
+            embedding_dim=3,
+        )
+        module = types.SimpleNamespace(MilvusClient=RecordingClient)
+
+        with patch.dict(sys.modules, {"pymilvus": module}):
+            store.connect()
+
+        self.assertEqual(captured["uri"], "http://milvus.example:19530")
+        self.assertEqual(captured["user"], "root")
+        self.assertEqual(captured["password"], "test-secret")
+
     def test_upsert_maps_ids_and_search_normalizes_hits(self):
         client = FakeMilvusClient(
             search_hits=[
@@ -150,6 +173,27 @@ class MilvusStoreTests(unittest.TestCase):
         )
         self.assertEqual(client.search_calls[0]["limit"], 2)
         self.assertEqual(client.search_calls[0]["search_params"]["metric_type"], "COSINE")
+
+    def test_search_normalizes_pymilvus_named_primary_key(self):
+        client = FakeMilvusClient(
+            search_hits=[
+                [
+                    {
+                        "doc_id": 7,
+                        "distance": 0.73,
+                        "entity": {"content_hash": "hash-7"},
+                    }
+                ]
+            ]
+        )
+        store = MilvusVectorStore(client=client, embedding_dim=3)
+
+        hits = store.search("tb_hazard_case", [0.3, 0.2, 0.1], top_k=1)
+
+        self.assertEqual(
+            hits,
+            [{"id": 7, "distance": 0.73, "content_hash": "hash-7"}],
+        )
 
     def test_wrong_dimension_is_rejected_for_upsert_and_search(self):
         store = MilvusVectorStore(client=FakeMilvusClient(), embedding_dim=3)
