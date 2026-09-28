@@ -1,13 +1,15 @@
 """执行数据库迁移：文书库加 region + 案例库建表 + 种子数据。"""
 import os
 import sys
+from pathlib import Path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pymysql
+from pymysql.constants import CLIENT
 from db_config import DB_CONFIG
 
 
 def run():
-    conn = pymysql.connect(**DB_CONFIG)
+    conn = pymysql.connect(**DB_CONFIG, client_flag=CLIENT.MULTI_STATEMENTS)
     try:
         with conn.cursor() as cur:
             # 1. 文书库加 region
@@ -68,7 +70,15 @@ def run():
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
                 cur.executemany(sql, seed_cases)
-                print(f"  -> 插入了 {len(seed_cases)} 条种子案例")
+
+            print("[4/4] Creating vector synchronization outbox...")
+            outbox_sql = Path(__file__).with_name("vector_sync_outbox.sql").read_text(
+                encoding="utf-8"
+            )
+            cur.execute(outbox_sql)
+            while cur.nextset():
+                pass
+            print("  -> tb_vector_sync_outbox is ready")
 
         conn.commit()
         print("\nDone. 迁移完成。")
