@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import logging
 import sys
+import threading
 from dataclasses import dataclass
 from typing import Callable
 
@@ -11,6 +12,7 @@ import pymysql
 import requests
 
 from config import SF_API_KEY, SF_BASE_URL, SF_EMBED_MODEL
+from core.cancellation import CancellationToken, StreamCancelled
 from db_config import DB_CONFIG
 from tools.milvus_store import MilvusVectorStore
 
@@ -140,9 +142,21 @@ class SiliconFlowEmbeddingClient:
         self.timeout_seconds = timeout_seconds
         self.http_post = http_post
 
-    def embed(self, texts: list[str]) -> list[list[float]]:
+    def embed(
+        self,
+        texts: list[str],
+        timeout_seconds: float | None = None,
+        cancellation: CancellationToken | None = None,
+    ) -> list[list[float]]:
         if not texts:
             return []
+        if cancellation:
+            cancellation.throw_if_cancelled()
+
+        timeout = self.timeout_seconds if timeout_seconds is None else timeout_seconds
+        response = None
+        close = None
+        close_once = None
         try:
             response = self.http_post(
                 f"{self.base_url}/embeddings",
@@ -151,24 +165,58 @@ class SiliconFlowEmbeddingClient:
                     "Content-Type": "application/json",
                 },
                 json={"model": self.model, "input": texts},
-                timeout=self.timeout_seconds,
+                timeout=max(0.001, float(timeout)),
             )
-        except Exception as exc:
-            raise EmbeddingServiceError("Embedding service request failed") from exc
+            close = getattr(response, "close", None)
+            if callable(close):
+                close_lock = threading.Lock()
+                closed = False
 
-        if response.status_code != 200:
-            raise EmbeddingServiceError(
-                f"Embedding service returned HTTP {response.status_code}"
-            )
-        try:
-            items = response.json()["data"]
-            items = sorted(items, key=lambda item: item.get("index", 0))
-            vectors = [item["embedding"] for item in items]
-        except (KeyError, TypeError, ValueError) as exc:
-            raise EmbeddingServiceError("Embedding service returned invalid data") from exc
-        if len(vectors) != len(texts):
-            raise EmbeddingServiceError("Embedding service returned an unexpected vector count")
-        return vectors
+                def close_once():
+                    nonlocal closed
+                    with close_lock:
+                        if closed:
+                            return
+                        closed = True
+                    close()
+
+            if cancellation and close_once:
+                cancellation.register(close_once)
+            if cancellation:
+                cancellation.throw_if_cancelled()
+
+            if response.status_code != 200:
+                raise EmbeddingServiceError(
+                    f"Embedding service returned HTTP {response.status_code}"
+                )
+            try:
+                items = response.json()["data"]
+                items = sorted(items, key=lambda item: item.get("index", 0))
+                vectors = [item["embedding"] for item in items]
+            except (KeyError, TypeError, ValueError) as exc:
+                raise EmbeddingServiceError(
+                    "Embedding service returned invalid data"
+                ) from exc
+            if cancellation:
+                cancellation.throw_if_cancelled()
+            if len(vectors) != len(texts):
+                raise EmbeddingServiceError(
+                    "Embedding service returned an unexpected vector count"
+                )
+            return vectors
+        except StreamCancelled:
+            raise
+        except EmbeddingServiceError:
+            raise
+        except Exception as exc:
+            if cancellation and cancellation.is_cancelled():
+                raise StreamCancelled() from exc
+            raise EmbeddingServiceError("Embedding service request failed") from exc
+        finally:
+            if cancellation and close_once:
+                cancellation.unregister(close_once)
+            if close_once:
+                close_once()
 
 
 class KnowledgeSynchronizer:

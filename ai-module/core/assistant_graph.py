@@ -1,34 +1,64 @@
-"""LangGraph 助手：动态槽位 + 类别化检索。
-route 先按隐患类别（占道/危房/消防通道/高空坠物...）选 slot schema，再决定追问或检索；
-search 用「类别 + 槽位」合成关键词，做类别化检索。
-```
+"""LangGraph 助手：语义理解 + 并行检索 + 报告。
+
+流程：begin_turn -> understand（唯一的事实与决策写入者）-> scope_guard -> route
+      -> direct_reply（回答/最多一个追问）
+      -> search（Send 并行扇出）-> retrieve -> report
+route 只把 understand 定好的 next_action 映射成 Command(goto=...)；
+每个隐患的法规与案例检索并行执行，最后由 reducer 汇聚。
+汇聚后先经 evaluate_retrieval 自评：不达标就让模型改写检索词（rewrite_query）
+回到 search 重查一次（上界 1 次），达标才进 report。
 """
 import asyncio
-import json
-import threading
-from dataclasses import dataclass
-from typing import Generator
+import logging
+import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Annotated, Generator, Literal
 
 from langgraph.graph import StateGraph, END
 from langgraph.config import get_stream_writer
 from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.types import Command, Send, interrupt
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
-from core.assistant_agent import ASSISTANT_SYSTEM
-from core.agent import Agent
-from core.langgraph_state import AssistantState
-from core.cancellation import CancellationToken
-from tools.assistant_tools import ASSISTANT_TOOLS
 from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
-
-_llm = Agent(
-    name="assistant",
-    system_prompt="",
-    tools=ASSISTANT_TOOLS,
-    base_url=MIMO_BASE_URL,
-    api_key=MIMO_API_KEY,
-    model=MIMO_MODEL,
+from core.agent import Agent
+from core.langgraph_state import AssistantState, merge_category_results
+from core.cancellation import CancellationToken, StreamCancelled
+from core.dialogue_understanding import (
+    ask_slot_question as _slot_question_llm,
+    resolve_slot_question,
+    schema_question_for_missing,
+    schema_slot_for_missing,
+    slot_question_targets_missing,
+    understand as _understand_plan,
 )
+from core.dialogue_policy import decide_next_action
+from core.hazard_taxonomy import (
+    ALL_SUBCATEGORY_CODES,
+    HAZARD_TAXONOMY,
+    MAJOR_LABELS,
+    SUBCATEGORY_LABELS,
+    normalize_taxonomy,
+)
+from core.scope_policy import (
+    AMBIGUOUS_RESPONSE,
+    OUT_OF_SCOPE_RESPONSE,
+    covers_emergency_points,
+    decide_scope,
+    emergency_guidance_fallback,
+    emergency_guidance_lead,
+    emergency_guidance_points,
+    emergency_guidance_type,
+)
+from core.case_relevance import NO_MATCH, filter_by_major
+from core.slot_schemas import (
+    get_slot_schema,
+    missing_decision_slots,
+    missing_report_slots,
+)
+from core.stream_guard import QUESTION_DROP, guard_stream, question_limiter
+from core.uncertainty import active_danger_term, assess, echo_slots
+from tools.assistant_tools import ASSISTANT_TOOLS
 
 # report 用不带 tools 的轻量 Agent（流式生成纯文本报告，避免 tools 导致 400）
 _report_llm = Agent(
@@ -40,253 +70,193 @@ _report_llm = Agent(
     model=MIMO_MODEL,
 )
 _TOOL_MAP = {t.name: t for t in ASSISTANT_TOOLS}
-_stream_local = threading.local()
-_PENDING_ADDRESS = {}
+
+logger = logging.getLogger(__name__)
+_RESULT_FIELD = {"search_regulation": "regulation", "search_cases": "case"}
+
+# 危险场景的产物动作（决策 1 + 决策 4）。它和 report_* / answer_* 一样，
+# 是 understand 定好的 next_action，route 只负责映射 —— 决策权仍然只有一处。
+EMERGENCY_ACTION = "emergency_guidance"
 
 STATUS_TEXT = {
+    "begin_turn": "正在准备本轮对话...",
+    "understand": "正在理解您的问题...",
+    "scope_guard": "正在判断问题范围...",
     "route": "正在分析您的咨询...",
-    "clarify": "正在补充信息...",
-    "search": "正在检索法规与案例...",
+    "search": "正在准备检索...",
+    "retrieve": "正在检索「{category}」的法规与案例...",
+    "evaluate_retrieval": "正在核对检索结果...",
+    "rewrite_query": "正在换个检索词再试一次...",
     "report": "正在生成结论...",
+    "after_report": "正在整理结论...",
+    "task_gate": "正在等待你的确认...",
+    "submit_task": "正在创建隐患任务...",
+    "close_task": "正在结束本轮...",
+    "boundary_reply": "正在整理回复...",
+    "smalltalk_reply": "正在整理回复...",
+    "answer_reply": "正在整理回复...",
+    "fallback_reply": "正在生成初步判断...",
+    "emergency_guidance": "正在给出安全处理指引...",
+    "ask_slot_question": "正在整理要问您的信息...",
 }
 
-
-# ====== 类别化槽位 ======
-
-@dataclass
-class Slot:
-    key: str
-    question: str
-    critical: bool = True
-
-CATEGORIES = ("占道", "危房", "消防通道", "高空坠物", "井盖/道路", "电气", "施工", "其他")
-
-SLOT_SCHEMAS: dict[str, list[Slot]] = {
-    "占道": [
-        Slot("behavior", "具体是什么占道？摆摊、还是车辆停放？"),
-        Slot("persistence", "是长期占压还是临时停放？"),
-        Slot("blocked", "是完全堵死还是部分占用？"),
-    ],
-    "危房": [
-        Slot("structure", "房屋有没有裂缝、倾斜或沉降？"),
-        Slot("occupancy", "现在有人在里面居住或使用吗？"),
-        Slot("risk", "有没有明显的即时坍塌风险？"),
-    ],
-    "消防通道": [
-        Slot("blocker", "被什么东西占用了？"),
-        Slot("persistence", "是长期还是临时？"),
-        Slot("impact", "是否影响消防车或人员通行？", critical=False),
-    ],
-    "高空坠物": [
-        Slot("source", "是从哪掉落的（外墙/阳台/广告牌）？"),
-        Slot("target", "下面是人行道还是车行道？", critical=False),
-        Slot("exposure", "有没有围挡或警告标志？", critical=False),
-    ],
-    "井盖/道路": [
-        Slot("defect", "井盖是缺失、破损还是松动？"),
-        Slot("traffic", "是否影响行人或车辆通行？"),
-    ],
-    "电气": [
-        Slot("source", "是漏电、裸露电线还是设备故障？"),
-        Slot("contact", "是否可能被人或车辆接触到？"),
-        Slot("risk", "有没有冒烟或火花等迹象？"),
-    ],
-    "施工": [
-        Slot("site", "施工区域是否做了围挡？"),
-        Slot("safety", "有无安全警示或防护？"),
-        Slot("impact", "是否影响行人或车辆通行？", critical=False),
-    ],
-    "其他": [
-        Slot("describe", "能再具体描述一下这个安全隐患是什么吗？"),
-    ],
-}
-
-CATEGORY_PRIORITY = {
-    "危房": 0, "消防通道": 1, "高空坠物": 2, "电气": 3,
-    "施工": 4, "占道": 5, "井盖/道路": 6, "其他": 9,
-}
-
-def _dedupe(items):
-    return list(dict.fromkeys(items))
-
-def _sort_by_priority(cats):
-    return sorted(cats, key=lambda c: CATEGORY_PRIORITY.get(c, 9))
-
-def _score_category(cat, text):
-    return sum(1 for k in _CATEGORY_KEYWORDS.get(cat, ()) if k in text)
-
-def _infer_categories(text, vision_category=""):
-    # 晚融合：图算图的类别，文本算文本的类别，最后合并（不再图覆盖文）
-    cats = []
-    # 1) 图算一票（如果能映射到已知类别）
-    if vision_category:
-        mapped = _VISION_CATEGORY_MAP.get(vision_category)
-        if mapped:
-            cats.append(mapped)
-    # 2) 文本算一票（关键词打分命中>0）
-    hits = [c for c in CATEGORIES if _score_category(c, text) > 0]
-    cats = _sort_by_priority(_dedupe(cats + hits))
-    if cats:
-        return cats
-    # 3) 两者都无命中 → 才 LLM 兜底
-    return [_llm_classify(text) or "其他"]
+# 状态文案契约（前端也照这个渲染）：
+#   1) 只描述"系统正在做什么"，禁止自夸（"解构现场特征"这类是营销词，不是状态）
+#   2) 长度上限 20 字；改文案必须过 tests/test_status_text.py
+# 上限由最长小类标签（占道经营/乱堆乱放，9 字）决定，不是随手写的数字
+STATUS_MAX_LENGTH = 24
+STATUS_BANNED_WORDS = ("解构", "深度研判", "智能研判", "赋能", "洞察", "强大", "领先")
 
 
-def _find_negated(text):
-    """找出被否定的类别。支持两类句式：
-    - 否定在前："不是占道" / "并非占道"
-    - 类别在前、否定在后："占道不是问题" / "占道不存在" / "占道不对" / "占道根本不是"
+# ====== 检索自评重试环（evaluator-optimizer）======
+# top1 向量分数低于这个值就算检索不够强。0.58 是量出来的：实测 p10 =
+# 0.5426（法规）/ 0.5726（案例），而向量置信门槛 RETRIEVAL_MIN_SCORE = 0.48。
+# 依据：docs/superpowers/specs/2026-09-27-retrieval-retry-loop-design.md
+WEAK_SCORE = 0.58
+
+# 环的上界：一轮最多重试 1 次。判定由代码做，模型只负责改写检索串。
+RETRY_MAX_ATTEMPTS = 1
+
+# 对照实测用的开关：如果实测证明重试没有改善，改成 False 就能整个关掉，
+# 而不是留一段死代码。
+RETRY_ENABLED = True
+
+# 检索程序返回的检索串长度上限（与 _pick_keyword 对齐）
+MAX_RETRIEVAL_KEYWORD = 24
+
+# 图的步数上限。本图最长的合法路径（含一次重试）约 16 步，60 足够宽松。
+# 为什么要显式设：新加的重试环是一条回边，一旦上限失效（例如后来有人把节点注解回基类），
+# 默认的 10007 会让它转到天荒地老并烧掉大量模型调用。宁可快速报错。
+GRAPH_RECURSION_LIMIT = 60
+
+# 是否为“灰色带”多花一次 embedding 取 top1 分数。
+# 分数不在检索文本里，只能另跑一次向量检索；实测单次 ~0.94s（embedding 占大头），
+# 两张表并发后整轮增加约 +0.9s。买到的是：第一步实测的 8 个触发点里有 4 个
+# 只有分数能抓（top1 在 [0.48, 0.58) 的灰色带）。关掉它只剩“完全无结果 /
+# 没有语义命中 / T1 / T2”触发，零额外成本。
+PROBE_TOP1_SCORE = True
+
+
+class AssistantGraphState(AssistantState, total=False):
+    """图实际使用的状态：在共享状态上加检索重试环自己的通道。
+
+    为什么不直接写进 core/langgraph_state.py：这些通道只服务这张图。而且未声明的键
+    会被 LangGraph **静默丢弃**（节点返回未声明键时值不会进 state，已实测），
+    所以计数器必须在此显式声明。
+
+    坑（实测）：LangGraph 按**参数的注解**过滤节点输入。节点参数注解成基类
+    AssistantState 时，这里新增的通道在节点里读到的是 None（写进去的值在
+    state 里，但节点看不见）——环会因此永远不收敛。所以读这些通道的节点
+    （plan_retrieval / evaluate_retrieval / rewrite_query）必须注解成 AssistantGraphState。
     """
-    neg = []
-    for c in CATEGORIES:
-        # 1) 否定在前："不是X" / "并非X"
-        if ("不是" + c) in text or ("并非" + c) in text:
-            neg.append(c)
-            continue
-        # 2) 类别在前、否定在后："X + (不是问题/不存在/不对/根本不是/不是)"
-        pos_c = text.find(c)
-        if pos_c == -1:
-            continue
-        for tail in ("不是问题", "不存在", "不对", "根本不是", "不是"):
-            pos_t = text.find(tail)
-            if pos_t != -1 and pos_c < pos_t:
-                neg.append(c)
-                break
-    return _dedupe(neg)
-
-_SAME_PLACE_WORDS = ("同一处", "同一个地方", "同处", "同一", "一起")
-_SEPARATE_WORDS = ("单独", "分开", "另一条", "新的一条", "不是一起", "不一起", "无关")
+    retrieval_attempts: int          # 本轮已重试几次（0/1）：环的上界靠它
+    retrieval_scores: Annotated[dict, merge_category_results]   # {code: {field: top1 分数}}
+    retrieval_keyword_override: dict  # {code: 改写后的检索串}，只在本轮内有效
+    retrieval_retry_log: list         # 每次触发的 before/after 记录（观测用）
+    retrieval_retry_reason: str       # 本次触发原因（T1/T2/T3），供改写提示词与日志用
 
 
-def _is_separate_answer(text: str) -> bool:
-    return any(w in (text or "") for w in _SEPARATE_WORDS)
+def _status_context(update: dict) -> dict:
+    results = update.get("category_results") or {}
+    category = ""
+    if results:
+        first = next(iter(results))
+        category = SUBCATEGORY_LABELS.get(first, first)
+    return {"category": category or "相关"}
 
 
-def _is_same_place_answer(text: str) -> bool:
-    return any(w in (text or "") for w in _SAME_PLACE_WORDS)
+def status_text(node: str, update: dict | None = None) -> str:
+    """按节点产出状态文案。带上下文的模板用 update 填充，填不上就退化成模板本身。"""
+    template = STATUS_TEXT.get(node, "处理中...")
+    if "{" not in template:
+        return template
+    try:
+        return template.format(**_status_context(update or {}))
+    except (KeyError, IndexError):
+        return "正在检索法规与案例..."
 
 
-def _merge_categories(new_cats, old_cats):
-    return _sort_by_priority(_dedupe(list(old_cats or []) + list(new_cats or [])))
-
+# ====== 类别化槽位（共享定义见 core.slot_schemas） ======
 
 def rebuild_missing(categories, category_slots) -> list[str]:
+    """确定性重算还缺哪些 **A 类（决策级）** 槽；顺序跟随 categories，不依赖旧优先级表。
+
+    A 类缺失才追问；B 类（报告级）缺失不追问，走 rebuild_report_missing 进报告。
+    """
     out = []
     for cat in categories:
-        for s in SLOT_SCHEMAS.get(cat, []):
-            if s.critical and not (category_slots.get(cat, {}).get(s.key) or '').strip():
-                out.append(f"{cat}_{s.key}")
-    return _sort_by_priority(out)
+        for s in missing_decision_slots(cat, category_slots.get(cat) or {}):
+            out.append(f"{cat}_{s.key}")
+    return out
 
-def add_category_slots(state_categories, category_slots, extracted) -> dict:
-    cs = {k: dict(v) for k, v in (category_slots or {}).items()}
-    for cat, slots in (extracted or {}).items():
-        if cat not in state_categories:
-            continue
-        cs.setdefault(cat, {})
-        for k, v in slots.items():
-            if v and str(v).strip():
-                cs[cat][k] = v
-    return cs
 
-def _detect_other_cats(value, from_cat) -> list[str]:
-    if not value:
-        return []
-    return [c for c in CATEGORIES if c != from_cat
-            and any(k in value for k in _CATEGORY_KEYWORDS.get(c, ()))]
+def rebuild_report_missing(categories, category_slots) -> list[str]:
+    """A+B 类缺失 = 报告「仍需确认」的条件分支材料（阶段 4 消费）。
 
-def _relocate(value, from_cat, key, categories, category_slots):
-    # 简化版：只登记"串台"到的类别，不转发填槽、不删源
-    # 防串类别的核心是"别让这个新类别被漏掉"，所以只把它加进 categories 即可
-    hit_cats = _detect_other_cats(value, from_cat)
-    if not hit_cats:
-        return None
-    new_cats = _merge_categories(hit_cats, categories)
-    return {"categories": new_cats, "category_slots": category_slots}
+    本阶段只把字段准备好，不改报告行为。
+    """
+    out = []
+    for cat in categories:
+        for s in missing_report_slots(cat, category_slots.get(cat) or {}):
+            out.append(f"{cat}_{s.key}")
+    return out
 
-_CATEGORY_KEYWORDS = {
-    "占道": ("占道", "摆摊", "摊位", "车占", "停车", "挡盲道", "占盲道", "盲道"),
-    "危房": ("危房", "裂缝", "倾斜", "沉降", "塌", "危楼", "危墙"),
-    "消防通道": ("消防通道", "消防车", "消防", "救援通道"),
-    "高空坠物": ("高空", "坠物", "掉落", "外墙", "广告牌", "瓷砖", "玻璃"),
-    "井盖/道路": ("井盖", "窨井", "路面", "坑", "破损", "塌陷"),
-    "电气": ("漏电", "电线", "短路", "火花", "电缆"),
-    "施工": ("施工", "工地", "开挖", "脚手架", "围挡"),
-}
 
-# 视觉 hazard_category → 我们的类别 映射（vision 优先用）
-_VISION_CATEGORY_MAP = {
-    "建筑施工": "施工", "占道经营": "占道", "道路交通": "井盖/道路",
-    "消防": "消防通道", "建筑结构": "危房", "高空坠物": "高空坠物",
-    "用电安全": "电气", "电气": "电气", "施工": "施工", "占道": "占道",
+def _detect_direct_mode(text: str, vision_summary: str = "") -> str:
+    """只识别问候语。
+
+    这里不再用关键词判定"简单问题"，因为那会在规划器之前短路，
+    让"消火栓坏了算隐患吗"这类问题拿不到检索和报告。
+    语义判断统一交给规划器，由 intent=quick_assessment + dialogue_policy 决定。
+    """
+    value = (text or "").strip().rstrip("！!。？?～~").strip()
+    if vision_summary or not value:
+        return ""
+    if value in {"你好", "您好", "嗨", "哈喽", "在吗", "谢谢", "感谢"}:
+        return "smalltalk"
+    return ""
+
+
+_ROLE_BUILDERS = {
+    "system": SystemMessage,
+    "user": HumanMessage,
+    "assistant": AIMessage,
 }
 
 
-def _llm_extract_slots(message: str, categories: list[str], category_slot_keys: dict) -> dict:
-    prompt = (
-        "你是槽位抽取器。请从用户消息中按类别抽取能填的槽位。只返回 JSON，格式为："
-        '{"类别名": {"槽key": "值或空字符串"}}。\n'
-        "槽位说明：\n" +
-        "\n".join(f" - {cat}: " + ", ".join(keys) for cat, keys in category_slot_keys.items()) +
-        "\n规则：用户消息里明确提到的就填对应槽的简体值；没提到的槽填空字符串；不要编造。\n"
-        '示例：{"消防通道": {"blocker": "私家车", "persistence": "长期", "impact": ""}}\n' +
-        f"用户消息：{message}"
-    )
-    try:
-        resp = _llm._call_llm(
-            [{"role": "system", "content": "你是槽位抽取器"}, {"role": "user", "content": prompt}],
-            cancellation=None,
-        )
-        content = (resp.get("content") or "").strip()
-        # 宽松解析：剥 markdown 代码块，截取 {...} 再 json.loads
-        if "```" in content:
-            content = content.split("```")[1] if content.find("```") < content.rfind("```") else content
-            if content.startswith("json"):
-                content = content[4:]
-        s = content.find("{")
-        e = content.rfind("}")
-        if s != -1 and e != -1:
-            return json.loads(content[s:e+1])
-        return json.loads(content)
-    except Exception:
-        return {}
+def build_turn_input(session_id: str, message: str, vision_summary: str,
+                     selected_major_code: str) -> dict:
+    """本轮只传新增事实；结构化状态由 checkpointer 持有，不再每轮清空。"""
+    return {
+        "session_id": session_id,
+        "messages": [HumanMessage(content=message)],
+        "vision_summary": vision_summary,
+        "selected_major_code": selected_major_code,
+    }
 
 
-def _llm_classify(text: str) -> str:
-    prompt = (
-        "请判断下面这句话主要反映的城市安全隐患类别，只返回一个类别词："
-        + " / ".join(CATEGORIES) + "\n文本：" + text
-    )
-    try:
-        resp = _llm._call_llm(
-            [{"role": "system", "content": "你是城市安全隐患分类器"}, {"role": "user", "content": prompt}],
-            cancellation=None,
-        )
-        content = (resp.get("content") or "").strip()
-    except Exception:
-        return "其他"
-    return next((c for c in CATEGORIES if c in content), "其他")
+def seed_messages(history) -> list:
+    """冷启动（进程重启或首次进入该 thread）时，用会话历史给图状态打底。"""
+    seeded = []
+    for item in history or []:
+        builder = _ROLE_BUILDERS.get((item or {}).get("role"))
+        if builder is not None:
+            seeded.append(builder(content=(item or {}).get("content", "")))
+    return seeded
 
 
-def _extract_vision_category(vision_summary: str) -> str:
-    if not vision_summary:
-        return ""
-    try:
-        s = vision_summary
-        if "[" in s:
-            s = s[s.index("{"):]
-        data = json.loads(s)
-        return str(data.get("hazard_category", ""))
-    except Exception:
-        return ""
+def begin_turn(state: AssistantState) -> dict:
+    """重置每轮标志位。
 
-
-def _join_text(state) -> str:
-    return " ".join(
-        getattr(m, "content", "") for m in state.get("messages", [])
-        if isinstance(m, (HumanMessage, AIMessage))
-    )
-
+    只从 START 进入；task_gate 中断回跳时直接走 understand，
+    因此不会把"本轮已经问过"这件事清掉。
+    """
+    # guidance_emitted 故意不在这里复位：它是"这次危险事件已经提醒过"，
+    # 由 understand 在危险结束时复位，否则同一场火灾会每轮重复贴指引。
+    return {
+        "task_offered": False,
+        "asked_question_last_turn": False,
+    }
 
 
 def _latest_user_text(state) -> str:
@@ -297,256 +267,1807 @@ def _latest_user_text(state) -> str:
     return ""
 
 
-def route(state: AssistantState) -> dict:
-    # 识别只拿本轮最新用户消息（避免历史旧类别被全文捞回）
+def _plan_issues(plan: dict) -> list[dict]:
+    """规划器契约以 issues 为准。
+
+    若规划器只给了旧的 categories/category_slots 形状，就在这里确定性地补成 issues，
+    避免 understand 因为上下游形状漂移而整体失效。
+    """
+    issues = [
+        issue for issue in (plan.get("issues") or [])
+        if issue.get("subcategory_code")
+    ]
+    if issues:
+        return issues
+    slots_by_category = plan.get("category_slots") or {}
+    legacy = []
+    for raw in plan.get("categories") or []:
+        pair = normalize_taxonomy(raw)
+        if not pair or pair[1] not in ALL_SUBCATEGORY_CODES:
+            continue
+        legacy.append({
+            "major_code": pair[0],
+            "subcategory_code": pair[1],
+            "slots": dict(
+                slots_by_category.get(raw) or slots_by_category.get(pair[1]) or {}
+            ),
+        })
+    return legacy
+
+
+def _merge_persisted_slots(issues: list[dict], persisted: dict) -> list[dict]:
+    """把图状态里跨轮保留下来的槽位折叠进本轮规划结果（增量，不从头重抽）。"""
+    merged = []
+    for issue in issues:
+        code = issue.get("subcategory_code")
+        kept = dict(persisted.get(code) or {})
+        kept.update({k: v for k, v in (issue.get("slots") or {}).items() if v})
+        issue = dict(issue)
+        issue["slots"] = kept
+        merged.append(issue)
+    return merged
+
+
+_CAUTIOUS_NOTE = (
+    "（以下是初步判断：有一条现场信息我无法从你的描述中确认，建议先核实再上报。）"
+)
+
+
+GAS_GUIDANCE_LINE = (
+    "如果闻到煤气味或燃气味：立即开窗通风、关闭燃气总阀，"
+    "不要开关任何电器、不要使用明火，先撤到室外再联系燃气公司抢修；"
+    "情况紧急或已有人不适，请立即拨打 119（救援）或 110。"
+)
+_GAS_DANGER_TERMS = ("煤气味", "燃气味", "煤气泄漏", "燃气泄漏", "漏气")
+
+
+def guidance_line(text: str) -> str:
+    """危险词决定用哪条指引：燃气场景需要关阀开窗那几句，泛用的 119 指引不够。"""
+    term = active_danger_term(text)
+    if term and term in _GAS_DANGER_TERMS:
+        return GAS_GUIDANCE_LINE
+    return GUIDANCE_LINE
+
+
+def prepend_guidance(text: str, state: AssistantState) -> str:
+    """安全指引由代码保证；模型自己已经说了 119 就不重复。
+
+    图内已无消费者（危险输入一律走 emergency_guidance 节点），这里是**非图调用者的安全网**：
+    直接调用 answer_reply() 的路径仍靠它把指引前置。guidance_emitted 用来判「这次危险事件
+    是否已经发过」，避免同一场危险重复贴。
+    """
+    if not state.get("danger_veto") or state.get("guidance_emitted"):
+        return text
+    if "119" in (text or ""):
+        return text
+    return guidance_line(_latest_user_text(state)) + "\n\n" + (text or "")
+
+
+def prepend_interpretation(text: str, state: AssistantState) -> str:
+    if state.get("uncertainty_level") != "cautious":
+        return text
+    if _CAUTIOUS_NOTE in (text or ""):
+        return text
+    return _CAUTIOUS_NOTE + "\n\n" + (text or "")
+
+
+def _reply_prefix(state: AssistantState) -> str:
+    """报告是先流式输出再落 draft，无法事后去重，所以这里只前置、不判重。
+
+    同 prepend_guidance：图内危险路径不会走到这里（走 emergency_guidance），
+    它是直接调用 report() 的非图路径的安全网。
+    """
+    parts = []
+    if state.get("danger_veto") and not state.get("guidance_emitted"):
+        parts.append(guidance_line(_latest_user_text(state)))
+    if state.get("uncertainty_level") == "cautious":
+        parts.append(_CAUTIOUS_NOTE)
+    return ("\n\n".join(parts) + "\n\n") if parts else ""
+
+
+GUIDANCE_LINE = (
+    "如果现场正在起火、有人被困、燃气泄漏，或存在触电、坍塌等即时危险，"
+    "请先确保自身安全并立即拨打 119（火警/救援）或 110，不要为了补全信息而停留。"
+)
+
+
+PREMISES_NOTES = {
+    "indoor": "（这属于户内问题：城市隐患上报主要面向公共部位，建议先联系物业或专业维修处理。）",
+    "indoor_risk": "（这属于户内问题，但可能影响公共安全，建议同时联系物业或燃气公司；情况紧急请先拨打 119。）",
+}
+INDOOR_TASK_REMINDER = "（提醒：这属于户内问题，上报后通常仍需你自行联系物业或燃气公司处理。）"
+
+
+def task_invitation_question(state) -> str:
+    """建任务邀请的唯一出口：户内时附带一句提醒。"""
+    question = "需要我帮你在系统建一条隐患任务吗？"
+    if ((state or {}).get("premises_scope") or "public") in PREMISES_NOTES:
+        question += "\n\n" + INDOOR_TASK_REMINDER
+    return question
+
+
+def _major_label(code: str) -> str:
+    return MAJOR_LABELS.get(code or "", code or "")
+
+
+def _major_subcategory_labels(major_code: str) -> list[str]:
+    for item in HAZARD_TAXONOMY:
+        if item["code"] == major_code:
+            return [label for _code, label in item["subcategories"]]
+    return []
+
+
+def _in_major_question(major_code: str) -> str:
+    """类内问句由代码生成：它只是把小类表读出来，不需要模型。"""
+    label = _major_label(major_code)
+    options = _major_subcategory_labels(major_code)[:3]
+    if not options:
+        return "具体是哪一类%s隐患？" % label
+    return "具体是哪一类「%s」隐患？比如%s。" % (label, "、".join(options))
+
+
+def _scope_notice(locked_major: str, other_major: str, tracking: str) -> str:
+    """越界只给通知：不改锁、不改小类、不发问句。"""
+    return (
+        "（这是「%s」范围的对话，刚才那句更像是「%s」类的问题。"
+        "如果确实是这一类，建议另开一个对话并选择对应大类；"
+        "如果还是「%s」的问题，直接继续补充就行。）"
+        % (_major_label(locked_major), _major_label(other_major), tracking)
+    )
+
+
+def understand(state: AssistantState, config=None) -> dict:
+    """本轮唯一的结构化事实写入者；下一步动作也在这里定，route 只做去向映射。
+
+    一条会话一个活跃隐患：
+      - 大类一旦确定就锁死，只有前端改选才能改；
+      - 小类只有用户主动纠正（intent=correction）才能改；
+      - 每一轮都拿用户这句话去抽**当前锁定类别**的槽位（哪怕这句话在讲别的隐患）。
+    """
     user_text = _latest_user_text(state)
-    full_text = _join_text(state)
-    vision_cat = _extract_vision_category(state.get("vision_summary", ""))
+    vision_summary = state.get("vision_summary", "")
+    selected_major_code = state.get("selected_major_code", "")
+    source_messages = list(state.get("messages") or [])
+    prev_major = state.get("locked_major") or ""
+    prev_sub = state.get("locked_subcategory") or ""
+    lock_keep = {
+        "locked_major": prev_major,
+        "locked_subcategory": prev_sub,
+        "premises_scope": state.get("premises_scope") or "public",
+    }
 
-    # 识别（可能多个）类别，并并进已有清单（去重 + 按优先级）
-    new_cats = _infer_categories(user_text, vision_cat)
-    old_cats = list(state.get("categories") or [])
-    negated = _find_negated(user_text)
-    if negated:
-        new_cats = [c for c in new_cats if c not in negated]
-    pending_prev = list(state.get("pending_categories") or [])
-    pending_out = pending_prev
-    relationship_out = ""
-    if pending_prev:
-        # 上轮 meta 在等用户确认：先按本轮回答落子
-        if _is_separate_answer(user_text):
-            # SWITCH：焦点切到待定类别
-            cats = _merge_categories(new_cats, pending_prev)
-            pending_out = []
-            relationship_out = "switch"
-        elif _is_same_place_answer(user_text):
-            # ADD：待定并入已有清单
-            cats = _merge_categories(new_cats, old_cats + pending_prev)
-            pending_out = []
-            relationship_out = "add"
-        elif negated:
-            # 用户给了明确修正，待定问题已无意义
-            cats = [c for c in old_cats if c not in negated]
-            cats = _merge_categories(new_cats, cats)
-            pending_out = []
-            relationship_out = "switch"
-        else:
-            # 回答模糊：待定继续挂起，本轮仍不并入待定类别
-            cats = _merge_categories([c for c in new_cats if c not in pending_prev], old_cats)
-            relationship_out = "pending"
-    elif negated:
-        # 替换/删除：先删掉被否定的旧类别，再并上本句肯定的新类别
-        cats = [c for c in old_cats if c not in negated]
-        cats = _merge_categories(new_cats, cats)
-        relationship_out = "switch"
+    # 一、危险场景的产物是「应急指引」（emergency_guidance 节点）：安全文本由它按类型
+    # 生成、再由代码核对必含要点。这里**不再**提前发那句通用话 —— 它对火灾和后面的
+    # 专属指引重复，对地震还把类型列举错了（那串词里根本没有地震）。
+    # 取舍（有意）：understand 原来在调模型之前就把话发出去了，即时反馈更好；改完之后
+    # 要等 emergency_guidance 吐文本才有人话。换来的是安全文本只有一个出处，不会再出现
+    # 「提前那句」与「专属指引」自相矛盾。
+    announced = bool(state.get("guidance_emitted"))
+    empty = {
+        "issues": [], "missing": [], "clarification_question": "",
+        "asked_question_last_turn": False,
+        # 阶段 2 校验：missing 非空却没问出问题（按设计不问 / 该问没问），每轮重置
+        "question_missing": [], "question_missing_reason": "",
+        "question_source": "", "question_dropped": "",
+        # 检索重试环按轮重置：每轮最多重试一次，且上一轮改写的检索串不外溢。
+        # 放在这里是因为 empty 会被三个返回路径共用，而 understand 是唯一的每轮事实写入者。
+        "retrieval_attempts": 0,
+        "retrieval_keyword_override": {},
+    }
+    if _detect_direct_mode(user_text, vision_summary):
+        verdict = assess({}, source_messages, vision_summary)
+        return {
+            **empty, **lock_keep,
+            "direct_mode": "smalltalk",
+            "dialogue_plan": {},
+            # 危险优先于寒暄：正在发生的危险一律走应急指引产物
+            "next_action": EMERGENCY_ACTION if verdict["danger_veto"] else "answer_now",
+            "report_mode": "none",
+            **verdict,
+            "guidance_emitted": announced if verdict["danger_veto"] else False,
+        }
+
+    # 只在已锁定小类时注入「已知事实 + 仍缺的决策级信息」：没有锁定时不存在
+    # 「这条隐患缺什么」，塞一段空上下文只会让规划器以为有活跃隐患。
+    planner_context = {}
+    if prev_sub:
+        persisted = dict((state.get("category_slots") or {}).get(prev_sub) or {})
+        planner_context = {
+            "missing": [s.key for s in missing_decision_slots(prev_sub, persisted)],
+            "known_slots": persisted,
+            "subcategory_code": prev_sub,
+        }
+    plan = _understand_plan(
+        source_messages, vision_summary, selected_major_code, **planner_context
+    )
+    if not plan or not plan.get("ok"):
+        verdict = assess({}, source_messages, vision_summary)
+        announced = announced or bool(verdict["danger_veto"])
+        return {
+            **empty, **lock_keep,
+            "dialogue_plan": {},
+            "categories": [],
+            "category_slots": dict(state.get("category_slots") or {}),
+            # 规划器挂了也可能正在危险中（漏词的紧急消息）：产物仍然是应急指引
+            "next_action": EMERGENCY_ACTION if verdict["danger_veto"] else "answer_now",
+            "report_mode": "none",
+            "direct_mode": "",
+            "policy_reason": "planner_failed",
+            **verdict,
+            "guidance_emitted": announced if verdict["danger_veto"] else False,
+        }
+
+    issues = _merge_persisted_slots(
+        _plan_issues(plan), state.get("category_slots") or {}
+    )
+    # 复述问题不算答过：清掉这类槽，它们会自然落回 missing。
+    echoes = echo_slots(issues)
+    for issue in issues:
+        for item in echoes.get(issue["subcategory_code"], []):
+            (issue.get("slots") or {}).pop(item.split("=", 1)[0], None)
+
+    # 二、定大类：前端是唯一权威（中途改选也在这里生效）
+    frontend_major = (selected_major_code or "").strip()
+    correction = plan.get("intent") == "correction"
+    frontend_changed = bool(frontend_major) and frontend_major != prev_major
+    # 模型"真正认为"的大类：它可能为了配合前端提示而把 issues 写成该大类，
+    # 所以不能只看 issues，必须读 perceived_major；没有时再退回 issues。
+    planner_major = (plan.get("perceived_major") or "").strip() or next(
+        (i.get("major_code") for i in issues if i.get("major_code")), "")
+    if frontend_major:
+        locked_major = frontend_major
+    elif correction and planner_major:
+        locked_major = planner_major          # 自动判断模式下，用户纠正可以改大类
     else:
-        fresh = [c for c in new_cats if c not in old_cats]
-        if old_cats and fresh:
-            # 跨轮首次发现新类别：只登记待定，本轮不并入
-            pending_out = fresh
-            relationship_out = "pending"
-            cats = _sort_by_priority(_dedupe(old_cats))
+        locked_major = prev_major or planner_major
+
+    # 三、定小类：只在类内匹配；能匹配到就锁，匹配不到就留空，绝不硬造
+    # 越界看"模型认为属于哪个大类"，不看它是否配合提示写了类内的 issues：
+    # 配合写出来的那条本身就是硬填，不能采信。
+    out_of_major = (
+        bool(locked_major) and bool(planner_major) and planner_major != locked_major
+    )
+    in_major = [] if out_of_major else [
+        i for i in issues if i.get("major_code") == locked_major
+    ]
+    relock_sub = correction or frontend_changed or not prev_sub
+    locked_subcategory = prev_sub
+    focus = None
+    if in_major:
+        candidate = in_major[0]
+        if relock_sub:
+            locked_subcategory = candidate["subcategory_code"]
+        if candidate["subcategory_code"] == locked_subcategory:
+            focus = candidate
+    if focus is None and locked_subcategory:
+        # 锁还在：用锁定的小类继续累积槽位（跨轮补充信息靠这里回捞）
+        focus = {"major_code": locked_major,
+                 "subcategory_code": locked_subcategory, "slots": {}}
+    issues = [focus] if focus else []
+
+    if out_of_major:
+        _emit_chunk(_scope_notice(
+            locked_major, planner_major,
+            SUBCATEGORY_LABELS.get(locked_subcategory, _major_label(locked_major)),
+        ))
+
+    categories = [issue["subcategory_code"] for issue in issues]
+    category_slots = dict(state.get("category_slots") or {})
+    for issue in issues:
+        category_slots[issue["subcategory_code"]] = dict(issue.get("slots") or {})
+    missing = rebuild_missing(categories, category_slots)
+    missing_keys = set(missing)
+    report_missing_keys = set(rebuild_report_missing(categories, category_slots))
+    for issue in issues:
+        code = issue["subcategory_code"]
+        issue["missing"] = [
+            slot.key for slot in get_slot_schema(code)
+            if f"{code}_{slot.key}" in missing_keys
+        ]
+        # A+B 类缺失：B 类不追问，但报告的条件分支要用（阶段 4）。
+        issue["report_missing"] = [
+            slot.key for slot in get_slot_schema(code)
+            if f"{code}_{slot.key}" in report_missing_keys
+        ]
+
+    plan = dict(plan)
+    plan["issues"] = issues
+    # 二、模型判定的危险（词表漏了）：不在这里发话，只把结果记进状态 ——
+    # 安全文本统一由 emergency_guidance 按类型生成并核对覆盖。
+    verdict = assess(plan, source_messages, vision_summary)
+    if echoes:
+        verdict["uncertainty_signals"] = list(verdict["uncertainty_signals"]) + [
+            "echo_slot:%s" % item for items in echoes.values() for item in items
+        ]
+    announced = announced or bool(verdict["danger_veto"])
+    # 户内/公共边界：只影响一句说明，不影响分类、不挡流程
+    premises_scope = (plan.get("premises_scope") or "public").strip() or "public"
+    if premises_scope in PREMISES_NOTES and state.get("premises_scope") != premises_scope:
+        _emit_chunk(PREMISES_NOTES[premises_scope] + "\n\n")
+    unverified = _unverified_by_issue(verdict["ungrounded_slots"])
+    for issue in issues:
+        issue["unverified"] = unverified.get(issue["subcategory_code"], [])
+    no_questions = verdict["danger_veto"] or verdict["uncertainty_level"] == "cautious"
+    policy = decide_next_action(plan, {
+        **state, "user_text": user_text, "missing": missing, **verdict,
+    })
+    action = policy.get("action") or "answer_now"
+    report_mode = policy.get("report_mode", "none")
+    if action in {"report_full", "report_preliminary"} and issues:
+        # 只有一条隐患了：全 → 完整报告，不全 → 初步报告（不再有 mixed）
+        if any(issue.get("missing") or issue.get("unverified") for issue in issues):
+            action, report_mode = "report_preliminary", "preliminary"
+    if no_questions:
+        if action in {"ask_critical_question", "answer_with_optional_question"}:
+            action = "report_preliminary" if issues else "answer_now"
+            report_mode = "preliminary" if issues else "none"
+        if report_mode == "full":
+            action, report_mode = "report_preliminary", "preliminary"
+    question = "" if no_questions else (policy.get("question") or "")
+    question_source = "understand" if question else ""
+    # 缺口 2 规则：A 类决策级缺失为空 → 丢弃模型/策略给的问句。
+    # 这是「B 类不追问」的真保证 —— 缺的只是报告级/装饰级信息时不该消耗用户耐心。
+    # 例外（有意）：下面那段代码生成的「类内枚举问句」不受影响 —— 它针对的是
+    # 「连小类都定不下来」，那时 missing 必然为空，丢了会话就卡死。
+    question_dropped = ""
+    if question and not missing:
+        question_dropped = "no_decision_class_missing"
+        logger.info("question_dropped reason=%s action=%s question=%s",
+                    question_dropped, action, question)
+        question, question_source = "", ""
+    # 四、类内但说不清是哪一类 → 问一句（代码生成的枚举问句）
+    if not out_of_major and not issues and locked_major and not locked_subcategory \
+            and not no_questions:
+        action, report_mode, question = "ask_critical_question", "none", _in_major_question(locked_major)
+        question_source = "understand"
+    if verdict["danger_veto"]:
+        # 决策 1 + 决策 4：危险场景的产物是「应急指引」而不是报告 ——
+        # 不进 search/report（因此也不会走到建任务闸门）、不追问、也不做安全确认。
+        # 放在最后覆盖：上面那些"降级成初步报告"的分支只对"事实存疑"生效。
+        action, report_mode, question = EMERGENCY_ACTION, "none", ""
+        question_source = ""
+    # 阶段 5a：问句是否指向 A 类缺失 —— 只告警、不改写。
+    # 本轮要进 ask_slot_question 时，由那个节点统一审（它才是最终交付的那一句）；
+    # 否则审这里定下来的问句（规划器自带的、或代码生成的类内枚举问句 —— 后者
+    # missing 必然为空，会自然落到「没有该问的题材」，不会被误报）。
+    if not _will_ask_slot_question(action, missing, verdict["danger_veto"]):
+        question_target_audit(
+            question=question,
+            target_slot=str(plan.get("question_target") or ""),
+            missing_keys=_decision_keys_of(issues, locked_subcategory),
+            origin=question_source or "understand",
+            code=locked_subcategory,
+        )
+    # 阶段 2 校验（不静默）：missing 非空却没问出问题。
+    # reason 区分「按设计不问」（危险 / 事实存疑 / 出报告）与「该问没问」，后者报警告。
+    question_missing = []
+    question_missing_reason = ""
+    if missing and not question:
+        question_missing = list(missing)
+        if verdict["danger_veto"]:
+            question_missing_reason = "danger_veto"
+        elif verdict["uncertainty_level"] == "cautious":
+            question_missing_reason = "cautious"
+        elif action in {"report_full", "report_preliminary"} or report_mode != "none":
+            question_missing_reason = "report"
         else:
-            # 新增：并集（首轮多类别直接 ADD）
-            cats = _merge_categories(new_cats, old_cats)
-            relationship_out = ""
+            question_missing_reason = "planner_no_question"
+        log = logger.warning if question_missing_reason == "planner_no_question" else logger.info
+        log("question_missing reason=%s action=%s missing=%s",
+            question_missing_reason, action, question_missing)
 
-    # 同步清理 category_slots 里已不在 cats 中的旧类别（切换/删除时清掉旧槽）
-    _prev = dict(state.get("category_slots") or {})
-    _valid = {k: dict(v) for k, v in _prev.items() if k in cats}
-    # LLM 抽槽：用全文（含历史），信息越全越好
-    slot_keys = {c: [s.key for s in SLOT_SCHEMAS.get(c, [])] for c in cats}
-    extracted = _llm_extract_slots(full_text, cats, slot_keys)
-    category_slots = add_category_slots(cats, _valid, extracted)
-
-    # 分流转发：防止串类别（如占道槽值里提到 "消防" -> 转到消防）
-    categories_after = cats
-    for from_cat in list(category_slots.keys()):
-        for key in list(category_slots[from_cat].keys()):
-            val = category_slots[from_cat].get(key)
-            if val:
-                res = _relocate(str(val), from_cat, key, categories_after, category_slots)
-                if res:
-                    categories_after = res["categories"]
-                    category_slots = res["category_slots"]
-
-    # 代码重算还缺哪些 critical 槽
-    missing = rebuild_missing(categories_after, category_slots)
-    can_search = (not missing) or (state.get("clarify_count", 0) >= 3) or state.get("clarify_stopped", False)
-
-    ret = {
-        "categories": categories_after,
+    reason = policy.get("reason", "")
+    if no_questions:
+        reason = "%s | %s" % (reason, ",".join(verdict["uncertainty_signals"])[:180])
+    return {
+        **empty,
+        "dialogue_plan": plan,
+        "intent": plan.get("intent", ""),
+        "issues": issues,
+        "categories": categories,
         "category_slots": category_slots,
         "missing": missing,
-        "route_decision": "search" if can_search else "clarify",
-        "pending_categories": pending_out,
-        "relationship": relationship_out,
+        "locked_major": locked_major,
+        "locked_subcategory": locked_subcategory,
+        "suggested_major_code": planner_major if out_of_major else "",
+        "immediate_danger": bool(plan.get("immediate_danger")),
+        "premises_scope": premises_scope,
+        "selected_major_code": plan.get("selected_major_code", selected_major_code),
+        "major_mismatch": bool(plan.get("major_mismatch")),
+        "clarification_question": question,
+        "question_source": question_source,
+        "question_dropped": question_dropped,
+        "optional_question": bool(policy.get("optional_question")) and not no_questions,
+        "next_action": action,
+        "report_mode": report_mode,
+        "policy_reason": reason,
+        "direct_mode": "",
+        "asked_question_last_turn": bool(question),
+        **verdict,
+        "guidance_emitted": announced if verdict["danger_veto"] else False,
+        "question_missing": question_missing,
+        "question_missing_reason": question_missing_reason,
     }
-    if categories_after and not state.get("active_category"):
-        ret["active_category"] = categories_after[0]
-        ret["category_index"] = 0
-    return ret
 
 
-def route_decider(state: AssistantState) -> str:
-    if state.get("pending_categories"):
-        return "meta_clarify"
-    if state.get("relationship") == "pending" and state.get("missing"):
-        return "meta_clarify"
-    if (not state.get("missing")) or state.get("clarify_count", 0) >= 3 or state.get("clarify_stopped"):
-        return "search"
-    return "clarify"
+_SCOPE_DIRECT_MODES = ("smalltalk",)
 
-# ---------- clarify（问该类别下一个缺失槽位） ----------
-def _llm_phrase(slot_keys, context) -> str:
-    prompt = (
-        "请把下面要问的槽位，措辞成一句自然、友好、一次只问一个问题的中文问句（不要列序号）。\n"
-        f"当前上下文：{context}\n要问的槽：{'、'.join(slot_keys)}\n只输出问句。"
+
+def scope_guard(state: AssistantState) -> dict:
+    """Keep the assistant inside its city-safety hazard scope."""
+    if state.get("danger_veto"):
+        # 正在发生的危险：不能被范围护栏降级成"越界拒绝"，
+        # 也不改 understand 定好的动作（它已经禁掉了追问）。
+        return {"scope": "emergency", "scope_reason": "danger veto"}
+    if state.get("direct_mode") in _SCOPE_DIRECT_MODES:
+        return {}
+    plan = state.get("dialogue_plan") or {}
+    user_text = _latest_user_text(state)
+    scope_key = f"{state.get('session_id', '')}|{len(state.get('messages') or [])}|{user_text}"
+    decision = decide_scope(plan, user_text, scope_key=scope_key)
+    scope = decision.get("scope", "hazard")
+    if scope == "hazard":
+        return {"scope": "hazard", "scope_reason": decision.get("reason", "")}
+    if scope == "emergency":
+        # 理论上不可达：危险信号已在上面短路。留着是为了那条不变式 ——
+        # 任何 emergency 都绝不能被降级成"越界拒答"，也绝不能被模板替换掉上下文。
+        return {"scope": "emergency", "scope_reason": decision.get("reason", "")}
+    mode_map = {
+        "ambiguous": "anchor_domain",
+        "out_of_scope": "out_of_scope",
+        "smalltalk": "smalltalk",
+    }
+    return {
+        "scope": scope,
+        "scope_reason": decision.get("reason", ""),
+        "scope_response": decision.get("response", ""),
+        "direct_mode": mode_map.get(scope, "out_of_scope"),
+        # 越界/模糊/紧急一律只回答，不允许走到检索
+        "next_action": "answer_now",
+        "report_mode": "none",
+    }
+
+
+def route(state: AssistantState) -> Command[Literal[
+        "search", "emergency_guidance", "ask_slot_question", "boundary_reply",
+        "smalltalk_reply", "answer_reply", "fallback_reply"]]:
+    """纯映射：understand 已经定好下一步动作，这里只决定去哪个节点。"""
+    if state.get("next_action") == EMERGENCY_ACTION:
+        return Command(goto="emergency_guidance")
+    if state.get("next_action") in {"report_full", "report_preliminary"}:
+        return Command(goto="search")
+    if _should_ask_slot_question(state):
+        return Command(goto="ask_slot_question")
+    return Command(goto=_reply_destination(state))
+
+
+def _reply_destination(state: AssistantState) -> str:
+    """回复分支的唯一判据。
+
+    顺序与重构前的 direct_reply **逐条对齐**：
+    边界模板（direct_mode）先于模型回答，模型回答先于寒暄，最后才是兜底。
+    改动这里就等于改动分发优先级，必须同时改 tests/test_reply_routing.py。
+    """
+    mode = state.get("direct_mode")
+    if mode in ("anchor_domain", "out_of_scope"):
+        return "boundary_reply"
+    if (state.get("dialogue_plan") or {}).get("ok"):
+        return "answer_reply"
+    if mode == "smalltalk":
+        return "smalltalk_reply"
+    return "fallback_reply"
+
+
+_ASK_SLOT_ACTIONS = ("ask_critical_question", "answer_with_optional_question")
+
+
+def _decision_slot_keys(state: AssistantState) -> list:
+    """当前锁定小类还缺的 A 类槽 key（与 understand 的 rebuild_missing 同源，只读）。"""
+    code = str(state.get("locked_subcategory") or "")
+    if not code:
+        return []
+    slots = (state.get("category_slots") or {}).get(code) or {}
+    return [slot.key for slot in missing_decision_slots(code, slots)]
+
+
+def _will_ask_slot_question(action, missing, danger_veto: bool) -> bool:
+    """这一轮会不会进 ask_slot_question 节点。
+
+    understand 与节点共用同一判据：本轮要进节点时，问句由节点统一审；
+    否则两处各审一遍，同一个「指向不明」被报两次，告警就被淹了。
+    """
+    return bool(action in _ASK_SLOT_ACTIONS and missing and not danger_veto)
+
+
+def _should_ask_slot_question(state: AssistantState) -> bool:
+    """只在「要追问 且 A 类缺失非空」的轮次进新节点。
+
+    G1 实测 73% 的输入 missing 为空 —— 普通轮次不进这个节点，也就不多一次模型调用。
+    """
+    return _will_ask_slot_question(state.get("next_action"), state.get("missing"),
+                                  bool(state.get("danger_veto")))
+
+
+def ask_slot_question(state: AssistantGraphState, config=None) -> Command:
+    """第 1 轮的问句来源：只读事实、只写问句。
+
+    为什么需要它：`missing` 注入只对第 2 轮及以后生效 —— 第 1 轮的锁定小类是规划器
+    跑完之后才定的。实测（阶段 2）：首轮「小区消防通道长期被私家车占用」时规划器
+    问的是 impact（B 类），而真正缺的 A 类是 persistence。
+
+    三级降级：本节点产出的问句（须自报 target_slot 命中 A 类缺失）→ understand 自带
+    问句 → 槽位 schema 的固定问句。固定兜底是阶段 5 的删除对象，这轮必须留着。
+    """
+    if not _should_ask_slot_question(state):
+        return Command(goto=_reply_destination(state))
+    code = str(state.get("locked_subcategory") or "")
+    keys = _decision_slot_keys(state)
+    if not keys:
+        return Command(goto=_reply_destination(state))
+    slots = dict((state.get("category_slots") or {}).get(code) or {})
+    candidate = _slot_question_llm(
+        missing=keys, known_slots=slots, subcategory_code=code,
+        user_text=_latest_user_text(state),
+    ) or {}
+    fixed = schema_question_for_missing(keys, code)
+    question, source = resolve_slot_question(
+        candidate.get("question"), candidate.get("target_slot"),
+        keys, state.get("clarification_question"), fixed,
     )
-    try:
-        resp = _llm._call_llm(
-        [{"role": "system", "content": "你是澄清问句生成器"}, {"role": "user", "content": prompt}],
-        cancellation=None,
-    )
-        return (resp.get("content") or "").strip() or "能再具体说说吗？"
-    except Exception:
-        return "能再具体说说吗？"
+    logger.info("slot_question source=%s target=%s missing=%s",
+                source, candidate.get("target_slot", ""), keys)
+    # 阶段 5a：问句是否指向 A 类缺失 —— 所有问句来源共用的一处核对（只告警，不改写）。
+    # 目标槽按优先级取：第 1 级自报的 target_slot → 文本正好等于某个缺失槽的固定问句
+    # （第 3 级，以及第 2 级走 dialogue_policy 退回固定串的那一种）→ 规划器自报的
+    # question_target（第 2 级自有措辞）。三级都取不到就是判不出来 → 告警，不硬猜。
+    target = str(candidate.get("target_slot") or "") if source == "ask_slot_question" else ""
+    if not target:
+        target = _schema_slot_of_text(question, keys, code) or str(
+            (state.get("dialogue_plan") or {}).get("question_target") or "")
+    question_target_audit(question=question, target_slot=target, missing_keys=keys,
+                          origin=source, code=code)
+    # 可观测（阶段 5）：要盯的是「用户会不会看到死板的固定串」，不是「哪一级给的」。
+    # 因为第 2 级（understand 自带问句）有时本身就是 dialogue_policy._question_for_missing
+    # 退回的固定串 —— 端到端实测见过这种「穿着 understand 外衣的第 3 级」。
+    # 所以判据取「交付问句是否等于固定串」，与 source 无关。
+    if question and question == fixed:
+        logger.warning("slot_question_fixed_string source=%s target=%s missing=%s",
+                       source, candidate.get("target_slot", ""), keys)
+    return Command(goto=_reply_destination(state), update={
+        "clarification_question": question,
+        "question_source": source,
+        "asked_question_last_turn": bool(question),
+    })
 
 
-def clarify(state: AssistantState) -> dict:
-    cats = state.get("categories") or []
-    active = state.get("active_category") or (cats[0] if cats else "其他")
-    missing = state.get("missing") or []
-    # 代码选槽：优先当前类别缺槽，取 top1-2
-    active_slots = [m for m in missing if m.startswith(active + "_")]
-    chosen = active_slots[:2] if active_slots else missing[:2]
-    # 如果实际改问别的类别，把 active_category/category_index 一起切过去
-    next_active = active
-    if chosen and "_" in chosen[0]:
-        next_active = chosen[0].split("_", 1)[0] or active
-    next_index = state.get("category_index", 0)
-    if next_active in cats:
-        next_index = cats.index(next_active)
-    # LLM 措辞成自然问句
-    question = _llm_phrase(chosen, next_active)
-    msgs = list(state.get("messages", [])) + [AIMessage(content=question)]
-    ret = {"messages": msgs, "relationship": "", "clarify_count": state.get("clarify_count", 0) + 1}
-    if next_active != state.get("active_category") or next_index != state.get("category_index", 0):
-        ret["active_category"] = next_active
-        ret["category_index"] = next_index
-    return ret
+def _append_reply(state: AssistantState, answer: str) -> dict:
+    return {"messages": list(state.get("messages", [])) + [AIMessage(content=answer)]}
 
 
-def meta_clarify(state: AssistantState) -> dict:
-    active = state.get("active_category", "")
-    pending = state.get("pending_categories") or []
-    if pending:
-        context = f"{active}；新发现：{'、'.join(pending)}" if active else f"新发现：{'、'.join(pending)}"
+def boundary_reply(state: AssistantState) -> dict:
+    """越界 / 模糊：范围之外的只回模板，不检索、不生成。"""
+    if state.get("direct_mode") == "anchor_domain":
+        answer = state.get("scope_response") or AMBIGUOUS_RESPONSE
     else:
-        context = active
-    question = _llm_phrase(["判断关系"], context)
-    msgs = list(state.get("messages", [])) + [AIMessage(content=question)]
-    return {"messages": msgs, "relationship": "pending"}
+        answer = state.get("scope_response") or OUT_OF_SCOPE_RESPONSE
+    _emit_chunk(answer)
+    return _append_reply(state, answer)
 
 
-# ---------- search（类别化检索） ----------
+def smalltalk_reply(state: AssistantState) -> dict:
+    """寒暄：纯模板，不追问隐患槽位。"""
+    user_text = _latest_user_text(state).strip()
+    if user_text.startswith(("谢谢", "感谢")):
+        answer = "不客气，有新情况再告诉我就好。"
+    elif user_text in {"在吗", "在么", "在不在"}:
+        answer = "在的，你说说看。"
+    elif user_text in {"嗨", "哈喽"}:
+        answer = "嗨，我在。说说现场情况吧。"
+    else:
+        answer = "你好，我在。你可以直接描述现场隐患，或者上传图片。"
+    _emit_chunk(answer)
+    return _append_reply(state, answer)
+
+
+def answer_reply(state: AssistantState) -> dict:
+    """模型已经给出回答，这里只负责拼装与前置装饰（指引 / 谨慎提示）。"""
+    plan = state.get("dialogue_plan") or {}
+    answer = str(plan.get("answer") or "").strip()
+    action = state.get("next_action")
+    if action:
+        question = (
+            state.get("clarification_question") or ""
+            if action in {"ask_critical_question", "answer_with_optional_question"}
+            else ""
+        )
+    else:
+        question = plan.get("question") or state.get("clarification_question") or ""
+    if state.get("optional_question") and question and not question.startswith(("如果", "方便", "可以")):
+        question = "如果方便，" + question
+    # answer / question 是规划器的两个独立字段；"回答里不许夹问题"由
+    # dialogue_understanding.parse_plan 在契约边界统一保证，这里只负责拼装。
+    parts = [part for part in (answer, question) if part]
+    answer = "\n\n".join(parts)
+    if not answer:
+        answer = "我先记录你描述的情况，如需进一步判断可以继续补充现场信息。"
+    answer = prepend_guidance(answer, state)
+    answer = prepend_interpretation(answer, state)
+    _emit_chunk(answer)
+    return _append_reply(state, answer)
+
+
+def fallback_reply(state: AssistantState, config=None) -> dict:
+    """规划器没给出可用回答时的兜底：现调一次模型流式生成初步判断。"""
+    user_text = _latest_user_text(state)
+    prompt = (
+        "请对用户的城市安全隐患判断问题给出简短、自然的初步判断。"
+        "不要检索、不要引用具体法规或案例，不要要求用户填写完整上报信息。"
+        "先说明是否值得按安全隐患处理，再给出一条现场安全建议；如果信息不足，明确说需要现场核实。\n"
+        f"用户问题：{user_text}"
+    )
+    answer_parts = []
+    writer = get_stream_writer()
+    prefix = _reply_prefix(state)
+    if prefix:
+        answer_parts.append(prefix)
+        try:
+            writer({"chunk": prefix})
+        except Exception:
+            pass
+    for kind, text in _report_llm._call_llm_stream_events(
+            [{"role": "user", "content": prompt}], cancellation=_cancel_token(config)):
+        if kind == "chunk":
+            answer_parts.append(text)
+            try:
+                writer({"chunk": text})
+            except Exception:
+                pass
+    answer = "".join(answer_parts).strip()
+    if not answer:
+        answer = "仅凭这句话还不能确认具体风险，建议先避开可能危险区域，并补充现场情况以便进一步判断。"
+        try:
+            writer({"chunk": answer})
+        except Exception:
+            pass
+    return _append_reply(state, answer)
+
+
+# ---------- emergency_guidance（危险场景的唯一产物） ----------
+def emergency_guidance(state: AssistantState, config=None) -> dict:
+    """危险场景给「应急指引」：不检索、不报告、不建单、不追问（决策 1 + 决策 4）。
+
+    分工沿用统一原则：代码给"必须覆盖的安全要点"并识别类型 → 模型负责措辞 →
+    代码核对是否覆盖 → 覆盖不到才补上该类型的前置兜底句。
+
+    流式：逐句放行（core.stream_guard），不必攒整篇 —— 问号是句级特征、井号是行级特征，
+    都不需要看到全文。唯一必须「先知道结果」的是要不要前置兜底句，而覆盖是不可逆的，
+    所以策略是「攒到覆盖为止，之后逐句放行」；模型始终没说全才退回一次性流出。
+    """
+    user_text = _latest_user_text(state)
+    kind = emergency_guidance_type(user_text)
+    context = []
+    plan_answer = str((state.get("dialogue_plan") or {}).get("answer") or "").strip()
+    if plan_answer:
+        context.append("助手对现场的先期判断：" + plan_answer)
+    labels = [
+        SUBCATEGORY_LABELS.get(code, code)
+        for code in (state.get("categories") or [])
+    ]
+    if labels:
+        context.append("已识别的情况：" + "、".join(labels))
+    context.append("用户原话：" + user_text)
+    point_text = "；".join("/".join(group) for group in emergency_guidance_points(kind))
+    lead = emergency_guidance_lead(kind)
+    prompt = (
+        "用户可能正在遭遇即时危险。请用 3~4 句自然、镇定的中文给出现场安全处理指引。\n"
+        "必须覆盖这些要点（每条都要说到，措辞自己组织，不要照抄要点里的词）："
+        + point_text + "\n"
+        "顺序要求（很重要）：第一句就把上面所有要点一口气说完，让用户第一时间看到该做什么，"
+        "例如「" + lead + "」；后面几句再展开细节、原因和注意事项。"
+        "不要把报警、关阀、断电、撤离这类关键动作留到后面才说。\n"
+        "禁止提出任何问题或反问，禁止询问是否创建任务，禁止输出 Markdown 标题，"
+        "不要引用法规和案例。\n"
+        + "\n".join(context)
+    )
+    events = _report_llm._call_llm_stream_events(
+        [{"role": "user", "content": prompt}], cancellation=_cancel_token(config))
+    tokens = (text for kind_of_event, text in events if kind_of_event == "chunk")
+    fallback = emergency_guidance_fallback(kind)
+    # 逐句流出去，不再攒整篇。但「要不要前置兜底句」必须先知道覆盖情况，
+    # 而覆盖是不可逆的（文本越多只会越可能覆盖），所以：攒到覆盖为止，之后逐句放行。
+    # 模型始终没说全 → 全程不放行，最后按兜底路径一次性流出。
+    released = False
+    emitted = []
+    held = []
+    for piece in guard_stream(tokens, questions=QUESTION_DROP):
+        if released:
+            emitted.append(piece)
+            _emit_chunk(piece)
+            continue
+        held.append(piece)
+        # 空文本不算覆盖：将来若有类型没有必含要点，这里不能把空串当成「已说全」
+        if held and covers_emergency_points("".join(held), kind):
+            released = True
+            emitted.extend(held)
+            _emit_chunk("".join(held))
+            held = []
+    answer = "".join(emitted + held)
+    if not released:
+        answer = (fallback + "\n\n" + answer) if answer else fallback
+        _emit_chunk(answer)
+    return _append_reply(state, answer)
+
+
+# ---------- search（类别化检索：Send 并行扇出 + reducer 汇聚） ----------
 def search(state: AssistantState) -> dict:
-    cats = state.get("categories") or []
-    results = dict(state.get("category_results") or {})
-    for cat in cats:
-        kw = _pick_keyword(cat, state.get("category_slots", {}).get(cat, {}))
-        reg = _run_tool("search_regulation", kw)
-        case = _run_tool("search_cases", kw)
-        results[cat] = {"regulation": reg, "case": case}
-    return {"category_results": results}
+    """扇出前的栅栏节点：先清空本轮要重查的类别，再由条件边发出 Send。"""
+    return {"category_results": {cat: None for cat in (state.get("categories") or [])}}
 
 
-def _pick_keyword(category: str, slots: dict) -> str:
-    parts = [category]
-    for key in ("structure", "behavior", "defect", "source", "blocker", "blocked"):
-        v = (slots.get(key) or "").strip()
-        if v:
-            parts.append(v)
-    return (" ".join(parts))[:8]
+def plan_retrieval(state: AssistantGraphState) -> list[Send]:
+    """每个（隐患类别, 检索工具）一条并行分支；延迟与隐患数量解耦。"""
+    override = state.get("retrieval_keyword_override") or {}
+    sends = []
+    for category in state.get("categories") or []:
+        slots = (state.get("category_slots") or {}).get(category, {})
+        # 重试时用模型改写过的检索串；没有就照旧拼
+        keyword = override.get(category) or _pick_keyword(
+            category, slots, state.get("premises_scope") or "public")
+        for tool_name in _RESULT_FIELD:
+            sends.append(Send("retrieve", {
+                "category": category,
+                "tool": tool_name,
+                "keyword": keyword,
+            }))
+    return sends
 
 
-def _run_tool(name: str, keyword: str) -> str:
+def retrieve(state: AssistantState, config=None) -> dict:
+    """单条并行分支：只写自己负责的那个字段，由 reducer 合并。"""
+    field = _RESULT_FIELD[state["tool"]]
+    result = _run_tool(state["tool"], state["keyword"], _cancel_token(config))
+    return {"category_results": {state["category"]: {field: result}}}
+
+
+_OBLIGATION_HINT = "维护 责任"
+
+
+def _pick_keyword(category: str, slots: dict, premises_scope: str = "public") -> str:
+    """返回用于一次检索的字符串。
+
+    **这个串同时是两样东西**：向量检索的 embedding 查询，以及关键词 LIKE 的输入。
+    所以小类标签必须留在里面 —— 去掉它向量查询就丢掉隐患语义。
+    （标签留在串里会让关键词分支也命中 category 字段，那其实是在做小类过滤、
+    纯向量拿不到的精度；所以合并顺序改成"向量在前、关键词只补尾部名额"，
+    见 tools/hybrid_search.HybridSearcher._merge_results。）
+
+    槽位值按该小类在 core.slot_schemas 里的**全部**槽位键、依 schema 顺序拼接。
+    这里以前硬编码了 9 个 slug，而 31 个小类里有 16 个（施工 site/safety、
+    其他 describe、占道 persistence、消防设施 function_impact …）的键都不在其中 ——
+    那些小类的槽位值永远进不了检索串。
+
+    参数 category 实际传的是小类 code（也兼容旧的两级标签）。
+    """
+    label = SUBCATEGORY_LABELS.get(category)
+    if not label:
+        pair = normalize_taxonomy(category)
+        label = SUBCATEGORY_LABELS.get(pair[1], category) if pair else category
+    parts = [label]
+    for slot in get_slot_schema(category):
+        value = (slots.get(slot.key) or "").strip()
+        if value:
+            parts.append(value)
+    base = " ".join(parts)[:24]
+    if premises_scope in {"indoor", "indoor_risk"}:
+        # 户内多数是维护义务问题，别把检索词都往"处罚/违法"上引
+        return (base + " " + _OBLIGATION_HINT)[:34]
+    return base
+
+
+def _run_tool(name: str, keyword: str, cancellation=None) -> str:
     tool = _TOOL_MAP.get(name)
     if not tool:
         return "[检索失败] 未知工具"
     try:
-        return str(tool.execute(keyword=keyword))
+        return str(tool.execute(keyword=keyword, cancellation=cancellation))
+    except StreamCancelled:
+        raise
     except Exception as e:
         return f"[检索失败] {e}"
 
 
+# ---------- evaluate_retrieval / rewrite_query（检索自评重试环） ----------
+
+_TABLE_OF_TOOL = {"search_cases": "tb_hazard_case", "search_regulation": "tb_regulation"}
+
+_RESULT_BLOCK = re.compile(r"【(?:结果|法规)\d+】")
+_SEMANTIC_BLOCK = re.compile(r"【(?:结果|法规)\d+】\s*\[语义匹配\]")
+_EMPTY_RESULT_MARKER = "未找到与"
+_FAILURE_MARKERS = ("检索失败", "检索超时", "向量检索不可用",
+                    "关键词为空", "retrieval timeout")
+
+
+def retrieval_quality(text) -> str:
+    """把一段检索文本粗分成五类，供重试判定使用。
+
+    empty   确实没有内容（hybrid_search 的空结果文案）
+    failure 检索本身失败（超时 / Milvus 不可用）——换词也救不了，不重试
+    weak    有结果块，但没有任何语义命中：向量分支没过 RETRIEVAL_MIN_SCORE
+    ok      有语义命中（强不强再看分数）
+    unknown 不是结果格式（空串、测试里的假文本等）——判不了就不动
+
+    分类而不直接看分数的原因：分数不在检索文本里，而追问一次向量检索要多一次 embedding。
+    这里只拿“免费”的结构信号；真要分数时由 _probe_top1_score 取。
+    """
+    text = text or ""
+    if any(marker in text for marker in _FAILURE_MARKERS):
+        return "failure"
+    if _EMPTY_RESULT_MARKER in text:
+        return "empty"
+    if not _RESULT_BLOCK.search(text):
+        return "unknown"
+    if not _SEMANTIC_BLOCK.search(text):
+        return "weak"
+    return "ok"
+
+
+def _issue_major(state, category: str) -> str:
+    for issue in state.get("issues") or []:
+        if (issue or {}).get("subcategory_code") == category:
+            return (issue or {}).get("major_code") or ""
+    return state.get("locked_major") or ""
+
+
+def should_retry_retrieval(state) -> tuple[bool, str]:
+    """要不要为“检索不够好”再试一次。**纯函数**：只看 state，不联网、不调模型。
+
+    判定权在代码（可验证信号），模型只负责“怎么改写”。三个条件任一成立即触发：
+
+      T1 ungrounded_slots 非空：槽位值在原文里找不到依据，检索串被幻觉词污染；
+      T2 命中的条目全部不属于锁定大类（filter_by_major 判成 NO_MATCH）；
+      T3 完全没有结果 / 没有任何语义命中 / top1 分数已知且低于 WEAK_SCORE。
+
+    上界：retrieval_attempts >= RETRY_MAX_ATTEMPTS 时一律不触发（环必须收敛）。
+    """
+    if not RETRY_ENABLED:
+        return False, "disabled"
+    attempts = int(state.get("retrieval_attempts") or 0)
+    if attempts >= RETRY_MAX_ATTEMPTS:
+        return False, "attempt_limit"
+    ungrounded = state.get("ungrounded_slots") or []
+    if ungrounded:
+        return True, "T1:ungrounded:%s" % ungrounded[0]
+    results = state.get("category_results") or {}
+    scores = state.get("retrieval_scores") or {}
+    for category, result in results.items():
+        major = _issue_major(state, category)
+        for field in _RESULT_FIELD.values():
+            text = (result or {}).get(field)
+            if not text:
+                continue
+            quality = retrieval_quality(text)
+            if quality in ("failure", "unknown"):
+                continue
+            if quality == "empty":
+                return True, "T3:empty:%s.%s" % (category, field)
+            if major and filter_by_major(text, major) == NO_MATCH:
+                return True, "T2:out_of_major:%s.%s" % (category, field)
+            if quality == "weak":
+                return True, "T3:no_semantic:%s.%s" % (category, field)
+            score = (scores.get(category) or {}).get(field)
+            if score is not None and float(score) < WEAK_SCORE:
+                return True, "T3:weak_score:%s.%s=%.4f" % (category, field, float(score))
+    return False, ""
+
+
+def _current_keyword(state, category: str) -> str:
+    """本轮真正使用的检索串：重试后是改写值，否则按槽位拼。"""
+    override = state.get("retrieval_keyword_override") or {}
+    if override.get(category):
+        return override[category]
+    slots = (state.get("category_slots") or {}).get(category) or {}
+    return _pick_keyword(category, slots, state.get("premises_scope") or "public")
+
+
+def _probe_top1_score(keyword: str, table: str, cancellation=None):
+    """取向量分支 top1 分数（拿不到返回 None）。
+
+    这是额外一次向量检索（多一次 embedding），所以只在“结果里确实有内容块”时才发，
+    见 _collect_retrieval_scores。拿不到分数时不猜：让 T3 回到免费的结构信号上。
+    """
+    if not keyword or not keyword.strip():
+        return None
+    try:
+        from tools.hybrid_search import searcher
+
+        rows = searcher.vector_search(
+            keyword.strip(), table, top_k=1, cancellation=cancellation)
+    except StreamCancelled:
+        raise
+    except Exception:
+        return None
+    if not rows:
+        return 0.0
+    score = rows[0].get("match_score")
+    return float(score) if score is not None else None
+
+
+def _pending_probes(state) -> list:
+    """哪些 (类别, 字段) 该取分数。没有结果块、检索失败的都不取。"""
+    pending = []
+    for category in state.get("categories") or []:
+        result = (state.get("category_results") or {}).get(category) or {}
+        for tool_name, field in _RESULT_FIELD.items():
+            if _RESULT_BLOCK.search(result.get(field) or ""):
+                pending.append((category, field,
+                                _current_keyword(state, category),
+                                _TABLE_OF_TOOL[tool_name]))
+    return pending
+
+
+def _collect_retrieval_scores(state, cancellation=None) -> dict:
+    """给“已经有结果块”的表补一次 top1 分数。
+
+    只在文本里确实有【结果N】/【法规N】块时才发探测请求：
+      - 没有结果 → 不需要分数（T3 的 empty 分支直接命中）；
+      - 检索失败 → 不该重试，也不需要分数。
+    这个门控还让“用假文本跑图”的测试天然不会发起网络调用。
+
+    两张表并发取：每次探测都是一次 embedding+Milvus，串行要多等一次。
+    """
+    if not PROBE_TOP1_SCORE:
+        return {}
+    pending = _pending_probes(state)
+    if not pending:
+        return {}
+    out = {}
+    if len(pending) == 1:
+        category, field, keyword, table = pending[0]
+        score = _probe_top1_score(keyword, table, cancellation)
+        return {category: {field: score}} if score is not None else {}
+    with ThreadPoolExecutor(max_workers=min(4, len(pending))) as pool:
+        futures = {
+            pool.submit(_probe_top1_score, keyword, table, cancellation): (category, field)
+            for category, field, keyword, table in pending
+        }
+        for future in as_completed(futures):
+            category, field = futures[future]
+            try:
+                score = future.result()
+            except StreamCancelled:
+                for pending_future in futures:
+                    pending_future.cancel()
+                raise
+            except Exception:
+                continue
+            if score is not None:
+                out.setdefault(category, {})[field] = score
+    return out
+
+
+def _merge_scores(base: dict, extra: dict) -> dict:
+    merged = {key: dict(value) for key, value in (base or {}).items()}
+    for category, fields in (extra or {}).items():
+        merged.setdefault(category, {}).update(fields or {})
+    return merged
+
+
+def evaluate_retrieval(state: AssistantGraphState, config=None) -> Command[
+        Literal["rewrite_query", "report"]]:
+    """检索自评：代码判定要不要重试；模型只在 rewrite_query 里决定“怎么改写”。
+
+    这个节点在 Send 扇出的汇聚点之后，**每轮只跑一次**（与 report 同位置）。
+    """
+    probed = _collect_retrieval_scores(state, _cancel_token(config))
+    scores = _merge_scores(state.get("retrieval_scores") or {}, probed)
+    update = {"retrieval_scores": probed} if probed else {}
+    # 重试跑完的这一遍：把“重试后分数”补进日志，形成 触发前 → 触发后 的对照
+    attempts = int(state.get("retrieval_attempts") or 0)
+    log = list(state.get("retrieval_retry_log") or [])
+    if attempts >= 1 and log and "after_scores" not in log[-1]:
+        entry = dict(log[-1])
+        entry["after_scores"] = {key: dict(value) for key, value in scores.items()}
+        log[-1] = entry
+        update["retrieval_retry_log"] = log
+    retry, reason = should_retry_retrieval({**state, "retrieval_scores": scores})
+    update["retrieval_retry_reason"] = reason if retry else ""
+    return Command(goto="rewrite_query" if retry else "report", update=update)
+
+
+_REWRITE_SYSTEM_PROMPT = (
+    "你在为一次知识库检索换检索词。库里是「隐患类别名 + 现场关键词」这样的短语。\n"
+    "只输出一行检索词：2 到 14 个字，由类别名和现场关键词组成，用空格分隔；"
+    "不要标点、不要引号、不要解释、不要换行；确实想不出更好的，就原样返回给你的检索词。"
+)
+
+_rewrite_llm = Agent(
+    name="rewrite_query",
+    system_prompt=_REWRITE_SYSTEM_PROMPT,
+    tools=[],
+    base_url=MIMO_BASE_URL,
+    api_key=MIMO_API_KEY,
+    model=MIMO_MODEL,
+)
+
+
+def _sanitize_keyword(raw, fallback: str) -> str:
+    """把模型输出压成“标签 + 槽位值”的形状（_pick_keyword 的契约）。
+
+    不能让它变成自然语言长句：关键词分支是整串 LIKE，长句会直接退化成 0 命中。
+    """
+    text = str(raw or "").strip()
+    for stop in ("\n", "。", "！", "？", "；", "："):
+        text = text.split(stop)[0]
+    text = text.strip("「」『』\"'`*#- —")
+    text = re.sub(r"\s+", " ", text).strip()
+    text = text[:MAX_RETRIEVAL_KEYWORD].strip()
+    return text or fallback
+
+
+def rewrite_query(state: AssistantGraphState, config=None) -> Command:
+    """让模型换一个检索词，然后回到 search 重查。
+
+    只重试检索：locked_major / locked_subcategory / 槽位都不动。
+    """
+    category = (state.get("categories") or [""])[0]
+    slots = (state.get("category_slots") or {}).get(category) or {}
+    current = _current_keyword(state, category)
+    reason = state.get("retrieval_retry_reason") or ""
+    known = "、".join("%s=%s" % (k, v) for k, v in slots.items() if v) or "（暂无）"
+    prompt = (
+        "当前检索词：%s\n"
+        "触发重试的原因：%s\n"
+        "用户原话：%s\n"
+        "隐患类别：%s\n"
+        "已知现场关键词：%s\n"
+        "请给一个更容易在知识库里命中的检索词。"
+        % (current, reason or "检索结果不够相关",
+           _latest_user_text(state)[:200],
+           SUBCATEGORY_LABELS.get(category, category), known)
+    )
+    raw = ""
+    try:
+        response = _rewrite_llm._call_llm(
+            [{"role": "user", "content": prompt}],
+            cancellation=_cancel_token(config),
+        )
+        raw = (response or {}).get("content") or ""
+    except StreamCancelled:
+        raise
+    except Exception:
+        raw = ""
+    if raw.startswith("调用失败"):
+        raw = ""                      # 模型不可用：不把错误文本当检索词
+    new_keyword = _sanitize_keyword(raw, current)
+    log = list(state.get("retrieval_retry_log") or [])
+    log.append({
+        "category": category,
+        "reason": reason,
+        "before_keyword": current,
+        "after_keyword": new_keyword,
+        "before_scores": {k: dict(v) for k, v in (state.get("retrieval_scores") or {}).items()},
+    })
+    return Command(goto="search", update={
+        "retrieval_attempts": int(state.get("retrieval_attempts") or 0) + 1,
+        "retrieval_keyword_override": {category: new_keyword},
+        # 重查前作废上一批分数，否则“重试后分数”会读到旧值
+        "retrieval_scores": {category: None},
+        "retrieval_retry_log": log[-10:],
+        "retrieval_retry_reason": "",
+    })
+
+
 # ---------- report（流式生成） ----------
-def report(state: AssistantState) -> dict:
-    messages = list(state.get("messages", []))
-    cats = state.get("categories") or []
+def can_offer_task_creation(state: AssistantState) -> bool:
+    """是否邀请建任务。
+
+    闸门刻意仍然要求"全部隐患都完整"：上报链路（tools/hazard_submit._extract）
+    是独立再调一次模型从对话里抽类别，不看这里的 issues。
+    所以放宽成"有一条完整就邀请"会建成那条不完整的。
+    等上报链路支持"指定目标隐患"之后，这里才能放宽到逐隐患。
+    """
+    if state.get("report_mode") == "preliminary":
+        return False
+    issues = state.get("issues") or []
+    if not issues:
+        categories = state.get("categories") or []
+        issues = [{"subcategory_code": category} for category in categories]
+    return bool(issues) and not (state.get("missing") or [])
+
+
+def _slot_questions(code, missing_keys) -> list[str]:
+    """把缺的槽翻译成代码里已有的固定问句：别让模型去猜"仍需确认"什么。"""
+    wanted = set(missing_keys or [])
+    return [slot.question for slot in get_slot_schema(code) if slot.key in wanted]
+
+
+def _report_issues(state: AssistantState) -> list[dict]:
+    issues = [i for i in (state.get("issues") or []) if (i or {}).get("subcategory_code")]
+    if issues:
+        return issues
+    # 兼容只给了 categories 的旧形状
+    return [{"subcategory_code": c, "missing": []} for c in state.get("categories") or []]
+
+
+def _is_preliminary(state: AssistantState) -> bool:
+    """初步报告 = 事实没齐。以材料本身为准（issues 的 missing/unverified），
+    不只看 report_mode —— 两者若不一致，格式要跟着材料走，否则会自相矛盾。
+    """
+    if (state.get("report_mode") or "") == "preliminary":
+        return True
+    return any(
+        (issue or {}).get("missing") or (issue or {}).get("unverified")
+        for issue in _report_issues(state)
+    )
+
+
+def _split_ungrounded(entry: str):
+    """把 "dangerous_building.structure=有裂缝" 拆成 (code, slot, value)。"""
+    left, _, value = str(entry or "").partition("=")
+    code, _, slot = left.partition(".")
+    return code, slot, value
+
+
+def _unverified_by_issue(entries) -> dict:
+    grouped = {}
+    for entry in entries or []:
+        code, slot, value = _split_ungrounded(entry)
+        if code and slot:
+            grouped.setdefault(code, []).append("%s=%s" % (slot, value))
+    return grouped
+
+
+def _issue_blocks(state: AssistantState) -> list[str]:
+    """每个隐患一段材料，并标出它自己完整不完整、还缺什么。
+
+    这样"逐隐患模板"才有可能：完整的那条能写三段式，不完整的那条写初步式。
+    """
     results = state.get("category_results") or {}
     vision = state.get("vision_summary") or ""
-    lines = []
-    for cat in cats:
-        r = results.get(cat, {})
-        reg = r.get("regulation") or "库内暂未检索到"
-        case = r.get("case") or "库内暂未检索到"
-        lines.append(
-            "[隐患类别] " + cat + "\n"
-            "[视觉分析] " + vision + "\n"
-            "[检索法规] " + reg + "\n"
-            "[检索案例] " + case
-        )
-    ctx = (
-        "\n\n".join(lines) +
-        "\n请对每个隐患用一节输出：### 一、触犯法规 / ### 二、安全隐患 / ### 三、类似案例。" +
-        "法规和案例必须来自上面检索结果，没有就写「库内暂未检索到」，不编造。" +
-        "多隐患时每个隐患精炼、突出结论；法规引用完整准确。信息不足写「信息不足，未确认」。" +
-        "最后必须以一句话询问用户：需要我帮你在系统建一条隐患任务吗？"
+    blocks = []
+    for index, issue in enumerate(_report_issues(state), 1):
+        code = (issue or {}).get("subcategory_code") or ""
+        pair = normalize_taxonomy(code)
+        label = SUBCATEGORY_LABELS.get(pair[1], code) if pair else code
+        missing = list((issue or {}).get("missing") or [])
+        unverified = list((issue or {}).get("unverified") or [])
+        result = results.get(code) or {}
+        issue_major = (issue or {}).get("major_code") or ""
+        # "完整"必须同时满足：关键槽都填了，且填的值在用户原话里找得到依据
+        complete = not missing and not unverified
+        block = [
+            "[隐患%d] %s（%s）" % (
+                index, label, "信息完整" if complete else "信息不完整"),
+            "[视觉分析] " + vision,
+            "[检索法规] " + filter_by_major(
+                result.get("regulation") or "库内暂未检索到", issue_major),
+            "[检索案例] " + filter_by_major(
+                result.get("case") or "库内暂未检索到", issue_major),
+        ]
+        questions = _slot_questions(code, missing)
+        if questions:
+            # 标出「这一项由末尾那一个追问承载」：报告要写的是分情况判断，
+            # 但它载的是 B 类；同一条信息不要既写分支又问一遍（规则见 _report_rules）。
+            block.append("[仍缺信息] " + "；".join(questions)
+                         + "（这一项由本轮末尾的那一个追问承载）")
+        # B 类（报告级）缺失：不追问，但要进材料 —— 缺的这项不影响结论与处置方向，
+        # 却会改变适用的法规条款 / 责任归属 / 处罚档次，所以报告必须写成分情况判断，
+        # 不能省略、也不能写「信息尚不完整、建议进一步核实」这类空话。
+        # 只取 B 类（report_missing 减掉 A 类），A 类已经走 [仍缺信息] 那一行了。
+        report_missing = [str(k) for k in ((issue or {}).get("report_missing") or [])]
+        b_only = [k for k in report_missing if k not in set(missing)]
+        b_questions = _slot_questions(code, b_only)
+        if b_questions:
+            block.append("[法规适用待确认] " + "；".join(b_questions)
+                         + "（缺它不影响结论和处置方向，但会改变适用的法规条款、"
+                           "责任归属或处罚档次）")
+        for item in unverified:
+            slot, _, value = item.partition("=")
+            question = next(
+                (s.question for s in get_slot_schema(code) if s.key == slot), slot)
+            block.append(
+                "[待核实] %s（当前填写「%s」，用户原话里没有依据，不要当成已确认事实）"
+                % (question, value))
+        blocks.append("\n".join(block))
+    return blocks
+
+
+# ---------- 初步报告的必含三块 + 单问句兜底（决策 b） ----------
+# 代码管「必须包含什么」：① 初步判断 ② 缺失信息 ③ 一个指向 A 类缺失槽的追问；
+# 模型管「怎么说」；代码核对「有没有包含」—— 与 emergency_guidance 同一形状。
+_PRELIM_JUDGMENT_MARKERS = (
+    "属于", "构成", "判定", "判断", "认定", "算是", "定性", "违法", "违规",
+)
+_PRELIM_MISSING_MARKERS = (
+    "仍需", "还需", "还需要", "需要确认", "待确认", "不清楚", "不明确", "尚不",
+    "补充", "缺少", "仍缺", "不完整",
+    # 实测补的：真实模型写的是「目前仍然缺的就是占用时长」「这一项尚未确认」，
+    # 第一版标记表只收「仍缺」「待确认」，把这两句都漏掉了（只告警，不影响交付）。
+    "仍然缺", "尚未确认", "还没确认",
+    # 阶段 6 补的：「还差一项会影响定档的信息」「目前还缺两个方面」—— 阶段 5a 线上复现的措辞。
+    "还差", "还缺",
+)
+
+
+def has_question_mark(text) -> bool:
+    return any(mark in str(text or "") for mark in ("？", "?"))
+
+
+def decision_missing_keys(state: AssistantState, code: str) -> list:
+    """这个小类还缺的 A 类（决策级）槽 key —— 只读 state["missing"] 与 issues。"""
+    prefix = (code or "") + "_"
+    keys = [str(m)[len(prefix):] for m in (state.get("missing") or [])
+            if str(m).startswith(prefix)]
+    if keys:
+        return keys
+    for issue in _report_issues(state):
+        if (issue or {}).get("subcategory_code") == code:
+            return [str(k) for k in (issue.get("missing") or [])]
+    return []
+
+
+def preliminary_question_tail(state: AssistantState, body: str) -> str:
+    """初步报告必须含「一个指向 A 类缺失槽的追问」；模型一个都没问就由代码补上。
+
+    为什么只补一个：一轮最多一个问句。模型自己写了就原样用它 ——
+    「至多一个」由 stream_guard.question_limiter(1) 在流上保证。
+    这个兜底是弱层次：它只保证「报告里有一个问句」，不判定这个问句是否真问在缺的那个槽上
+    （那需要语义判定，代码做不到）。真正指向 A 类缺失由提示词里的 [仍缺信息] 承担。
+    """
+    if has_question_mark(body):
+        return ""
+    code = str(state.get("locked_subcategory") or "")
+    if not code:
+        code = next((str((i or {}).get("subcategory_code") or "")
+                     for i in _report_issues(state)), "")
+    questions = _slot_questions(code, decision_missing_keys(state, code))
+    if not questions:
+        return ""
+    return "\n\n" + questions[0]
+
+
+def preliminary_coverage(text) -> dict:
+    """弱层次的必含核对：判断 / 缺失 / 追问三块在不在。
+
+    为什么只到「弱」：用的是词面标记，不是语义判定 —— 实测第 1 轮真实报告写的是
+    「仍缺的关键点」，第一版标记表就漏检了（所以补了「仍缺」「不完整」）。
+    它只用来（a）决定要不要补上确定性的那一个追问，（b）把「三块齐不齐」
+    变成可测、可观测的；不用来改写正文。
+    兜不住的：内容是否与上一轮**实质重复** —— 实测两个客观指标都抓不住
+    （db/eval_increment_turns.txt：整篇重合度 0.162、逐句重复率 0.00），
+    只能靠提示词 + 人工抽查。见 docs/superpowers/plans/2026-09-27-dialogue-quality-execution.md。
+    """
+    value = str(text or "")
+    return {
+        "judgment": any(m in value for m in _PRELIM_JUDGMENT_MARKERS),
+        "missing": any(m in value for m in _PRELIM_MISSING_MARKERS),
+        "question": has_question_mark(value),
+    }
+
+
+_EMPTY_TALK_MARKERS = (
+    "建议进一步核实", "建议进一步确认", "建议进一步了解", "建议进一步查明",
+    "建议自行核实", "建议自行确认", "建议核实",
+    "有待进一步核实", "有待核实", "需进一步核实", "尚待核实", "待进一步核实",
+)
+
+
+def empty_talk_hits(text) -> list[str]:
+    """空话检测（弱层次，只告警、不改写正文）：把不确定性丢回给用户、自己没做判断的表述。
+
+    为什么只收「把核实退回给用户」的措辞，而不是「信息不完整」这类断言本身：
+    线上第 1 轮实测的合格文本里就有「目前信息还不完整，需要确认的问题是：被什么东西占用了」——
+    它说了「不完整」，但紧跟一个具体到槽位的确认项，是合格写法。按断言本身去抓会误伤它。
+    所以标记表只收明确往回推的句式（建议进一步核实 / 有待核实 …）。
+
+    兜不住的：它只做词面命中，不判语义。「信息不完整」+ 空话混写、或换一种说法往回推，
+    都可能漏检。所以这一层和 preliminary_coverage 一样：只告警，不改写正文。
+    """
+    value = str(text or "")
+    return [marker for marker in _EMPTY_TALK_MARKERS if marker in value]
+
+
+def report_branch_keys(state: AssistantState) -> list[str]:
+    """本轮所有隐患里「只缺 B 类」的槽 key 并集 —— 报告要就这些写分情况判断。
+
+    取 report_missing 减掉 A 类：A 类缺了就走追问（[仍缺信息]），不是分支的题材。
+    """
+    out = []
+    for issue in _report_issues(state):
+        missing = set(str(k) for k in ((issue or {}).get("missing") or []))
+        for key in (issue or {}).get("report_missing") or []:
+            key = str(key)
+            if key not in missing and key not in out:
+                out.append(key)
+    return out
+
+
+# ---------- 阶段 5a：消冗余的观测侧（只告警、不改写正文） ----------
+# 分工按 A/B/C 类走，不靠「抑制某一侧」：
+#   A 决策级 -> 由末尾那一个追问承载；B 报告级 -> 由正文分情况判断承载，不再追问；
+#   C 装饰级 -> 都不。
+# 这里的每一条都只是「让我们能看见」：判得出来的用结构化字段判，
+# 判不出来的（正文里那句自由措辞的问句指向哪个槽）只告警，不硬猜。
+_SENTENCE_SPLIT = re.compile(r"(?<=[。！？?!；;\n])")
+
+
+def question_sentences(text) -> list[str]:
+    """正文里能算「问句」的整句 —— 取严口径，避免用疑问词计数造成假告警。
+
+    为什么不用「什么/怎么/多少/是否」这类词：它们在建议句和从句里大量出现，
+    实测把「向现场人员问清占用从什么时候开始的」这种建议句误判成问句。
+    所以只认两种：带问号，或以 吗/呢 结尾（后者是 question_limiter
+    把多余问号去掉之后的残留形态）。
+    """
+    out = []
+    for sentence in _SENTENCE_SPLIT.split(str(text or "")):
+        value = sentence.strip()
+        if not value:
+            continue
+        if "？" in value or "?" in value:
+            out.append(value)
+            continue
+        if value.rstrip("。！!；;，,、 ").endswith(("吗", "呢")):
+            out.append(value)
+    return out
+
+
+def _cjk_ngrams(text, size: int = 3) -> set:
+    grams = set()
+    for run in re.findall(r"[\u4e00-\u9fff]+", str(text or "")):
+        for i in range(len(run) - size + 1):
+            grams.add(run[i:i + size])
+    return grams
+
+
+def slot_question_overlap(text, slot_question, size: int = 3, threshold: int = 2) -> bool:
+    """启发式：正文与某个槽位自带问句共享足够多的三字片段。
+
+    这是已经认过的那层局限的补丁 —— 「正文里给哪条槽写了分支」没有结构化判据，
+    所以只做词面重叠、只告警。宁可比实际宽一点：告警是给人看的线索，不是判决。
+    """
+    if not text or not slot_question:
+        return False
+    shared = _cjk_ngrams(text, size) & _cjk_ngrams(slot_question, size)
+    return len(shared) >= threshold
+
+
+def redundancy_reasons(state: AssistantState, body: str) -> list:
+    """冗余重叠检测：同一条缺失信息既写成条件分支、又在正文里被问。
+
+    判据（前两条结构化，后两条启发式）：
+      question_without_decision_missing  正文有问句，但 A 类缺失为空 —— 这一问没有
+          A 类题材。缺口 2 的规则只覆盖 clarification_question，覆盖不到报告正文里
+          模型自发的问句（线上复现的正是这一条）。
+      b_class_also_branched              B 类缺失已经写成分支，正文又问一遍（真正的冗余）。
+      extra_question_beside_followup     A 类缺失非空（本该只有末尾那一个追问），
+          正文却出现一个以上问句 —— 多出来的那句很可能落在 B 类上。
+      a_slot_expanded_beside_followup:<k>  启发式：正文（问句之外的部分）提到了某条
+          A 类缺失槽 —— 它该由追问承载。
+      b_slot_question_overlap:<k>       启发式：正文的问句与某条 B 类槽自带的问句重叠 —— 
+          B 类该写分支、不该问。
+    """
+    reasons = []
+    questions = question_sentences(body)
+    branches = report_branch_keys(state)
+    decision_missing = [str(k) for issue in _report_issues(state)
+                        for k in ((issue or {}).get("missing") or [])]
+    if not decision_missing:
+        # 兼容只给了 categories 的旧形状：那种 issues 是 _report_issues 兜出来的、
+        # missing 恒为空 —— 不补这一句就会把「A 类缺失为空」误判成事实。
+        decision_missing = [str(k) for k in (state.get("missing") or [])]
+    if questions and not decision_missing:
+        reasons.append("question_without_decision_missing")
+        if branches:
+            reasons.append("b_class_also_branched")
+    if questions and decision_missing and branches and len(questions) > 1:
+        reasons.append("extra_question_beside_followup")
+    for issue in _report_issues(state):
+        code = str((issue or {}).get("subcategory_code") or "")
+        missing = set(str(k) for k in ((issue or {}).get("missing") or []))
+        for key in (issue or {}).get("report_missing") or []:
+            key = str(key)
+            if key in missing:
+                continue                       # A 类那一项走 [仍缺信息]，不在这里判
+            hint = _slot_questions(code, [key])
+            if hint and any(slot_question_overlap(q, hint[0]) for q in questions):
+                reasons.append("b_slot_question_overlap:%s" % key)
+    if questions and decision_missing:
+        asked = set(questions)
+        statements = " ".join(
+            s for s in _SENTENCE_SPLIT.split(str(body or ""))
+            if s.strip() and s.strip() not in asked)
+        for issue in _report_issues(state):
+            code = str((issue or {}).get("subcategory_code") or "")
+            for key in (issue or {}).get("missing") or []:
+                hint = _slot_questions(code, [str(key)])
+                if hint and slot_question_overlap(statements, hint[0]):
+                    reasons.append("a_slot_expanded_beside_followup:%s" % str(key))
+    return list(dict.fromkeys(reasons))
+
+
+def _followup_pending(state: AssistantState) -> bool:
+    """本轮还有 A 类（决策级）缺失要追问吗 —— 决定提示词要不要讲「只承载一次」。"""
+    if any((issue or {}).get("missing") for issue in _report_issues(state)):
+        return True
+    return bool(state.get("missing"))
+
+
+def _warn_redundancy(state: AssistantState, body: str) -> None:
+    reasons = redundancy_reasons(state, body)
+    if not reasons:
+        return
+    logger.warning(
+        "report_question_redundancy reasons=%s code=%s decision_missing=%s branch_keys=%s",
+        reasons, state.get("locked_subcategory"),
+        [str(k) for issue in _report_issues(state)
+         for k in ((issue or {}).get("missing") or [])],
+        report_branch_keys(state))
+
+
+def _decision_keys_of(issues, code) -> list:
+    """本轮的 A 类缺失槽 key —— 只用刚算好的 issues，不读上一轮 state。"""
+    for issue in issues or []:
+        if (issue or {}).get("subcategory_code") == code:
+            return [str(k) for k in ((issue or {}).get("missing") or [])]
+    return []
+
+
+def _schema_slot_of_text(question, keys, code: str) -> str:
+    """问句文本正好等于某个缺失槽自带的固定问句时，归属到那个槽（真实归属，不是猜）。"""
+    value = str(question or "").strip()
+    if not value or not code:
+        return ""
+    for key in keys or []:
+        if value == str(schema_question_for_missing([key], code) or "").strip():
+            return str(key)
+    return ""
+
+
+def question_target_audit(*, question, target_slot, missing_keys, origin: str,
+                          code: str = "") -> dict:
+    """问句是否指向 A 类（决策级）缺失 —— 所有问句来源共用的一处核对。
+
+    这是这一轮唯一能拿到「真保证」的地方，而且它不加任何措辞约束：
+    只读结构化字段（目标槽 key）与代码算好的 missing，不改写任何文本。
+
+    判得出来就判、判不出来就告警，不硬猜：
+      no_question       本轮没有问句
+      no_missing        A 类缺失为空 —— 没有该问的题材（丢弃由缺口 2 的规则负责）
+      ok                目标槽确实在 A 类缺失里
+      target_mismatch   报了目标槽，但它不在 A 类缺失里（G1 记录的「问位置」就是这种）
+      target_unknown    没报目标槽，无从判断指向哪个槽（老规划器 / 模型漏填）
+    """
+    value = str(question or "").strip()
+    keys = [str(k).strip() for k in (missing_keys or []) if str(k).strip()]
+    if not value:
+        return {"judged": False, "ok": False, "reason": "no_question", "target": ""}
+    if not keys:
+        return {"judged": False, "ok": False, "reason": "no_missing", "target": ""}
+    target = str(target_slot or "").strip()
+    if not target:
+        logger.warning("question_target_unknown origin=%s code=%s missing=%s question=%s",
+                       origin, code, keys, value)
+        return {"judged": False, "ok": False, "reason": "target_unknown", "target": ""}
+    if slot_question_targets_missing(target, keys):
+        return {"judged": True, "ok": True, "reason": "ok", "target": target}
+    logger.warning("question_target_mismatch origin=%s code=%s target=%s missing=%s question=%s",
+                   origin, code, target, keys, value)
+    return {"judged": True, "ok": False, "reason": "target_mismatch", "target": target}
+
+
+def _warn_empty_talk(state: AssistantState, body: str) -> None:
+    hits = empty_talk_hits(body)
+    if not hits:
+        return
+    pending = [str(k) for issue in _report_issues(state)
+               for k in ((issue or {}).get("report_missing") or [])]
+    logger.warning(
+        "report_empty_talk hits=%s code=%s report_missing=%s",
+        hits, state.get("locked_subcategory"), pending)
+
+
+def _deliver_report(state: AssistantState, body: str, offer_task: bool) -> dict:
+    """把交付给用户的报告正文同时写进 messages 与 draft_report。
+
+    修的是断链：原实现只写 draft_report，而全项目没有任何地方读它 ——
+    下一轮的规划器只看得见用户说过什么，看不见上一轮引了哪些法条、下了什么结论，
+    于是同一件事会被重新分析、重新检索，甚至引出不同法条（同一段对话两套分析）。
+    messages 才是归宿：规划器会把最近的 assistant 轮次一起读进去
+    （core/dialogue_understanding.build_planner_messages）。
+    draft_report 保留为「本轮交付正文」的记录（既有测试与可观测性读它）。
+    """
+    return {
+        **_append_reply(state, body),
+        "draft_report": body,
+        "offer_task": offer_task,
+    }
+
+
+# 报告提示词里的去重规则。提成模块常量有两个原因：
+#   1) 可以单独钉住它的措辞，不必从整段提示词里捞；
+#   2) 它只提「材料里标着…的那一项」而不照抄带方括号的材料标签 ——
+#      照抄会让「材料里不该出现某一行的」那类断言被规则文案本身触发（实测踩过）。
+REPORT_DEDUP_RULE = (
+    "同一条缺失信息不要承载两次：材料里标着「法规适用待确认」的那一项"
+    "（会改变法规适用、责任归属或处罚档次），由分情况判断承载；"
+    "材料里标着「仍缺信息」的那一项（缺了它处置方向会判错），"
+    "由末尾那一个追问承载 —— 已经用分情况判断写过的，不要再问一遍。"
+)
+
+
+def _report_rules(premises_scope: str, preliminary: bool = False,
+                  branch: bool = False, followup: bool = False) -> str:
+    """户内不能套「触犯法规」：多数户内报修是燃气公司/物业的维护义务，住户是报修方。
+
+    完整报告是文档（法规和案例要能对照），保留三段式；
+    初步报告只是一段判断，不用小标题 —— 强制小标题正是「模板感 / 生硬」的来源。
+    """
+    indoor = (premises_scope or "public") in {"indoor", "indoor_risk"}
+    heading = "相关法规与责任归属" if indoor else "触犯法规"
+    indoor_note = (
+        "这是户内场景：多数情况下责任在燃气公司、物业或设备方的维护义务，住户是报修方。"
+        "不要把它写成用户违法，也不要预设有人违规。"
+        if indoor else ""
     )
+    # 只有材料里真的出现了 B 类缺失时，才给这段要求：否则这段说明本身会让模型
+    # 以为还有信息没确认（也避免把「[法规适用待确认]」这个标签写进无关的提示词）。
+    branch_rule = (
+        "材料里标了「[法规适用待确认]」的，是缺了也不影响结论和处置方向、"
+        "但会改变适用的法规条款、责任归属或处罚档次的那一项。"
+        "这种信息不要省略，也不要写「信息尚不完整」「建议进一步核实」这类把核实退回给用户的空话；"
+        "要用「若…则…」的分情况判断，把每一种可能各自的适用依据都写出来"
+        "（例如：若为长期占用，适用某条、可处罚；若为临时占用，适用另一条、以责令改正为主）。"
+    )
+    increment = (
+        "如果对话历史里你已经给过这个隐患的分析，不要重讲一遍："
+        "已经说过的结论用一句话带过，本轮只讲新增信息带来的变化、仍然缺的、以及那一个追问。"
+        "注意是「只输出增量」，不是「换一种说法把同一份分析重讲一遍」。"
+    )
+    # 去重规则：只描述「同一条信息只承载一次」这层关系，不列禁止词。
+    # 为什么不用「A 类不许展开」那种表述：报告里给 A 类写「若长期…若临时…」本身对用户有价值，
+    # 真正要避免的只是「同一件事既写成分支、又在末尾问一遍」。
+    if preliminary:
+        # 内容要求一个都不能少（初步判断 / 仍需确认 / 一个追问 / 建议动作），只是不再用标题表达。
+        # 「仍需确认」只允许针对下面列出的待确认问题，不许凭空猜。
+        # 追问是决策 (b) 新增的必含块：只允许一个，由 question_limiter(1) 在流上兜住。
+        shape = (
+            "标注「信息不完整」时不要用任何小标题、不要输出 Markdown 井号或「一、二、三」式分节，"
+            "用自然、口语化的两三段话写出来：先说你的初步判断是什么，"
+            "再说明目前仍需确认哪些信息（只能针对下面列出的待确认问题，不要凭空猜），"
+            "最后用你自己的话追问其中最关键的那一个，并给出建议动作；"
+            "整段话最多只能有一个问句，不要问第二个问题。"
+        )
+    else:
+        shape = (
+            "标注「信息完整」时用三段式：### 一、" + heading +
+            " / ### 二、安全隐患 / ### 三、类似案例。"
+            "如果上面确有仍需用户补充的信息，最多只能提一个问句；"
+            "除此之外不要提出任何问题，也不要邀请用户补充信息。"
+        )
+    return (
+        "\n本次对话只跟踪这一个隐患，请只针对它输出。"
+        + shape + indoor_note + increment + (branch_rule if branch else "")
+        + (REPORT_DEDUP_RULE if (branch or followup) else "") +
+        "法规和案例必须来自上面的检索结果，没有就写「库内暂未检索到」，不编造。"
+        "不要询问是否创建任务，也不要提出上报邀请——这一步由对话流程单独负责。"
+    )
+
+
+def report(state: AssistantState, config=None) -> dict:
+    messages = list(state.get("messages", []))
+    ask_create = can_offer_task_creation(state)
+    preliminary = _is_preliminary(state)
+    ctx = ("\n\n".join(_issue_blocks(state))
+           + _report_rules(state.get("premises_scope"), preliminary,
+                           branch=bool(report_branch_keys(state)),
+                           followup=_followup_pending(state)))
     # 把 langchain 消息转成 dict，供 _call_llm_stream_events 的 payload 序列化
     dict_msgs = []
     _ROLE_MAP = {"system": "system", "human": "user", "ai": "assistant", "tool": "tool"}
     for m in messages:
         dict_msgs.append({"role": _ROLE_MAP.get(getattr(m, "type", "user"), "user"), "content": getattr(m, "content", "")})
     dict_msgs.append({"role": "user", "content": ctx})
-    writer = get_stream_writer()
+    prefix = _reply_prefix(state)
+    events = _report_llm._call_llm_stream_events(
+        dict_msgs, cancellation=_cancel_token(config))
+    tokens = (text for kind, text in events if kind == "chunk")
+    if preliminary:
+        # 初步报告逐句流出去：行首井号由执行器零延迟剥掉；追问最多放行一个 ——
+        # 决策 (b)：这一档里判断、缺失、追问在同一段话里，所以「一轮最多一个问句」
+        # 必须在流上按句计数（question_limiter），不能像普通报告那样整篇放行。
+        _emit_chunk(prefix)
+        pieces = []
+        for piece in guard_stream(tokens, strip_headings=True, questions=question_limiter(1)):
+            pieces.append(piece)
+            _emit_chunk(piece)
+        body = prefix + "".join(pieces)
+        tail = preliminary_question_tail(state, body)
+        if tail:
+            # 模型一个字都没问：补上该小类的固定问句（不静默，留日志）
+            logger.info("preliminary_question_fallback code=%s missing=%s",
+                        state.get("locked_subcategory"),
+                        decision_missing_keys(state, str(state.get("locked_subcategory") or "")))
+            _emit_chunk(tail)
+            body += tail
+        _warn_empty_talk(state, body)
+        _warn_redundancy(state, body)
+        coverage = preliminary_coverage(body)
+        if not all(coverage.values()):
+            # 弱层次核对：词面标记漏检是已知的，所以只告警、不改写正文
+            logger.warning("preliminary_coverage_missing blocks=%s code=%s",
+                           coverage, state.get("locked_subcategory"))
+        return _deliver_report(state, body, ask_create)
+    # 完整报告也走同一个逐句执行器：项目原则是「同一个约束不要两套判定」。
+    # 为什么不用「token 粒度只剥问号」那套：它只处理问号、不管别的约束，以后必然分叉。
+    # 问号上限也是 1（不是 0）：完整报告的材料里有 report_missing（A+B 类），
+    # 可能合法地列出一条 B 类开放问题 —— 两个产物因此真的是同一套机制。
+    # 行首井号不剥（这一档是文档，三段式标题要保留）。
     buf = []
-    for kind, text in _report_llm._call_llm_stream_events(dict_msgs, cancellation=None):
-        if kind == "chunk":
-            buf.append(text)
-            try:
-                writer({"chunk": text})
-            except Exception:
-                pass
-    draft = "".join(buf)
-    if "建一条隐患任务" not in draft:
-        tail = "\n\n需要我帮你在系统建一条隐患任务吗？"
-        buf.append(tail)
-        try:
-            writer({"chunk": tail})
-        except Exception:
-            pass
-        draft = "".join(buf)
-    return {"draft_report": draft}
+    if prefix:
+        buf.append(prefix)
+        _emit_chunk(prefix)
+    for piece in guard_stream(tokens, strip_headings=False, questions=question_limiter(1)):
+        buf.append(piece)
+        _emit_chunk(piece)
+    body = "".join(buf)
+    _warn_empty_talk(state, body)
+    _warn_redundancy(state, body)
+    return _deliver_report(state, body, ask_create)
+
+
+# ---------- 建任务确认闸门（durable human-in-the-loop） ----------
+_TASK_DECLINE_MARKERS = ("不需要", "不用了", "不要", "取消", "不建", "不用", "先不用", "否")
+_TASK_CONFIRM_EXACT = {
+    "需要", "要", "好", "好的", "可以", "行", "没问题", "建", "创建", "上报",
+    "是的", "确定", "确认", "嗯", "嗯嗯",
+}
+_TASK_CONFIRM_PREFIX = (
+    "好的", "可以", "那就", "麻烦你", "帮我建", "请建", "创建", "上报",
+    "确定", "确认", "没问题", "建", "要", "嗯",
+)
+
+
+def classify_task_reply(message: str) -> str:
+    """把用户对"要不要建任务"的回答归成 confirm / decline / other。
+
+    只用精确匹配或前缀匹配，绝不用子串匹配：否则"我要投诉物业"会被当成同意建任务。
+    是否已提问、问过没有，都由图的挂起状态表达，不在这里维护。
+    """
+    text = (message or "").strip()
+    if not text:
+        return "other"
+    if any(marker in text for marker in _TASK_DECLINE_MARKERS):
+        return "decline"
+    if text in _TASK_CONFIRM_EXACT:
+        return "confirm"
+    if len(text) <= 12 and text.startswith(_TASK_CONFIRM_PREFIX):
+        return "confirm"
+    return "other"
+
+
+def _cancel_token(config):
+    """取消令牌走 config（不是图状态）：实测并行 Send 分支里同样可见。"""
+    return ((config or {}).get("configurable") or {}).get("cancel_token")
+
+
+def _emit_chunk(text: str) -> None:
+    if not text:
+        return
+    try:
+        get_stream_writer()({"chunk": text})
+    except Exception:
+        pass
+
+
+def task_gate(state: AssistantState) -> Command:
+    """中断等待用户决定；恢复值由下一轮请求以 Command(resume=...) 传入。
+
+    这段代码在恢复时整体重跑，所以 interrupt() 之前不能有副作用。
+    """
+    phase = state.get("task_phase") or "confirm"
+    if phase == "address":
+        answer = interrupt({
+            "type": "ask_address",
+            "question": "请提供具体地址（如 XX 市 XX 区 XX 路 XX 小区或明显地标），我好帮你定位并创建隐患任务。",
+        })
+        return Command(
+            goto="submit_task",
+            update={"address_text": str(answer or "").strip(), "task_offered": True},
+        )
+    answer = interrupt({
+        "type": "confirm_create_task",
+        "question": task_invitation_question(state),
+        "issues": state.get("issues") or [],
+    })
+    decision = str((answer or {}).get("decision") or "other")
+    if decision == "confirm":
+        return Command(goto="submit_task", update={"task_offered": True})
+    if decision == "decline":
+        return Command(goto="close_task", update={"task_offered": True})
+    return Command(goto="understand", update={"task_offered": True})
+
+
+def submit_task(state: AssistantState) -> Command:
+    from tools.hazard_submit import submit_from_history
+
+    history = [
+        {
+            "role": "assistant" if isinstance(m, AIMessage) else "user",
+            "content": getattr(m, "content", ""),
+        }
+        for m in (state.get("messages") or [])
+        if isinstance(m, (AIMessage, HumanMessage))
+    ]
+    latest = (state.get("address_text") or "").strip() or (
+        history[-1]["content"] if history else ""
+    )
+    result = submit_from_history(state.get("user_id"), history, latest)
+    action = result.get("action")
+    if action == "created":
+        _emit_chunk("✅ 已创建隐患任务，任务编号 " + str(result.get("hazardId")))
+        return Command(goto=END, update={"address_text": "", "task_phase": ""})
+    if action == "ask_address":
+        return Command(goto="task_gate", update={"task_phase": "address"})
+    _emit_chunk("⚠️ " + str(result.get("message")))
+    return Command(goto=END, update={"address_text": "", "task_phase": ""})
+
+
+def close_task(state: AssistantState) -> dict:
+    # 只往 messages 里追加；SSE 桥会把它流出去，避免重复输出
+    return {"messages": [AIMessage(
+        content="好的，那我不建任务。如果还有其他现场情况，直接说就行。"
+    )]}
+
+
+def after_report(state: AssistantState) -> dict:
+    return {}
+
+
+def route_after_report(state: AssistantState):
+    if state.get("offer_task") and not state.get("task_offered"):
+        return "task_gate"
+    return END
 
 
 def build_graph():
-    g = StateGraph(AssistantState)
+    g = StateGraph(AssistantGraphState)
+    g.add_node("begin_turn", begin_turn)
+    g.add_node("understand", understand)
+    g.add_node("scope_guard", scope_guard)
     g.add_node("route", route)
-    g.add_node("meta_clarify", meta_clarify)
-    g.add_node("clarify", clarify)
     g.add_node("search", search)
+    g.add_node("retrieve", retrieve)
+    g.add_node("evaluate_retrieval", evaluate_retrieval)
+    g.add_node("rewrite_query", rewrite_query)
     g.add_node("report", report)
-    g.set_entry_point("route")
+    g.add_node("after_report", after_report)
+    g.add_node("task_gate", task_gate)
+    g.add_node("submit_task", submit_task)
+    g.add_node("close_task", close_task)
+    g.add_node("boundary_reply", boundary_reply)
+    g.add_node("smalltalk_reply", smalltalk_reply)
+    g.add_node("answer_reply", answer_reply)
+    g.add_node("fallback_reply", fallback_reply)
+    g.add_node("emergency_guidance", emergency_guidance)
+    g.add_node("ask_slot_question", ask_slot_question)
+    g.set_entry_point("begin_turn")
+    g.add_edge("begin_turn", "understand")
+    g.add_edge("understand", "scope_guard")
+    g.add_edge("scope_guard", "route")
+    # route 返回 Command(goto=...)，不需要额外的条件边
+    g.add_conditional_edges("search", plan_retrieval)
+    # 检索自评重试环：扇出汇聚 → 判定 →（不达标）改写检索词回到 search
+    g.add_edge("retrieve", "evaluate_retrieval")
+    g.add_edge("rewrite_query", "search")
+    g.add_edge("report", "after_report")
     g.add_conditional_edges(
-        "route", route_decider,
-        {"meta_clarify": "meta_clarify", "clarify": "clarify", "search": "search"},
+        "after_report", route_after_report, {"task_gate": "task_gate", END: END}
     )
-    g.add_edge("meta_clarify", END)   # 问完"同一处/单独"即结束本轮，等用户下一轮
-    g.add_edge("clarify", END)        # 问完槽位即结束本轮，等用户下一轮
-    g.add_edge("search", "report")
-    g.add_edge("report", END)
+    g.add_edge("close_task", END)
+    for _reply_node in ("boundary_reply", "smalltalk_reply", "answer_reply",
+                        "fallback_reply", "emergency_guidance"):
+        g.add_edge(_reply_node, END)
     return g.compile(checkpointer=InMemorySaver())
 
 
@@ -558,43 +2079,12 @@ def get_app():
     return _APP
 
 
-
-_CONFIRM_WORDS = ("要", "好", "可以", "建", "上报", "创建", "是的", "行", "没问题", "需要")
-
-
-def _is_confirmation(message: str) -> bool:
-    m = (message or "").strip()
-    if not m:
-        return False
-    return len(m) <= 12 and any(w in m for w in _CONFIRM_WORDS)
-
-
-def _asked_to_create(history) -> bool:
-    for h in reversed(history or []):
-        if h.get("role") == "assistant":
-            return "建一条隐患任务" in (h.get("content") or "")
-    return False
-
-
-def _handle_submit(result: dict, emit, session_id: str) -> None:
-    action = result.get("action")
-    if action == "created":
-        emit("chunk", "✅ 已创建隐患任务，任务编号 " + str(result.get("hazardId")))
-        _PENDING_ADDRESS.pop(session_id, None)
-    elif action == "ask_address":
-        emit("chunk", str(result.get("message")))
-        _PENDING_ADDRESS[session_id] = True
-    else:
-        emit("chunk", "⚠️ " + str(result.get("message")))
-        _PENDING_ADDRESS.pop(session_id, None)
-    emit("done", "")
-
-# ---------- SSE bridge（asyncio.Queue 真流式） ----------
 async def run_stream_events(message: str, history: list[dict], slots: dict,
                             vision_summary: str, session_id: str,
                             max_rounds: int = 5,
                             cancellation: CancellationToken = None,
-                            user_id: int = None) -> Generator[tuple, None, None]:
+                            user_id: int = None,
+                            selected_major_code: str = "") -> Generator[tuple, None, None]:
     app = get_app()
     loop = asyncio.get_running_loop()
     q: asyncio.Queue = asyncio.Queue()
@@ -602,65 +2092,85 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
     def emit(kind: str, text: str):
         loop.call_soon_threadsafe(q.put_nowait, (kind, text))
 
-    hc_msgs = [SystemMessage(content=ASSISTANT_SYSTEM)]
-    for h in (history or [])[-max_rounds * 2:]:
-        role = h.get("role")
-        if role == "system":
-            hc_msgs.append(SystemMessage(content=h.get("content", "")))
-        elif role == "user":
-            hc_msgs.append(HumanMessage(content=h.get("content", "")))
-        elif role == "assistant":
-            hc_msgs.append(AIMessage(content=h.get("content", "")))
-    hc_msgs.append(HumanMessage(content=message))
-
-    initial = {
-        "session_id": session_id,
-        "messages": hc_msgs,
-        "categories": [],
-        "active_category": "",
-        "category_index": 0,
-        "category_slots": {},
-        "category_results": {},
-        "missing": [],
-        "relationship": "",
-        "pending_categories": [],
-        "vision_summary": vision_summary,
-        "attempts": 0,
+    config = {
+        "configurable": {
+            "thread_id": session_id,
+            "cancel_token": cancellation,
+        },
+        "recursion_limit": GRAPH_RECURSION_LIMIT,
     }
-    config = {"configurable": {"thread_id": session_id}}
+    initial = build_turn_input(session_id, message, vision_summary, selected_major_code)
+    initial["user_id"] = user_id
+
 
     def produce():
-        _stream_local.emit = emit
         try:
-            # AI 上报闭环：确认建任务 / 等地址补充 -> 调 Python->Java 建库，跳过 graph
-            if user_id is not None:
-                from tools.hazard_submit import submit_from_history
-                result = None
-                if _PENDING_ADDRESS.get(session_id):
-                    result = submit_from_history(user_id, history, message)
-                elif _is_confirmation(message) and _asked_to_create(history):
-                    result = submit_from_history(user_id, history, message)
-                if result is not None:
-                    _handle_submit(result, emit, session_id)
-                    return
+            snapshot = app.get_state(config)
+            # 上一轮停在建任务闸门：用 Command(resume=...) 恢复，
+            # 恢复值同时把本轮用户消息并进状态。
+            if tuple(snapshot.next or ()) == ("task_gate",):
+                phase = snapshot.values.get("task_phase") or "confirm"
+                resume_value = (
+                    message if phase == "address"
+                    else {"decision": classify_task_reply(message)}
+                )
+                payload = Command(
+                    resume=resume_value,
+                    update={"messages": [HumanMessage(content=message)]},
+                )
+            else:
+                payload = initial
+                if not snapshot.values.get("messages"):
+                    seed = seed_messages((history or [])[-max_rounds * 2:])
+                    if seed:
+                        payload = {**initial, "messages": seed + initial["messages"]}
             seen = set()
-            for mode, item in app.stream(initial, config, stream_mode=["updates", "custom"]):
+            for mode, item in app.stream(payload, config, stream_mode=["updates", "custom"]):
                 if mode == "custom":
                     # report 逐 token 写的 {"chunk": text} -> 作为 chunk 流出
                     if isinstance(item, dict) and "chunk" in item:
                         emit("chunk", item["chunk"])
                     continue
                 # mode == "updates"：节点级更新
+                interrupts = item.get("__interrupt__") if isinstance(item, dict) else None
+                if interrupts:
+                    value = dict(interrupts[0].value)
+                    # 问句仍然以 chunk 流出（现前端直接显示），
+                    # 另发结构化 interrupt 事件给前端渲染确认按钮。
+                    question = str(value.get("question") or "").strip()
+                    if question:
+                        emit("chunk", "\n\n" + question)
+                    emit("interrupt", value)
+                    continue
                 for node, update in item.items():
                     if node not in seen:
                         seen.add(node)
-                        emit("status", STATUS_TEXT.get(node, "处理中..."))
-                    # 澄清节点：把新追加的追问作为 chunk 流出给前端
-                    if node in ("clarify", "meta_clarify"):
+                        emit("status", status_text(node, update))
+                    if node == "understand" and (
+                        (update or {}).get("issues")
+                        or (update or {}).get("locked_major")
+                        or (update or {}).get("suggested_major_code")
+                    ):
+                        emit("taxonomy", {
+                            "selected_major_code": (update or {}).get(
+                                "selected_major_code", selected_major_code
+                            ),
+                            "major_mismatch": bool(
+                                (update or {}).get("major_mismatch")
+                            ),
+                            "issues": (update or {}).get("issues") or [],
+                            # 锁定状态与危险标志：给前端渲染"改报"入口，也给量化用
+                            "locked_major": (update or {}).get("locked_major", ""),
+                            "locked_subcategory": (update or {}).get("locked_subcategory", ""),
+                            "suggested_major_code": (update or {}).get("suggested_major_code", ""),
+                            "immediate_danger": bool((update or {}).get("immediate_danger")),
+                            "premises_scope": (update or {}).get("premises_scope", "public"),
+                        })
+                    # close_task 等节点直接追加的回复也要流出给前端
+                    if node in ("close_task",):
                         msgs = (update or {}).get("messages") or []
                         if msgs:
-                            last = msgs[-1]
-                            content = getattr(last, "content", None) or ""
+                            content = getattr(msgs[-1], "content", None) or ""
                             if content:
                                 emit("chunk", content)
                     # 注意：report 正文现在走 custom 流，这里不再从 updates 取（避免重复）
@@ -668,12 +2178,11 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                     cancellation.throw_if_cancelled()
             emit("done", "")
         except Exception as e:
+            if isinstance(e, StreamCancelled) or (cancellation and cancellation.is_cancelled()):
+                return
             emit("error", str(e))
         finally:
-            try:
-                del _stream_local.emit
-            except Exception:
-                pass
+            pass
 
     worker = asyncio.create_task(asyncio.to_thread(produce))
     try:

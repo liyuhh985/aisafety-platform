@@ -17,9 +17,9 @@ if _env_file.exists():
 # MiMo API 配置 (OpenAI-compatible)
 MIMO_BASE_URL = os.getenv("MIMO_BASE_URL", "https://api.xiaomimimo.com/v1")
 MIMO_API_KEY = os.getenv("MIMO_API_KEY", "")
-MIMO_MODEL = os.getenv("MIMO_MODEL", "mimo-v2.5-pro")
-MIMO_MODEL_BACKUP = os.getenv("MIMO_MODEL_BACKUP", "mimo-v2.5")
-MIMO_VISION_MODEL = os.getenv("MIMO_VISION_MODEL", "mimo-v2.5")
+MIMO_MODEL = os.getenv("MIMO_MODEL", "mimo-v2.6-flash")
+MIMO_MODEL_BACKUP = os.getenv("MIMO_MODEL_BACKUP", "mimo-v2.6-flash")
+MIMO_VISION_MODEL = os.getenv("MIMO_VISION_MODEL", "mimo-v2.6-flash")
 
 # 硅基流动 Embedding (免费)
 SF_BASE_URL = os.getenv("SF_BASE_URL", "https://api.siliconflow.cn/v1")
@@ -60,6 +60,14 @@ MILVUS_EMBEDDING_DIM = int(os.getenv("MILVUS_EMBEDDING_DIM", "1024"))
 MILVUS_TIMEOUT_SECONDS = float(os.getenv("MILVUS_TIMEOUT_SECONDS", "5"))
 MILVUS_FALLBACK_TO_MYSQL = _env_bool("MILVUS_FALLBACK_TO_MYSQL", "true")
 RETRIEVAL_TIMEOUT_SECONDS = float(os.getenv("RETRIEVAL_TIMEOUT_SECONDS", "10"))
+
+# 向量检索最低置信度（COSINE 相似度，越大越像）。低于它的命中视为不相关，直接不返回。
+# 依据 2026-09-27 实测（74 条查询，案例库 + 法规库各跑一遍）：
+#   案例库  负样本 top1 最高 0.4687 | 正样本 top1 最低 0.5422
+#   法规库  负样本 top1 最高 0.4374 | 正样本 top1 最低 0.5025
+# 两张表都完全可分，安全带 = [0.4687, 0.5025]。取 0.48（偏正样本一侧）：
+# 漏掉相关检索结果的后果（报告没有法规/案例依据）比多带一条不相关更重，所以往低取。
+RETRIEVAL_MIN_SCORE = float(os.getenv("RETRIEVAL_MIN_SCORE", "0.48"))
 MILVUS_CASE_COLLECTION = os.getenv("MILVUS_CASE_COLLECTION", "hazard_cases")
 MILVUS_POLICY_COLLECTION = os.getenv("MILVUS_POLICY_COLLECTION", "hazard_policies")
 MILVUS_REGULATION_COLLECTION = os.getenv("MILVUS_REGULATION_COLLECTION", "hazard_regulations")

@@ -8,13 +8,20 @@ import logging
 import re
 
 from core.agent import Agent
+from core.hazard_categories import SUBMIT_CATEGORIES
+from core.hazard_taxonomy import (
+    HAZARD_TAXONOMY,
+    SUBCATEGORY_LABELS,
+    format_hazard_type,
+    normalize_taxonomy,
+)
 from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
 from tools.amap_geo import geocode
 from tools.java_client import create_hazard
 
 LOGGER = logging.getLogger(__name__)
 
-CATEGORIES = ("占道", "井盖/道路", "消防通道", "施工")
+CATEGORIES = SUBMIT_CATEGORIES
 
 # 轻量抽取器（不带工具）
 _extractor = Agent(
@@ -57,9 +64,16 @@ def _render(history, latest) -> str:
 def _extract(history, latest) -> dict:
     prompt = (
         "请从下面对话中抽取隐患上报信息，只返回 JSON，字段："
-        "category(四选一：占道/井盖/道路/消防通道/施工，用精确值如'占道','井盖/道路','消防通道','施工')，"
+        "category(必须使用 major_code/subcategory_code 格式)，"
         "address(最具体的地点文本，如'XX市XX区XX路XX小区门口'，没有为空)，"
         "district(省/市/区，没有为空)，description(隐患描述，简短)，severity(0一般/1较重/2严重，默认1)。\n"
+        "允许的类别：\n"
+        + "\n".join(
+            f"- {item['label']}({item['code']}): "
+            + "、".join(f"{label}({code})" for code, label in item["subcategories"])
+            for item in HAZARD_TAXONOMY
+        )
+        + "\n"
         f"对话：\n{_render(history, latest)}"
     )
     try:
@@ -74,12 +88,11 @@ def _extract(history, latest) -> dict:
             data = json.loads(content[s:e + 1])
         else:
             data = json.loads(content)
-        # category 归一化到 4 类
+        # category 归一化到 canonical major/subcategory 编码
         cat = (data.get("category") or "").strip()
-        for c in CATEGORIES:
-            if c in cat or cat in c or cat == "井盖与道路" and c == "井盖/道路":
-                data["category"] = c
-                break
+        pair = normalize_taxonomy(cat)
+        if pair:
+            data["category"] = format_hazard_type(pair[0], pair[1])
         else:
             data["category"] = ""
         data["severity"] = int(data.get("severity") or 1)

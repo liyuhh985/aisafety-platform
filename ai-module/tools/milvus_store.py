@@ -4,8 +4,10 @@ from config import (
     MILVUS_ALIAS,
     MILVUS_EMBEDDING_DIM,
     MILVUS_HOST,
+    MILVUS_PASSWORD,
     MILVUS_PORT,
     MILVUS_TIMEOUT_SECONDS,
+    MILVUS_USER,
 )
 from tools.hybrid_search import TABLE_TO_COLLECTION
 
@@ -25,6 +27,8 @@ class MilvusVectorStore:
         host: str = MILVUS_HOST,
         port: int = MILVUS_PORT,
         alias: str = MILVUS_ALIAS,
+        user: str = MILVUS_USER,
+        password: str = MILVUS_PASSWORD,
         timeout_seconds: float = MILVUS_TIMEOUT_SECONDS,
         embedding_dim: int = MILVUS_EMBEDDING_DIM,
     ):
@@ -34,6 +38,8 @@ class MilvusVectorStore:
         self.host = host
         self.port = port
         self.alias = alias
+        self.user = user
+        self.password = password
         self.timeout_seconds = timeout_seconds
         self.embedding_dim = embedding_dim
 
@@ -50,6 +56,8 @@ class MilvusVectorStore:
 
         self.client = MilvusClient(
             uri=f"http://{self.host}:{self.port}",
+            user=self.user,
+            password=self.password,
             timeout=self.timeout_seconds,
         )
 
@@ -294,8 +302,11 @@ class MilvusVectorStore:
     def _normalize_hit(cls, hit) -> dict:
         entity = cls._value(hit, "entity", {}) or {}
         content_hash = cls._value(entity, "content_hash", "")
+        doc_id = cls._value(hit, "id")
+        if doc_id is None:
+            doc_id = cls._value(hit, "doc_id")
         return {
-            "id": int(cls._value(hit, "id")),
+            "id": int(doc_id),
             "distance": float(cls._value(hit, "distance")),
             "content_hash": content_hash or "",
         }

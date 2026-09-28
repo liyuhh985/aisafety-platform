@@ -10,7 +10,7 @@ from typing import Optional
 import requests
 from PIL import Image
 
-from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL, MAX_IMAGE_SIZE
+from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL, MIMO_VISION_MODEL, MAX_IMAGE_SIZE
 
 
 class MiMoVisionClient:
@@ -19,7 +19,7 @@ class MiMoVisionClient:
     def __init__(self):
         self.base_url = MIMO_BASE_URL.rstrip("/")
         self.api_key = MIMO_API_KEY
-        self.model = MIMO_MODEL
+        self.model = MIMO_VISION_MODEL
 
     def analyze(self, image_path: str, prompt: str, temperature: float = 0.3) -> Optional[str]:
         """

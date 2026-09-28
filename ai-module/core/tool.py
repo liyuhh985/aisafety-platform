@@ -2,6 +2,8 @@
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
+from core.cancellation import StreamCancelled
+
 
 @dataclass
 class Tool:
@@ -32,5 +34,8 @@ class Tool:
         try:
             result = self.func(**kwargs)
             return str(result) if not isinstance(result, str) else result
+        except StreamCancelled:
+            # 取消必须穿透工具边界：否则会被当成"工具失败"继续跑完剩下所有检索
+            raise
         except Exception as e:
             return f"[工具执行失败] {self.name}: {e}"

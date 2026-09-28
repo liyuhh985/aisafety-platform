@@ -2,9 +2,13 @@
 混合检索：向量语义匹配 + 关键词精确匹配 → 合并去重排序。
 """
 import json
+import inspect
 import logging
 import math
 import os
+import socket
+import threading
+import time
 from typing import Optional
 
 import numpy as np
@@ -22,8 +26,11 @@ from config import (
     SF_BASE_URL,
     SF_API_KEY,
     SF_EMBED_MODEL,
+    RETRIEVAL_MIN_SCORE,
+    RETRIEVAL_TIMEOUT_SECONDS,
     VECTOR_BACKEND,
 )
+from core.cancellation import CancellationToken, StreamCancelled
 from db_config import DB_CONFIG
 
 EMBEDDING_CACHE_FILE = os.path.join(os.path.dirname(__file__), "..", "db", "case_embeddings.json")
@@ -38,6 +45,181 @@ TABLE_TO_COLLECTION = {
 
 class MilvusRetrievalError(RuntimeError):
     """Raised when Milvus retrieval fails and MySQL fallback is disabled."""
+
+
+class RetrievalTimeout(TimeoutError):
+    """Raised when one logical library lookup exhausts its time budget."""
+
+
+def _check_cancelled(cancellation: CancellationToken | None) -> None:
+    if cancellation:
+        cancellation.throw_if_cancelled()
+
+
+def _remaining(deadline: float | None, fallback: float = RETRIEVAL_TIMEOUT_SECONDS) -> float:
+    remaining = float(fallback) if deadline is None else deadline - time.monotonic()
+    if remaining <= 0:
+        raise RetrievalTimeout("retrieval time budget exhausted")
+    return remaining
+
+
+def _call_with_optional_kwargs(func, *args, **kwargs):
+    """Keep old test doubles and integrations valid while adding cancellation args."""
+    try:
+        parameters = inspect.signature(func).parameters
+    except (TypeError, ValueError):
+        return func(*args, **kwargs)
+    if any(parameter.kind == inspect.Parameter.VAR_KEYWORD
+           for parameter in parameters.values()):
+        return func(*args, **kwargs)
+    accepted = {key: value for key, value in kwargs.items() if key in parameters}
+    return func(*args, **accepted)
+
+
+def _mysql_connection(timeout_seconds: float, cancellation: CancellationToken | None):
+    timeout = max(0.001, float(timeout_seconds))
+    try:
+        conn = pymysql.connect(
+            **DB_CONFIG,
+            connect_timeout=timeout,
+            read_timeout=timeout,
+            write_timeout=timeout,
+        )
+    except Exception as exc:
+        _raise_for_cancel_or_timeout(exc, cancellation)
+        raise
+    closer = conn.close
+    if cancellation:
+        cancellation.register(closer)
+        try:
+            cancellation.throw_if_cancelled()
+        except StreamCancelled:
+            cancellation.unregister(closer)
+            closer()
+            raise
+    return conn, closer
+
+
+def _raise_for_cancel_or_timeout(exc: Exception,
+                                 cancellation: CancellationToken | None) -> None:
+    if cancellation and cancellation.is_cancelled():
+        raise StreamCancelled() from exc
+    message = str(exc).lower()
+    if isinstance(exc, (TimeoutError, socket.timeout, requests.Timeout)) or "timed out" in message:
+        raise RetrievalTimeout("retrieval dependency timed out") from exc
+
+
+# ====== 关键词分支：分词 OR 召回 + Python 打分排序 ======
+
+# 语料规模（案例 231 / 法规 129 / 知识 30）远小于该上限，所以"扫全量候选、在 Python 里打分"
+# 是精确的；语料涨到接近这个量级时要一起调大（超过后截断会退化成按 id 丢尾部候选）。
+_KEYWORD_SCAN_CAP = 500
+
+# 短于 2 个字的 token 信息量太低（"的""在"），丢掉。
+_KEYWORD_TOKEN_MIN_LEN = 2
+
+# 槽位值里常见的中文顿号/逗号/分号，切开后每个词更有机会命中。
+# 刻意**不切 "/"**：分类标签里有"井盖缺失/破损""排水/积水""占道经营/乱堆乱放"，
+# 切开会让"破损""积水"这类泛词单独进 LIKE，反而污染结果。
+_KEYWORD_TOKEN_SEPARATORS = "、，,;；"
+
+_KEYWORD_FIELD_SPECS = {
+    "tb_hazard_case": {
+        "columns": ("id", "title", "description", "category", "severity", "city",
+                    "casualties", "cause", "rectification", "regulation_ref", "verdict"),
+        "search_fields": ("category", "title", "description"),
+        "bonus_fields": ("title",),
+    },
+    "tb_regulation": {
+        "columns": ("id", "law_name", "article", "content", "category", "keywords"),
+        "search_fields": ("category", "law_name", "keywords", "content"),
+        "bonus_fields": ("law_name",),
+    },
+    "tb_hazard_knowledge": {
+        "columns": ("id", "title", "content", "category", "region", "source"),
+        "search_fields": ("title", "content"),
+        "bonus_fields": ("title",),
+    },
+}
+
+def _tokenize_keyword(keyword: str) -> list[str]:
+    """切词 → 丢过短 token → 去重。
+
+    刻意**不区分**"类别标签 token"：标签命中 category 字段时拿到的就是同小类案例，
+    这是纯向量检索给不了的精度，丢掉它是净损失（评测实测：改前 Hit@5 1.000/MRR 0.984
+    → 丢掉标签后 0.938/0.854）。标签块占住前排的问题改为在合并顺序上解决 ——
+    见 HybridSearcher._merge_results（向量在前、关键词只补尾部名额）。
+
+    返回空列表表示"这个串没有词汇级信号"，调用方直接返回空结果、交给纯向量检索
+    （绝不能落到 LIKE '%%'，那会匹配全表）。
+    """
+    text = (keyword or "").strip()
+    if not text:
+        return []
+    for separator in _KEYWORD_TOKEN_SEPARATORS:
+        text = text.replace(separator, " ")
+    tokens: list[str] = []
+    for raw in text.split():
+        token = raw.strip()
+        if len(token) < _KEYWORD_TOKEN_MIN_LEN:
+            continue
+        if token not in tokens:
+            tokens.append(token)
+    return tokens
+
+
+def _like_pattern(token: str) -> str:
+    """把 token 变成 LIKE 模式串，并转义 LIKE 通配符（% _ \\）。"""
+    escaped = token.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    return f"%{escaped}%"
+
+
+def _rank_keyword_rows(table: str, rows, tokens: list[str]) -> list[tuple]:
+    """按 命中 token 数↓ → 标题类字段命中数↓ → id↑ 排序，返回 [(hits, bonus, id, row)]。
+
+    排序刻意放在 Python 里做：MySQL 那边只负责"召回宽候选"，不负责决定顺序
+    （改动前没有 ORDER BY，LIMIT 拿到的是按 id 排的任意 3 条）。
+    """
+    spec = _KEYWORD_FIELD_SPECS[table]
+    columns = spec["columns"]
+    search_idx = [columns.index(field) for field in spec["search_fields"]]
+    bonus_idx = [columns.index(field) for field in spec["bonus_fields"]]
+    id_idx = columns.index("id")
+    scored = []
+    for row in rows:
+        hits = 0
+        bonus = 0
+        for token in tokens:
+            needle = token.lower()
+            matched_bonus = False
+            matched_any = False
+            for idx in search_idx:
+                value = row[idx]
+                if value and needle in str(value).lower():
+                    matched_any = True
+                    if idx in bonus_idx:
+                        matched_bonus = True
+            if matched_any:
+                hits += 1
+                if matched_bonus:
+                    bonus += 1
+        scored.append((-hits, -bonus, row[id_idx], row))
+    scored.sort(key=lambda item: (item[0], item[1], item[2]))
+    return scored
+
+
+def _keyword_row_to_dict(table: str, row) -> dict:
+    """把数据库行还原成调用方依赖的 dict 结构（与改动前逐一对应）。"""
+    if table == "tb_regulation":
+        return {"id": row[0], "title": f"{row[1]} {row[2]}", "description": row[3],
+                "category": row[4], "keywords": row[5]}
+    if table == "tb_hazard_case":
+        return {"table": "tb_hazard_case", "id": row[0], "title": row[1],
+                "description": row[2], "category": row[3], "severity": row[4],
+                "city": row[5], "casualties": row[6], "cause": row[7],
+                "rectification": row[8], "regulation_ref": row[9], "verdict": row[10]}
+    return {"table": "tb_hazard_knowledge", "id": row[0], "title": row[1],
+            "content": row[2], "category": row[3], "region": row[4], "source": row[5]}
 
 
 class HybridSearcher:
@@ -72,18 +254,39 @@ class HybridSearcher:
 
     # ====== 向量检索 ======
 
-    def vector_search(self, query: str, table: str, top_k: int = 3) -> list[dict]:
+    def vector_search(self, query: str, table: str, top_k: int = 3,
+                      cancellation: CancellationToken | None = None,
+                      deadline: float | None = None) -> list[dict]:
         if table not in TABLE_TO_COLLECTION:
             raise ValueError(f"Unsupported retrieval table: {table}")
+        _check_cancelled(cancellation)
         if self.vector_backend == "mysql":
-            return self.mysql_vector_search(query, table, top_k)
+            return _call_with_optional_kwargs(
+                self.mysql_vector_search,
+                query,
+                table,
+                top_k,
+                cancellation=cancellation,
+                deadline=deadline,
+            )
         if self.vector_backend != "milvus":
             raise ValueError(f"Unsupported VECTOR_BACKEND: {self.vector_backend}")
 
         try:
             if not self.milvus_enabled:
                 raise MilvusRetrievalError("Milvus backend is disabled")
-            return self.milvus_vector_search(query, table, top_k)
+            return _call_with_optional_kwargs(
+                self.milvus_vector_search,
+                query,
+                table,
+                top_k,
+                cancellation=cancellation,
+                deadline=deadline,
+            )
+        except RetrievalTimeout:
+            raise
+        except StreamCancelled:
+            raise
         except Exception as exc:
             if self.milvus_fallback_to_mysql:
                 self.logger.warning(
@@ -91,36 +294,55 @@ class HybridSearcher:
                     table,
                     type(exc).__name__,
                 )
-                return self.mysql_vector_search(query, table, top_k)
+                return _call_with_optional_kwargs(
+                    self.mysql_vector_search,
+                    query,
+                    table,
+                    top_k,
+                    cancellation=cancellation,
+                    deadline=deadline,
+                )
             if isinstance(exc, MilvusRetrievalError):
                 raise
             raise MilvusRetrievalError(
                 f"Milvus vector retrieval failed for {table}: {type(exc).__name__}"
             ) from exc
 
-    def mysql_vector_search(self, query: str, table: str, top_k: int = 3) -> list[dict]:
+    def mysql_vector_search(self, query: str, table: str, top_k: int = 3,
+                            cancellation: CancellationToken | None = None,
+                            deadline: float | None = None) -> list[dict]:
         """
         MySQL fallback: 用 embedding 做全表语义检索。
         table: "tb_hazard_case" | "tb_hazard_knowledge"
         """
-        query_emb = self._embed(query)
+        _check_cancelled(cancellation)
+        query_emb = self._embed(
+            query,
+            cancellation=cancellation,
+            timeout_seconds=_remaining(deadline),
+        )
         if query_emb is None:
             return []
 
         # 获取表中所有需要检索的记录
-        rows = self._fetch_all(table)
+        rows = self._fetch_all(table, cancellation=cancellation, deadline=deadline)
         if not rows:
             return []
 
         scored = []
         for row in rows:
+            _check_cancelled(cancellation)
             row_id, title, content = row[0], row[1], row[2]
             # 优先用缓存，否则实时 embedding
             cached = self.embedding_cache.get(row_id)
             if cached:
                 doc_emb = cached
             else:
-                doc_emb = self._embed(f"{title} {content or ''}"[:500])
+                doc_emb = self._embed(
+                    f"{title} {content or ''}"[:500],
+                    cancellation=cancellation,
+                    timeout_seconds=_remaining(deadline),
+                )
                 if doc_emb:
                     self.embedding_cache[row_id] = doc_emb
 
@@ -129,24 +351,77 @@ class HybridSearcher:
                 scored.append((sim, row))
 
         scored.sort(key=lambda x: x[0], reverse=True)
-        top_ids = [row[0] for _, row in scored[:top_k] if _ > 0.3]
+        top_ids = [row[0] for _, row in scored[:top_k]
+                   if _ >= RETRIEVAL_MIN_SCORE]
         if not top_ids:
             return []
         # 用 ID 回查完整字段
-        return self._get_rows_by_ids(table, top_ids)
+        return _call_with_optional_kwargs(
+            self._get_rows_by_ids,
+            table,
+            top_ids,
+            cancellation=cancellation,
+            deadline=deadline,
+        )
 
-    def milvus_vector_search(self, query: str, table: str, top_k: int = 3) -> list[dict]:
+    def milvus_vector_search(self, query: str, table: str, top_k: int = 3,
+                             cancellation: CancellationToken | None = None,
+                             deadline: float | None = None,
+                             timeout_seconds: float | None = None) -> list[dict]:
         if self.vector_store is None:
             from tools.milvus_store import MilvusVectorStore
 
             self.vector_store = MilvusVectorStore()
-        query_vector = self._milvus_embed(query)
-        hits = self.vector_store.search(table, query_vector, top_k)
+        _check_cancelled(cancellation)
+        requested_timeout = timeout_seconds
+        if deadline is None and timeout_seconds is not None:
+            deadline = time.monotonic() + timeout_seconds
+        query_vector = self._milvus_embed(
+            query, cancellation=cancellation, deadline=deadline
+        )
+        hits = _call_with_optional_kwargs(
+            self.vector_store.search,
+            table,
+            query_vector,
+            top_k,
+            timeout_seconds=(
+                requested_timeout
+                if requested_timeout is not None
+                else _remaining(deadline)
+            ),
+            cancellation=cancellation,
+        )
         if not hits:
             raise MilvusRetrievalError("Milvus collection returned no vector hits")
 
+        confident = [hit for hit in hits if float(hit["distance"]) >= RETRIEVAL_MIN_SCORE]
+        if not confident:
+            # 有向量命中但全部低于置信度门槛：这不是故障，是「库内确实没有相关内容」。
+            # 这里必须 return [] 而不是 raise —— raise 会触发 MySQL 兜底，
+            # 把同一批噪声结果再捞回来，等于阈值白加。
+            self.logger.info(
+                "Milvus hits below confidence threshold source=%s kept=0 dropped=%d",
+                table,
+                len(hits),
+            )
+            return []
+        if len(confident) < len(hits):
+            self.logger.info(
+                "Milvus hits filtered by confidence source=%s kept=%d dropped=%d",
+                table,
+                len(confident),
+                len(hits) - len(confident),
+            )
+        hits = confident
+
         ids = [int(hit["id"]) for hit in hits]
-        rows = self._get_rows_by_ids(table, ids)
+        rows = _call_with_optional_kwargs(
+            self._get_rows_by_ids,
+            table,
+            ids,
+            cancellation=cancellation,
+            deadline=deadline,
+        )
         rows_by_id = {int(row["id"]): row for row in rows}
         hydrated = []
         for hit in hits:
@@ -162,18 +437,32 @@ class HybridSearcher:
             )
         return hydrated
 
-    def _milvus_embed(self, query: str) -> list[float]:
+    def _milvus_embed(self, query: str,
+                      cancellation: CancellationToken | None = None,
+                      deadline: float | None = None) -> list[float]:
         if self.embedding_client is None:
             from tools.knowledge_sync import SiliconFlowEmbeddingClient
 
             self.embedding_client = SiliconFlowEmbeddingClient()
-        vectors = self.embedding_client.embed([query])
+        vectors = _call_with_optional_kwargs(
+            self.embedding_client.embed,
+            [query],
+            timeout_seconds=_remaining(deadline),
+            cancellation=cancellation,
+        )
         if len(vectors) != 1:
             raise MilvusRetrievalError("Embedding service returned no query vector")
         return vectors[0]
 
-    def _embed(self, text: str) -> Optional[list[float]]:
+    def _embed(self, text: str,
+               cancellation: CancellationToken | None = None,
+               timeout_seconds: float = 30) -> Optional[list[float]]:
         """调用硅基流动 BAAI/bge-m3 embedding API 获取语义向量。"""
+        _check_cancelled(cancellation)
+        timeout = max(0.001, float(timeout_seconds))
+        resp = None
+        close = None
+        close_once = None
         try:
             resp = requests.post(
                 f"{SF_BASE_URL}/embeddings",
@@ -185,15 +474,49 @@ class HybridSearcher:
                     "model": SF_EMBED_MODEL,
                     "input": text[:8192],  # bge-m3 支持最长 8192 token
                 },
-                timeout=30,
+                timeout=timeout,
             )
+            close = getattr(resp, "close", None)
+            if callable(close):
+                close_lock = threading.Lock()
+                closed = False
+
+                def close_once():
+                    nonlocal closed
+                    with close_lock:
+                        if closed:
+                            return
+                        closed = True
+                    close()
+
+            if cancellation and close_once:
+                cancellation.register(close_once)
+                cancellation.throw_if_cancelled()
             if resp.status_code == 200:
-                return resp.json()["data"][0]["embedding"]
+                result = resp.json()["data"][0]["embedding"]
+                _check_cancelled(cancellation)
+                return result
+            _check_cancelled(cancellation)
             print(f"[WARN] Embedding API 返回 {resp.status_code}: {resp.text[:200]}")
-            return self._fallback_embed(text)
+            result = self._fallback_embed(text)
+            _check_cancelled(cancellation)
+            return result
+        except StreamCancelled:
+            raise
+        except requests.Timeout as e:
+            if cancellation and cancellation.is_cancelled():
+                raise StreamCancelled() from e
+            raise RetrievalTimeout("embedding request timed out") from e
         except Exception as e:
+            if cancellation and cancellation.is_cancelled():
+                raise StreamCancelled() from e
             print(f"[WARN] Embedding API 异常: {e}")
             return self._fallback_embed(text)
+        finally:
+            if cancellation and close_once:
+                cancellation.unregister(close_once)
+            if close_once:
+                close_once()
 
     def _fallback_embed(self, text: str) -> list[float]:
         """
@@ -223,103 +546,104 @@ class HybridSearcher:
     # ====== 关键词检索 ======
 
     @staticmethod
-    def keyword_search(keyword: str, table: str, limit: int = 3) -> list[dict]:
-        """MySQL LIKE 精确关键词匹配。"""
-        conn = pymysql.connect(**DB_CONFIG)
+    def keyword_search(keyword: str, table: str, limit: int = 3,
+                       cancellation: CancellationToken | None = None,
+                       timeout_seconds: float = RETRIEVAL_TIMEOUT_SECONDS) -> list[dict]:
+        """关键词匹配：分词 OR 召回 + Python 打分排序（不是整串 LIKE）。
+
+        改动前是拿整串做 `LIKE '%整串%'`，而生产传进来的是「小类标签 + 槽位值」
+        （见 core.assistant_graph._pick_keyword），所以只有整串恰好是某个字段的连续子串
+        时才会命中 —— 槽位一多就恒为 0 命中，混合检索退化成纯向量检索。
+
+        现在：按空白/顿号切 token，每个 token 做 OR 匹配，取宽候选后在 Python 里按
+        "命中 token 数 → 标题类字段 → id" 排序。token 里包含小类标签是**故意**的
+        （标签命中 category 等于同小类过滤，是精度来源）；它占住前排的问题由
+        _merge_results 的"向量在前"解决。切不出 token 就返回 []，交给纯向量检索。
+        """
+        _check_cancelled(cancellation)
+        spec = _KEYWORD_FIELD_SPECS.get(table)
+        if spec is None:
+            raise ValueError(f"Unsupported retrieval table: {table}")
+        tokens = _tokenize_keyword(keyword)
+        if not tokens:
+            return []
+        conn, closer = _mysql_connection(timeout_seconds, cancellation)
         try:
             with conn.cursor() as cur:
-                like = f"%{keyword}%"
-                if table == "tb_regulation":
-                    cur.execute(
-                        "SELECT id, law_name, article, content, category, keywords "
-                        "FROM tb_regulation "
-                        "WHERE category LIKE %s OR law_name LIKE %s OR keywords LIKE %s "
-                        "OR content LIKE %s LIMIT %s",
-                        (like, like, like, like, limit),
-                    )
-                    return [{"id": r[0], "title": f"{r[1]} {r[2]}", "description": r[3],
-                             "category": r[4], "keywords": r[5]} for r in cur.fetchall()]
-                if table == "tb_hazard_case":
-                    cur.execute(
-                        "SELECT id, title, description, category, severity, city, "
-                        "casualties, cause, rectification, regulation_ref, verdict "
-                        "FROM tb_hazard_case "
-                        "WHERE category LIKE %s OR title LIKE %s OR description LIKE %s "
-                        "LIMIT %s",
-                        (like, like, like, limit),
-                    )
-                    rows = cur.fetchall()
-                    results = []
-                    for row in rows:
-                        results.append({
-                            "table": "tb_hazard_case",
-                            "id": row[0],
-                            "title": row[1],
-                            "description": row[2],
-                            "category": row[3],
-                            "severity": row[4],
-                            "city": row[5],
-                            "casualties": row[6],
-                            "cause": row[7],
-                            "rectification": row[8],
-                            "regulation_ref": row[9],
-                            "verdict": row[10],
-                        })
-                    return results
-                else:
-                    cur.execute(
-                        "SELECT id, title, content, category, region, source "
-                        "FROM tb_hazard_knowledge "
-                        "WHERE title LIKE %s OR content LIKE %s LIMIT %s",
-                        (like, like, limit),
-                    )
-                    rows = cur.fetchall()
-                    return [
-                        {
-                            "table": "tb_hazard_knowledge",
-                            "id": r[0],
-                            "title": r[1],
-                            "content": r[2],
-                            "category": r[3],
-                            "region": r[4],
-                            "source": r[5],
-                        }
-                        for r in rows
-                    ]
+                columns = ", ".join(spec["columns"])
+                clauses = []
+                params: list = []
+                for field in spec["search_fields"]:
+                    clauses.append(
+                        "(" + " OR ".join(f"{field} LIKE %s" for _ in tokens) + ")")
+                    params.extend(_like_pattern(token) for token in tokens)
+                sql = (f"SELECT {columns} FROM {table} WHERE " + " OR ".join(clauses)
+                       + " ORDER BY id ASC LIMIT %s")
+                params.append(_KEYWORD_SCAN_CAP)
+                cur.execute(sql, params)
+                rows = cur.fetchall()
+        except StreamCancelled:
+            raise
+        except Exception as exc:
+            _raise_for_cancel_or_timeout(exc, cancellation)
+            raise
         finally:
+            if cancellation:
+                cancellation.unregister(closer)
             conn.close()
+        ranked = _rank_keyword_rows(table, rows, tokens)
+        return [_keyword_row_to_dict(table, item[3]) for item in ranked[:max(0, limit)]]
+
 
     # ====== 混合检索 ======
 
     def hybrid_search(self, query: str, table: str = "tb_hazard_case",
-                      vector_k: int = 3, keyword_k: int = 3) -> str:
+                      vector_k: int = 3, keyword_k: int = 3,
+                      cancellation: CancellationToken | None = None,
+                      timeout_seconds: float = RETRIEVAL_TIMEOUT_SECONDS) -> str:
         """
         混合检索入口：向量 + 关键词 → 合并去重 → 格式化输出。
         """
         if table not in TABLE_TO_COLLECTION:
             raise ValueError(f"Unsupported retrieval table: {table}")
 
-        # 并行两种检索
+        deadline = time.monotonic() + max(0.001, float(timeout_seconds))
+        _check_cancelled(cancellation)
         try:
-            vector_results = self.vector_search(query, table, top_k=vector_k)
+            vector_results = _call_with_optional_kwargs(
+                self.vector_search,
+                query,
+                table,
+                top_k=vector_k,
+                cancellation=cancellation,
+                deadline=deadline,
+            )
+            _check_cancelled(cancellation)
+        except StreamCancelled:
+            raise
+        except RetrievalTimeout:
+            _check_cancelled(cancellation)
+            return self._degraded_result(query, table)
         except MilvusRetrievalError as exc:
+            _check_cancelled(cancellation)
             return f"Milvus 向量检索不可用：{exc}。请暂时使用 MySQL 检索或稍后重试。"
-        keyword_results = self.keyword_search(query, table, limit=keyword_k)
+        try:
+            keyword_results = _call_with_optional_kwargs(
+                self.keyword_search,
+                query,
+                table,
+                limit=keyword_k,
+                cancellation=cancellation,
+                timeout_seconds=_remaining(deadline),
+            )
+            _check_cancelled(cancellation)
+        except StreamCancelled:
+            raise
+        except RetrievalTimeout:
+            _check_cancelled(cancellation)
+            return self._degraded_result(query, table)
 
-        # 合并去重（按 id）
-        seen = set()
-        merged = []
-        for r in keyword_results:
-            if r["id"] not in seen:
-                seen.add(r["id"])
-                r["match_type"] = "关键词"
-                merged.append(r)
-        for r in vector_results:
-            rid = r.get("id")
-            if rid not in seen:
-                seen.add(rid)
-                r["match_type"] = "语义"
-                merged.append(r)
+        merged = self._merge_results(keyword_results, vector_results, vector_k, keyword_k)
 
         # 格式化输出
         if not merged:
@@ -354,11 +678,46 @@ class HybridSearcher:
         return "\n".join(lines)
 
     @staticmethod
-    def _get_rows_by_ids(table: str, ids: list[int]) -> list[dict]:
+    def _merge_results(keyword_results: list[dict], vector_results: list[dict],
+                       vector_k: int, keyword_k: int) -> list[dict]:
+        """合并去重：**向量在前、关键词只补尾部名额**，按 id 去重，截断到 max(k) + 2。
+
+        顺序是有意的：关键词块内部只按"命中 token 数 → 字段 → id"排，跟语义相关性无关，
+        把它放在前面会用 id 顺序占住 top-1~3（评测实测：关键词在前时"槽位有值"MRR
+        0.728，改成向量在后…即向量在前后回到 0.844）。所以向量负责相关性排序，
+        关键词负责把向量没占满的名额补上（多召回同小类/同 token 的条目）。
+
+        这一段定义了"模型真正看得到的窗口"，eval_retrieval.py 直接调用它，
+        保证评测重建的排名与生产同源 —— 两边各写一份迟早会漂移。
+        """
+        seen = set()
+        merged = []
+        for r in vector_results:
+            rid = r.get("id")
+            if rid not in seen:
+                seen.add(rid)
+                r["match_type"] = "语义"
+                merged.append(r)
+        for r in keyword_results:
+            if r["id"] not in seen:
+                seen.add(r["id"])
+                r["match_type"] = "关键词"
+                merged.append(r)
+        return merged[:max(vector_k, keyword_k) + 2]
+
+    @staticmethod
+    def _degraded_result(query: str, table: str) -> str:
+        return f"{table} retrieval timeout（检索超时），暂未返回结果。查询：{query}"
+
+    @staticmethod
+    def _get_rows_by_ids(table: str, ids: list[int],
+                         cancellation: CancellationToken | None = None,
+                         deadline: float | None = None) -> list[dict]:
         """按 ID 列表回查完整字段。"""
         if not ids:
             return []
-        conn = pymysql.connect(**DB_CONFIG)
+        _check_cancelled(cancellation)
+        conn, closer = _mysql_connection(_remaining(deadline), cancellation)
         try:
             with conn.cursor() as cur:
                 placeholders = ",".join(["%s"] * len(ids))
@@ -398,14 +757,24 @@ class HybridSearcher:
                          "region": r[4] or "", "source": r[5] or ""}
                         for r in cur.fetchall()
                     ]
+        except StreamCancelled:
+            raise
+        except Exception as exc:
+            _raise_for_cancel_or_timeout(exc, cancellation)
+            raise
         finally:
+            if cancellation:
+                cancellation.unregister(closer)
             conn.close()
 
     # ====== 缓存 ======
 
-    def _fetch_all(self, table: str) -> list:
+    def _fetch_all(self, table: str,
+                   cancellation: CancellationToken | None = None,
+                   deadline: float | None = None) -> list:
         """获取表中所有记录 (id, title, content/description)。"""
-        conn = pymysql.connect(**DB_CONFIG)
+        _check_cancelled(cancellation)
+        conn, closer = _mysql_connection(_remaining(deadline), cancellation)
         try:
             with conn.cursor() as cur:
                 if table == "tb_regulation":
@@ -415,7 +784,14 @@ class HybridSearcher:
                 else:
                     cur.execute("SELECT id, title, content FROM tb_hazard_knowledge")
                 return cur.fetchall()
+        except StreamCancelled:
+            raise
+        except Exception as exc:
+            _raise_for_cancel_or_timeout(exc, cancellation)
+            raise
         finally:
+            if cancellation:
+                cancellation.unregister(closer)
             conn.close()
 
     def _load_cache(self):

@@ -1,30 +1,37 @@
 """
-双层记忆架构: Working Memory(当前) + Historical Memory(历史)。
+双层记忆架构: Working Memory(当前) + Historical Memory(按用户持久化)。
 
-  ┌─────────────────────────────────┐
-  │     Working Memory (session级)   │
-  │  - 本轮视觉识别结果                │
-  │  - 本轮检索结果                    │
-  │  - 最近 N 轮对话                   │
-  │  → 直接注入 Agent messages        │
-  └──────────────┬──────────────────┘
-                 │ 超出窗口后 → 压缩摘要
-                 ▼
-  ┌─────────────────────────────────┐
-  │   Historical Memory (跨session)  │
-  │  - 历史分析摘要列表                │
-  │  - 用户关注偏好统计                │
-  │  → 新分析时注入 system prompt     │
-  │  → 持久化到 JSON 文件             │
-  └─────────────────────────────────┘
+  Working Memory (session级)
+  - 本轮视觉识别结果 / 检索结果 / 最近 N 轮对话
+  - 注入 Agent messages，仅内存
+
+  Historical Memory (user级，MySQL 持久化 + Redis 缓存)
+  - 历史分析摘要、用户偏好统计
+  - 按 user_id 隔离，MySQL 为最终存储，Redis 只做读取缓存
 """
 import json
-import os
+import logging
 import time
 from dataclasses import dataclass, field
-from pathlib import Path
 
-HISTORY_FILE = Path(__file__).parent.parent / "db" / "historical_memory.json"
+import pymysql
+
+from config import (
+    REDIS_DB,
+    REDIS_HOST,
+    REDIS_PASSWORD,
+    REDIS_PORT,
+    REDIS_TIMEOUT_SECONDS,
+)
+from db_config import DB_CONFIG
+
+LOGGER = logging.getLogger(__name__)
+
+_HISTORY_TABLE = "ai_historical_analysis"
+_REDIS_KEY_TEMPLATE = "ai:hist:{user_id}:context"
+_REDIS_TTL_SECONDS = 300
+
+_redis_client = None
 
 
 # ====== Working Memory (当前) ======
@@ -33,7 +40,7 @@ HISTORY_FILE = Path(__file__).parent.parent / "db" / "historical_memory.json"
 class WorkingMemory:
     """当前会话的工作记忆。注入 Agent 的消息上下文。"""
     session_id: str = ""
-    max_turns: int = 3  # 保留的对话轮数
+    max_turns: int = 10  # 保留的对话轮数
 
     # 当前轮次上下文
     current_vision: dict | None = None      # 本轮视觉识别结果
@@ -98,6 +105,12 @@ class WorkingMemory:
             parts.append(f"[{role}]: {content}")
         return "\n".join(parts)
 
+    def get_history(self, last_n: int | None = None) -> list[dict]:
+        """返回最近 last_n 条会话消息；不传则返回全部（最多 max_turns*2 条）。"""
+        if last_n is None or last_n <= 0:
+            return list(self.messages)
+        return self.messages[-last_n:]
+
     def clear(self):
         self.current_vision = None
         self.current_cases = ""
@@ -110,84 +123,9 @@ class WorkingMemory:
             self.messages = self.messages[-max_msgs:]
 
 
-# ====== Historical Memory (历史) ======
-
-@dataclass
-class HistoricalMemory:
-    """
-    跨会话的持久化历史记忆。
-    超过 Working Memory 窗口的对话压缩后存入此处。
-    """
-
-    analyses: list[dict] = field(default_factory=list)    # 历史分析摘要
-    preferences: dict[str, int] = field(default_factory=dict)  # 类别偏好计数
-
-    def add_analysis(self, vision_result: dict, report_summary: str,
-                     dialogue_summary: str = ""):
-        """添加一次分析记录。"""
-        entry = {
-            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-            "category": vision_result.get("hazard_category", ""),
-            "severity": vision_result.get("severity", ""),
-            "description": (vision_result.get("description", "") or "")[:200],
-            "report": report_summary[:500],
-            "dialogue": dialogue_summary,
-        }
-        self.analyses.append(entry)
-
-        # 更新偏好
-        cat = vision_result.get("hazard_category", "")
-        if cat:
-            self.preferences[cat] = self.preferences.get(cat, 0) + 1
-
-        # 只保留最近 50 条
-        if len(self.analyses) > 50:
-            self.analyses = self.analyses[-50:]
-
-    def get_context_for_new_analysis(self) -> str:
-        """
-        生成注入新分析 system prompt 的历史上下文。
-        让 Agent 了解: 用户关注什么类别、历史分析过哪些场景。
-        """
-        if not self.analyses:
-            return ""
-
-        lines = ["=== 历史分析记录（来自用户之前的会话）==="]
-
-        # 用户偏好
-        if self.preferences:
-            sorted_prefs = sorted(self.preferences.items(), key=lambda x: x[1], reverse=True)
-            top_cats = ", ".join(f"{cat}({cnt}次)" for cat, cnt in sorted_prefs[:5])
-            lines.append(f"用户关注隐患类别: {top_cats}")
-
-        # 最近 5 次分析摘要
-        recent = self.analyses[-5:]
-        for i, a in enumerate(recent, 1):
-            lines.append(
-                f"{i}. [{a['timestamp']}] {a['category']} | {a['severity']} | "
-                f"{a['description'][:100]}"
-            )
-
-        return "\n".join(lines)
-
-    def to_dict(self) -> dict:
-        return {
-            "analyses": self.analyses,
-            "preferences": self.preferences,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict) -> "HistoricalMemory":
-        return cls(
-            analyses=data.get("analyses", []),
-            preferences=data.get("preferences", {}),
-        )
-
-
 # ====== 会话管理 ======
 
 sessions: dict[str, WorkingMemory] = {}
-_historical: HistoricalMemory | None = None
 
 
 def get_session(session_id: str) -> WorkingMemory:
@@ -196,48 +134,129 @@ def get_session(session_id: str) -> WorkingMemory:
     return sessions[session_id]
 
 
-def get_historical() -> HistoricalMemory:
-    global _historical
-    if _historical is None:
-        _historical = _load_historical()
-    return _historical
+# ====== Historical Memory (按用户持久化) ======
 
-
-def _load_historical() -> HistoricalMemory:
-    if HISTORY_FILE.exists():
-        try:
-            return HistoricalMemory.from_dict(
-                json.loads(HISTORY_FILE.read_text(encoding="utf-8")))
-        except Exception:
-            pass
-    return HistoricalMemory()
-
-
-def save_historical():
-    """持久化历史记忆到 JSON 文件。"""
-    if _historical is None:
-        return
-    HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
-    HISTORY_FILE.write_text(
-        json.dumps(_historical.to_dict(), ensure_ascii=False, indent=2),
-        encoding="utf-8")
-
-
-def archive_working_to_historical(session_id: str, report: str):
-    """
-    将当前 Working Memory 的关键信息压缩存入 Historical Memory。
-    调用时机: 一次分析完成后。
-    """
-    wm = get_session(session_id)
-    historical = get_historical()
-
-    vision = wm.current_vision or {}
-    dialogue = wm.get_compressed_dialogue()
-
-    historical.add_analysis(
-        vision_result=vision,
-        report_summary=report[:500],
-        dialogue_summary=dialogue,
+def _mysql_connection():
+    return pymysql.connect(
+        **DB_CONFIG,
+        connect_timeout=5,
+        read_timeout=5,
+        write_timeout=5,
     )
 
-    save_historical()
+
+def _redis():
+    global _redis_client
+    if _redis_client is None:
+        import redis
+        _redis_client = redis.Redis(
+            host=REDIS_HOST,
+            port=REDIS_PORT,
+            password=REDIS_PASSWORD or None,
+            db=REDIS_DB,
+            decode_responses=True,
+            socket_connect_timeout=REDIS_TIMEOUT_SECONDS,
+            socket_timeout=REDIS_TIMEOUT_SECONDS,
+        )
+    return _redis_client
+
+
+def _redis_key(user_id: int) -> str:
+    return _REDIS_KEY_TEMPLATE.format(user_id=user_id)
+
+
+def archive_working_to_historical(user_id: int, session_id: str, report: str,
+                                  vision: dict | None = None,
+                                  dialogue: str = "") -> None:
+    """将一次分析结果归档到该用户的历史记忆（MySQL），并失效 Redis 缓存。
+
+    归档失败只记录日志，不影响本次分析结果返回。
+    """
+    if user_id is None:
+        return
+    vision = vision or {}
+    category = (vision.get("hazard_category") or "")[:64]
+    severity = (vision.get("severity") or "")[:16]
+    description = (vision.get("description") or "")[:500]
+    report = (report or "")[:5000]
+    dialogue = (dialogue or "")[:2000]
+    try:
+        conn = _mysql_connection()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(
+                    f"INSERT INTO {_HISTORY_TABLE} "
+                    "(user_id, hazard_category, severity, description, report, dialogue) "
+                    "VALUES (%s, %s, %s, %s, %s, %s)",
+                    (user_id, category, severity, description, report, dialogue),
+                )
+            conn.commit()
+        finally:
+            conn.close()
+        try:
+            _redis().delete(_redis_key(user_id))
+        except Exception:
+            pass
+    except Exception as exc:
+        LOGGER.warning("archive historical memory failed user_id=%s: %s", user_id, exc)
+
+
+def get_historical_context(user_id: int) -> str:
+    """返回该用户的历史上下文文本；无记录返回空串。Redis 不可用时降级查 MySQL。"""
+    if user_id is None:
+        return ""
+    try:
+        cached = _redis().get(_redis_key(user_id))
+        if cached is not None:
+            return cached
+    except Exception:
+        pass
+    context = _build_context_from_mysql(user_id)
+    try:
+        if context:
+            _redis().set(_redis_key(user_id), context, ex=_REDIS_TTL_SECONDS)
+        else:
+            _redis().set(_redis_key(user_id), "", ex=60)
+    except Exception:
+        pass
+    return context
+
+
+def _build_context_from_mysql(user_id: int) -> str:
+    try:
+        conn = _mysql_connection()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(
+                    f"SELECT hazard_category, COUNT(*) FROM {_HISTORY_TABLE} "
+                    "WHERE user_id=%s GROUP BY hazard_category "
+                    "ORDER BY COUNT(*) DESC LIMIT 5",
+                    (user_id,),
+                )
+                prefs = cur.fetchall()
+                cur.execute(
+                    f"SELECT hazard_category, severity, description, created_at "
+                    f"FROM {_HISTORY_TABLE} WHERE user_id=%s "
+                    "ORDER BY created_at DESC, id DESC LIMIT 5",
+                    (user_id,),
+                )
+                recent = cur.fetchall()
+        finally:
+            conn.close()
+    except Exception as exc:
+        LOGGER.warning("load historical context failed user_id=%s: %s", user_id, exc)
+        return ""
+
+    if not prefs and not recent:
+        return ""
+
+    lines = ["=== 历史分析记录（来自用户之前的会话）==="]
+    if prefs:
+        top = ", ".join(f"{cat}({cnt}次)" for cat, cnt in prefs)
+        lines.append(f"用户关注隐患类别: {top}")
+    for i, row in enumerate(recent, 1):
+        category, severity, description, created_at = row
+        lines.append(
+            f"{i}. [{created_at}] {category} | {severity} | {(description or '')[:100]}"
+        )
+    return "\n".join(lines)
