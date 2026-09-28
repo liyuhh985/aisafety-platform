@@ -1,0 +1,77 @@
+范围词表扩表端到端验证（完整图，真模型）
+输入 10 条本领域 + 5 条越界；每例只跑 1 次 —— 无方差数据。
+口径：全新 thread_id 干净首轮；scope 取 scope_guard 写入值。
+
+[1] 交通设施损坏 | 路边有个交通标志牌和护栏坏了
+    scope=hazard (planner resolved hazard issues) | locked=traffic/traffic_facility_damage | next=report_full | boundary_reply=False | 20.6s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → report → after_report → __interrupt__
+    回复：### 一、触犯法规  - **《公路安全保护条例》第21条**：公路养护单位须定期检查养护隔离护栏、防撞设施、交通标志标线，保证附属设施处于良好技术状态；设施损坏危及交通安全的，必须在**两小时内设置警示防撞设施并及时修复**。 - **《公路安全保护条例》第16条**：禁止破坏公路及公路附属设施，禁止影响公路安全通
+
+[2] 交通设施损坏 | 交通设施损坏了没人修
+    scope=hazard (planner resolved hazard issues) | locked=traffic/traffic_facility_damage | next=report_full | boundary_reply=False | 26.5s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → report → after_report → __interrupt__
+    回复：### 一、触犯法规  - **《公路安全保护条例》第21条**：公路养护作业单位应定期检查养护路面、隔离护栏、防撞设施、交通标志标线，保证附属设施处于良好技术状态；设施损坏翘起危及交通安全的，须在**两小时内设置警示防撞设施并及时修复**。"损坏没人修"直接违反养护修复义务。 - **《公路安全保护条例》第16条**
+
+[3] 交通设施损坏 | 路口的信号灯不亮了
+    scope=hazard (planner resolved hazard issues) | locked=traffic/traffic_facility_damage | next=report_full | boundary_reply=False | 25.1s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → report → after_report → __interrupt__
+    回复：### 一、触犯法规  - **《公路安全保护条例》第21条**：公路养护作业单位应定期对交通标志标线等附属设施进行检查与养护，保证其处于良好技术状态；设施损坏危及交通安全的，必须在两小时内设置警示防撞设施并及时修复。信号灯作为交通控制设施失灵，养护责任单位未及时修复已违反该条要求。 - **《公路安全保护条例》第16
+
+[4] 交通设施损坏 | 道路中间的护栏被撞断了
+    scope=hazard (planner resolved hazard issues) | locked=traffic/traffic_facility_damage | next=report_full | boundary_reply=False | 21.3s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → report → after_report → __interrupt__
+    回复：### 一、触犯法规  - **《公路安全保护条例》第二十一条**：公路养护单位应定期对路面、隔离护栏、防撞设施等进行检查养护，保证附属设施处于良好技术状态；设施损坏翘起危及交通安全的，必须在**两小时内**设置警示防撞设施并及时修复。 - **《公路安全保护条例》第十六条**：禁止破坏公路及公路附属设施，禁止影响公路
+
+[5] 外立面脱落 | 小区外立面墙皮脱落
+    scope=hazard (planner resolved hazard issues) | locked=building/facade_fall | next=ask_critical_question | boundary_reply=False | 11.4s
+    节点：begin_turn → understand → scope_guard → route → ask_slot_question → answer_reply
+    回复：外立面墙皮脱落属于建筑安全隐患，存在高空坠物风险，尤其在楼下有行人经过时比较危险。建议您提醒物业设置警戒区域、及时排查并修复脱落部位。如果需要，我可以帮您记录并上报这个隐患。  掉下来的东西具体是从墙体表皮、阳台还是外挂的招牌上脱落的？
+
+[6] 外立面脱落 | 楼房外立面的瓷砖掉下来了
+    scope=hazard (planner resolved hazard issues) | locked=building/facade_fall | next=report_full | boundary_reply=False | 37.6s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → report → after_report → __interrupt__
+    回复：### 一、触犯法规  - 《中华人民共和国民法典》第1253条：建筑物搁置物、悬挂物脱落坠落致害，所有人、管理人或使用人不能证明自己无过错的，应承担侵权责任；赔偿后有其他责任人的可追偿。 - 《建筑外墙外保温工程技术标准》(JGJ 144) 强制性条文：饰面层严禁空鼓、开裂、剥离、脱落；运营单位须建立定期巡查与红外热
+
+[7] 外立面脱落 | 外立面的墙皮一块块往下掉
+    scope=hazard (planner resolved hazard issues) | locked=building/facade_fall | next=report_full | boundary_reply=False | 36.5s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → report → after_report → __interrupt__
+    回复：### 一、触犯法规  - **《中华人民共和国民法典》第1253条**：建筑物发生脱落、坠落造成损害，所有人、管理人或使用人不能证明自己无过错的，应承担侵权责任。墙皮已“一块块往下掉”，说明脱落已实际发生，管理人举证责任在先。 - **《建筑外墙外保温工程技术标准》(JGJ 144) 强制性条文**：饰面层严禁空鼓、
+
+[8] 配电设施故障 | 配电设施出问题了
+    scope=hazard (planner resolved hazard issues) | locked=utility/distribution_box_fault | next=ask_critical_question | boundary_reply=False | 12.5s
+    节点：begin_turn → understand → scope_guard → route → ask_slot_question → answer_reply
+    回复：配电设施故障属于高风险电气隐患，可能引发触电或火灾。建议先远离故障设备、不要自行触碰，并联系专业电工或供电部门处理。  这个配电设施旁边平时有没有人或者车辆会经过、碰到它？
+
+[9] 配电设施故障 | 小区里的配电柜门开着很危险
+    scope=hazard (planner resolved hazard issues) | locked=utility/distribution_box_fault | next=report_preliminary | boundary_reply=False | 38.2s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → rewrite_query → search → retrieve → retrieve → evaluate_retrieval → report → after_report
+    回复：（以下是初步判断：有一条现场信息我无法从你的描述中确认，建议先核实再上报。）  配电柜门敞开这件事本身已经可以初步判定为隐患：GB/T 13869《用电安全导则》第5.4条明确要求配电箱、开关箱装设端正牢固、箱门完好加锁并设防触电警示标志，GB 50303 第3.2.12条也规定箱门应配锁、由专人负责，柜门长期敞开属于
+
+[10] 配电设施故障 | 配电房旁边堆了杂物
+    scope=hazard (planner resolved hazard issues) | locked=environment_other/garbage_pile | next=report_full | boundary_reply=False | 31.8s
+    节点：begin_turn → understand → scope_guard → route → search → retrieve → retrieve → evaluate_retrieval → report → after_report → __interrupt__
+    回复：### 一、触犯法规  - **《城市生活垃圾管理办法》第16条**：单位和个人应按规定的时间、地点将生活垃圾投放到指定容器或收集场所；禁止随意倾倒、抛撒、堆放城市生活垃圾或建筑垃圾。 - **《中华人民共和国固体废物污染环境防治法》第20条**：产生、收集、贮存固体废物的单位应采取防扬散、防流失、防渗漏等措施，不得擅
+
+—— 越界反例（必须仍被拦）——
+[1] 红烧肉怎么做好吃
+    scope=out_of_scope | direct_mode= | 被拒=True | 节点：begin_turn → understand → scope_guard → route → boundary_reply
+    回复：我主要负责城市安全隐患的识别、法规案例查询和隐患上报。你可以描述占道、消防、建筑、电气、燃气、施工、电梯、市政设施等隐患；其他话题我暂时不能提供专业结论。
+
+[2] 今天天气怎么样
+    scope=out_of_scope | direct_mode= | 被拒=True | 节点：begin_turn → understand → scope_guard → route → boundary_reply
+    回复：我这边只负责城市安全隐患相关咨询。你可以说说现场有没有占道、消防、建筑、电气、燃气或施工方面的隐患。
+
+[3] 帮我写一篇八百字的周记
+    scope=out_of_scope | direct_mode= | 被拒=True | 节点：begin_turn → understand → scope_guard → route → boundary_reply
+    回复：这个问题不在我的专业范围内。我主要处理城市安全隐患和上报，如果是现场安全问题，可以直接描述，我继续帮你判断。
+
+[4] 推荐一款性价比高的手机
+    scope=out_of_scope | direct_mode= | 被拒=True | 节点：begin_turn → understand → scope_guard → route → boundary_reply
+    回复：我这边只负责城市安全隐患相关咨询。你可以说说现场有没有占道、消防、建筑、电气、燃气或施工方面的隐患。
+
+[5] Python 列表如何去重
+    scope=out_of_scope | direct_mode= | 被拒=True | 节点：begin_turn → understand → scope_guard → route → boundary_reply
+    回复：这个问题不在我的专业范围内。我主要处理城市安全隐患和上报，如果是现场安全问题，可以直接描述，我继续帮你判断。
+
+
+汇总：本领域 10/10 scope=hazard，10/10 锁到大类或小类；越界被拦 5/5
