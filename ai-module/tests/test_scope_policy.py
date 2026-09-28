@@ -4,7 +4,7 @@ from tests.reply_helpers import (collect_chunks, fake_report_model,
 import core.assistant_graph as assistant_graph
 import pytest
 from core import dialogue_understanding
-from core.scope_policy import decide_scope
+from core.scope_policy import DOMAIN_KEYWORDS, decide_scope
 
 
 def test_hazard_text_is_in_scope():
@@ -264,3 +264,55 @@ def test_direct_reply_scope_templates_are_fixed(monkeypatch):
     content = update["messages"][-1].content
     assert "我主要负责城市安全隐患" in content
     assert chunks == [{"chunk": content}]
+
+# ===== 占道家族：确定性兜底的回归（2026-09-28 扩表）=====
+# 背景：扩表前这一族在 DOMAIN_KEYWORDS 里只有字面「占道」一个词，范围判据完全依赖
+# 规划器稳定抽出 issues；实测记录过一次真实误拦（db/eval_stage5_e2e.txt：
+# 「有人在人行道上摆摊经营」被规划器报成 smalltalk → out_of_scope → boundary_reply）。
+# 下面这组用例把「规划器什么都没给」当成最坏情况，锁住确定性兜底。
+
+ROAD_OCCUPANCY_PHRASINGS = (
+    "有人在人行道上摆摊经营",
+    "路口那边摆摊的特别多",
+    "人行道上摆了很多摊",
+    "人行道被摊位占了",
+    "店门口摆摊卖东西",
+    "马路市场把路都占了",
+    "小商贩占道摆摊",
+    "流动摊贩占道经营",
+    "路边有人占道卖水果",
+    "马路边上占道的情况挺严重",
+    "有建材乱堆在人行道上",
+    "路边堆放了不少杂物",
+    "私家车违停在人行道上",
+)
+
+OFF_DOMAIN_SAMPLES = (
+    "今天天气怎么样",
+    "红烧肉怎么做好吃",
+    "帮我写一首关于秋天的诗",
+    "推荐一部适合周末看的电影",
+    "Python 列表如何去重",
+    "今天股市收盘涨了多少",
+)
+
+
+@pytest.mark.parametrize("text", ROAD_OCCUPANCY_PHRASINGS)
+def test_road_occupancy_phrasings_survive_a_silent_planner(text):
+    """plan={}（规划器没抽 issues、也没给 scope 信心）时也必须判成 hazard。"""
+    out = decide_scope({}, text)
+    assert out["scope"] == "hazard", (text, out)
+
+
+@pytest.mark.parametrize("text", OFF_DOMAIN_SAMPLES)
+def test_off_domain_samples_are_still_rejected_after_widening(text):
+    """扩表不能把越界输入一起放进来 —— 反向误伤检查。"""
+    out = decide_scope({}, text)
+    assert out["scope"] == "out_of_scope", (text, out)
+
+
+def test_bare_tan_is_deliberately_not_a_domain_keyword():
+    """有意不收单字「摊」：摊开/摊牌/摊销是域外说法，收了会误放。"""
+    assert "摊" not in DOMAIN_KEYWORDS
+    assert decide_scope({}, "把事情摊开讲清楚")["scope"] == "out_of_scope"
+    assert decide_scope({}, "他准备跟老板摊牌了")["scope"] == "out_of_scope"
