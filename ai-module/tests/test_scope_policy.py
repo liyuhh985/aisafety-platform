@@ -316,3 +316,69 @@ def test_bare_tan_is_deliberately_not_a_domain_keyword():
     assert "摊" not in DOMAIN_KEYWORDS
     assert decide_scope({}, "把事情摊开讲清楚")["scope"] == "out_of_scope"
     assert decide_scope({}, "他准备跟老板摊牌了")["scope"] == "out_of_scope"
+
+
+# ===== 交通设施 / 外立面 / 配电设施：确定性兜底的回归（2026-09-28 第二次扩表）=====
+# 背景：扩表前这一族只有「外墙」「配电箱」两个词，用户说「外立面」「配电设施」就判越界。
+# 实测（plan={}，不调模型）扩表前 10 条本领域表述 10/10 被判 out_of_scope —— 回复是
+# 「不在我的专业范围内」，与占道那次同属"用户描述本领域隐患却被拒绝"。
+# 语料计数见 core/scope_policy.py 的注释（db/measure_scope_words.py 可复现）。
+
+TRAFFIC_FACILITY_PHRASINGS = (
+    "路边有个交通标志牌和护栏坏了",
+    "交通设施损坏了没人修",
+    "路口的信号灯不亮了",
+    "道路中间的护栏被撞断了",
+)
+
+FACADE_FALL_PHRASINGS = (
+    "小区外立面墙皮脱落",
+    "楼房外立面的瓷砖掉下来了",
+    "外立面的墙皮一块块往下掉",
+)
+
+DISTRIBUTION_BOX_PHRASINGS = (
+    "配电设施出问题了",
+    "小区里的配电柜门开着很危险",
+    "配电房旁边堆了杂物",
+)
+
+NEW_FAMILY_PHRASINGS = (
+    TRAFFIC_FACILITY_PHRASINGS + FACADE_FALL_PHRASINGS + DISTRIBUTION_BOX_PHRASINGS
+)
+
+EXTRA_OFF_DOMAIN_SAMPLES = (
+    "帮我写一篇八百字的周记",
+    "这道数学题怎么解",
+    "推荐一款性价比高的手机",
+)
+
+
+@pytest.mark.parametrize("text", NEW_FAMILY_PHRASINGS)
+def test_new_family_phrasings_survive_a_silent_planner(text):
+    """plan={}（规划器什么都没给）时也必须判成 hazard。"""
+    out = decide_scope({}, text)
+    assert out["scope"] == "hazard", (text, out)
+
+
+@pytest.mark.parametrize("text", OFF_DOMAIN_SAMPLES + EXTRA_OFF_DOMAIN_SAMPLES)
+def test_extended_off_domain_samples_are_still_rejected(text):
+    """扩表不能把越界输入一起放进来 —— 反向误伤检查。"""
+    out = decide_scope({}, text)
+    assert out["scope"] == "out_of_scope", (text, out)
+
+
+def test_over_broad_words_are_deliberately_excluded():
+    """「脱落」「变压器」跨类别或域外用法多，有意不收（理由见 scope_policy 注释）。"""
+    assert "脱落" not in DOMAIN_KEYWORDS
+    assert "变压器" not in DOMAIN_KEYWORDS
+    assert "电箱" not in DOMAIN_KEYWORDS          # 是「配电箱」的子串，不新增覆盖
+    assert decide_scope({}, "最近头发脱落得厉害")["scope"] == "out_of_scope"
+    assert decide_scope({}, "变压器的工作原理是什么")["scope"] == "out_of_scope"
+
+
+def test_new_family_words_are_present():
+    """把扩表的词钉住，防止回退。"""
+    for word in ("交通设施", "交通标志", "标志牌", "护栏", "信号灯",
+                 "外立面", "墙皮", "配电设施", "配电柜", "配电房"):
+        assert word in DOMAIN_KEYWORDS, word
