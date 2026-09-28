@@ -1,0 +1,140 @@
+分类评测（understand 节点）
+生成时间=2026-09-27 10:36:18
+模型=mimo-v2.6-flash
+正样本=64 条（覆盖小类=32）  负样本=10  每例采样=3  并发=6
+失败（重试耗尽，不计入判错分母）=0 条
+
+===== 一、正样本明细（每例 3 次采样） =====
+命中  问法         期望小类                                 -> 实际小类
+[OK  ] explicit    traffic/road_occupancy                     -> traffic/road_occupancy                         scope=hazard
+[OK  ] colloquial  traffic/road_occupancy                     -> traffic/road_occupancy                         scope=hazard
+[OK  ] explicit    traffic/vehicle_occupancy                  -> traffic/vehicle_occupancy                      scope=hazard
+[OK  ] colloquial  traffic/vehicle_occupancy                  -> traffic/vehicle_occupancy                      scope=hazard
+[OK  ] explicit    traffic/blind_path_occupied                -> traffic/blind_path_occupied                    scope=hazard
+[OK  ] colloquial  traffic/blind_path_occupied                -> traffic/blind_path_occupied                    scope=hazard
+[OK  ] explicit    traffic/traffic_facility_damage            -> traffic/traffic_facility_damage                scope=hazard
+[部分] colloquial  traffic/traffic_facility_damage            -> municipal/street_light_pole | traffic/traffic_facility_damage scope=hazard
+[OK  ] explicit    municipal/manhole_damage                   -> municipal/manhole_damage                       scope=emergency
+[OK  ] colloquial  municipal/manhole_damage                   -> municipal/manhole_damage                       scope=hazard
+[OK  ] explicit    municipal/road_surface_collapse            -> municipal/road_surface_collapse                scope=hazard
+[OK  ] colloquial  municipal/road_surface_collapse            -> municipal/road_surface_collapse                scope=hazard
+[OK  ] explicit    municipal/drainage_flood                   -> municipal/drainage_flood                       scope=emergency/hazard
+[OK  ] colloquial  municipal/drainage_flood                   -> municipal/drainage_flood                       scope=hazard
+[OK  ] explicit    municipal/street_light_pole                -> municipal/street_light_pole                    scope=hazard
+[OK  ] colloquial  municipal/street_light_pole                -> municipal/street_light_pole                    scope=hazard
+[OK  ] explicit    fire/fire_lane_blocked                     -> fire/fire_lane_blocked                         scope=hazard
+[OK  ] colloquial  fire/fire_lane_blocked                     -> fire/fire_lane_blocked                         scope=emergency
+[OK  ] explicit    fire/fire_equipment_fault                  -> fire/fire_equipment_fault                      scope=hazard
+[OK  ] colloquial  fire/fire_equipment_fault                  -> fire/fire_equipment_fault                      scope=hazard
+[OK  ] explicit    fire/fire_water_abnormal                   -> fire/fire_water_abnormal                       scope=hazard
+[OK  ] colloquial  fire/fire_water_abnormal                   -> fire/fire_water_abnormal                       scope=hazard
+[部分] explicit    building/dangerous_building                -> building/dangerous_building | building/wall_crack_lean scope=hazard
+[部分] colloquial  building/dangerous_building                -> building/dangerous_building | building/wall_crack_lean scope=hazard
+[OK  ] explicit    building/wall_crack_lean                   -> building/wall_crack_lean                       scope=hazard
+[OK  ] colloquial  building/wall_crack_lean                   -> building/wall_crack_lean                       scope=hazard
+[OK  ] explicit    building/facade_fall                       -> building/facade_fall                           scope=hazard
+[OK  ] colloquial  building/facade_fall                       -> building/facade_fall                           scope=hazard
+[OK  ] explicit    building/falling_object                    -> building/falling_object                        scope=hazard
+[OK  ] colloquial  building/falling_object                    -> building/falling_object                        scope=emergency/hazard
+[OK  ] explicit    building/illegal_structure                 -> building/illegal_structure                     scope=hazard
+[OK  ] colloquial  building/illegal_structure                 -> building/illegal_structure                     scope=hazard
+[OK  ] explicit    utility/exposed_wire                       -> utility/exposed_wire                           scope=hazard
+[OK  ] colloquial  utility/exposed_wire                       -> utility/exposed_wire                           scope=hazard
+[OK  ] explicit    utility/distribution_box_fault             -> utility/distribution_box_fault                 scope=emergency
+[OK  ] colloquial  utility/distribution_box_fault             -> utility/distribution_box_fault                 scope=emergency
+[OK  ] explicit    utility/illegal_wiring                     -> utility/illegal_wiring                         scope=hazard
+[OK  ] colloquial  utility/illegal_wiring                     -> utility/illegal_wiring                         scope=hazard
+[OK  ] explicit    utility/gas_leak                           -> utility/gas_leak                               scope=emergency
+[OK  ] colloquial  utility/gas_leak                           -> utility/gas_leak                               scope=emergency
+[部分] explicit    utility/gas_pipe_aging                     -> utility/gas_leak | utility/gas_pipe_aging      scope=emergency/hazard
+[OK  ] colloquial  utility/gas_pipe_aging                     -> utility/gas_pipe_aging                         scope=emergency/hazard
+[OK  ] explicit    construction/no_barrier                    -> construction/no_barrier                        scope=hazard
+[OK  ] colloquial  construction/no_barrier                    -> construction/no_barrier                        scope=hazard
+[OK  ] explicit    construction/no_warning                    -> construction/no_warning                        scope=hazard
+[OK  ] colloquial  construction/no_warning                    -> construction/no_warning                        scope=hazard
+[OK  ] explicit    construction/scaffold_guard                -> construction/scaffold_guard                    scope=hazard
+[OK  ] colloquial  construction/scaffold_guard                -> construction/scaffold_guard                    scope=hazard
+[OK  ] explicit    construction/deep_pit                      -> construction/deep_pit                          scope=emergency/hazard
+[OK  ] colloquial  construction/deep_pit                      -> construction/deep_pit                          scope=hazard
+[OK  ] explicit    construction/temporary_power               -> construction/temporary_power                   scope=hazard
+[OK  ] colloquial  construction/temporary_power               -> construction/temporary_power                   scope=hazard
+[OK  ] explicit    elevator_special/elevator_trapped          -> elevator_special/elevator_trapped              scope=emergency
+[OK  ] colloquial  elevator_special/elevator_trapped          -> elevator_special/elevator_trapped              scope=emergency
+[OK  ] explicit    elevator_special/elevator_stopped          -> elevator_special/elevator_stopped              scope=hazard
+[OK  ] colloquial  elevator_special/elevator_stopped          -> elevator_special/elevator_stopped              scope=hazard
+[OK  ] explicit    elevator_special/elevator_inspection       -> elevator_special/elevator_inspection           scope=hazard
+[OK  ] colloquial  elevator_special/elevator_inspection       -> elevator_special/elevator_inspection           scope=hazard
+[OK  ] explicit    environment_other/garbage_pile             -> environment_other/garbage_pile                 scope=hazard
+[部分] colloquial  environment_other/garbage_pile             -> -/- | environment_other/garbage_pile           scope=hazard
+[部分] explicit    environment_other/sewage_odor              -> -/- | environment_other/sewage_odor | municipal/drainage_flood scope=hazard
+[未中] colloquial  environment_other/sewage_odor              -> municipal/drainage_flood                       scope=hazard
+[OK  ] explicit    environment_other/other                    -> environment_other/other                        scope=hazard
+[部分] colloquial  environment_other/other                    -> environment_other/other | traffic/road_occupancy scope=hazard
+
+===== 二、负样本明细（每例 3 次采样） =====
+[OK  ] 今天上海天气怎么样                        拦截 3/3  scope=out_of_scope
+[OK  ] 红烧肉怎么做好吃                         拦截 3/3  scope=out_of_scope
+[OK  ] 帮我写一首关于秋天的诗                      拦截 3/3  scope=out_of_scope
+[OK  ] 推荐一部适合周末看的电影                     拦截 3/3  scope=out_of_scope
+[OK  ] Python 列表如何去重                    拦截 3/3  scope=out_of_scope
+[OK  ] 今天股市收盘涨了多少                       拦截 3/3  scope=out_of_scope
+[OK  ] 减脂期一天该吃多少蛋白质                     拦截 3/3  scope=out_of_scope
+[OK  ] 把这句话翻译成英语                        拦截 3/3  scope=out_of_scope
+[OK  ] 最近有什么明星八卦新闻                      拦截 3/3  scope=out_of_scope
+[OK  ] 国庆去三亚玩几天合适                       拦截 3/3  scope=out_of_scope
+
+===== 三、汇总 =====  （均值 ± 采样极差）
+小类准确率 explicit   : 0.958 ± 0.094
+小类准确率 colloquial : 0.917 ± 0.031
+小类准确率 总体       : 0.938 ± 0.062
+大类准确率 explicit   : 0.979 ± 0.031
+大类准确率 colloquial : 0.938 ± 0.062
+大类准确率 总体       : 0.958 ± 0.047
+负样本拦截率          : 1.000 ± 0.000
+误拦正样本(判为越界/模糊)    : 0 / 192
+紧急标记正样本(scope=emergency): 32 / 192
+正样本范围分布: emergency=32、hazard=160
+失败条数              : 0
+
+===== 四、混淆对 Top-10（期望小类 -> 实际小类，按次数降序） =====
+  sewage_odor                -> drainage_flood             x4
+  dangerous_building         -> wall_crack_lean            x3
+  garbage_pile               -> <空>                        x1
+  gas_pipe_aging             -> gas_leak                   x1
+  other                      -> road_occupancy             x1
+  sewage_odor                -> <空>                        x1
+  traffic_facility_damage    -> street_light_pole          x1
+
+===== 五、逐小类命中（按小类聚合，最弱在前） =====
+  environment_other/sewage_odor               1/ 6  误判为 drainage_flood x4、<空> x1
+  building/dangerous_building                 3/ 6  误判为 wall_crack_lean x3
+  environment_other/garbage_pile              5/ 6  误判为 <空> x1
+  environment_other/other                     5/ 6  误判为 road_occupancy x1
+  traffic/traffic_facility_damage             5/ 6  误判为 street_light_pole x1
+  utility/gas_pipe_aging                      5/ 6  误判为 gas_leak x1
+  building/facade_fall                        6/ 6  
+  building/falling_object                     6/ 6  
+  building/illegal_structure                  6/ 6  
+  building/wall_crack_lean                    6/ 6  
+  construction/deep_pit                       6/ 6  
+  construction/no_barrier                     6/ 6  
+  construction/no_warning                     6/ 6  
+  construction/scaffold_guard                 6/ 6  
+  construction/temporary_power                6/ 6  
+  elevator_special/elevator_inspection        6/ 6  
+  elevator_special/elevator_stopped           6/ 6  
+  elevator_special/elevator_trapped           6/ 6  
+  fire/fire_equipment_fault                   6/ 6  
+  fire/fire_lane_blocked                      6/ 6  
+  fire/fire_water_abnormal                    6/ 6  
+  municipal/drainage_flood                    6/ 6  
+  municipal/manhole_damage                    6/ 6  
+  municipal/road_surface_collapse             6/ 6  
+  municipal/street_light_pole                 6/ 6  
+  traffic/blind_path_occupied                 6/ 6  
+  traffic/road_occupancy                      6/ 6  
+  traffic/vehicle_occupancy                   6/ 6  
+  utility/distribution_box_fault              6/ 6  
+  utility/exposed_wire                        6/ 6  
+  utility/gas_leak                            6/ 6  
+  utility/illegal_wiring                      6/ 6  

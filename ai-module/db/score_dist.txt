@@ -1,0 +1,12 @@
+=== tb_hazard_case (阈值关闭) ===
+  pos top1: n=64 min=0.5422 p10=0.5726 med=0.6645 max=0.8005
+  neg top1: n=10 min=0.3459 p10=0.3459 med=0.3977 max=0.4687
+  POS_min=0.5422  NEG_max=0.4687  gap=0.0736  SEPARABLE
+  0.50 drops positives: 0/64
+  0.50 drops negatives: 10/10
+=== tb_regulation (阈值关闭) ===
+  pos top1: n=64 min=0.5025 p10=0.5426 med=0.6015 max=0.7336
+  neg top1: n=10 min=0.2965 p10=0.2965 med=0.3536 max=0.4374
+  POS_min=0.5025  NEG_max=0.4374  gap=0.0650  SEPARABLE
+  0.50 drops positives: 0/64
+  0.50 drops negatives: 10/10

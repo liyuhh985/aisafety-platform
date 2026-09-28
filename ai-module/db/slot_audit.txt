@@ -1,0 +1,17 @@
+SLOT_SCHEMAS 套数 = 9  -> ['占道', '危房', '消防通道', '消防设施', '高空坠物', '井盖/道路', '电气', '施工', '其他']
+
+按槽位键组合分组（共 9 组）:
+  ('describe',)                            x12  ['traffic_facility_damage', 'street_light_pole', 'fire_water_abnormal', 'illegal_structure', 'gas_leak', 'gas_pipe_aging']
+  ('source', 'contact', 'risk')            x4  ['exposed_wire', 'distribution_box_fault', 'illegal_wiring', 'temporary_power']
+  ('site', 'safety', 'impact')             x4  ['no_barrier', 'no_warning', 'scaffold_guard', 'deep_pit']
+  ('behavior', 'persistence', 'blocked')   x3  ['road_occupancy', 'vehicle_occupancy', 'blind_path_occupied']
+  ('defect', 'traffic')                    x3  ['manhole_damage', 'road_surface_collapse', 'drainage_flood']
+  ('structure', 'occupancy', 'risk')       x2  ['dangerous_building', 'wall_crack_lean']
+  ('source', 'target', 'exposure')         x2  ['facade_fall', 'falling_object']
+  ('blocker', 'persistence', 'impact')     x1  ['fire_lane_blocked']
+  ('facility_type', 'condition', 'function_impact') x1  ['fire_equipment_fault']
+
+只有一句 describe 的小类 (12): ['traffic_facility_damage', 'street_light_pole', 'fire_water_abnormal', 'illegal_structure', 'gas_leak', 'gas_pipe_aging', 'elevator_trapped', 'elevator_stopped', 'elevator_inspection', 'garbage_pile', 'sewage_odor', 'other']
+
+drainage_flood 的槽位: [('defect', '井盖是缺失、破损还是松动？'), ('traffic', '是否影响行人或车辆通行？')]
+road_surface_collapse 的槽位: [('defect', '井盖是缺失、破损还是松动？'), ('traffic', '是否影响行人或车辆通行？')]

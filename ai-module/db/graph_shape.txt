@@ -1,0 +1,16 @@
+NODES(15): after_report, answer_reply, begin_turn, boundary_reply, close_task, fallback_reply, report, retrieve, route, scope_guard, search, smalltalk_reply, submit_task, task_gate, understand
+
+  __start__        -> begin_turn
+  answer_reply     -> __end__
+  begin_turn       -> understand
+  boundary_reply   -> __end__
+  fallback_reply   -> __end__
+  route            -> answer_reply  (conditional)
+  route            -> boundary_reply  (conditional)
+  route            -> fallback_reply  (conditional)
+  route            -> search  (conditional)
+  route            -> smalltalk_reply  (conditional)
+  scope_guard      -> route
+  search           -> __end__
+  smalltalk_reply  -> __end__
+  understand       -> scope_guard

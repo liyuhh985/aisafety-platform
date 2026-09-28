@@ -1,0 +1,57 @@
+========================================================================
+[1] 输入：我们小区消防通道长期被私家车占用
+  锁定小类：fire_lane_blocked   大类：fire
+  A 类缺失：（无）
+  本轮动作：report_full   danger_veto=False
+  before 问句：（没问）
+  节点是否分流：False
+  after  问句：（没问）（节点未分流，同上）
+  after  出处：understand（未分流）
+  耗时：8.1s
+
+========================================================================
+[2] 输入：楼道里的灭火器早就没压力了，那个水管的箱子也打不开
+  锁定小类：fire_equipment_fault   大类：fire
+  A 类缺失：（无）
+  本轮动作：report_preliminary   danger_veto=False
+  before 问句：（没问）
+  节点是否分流：False
+  after  问句：（没问）（节点未分流，同上）
+  after  出处：understand（未分流）
+  耗时：11.5s
+
+========================================================================
+[3] 输入：路边放着几个大桶，也不知道装的什么，有股味儿
+  锁定小类：other   大类：environment_other
+  A 类缺失：（无）
+  本轮动作：answer_with_optional_question   danger_veto=False
+  before 问句：（没问）
+  节点是否分流：False
+  after  问句：（没问）（节点未分流，同上）
+  after  出处：understand（未分流）
+  耗时：8.4s
+
+========================================================================
+[4] 输入：楼下垃圾堆成山了，一直没人拉走
+  锁定小类：garbage_pile   大类：environment_other
+  A 类缺失：（无）
+  本轮动作：report_full   danger_veto=False
+  before 问句：（没问）
+  节点是否分流：False
+  after  问句：（没问）（节点未分流，同上）
+  after  出处：understand（未分流）
+  耗时：5.2s
+
+========================================================================
+[5] 输入：商场自动扶梯超期未检，检验合格标志已过期一年
+  锁定小类：elevator_inspection   大类：elevator_special
+  A 类缺失：['describe']
+  本轮动作：answer_with_optional_question   danger_veto=False
+  before 问句：这台扶梯目前是仍在继续运行吗？
+  节点是否分流：True
+  模型自报 target_slot：describe
+  after  问句：这台扶梯除了检验合格标志过期，运行时还有没有出现异常响声、抖动之类的情况？
+  after  出处：ask_slot_question
+  after  命中 A 类缺失：True
+  耗时：16.0s
+

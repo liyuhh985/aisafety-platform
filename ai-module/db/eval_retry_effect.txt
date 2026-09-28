@@ -1,0 +1,68 @@
+=== 检索重试环对照测量（WEAK=0.58）===
+触发点来自 db/eval_retry_trigger.txt；重试用真实模型改写检索串
+
+[rewrite_query] 槽位空 | illegal_structure | tb_hazard_case
+    原因     : T3:weak_score:illegal_structure.case=0.5755
+    触发前   : 检索串='违规搭建' top1=0.5754 结果块=4 质量=ok
+    改写后   : 检索串='违规搭建 阳光房 承重结构' top1=0.6520 结果块=5 质量=ok
+    变化     : top1 0.5754 → 0.6520 | 结果块 4 → 5
+    耗时     : 6.3s
+
+[rewrite_query] 槽位空 | scaffold_guard | tb_hazard_case
+    原因     : T3:weak_score:scaffold_guard.case=0.5779
+    触发前   : 检索串='脚手架/临边防护' top1=0.5779 结果块=5 质量=ok
+    改写后   : 检索串='脚手架/临边防护 护栏缺失' top1=0.6122 结果块=5 质量=ok
+    变化     : top1 0.5779 → 0.6122 | 结果块 5 → 5
+    耗时     : 9.1s
+
+[rewrite_query] 槽位空 | other | tb_hazard_case
+    原因     : T3:no_semantic:other.case
+    触发前   : 检索串='其他' top1=无 结果块=3 质量=weak
+    改写后   : 检索串='其他 危化品桶' top1=0.5454 结果块=5 质量=ok
+    变化     : top1 无 → 0.5454 | 结果块 3 → 5
+    耗时     : 8.8s
+
+[rewrite_query] 槽位空 | other | tb_regulation
+    原因     : T2:out_of_major:other.regulation
+    触发前   : 检索串='其他' top1=无 结果块=3 质量=weak
+    改写后   : 检索串='其他 危化品桶' top1=0.5169 结果块=4 质量=ok
+    变化     : top1 无 → 0.5169 | 结果块 3 → 4
+    耗时     : 7.8s
+
+[rewrite_query] 槽位空 | illegal_wiring | tb_regulation
+    原因     : T3:weak_score:illegal_wiring.regulation=0.5305
+    触发前   : 检索串='私拉乱接' top1=0.5305 结果块=3 质量=ok
+    改写后   : 检索串='私拉乱接 电线充电' top1=0.6456 结果块=3 质量=ok
+    变化     : top1 0.5305 → 0.6456 | 结果块 3 → 3
+    耗时     : 5.5s
+
+[rewrite_query] 槽位有值(schema键) | scaffold_guard | tb_hazard_case
+    原因     : T3:weak_score:scaffold_guard.case=0.5639
+    触发前   : 检索串='脚手架/临边防护 临边防护' top1=0.5639 结果块=5 质量=ok
+    改写后   : 检索串='脚手架 临边防护栏杆缺失' top1=0.6152 结果块=4 质量=ok
+    变化     : top1 0.5639 → 0.6152 | 结果块 5 → 4
+    耗时     : 9.1s
+
+[rewrite_query] 槽位有值(schema键) | other | tb_hazard_case
+    原因     : T3:no_semantic:other.case
+    触发前   : 检索串='其他 来源不明' top1=无 结果块=3 质量=weak
+    改写后   : 检索串='其他 来源不明危化品桶' top1=0.5819 结果块=5 质量=ok
+    变化     : top1 无 → 0.5819 | 结果块 3 → 5
+    耗时     : 11.7s
+
+[rewrite_query] 槽位有值(schema键) | other | tb_regulation
+    原因     : T2:out_of_major:other.regulation
+    触发前   : 检索串='其他 来源不明' top1=无 结果块=3 质量=weak
+    改写后   : 检索串='其他 来源不明危化品' top1=0.5372 结果块=5 质量=ok
+    变化     : top1 无 → 0.5372 | 结果块 3 → 5
+    耗时     : 8.3s
+
+=== 汇总 ===
+触发点 8 个，其中在代码路径里重新触发 8 个
+重试后有改善 8 个 / 8
+top1 均值（无命中记 0）：0.2810 → 0.5883
+触发前向量分支 0 命中（top1 为无）：4 个，重试后拿到向量命中：4 个
+    槽位空 | other | tb_hazard_case : 结果块 3 → 5 | top1 无 → 0.5454 | 新检索串='其他 危化品桶'
+    槽位空 | other | tb_regulation : 结果块 3 → 4 | top1 无 → 0.5169 | 新检索串='其他 危化品桶'
+    槽位有值(schema键) | other | tb_hazard_case : 结果块 3 → 5 | top1 无 → 0.5819 | 新检索串='其他 来源不明危化品桶'
+    槽位有值(schema键) | other | tb_regulation : 结果块 3 → 5 | top1 无 → 0.5372 | 新检索串='其他 来源不明危化品'
