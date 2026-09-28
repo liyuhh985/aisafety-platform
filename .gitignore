@@ -66,3 +66,10 @@ ai-module/db/_diag_*.py
 ai-module/db/_verify_*.py
 ai-module/db/_rebuild_*.py
 .pytest_cache/
+
+# ====== 数据库备份与运行残留（不入库）======
+# db/backup/ 是 MySQL 表快照（可随时重新导出，不是源码）；
+# *.err 是测量/服务脚本的重定向输出（ai-module/db/g*_run.err 等）。
+# 全仓扫过：没有 tracked 的 .err 文件，所以 *.err 不会误伤已有内容。
+ai-module/db/backup/
+*.err
