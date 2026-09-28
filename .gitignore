@@ -4,6 +4,17 @@
 application-local.yml
 !application-local.yml.example
 
+# Credentials and certificates
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+*.crt
+*.cer
+credentials*.json
+secrets/
+
 # ====== Java ======
 target/
 *.class
@@ -41,3 +52,17 @@ ai-module/db/case_embeddings.json
 ai-module/test_images/
 uploads/
 demo.png
+
+# ====== 临时诊断脚本与运行产物（不入库）======
+*.bak
+*.bak2
+.tmp_*
+_server_mh*.log
+_server_mh*.log.err
+_compat_block.txt
+ai-module/db/_patch_*.py
+ai-module/db/_fix_*.py
+ai-module/db/_diag_*.py
+ai-module/db/_verify_*.py
+ai-module/db/_rebuild_*.py
+.pytest_cache/
