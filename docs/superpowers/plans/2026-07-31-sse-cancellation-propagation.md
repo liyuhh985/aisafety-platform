@@ -24,25 +24,26 @@
 **Files:**
 - Create: `safety-web/src/test/java/com/safety/web/service/AiServiceStreamCancellationTest.java`
 - Create: `ai-module/test_server_sse_cancellation.py`
+- Create: `ai-module/test_agent_cancellation.py`
 - Modify: `ai-module/test_server_sse_errors.py`
 
 **Interfaces:**
 - The Java test expects `AiService` to accept an injected `ExecutorService` and register timeout/completion/error callbacks on each returned emitter.
 - The Python test expects `stream_analysis` to pass a cancellation token to the orchestrator and stop after `Request.is_disconnected()` becomes true.
 
-- [ ] **Step 1: Write the Java failing test**
+- [x] **Step 1: Write the Java failing test**
 
 Test a timeout callback on `chatStream`: capture the submitted Future, invoke the registered `ResponseBodyEmitter` timeout callback, and assert `future.cancel(true)`. Also assert normal completion callbacks are registered alongside timeout and error callbacks.
 
-- [ ] **Step 2: Write the Python failing test**
+- [x] **Step 2: Write the Python failing test**
 
 Use a request whose `is_disconnected()` returns false once and true on the next poll. Use an orchestrator generator that yields one event and then waits until its received token is cancelled. Assert the stream contains only the first event and the token was cancelled.
 
-- [ ] **Step 3: Update the existing error fake signature**
+- [x] **Step 3: Update the existing error fake signature**
 
 Allow `FailingOrchestrator.analyze_stream(..., cancellation=None)` so the error-contract test remains valid when the production stream passes the token.
 
-- [ ] **Step 4: Run the focused tests and confirm expected failure**
+- [x] **Step 4: Run the focused tests and confirm expected failure**
 
 Run:
 
@@ -51,7 +52,7 @@ mvn -pl safety-web -am -Dtest=AiServiceStreamCancellationTest test
 python -m unittest ai-module.test_server_sse_cancellation ai-module.test_server_sse_errors
 ```
 
-Expected: the new tests fail because the Java service has no injectable cancellation session and the Python stream does not pass/cancel a token.
+Expected and observed: Python failed because the stream did not pass/cancel a token. Java could not start because this workspace has no Maven executable or wrapper.
 
 ---
 
@@ -66,11 +67,11 @@ Expected: the new tests fail because the Java service has no injectable cancella
 - Add a private `StreamCancellation` state object with `cancel()`, `setFuture(Future<?>)`, `setUpstreamCloser(Runnable)`, `clearUpstreamCloser()`, `isCancelled()`, `finish()`, and `isFinished()`.
 - Route both stream methods through one helper that registers `onCompletion`, `onTimeout`, and `onError` before submitting the task.
 
-- [ ] **Step 1: Implement the minimal cancellation state**
+- [x] **Step 1: Implement the minimal cancellation state**
 
 Use atomic state and an atomic Future/closer reference. `cancel()` must be idempotent, close the active response, and cancel an already-bound Future; `setFuture()` must immediately cancel when cancellation won the race.
 
-- [ ] **Step 2: Route analyze and chat stream execution through the state**
+- [x] **Step 2: Route analyze and chat stream execution through the state**
 
 Save the `Future<?>` returned by `streamExecutor.submit`, register all emitter callbacks, keep the response closer bound while reading, check `isCancelled()` before send, and mark normal completion before `emitter.complete()`.
 
@@ -82,7 +83,7 @@ Run:
 mvn -pl safety-web -am -Dtest=AiServiceStreamCancellationTest test
 ```
 
-Expected: PASS.
+Blocked by the missing Maven executable; the Java test was not run.
 
 ---
 
@@ -99,15 +100,15 @@ Expected: PASS.
 - `Agent.run(..., cancellation=None)`, `Agent.run_stream(..., cancellation=None)`, `_call_llm(..., cancellation=None)`, and `_call_llm_stream(..., cancellation=None)` preserve existing callers through the default.
 - `Orchestrator.analyze_stream(..., cancellation=None)` and `Orchestrator.chat_stream(..., cancellation=None)` preserve existing callers through the default.
 
-- [ ] **Step 1: Implement the token and cancellation exception**
+- [x] **Step 1: Implement the token and cancellation exception**
 
 Use `threading.Event` plus a lock-protected closer set. Cancellation sets the event and invokes each closer once; registering after cancellation closes immediately.
 
-- [ ] **Step 2: Propagate token checks through Agent and Orchestrator**
+- [x] **Step 2: Propagate token checks through Agent and Orchestrator**
 
 Check before each stage, tool round, and output token. Register active model `Response.close` callbacks around `requests.post`, unregister them in `finally`, and raise `StreamCancelled` instead of yielding an error after cancellation.
 
-- [ ] **Step 3: Defer execution verification until the server adapter is connected**
+- [x] **Step 3: Defer execution verification until the server adapter is connected**
 
 The Task 1 red run already proves the new contract is missing. Do not rerun the same Python cancellation test between token propagation and adapter wiring; run it once in the consolidated final verification after Task 4.
 
@@ -124,15 +125,15 @@ The Task 1 red run already proves the new contract is missing. Do not rerun the 
 - Add an async disconnect-aware adapter that accepts a request and a synchronous generator factory, runs production work in a worker thread, and yields SSE frames from an asyncio queue.
 - Add `stream_chat(request, orch, message, session_id)` matching `stream_analysis` cancellation and cleanup behavior.
 
-- [ ] **Step 1: Implement the async adapter**
+- [x] **Step 1: Implement the async adapter**
 
 Poll `Request.is_disconnected()` while the worker runs. On disconnect or ASGI cancellation, call `token.cancel()`, stop forwarding queued events, and suppress cancellation errors. For genuine exceptions, preserve `error` then `done`.
 
-- [ ] **Step 2: Connect analyze and chat endpoints**
+- [x] **Step 2: Connect analyze and chat endpoints**
 
 Pass the token into both orchestrator generators, make `/chat/stream` accept `Request`, and keep image deletion in `stream_analysis`'s `finally` block.
 
-- [ ] **Step 3: Run the single final verification**
+- [x] **Step 3: Run the single final verification**
 
 Run:
 
@@ -141,7 +142,7 @@ mvn -pl safety-web -am -Dtest=AiServiceStreamCancellationTest test
 python -m unittest ai-module.test_server_sse_cancellation ai-module.test_server_sse_errors ai-module.test_orchestrator_stream
 ```
 
-Expected: all focused Java and Python tests PASS; no full-suite or repeated test run is required for this change.
+Observed: Python focused tests PASS (`Ran 5 tests ... OK`). Java focused test was not run because Maven is unavailable.
 
 ---
 
@@ -151,10 +152,25 @@ Expected: all focused Java and Python tests PASS; no full-suite or repeated test
 - Review: all files changed by Tasks 1-4
 - Modify: `docs/superpowers/plans/2026-07-31-sse-cancellation-propagation.md`
 
-- [ ] **Step 1: Inspect the diff for scope and callback races**
+- [x] **Step 1: Inspect the diff for scope and callback races**
 
 Confirm only the two SSE endpoints and their cancellation dependencies changed, and confirm normal completion cannot invoke cancellation before the worker releases its response.
 
-- [ ] **Step 2: Mark completed checklist items and summarize verification**
+- [x] **Step 2: Mark completed checklist items and summarize verification**
 
 Record the final focused commands and result in the plan document without adding unrelated refactors or tests.
+
+### Task 6: Bound SSE admission under load
+
+**Files:**
+- Modify: `safety-web/src/main/java/com/safety/web/service/AiService.java`
+- Create: `safety-web/src/main/java/com/safety/web/service/AiStreamBusyException.java`
+- Modify: `safety-web/src/main/java/com/safety/web/controller/AiController.java`
+- Modify: `safety-web/src/main/java/com/safety/web/config/GlobalExceptionHandler.java`
+- Test: `safety-web/src/test/java/com/safety/web/service/AiServiceStreamCapacityTest.java`
+- Test: `safety-web/src/test/java/com/safety/web/controller/AiControllerStreamCapacityTest.java`
+
+- [x] Replace the unbounded fixed-thread-pool queue with 8 worker threads, an `ArrayBlockingQueue(32)`, and `AbortPolicy`.
+- [x] Convert `RejectedExecutionException` into `AiStreamBusyException` for both SSE endpoints.
+- [x] Return HTTP 429 with `当前服务繁忙，请稍后重试` through the global exception handler.
+- [ ] Run Java capacity tests; blocked because Maven and Maven Wrapper are unavailable in the workspace.
