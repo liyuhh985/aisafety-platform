@@ -5,6 +5,8 @@ import com.safety.common.result.R;
 import com.safety.pojo.entity.Regulation;
 import com.safety.service.service.RegulationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +27,16 @@ public class RegulationController {
     @GetMapping("/{id:\\d+}")
     public R<Regulation> detail(@PathVariable Long id) {
         Regulation r = regulationService.getById(id);
-        if (r == null) return R.fail("法规不存在");
+        if (r == null) return R.fail(404, "法规不存在");
         return R.ok(r);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id:\\d+}")
+    public ResponseEntity<R<Void>> delete(@PathVariable Long id) {
+        if (!regulationService.delete(id)) {
+            return ResponseEntity.status(404).body(R.fail(404, "Regulation not found"));
+        }
+        return ResponseEntity.ok(R.ok());
     }
 }

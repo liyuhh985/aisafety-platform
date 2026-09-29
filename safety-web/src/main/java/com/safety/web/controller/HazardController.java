@@ -118,8 +118,25 @@ public class HazardController {
     }
 
     @GetMapping("/{id:\\d+}")
-    public R<HazardVO> getById(@PathVariable Long id) {
-        return R.ok(hazardService.getById(id));
+    public R<HazardVO> getById(@PathVariable Long id, Authentication auth) {
+        HazardVO vo = hazardService.getById(id);
+        Integer role = roleOf(auth);
+        boolean isAdmin = (role != null && role == 1);
+        if (vo != null && vo.getStatus() != null && vo.getStatus() == 5 && !isAdmin) {
+            // 已撤回只对管理员可见：对其他人等同于不存在
+            throw new BusinessException(404, "隐患记录不存在");
+        }
+        return R.ok(vo);
+    }
+
+    /** 撤回：仅创建人本人、仅 status=0（未接单）可撤；不审核。 */
+    @PostMapping("/{id:\\d+}/withdraw")
+    public R<HazardVO> withdraw(@PathVariable Long id, Authentication auth) {
+        if (auth == null) {
+            throw new BusinessException(401, "未登录");
+        }
+        Long userId = (Long) auth.getPrincipal();
+        return R.ok(hazardService.withdraw(id, userId));
     }
 
     /** 从 SecurityContext 推导角色数字：0 普通 / 1 管理员 / 2 处理人员 */

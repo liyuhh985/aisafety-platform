@@ -28,4 +28,8 @@ public class Hazard {
     private String report;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    /** 撤回时间（status=5 时非空） */
+    private LocalDateTime withdrawnAt;
+    /** 撤回人 userId */
+    private Long withdrawnBy;
 }

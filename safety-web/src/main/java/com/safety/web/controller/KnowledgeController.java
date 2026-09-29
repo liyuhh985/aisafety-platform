@@ -5,6 +5,8 @@ import com.safety.common.result.R;
 import com.safety.pojo.entity.HazardKnowledge;
 import com.safety.service.service.KnowledgeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,7 +30,16 @@ public class KnowledgeController {
     @GetMapping("/{id:\\d+}")
     public R<HazardKnowledge> detail(@PathVariable Long id) {
         HazardKnowledge k = knowledgeService.getById(id);
-        if (k == null) return R.fail("文书不存在");
+        if (k == null) return R.fail(404, "文书不存在");
         return R.ok(k);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id:\\d+}")
+    public ResponseEntity<R<Void>> delete(@PathVariable Long id) {
+        if (!knowledgeService.delete(id)) {
+            return ResponseEntity.status(404).body(R.fail(404, "Knowledge not found"));
+        }
+        return ResponseEntity.ok(R.ok());
     }
 }

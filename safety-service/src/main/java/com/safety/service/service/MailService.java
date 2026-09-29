@@ -28,7 +28,7 @@ public class MailService {
                 RedisConstant.EMAIL_CODE_TTL, TimeUnit.MINUTES);
 
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom("安全隐患分析平台 <" + from + ">");
+        msg.setFrom(from);
         msg.setTo(toEmail);
         msg.setSubject("安全隐患分析平台 - 验证码");
         msg.setText("你的验证码是：" + code + "，5分钟内有效。");
@@ -39,10 +39,10 @@ public class MailService {
         String saved = redisTemplate.opsForValue()
                 .get(RedisConstant.EMAIL_CODE_PREFIX + email);
         if (saved == null) {
-            throw new BusinessException("验证码已过期，请重新获取");
+            throw new BusinessException(400, "验证码已过期，请重新获取");
         }
         if (!saved.equals(inputCode)) {
-            throw new BusinessException("验证码错误");
+            throw new BusinessException(400, "验证码错误");
         }
         redisTemplate.delete(RedisConstant.EMAIL_CODE_PREFIX + email);
     }

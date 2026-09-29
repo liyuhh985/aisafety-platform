@@ -3,11 +3,12 @@
 启动: python server.py  (默认 0.0.0.0:8000)
 """
 import json
+import logging
 import shutil
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, Query, Request, UploadFile, HTTPException
+from fastapi import Body, FastAPI, File, Form, Header, Query, Request, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.responses import StreamingResponse
@@ -15,7 +16,10 @@ from fastapi.responses import StreamingResponse
 from core.memory import get_session
 from core.cancellation import CancellationToken
 from core.assistant_graph import run_stream_events as assistant_graph_stream
-from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
+from tools.milvus_store import MilvusVectorStore
+from config import AI_INTERNAL_TOKEN, MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
+
+logger = logging.getLogger("safety.ai")
 
 app = FastAPI(title="Safety AI", version="1.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -381,6 +385,52 @@ def clear_session(session_id: str = Query(...)):
 @app.get("/api/ai/health")
 def health():
     return {"status": "ok", "model": MIMO_MODEL}
+
+
+
+# ====== 内部：Java 向量删除回执 ======
+
+# 只允许删除这三张检索源表（与 Java 侧 VectorSyncOutboxService 的白名单一致）。
+VECTOR_DELETE_TABLES = frozenset({
+    "tb_hazard_case",
+    "tb_regulation",
+    "tb_hazard_knowledge",
+})
+VECTOR_DELETE_MAX_IDS = 100
+
+
+@app.post("/api/ai/internal/vectors/delete")
+def delete_vectors(payload: dict = Body(...), x_internal_token: str = Header(default="")):
+    """Java 向量删除 outbox 的回执端点：按表名加主键删除 Milvus 里的向量。
+
+    鉴权用共享密钥 X-Internal-Token（与 Java 侧 ai.internal-token 同源）。
+    请求体故意收成 dict 而不是 Pydantic 模型：形状不合法时这里要回 400，
+    不能退化成 FastAPI 默认的 422 —— Java 侧把 400/401/422 都当永久失败，
+    但 422 的报文对排查没有帮助。
+    """
+    if not AI_INTERNAL_TOKEN or x_internal_token != AI_INTERNAL_TOKEN:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    table = payload.get("table")
+    if table not in VECTOR_DELETE_TABLES:
+        raise HTTPException(status_code=400, detail="Unsupported table")
+
+    ids = payload.get("ids")
+    if not isinstance(ids, list):
+        raise HTTPException(status_code=400, detail="ids must be a list")
+    if not ids or len(ids) > VECTOR_DELETE_MAX_IDS:
+        raise HTTPException(status_code=400, detail="ids length out of range")
+    for doc_id in ids:
+        if isinstance(doc_id, bool) or not isinstance(doc_id, int) or doc_id < 1:
+            raise HTTPException(status_code=400, detail="ids must be positive integers")
+
+    try:
+        MilvusVectorStore().delete_ids(table, ids)
+    except Exception:
+        logger.exception("vector delete failed table=%s ids=%s", table, ids)
+        raise HTTPException(status_code=503, detail="Vector store unavailable")
+
+    return {"deleted_count": len(ids)}
 
 
 # ====== 内部 ======

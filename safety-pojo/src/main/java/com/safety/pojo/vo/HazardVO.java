@@ -29,4 +29,6 @@ public class HazardVO {
     private Integer reviewed;
     private String statusText;
     private LocalDateTime createTime;
+    private LocalDateTime withdrawnAt;
+    private Long withdrawnBy;
 }

@@ -54,14 +54,13 @@ class HazardServiceImplCacheTest {
     }
 
     @Test
-    void fallsBackToDatabaseWhenRedisListCacheIsUnavailable() {
+    void pageReadsDatabaseDirectlyWithoutListCache() {
         Hazard hazard = new Hazard();
         hazard.setId(1L);
         hazard.setStatus(0);
         Page<Hazard> databasePage = new Page<>(1, 10, 1);
         databasePage.setRecords(List.of(hazard));
-        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
-        when(valueOperations.get(anyString())).thenThrow(new RuntimeException("redis down"));
+        // 列表已改为轻量直接查库（不再有 Redis 列表缓存），因此这里不再 stub Redis
         when(hazardMapper.selectPage(any(Page.class), any())).thenReturn(databasePage);
 
         Page<HazardVO> result = service.page(1, 10, null, null);
@@ -85,7 +84,6 @@ class HazardServiceImplCacheTest {
         when(lock.tryLock(3, 10, TimeUnit.SECONDS)).thenReturn(true);
         when(lock.isHeldByCurrentThread()).thenReturn(true);
         doThrow(new RuntimeException("redis down")).when(redisTemplate).delete(anyString());
-        when(redisTemplate.keys(anyString())).thenThrow(new RuntimeException("redis down"));
 
         HazardVO result = service.create(7L, new HazardDTO());
 

@@ -41,6 +41,12 @@ public class GlobalExceptionHandler {
         return R.fail(429, e.getMessage());
     }
 
+    @ExceptionHandler(org.springframework.web.servlet.resource.NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public R<Void> handleNoResourceFound(org.springframework.web.servlet.resource.NoResourceFoundException e) {
+        return R.fail(404, "请求的接口不存在");
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public R<Void> handleException(Exception e) {

@@ -24,7 +24,7 @@ public class AuthController {
     private final MailService mailService;
 
     @RateLimit(key = "'send_code:' + #dto.email", count = 1, time = 60)
-    @PostMapping("/send-code")
+    @PostMapping(value = {"/send-code", "/code"})
     public R<Void> sendCode(@Valid @RequestBody SendCodeDTO dto) {
         mailService.sendCode(dto.getEmail());
         return R.ok();

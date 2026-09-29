@@ -37,6 +37,8 @@ public class HazardServiceImpl implements HazardService {
     private final HazardActionMapper hazardActionMapper;
     private final StringRedisTemplate redisTemplate;
     private final RedissonClient redissonClient;
+    /** 已撤回：仅创建人本人、仅 status=0 时可达；普通用户与处理人不可见，管理员可见可统计 */
+    private static final int STATUS_WITHDRAWN = 5;
     private static final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
 
@@ -168,7 +170,7 @@ public class HazardServiceImpl implements HazardService {
     public HazardVO assign(Long id, Long adminId, Long handlerId) {
         Hazard hazard = hazardMapper.selectById(id);
         if (hazard == null) {
-            throw new BusinessException("隐患不存在");
+            throw new BusinessException(404, "隐患不存在");
         }
         if (hazard.getStatus() == null || (hazard.getStatus() != 0 && hazard.getStatus() != 4)) {
             throw new BusinessException("仅待处理或已驳回任务可指派责任人");
@@ -197,7 +199,7 @@ public class HazardServiceImpl implements HazardService {
     public HazardVO review(Long id, Long adminId, boolean pass, String remark) {
         Hazard hazard = hazardMapper.selectById(id);
         if (hazard == null) {
-            throw new BusinessException("隐患不存在");
+            throw new BusinessException(404, "隐患不存在");
         }
         Integer st = hazard.getStatus();
         Integer rev = hazard.getReviewed();
@@ -248,16 +250,16 @@ public class HazardServiceImpl implements HazardService {
     private HazardVO transition(Long id, int from, int to, String actionType, Long userId, boolean setHandler, Integer role) {
         Hazard hazard = hazardMapper.selectById(id);
         if (hazard == null) {
-            throw new BusinessException("隐患不存在");
+            throw new BusinessException(404, "隐患不存在");
         }
         Integer cur = hazard.getStatus();
         if (cur == null || cur != from) {
-            throw new BusinessException("当前状态不允许流转到该状态");
+            throw new BusinessException(409, "当前状态不允许流转到该状态");
         }
         boolean isAdmin = (role != null && role == 1);
         if (!isAdmin) {
             if (hazard.getHandlerId() == null || !hazard.getHandlerId().equals(userId)) {
-                throw new BusinessException("只能处理分配给自己的任务");
+                throw new BusinessException(403, "只能处理分配给自己的任务");
             }
         }
         hazard.setStatus(to);
@@ -269,6 +271,26 @@ public class HazardServiceImpl implements HazardService {
         }
         hazardMapper.updateById(hazard);
         saveAction(id, userId, actionType, "status " + from + " -> " + to);
+        invalidateDetailCache(id);
+        invalidateListCache();
+        return toVO(hazardMapper.selectById(id));
+    }
+
+    @Override
+    public HazardVO withdraw(Long id, Long userId) {
+        int rows = hazardMapper.withdraw(id, userId);
+        if (rows == 0) {
+            Hazard current = hazardMapper.selectById(id);
+            if (current == null || !java.util.Objects.equals(current.getUserId(), userId)) {
+                throw new BusinessException(404, "隐患不存在或无权限");
+            }
+            if (current.getStatus() != null && current.getStatus() == STATUS_WITHDRAWN) {
+                // 重复点撤回：幂等，直接返回当前状态
+                return toVO(current);
+            }
+            throw new BusinessException(409, "该任务已被受理，无法撤回");
+        }
+        saveAction(id, userId, "WITHDRAW", "status 0 -> " + STATUS_WITHDRAWN);
         invalidateDetailCache(id);
         invalidateListCache();
         return toVO(hazardMapper.selectById(id));
@@ -291,16 +313,29 @@ public class HazardServiceImpl implements HazardService {
     public Page<HazardVO> page(int current, int size, Long userId, Integer role) {
         // 普通用户(role=0)只能看自己上报的；处理人员/管理员看全部
         boolean restricted = (role != null && role == 0);
+        boolean isAdmin = (role != null && role == 1);
         Page<Hazard> pg = new Page<>(current, size);
         LambdaQueryWrapper<Hazard> qw = new LambdaQueryWrapper<Hazard>()
                 .orderByDesc(Hazard::getCreateTime);
         if (restricted && userId != null) {
             qw.eq(Hazard::getUserId, userId);
         }
+        if (hidesWithdrawn(role)) {
+            // 已撤回只对管理员可见（创建人自己、处理团队都看不到）
+            qw.ne(Hazard::getStatus, STATUS_WITHDRAWN);
+        }
         Page<Hazard> result = hazardMapper.selectPage(pg, qw);
         Page<HazardVO> voPage = new Page<>(current, size, result.getTotal());
         voPage.setRecords(result.getRecords().stream().map(this::toVO).toList());
         return voPage;
+    }
+
+    /**
+     * 已撤回（status=5）是否对该角色隐藏：只有管理员（role=1）可见。
+     * 抽成静态纯函数是为了让"可见性规则"本身可被单测锁住（SQL 层的真实行为由部署后的 e2e 覆盖）。
+     */
+    static boolean hidesWithdrawn(Integer role) {
+        return role == null || role != 1;
     }
 
     private void invalidateListCache() {
@@ -376,6 +411,7 @@ public class HazardServiceImpl implements HazardService {
                 case 2 -> "整改中";
                 case 3 -> (hazard.getReviewed() != null && hazard.getReviewed() == 1) ? "已办结" : "待验收";
                 case 4 -> "已驳回";
+                case STATUS_WITHDRAWN -> "已撤回";
                 default -> "未知";
             };
         }
@@ -386,12 +422,17 @@ public class HazardServiceImpl implements HazardService {
                 hazard.getDistrict(), hazard.getReport(), hazard.getHandlerId(),
                 hazard.getSeverity(), hazard.getStatus(), hazard.getReviewed(),
                 statusText,
-                hazard.getCreateTime());
+                hazard.getCreateTime(),
+                hazard.getWithdrawnAt(),
+                hazard.getWithdrawnBy());
     }
 
     @Override
     public HazardStatsVO getStats() {
-        long total = hazardMapper.selectCount(null);
+        long withdrawn = hazardMapper.selectCount(
+                new LambdaQueryWrapper<Hazard>().eq(Hazard::getStatus, STATUS_WITHDRAWN));
+        long total = hazardMapper.selectCount(
+                new LambdaQueryWrapper<Hazard>().ne(Hazard::getStatus, STATUS_WITHDRAWN));
         long processed = hazardMapper.selectCount(
                 new LambdaQueryWrapper<Hazard>().eq(Hazard::getStatus, 3).eq(Hazard::getReviewed, 1));
         long processing = hazardMapper.selectCount(
@@ -399,7 +440,8 @@ public class HazardServiceImpl implements HazardService {
         String rate = total == 0 ? "0.0%"
                 : String.format("%.1f%%", processed * 100.0 / total);
         return HazardStatsVO.builder()
-                .total(total).processed(processed).processing(processing).rate(rate)
+                .total(total).processed(processed).processing(processing)
+                .withdrawn(withdrawn).rate(rate)
                 .build();
     }
 }

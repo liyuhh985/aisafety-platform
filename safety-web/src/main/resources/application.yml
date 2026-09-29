@@ -1,6 +1,15 @@
 server:
   port: ${SERVER_PORT:8080}
 
+ai:
+  base-url: ${AI_BASE_URL:http://127.0.0.1:8000/api/ai}
+  internal-token: ${AI_INTERNAL_TOKEN:}
+
+vector-sync:
+  delete:
+    poll-delay-ms: ${VECTOR_SYNC_DELETE_POLL_DELAY_MS:30000}
+    batch-size: ${VECTOR_SYNC_DELETE_BATCH_SIZE:50}
+
 spring:
   profiles:
     active: local

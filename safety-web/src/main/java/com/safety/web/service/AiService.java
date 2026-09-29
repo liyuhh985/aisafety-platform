@@ -95,7 +95,9 @@ public class AiService {
     public Map<String, Object> analyze(MultipartFile file, String text, Long userId) throws IOException {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("text", text != null ? text : "请分析这张图片中的安全隐患，并生成报告");
-        body.add("user_id", userId);
+        if (userId != null) {
+            body.add("user_id", String.valueOf(userId));
+        }
         if (file != null && !file.isEmpty()) {
             body.add("file", new ByteArrayResource(file.getBytes()) {
                 @Override
@@ -119,7 +121,9 @@ public class AiService {
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("text", text != null ? text : "请分析这张图片中的安全隐患，并生成报告");
-        body.add("user_id", userId);
+        if (userId != null) {
+            body.add("user_id", String.valueOf(userId));
+        }
         if (file != null && !file.isEmpty()) {
             body.add("file", new ByteArrayResource(file.getBytes()) {
                 @Override
@@ -185,12 +189,22 @@ public class AiService {
      * AI 助手 ReAct SSE 流式多轮问答（JSON body）。
      */
     public SseEmitter assistantStream(String message, String sessionId, Long userId) {
+        return assistantStream(message, sessionId, userId, "");
+    }
+
+    /**
+     * AI 助手 ReAct SSE 流式多轮问答（JSON body），带前端大类提示。
+     */
+    public SseEmitter assistantStream(String message, String sessionId, Long userId,
+                                      String selectedMajorCode) {
         SseEmitter emitter = new SseEmitter(300_000L);
 
-        String body = String.format("{\"message\":\"%s\",\"session_id\":\"%s\",\"user_id\":%s}",
+        String body = String.format(
+                "{\"message\":\"%s\",\"session_id\":\"%s\",\"user_id\":%s,\"selected_major_code\":\"%s\"}",
                 message == null ? "" : message.replace("\"", "\\\""),
                 sessionId == null ? "" : sessionId,
-                userId == null ? "null" : userId.toString());
+                userId == null ? "null" : userId.toString(),
+                selectedMajorCode == null ? "" : selectedMajorCode.replace("\"", "\\\""));
 
         final String finalBody = body;
         StreamCancellation cancellation = new StreamCancellation();
@@ -254,8 +268,16 @@ public class AiService {
      * AI 助手 ReAct SSE 流式多轮问答（multipart，有图时用）。
      */
     public SseEmitter assistantStream(String message, String sessionId, Long userId, MultipartFile file) throws IOException {
+        return assistantStream(message, sessionId, userId, "", file);
+    }
+
+    /**
+     * AI 助手 ReAct SSE 流式多轮问答（multipart，有图时用），带前端大类提示。
+     */
+    public SseEmitter assistantStream(String message, String sessionId, Long userId,
+                                      String selectedMajorCode, MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
-            return assistantStream(message, sessionId, userId);
+            return assistantStream(message, sessionId, userId, selectedMajorCode);
         }
         SseEmitter emitter = new SseEmitter(300_000L);
 
@@ -263,6 +285,7 @@ public class AiService {
         body.add("message", message == null ? "" : message);
         body.add("session_id", sessionId == null ? "" : sessionId);
         body.add("user_id", userId);
+        body.add("selected_major_code", selectedMajorCode == null ? "" : selectedMajorCode);
         body.add("file", new ByteArrayResource(file.getBytes()) {
             @Override public String getFilename() { return file.getOriginalFilename(); }
         });
@@ -396,11 +419,12 @@ public class AiService {
             rest.postForEntity(
                     aiBase + "/internal/vectors/delete", request, Map.class);
         } catch (HttpClientErrorException e) {
-            if (e.getStatusCode().value() == 400
-                    || e.getStatusCode().value() == 401
-                    || e.getStatusCode().value() == 422) {
+            int status = e.getStatusCode().value();
+            // 4xx 表示请求本身/配置有问题（表名非法、鉴权失败、路径不存在…），
+            // 重试不会自愈；只有 429（限流）属于可恢复，继续重试。
+            if (status != 429) {
                 throw new VectorSyncPermanentException(
-                        "Python AI rejected vector delete request");
+                        "Python AI rejected vector delete request: HTTP " + status);
             }
             throw e;
         }

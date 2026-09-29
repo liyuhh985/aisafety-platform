@@ -5,6 +5,8 @@ import com.safety.common.result.R;
 import com.safety.pojo.entity.HazardCase;
 import com.safety.service.service.CaseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,5 +23,14 @@ public class CaseController {
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String category) {
         return R.ok(caseService.page(current, size, city, category));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id:\\d+}")
+    public ResponseEntity<R<Void>> delete(@PathVariable Long id) {
+        if (!caseService.delete(id)) {
+            return ResponseEntity.status(404).body(R.fail(404, "Case not found"));
+        }
+        return ResponseEntity.ok(R.ok());
     }
 }

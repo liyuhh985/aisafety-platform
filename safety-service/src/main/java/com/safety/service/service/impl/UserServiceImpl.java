@@ -34,12 +34,12 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectOne(
                 new LambdaQueryWrapper<User>().eq(User::getEmail, dto.getEmail()));
         if (user == null) {
-            throw new BusinessException("用户不存在");
+            throw new BusinessException(401, "用户不存在");
         }
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new BusinessException("密码错误");
+            throw new BusinessException(401, "密码错误");
         }
-        String token = JwtUtil.generate(user.getId());
+        String token = JwtUtil.generate(user.getId(), user.getRole());
         redisTemplate.opsForValue().set(
                 RedisConstant.TOKEN_PREFIX + token,
                 user.getId().toString(),
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         User exist = userMapper.selectOne(
                 new LambdaQueryWrapper<User>().eq(User::getEmail, dto.getEmail()));
         if (exist != null) {
-            throw new BusinessException("该邮箱已注册");
+            throw new BusinessException(409, "该邮箱已注册");
         }
         mailService.verifyCode(dto.getEmail(), dto.getCode());
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
                 dto.getNickname() != null ? dto.getNickname() : dto.getEmail().split("@")[0]);
         userMapper.insert(user);
 
-        String token = JwtUtil.generate(user.getId());
+        String token = JwtUtil.generate(user.getId(), user.getRole());
         redisTemplate.opsForValue().set(
                 RedisConstant.TOKEN_PREFIX + token,
                 user.getId().toString(),
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
     public UserVO getUserById(Long id) {
         User user = userMapper.selectById(id);
         if (user == null) {
-            throw new BusinessException("用户不存在");
+            throw new BusinessException(404, "用户不存在");
         }
         return UserVO.builder()
                 .id(user.getId())

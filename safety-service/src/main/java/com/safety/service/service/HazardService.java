@@ -19,6 +19,8 @@ public interface HazardService {
     HazardVO review(Long id, Long adminId, boolean pass, String remark);
     /** 管理员批量审核：批量通过或批量驳回 */
     java.util.List<HazardVO> batchReview(java.util.List<Long> ids, Long adminId, boolean pass, String remark);
+    /** 用户撤回自己尚未被受理的上报：0 待处理 -> 5 已撤回（仅创建人本人，不审核） */
+    HazardVO withdraw(Long id, Long userId);
     Page<HazardVO> page(int current, int size, Long userId, Integer role);
     HazardVO getById(Long id);
     HazardStatsVO getStats();

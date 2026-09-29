@@ -1,22 +1,16 @@
 import unittest
 from unittest.mock import Mock, patch
 
-import pytest
 from fastapi.testclient import TestClient
 
 import server
 
-# 端点未实现：Python 侧没有 /api/ai/internal/vectors/delete 这个路由（当前返回 404）。
-# 它归属另一条线 —— Java 侧的向量删除 outbox 已经写好，Python 侧的端点还没补。
-# 首次记录：2026-09-28。
-# strict=True：端点真被实现之后，这里会以 XPASS 失败的形式提醒回来拆掉 xfail，
-# 符合本项目"不要静默留缺口"的原则。
-XFAIL_REASON = (
-    "internal/vectors/delete 端点未实现：Python 侧没有该路由（404）；"
-    "属 Java 向量删除 outbox 那条线，Python 端点待补（2026-09-28 首次记录）"
-)
+# 端点已实现（2026-09-29）：POST /api/ai/internal/vectors/delete
+# 它是 Java 向量删除 outbox 的回执口：Java 侧 CaseService / RegulationService /
+# KnowledgeService 三处 enqueueDelete 投递的任务，最终由这里真正删掉 Milvus 向量。
+# 2026-09-28 首次记录时这里是 xfail(strict=True) 的已知缺口，现已补齐并拆除 xfail。
 
-pytestmark = pytest.mark.xfail(strict=True, reason=XFAIL_REASON)
+
 
 
 class VectorDeleteApiTests(unittest.TestCase):
@@ -47,10 +41,7 @@ class VectorDeleteApiTests(unittest.TestCase):
         self.assertEqual(response.json(), {"deleted_count": 1})
         self.store.delete_ids.assert_called_once_with("tb_hazard_case", [42])
 
-    # unittest 的 subTest 不会把父测试判为失败（子测试失败单独上报），
-    # 所以端点缺失时父测试仍然是 pass，strict 会把这里变成 XPASS 失败。
-    # 用 run=False 让它按"已知缺口"直接记 xfail，不参与 strict 判定。
-    @pytest.mark.xfail(run=False, reason=XFAIL_REASON)
+    # 2026-09-29：端点已实现，xfail 已拆除；这里用 subTest 逐个子用例断言。
     def test_missing_or_incorrect_internal_token_is_rejected(self):
         for headers in ({}, {"X-Internal-Token": "wrong-token"}):
             with self.subTest(headers=headers):
@@ -62,10 +53,7 @@ class VectorDeleteApiTests(unittest.TestCase):
 
                 self.assertEqual(response.status_code, 401)
 
-    # unittest 的 subTest 不会把父测试判为失败（子测试失败单独上报），
-    # 所以端点缺失时父测试仍然是 pass，strict 会把这里变成 XPASS 失败。
-    # 用 run=False 让它按"已知缺口"直接记 xfail，不参与 strict 判定。
-    @pytest.mark.xfail(run=False, reason=XFAIL_REASON)
+    # 2026-09-29：端点已实现，xfail 已拆除；这里用 subTest 逐个子用例断言。
     def test_invalid_delete_payload_is_rejected(self):
         invalid_payloads = (
             {"table": "tb_unknown", "ids": [42]},

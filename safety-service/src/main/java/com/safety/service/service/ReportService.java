@@ -7,20 +7,42 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safety.pojo.dto.ReportSaveDTO;
 import com.safety.pojo.entity.HazardReport;
 import com.safety.service.mapper.HazardReportMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
+@Slf4j
 @Service
-@RequiredArgsConstructor
 public class ReportService {
 
+    /** 图片对象名在 image_url 里的最大长度，超过就认为解析结果不可信。 */
+    private static final int MAX_OBJECT_KEY_LENGTH = 128;
+    private static final String REPORT_SOURCE_TABLE = "tb_hazard_report";
+
     private final HazardReportMapper mapper;
+    private final FileUploadService fileUploadService;
+    private final ResourceCleanupOutboxService cleanupOutboxService;
+    private final TransactionTemplate cleanupTransaction;
+
     private static final ObjectMapper json = new ObjectMapper();
+
+    public ReportService(
+            HazardReportMapper mapper,
+            FileUploadService fileUploadService,
+            ResourceCleanupOutboxService cleanupOutboxService,
+            PlatformTransactionManager transactionManager) {
+        this.mapper = mapper;
+        this.fileUploadService = fileUploadService;
+        this.cleanupOutboxService = cleanupOutboxService;
+        this.cleanupTransaction = new TransactionTemplate(transactionManager);
+    }
 
     public HazardReport save(Long userId, ReportSaveDTO dto) {
         HazardReport r = new HazardReport();
         r.setUserId(userId);
         r.setImageUrl(dto.getImageUrl());
+        r.setImageKey(objectKeyOf(dto.getImageUrl()));
         r.setHazardCategory(dto.getHazardCategory());
         r.setSeverity(dto.getSeverity());
         r.setDescription(dto.getDescription());
@@ -43,15 +65,88 @@ public class ReportService {
         q.orderByDesc(HazardReport::getCreateTime)
          .select(HazardReport::getId, HazardReport::getImageUrl,
                  HazardReport::getHazardCategory, HazardReport::getSeverity,
-                 HazardReport::getDescription, HazardReport::getCreateTime);
+                 HazardReport::getDescription, HazardReport::getRectification,
+                 HazardReport::getReportText, HazardReport::getCreateTime);
         return mapper.selectPage(page, q);
     }
 
-    public HazardReport getById(Long id) {
-        return mapper.selectById(id);
+    public HazardReport getById(Long id, Long userId) {
+        LambdaQueryWrapper<HazardReport> q = new LambdaQueryWrapper<HazardReport>()
+                .eq(HazardReport::getId, id);
+        if (userId != null) {
+            q.eq(HazardReport::getUserId, userId);
+        }
+        return mapper.selectOne(q);
     }
 
-    public void delete(Long id) {
-        mapper.deleteById(id);
+    /**
+     * 删除报告：先删 MinIO 对象，再删数据库行。
+     *
+     * 顺序（见 spec §3.1）：查行 → 删对象 → 失败则「入队清理任务 + 删行」在同一事务里 → 删行。
+     * 查不到（不存在或越权）时对象与行都不动。
+     * 入队失败必须整体回滚：否则 image_key 随行一起丢失，对象就再也没人能删了。
+     */
+    public void delete(Long id, Long userId) {
+        HazardReport row = getById(id, userId);
+        if (row == null) {
+            return;
+        }
+        String objectKey = row.getImageKey() != null && !row.getImageKey().isBlank()
+                ? row.getImageKey()
+                : objectKeyOf(row.getImageUrl());
+        if (objectKey == null) {
+            log.warn("报告 {} 无法定位图片对象，仅删除数据库行: image_key={} image_url={}",
+                    id, row.getImageKey(), row.getImageUrl());
+            mapper.deleteById(row.getId());
+            return;
+        }
+        if (removeObjectQuietly(objectKey)) {
+            mapper.deleteById(row.getId());
+            return;
+        }
+        cleanupTransaction.executeWithoutResult(status -> {
+            cleanupOutboxService.enqueueObjectDelete(
+                    fileUploadService.bucketName(), objectKey, REPORT_SOURCE_TABLE, row.getId());
+            mapper.deleteById(row.getId());
+        });
+    }
+
+    /** 删对象；失败不抛异常，返回 false 让调用方转投清理任务。 */
+    private boolean removeObjectQuietly(String objectKey) {
+        try {
+            fileUploadService.removeObject(objectKey);
+            return true;
+        } catch (RuntimeException e) {
+            log.warn("图片对象删除失败，转为后台清理任务: object={} reason={}",
+                    objectKey, e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * 从图片 URL 末段取对象名（前端只给 URL 时用）。解析不出返回 null。
+     * 例：http://host:9100/safety-images/ab12.png -> ab12.png
+     */
+    static String objectKeyOf(String imageUrl) {
+        if (imageUrl == null) {
+            return null;
+        }
+        String trimmed = imageUrl.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        int slash = trimmed.lastIndexOf('/');
+        if (slash < 0 || slash == trimmed.length() - 1) {
+            return null;
+        }
+        String key = trimmed.substring(slash + 1);
+        int query = key.indexOf('?');
+        if (query >= 0) {
+            key = key.substring(0, query);
+        }
+        if (key.isBlank() || key.length() > MAX_OBJECT_KEY_LENGTH) {
+            return null;
+        }
+        return key;
     }
 }
