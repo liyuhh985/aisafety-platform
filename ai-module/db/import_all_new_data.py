@@ -3,7 +3,8 @@
 执行内容：
 1. 自动备份当前 MySQL 中的 tb_hazard_case 和 tb_regulation 数据；
 2. 批量导入 CASES_BATCH_2（40条）与 CASES_BATCH_3（64条），按 title 去重；
-3. 批量导入 NEW_REGULATIONS_BATCH_2（45条），按 (law_name, article, category) 去重；
+3. 批量导入 NEW_REGULATIONS_BATCH_2（56条）与 NEW_REGULATIONS_2026（10条），
+   按 (law_name, article, category) 去重（两个批次共用同一份清单、同一套去重逻辑）；
 4. 打印两级规范分类完整看板与全库统计信息。
 """
 import os
@@ -22,6 +23,13 @@ from core.hazard_taxonomy import HAZARD_TAXONOMY
 from db.data_cases_batch2 import CASES_BATCH_2
 from db.data_cases_batch3 import CASES_BATCH_3
 from db.data_regulations_batch2 import NEW_REGULATIONS_BATCH_2
+from db.data_regulations_batch2026 import NEW_REGULATIONS_2026
+
+# 合并后的法规导入清单。去重逻辑不变：仍按 (law_name, article, category) 跳过已存在。
+# 2026-09-29 并入 batch2026：在那之前它是一个"孤立的数据文件"（全仓没有任何脚本引用它），
+# 重建库时会得到不完整的法规数据 —— 而"来源可复现"正是当初把它纳入版本控制的理由。
+# 幂等性：并入后在现有库上跑必须得到 0 inserted / 10 skipped（见 db/verify_import_idempotent.py）。
+ALL_NEW_REGULATIONS = NEW_REGULATIONS_BATCH_2 + NEW_REGULATIONS_2026
 
 BACKUP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "backup")
 
@@ -88,11 +96,11 @@ def import_cases(cur):
 
 
 def import_regulations(cur):
-    print(f"\n[法规导入] 准备导入第二批法规，共 {len(NEW_REGULATIONS_BATCH_2)} 条...")
+    print(f"\n[法规导入] 准备导入法规批次（batch2 + batch2026），共 {len(ALL_NEW_REGULATIONS)} 条...")
     inserted = 0
     skipped = 0
 
-    for reg in NEW_REGULATIONS_BATCH_2:
+    for reg in ALL_NEW_REGULATIONS:
         law_name = reg["law_name"].strip()
         article = reg["article"].strip()
         category = reg["category"].strip()
@@ -166,7 +174,7 @@ def main():
             print("\n>>> 步骤2: 批量导入 Batch 2 + Batch 3 权威案例...")
             import_cases(cur)
 
-            print("\n>>> 步骤3: 批量导入 Batch 2 权威法规...")
+            print("\n>>> 步骤3: 批量导入 Batch 2 + Batch 2026 权威法规...")
             import_regulations(cur)
 
             conn.commit()
