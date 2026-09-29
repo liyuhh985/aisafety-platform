@@ -19,6 +19,8 @@ public class VectorSyncOutboxService {
             "tb_regulation");
     private static final int MAX_ERROR_LENGTH = 1000;
     private static final long MAX_RETRY_DELAY_SECONDS = 3600;
+    /** 与 mapper SQL 里的 `retry_count < 10` 保持一致：到上限就转终态 FAILED，不再躺在 RETRY 里没人管 */
+    private static final int MAX_RETRY_COUNT = 10;
 
     private final VectorSyncOutboxMapper mapper;
 
@@ -58,6 +60,10 @@ public class VectorSyncOutboxService {
             int previousRetryCount,
             String error) {
         int retryCount = previousRetryCount + 1;
+        if (retryCount >= MAX_RETRY_COUNT) {
+            // 到上限：转终态失败（否则 SQL 的 retry_count < 10 会让它永远不被 claim，且既不失败也不告警）
+            return mapper.markFailed(id, claimVersion, sanitizeError(error)) == 1;
+        }
         long delaySeconds = retryDelaySeconds(previousRetryCount);
         return mapper.markRetry(
                 id,

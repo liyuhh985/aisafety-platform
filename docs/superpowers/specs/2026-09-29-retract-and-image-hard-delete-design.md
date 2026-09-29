@@ -125,7 +125,7 @@ UPDATE tb_hazard
 3. `removeObject` 抛异常 → 行仍在，且**新增一条 outbox 任务**（status=PENDING）。
 4. outbox 插入失败（mock）→ 行仍在，返回 500。
 5. 越权删除 → 403/404，**对象与行都不动**。
-6. 老数据（`image_key` 为空）→ URL 末段解析成功照样删；URL 异常 → 入队 outbox 而不是静默失败。
+6. 老数据（`image_key` 为空）→ URL 末段解析成功照样删；URL 解析不出（没有 object key 可入队）→ 记 warning 后只删 DB 行（实现修正：原 spec 写「入队 outbox」在无 key 时不可执行）。
 7. Worker：成功 → SUCCEEDED；连续失败 → retry_count 递增、超 10 次 → FAILED。
 
 ---

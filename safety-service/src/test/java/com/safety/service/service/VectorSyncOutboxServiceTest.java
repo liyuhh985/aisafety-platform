@@ -78,7 +78,7 @@ class VectorSyncOutboxServiceTest {
         LocalDateTime before = LocalDateTime.now().plusSeconds(3599);
         String longError = "x".repeat(1200);
 
-        service.markRetry(7L, 4, 20, longError);
+        service.markRetry(7L, 4, 7, longError);
 
         ArgumentCaptor<LocalDateTime> nextAttempt =
                 ArgumentCaptor.forClass(LocalDateTime.class);
@@ -86,13 +86,29 @@ class VectorSyncOutboxServiceTest {
         verify(mapper).markRetry(
                 org.mockito.ArgumentMatchers.eq(7L),
                 org.mockito.ArgumentMatchers.eq(4),
-                org.mockito.ArgumentMatchers.eq(21),
+                org.mockito.ArgumentMatchers.eq(8),
                 nextAttempt.capture(),
                 error.capture());
         assertTrue(!nextAttempt.getValue().isBefore(before));
         assertTrue(Duration.between(LocalDateTime.now(), nextAttempt.getValue())
                 .getSeconds() <= 3600);
         assertEquals(1000, error.getValue().length());
+    }
+
+    @Test
+    void retryAtCapMarksTerminalFailureInsteadOfRetryingForever() {
+        service.markRetry(9L, 4, 9, "boom");
+
+        verify(mapper).markFailed(
+                org.mockito.ArgumentMatchers.eq(9L),
+                org.mockito.ArgumentMatchers.eq(4),
+                org.mockito.ArgumentMatchers.eq("boom"));
+        verify(mapper, org.mockito.Mockito.never()).markRetry(
+                org.mockito.ArgumentMatchers.anyLong(),
+                org.mockito.ArgumentMatchers.anyInt(),
+                org.mockito.ArgumentMatchers.anyInt(),
+                org.mockito.ArgumentMatchers.any(),
+                org.mockito.ArgumentMatchers.any());
     }
 
     @Test
