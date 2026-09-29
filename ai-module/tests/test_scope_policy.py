@@ -329,6 +329,9 @@ TRAFFIC_FACILITY_PHRASINGS = (
     "交通设施损坏了没人修",
     "路口的信号灯不亮了",
     "道路中间的护栏被撞断了",
+    # 2026-09-29 第三次扩表补的两条（扩表前均判越界）
+    "路上的交通标线看不清了",
+    "交通标线磨损掉色了",
 )
 
 FACADE_FALL_PHRASINGS = (
@@ -379,6 +382,42 @@ def test_over_broad_words_are_deliberately_excluded():
 
 def test_new_family_words_are_present():
     """把扩表的词钉住，防止回退。"""
-    for word in ("交通设施", "交通标志", "标志牌", "护栏", "信号灯",
+    for word in ("交通设施", "交通标志", "标志牌", "护栏", "信号灯", "交通标线",
                  "外立面", "墙皮", "配电设施", "配电柜", "配电房"):
         assert word in DOMAIN_KEYWORDS, word
+
+
+# ===== 交通标线 收录 / 指示牌·光杆标线 排除（2026-09-29 第三次扩表）=====
+# 背景：扩表前「路上的交通标线看不清了」判 out_of_scope，与前面几次同属
+# "用户描述本领域隐患却被拒绝"。收录依据见 core/scope_policy.py 的注释（语料计数是 0，
+# 依据是 taxonomy 标签「交通设施损坏」+ 同族构词 + 自带域标记「交通」）。
+# 「指示牌」和光杆「标线」有域外家族，有意不收 —— 下面同时钉住"收了的能过"和"没收的不被误放"。
+
+SIGN_WORD_OFF_DOMAIN = (
+    "商场里的指示牌歪了",
+    "楼层指示牌挂得太低了",
+    "Excel 表格怎么加标线",
+    "图纸上的标线怎么画",
+)
+
+
+@pytest.mark.parametrize("text", SIGN_WORD_OFF_DOMAIN)
+def test_sign_word_off_domain_samples_are_still_rejected(text):
+    """光杆「指示牌」「标线」没收，所以这些域外输入不会被范围层放行。"""
+    out = decide_scope({}, text)
+    assert out["scope"] == "out_of_scope", (text, out)
+
+
+def test_ambiguous_sign_words_are_deliberately_excluded():
+    """「指示牌」/光杆「标线」有域外家族（商场指示牌、表格标线），有意不收；只收自带域标记
+    的「交通标线」。理由见 scope_policy 的注释。
+
+    另外钉住本次有意留下的取舍（已知残留）：不含「交通」的域内说法仍会判越界 ——
+    要覆盖它们得靠域锚共现，那要改判据机制，不在词表改动范围内。
+    """
+    assert "交通标线" in DOMAIN_KEYWORDS
+    assert "标线" not in DOMAIN_KEYWORDS          # 光杆词：域外家族（表格/图纸/衣服标线）
+    assert "指示牌" not in DOMAIN_KEYWORDS        # 域外家族（商场/楼层/导览指示牌）
+    assert "道路标线" not in DOMAIN_KEYWORDS      # 无任何语料或用户措辞证据，本次未收
+    for residual in ("地上的标线看不清", "道路标线模糊不清", "路口的指示牌歪了"):
+        assert decide_scope({}, residual)["scope"] == "out_of_scope", residual

@@ -35,6 +35,9 @@ IN_DOMAIN = [
     ("配电设施故障", "配电设施出问题了"),
     ("配电设施故障", "小区里的配电柜门开着很危险"),
     ("配电设施故障", "配电房旁边堆了杂物"),
+    # 2026-09-29 第三次扩表：扩表前这两条判越界（回复「不在我的专业范围内」）
+    ("交通设施损坏", "路上的交通标线看不清了"),
+    ("交通设施损坏", "交通标线磨损掉色了"),
 ]
 
 OFF_DOMAIN = [
@@ -43,6 +46,18 @@ OFF_DOMAIN = [
     "帮我写一篇八百字的周记",
     "推荐一款性价比高的手机",
     "Python 列表如何去重",
+    # 光杆「指示牌」「标线」的域外用法（这两个词有意不收，见 core/scope_policy.py 注释）
+    "商场里的指示牌歪了",
+    "楼层指示牌挂得太低了",
+    "Excel 表格怎么加标线",
+    "图纸上的标线怎么画",
+]
+
+# 有意不收的光杆词带来的已知残留：这些是**本领域**表述，但按"会误放就不收"的口径没收词，
+# 所以它们仍会判越界。这里如实记录，不计入任何"通过"项。
+KNOWN_GAP = [
+    "路口的指示牌歪了",
+    "地上的标线看不清",
 ]
 
 
@@ -127,8 +142,24 @@ def main():
             lines.append("    失败：%s" % err)
         lines.append("")
 
+    if MODE != "off":
+        lines.append("—— 已知残留（有意不收的光杆词；仍判越界，不计入通过项）——")
+        for idx, text in enumerate(KNOWN_GAP, 1):
+            try:
+                r = run_case(app, text, "gap%d" % idx)
+                err = ""
+            except Exception as exc:
+                r, err = {"nodes": [], "sg": {}, "text": ""}, repr(exc)
+            rejected = any(t in r["text"] for t in OUT_OF_SCOPE_RESPONSES)
+            lines.append("[%d] %s -> scope=%s | 仍被拒=%s%s"
+                         % (idx, text, r["sg"].get("scope"), rejected,
+                            (" | 失败：%s" % err) if err else ""))
+        lines.append("")
+
     summary = ("\n汇总：本领域 %d/%d scope=hazard，%d/%d 锁到大类或小类；越界被拦 %d/%d"
                % (ok_scope, len(in_domain), ok_sub, len(in_domain), off_ok, len(OFF_DOMAIN)))
+    if MODE != "off":
+        summary += "；已知残留 %d 条（有意，见上）" % len(KNOWN_GAP)
     lines.append(summary)
     text = "\n".join(lines) + "\n"
     sys.stdout.write(text)
