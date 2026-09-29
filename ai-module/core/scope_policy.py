@@ -232,6 +232,85 @@ def covers_emergency_points(text: str, kind: str) -> bool:
     return all(any(word in value for word in group) for group in emergency_guidance_points(kind))
 
 
+# ====== 「要有原文依据」的小类：模型声称的隐患回到原文核对（2026-09-29）======
+# 要解决的漏放（复现：db/_diag_planner_leak.py，各 3 次；产物：db/eval_scope_families_e2e_offdomain.txt）：
+#   「商场里的指示牌歪了」「楼层指示牌挂得太低了」被**规划器自己**判成 hazard 并给出 issues
+#   （traffic/traffic_facility_damage，有时是 environment_other/other），于是下面 decide_scope
+#   的 `if issues` 分支直接采信 → 检索 → 一份引《公路安全保护条例》的完整报告。
+# 为什么不在词表里解决：DOMAIN_KEYWORDS 是子串放行，收录光杆「指示牌」后 4 条域外探针 4/4
+#   被放行（见上面「有意不收」那段），收益小于代价。
+# 为什么不能要求"原文必须有域锚"：实测（db/_diag_anchor_coverage.py）40 条现实口吻的本领域
+#   表述里 11 条（27.5%）不含任何 DOMAIN_KEYWORDS 词 ——「楼上老是往下扔东西」「楼道里闻到
+#   很浓的煤气味」「小区里挖了个大坑，晚上没有灯」。把"必须有域锚"当通用必要条件，会把这
+#   27.5% 的真隐患降级成澄清，比漏放更糟。
+# 所以规则只对**判据里物件/场所本身就是必要条件**的小类生效：
+#   · 物件型（隐患 = 某个物件坏了）：表里 5 类，物件词或场所词必须出现；
+#   · 兜底类（其他）：它不是某个物件，只要求原文有"领域词或场所词"。
+# 不采信 → 返回 ambiguous（让用户澄清），不用 out_of_scope：项目既有的偏向是
+#   "宁可多问一句，也不要把真隐患判成不在专业范围内"。
+# 表有意只有这几类；扩表必须先有"模型误判 + 原文没有该物件词"的实例（spec §6）。
+# 有意不做物件词的词：光杆「指示牌」（域外家族：商场/楼层/导览牌，与词表同一条理由）、
+#   单字「灯」（会放过「商场灯箱」这类无关输入）。
+OBJECT_CLASS_EVIDENCE = {
+    "traffic_facility_damage": (
+        "交通", "标志", "信号灯", "红绿灯", "护栏", "隔离墩", "防撞", "标线", "斑马线",
+    ),
+    "manhole_damage": (
+        "井盖", "窨井", "雨水篦", "雨水口", "盖板", "盖子", "井口",
+    ),
+    "street_light_pole": (
+        "路灯", "线杆", "灯杆", "电线杆", "灯柱", "照明", "杆子",
+    ),
+    "distribution_box_fault": (
+        "配电", "电箱", "电表箱", "变电", "变压器", "电闸",
+    ),
+    "facade_fall": (
+        "外立面", "外墙", "墙面", "墙皮", "瓷砖", "幕墙", "招牌", "广告牌", "雨棚", "楼顶",
+    ),
+}
+
+# 兜底类：说"其他隐患"时，原文至少要有一个领域词或场所词（它自己不是物件，没有物件词表）。
+CATCH_ALL_SUBCATEGORIES = ("other",)
+
+# 公共场所词：命中即算"这件事发生在公共空间"。有意宽松 —— 只用于**放行**（抑制否决），
+# 宽松的代价是"少否决"，方向安全，不会造成误拦真隐患。
+# 有意不收「小区」「楼道」「院」「门口」这类共享但室内的空间词：门口挂一块导览牌不是交通设施，
+# 而这类表述里通常本来就有物件词（井盖/配电箱/路灯）撑着，不需要靠场所词放行。
+PUBLIC_SPACE_WORDS = (
+    "路", "道", "街", "巷", "桥", "公共", "户外", "室外", "露天", "街边",
+    "道边", "路边", "车道", "人行道", "斑马线", "车库", "停车场", "广场",
+    "公园", "工地", "天桥", "隧道", "涵洞", "高架", "地铁",
+)
+
+
+def unbacked_hazard_claim(issues, evidence_text: str) -> str:
+    """模型声称的隐患，原文（用户原话 + 视觉摘要）里有没有依据。
+
+    返回第一个缺依据的小类编码；都有依据、或不在核对范围内则返回空串。
+    纯函数：只读 issues 与文本，不调模型 —— 所以可单测、可做变异实验。
+    """
+    evidence = str(evidence_text or "")
+    has_domain_word = any(word in evidence for word in DOMAIN_KEYWORDS)
+    has_place_word = any(word in evidence for word in PUBLIC_SPACE_WORDS)
+    for issue in issues or []:
+        if not isinstance(issue, dict):
+            continue
+        code = str(issue.get("subcategory_code") or "").strip()
+        if code in CATCH_ALL_SUBCATEGORIES:
+            if has_domain_word or has_place_word:
+                continue
+            return code
+        words = OBJECT_CLASS_EVIDENCE.get(code)
+        if not words:
+            continue
+        if has_domain_word or has_place_word:
+            continue
+        if any(word in evidence for word in words):
+            continue
+        return code
+    return ""
+
+
 def _pick_template(templates: tuple[str, ...], scope_key: str) -> str:
     if not scope_key:
         return templates[0]
@@ -243,8 +322,13 @@ def _decision(scope: str, reason: str = "", response: str = "") -> dict:
     return {"scope": scope, "reason": reason, "response": response}
 
 
-def decide_scope(plan: dict, user_text: str, scope_key: str = "") -> dict:
-    """Decide whether the message is in the hazard-assistant scope."""
+def decide_scope(plan: dict, user_text: str, scope_key: str = "",
+                 support_text: str = "") -> dict:
+    """Decide whether the message is in the hazard-assistant scope.
+
+    support_text：原文的另一部分（目前是视觉摘要）。它只参与"有没有依据"的核对，
+    不参与确定性词表判定 —— 词表仍然只看用户这句话。
+    """
     text = (user_text or "").strip()
     normalized = text.rstrip("！!。？?～~ ").strip()
     if not text:
@@ -263,6 +347,15 @@ def decide_scope(plan: dict, user_text: str, scope_key: str = "") -> dict:
     plan = plan if isinstance(plan, dict) else {}
     issues = plan.get("issues") or []
     if issues:
+        # 模型说这是隐患 → 回到原文核对（物件词 / 场所词 / 领域词）。
+        # 核对不过不是"越界"，是"这条说法没有依据" → 让用户澄清（见本节顶部注释）。
+        unbacked = unbacked_hazard_claim(issues, text + "\n" + str(support_text or ""))
+        if unbacked:
+            return _decision(
+                "ambiguous",
+                reason="unbacked hazard claim:%s" % unbacked,
+                response=_pick_template(AMBIGUOUS_RESPONSES, scope_key),
+            )
         return _decision("hazard", reason="planner resolved hazard issues")
 
     if any(keyword in text for keyword in DOMAIN_KEYWORDS):

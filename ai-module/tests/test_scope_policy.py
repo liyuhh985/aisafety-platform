@@ -421,3 +421,147 @@ def test_ambiguous_sign_words_are_deliberately_excluded():
     assert "道路标线" not in DOMAIN_KEYWORDS      # 无任何语料或用户措辞证据，本次未收
     for residual in ("地上的标线看不清", "道路标线模糊不清", "路口的指示牌歪了"):
         assert decide_scope({}, residual)["scope"] == "out_of_scope", residual
+
+# ===== 物件型小类的原文核对（2026-09-29）=====
+# 背景：端到端实测（db/eval_scope_families_e2e_offdomain.txt、db/_diag_planner_leak.py）
+# 「商场里的指示牌歪了」「楼层指示牌挂得太低了」被**规划器自己**判成 hazard、归成
+# traffic/traffic_facility_damage（有时是 environment_other/other），进而出一份引
+# 《公路安全保护条例》的完整报告。分类是语义判断，代码看不见；能看见的是
+# "原文有没有交代这件事发生在公共空间、或有没有点到那个物件"。
+# 规则与表见 core/scope_policy.py 的 OBJECT_CLASS_EVIDENCE，设计见
+# docs/superpowers/specs/2026-09-29-object-claim-grounding-design.md
+
+from core.hazard_taxonomy import SUBCATEGORY_TO_MAJOR
+from core.scope_policy import (CATCH_ALL_SUBCATEGORIES, OBJECT_CLASS_EVIDENCE,
+                               PUBLIC_SPACE_WORDS, unbacked_hazard_claim)
+
+OBJECT_CLASS_CODES = (
+    "traffic_facility_damage", "manhole_damage", "street_light_pole",
+    "distribution_box_fault", "facade_fall",
+)
+
+
+def plan_claiming(subcategory_code, text=""):
+    """造一个"规划器说这是某小类隐患"的 plan（模型自报的部分就是这些）。"""
+    return {
+        "ok": True, "scope": "hazard", "scope_confidence": 0.95,
+        "issues": [{
+            "major_code": "?",
+            "subcategory_code": subcategory_code,
+            "slots": {"describe": text}, "confidence": 0.8,
+        }],
+    }
+
+
+UNBACKED_OBJECT_CLAIMS = (
+    "商场里的指示牌歪了",
+    "楼层指示牌挂得太低了",
+    "小区门口的导览指示牌歪了",
+)
+
+
+@pytest.mark.parametrize("text", UNBACKED_OBJECT_CLAIMS)
+def test_object_claim_without_public_space_evidence_is_not_accepted(text):
+    """模型说是交通设施损坏，但原文既没点到物件也没说公共空间 → 不采信，不给报告。"""
+    out = decide_scope(plan_claiming("traffic_facility_damage", text), text)
+    assert out["scope"] != "hazard", (text, out)
+    assert out["scope"] == "ambiguous", (text, out)
+    assert out["reason"].startswith("unbacked hazard claim"), out
+    assert "是否涉及" in out["response"]
+
+
+OBJECT_CLASS_PHRASES = (
+    ("traffic_facility_damage", "那个路口的灯早就不亮了，车和人都不知道什么时候能走"),   # 场所词
+    ("traffic_facility_damage", "交通标线磨损掉色了"),                                  # 物件词
+    ("manhole_damage", "马路上一个铁盖子没了，就留个黑洞，晚上看不见掉下去就完了"),        # 场所词
+    ("manhole_damage", "暴雨夜雨水井盖缺失移位，行人涉水坠井"),                          # 物件词
+    ("street_light_pole", "那条路晚上黑得看不见人，旁边的杆子还歪着"),                  # 场所词
+    ("street_light_pole", "小区外路灯连片不亮，线杆底座倾斜开裂"),                        # 物件词
+    ("distribution_box_fault", "楼下的电表箱子门掉了，里面还冒烟有糊味"),                 # 物件词
+    ("distribution_box_fault", "小区配电箱箱门缺失、接线端子烧蚀冒烟"),                   # 物件词
+    ("facade_fall", "楼上掉下来一大块外墙的砖，把车都砸穿了"),                            # 物件词
+    ("facade_fall", "高层大厦外立面大理石瓷砖脱落砸坏车辆"),                              # 物件词
+)
+
+
+@pytest.mark.parametrize("code,text", OBJECT_CLASS_PHRASES)
+def test_object_claims_with_real_evidence_still_pass(code, text):
+    """真实的本领域表述（含宽松口吻）不能被核对误伤 —— 这些同时是分类评测的口语样本。
+
+    断言"没被降级"而不是"== hazard"：其中几条含「冒烟」等危险词，按既有规则本来就走
+    emergency（危险优先），那是另一条既存行为，不该被这条核对改掉。
+    """
+    out = decide_scope(plan_claiming(code, text), text)
+    assert out["scope"] not in {"ambiguous", "out_of_scope"}, (code, text, out)
+
+
+@pytest.mark.parametrize("code", OBJECT_CLASS_CODES)
+def test_every_object_evidence_word_is_effective(code):
+    """表里每个词都真的能放行（防止写错字/写死词）。"""
+    for word in OBJECT_CLASS_EVIDENCE[code]:
+        assert unbacked_hazard_claim([{"subcategory_code": code}], "这儿有个" + word + "坏了") == "", (code, word)
+    assert unbacked_hazard_claim([{"subcategory_code": code}], "一切正常") == code
+
+
+def test_public_space_words_are_a_whitelist_not_a_veto():
+    """场所词只用于放行：原文提到公共空间时，即使没说物件也不否决。"""
+    for word in PUBLIC_SPACE_WORDS:
+        assert unbacked_hazard_claim(
+            [{"subcategory_code": "manhole_damage"}], "那边" + word + "上的东西坏了") == "", word
+
+
+def test_non_object_classes_need_no_evidence():
+    """非物件型小类的判据是"情形"而不是"物件"，不适用这条核对。"""
+    out = decide_scope(plan_claiming("fire_lane_blocked"), "楼道里堆了很多纸箱")
+    assert out["scope"] == "hazard"
+    out = decide_scope(plan_claiming("elevator_trapped"), "有人在里面")
+    assert out["scope"] == "hazard"
+    out = decide_scope(plan_claiming("road_occupancy"), "路口那边摆摊的特别多")
+    assert out["scope"] == "hazard"
+
+
+def test_object_evidence_can_come_from_vision_summary():
+    """视觉摘要也是原文的一部分：用户只说「这个歪了」，物件在图片说明里。"""
+    text = "这个歪了，你看下"
+    assert decide_scope(plan_claiming("traffic_facility_damage"), text)["scope"] == "ambiguous"
+    out = decide_scope(plan_claiming("traffic_facility_damage"), text,
+                       support_text="路口交通标志牌倾斜，底座松动")
+    assert out["scope"] == "hazard"
+
+
+def test_object_evidence_table_covers_only_registered_classes():
+    """表有意只有这 5 类；扩表必须先有"模型误判 + 原文没有该物件词"的实例（见 spec §6）。"""
+    assert set(OBJECT_CLASS_EVIDENCE) == set(OBJECT_CLASS_CODES)
+    for code in OBJECT_CLASS_EVIDENCE:
+        assert code in SUBCATEGORY_TO_MAJOR, code
+    assert CATCH_ALL_SUBCATEGORIES == ("other",)
+    for code in CATCH_ALL_SUBCATEGORIES:
+        assert code in SUBCATEGORY_TO_MAJOR, code
+
+
+def test_catch_all_claim_needs_a_domain_or_place_word():
+    """兜底类（其他）：说"其他隐患"时，原文至少要有领域词或场所词（它自己不是物件）。"""
+    assert unbacked_hazard_claim([{"subcategory_code": "other"}], "楼层指示牌挂得太低了") == "other"
+    assert unbacked_hazard_claim([{"subcategory_code": "other"}], "公共区域出现来源不明的危化品桶") == ""
+    assert unbacked_hazard_claim([{"subcategory_code": "other"}], "路边放着几个大桶") == ""
+
+
+def test_catch_all_leak_variant_is_not_accepted():
+    """漏放的另一个变体：规划器把「楼层指示牌」归成 environment_other/other（实测 3/6 次）。"""
+    out = decide_scope(plan_claiming("other"), "楼层指示牌挂得太低了")
+    assert out["scope"] == "ambiguous", out
+    assert out["reason"].startswith("unbacked hazard claim"), out
+
+
+def test_unbacked_check_is_pure_and_handles_junk():
+    """纯函数边界：issues 为空 / 不是 dict / 没有小类编码都不该抛。"""
+    assert unbacked_hazard_claim(None, "商场里的指示牌歪了") == ""
+    assert unbacked_hazard_claim([], "商场里的指示牌歪了") == ""
+    assert unbacked_hazard_claim(["x", {}, {"subcategory_code": ""}], "商场里的指示牌歪了") == ""
+
+
+def test_detached_sign_word_is_deliberately_not_evidence():
+    """「指示牌」有域外家族（商场/楼层/导览牌），与词表同一条理由，有意不做物件词。"""
+    words = OBJECT_CLASS_EVIDENCE["traffic_facility_damage"]
+    assert not any("指示牌" in word for word in words)
+    assert "灯" not in OBJECT_CLASS_EVIDENCE["street_light_pole"]

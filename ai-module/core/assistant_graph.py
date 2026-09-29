@@ -704,7 +704,10 @@ def scope_guard(state: AssistantState) -> dict:
     plan = state.get("dialogue_plan") or {}
     user_text = _latest_user_text(state)
     scope_key = f"{state.get('session_id', '')}|{len(state.get('messages') or [])}|{user_text}"
-    decision = decide_scope(plan, user_text, scope_key=scope_key)
+    # support_text：视觉摘要也算原文的一部分（用户只说「这个歪了」时，物件在图片说明里）。
+    # 它只参与「有没有依据」的核对，不参与确定性词表判定。
+    decision = decide_scope(plan, user_text, scope_key=scope_key,
+                            support_text=state.get("vision_summary") or "")
     scope = decision.get("scope", "hazard")
     if scope == "hazard":
         return {"scope": "hazard", "scope_reason": decision.get("reason", "")}
