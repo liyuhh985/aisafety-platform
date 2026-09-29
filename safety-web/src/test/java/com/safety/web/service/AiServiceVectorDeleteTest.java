@@ -43,10 +43,9 @@ class AiServiceVectorDeleteTest {
     }
 
     @Test
-    void clientValidationAndAuthenticationErrorsArePermanent() {
+    void clientValidationErrorsArePermanent() {
         for (HttpStatus status : List.of(
                 HttpStatus.BAD_REQUEST,
-                HttpStatus.UNAUTHORIZED,
                 HttpStatus.UNPROCESSABLE_ENTITY)) {
             RestTemplate restTemplate = new RestTemplate();
             MockRestServiceServer server =
@@ -79,9 +78,8 @@ class AiServiceVectorDeleteTest {
     }
 
     @Test
-    void everyClientErrorExceptRateLimitIsPermanent() {
+    void notFoundMethodAndConflictArePermanent() {
         for (HttpStatus status : List.of(
-                HttpStatus.FORBIDDEN,
                 HttpStatus.NOT_FOUND,
                 HttpStatus.METHOD_NOT_ALLOWED,
                 HttpStatus.CONFLICT)) {
@@ -97,6 +95,30 @@ class AiServiceVectorDeleteTest {
             assertThrows(VectorSyncPermanentException.class,
                     () -> service.deleteVectors("tb_hazard_case", List.of(42L)),
                     "HTTP " + status.value() + " 应判为永久失败");
+            server.verify();
+        }
+    }
+
+    @Test
+    void unauthorizedAndForbiddenStayRetryable() {
+        // 运维修完 token/权限后同一请求就能通 → 必须可重试；重试到上限由 service 转 FAILED 兜住
+        for (HttpStatus status : List.of(
+                HttpStatus.UNAUTHORIZED,
+                HttpStatus.FORBIDDEN)) {
+            RestTemplate restTemplate = new RestTemplate();
+            MockRestServiceServer server =
+                    MockRestServiceServer.bindTo(restTemplate).build();
+            AiService service = new AiService(
+                    restTemplate, "http://python-ai:8000/api/ai", "shared-token");
+            server.expect(requestTo(
+                            "http://python-ai:8000/api/ai/internal/vectors/delete"))
+                    .andRespond(withStatus(status));
+
+            RuntimeException raised = assertThrows(RuntimeException.class,
+                    () -> service.deleteVectors("tb_hazard_case", List.of(42L)),
+                    "HTTP " + status.value() + " 应可重试");
+            assertFalse(raised instanceof VectorSyncPermanentException,
+                    "HTTP " + status.value() + " 不该被判为永久失败");
             server.verify();
         }
     }

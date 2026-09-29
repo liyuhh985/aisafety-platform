@@ -25,11 +25,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 调用 Python AI 模块的 HTTP 客户端。
  * Python 服务启动: cd ai-module && python server.py (端口 8000)
  */
+@Slf4j
 @Service
 public class AiService {
 
@@ -420,12 +422,18 @@ public class AiService {
                     aiBase + "/internal/vectors/delete", request, Map.class);
         } catch (HttpClientErrorException e) {
             int status = e.getStatusCode().value();
-            // 4xx 表示请求本身/配置有问题（表名非法、鉴权失败、路径不存在…），
-            // 重试不会自愈；只有 429（限流）属于可恢复，继续重试。
-            if (status != 429) {
+            // 请求本身没救的 4xx（表名非法 / 路径不存在 / 方法不对 / 参数错 / 冲突）→ 永久失败，重试无意义
+            if (status == 400 || status == 404 || status == 405 || status == 409 || status == 422) {
                 throw new VectorSyncPermanentException(
                         "Python AI rejected vector delete request: HTTP " + status);
             }
+            // 401/403：内部 token 或权限问题 —— 运维修好配置后**同一个请求就能通**，所以必须可重试；
+            // 同时打 ALERT 级别的日志（当前没有告警基础设施，先用 error 日志 + 重试到上限后转 FAILED 兜住）。
+            if (status == 401 || status == 403) {
+                log.error("[ALERT] vector delete unauthorized, HTTP {} — 需人工介入（内部 token/权限）；"
+                        + "任务会按退避重试，达上限（10 次）后转为 FAILED", status);
+            }
+            // 429 限流 + 401/403 + 其他 4xx → 交回 worker 按可重试处理
             throw e;
         }
     }
