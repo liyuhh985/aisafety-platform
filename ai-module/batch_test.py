@@ -6,7 +6,7 @@ import os
 import sys
 
 from mimo_client import client
-from prompts import HAZARD_ANALYSIS_PROMPT
+from prompts import VISION_PROMPT
 
 TEST_DIR = "test_images"
 
@@ -36,7 +36,7 @@ def main():
         print(f"\n[{i}/{len(files)}] {filename}")
         print("-" * 50)
 
-        result = client.analyze_json(path, HAZARD_ANALYSIS_PROMPT)
+        result = client.analyze_json(path, VISION_PROMPT)
         if result is None:
             print("[FAIL] 识别失败")
             fail += 1

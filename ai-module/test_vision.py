@@ -6,7 +6,7 @@ import json
 import sys
 
 from mimo_client import client
-from prompts import HAZARD_ANALYSIS_PROMPT
+from prompts import VISION_PROMPT
 
 
 def main():
@@ -17,7 +17,7 @@ def main():
     print("=" * 60)
 
     print("\n>>> 发送识图请求...\n")
-    result = client.analyze_json(image_path, HAZARD_ANALYSIS_PROMPT)
+    result = client.analyze_json(image_path, VISION_PROMPT)
 
     if result is None:
         print("[FAIL] 识别失败")
@@ -29,7 +29,10 @@ def main():
 
     # 校验关键字段
     missing = []
-    required = ["has_hazard", "hazard_category", "severity", "description", "location_hint", "rectification"]
+    required = [
+        "has_hazard", "confidence", "hazard_category", "severity", "description",
+        "reason_if_no_hazard", "location_hint", "rectification",
+    ]
     for k in required:
         if k not in result:
             missing.append(k)

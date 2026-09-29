@@ -73,3 +73,25 @@ ai-module/db/_rebuild_*.py
 # 全仓扫过：没有 tracked 的 .err 文件，所以 *.err 不会误伤已有内容。
 ai-module/db/backup/
 *.err
+
+# ===== 仓库卫生（2026-09-29）：把一次性工具产物 / 本地状态 / 运行日志挡在库外 =====
+# 说明：根目录这批 _*.py / *.docx / 花甲_*.jpg 等来自另一次任务（docx 处理），不属于本项目
+/_*.py
+/_*.txt
+/_*.xml
+/*.docx
+/*.jpg
+/tmp_media_*
+/tmp_repair_detail.mjs
+/fill_template.py
+/*劳动*
+/*花甲*
+/*请假-*
+/127.0.0.1*
+# 本地工具/同步状态
+.codex-remote-frontend-edit/
+.frontend-sync-dist/
+.deploy_stamp
+.claude/settings.local.json
+# 运行日志
+runtime-logs/
