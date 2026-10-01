@@ -1,4 +1,4 @@
-"""Structured semantic understanding for the safety assistant dialogue."""
+﻿"""Structured semantic understanding for the safety assistant dialogue."""
 import json
 import re
 
@@ -191,9 +191,17 @@ def parse_plan(raw: str) -> dict:
     if perceived_major not in MAJOR_LABELS:
         perceived_major = ""
 
+    # 「当前焦点」：用户这句话指向的那一件事属于哪一个小类。
+    # 与 perceived_major 同构 —— 都是"直接问模型这一句在说什么"，而不是从 issues 的
+    # 位置去推（那条路会被历史拖拽，实测见 db/measure_history_bleed.py）。
+    perceived_subcategory = str(data.get("perceived_subcategory") or "").strip()
+    if perceived_subcategory not in ALL_SUBCATEGORY_CODES:
+        perceived_subcategory = ""
+
     return {
         "ok": True,
         "perceived_major": perceived_major,
+        "perceived_subcategory": perceived_subcategory,
         "premises_scope": premises_scope,
         "immediate_danger": bool(data.get("immediate_danger")),
         "intent": intent,
@@ -233,6 +241,7 @@ def _planner_system_prompt() -> str:
         "\"issues\":[{\"major_code\":\"\",\"subcategory_code\":\"\","
         "\"slots\":{\"槽key\":\"值\"},\"confidence\":0.0}],"
         "\"perceived_major\":\"你认为这句话真正属于的大类\","
+        "\"perceived_subcategory\":\"你认为用户这句话指向的那一件事属于哪一个小类\","
         "\"premises_scope\":\"public|indoor|indoor_risk\","
         "\"question\":\"最多一个自然问题\",\n"
         "\"question_target\":\"question 针对的那一个槽 key，没有 question 就留空\",\n"
@@ -265,6 +274,11 @@ def _planner_system_prompt() -> str:
         "- perceived_major 必须说真话：无论前端有没有预选大类，都在这里给出你认为这句话\n"
         "  真正属于的大类编码。如果你为了配合前端预选大类而把 issues 写成那个大类，\n"
         "  这里仍然要写你真实的判断（两者不一致时同时令 major_mismatch=true）。\n"
+        "- perceived_subcategory：用户「这句话指向的那一件事」属于哪一个小类，原样照抄上面的小类编码，\n"
+        "  判断不出来就留空。它表示「当前焦点」，决定这条会话接下来跟哪一条隐患，所以要说真话：\n"
+        "  · 用户说「那那个呢」「再往前那段呢」这类指代时，先用上下文把它解析成具体是哪一件事，再给小类；\n"
+        "  · 但不要因为前几轮聊过某个隐患，就把它填在这里 —— 这里只写这句话要问的那一件。\n"
+        "  前一件事和新一件事都可以留在 issues 里；这个字段只回答「焦点是哪一件」。\n"
         "- intent=correction 只在用户明确否定或修正他之前说的隐患时使用：\n"
         "  例如「不是占道，是消防通道」「你搞错了」「其实是消防设施」。\n"
         "  「另外」「还有」「旁边那个」是新增信息，不是 correction。\n"

@@ -1,4 +1,4 @@
-"""Deterministic next-best-action policy for the safety dialogue."""
+﻿"""Deterministic next-best-action policy for the safety dialogue."""
 from core.hazard_taxonomy import SUBCATEGORY_TO_MAJOR
 from core.slot_schemas import get_slot_schema
 
@@ -55,6 +55,46 @@ def _question_for_missing(plan: dict) -> str:
             if slot.key in missing:
                 return slot.question
     return ""
+
+
+# M1（闭环）：产物由**代码可判的判据**定，不由模型这一轮的 intent 定。
+# 理由与实测见 docs/superpowers/specs/2026-10-01-loop-closure-final.md §3：
+# 同一句话跑 10 次，模型给出 4 种 intent（report_hazard 6 / quick_assessment 2 / other 1 / 空 1），
+# 而 intent 是决定进哪个节点的唯一输入 —— 产物就跟着飘。
+MODE_PLAIN = "plain"
+MODE_PRELIMINARY = "preliminary"
+MODE_REPORT = "report"
+MODES = (MODE_PLAIN, MODE_PRELIMINARY, MODE_REPORT)
+
+
+_MODE_OF_ACTION = {
+    "answer_now": MODE_PLAIN,
+    "answer_with_optional_question": MODE_PLAIN,
+    # 追问分两种档：
+    #   answer_with_optional_question = 纯回答档顺带问一句（"是不是隐患" → 先给判断）
+    #   ask_critical_question          = 关键信息缺失、必须先问 → 属「初步判断 + 追问」档
+    # 后者能被追问补全后升级成完整报告；前者不能（决策 5 的天花板）。
+    "ask_critical_question": MODE_PRELIMINARY,
+    "report_preliminary": MODE_PRELIMINARY,
+    "report_full": MODE_REPORT,
+}
+
+
+def mode_of_action(action: str, current: str = "") -> str:
+    """算这一轮的产物模式。**危险与兜底不改模式** —— 返回原值。
+
+    危险是临时的（一场火不该把会话永久变成"应急模式"），兜底是异常路径，
+    两者都不该覆盖用户真正的对话意图。
+    """
+    return _MODE_OF_ACTION.get(str(action or ""), str(current or ""))
+
+
+def wants_report(text: str) -> bool:
+    """用户这一句里有没有明确的「要报告 / 要法规」信号。代码可判，不看模型。
+
+    这是**从纯回答档升级到报告档的唯一通道**（见 decide_next_action 里的模式继承）。
+    """
+    return any(phrase in (text or "") for phrase in REPORT_PHRASES)
 
 
 def _is_casual_judgment(text: str) -> bool:
@@ -119,6 +159,25 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
             report_mode=mode,
         )
 
+    # M1：明确信号都用完之后，才轮到「沿用上一轮模式」。
+    # 它同时干两件事：
+    #   ① 解省略句 —— 用户说「那 X 呢」时单看这一句判不出要什么产物，沿用上一轮；
+    #   ② 当「纯回答档的天花板」—— 想升级成报告只有一条路：用户明说要报告（上面的分支）。
+    prev_mode = str(state.get("dialogue_mode") or "")
+    if prev_mode in MODES:
+        if prev_mode == MODE_PLAIN:
+            return _decision("answer_now", reason="inherit plain mode")
+        if prev_mode == MODE_REPORT and complete and not incomplete:
+            return _decision(
+                "report_full", reason="inherit report mode",
+                needs_search=True, report_mode="full",
+            )
+        if prev_mode == MODE_PRELIMINARY and incomplete:
+            return _decision(
+                "report_preliminary", reason="inherit preliminary mode",
+                needs_search=True, report_mode="preliminary",
+            )
+
     if complete and state.get("asked_question_last_turn"):
         return _decision(
             "report_full",
@@ -127,19 +186,11 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
             report_mode="full",
         )
 
-    if intent in REPORT_INTENTS and complete and not incomplete:
-        return _decision(
-            "report_full",
-            reason="report intent with complete facts",
-            needs_search=True,
-            report_mode="full",
-        )
-
     if (
         complete
         and not incomplete
         and risk in {"high", "medium"}
-        and not (intent == "quick_assessment" and _is_casual_judgment(user_text))
+        and not _is_casual_judgment(user_text)
     ):
         return _decision(
             "report_full",
@@ -148,7 +199,7 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
             report_mode="full",
         )
 
-    if intent == "quick_assessment":
+    if _is_casual_judgment(user_text):
         question = str(plan.get("question") or "").strip()
         if answer:
             if question:
@@ -205,11 +256,18 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
         )
 
     if issues:
+        if incomplete:
+            return _decision(
+                "report_preliminary",
+                reason="issues exist but facts are incomplete",
+                needs_search=True, report_mode="preliminary",
+            )
+        # 用户描述了隐患、且事实齐全 → 完整报告。这条以前靠 intent in REPORT_INTENTS，
+        # 现在靠代码：有 issues + 无缺口，就够了。
         return _decision(
-            "report_preliminary",
-            reason="issues exist but facts are incomplete",
-            needs_search=True,
-            report_mode="preliminary",
+            "report_full",
+            reason="complete hazard facts",
+            needs_search=True, report_mode="full",
         )
 
     return _decision("answer_now", reason="no hazard issue was resolved")

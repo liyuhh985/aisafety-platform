@@ -1,4 +1,4 @@
-"""LangGraph 助手状态定义。"""
+﻿"""LangGraph 助手状态定义。"""
 from typing import Annotated, TypedDict
 
 from langgraph.graph.message import add_messages
@@ -46,12 +46,16 @@ class AssistantState(TypedDict, total=False):
     question_source: str                # 本轮问句出处：ask_slot_question | understand | slot_schema | ""
     question_dropped: str               # A 类缺失为空却拿到问句 → 丢弃原因（不静默）
     issues: list[dict]                  # canonical issue list from the planner
+    facts_snapshot: dict                # 本轮**之前**的事实快照（begin_turn 写）；
+                                        # scope_guard 判越界时按它整体回滚，见 spec 决策 7
     vision_summary: str
     # 本轮语义与决策
     dialogue_plan: dict                 # structured semantic plan for this turn
     intent: str                         # planner intent label
     clarification_question: str         # at most one planned question
+    question_target: str                # 本轮问句针对的槽 key（写问句的节点自报；供核对与观测）
     next_action: str                    # deterministic policy action
+    dialogue_mode: str                  # 产出模式：plain | preliminary | report（决策 10 / M1，跨轮继承）
     report_mode: str                    # "none" | "preliminary" | "full"
     policy_reason: str                  # explainable policy reason
     optional_question: bool             # question is optional, not required

@@ -1,4 +1,4 @@
-"""LangGraph 助手：语义理解 + 并行检索 + 报告。
+﻿"""LangGraph 助手：语义理解 + 并行检索 + 报告。
 
 流程：begin_turn -> understand（唯一的事实与决策写入者）-> scope_guard -> route
       -> direct_reply（回答/最多一个追问）
@@ -32,7 +32,7 @@ from core.dialogue_understanding import (
     slot_question_targets_missing,
     understand as _understand_plan,
 )
-from core.dialogue_policy import decide_next_action
+from core.dialogue_policy import decide_next_action, mode_of_action
 from core.hazard_taxonomy import (
     ALL_SUBCATEGORY_CODES,
     HAZARD_TAXONOMY,
@@ -202,6 +202,44 @@ def rebuild_report_missing(categories, category_slots) -> list[str]:
     return out
 
 
+# 决策 7 的"事实"集合：越界时按快照把这些整体回滚。
+# 刻意不含 category_results —— 它带 reducer（merge_category_results），只能合并不能替换，
+# 而且越界那一轮根本走不到 search，本来就不会被改。
+_SNAPSHOT_KEYS = ("locked_major", "locked_subcategory", "categories",
+                  "issues", "category_slots", "missing")
+
+
+def _facts_snapshot(state) -> dict:
+    """本轮**之前**的事实快照（理解之前取，见 understand 的 empty）。
+
+    为什么不在 begin_turn 取：`task_gate` 中断回跳时直接 `goto="understand"`，跳过 begin_turn，
+    那样拿到的会是上一轮留下的旧快照 —— 回滚就会把 gate 那一轮攒的事实一起抹掉。
+    understand 在每条路径上都跑，且在它改写事实**之前**读 state，所以在这里取永远是最新的。
+    """
+    # 值做类型归一：字段"从没被设过"时 state.get 给 None，直接回滚会写出
+    # `categories: None` 这种与声明不符的值。归一之后回滚就是一次干净的还原。
+    return {
+        "locked_major": str(state.get("locked_major") or ""),
+        "locked_subcategory": str(state.get("locked_subcategory") or ""),
+        "categories": list(state.get("categories") or []),
+        "issues": list(state.get("issues") or []),
+        "category_slots": dict(state.get("category_slots") or {}),
+        "missing": list(state.get("missing") or []),
+    }
+
+
+def _facts_rollback(state) -> dict:
+    """把事实回滚到本轮之前（决策 7：越界撤销本轮，而不是清零）。
+
+    为什么不是清零：用户只是跑题（"今天天气不错"）时，正在跟的那条隐患要留着。
+    没有快照就什么都不做 —— 宁可不动，也不要按空快照把事实抹掉。
+    """
+    snapshot = state.get("facts_snapshot")
+    if not isinstance(snapshot, dict) or not snapshot:
+        return {}
+    return {key: snapshot.get(key) for key in _SNAPSHOT_KEYS}
+
+
 def _detect_direct_mode(text: str, vision_summary: str = "") -> str:
     """只识别问候语。
 
@@ -246,16 +284,19 @@ def seed_messages(history) -> list:
 
 
 def begin_turn(state: AssistantState) -> dict:
-    """重置每轮标志位。
+    """重置**本轮**标志位。
 
-    只从 START 进入；task_gate 中断回跳时直接走 understand，
-    因此不会把"本轮已经问过"这件事清掉。
+    只从 START 进入；task_gate 中断回跳时直接走 understand。
+
+    只清 task_offered（它的读写都在同一轮内）。asked_question_last_turn 故意不清：
+    它描述的是"上一轮问没问过"，唯一的读者是**下一轮**的 dialogue_policy —— 在这里
+    清零等于让那条分支永远不成立。它每轮由 understand 结尾无条件重写（正常路径显式
+    写，寒暄/规划器失败路径经 empty 写 False），所以不会残留成 True。
     """
-    # guidance_emitted 故意不在这里复位：它是"这次危险事件已经提醒过"，
+    # guidance_emitted 同样不复位：它是"这次危险事件已经提醒过"，
     # 由 understand 在危险结束时复位，否则同一场火灾会每轮重复贴指引。
     return {
         "task_offered": False,
-        "asked_question_last_turn": False,
     }
 
 
@@ -453,6 +494,9 @@ def understand(state: AssistantState, config=None) -> dict:
         # 放在这里是因为 empty 会被三个返回路径共用，而 understand 是唯一的每轮事实写入者。
         "retrieval_attempts": 0,
         "retrieval_keyword_override": {},
+        # 决策 7：本轮**之前**的事实快照，供 scope_guard 判越界时整体回滚。
+        # 放在 empty 里 = 三个返回路径都会带上，且是在改写事实之前读的 state。
+        "facts_snapshot": _facts_snapshot(state),
     }
     if _detect_direct_mode(user_text, vision_summary):
         verdict = assess({}, source_messages, vision_summary)
@@ -540,9 +584,13 @@ def understand(state: AssistantState, config=None) -> dict:
         if candidate["subcategory_code"] == locked_subcategory:
             focus = candidate
     if focus is None and locked_subcategory:
-        # 锁还在：用锁定的小类继续累积槽位（跨轮补充信息靠这里回捞）
+        # 锁还在：用锁定的小类继续累积槽位（跨轮补充信息靠这里回捞）。
+        # **槽位必须带上已持久化的那一份**：这里曾经硬写 `slots: {}`，于是一旦某一轮规划器
+        # 没给出该小类的 issue（跑题、只说"嗯"、判不出来），focus 就被重建成空槽，紧接着
+        # `category_slots[code] = {}` 把之前攒的全部覆盖掉 —— 用户被重新问一遍已经答过的问题。
         focus = {"major_code": locked_major,
-                 "subcategory_code": locked_subcategory, "slots": {}}
+                 "subcategory_code": locked_subcategory,
+                 "slots": dict((state.get("category_slots") or {}).get(locked_subcategory) or {})}
     issues = [focus] if focus else []
 
     if out_of_major:
@@ -679,6 +727,8 @@ def understand(state: AssistantState, config=None) -> dict:
         "question_dropped": question_dropped,
         "optional_question": bool(policy.get("optional_question")) and not no_questions,
         "next_action": action,
+        # M1：产物模式跨轮继承。危险 / 兜底不改模式（mode_of_action 会返回原值）。
+        "dialogue_mode": mode_of_action(action, state.get("dialogue_mode") or ""),
         "report_mode": report_mode,
         "policy_reason": reason,
         "direct_mode": "",
@@ -691,6 +741,11 @@ def understand(state: AssistantState, config=None) -> dict:
 
 
 _SCOPE_DIRECT_MODES = ("smalltalk",)
+
+# 决策 7：这两种 scope 下要撤销本轮锁定。`smalltalk` 不在此列 ——
+# 寒暄走的是 understand 里的 _detect_direct_mode 早退，不经过这里；
+# 而 decide_scope 判出的 smalltalk（极少数问候词）本轮暂不处理，保持现状。
+_ROLLBACK_SCOPES = ("ambiguous", "out_of_scope")
 
 
 def scope_guard(state: AssistantState) -> dict:
@@ -720,7 +775,7 @@ def scope_guard(state: AssistantState) -> dict:
         "out_of_scope": "out_of_scope",
         "smalltalk": "smalltalk",
     }
-    return {
+    update = {
         "scope": scope,
         "scope_reason": decision.get("reason", ""),
         "scope_response": decision.get("response", ""),
@@ -729,6 +784,11 @@ def scope_guard(state: AssistantState) -> dict:
         "next_action": "answer_now",
         "report_mode": "none",
     }
+    if scope in _ROLLBACK_SCOPES:
+        # 决策 7：这一句不在范围内 → 撤销本轮对事实造成的改动（见 _facts_rollback）。
+        # 不清零：正在跟的那条隐患要留着。
+        update.update(_facts_rollback(state))
+    return update
 
 
 def route(state: AssistantState) -> Command[Literal[

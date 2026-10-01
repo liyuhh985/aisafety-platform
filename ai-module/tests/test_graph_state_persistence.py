@@ -1,4 +1,4 @@
-"""C1：结构化事实随图状态跨轮保留；图状态不再每轮被清空重抽。"""
+﻿"""C1：结构化事实随图状态跨轮保留；图状态不再每轮被清空重抽。"""
 from typing import Annotated, TypedDict
 
 from langchain_core.messages import AIMessage, HumanMessage
@@ -85,7 +85,10 @@ def test_begin_turn_resets_only_per_turn_flags():
 
     update = begin_turn({"task_offered": True, "asked_question_last_turn": True,
                          "issues": [{"subcategory_code": "x"}]})
-    assert update == {"task_offered": False, "asked_question_last_turn": False}
+    assert update == {"task_offered": False}
+    # asked_question_last_turn 也不复位：它的读者在**下一轮**（dialogue_policy）。
+    # 在这里清零会让「用户回答了追问 → 出完整报告」这条分支永远不成立（G2）。
+    assert "asked_question_last_turn" not in update
     # guidance_emitted 故意不复位：它是"这次危险事件已提醒过"，由 understand 收尾
     assert "guidance_emitted" not in update
 
@@ -95,3 +98,29 @@ def test_graph_entry_is_begin_turn():
 
     nodes = set(ag.build_graph().get_graph().nodes.keys())
     assert "begin_turn" in nodes
+
+
+def test_new_contract_fields_survive_a_node_return():
+    """新字段必须在 state 里声明，否则 LangGraph 会**静默丢弃**节点返回的键。
+
+    这是本项目记过的坑（`AssistantGraphState` 的 docstring：节点返回未声明键时值不会进
+    state，已实测）。所以这个测试用**真实的** `AssistantGraphState` 当 schema 跑一次节点，
+    而不是断言注解里有没有那个名字 —— 后者是自证，前者才是行为。
+    """
+    from core.assistant_graph import AssistantGraphState
+
+    def writer(state):
+        return {"question_target": "persistence", "facts_snapshot": {"issues": ["x"]}}
+
+    graph = StateGraph(AssistantGraphState)
+    graph.add_node("writer", writer)
+    graph.add_edge(START, "writer")
+    graph.add_edge("writer", END)
+    app = graph.compile(checkpointer=InMemorySaver())
+    config = {"configurable": {"thread_id": "new-fields-1"}}
+
+    app.invoke({"session_id": "new-fields-1"}, config)
+    values = app.get_state(config).values
+
+    assert values.get("question_target") == "persistence"
+    assert values.get("facts_snapshot") == {"issues": ["x"]}
