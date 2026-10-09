@@ -36,6 +36,19 @@ _extractor = Agent(
 
 
 
+# 轻量地址抽取器（不带工具、不加载 32 小类清单）：
+# 确认卡片要在「出报告之后、点确认之前」就显示地址；重抽取器 _extract
+# 带全套 32 小类清单还要归一化类别，太慢，所以单独做一个只问地点的。
+_location_extractor = Agent(
+    name="hazard_address_extract",
+    system_prompt="你是地址抽取器，只从对话中提取用户描述的地点，不编造。",
+    tools=[],
+    base_url=MIMO_BASE_URL,
+    api_key=MIMO_API_KEY,
+    model=MIMO_MODEL,
+)
+
+
 _ADDR_RE = re.compile(
     r"[一-龥]{2,}(?:省|市|自治区)[一-龥]{0,18}?"
     r"(?:区|县|市|路|街|大道|镇|乡|社区|小区|村|号|栋|门|广场)"
@@ -134,7 +147,63 @@ def _extract(history, latest) -> dict:
                 "description": "", "severity": 1}
 
 
-def submit_from_history(user_id, history, latest) -> dict:
+# 地址结构判据：机器抽出来的"地址"必须带行政/道路/地名标记。
+# 为什么必须有它（实测）：轻量抽取器对"楼道""楼下"这类相对位置也给得出文本，
+# 而高德会把它匹配到别的城市（实测"楼道" -> 广州番禺区，坐标 113.4/22.96），
+# 于是系统会静默建出一条"位置完全错误"的工单 —— 比"没有地址"更糟。
+# 所以宁可判空，让流程回到既有的「追问地址」。
+_ADDRESS_HINT_RE = re.compile(
+    r"(省|市|区|县|镇|乡|街道|社区|村|路|街|大道|巷|弄|号|"
+    r"小区|广场|大厦|大楼|园区|公园|车站|医院|学校|超市|商场|工地|桥)"
+)
+
+
+def _looks_like_address(text: str) -> bool:
+    """粗判一个字符串像不像"能定位的地址"；宁可判否（回到追问地址）。"""
+    value = _as_text(text)
+    return len(value) >= 4 and bool(_ADDRESS_HINT_RE.search(value))
+
+
+def extract_location(history, latest) -> str:
+    """轻量预抽取地址，供确认卡片在点确认之前显示。
+
+    为什么单独做一个轻量的：确认卡片要在**出报告之后、点确认之前**就把地址
+    显示出来，而 _extract 重抽取器带全套 32 小类清单、还要归一化类别，太慢。
+    这里只问地点，只返回 {"address": ..., "district": ...}。LLM 调用失败或返回
+    空时用 _regex_address 兜底，都没有则返回空串。
+    """
+    prompt = (
+        "请从下面对话中提取用户描述的隐患地点，只返回 JSON，字段："
+        "address(可定位的具体地点，如'XX市XX区XX路XX小区门口'；"
+        "如果对话里只有'楼道/楼下/家门口'这类相对位置、或根本没说地点，address 留空)，"
+        "district(省/市/区，没有为空)。不要编造，只依据对话。\n"
+        f"对话：\n{_render(history, latest)}"
+    )
+    try:
+        resp = _location_extractor._call_llm(
+            [{"role": "user", "content": prompt}], cancellation=None)
+        content = (resp.get("content") or "").strip()
+        if "```" in content:
+            content = content.split("```")[1] if content.find("```") < content.rfind("```") else content
+            if content.startswith("json"):
+                content = content[4:]
+        s, e = content.find("{"), content.rfind("}")
+        if s != -1 and e != -1:
+            data = json.loads(content[s:e + 1])
+        else:
+            data = json.loads(content)
+        address = _as_text(data.get("address"))
+        if _looks_like_address(address):
+            return address
+        if address:
+            LOGGER.warning("location extract rejected address=%r", address)
+    except Exception as e:  # noqa: BLE001
+        LOGGER.warning("location extract failed: %s", e)
+    fallback = _regex_address(_render(history, latest))
+    return fallback if _looks_like_address(fallback) else ""
+
+
+def submit_from_history(user_id, history, latest, *, address_hint: str = "", coords=None) -> dict:
     """返回 {action, hazardId?, message?}。
 
     action:
@@ -142,16 +211,24 @@ def submit_from_history(user_id, history, latest) -> dict:
       ask_address  -> 缺地址，需要追问用户具体地址
       no_category  -> 无法识别类别
       fail         -> 建库失败
+
+    address_hint: 用户确认或改过的地址字符串，优先于重抽取器结果（可为空）。
+    coords: (longitude, latitude) 二元组；用户在图上选点时直接当坐标用，跳过 geocode。
     """
     info = _extract(history, latest)
     category = _as_text(info.get("category"))
     if not category:
         return {"action": "no_category", "message": "未能识别隐患类别，暂不建任务"}
-    address = _as_text(info.get("address"))
+    # 用户确认/改过的地址优先于重抽取器给出的地址
+    address = _as_text(address_hint) or _as_text(info.get("address"))
     if not address:
         return {"action": "ask_address",
                 "message": "请提供具体地址（如 XX 市 XX 区 XX 路 XX 小区 / XX 地标），我好帮您定位并创建隐患任务。"}
-    geo = geocode(address) if address else {}
+    if coords:
+        # 用户在图上选点：直接当坐标用，不调 geocode
+        geo = {"longitude": coords[0], "latitude": coords[1]}
+    else:
+        geo = geocode(address)
     payload = {
         "userId": user_id,
         "category": category,

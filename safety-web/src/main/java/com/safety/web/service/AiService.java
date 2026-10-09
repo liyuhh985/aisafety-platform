@@ -191,22 +191,23 @@ public class AiService {
      * AI 助手 ReAct SSE 流式多轮问答（JSON body）。
      */
     public SseEmitter assistantStream(String message, String sessionId, Long userId) {
-        return assistantStream(message, sessionId, userId, "");
+        return assistantStream(message, sessionId, userId, "", "");
     }
 
     /**
      * AI 助手 ReAct SSE 流式多轮问答（JSON body），带前端大类提示。
      */
     public SseEmitter assistantStream(String message, String sessionId, Long userId,
-                                      String selectedMajorCode) {
+                                      String selectedMajorCode, String interruptReply) {
         SseEmitter emitter = new SseEmitter(300_000L);
 
         String body = String.format(
-                "{\"message\":\"%s\",\"session_id\":\"%s\",\"user_id\":%s,\"selected_major_code\":\"%s\"}",
+                "{\"message\":\"%s\",\"session_id\":\"%s\",\"user_id\":%s,\"selected_major_code\":\"%s\",\"interrupt_reply\":\"%s\"}",
                 message == null ? "" : message.replace("\"", "\\\""),
                 sessionId == null ? "" : sessionId,
                 userId == null ? "null" : userId.toString(),
-                selectedMajorCode == null ? "" : selectedMajorCode.replace("\"", "\\\""));
+                selectedMajorCode == null ? "" : selectedMajorCode.replace("\"", "\\\""),
+                interruptReply == null ? "" : interruptReply.replace("\"", "\\\""));
 
         final String finalBody = body;
         StreamCancellation cancellation = new StreamCancellation();
@@ -279,7 +280,7 @@ public class AiService {
     public SseEmitter assistantStream(String message, String sessionId, Long userId,
                                       String selectedMajorCode, MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
-            return assistantStream(message, sessionId, userId, selectedMajorCode);
+            return assistantStream(message, sessionId, userId, selectedMajorCode, "");
         }
         SseEmitter emitter = new SseEmitter(300_000L);
 

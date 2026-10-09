@@ -140,6 +140,8 @@ def test_bridge_custom_chunk_from_report(monkeypatch):
     }
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: dict(plan))
     monkeypatch.setattr(ag, "_run_tool", lambda name, kw, cancellation=None: f"[{name}] {kw}")
+    # after_report 会预抽取地址；测试不打真模型
+    monkeypatch.setattr("tools.hazard_submit.extract_location", lambda history, latest: "")
 
     async def run():
         out = []

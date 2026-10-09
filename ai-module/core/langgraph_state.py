@@ -67,6 +67,9 @@ class AssistantState(TypedDict, total=False):
     task_offered: bool                  # per-turn: the gate already asked
     task_phase: str                     # "confirm" | "address"
     address_text: str                   # address captured by the gate
+    # 用户在图上选点得到的坐标，来自确认卡片的 interrupt_reply；有值时跳过地理编码
+    picked_longitude: float             # float 或 None，默认 None
+    picked_latitude: float              # float 或 None，默认 None
     # 不确定性（见 core/uncertainty.py）
     uncertainty_level: str              # "ok" | "cautious" | "fallback"
     danger_veto: bool                   # 正在发生的危险：禁止追问

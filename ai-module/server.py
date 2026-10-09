@@ -260,6 +260,7 @@ async def assistant_stream(
     session_id: str = Form(None),
     user_id: int = Form(None),
     selected_major_code: str = Form(None),
+    interrupt_reply: str = Form(None),
     file: UploadFile = File(None),
 ):
     # 兼容 JSON 和 multipart：有 file 走 FormData，无 file 走 JSON
@@ -272,6 +273,11 @@ async def assistant_stream(
             selected_major_code = (
                 body.get("selected_major_code")
                 or body.get("selectedMajorCode")
+                or ""
+            )
+            interrupt_reply = (
+                body.get("interrupt_reply")
+                or body.get("interruptReply")
                 or ""
             )
         except Exception:
@@ -340,6 +346,7 @@ async def assistant_stream(
                 vision_summary=vision_summary, session_id=sid, max_rounds=5,
                 cancellation=cancel_token, user_id=user_id,
                 selected_major_code=selected_major_code or "",
+                interrupt_reply=interrupt_reply or "",
             ):
                 if await request.is_disconnected():
                     cancel_token.cancel()

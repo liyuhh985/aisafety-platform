@@ -76,6 +76,7 @@ public class AiController {
             @RequestParam(value = "message", required = false) String messageParam,
             @RequestParam(value = "session_id", required = false) String sessionIdParam,
             @RequestParam(value = "selected_major_code", required = false) String selectedMajorCodeParam,
+            @RequestParam(value = "interrupt_reply", required = false) String interruptReplyParam,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         if (aiService == null) {
             SseEmitter e = new SseEmitter();
@@ -85,6 +86,7 @@ public class AiController {
         String message = messageParam;
         String sessionId = sessionIdParam;
         String selectedMajorCode = selectedMajorCodeParam;
+        String interruptReply = interruptReplyParam;
 
         String ct = request.getContentType();
         if (ct != null && ct.contains("application/json")) {
@@ -98,6 +100,8 @@ public class AiController {
                     if (s == null) s = map.get("sessionId");
                     Object major = map.get("selected_major_code");
                     if (major == null) major = map.get("selectedMajorCode");
+                    Object ir = map.get("interrupt_reply");
+                    if (ir != null) interruptReply = String.valueOf(ir);
                     if (m != null) message = String.valueOf(m);
                     if (s != null) sessionId = String.valueOf(s);
                     if (major != null) selectedMajorCode = String.valueOf(major);
@@ -106,6 +110,7 @@ public class AiController {
         }
 
         if (message == null) message = "";
+        if (interruptReply == null) interruptReply = "";
         if (sessionId == null || sessionId.isBlank()) sessionId = java.util.UUID.randomUUID().toString();
 
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -113,7 +118,7 @@ public class AiController {
         if (file != null && !file.isEmpty()) {
             return aiService.assistantStream(message, sessionId, userId, selectedMajorCode, file);
         } else {
-            return aiService.assistantStream(message, sessionId, userId, selectedMajorCode);
+            return aiService.assistantStream(message, sessionId, userId, selectedMajorCode, interruptReply);
         }
     }
 

@@ -9,6 +9,7 @@ route 只把 understand 定好的 next_action 映射成 Command(goto=...)；
 回到 search 重查一次（上界 1 次），达标才进 report。
 """
 import asyncio
+import json
 import logging
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -2010,6 +2011,21 @@ def classify_task_reply(message: str) -> str:
     return "other"
 
 
+def parse_interrupt_reply(raw) -> dict | None:
+    """把前端传来的 interrupt_reply JSON 字符串解析成 dict。
+
+    只认 dict：坏 JSON、非 dict、空串一律返回 None，让调用方回落到
+    classify_task_reply 的老路径，行为与改造前完全一致。
+    """
+    if not raw or not isinstance(raw, str):
+        return None
+    try:
+        data = json.loads(raw)
+    except (TypeError, ValueError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
 def _cancel_token(config):
     """取消令牌走 config（不是图状态）：实测并行 Send 分支里同样可见。"""
     return ((config or {}).get("configurable") or {}).get("cancel_token")
@@ -2054,9 +2070,45 @@ def task_gate(state: AssistantState) -> Command:
         "type": "confirm_create_task",
         "question": task_invitation_question(state),
         "issues": state.get("issues") or [],
+        "address": str(state.get("address_text") or ""),
     })
-    decision = str((answer or {}).get("decision") or "other")
+    if isinstance(answer, dict):
+        # 新路径：前端把确认卡片连同改过的地址 / 图选点坐标一起回传
+        decision = str(answer.get("decision") or "other")
+        address = str(answer.get("address") or "").strip()
+        longitude = answer.get("longitude")
+        latitude = answer.get("latitude")
+        has_coords = (
+            isinstance(longitude, (int, float))
+            and not isinstance(longitude, bool)
+            and isinstance(latitude, (int, float))
+            and not isinstance(latitude, bool)
+        )
+        update = {"task_offered": True}
+        if address:
+            update["address_text"] = address
+        if has_coords:
+            update["picked_longitude"] = float(longitude)
+            update["picked_latitude"] = float(latitude)
+        if decision == "confirm":
+            # 最终地址仍为空（预抽取为空且用户没改）-> 回到地址追问（既有恢复路径）
+            if not (address or str(state.get("address_text") or "").strip()):
+                return Command(
+                    goto="task_gate",
+                    update={"task_phase": "address", "task_offered": True},
+                )
+            return Command(goto="submit_task", update=update)
+        if decision == "decline":
+            return Command(goto="close_task", update=update)
+        return Command(goto="understand", update=update)
+    # 老路径：整段文本回复，回到纯文本分类
+    decision = classify_task_reply(answer if isinstance(answer, str) else "")
     if decision == "confirm":
+        if not str(state.get("address_text") or "").strip():
+            return Command(
+                goto="task_gate",
+                update={"task_phase": "address", "task_offered": True},
+            )
         return Command(goto="submit_task", update={"task_offered": True})
     if decision == "decline":
         return Command(goto="close_task", update={"task_offered": True})
@@ -2077,7 +2129,17 @@ def submit_task(state: AssistantState) -> Command:
     latest = (state.get("address_text") or "").strip() or (
         history[-1]["content"] if history else ""
     )
-    result = submit_from_history(state.get("user_id"), history, latest)
+    picked_longitude = state.get("picked_longitude")
+    picked_latitude = state.get("picked_latitude")
+    coords = (
+        (picked_longitude, picked_latitude)
+        if picked_longitude is not None and picked_latitude is not None
+        else None
+    )
+    result = submit_from_history(
+        state.get("user_id"), history, latest,
+        address_hint=state.get("address_text") or "", coords=coords,
+    )
     action = result.get("action")
     if action == "created":
         hazard_id = result.get("hazardId")
@@ -2102,7 +2164,31 @@ def close_task(state: AssistantState) -> dict:
 
 
 def after_report(state: AssistantState) -> dict:
-    return {}
+    """出报告后、点确认前，把地址预抽出来写进 state，供确认卡片显示。
+
+    这个节点每次只跑一次：刻意放在 task_gate 之外 —— task_gate 恢复时整段会
+    重跑，interrupt() 之前的模型调用会执行两次，把地址抽取放里面就白跑一遍。
+    """
+    if not can_offer_task_creation(state):
+        return {}
+    if str(state.get("address_text") or "").strip():
+        return {}
+    from tools.hazard_submit import extract_location
+
+    history = [
+        {
+            "role": "assistant" if isinstance(m, AIMessage) else "user",
+            "content": getattr(m, "content", ""),
+        }
+        for m in (state.get("messages") or [])
+        if isinstance(m, (AIMessage, HumanMessage))
+    ]
+    latest = ""
+    for item in reversed(history):
+        if item["role"] == "user":
+            latest = item["content"]
+            break
+    return {"address_text": extract_location(history, latest)}
 
 
 def route_after_report(state: AssistantState):
@@ -2165,7 +2251,8 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             max_rounds: int = 5,
                             cancellation: CancellationToken = None,
                             user_id: int = None,
-                            selected_major_code: str = "") -> Generator[tuple, None, None]:
+                            selected_major_code: str = "",
+                            interrupt_reply: str = "") -> Generator[tuple, None, None]:
     app = get_app()
     loop = asyncio.get_running_loop()
     q: asyncio.Queue = asyncio.Queue()
@@ -2191,10 +2278,15 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
             # 恢复值同时把本轮用户消息并进状态。
             if tuple(snapshot.next or ()) == ("task_gate",):
                 phase = snapshot.values.get("task_phase") or "confirm"
-                resume_value = (
-                    message if phase == "address"
-                    else {"decision": classify_task_reply(message)}
-                )
+                if phase == "address":
+                    resume_value = message
+                else:
+                    # 前端可选的 interrupt_reply（JSON 字符串）优先；坏 JSON 或
+                    # 缺失时回落老路径，行为与改造前完全一致。
+                    resume_value = (
+                        parse_interrupt_reply(interrupt_reply)
+                        or {"decision": classify_task_reply(message)}
+                    )
                 payload = Command(
                     resume=resume_value,
                     update={"messages": [HumanMessage(content=message)]},

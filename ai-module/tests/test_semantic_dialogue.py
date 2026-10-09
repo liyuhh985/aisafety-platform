@@ -409,6 +409,8 @@ def test_complete_hazard_report_searches_and_offers_task(monkeypatch):
         assistant_graph._report_llm, "_call_llm_stream_events",
         lambda messages, cancellation: iter([("chunk", "消防设施故障报告")]),
     )
+    # after_report 会预抽取地址；测试不打真模型
+    monkeypatch.setattr("tools.hazard_submit.extract_location", lambda history, latest: "")
 
     async def collect():
         return [event async for event in assistant_graph.run_stream_events(
