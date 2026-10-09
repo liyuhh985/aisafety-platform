@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -71,6 +72,7 @@ public class AiController {
     @PostMapping(value = "/assistant/stream")
     public SseEmitter assistantStream(
             HttpServletRequest request,
+            HttpServletResponse response,
             @RequestParam(value = "message", required = false) String messageParam,
             @RequestParam(value = "session_id", required = false) String sessionIdParam,
             @RequestParam(value = "selected_major_code", required = false) String selectedMajorCodeParam,
@@ -104,9 +106,10 @@ public class AiController {
         }
 
         if (message == null) message = "";
-        if (sessionId == null) sessionId = "";
+        if (sessionId == null || sessionId.isBlank()) sessionId = java.util.UUID.randomUUID().toString();
 
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        response.setHeader("X-Session-Id", sessionId);
         if (file != null && !file.isEmpty()) {
             return aiService.assistantStream(message, sessionId, userId, selectedMajorCode, file);
         } else {

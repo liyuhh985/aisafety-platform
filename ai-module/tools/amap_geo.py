@@ -12,6 +12,15 @@ def _empty():
             "province": "", "city": "", "district": "", "level": ""}
 
 
+def _text(value) -> str:
+    """高德行政区字段类型不稳定（未命中时 district 可能是空数组 []/None），收敛成 str。"""
+    if value is None:
+        return ""
+    if isinstance(value, (list, tuple)):
+        return "".join(_text(item) for item in value)
+    return str(value).strip()
+
+
 def geocode(address: str) -> dict:
     """返回 {longitude, latitude, province, city, district, level}。
 
@@ -54,6 +63,6 @@ def geocode(address: str) -> dict:
         "latitude": lat,
         "province": g.get("province", ""),
         "city": g.get("city", ""),
-        "district": g.get("district", ""),
+        "district": _text(g.get("district")),
         "level": g.get("level", ""),
     }

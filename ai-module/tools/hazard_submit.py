@@ -53,6 +53,35 @@ def _regex_address(text: str) -> str:
     return ""
 
 
+def _as_text(value) -> str:
+    """把抽取模型/地理编码返回的字段收敛成 Java 契约要求的 str。
+
+    动机：上游字段类型不稳定（实测 district 返回空数组 []），而 Java 侧
+    category/address/district/description/report/imageUrl 都是 String；
+    类型必须在契约边界收口，不能靠上游自觉。
+    """
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, (list, tuple)):
+        parts = [_as_text(item) for item in value]
+        return "、".join(part for part in parts if part)
+    return str(value)
+
+
+def _as_severity(value) -> int:
+    """severity 安全解析：取文本里的第一个数字，缺省 1，夹到 0..2。
+
+    抽取模型可能给出 "严重"/["2"] 等非数字，直接 int() 会抛异常并被外层
+    except 吞掉，退化成空 payload -> 用户看到"未能识别隐患类别"。
+    """
+    match = re.search(r"\d+", _as_text(value))
+    if not match:
+        return 1
+    return max(0, min(2, int(match.group(0))))
+
+
 def _render(history, latest) -> str:
     parts = []
     for h in (history or [])[-10:]:
@@ -95,7 +124,7 @@ def _extract(history, latest) -> dict:
             data["category"] = format_hazard_type(pair[0], pair[1])
         else:
             data["category"] = ""
-        data["severity"] = int(data.get("severity") or 1)
+        data["severity"] = _as_severity(data.get("severity"))
         if not data.get("address"):
             data["address"] = _regex_address(_render(history, latest))
         return data
@@ -115,10 +144,10 @@ def submit_from_history(user_id, history, latest) -> dict:
       fail         -> 建库失败
     """
     info = _extract(history, latest)
-    category = info.get("category") or ""
+    category = _as_text(info.get("category"))
     if not category:
         return {"action": "no_category", "message": "未能识别隐患类别，暂不建任务"}
-    address = info.get("address") or ""
+    address = _as_text(info.get("address"))
     if not address:
         return {"action": "ask_address",
                 "message": "请提供具体地址（如 XX 市 XX 区 XX 路 XX 小区 / XX 地标），我好帮您定位并创建隐患任务。"}
@@ -127,13 +156,13 @@ def submit_from_history(user_id, history, latest) -> dict:
         "userId": user_id,
         "category": category,
         "address": address,
-        "district": info.get("district") or geo.get("district", ""),
+        "district": _as_text(info.get("district")) or _as_text(geo.get("district")),
         "longitude": geo.get("longitude"),
         "latitude": geo.get("latitude"),
-        "description": info.get("description") or "",
-        "severity": info.get("severity") or 1,
-        "imageUrl": "",
-        "report": "",
+        "description": _as_text(info.get("description")),
+        "severity": _as_severity(info.get("severity")),
+        "imageUrl": _as_text(info.get("imageUrl")),
+        "report": _as_text(info.get("report")),
     }
     LOGGER.info("AI hazard submit payload=%s", payload)
     result = create_hazard(payload)

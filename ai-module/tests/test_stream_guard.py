@@ -3,8 +3,8 @@
 
 验收对应关系：
   1. 应急指引 / 初步判断恢复多块流出，且首块早于整篇生成完（test_*_streams_*）
-  2. 两个报告产物同一条规则：至多一个问句（多出来的只去问号、不丢句）、
-     初步判断任意行不以 # 开头
+  2. 问号上限按档位：初步报告至多一个问句、完整报告零个（多出来的只去问号、
+     不丢句），初步判断任意行不以 # 开头
   3. 句末符被 token 边界切开（test_*_split_across_tokens*）
   4. 问号在句中 / 单独成句 → 整句丢掉，后续句子照常放出
   5. 覆盖核对仍然生效（test_*_fallback_*）
@@ -325,19 +325,32 @@ def test_preliminary_report_headings_never_reach_the_client(monkeypatch):
 
 
 # 旧不变式「初步报告里一个问号都没有」**已作废**（决策 b）：初步报告必须含一个追问，
-# 否则用户永远不知道自己漏了什么。新不变式把两个产物统一成同一条规则：**至多一个问句**，
-# 上限之外多出来的问句只去问号、不丢整句（报告里那段是内容，丢整句等于制造误判）。
-@pytest.mark.parametrize("overrides", [None, FULL_OVERRIDES], ids=["preliminary", "full"])
-def test_report_chunks_carry_at_most_one_question(monkeypatch, overrides):
+# 否则用户永远不知道自己漏了什么。问号上限改为按档位：初步报告 **至多一个问句**，
+# 完整报告 **零个**（用户明确要求完整报告里不许出现任何问句）；上限之外多出来的问句
+# 只去问号、不丢整句（报告里那段是内容，丢整句等于制造误判）。
+def test_preliminary_report_chunks_carry_at_most_one_question(monkeypatch):
     tokens = ["楼下通道被占。", "仍需确认：被什么东西占用了？", "堆了多久了？", "建议先拍照留证。"]
-    draft, sent = _run_report(monkeypatch, lambda _sent: list(tokens), **(overrides or {}))
+    draft, sent = _run_report(monkeypatch, lambda _sent: list(tokens))
     body = "".join(str(item["chunk"]) for item in sent)
 
     assert body == draft                              # 拼接等于落库文本
-    assert body.count("？") + body.count("?") == 1     # 至多一个问句
+    assert body.count("？") + body.count("?") == 1     # 初步报告仍至多一个问句
     assert "仍需确认" in draft and "被什么东西占用" in draft
     assert "堆了多久了" in draft                       # 第二个问句只去问号，内容还在
     assert "堆了多久了？" not in draft
+    assert "建议先拍照留证。" in draft
+
+
+def test_full_report_chunks_carry_no_question(monkeypatch):
+    """完整报告零个问句：多出来的问句只去问号、不丢整句（正文内容仍在）。"""
+    tokens = ["楼下通道被占。", "仍需确认：被什么东西占用了？", "堆了多久了？", "建议先拍照留证。"]
+    draft, sent = _run_report(monkeypatch, lambda _sent: list(tokens), **FULL_OVERRIDES)
+    body = "".join(str(item["chunk"]) for item in sent)
+
+    assert body == draft                              # 拼接等于落库文本
+    assert body.count("？") + body.count("?") == 0     # 一个问号都没有
+    assert "被什么东西占用" in draft and "堆了多久了" in draft   # 只去问号，内容还在
+    assert "被什么东西占用了？" not in draft and "堆了多久了？" not in draft
     assert "建议先拍照留证。" in draft
 
 

@@ -4,7 +4,8 @@
 锁三件事：
   1. 断链修复：report 之后 messages 里能看到那份报告
      （下一轮的规划器据此才知道上一轮引了哪些法条、下了什么结论）；
-  2. 决策 (b)：初步报告含「一个指向 A 类缺失槽的追问」，且一轮最多一个问句；
+  2. 决策 (b)：初步报告含「一个指向 A 类缺失槽的追问」，且初步报告一轮最多一个问句
+     （完整报告零个问句 —— 用户明确要求完整报告里不许出现任何问句）；
   3. 边界：完整报告（信息齐全）不带追问；危险路径既不进报告也不追问。
 
 诚实说明：文字层只能核对「三块在不在」（词面标记，弱），
@@ -232,11 +233,11 @@ def _full_state():
     )
 
 
-def test_full_report_has_the_same_question_rule_as_preliminary(monkeypatch):
-    """完整报告与初步报告同一条规则：至多一个问句；且完整档不拼代码兜底的追问。
+def test_full_report_forbids_any_question(monkeypatch):
+    """完整报告里不许出现任何问句：模型自己写的问句一律只去问号、不丢整句。
 
-    为什么是「至多一个」而不是「零个」：完整报告的材料里含 report_missing（A+B 类），
-    可能合法地列出一条 B 类开放问题 —— 两个产物因此真的是同一套机制。
+    线上实测完整报告末尾混进了模型生成的问句，用户明确要求「完整报告里不许出现
+    任何问句」—— 所以上限从 1 收紧到 0（初步报告那一档仍是 1，要带一个追问）。
     """
     tokens = ["### 一、触犯法规\n《消防法》第28条。",
               "仍需确认通道净宽，能实测一下吗？",
@@ -245,10 +246,36 @@ def test_full_report_has_the_same_question_rule_as_preliminary(monkeypatch):
     body = update["draft_report"]
 
     assert "".join(item["chunk"] for item in sent) == body      # 拼接等于落库文本
-    assert body.count("？") + body.count("?") == 1              # 至多一个
-    assert "能实测一下吗？" in body
-    assert "物业收到过通知吗" in body and "物业收到过通知吗？" not in body
-    assert "最多只能提一个问句" in captured[0][-1]["content"]
+    assert body.count("？") + body.count("?") == 0              # 一个问号都没有
+    assert "能实测一下吗" in body and "物业收到过通知吗" in body   # 只去问号，句子保留
+    assert "能实测一下吗？" not in body and "物业收到过通知吗？" not in body
+    assert "最多只能提一个问句" not in captured[0][-1]["content"]
+
+
+def test_full_report_strips_the_question_mark_from_a_model_question(monkeypatch):
+    """新增回归：完整报告里「…是哪一家？」这种问句，问号被去掉、句子保留。"""
+    tokens = ["### 一、触犯法规\n《消防法》第28条。\n",
+              "这个消防栓的产权或者管理责任单位是哪一家？\n",
+              "### 二、安全隐患\n消防栓被遮挡。"]
+    update, _sent, _captured = _run_report_node(monkeypatch, _full_state(), tokens)
+    body = update["draft_report"]
+
+    assert "？" not in body and "?" not in body
+    assert "这个消防栓的产权或者管理责任单位是哪一家" in body   # 句子保留，只去问号
+
+
+def test_full_report_rules_forbid_questions_and_followup_wording():
+    """新行为：完整报告的规则里既不许留「提一个问句」的口子，也不许出现「追问」字样。"""
+    text = ag._report_rules("public", preliminary=False, branch=True, followup=True)
+    assert "提一个问句" not in text
+    assert "追问" not in text
+    assert "不要提出任何问题" in text
+    assert "不能写成问句" in text          # B 类那一项要写分情况判断，不许写成问句
+
+    # 初步报告那一档不受影响：仍然带一个追问
+    prelim = ag._report_rules("public", preliminary=True, branch=False, followup=True)
+    assert "追问" in prelim
+    assert "最多只能有一个问句" in prelim
 
 
 def test_full_report_does_not_append_the_slot_question(monkeypatch):

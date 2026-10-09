@@ -180,8 +180,60 @@ def test_stream_bridge_asks_then_creates_the_task(monkeypatch):
         "bridge-task-1",
     ))
     assert any(kind == "chunk" and "已创建隐患任务" in str(text) for kind, text in second)
+    assert ("task_created", {"hazard_id": 42, "hazard_code": "#HAZ-42"}) in second
+    chunk_texts = [str(text) for kind, text in second if kind == "chunk"]
+    assert chunk_texts and all("42" not in c for c in chunk_texts)
+    assert all("任务编号" not in c for c in chunk_texts)
     assert second[-1] == ("done", "")
     assert calls and calls[0][0] == 7
+
+
+def test_stream_bridge_skips_task_created_without_hazard_id(monkeypatch):
+    """边界：hazardId 为 None 时不发 task_created 事件，也不抛异常。"""
+    import asyncio
+
+    import core.assistant_graph as ag
+
+    monkeypatch.setattr(ag, "_APP", None)
+    plan = {
+        "ok": True, "intent": "report_hazard", "risk_level": "high",
+        "issues": [{
+            "major_code": "road", "subcategory_code": "road_occupancy",
+            "slots": {"behavior": "摆摊", "persistence": "长期", "blocked": "完全堵死"},
+        }],
+        "categories": ["road/road_occupancy"],
+        "category_slots": {"road/road_occupancy": {
+            "behavior": "摆摊", "persistence": "长期", "blocked": "完全堵死"}},
+        "question": "", "answer": "", "needs_search": True,
+    }
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: dict(plan))
+    monkeypatch.setattr(ag, "_run_tool", lambda name, kw, cancellation=None: f"[{name}] {kw}")
+    monkeypatch.setattr(
+        ag._report_llm, "_call_llm_stream_events",
+        lambda messages, cancellation=None: iter([("chunk", "报告正文")]),
+    )
+    monkeypatch.setattr(
+        "tools.hazard_submit.submit_from_history",
+        lambda *a, **k: {"action": "created", "hazardId": None},
+    )
+
+    async def turn(message, history, session_id):
+        return [event async for event in ag.run_stream_events(
+            message=message, history=history, slots={}, vision_summary="",
+            session_id=session_id, user_id=7)]
+
+    first = asyncio.run(turn("长期摆摊占着盲道，完全堵死", [], "bridge-noid-1"))
+    assert any(kind == "interrupt" for kind, _ in first)
+    second = asyncio.run(turn(
+        "好的",
+        [{"role": "user", "content": "长期摆摊占着盲道，完全堵死"},
+         {"role": "assistant", "content": "报告正文"}],
+        "bridge-noid-1",
+    ))
+    assert any(kind == "chunk" and "已创建隐患任务" in str(text)
+               for kind, text in second)
+    assert not any(kind == "task_created" for kind, _ in second)
+    assert second[-1] == ("done", "")
 
 
 def test_stream_bridge_decline_does_not_submit(monkeypatch):

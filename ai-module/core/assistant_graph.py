@@ -1884,8 +1884,9 @@ def _report_rules(premises_scope: str, preliminary: bool = False,
     )
     increment = (
         "如果对话历史里你已经给过这个隐患的分析，不要重讲一遍："
-        "已经说过的结论用一句话带过，本轮只讲新增信息带来的变化、仍然缺的、以及那一个追问。"
-        "注意是「只输出增量」，不是「换一种说法把同一份分析重讲一遍」。"
+        "已经说过的结论用一句话带过，本轮只讲新增信息带来的变化、仍然缺的"
+        + ("、以及那一个追问。" if preliminary else "。")
+        + "注意是「只输出增量」，不是「换一种说法把同一份分析重讲一遍」。"
     )
     # 去重规则：只描述「同一条信息只承载一次」这层关系，不列禁止词。
     # 为什么不用「A 类不许展开」那种表述：报告里给 A 类写「若长期…若临时…」本身对用户有价值，
@@ -1905,13 +1906,13 @@ def _report_rules(premises_scope: str, preliminary: bool = False,
         shape = (
             "标注「信息完整」时用三段式：### 一、" + heading +
             " / ### 二、安全隐患 / ### 三、类似案例。"
-            "如果上面确有仍需用户补充的信息，最多只能提一个问句；"
-            "除此之外不要提出任何问题，也不要邀请用户补充信息。"
+            "完整报告里不要提出任何问题，也不要邀请用户补充信息。"
+            + ("材料里标着「[法规适用待确认]」的那一项不能写成问句。" if branch else "")
         )
     return (
         "\n本次对话只跟踪这一个隐患，请只针对它输出。"
         + shape + indoor_note + increment + (branch_rule if branch else "")
-        + (REPORT_DEDUP_RULE if (branch or followup) else "") +
+        + (REPORT_DEDUP_RULE if preliminary else "") +
         "法规和案例必须来自上面的检索结果，没有就写「库内暂未检索到」，不编造。"
         "不要询问是否创建任务，也不要提出上报邀请——这一步由对话流程单独负责。"
     )
@@ -1963,14 +1964,14 @@ def report(state: AssistantState, config=None) -> dict:
         return _deliver_report(state, body, ask_create)
     # 完整报告也走同一个逐句执行器：项目原则是「同一个约束不要两套判定」。
     # 为什么不用「token 粒度只剥问号」那套：它只处理问号、不管别的约束，以后必然分叉。
-    # 问号上限也是 1（不是 0）：完整报告的材料里有 report_missing（A+B 类），
-    # 可能合法地列出一条 B 类开放问题 —— 两个产物因此真的是同一套机制。
+    # 问号上限是 0（不是 1）：完整报告里不许出现任何问句，模型多写出来的问句
+    # 一律只去掉问号、不丢整句；初步报告那一档仍是 1（要带一个追问）。
     # 行首井号不剥（这一档是文档，三段式标题要保留）。
     buf = []
     if prefix:
         buf.append(prefix)
         _emit_chunk(prefix)
-    for piece in guard_stream(tokens, strip_headings=False, questions=question_limiter(1)):
+    for piece in guard_stream(tokens, strip_headings=False, questions=question_limiter(0)):
         buf.append(piece)
         _emit_chunk(piece)
     body = "".join(buf)
@@ -2022,6 +2023,17 @@ def _emit_chunk(text: str) -> None:
     except Exception:
         pass
 
+def _emit_event(kind: str, payload) -> None:
+    """推一个结构化 SSE 事件：前端按 type 分流渲染。
+
+    为什么不用 chunk 传：chunk 是给人读的正文，把“机器要读的字段”（工单 id、
+    跳转目标）拼进正文，等于让前端去正则抠字符串 —— 同一条约束两处判定。
+    """
+    try:
+        get_stream_writer()({"event": {"type": kind, "content": payload}})
+    except Exception:
+        pass
+
 
 def task_gate(state: AssistantState) -> Command:
     """中断等待用户决定；恢复值由下一轮请求以 Command(resume=...) 传入。
@@ -2068,7 +2080,13 @@ def submit_task(state: AssistantState) -> Command:
     result = submit_from_history(state.get("user_id"), history, latest)
     action = result.get("action")
     if action == "created":
-        _emit_chunk("✅ 已创建隐患任务，任务编号 " + str(result.get("hazardId")))
+        hazard_id = result.get("hazardId")
+        _emit_chunk("✅ 已创建隐患任务")
+        if hazard_id is not None:
+            _emit_event("task_created", {
+                "hazard_id": hazard_id,
+                "hazard_code": "#HAZ-%s" % hazard_id,
+            })
         return Command(goto=END, update={"address_text": "", "task_phase": ""})
     if action == "ask_address":
         return Command(goto="task_gate", update={"task_phase": "address"})
@@ -2193,6 +2211,9 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                     # report 逐 token 写的 {"chunk": text} -> 作为 chunk 流出
                     if isinstance(item, dict) and "chunk" in item:
                         emit("chunk", item["chunk"])
+                    elif isinstance(item, dict) and "event" in item:
+                        evt = item["event"]
+                        emit(evt["type"], evt["content"])
                     continue
                 # mode == "updates"：节点级更新
                 interrupts = item.get("__interrupt__") if isinstance(item, dict) else None
