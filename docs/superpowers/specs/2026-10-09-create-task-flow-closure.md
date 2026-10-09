@@ -61,3 +61,33 @@
 - AI：改前文件备份在 `/home/ubuntu/ai-deploy-backups/taskgate-20261008/`（`assistant_graph.py.before`、`hazard_submit.py.before`、`amap_geo.py.before`）与 `/home/ubuntu/ai-deploy-backups/taskevent-20261009/assistant_graph.py.before`；重启脚本 `/home/ubuntu/restart_g2.sh`。
 - Java：改前 jar 备份 `/home/ubuntu/backend-deploy-backups/safety-backend.jar.before-taskgate`；起停脚本 `/home/ubuntu/stop-backend.sh` / `start-backend.sh`。
 - 线上当前 md5：`assistant_graph.py=09128682c6e93c87645b1713a99d3dbd`、`hazard_submit.py=c09cf3d334d0a1e1b77ffe6595d3db99`、`amap_geo.py=c36f7a2ac556ff675d02a6de47192371`（与本地一致）。
+## 7. 同日第二轮：地址回显 + 地图选点（A+B）
+
+**目的**：确认建任务这一步不再只依赖“机器从对话里猜地址”——把抽到的地址显示在卡片上，用户可以改，也可以在高德地图上选点；坐标由用户点出来，而不是猜出来。
+
+**契约**
+- 后端 → 前端：`confirm_create_task` 事件的 payload 新增 `"address"`（预抽取的地址，可能是空串）。
+- 前端 → 后端：请求新增可选字段 `interrupt_reply`（JSON 字符串）
+  `{"decision":"confirm","address":"…","longitude":117.63,"latitude":26.26}`
+  - `address` 非空 → 覆盖预抽取地址（用户改地址的通道）
+  - 两个坐标都给 → 直接采用，**跳过地理编码**；只给一个 → 忽略
+  - 不传 → 行为与改造前完全一致（回落成对 `message` 的文本分类）
+
+**实现要点**
+- `after_report` 做地址预抽取，**刻意放在 `task_gate` 之外**：`task_gate` 恢复时整段会重跑，放里面模型调用会白跑两次。
+- `tools/hazard_submit.extract_location()`：单独的**轻量**抽取器（不加载 32 小类清单），失败时用 `_regex_address` 兜底。
+- `submit_from_history()` 新增仅关键字参数 `address_hint` / `coords`；地址优先用用户确认过的那份。
+
+**中途抓到并修掉的一个坑（值得记）**
+轻量抽取器把「楼道」当成了地址，而高德把「楼道」匹配到了**广州番禺区**（113.416586/22.960305）——系统于是静默建出一条**位置完全错误**的工单，比“没有地址”更糟。
+修法：加结构判据 `_looks_like_address()`（必须含行政/道路/地名标记且长度 ≥ 4），机器抽取的地址判不过就当作空 → 回到既有的「追问地址」。
+**边界划清**：这条判据只决定“卡片要不要预填地址”；用户在卡片或追问里自己写的地址一律照收。
+
+**线上验收（三场景，全部通过）**
+1. 对话带地址 → 闸门 payload 回显 `address = "三明市三明万达广场东南角"`。
+2. 用户改地址 + 地图选点 → 落库地址 = 用户改的那份、经纬度 = 选点给的（117.638919/26.263455）。
+3. 对话里没有可定位地址 → `address = ""`，点确认后回到「请提供具体地址…」追问（不再出现“楼道 → 广州”这种静默错误）。
+
+**测试**：`835 passed / 3 skipped / 0 failed`（新增 `tests/test_location_guard.py`）。
+**部署备份**：AI `/home/ubuntu/ai-deploy-backups/locpick-20261009/{before,new}/`；Java `/home/ubuntu/backend-deploy-backups/safety-backend.jar.before-locpick`。
+**前端**：规格见 `docs/superpowers/specs/2026-10-09-assistant-task-created-frontend-spec.md`（同一份文档里含 `task_created` 按钮、`ask_address` 分流、位置回显与地图选点三处要求）。
