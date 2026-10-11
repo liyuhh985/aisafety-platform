@@ -171,4 +171,5 @@ Python 内部：`POST /api/ai/internal/vectors/delete`（向量删除，Java out
 2. 只渲染 `status.content`；`done`/`error` 清除。
 3. `interrupt` 渲染确认卡片（可改地址 + 地图选点），`interrupt_reply` 按第三节回传。
 4. `task_accepted` → 轮询 `GET /api/hazard/requests/{requestId}` 到 `SUCCESS`/`FAILED`；`task_created` 已删除。
-5. 真正在跑的文件是 `src/views/HomeView.vue`；`src/components/AiAssistant.vue` 是死代码。
+5. 真正在跑的文件是 `src/views/HomeView.vue`；`src/components/AiAssistant.vue` 已于 2026-10-11 物理删除（不要再引用）。
+6. 前端已收口：`src/utils/request.js`（统一注入 Bearer + 401 拦截）、`src/api/{auth,hazard}.js`（业务接口分层）、`src/constants/hazardStatus.js`（五态文案/样式字典，视图里不再硬编码状态数字）。
