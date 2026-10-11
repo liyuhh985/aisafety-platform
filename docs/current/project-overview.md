@@ -20,7 +20,6 @@
 | `safety-common` | 公共常量、通用能力、异常 |
 | `safety-pojo` | DTO / 实体（`Hazard`、`HazardAction`、`User`、`HazardReport` 等）/ VO |
 | `safety-service` | 业务服务、Mapper、缓存、状态流转 |
-| `safety-crawler` | 语料抓取/解析 |
 | `safety-web` | Controller、Security、AI 客户端、上传、SSE、MQ 消费与回执 |
 
 关键依赖：Spring Security 6 + JWT、MyBatis-Plus 3.5.7、MySQL、Redis、Caffeine、MinIO、`SseEmitter`、Redisson、**Spring AMQP（RabbitMQ）**。

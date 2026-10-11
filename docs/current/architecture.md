@@ -36,7 +36,6 @@ Python AI :8000（FastAPI + LangGraph）
 safety-common   工具/常量/异常
 safety-pojo     entity / dto / vo（含 HazardCreateMessage / HazardCreateResult / AiHazardDTO）
 safety-service  service + mapper + 缓存 + 状态流转
-safety-crawler  语料抓取解析
 safety-web      controller + security + ai client + upload + MQ（RabbitConfig / HazardCreateConsumer / HazardCreateResultPublisher）
 ```
 
