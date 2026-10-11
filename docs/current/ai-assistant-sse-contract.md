@@ -135,7 +135,7 @@ GET /api/hazard/requests/{requestId}     （Java，需登录 JWT）
 - 同时正文只输出 `✅ 已创建隐患任务`（**不再把工单编号写进正文**）。
 - 旧同步链路删除的条件见 `docs/current/ai-hazard-create-mq.md`。
 
-### 4.4 前端兼容规则（灰度期两条链路并存）
+### 4.4 前端处理规则（MQ 唯一路径）
 
 1. 收到 `task_accepted` → 记录 `request_id` + 轮询（4.2）。
 2. 不解析正文里的编号；工单入口只由轮询 `SUCCESS` 后的状态接口驱动。
@@ -144,14 +144,15 @@ GET /api/hazard/requests/{requestId}     （Java，需登录 JWT）
 
 ## 五、旧兼容接口附录
 
-以下接口仍在代码中，但**不是当前主链路**，前端新功能不要依赖：
+以下接口仍在代码中，但**不是当前主链路**，前端新功能不要依赖。
+注意：下面前两行是 Java 路由（`AiController` 有转发）；`/api/ai/chat*` **只在 Python 侧存在**，Java 没有对应路由，浏览器按现行分层调不到。
 
 | 接口 | 状态 | 说明 |
 |------|------|------|
 | `POST /api/ai/analyze` | 兼容 | 非流式图片分析，调试用 |
 | `POST /api/ai/analyze/stream` | 兼容 | 旧图片分析 SSE（`vision`/`report`/…） |
-| `POST /api/ai/chat` | 兼容 | 非流式追问 |
-| `POST /api/ai/chat/stream` | 兼容 | 流式追问 |
+| `POST /api/ai/chat` | 兼容 | 非流式追问（**仅 Python**） |
+| `POST /api/ai/chat/stream` | 兼容 | 流式追问（**仅 Python**） |
 | `GET /api/ai/history` | 保留 | 会话历史 |
 | `DELETE /api/ai/session` | 保留 | 清会话 |
 

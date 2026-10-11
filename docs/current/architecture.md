@@ -78,7 +78,7 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 
 | 前缀 | Controller | 主要接口 |
 |------|-----------|----------|
-| `/api/hazard` | HazardController | `POST`（上报）/ `POST /ai`（内部建单，旧同步链路）/ `GET` / `GET /stats` / `GET /{id}` / **`GET /requests/{requestId}`（AI 建单状态查询，代理 Python）**；`assign`、`accept`、`start`、`complete`、`review`、`batch-review`、`withdraw` |
+| `/api/hazard` | HazardController | `POST`（上报）/ `GET` / `GET /stats` / `GET /{id}` / **`GET /requests/{requestId}`（AI 建单状态查询，代理 Python）** / `GET /ai/requests/{requestId}`（内部对账，校验 `X-Internal-Token`，供 Python `RequestReconciler` 调用）；`assign`、`accept`、`start`、`complete`、`review`、`batch-review`、`withdraw`、`PUT /{id}/location` |
 | `/api/report` | ReportController | `POST` / `GET` / `GET /{id}` / `DELETE /{id}` |
 | `/api/upload` | UploadController | `POST /image` |
 | `/api/case` | CaseController | `GET` / `DELETE /{id}` |

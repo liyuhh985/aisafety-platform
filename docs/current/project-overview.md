@@ -32,12 +32,11 @@
 - 高德地理编码（`tools/amap_geo.py`）
 - OpenAI 兼容多模态模型（MiMo），`mimo_client.py`
 - **建单链路：Outbox + RabbitMQ（pika），worker 入口 `ai-module/hazard_create_worker.py`**
-- `legacy/` 下保留旧的 `agent.py` / `assistant_agent.py`（已不在主链路）
 
 ### 前端 / 部署
 
 - Vue 3 + Vite，云端静态部署
-- Nginx（静态 + `/api/*` 反代 + SSE）+ FRP TCP 转发
+- Nginx（静态 + `/api/*` 反代 + SSE）
 - 前端源码不在本仓库：`/home/ubuntu/aisafety-platform-frontend`
 - 静态目录：`/var/www/safety-platform`
 - **RabbitMQ**：broker `5672` / 管理台 `15672`，topic exchange `safety.hazard`
@@ -90,7 +89,7 @@ Python AI :8000
 - 建单可靠性：Outbox 至少一次投递、`request_id` 幂等（`tb_hazard.request_id` 唯一索引）、DLX/DLQ、失败重试；回执失败与卡单的处置见「已知边界」。
 - 隐患生命周期：派单 / 整改 / 完成 / 验收 / 驳回 / 撤回，`HazardAction` 全量留痕。
 - 语料：案例 / 法规 / 知识库；向量同步与删除 outbox。
-- 部署：云端前端 + 本地 Java/Python（Nginx + FRP）+ RabbitMQ + MQ worker 守护脚本。
+- 部署：单台云服务器（`106.53.219.214`）承载全部组件 —— Nginx 前端 `8081` / Java `8080` / Python `8000` / MySQL / Redis / Milvus / MinIO / RabbitMQ；MQ worker 由 cron watchdog 守护。
 
 ## 6. 已知边界
 
@@ -107,7 +106,7 @@ Python AI :8000
 - 收敛规划器 intent 漂移（同一句输入的产物稳定性）。
 - 扩大语料覆盖，减少「库内暂未检索到」。
 - 完善检索评测与回归基线（见 `docs/evidence/`）。
-- 高并发性能优化：优先定位 Java 同步落库链路的日志/批量化瓶颈，再谈删除旧同步链路。
+- 高并发：50 并发 / 500 单已达面试级目标（p95=9.062s，0 重复 / 0 丢单 / DLQ=0）；100/1000 暴露 2 vCPU 单机 MySQL 写入边界，作为容量上限记录，不再追高（证据见 `docs/evidence/2026-10-11-hazard-create-mq-load.md`）。
 - CI/CD 尚未落地（仓库内无 `.github/workflows/*`、无 Jenkinsfile），仅有部署 Runbook。
 
 ## 8. 相关文档
