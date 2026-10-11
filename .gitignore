@@ -95,3 +95,15 @@ ai-module/db/backup/
 .claude/settings.local.json
 # 运行日志
 runtime-logs/
+
+# ===== ai-module/db 的测量产物（2026-10-11 移出版本库）=====
+# 这些 .txt 是 experiments/、eval/ 下脚本跑出来的结果，可重新生成，不是源码。
+# 整理前它们是 tracked 的（和 migrate.sql / import_*.py 混在一个目录）；
+# 整理后统一挡在库外，保留在本地磁盘。结论看 docs/evidence/。
+ai-module/db/eval_*.txt
+ai-module/db/eval_reports/
+ai-module/db/kw_probe*.txt
+ai-module/db/graph_shape.txt
+ai-module/db/score_dist.txt
+ai-module/db/slot_audit.txt
+ai-module/db/question_source.txt

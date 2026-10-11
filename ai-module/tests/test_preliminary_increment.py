@@ -10,7 +10,7 @@
 
 诚实说明：文字层只能核对「三块在不在」（词面标记，弱），
 「内容是否与上一轮实质重复」没有客观判据 —— 那部分靠提示词 + 人工抽查，
-测量脚本 db/measure_increment_turns.py 只负责把重合度与法条对照打印出来。
+测量脚本 db/experiments/measure_increment_turns.py 只负责把重合度与法条对照打印出来。
 """
 from langchain_core.messages import AIMessage, HumanMessage
 

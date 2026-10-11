@@ -436,16 +436,16 @@ ssh -o BatchMode=yes ubuntu@106.53.219.214 '
 必须确认表结构脚本已执行：
 
 ```text
-ai-module/db/migrate.sql
-ai-module/db/migrate_hazard_type_length.sql
-ai-module/db/migrate_hazard_create_mq.py    # AI 建任务 MQ：request/outbox 表 + tb_hazard.request_id
+ai-module/db/schema/migrate.sql
+ai-module/db/schema/migrate_hazard_type_length.sql
+ai-module/db/schema/migrate_hazard_create_mq.py    # AI 建任务 MQ：request/outbox 表 + tb_hazard.request_id
 ```
 
 建单 MQ 相关表（幂等脚本，可重复执行；会先备份 tb_hazard）：
 
 ```bash
 ssh -o BatchMode=yes ubuntu@106.53.219.214 '
-  cd /home/ubuntu/ai-module && venv/bin/python3 db/migrate_hazard_create_mq.py
+  cd /home/ubuntu/ai-module && venv/bin/python3 db/schema/migrate_hazard_create_mq.py
 '
 ```
 

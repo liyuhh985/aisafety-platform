@@ -84,7 +84,7 @@ ALTER TABLE tb_hazard ADD UNIQUE INDEX uk_tb_hazard_request_id (request_id);
 MySQL 唯一索引允许多个 `NULL`，存量行不受影响。
 
 ### 2.4 建表脚本
-`ai-module/db/migrate_hazard_create_mq.py`（幂等，先探测再改，可重复执行）：
+`ai-module/db/schema/migrate_hazard_create_mq.py`（幂等，先探测再改，可重复执行）：
 备份 `tb_hazard` → 加 `request_id` → 加唯一索引 → 建 `ai_hazard_create_request` → 建 `ai_hazard_create_outbox`。
 
 ## 3. MQ 拓扑

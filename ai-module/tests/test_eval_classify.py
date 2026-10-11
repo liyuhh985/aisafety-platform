@@ -6,7 +6,7 @@ from collections import Counter
 
 import pytest
 
-from eval_classify import (
+from eval.eval_classify import (
     confusion_pairs,
     is_intercepted,
     major_hit,
@@ -16,7 +16,7 @@ from eval_classify import (
     subcategory_hit,
     top_confusions,
 )
-from eval_queries import NEGATIVE_SET, QUERY_SET
+from eval.eval_queries import NEGATIVE_SET, QUERY_SET
 from core.hazard_taxonomy import HAZARD_TAXONOMY
 
 

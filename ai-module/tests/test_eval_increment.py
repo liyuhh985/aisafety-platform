@@ -6,7 +6,7 @@
 """
 import pytest
 
-from eval_increment import (bigrams, citation_report, duplicated_sentence_ratio,
+from eval.eval_increment import (bigrams, citation_report, duplicated_sentence_ratio,
                             overlap_ratio, regulation_citations, sentences)
 
 

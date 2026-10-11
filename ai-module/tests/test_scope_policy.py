@@ -322,7 +322,7 @@ def test_bare_tan_is_deliberately_not_a_domain_keyword():
 # 背景：扩表前这一族只有「外墙」「配电箱」两个词，用户说「外立面」「配电设施」就判越界。
 # 实测（plan={}，不调模型）扩表前 10 条本领域表述 10/10 被判 out_of_scope —— 回复是
 # 「不在我的专业范围内」，与占道那次同属"用户描述本领域隐患却被拒绝"。
-# 语料计数见 core/scope_policy.py 的注释（db/measure_scope_words.py 可复现）。
+# 语料计数见 core/scope_policy.py 的注释（db/experiments/measure_scope_words.py 可复现）。
 
 TRAFFIC_FACILITY_PHRASINGS = (
     "路边有个交通标志牌和护栏坏了",

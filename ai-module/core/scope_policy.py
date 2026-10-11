@@ -30,7 +30,7 @@ EMERGENCY_KEYWORDS = DANGER_TERMS
 # 于是整条范围判据又落回「规划器是否稳定抽出 issues」。实测（plan={} 最坏情况，不调模型）：
 # 扩表前 10 条本领域表述 10/10 被判 out_of_scope，回复是「不在我的专业范围内」——和占道那次同一种
 # 真实误拦形态（用户描述本领域隐患却被拒绝）。
-# 语料计数（db/measure_scope_words.py；逐行拼接全字段、每行计一次；case 231 / reg 139 / kb 30）：
+# 语料计数（db/experiments/measure_scope_words.py；逐行拼接全字段、每行计一次；case 231 / reg 139 / kb 30）：
 #   交通设施 case 8（8/8 落在「交通与通行/交通设施损坏」）、交通标志 case 2、标志牌 case 3、
 #   护栏 case 6（6/6 都在本领域类别内）、信号灯 case 0 / reg 1 / kb 1；
 #   外立面 case 12（其中 6 条属「外立面脱落」，其余同在建筑安全大类）、墙皮 case 3；

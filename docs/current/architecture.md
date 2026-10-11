@@ -47,10 +47,12 @@ hazard_create_worker.py 建单 MQ worker 独立进程（Relay + ResultConsumer +
 config.py / db_config.py
 core/                   编排与策略（assistant_graph, dialogue_*, scope_policy, uncertainty...）
 tools/                  外部能力（hybrid_search, milvus_store, amap_geo, hazard_submit, hazard_create_queue, java_client, knowledge_sync）
-legacy/                 旧 agent.py / assistant_agent.py（不在主链路）
 tests/                  pytest
-db/                     数据脚本 + 评测脚本（含 migrate_hazard_create_mq.py）
-eval_*.py               评测
+eval/                   检索/分类/报告评测（eval_queries, eval_metrics, eval_retrieval, ...）
+db/schema/              建表与迁移（migrate*.py / *.sql）
+db/seed/                语料录入与数据修复（data_* / append_* / enrich_* / import_*）
+db/experiments/         一次性度量与诊断（measure_* / g1_ / g3_ / g5_）
+db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 ```
 
 ## 3. HTTP 接口面

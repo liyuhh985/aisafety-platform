@@ -1,7 +1,7 @@
 """评测指标纯函数单测：不联网、不读库。"""
 import pytest
 
-from eval_metrics import (
+from eval.eval_metrics import (
     first_relevant_rank,
     hit_at_k,
     major_hit_at_k,

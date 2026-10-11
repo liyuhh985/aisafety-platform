@@ -1,4 +1,4 @@
-﻿"""Structured semantic understanding for the safety assistant dialogue."""
+"""Structured semantic understanding for the safety assistant dialogue."""
 import json
 import re
 
@@ -193,7 +193,7 @@ def parse_plan(raw: str) -> dict:
 
     # 「当前焦点」：用户这句话指向的那一件事属于哪一个小类。
     # 与 perceived_major 同构 —— 都是"直接问模型这一句在说什么"，而不是从 issues 的
-    # 位置去推（那条路会被历史拖拽，实测见 db/measure_history_bleed.py）。
+    # 位置去推（那条路会被历史拖拽，实测见 db/experiments/measure_history_bleed.py）。
     perceived_subcategory = str(data.get("perceived_subcategory") or "").strip()
     if perceived_subcategory not in ALL_SUBCATEGORY_CODES:
         perceived_subcategory = ""
