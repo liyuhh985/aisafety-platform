@@ -2,10 +2,14 @@
 安全隐患分析 AI 服务 — FastAPI HTTP 接口。
 启动: python server.py  (默认 0.0.0.0:8000)
 """
+import asyncio
 import json
 import logging
 import shutil
+import threading
 import uuid
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import Body, FastAPI, File, Form, Header, Query, Request, UploadFile, HTTPException
@@ -13,19 +17,81 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.responses import StreamingResponse
 
-from core.memory import get_session
+from core.memory import (
+    get_session,
+    session_backend_status,
+)
 from core.cancellation import CancellationToken
-from core.assistant_graph import run_stream_events as assistant_graph_stream
+from core.assistant_graph import (
+    checkpoint_backend_status,
+    run_stream_events as assistant_graph_stream,
+)
 from tools.milvus_store import MilvusVectorStore
-from config import AI_INTERNAL_TOKEN, MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
+from config import (AI_INTERNAL_TOKEN, MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL,
+                      HAZARD_CREATE_WORKER_INLINE)
 
 logger = logging.getLogger("safety.ai")
 
-app = FastAPI(title="Safety AI", version="1.0")
+
+def _log_backend_choice() -> None:
+    """启动时把会话/checkpoint 后端打出来，并提醒 memory 后端不支持多 worker。"""
+    session_backend = session_backend_status()
+    checkpoint = checkpoint_backend_status()
+    logger.info(
+        "session backend=%s effective=%s | checkpoint backend=%s effective=%s",
+        session_backend["configured"], session_backend["effective"],
+        checkpoint["configured"], checkpoint["effective"],
+    )
+    for name, status in (("SESSION_BACKEND", session_backend), ("CHECKPOINT_BACKEND", checkpoint)):
+        if status["configured"] == "memory":
+            logger.warning(
+                "%s=memory：状态只存在本进程，多 worker/重启会丢；生产请切 redis", name
+            )
+        elif status["effective"] == "memory":
+            logger.error("%s=redis 但已降级到 memory：%s", name, status.get("error"))
+
+
+
+@asynccontextmanager
+async def _lifespan(_app):
+    """本地开发可选：把建单 MQ worker 跑在进程内；生产用独立进程 hazard_create_worker.py。"""
+    stop = threading.Event()
+    threads = []
+    if HAZARD_CREATE_WORKER_INLINE:
+        from tools.hazard_create_queue import RelayWorker, RequestReconciler, ResultConsumer
+        relay = RelayWorker()
+        threads = [
+            threading.Thread(target=relay.run_forever, args=(stop,), daemon=True),
+            threading.Thread(target=ResultConsumer().run_forever, args=(stop,), daemon=True),
+            threading.Thread(target=RequestReconciler().run_forever, args=(stop,), daemon=True),
+        ]
+        for t in threads:
+            t.start()
+        logger.info("hazard create worker started inline")
+    _log_backend_choice()
+    try:
+        yield
+    finally:
+        stop.set()
+
+
+app = FastAPI(title="Safety AI", version="1.0", lifespan=_lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
+
+# 图片处理是阻塞的（PIL 解码/缩放 + 同步 HTTP 等视觉模型，最长 60s）。
+# uvicorn 只有一个事件循环，而所有会话的 SSE 逐字输出都跑在这个循环上，
+# 所以阻塞调用必须挪进线程池，否则一个带图请求会冻住所有人的打字机效果。
+# 显式有界（8）而不是用默认池：默认是 min(32, CPU+4)，2 核机器上只有 6，且语义不明确。
+_IMAGE_EXECUTOR = ThreadPoolExecutor(max_workers=8, thread_name_prefix="img-io")
+
+
+async def _run_blocking(fn, *args):
+    """把阻塞函数丢到线程池执行，避免卡住事件循环。"""
+    loop = asyncio.get_running_loop()
+    return await loop.run_in_executor(_IMAGE_EXECUTOR, fn, *args)
 
 # ====== 兼容入口的共用部件 ======
 # 全仓只有一套编排：老接口（analyze / chat）与新接口（assistant）都跑同一张助手图，
@@ -96,9 +162,9 @@ async def analyze(
     user_id: int = Form(None),
 ):
     """兼容（非流式）：返回 {session_id, vision, report}，内部走助手图。"""
-    image_path = _save_upload(file) if file else None
+    image_path = await _run_blocking(_save_upload, file) if file else None
     sid = session_id or str(uuid.uuid4())
-    vision_json, extra = _compat_vision(image_path)
+    vision_json, extra = await _run_blocking(_compat_vision, image_path)
     mem = get_session(sid)
     history = (mem.get_history() if mem else []) + extra
     if not text and image_path:
@@ -137,9 +203,9 @@ async def analyze_stream(
     user_id: int = Form(None),
 ):
     """兼容（SSE）：事件名沿用旧契约 status/vision/no_hazard/report/error/done。"""
-    image_path = _save_upload(file) if file else None
+    image_path = await _run_blocking(_save_upload, file) if file else None
     sid = session_id or str(uuid.uuid4())
-    vision_json, extra = _compat_vision(image_path)
+    vision_json, extra = await _run_blocking(_compat_vision, image_path)
     mem = get_session(sid)
     history = (mem.get_history() if mem else []) + extra
     if not text and image_path:
@@ -296,13 +362,13 @@ async def assistant_stream(
     image_path = None
     if file is not None and getattr(file, "filename", ""):
         try:
-            image_path = _save_upload(file)
+            image_path = await _run_blocking(_save_upload, file)
             # 同步注入视觉结果到 history（不依赖模型是否调工具）
             try:
                 from mimo_client import MiMoVisionClient
                 from prompts import VISION_PROMPT
                 vc = MiMoVisionClient()
-                vision_json = vc.analyze_json(image_path, VISION_PROMPT)
+                vision_json = await _run_blocking(vc.analyze_json, image_path, VISION_PROMPT)
             except Exception:
                 vision_json = None
             vision_content = (
@@ -313,8 +379,9 @@ async def assistant_stream(
             history = history + [{"role": "system", "content": vision_content}]
             # 立刻落库，保证第二轮能读到；失败也只记录这一条失败信息
             try:
-                mem.messages.append({"role": "system", "content": vision_content})
-                mem._trim()
+                # add_system 在两种后端下语义一致（memory 追加到列表 / redis RPUSH+LTRIM），
+                # 不要再 mem.messages.append(...)：Redis 后端下 messages 是即时读出来的副本。
+                mem.add_system(vision_content)
             except Exception:
                 pass
             if len(history) > max_keep:
@@ -376,7 +443,7 @@ async def assistant_stream(
 
 @app.get("/api/ai/history")
 def history(session_id: str = Query(...)):
-    """获取会话历史。"""
+    """获取会话历史（redis 后端下读的是跨 worker 共享的那一份）。"""
     mem = get_session(session_id)
     return {"session_id": session_id, "messages": mem.get_history()}
 
@@ -389,9 +456,24 @@ def clear_session(session_id: str = Query(...)):
     return {"session_id": session_id, "status": "cleared"}
 
 
+@app.get("/api/ai/hazard-create/requests/{request_id}")
+def hazard_create_status(request_id: str, user_id: int = Query(None)):
+    """AI 建单状态查询。Java 侧 /api/hazard/requests/{id} 代理到这里（前端只认 Java）。"""
+    from tools.hazard_create_queue import get_request_status
+    body = get_request_status(request_id, user_id=user_id)
+    if body is None:
+        raise HTTPException(status_code=404, detail="request not found")
+    return body
+
+
 @app.get("/api/ai/health")
 def health():
-    return {"status": "ok", "model": MIMO_MODEL}
+    return {
+        "status": "ok",
+        "model": MIMO_MODEL,
+        "session_backend": session_backend_status(),
+        "checkpoint_backend": checkpoint_backend_status(),
+    }
 
 
 
@@ -454,8 +536,3 @@ def _save_upload(file: UploadFile) -> str:
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
-
-
-

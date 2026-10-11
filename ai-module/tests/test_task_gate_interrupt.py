@@ -164,9 +164,9 @@ def test_stream_bridge_asks_then_creates_the_task(monkeypatch):
     )
     calls = []
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
         calls.append((user_id, latest))
-        return {"action": "created", "hazardId": 42}
+        return {"action": "accepted", "requestId": "req-42"}
 
     monkeypatch.setattr("tools.hazard_submit.submit_from_history", fake_submit)
 
@@ -189,8 +189,8 @@ def test_stream_bridge_asks_then_creates_the_task(monkeypatch):
          {"role": "assistant", "content": "报告正文"}],
         "bridge-task-1",
     ))
-    assert any(kind == "chunk" and "已创建隐患任务" in str(text) for kind, text in second)
-    assert ("task_created", {"hazard_id": 42, "hazard_code": "#HAZ-42"}) in second
+    assert any(kind == "chunk" and "已受理，正在创建隐患任务" in str(text) for kind, text in second)
+    assert any(kind == "task_accepted" and isinstance(content, dict) and content.get("request_id") == "req-42" for kind, content in second)
     chunk_texts = [str(text) for kind, text in second if kind == "chunk"]
     assert chunk_texts and all("42" not in c for c in chunk_texts)
     assert all("任务编号" not in c for c in chunk_texts)
@@ -198,8 +198,8 @@ def test_stream_bridge_asks_then_creates_the_task(monkeypatch):
     assert calls and calls[0][0] == 7
 
 
-def test_stream_bridge_skips_task_created_without_hazard_id(monkeypatch):
-    """边界：hazardId 为 None 时不发 task_created 事件，也不抛异常。"""
+def test_stream_bridge_emits_task_accepted_with_request_id(monkeypatch):
+    """MQ 模式：受理后必须发 task_accepted，且不再发 task_created。"""
     import asyncio
 
     import core.assistant_graph as ag
@@ -226,7 +226,7 @@ def test_stream_bridge_skips_task_created_without_hazard_id(monkeypatch):
     )
     monkeypatch.setattr(
         "tools.hazard_submit.submit_from_history",
-        lambda *a, **k: {"action": "created", "hazardId": None},
+        lambda *a, **k: {"action": "accepted", "requestId": "req-none"},
     )
 
     async def turn(message, history, session_id):
@@ -242,8 +242,9 @@ def test_stream_bridge_skips_task_created_without_hazard_id(monkeypatch):
          {"role": "assistant", "content": "报告正文"}],
         "bridge-noid-1",
     ))
-    assert any(kind == "chunk" and "已创建隐患任务" in str(text)
+    assert any(kind == "chunk" and "已受理，正在创建隐患任务" in str(text)
                for kind, text in second)
+    assert any(kind == "task_accepted" for kind, _ in second)
     assert not any(kind == "task_created" for kind, _ in second)
     assert second[-1] == ("done", "")
 
@@ -275,7 +276,7 @@ def test_stream_bridge_decline_does_not_submit(monkeypatch):
     )
     denied = []
     monkeypatch.setattr("tools.hazard_submit.submit_from_history",
-                        lambda *a, **k: denied.append(1) or {"action": "created"})
+                        lambda *a, **k: denied.append(1) or {"action": "accepted", "requestId": "req-denied"})
 
     async def turn(message, session_id):
         return [event async for event in ag.run_stream_events(
@@ -372,10 +373,10 @@ def test_dict_resume_address_overrides_preextracted(monkeypatch):
     """字典 resume 带改过的地址 -> submit_from_history 收到那个新地址。"""
     captured = {}
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
         captured["address_hint"] = address_hint
         captured["coords"] = coords
-        return {"action": "created", "hazardId": 1}
+        return {"action": "accepted", "requestId": "req-1"}
 
     monkeypatch.setattr("tools.hazard_submit.submit_from_history", fake_submit)
     app = _gate_submit_graph()
@@ -408,8 +409,8 @@ def test_dict_resume_coords_skip_geocode_and_reach_payload(monkeypatch):
             "longitude": 1.0, "latitude": 2.0, "district": ""})
     captured = {}
     monkeypatch.setattr(
-        hazard_submit, "create_hazard",
-        lambda payload: captured.update(payload) or {"ok": True, "hazardId": 1})
+        hazard_submit, "enqueue_hazard_create",
+        lambda user_id, session_id, payload: captured.update(payload) or {"ok": True, "requestId": "req-coords"})
 
     app = _gate_submit_graph()
     config = {"configurable": {"thread_id": "gate-dict-coords"}}
@@ -429,7 +430,7 @@ def test_confirm_without_address_self_loops_to_address_phase(monkeypatch):
     """confirm 但最终地址为空 -> 自环回地址追问，不建任务。"""
     called = []
     monkeypatch.setattr("tools.hazard_submit.submit_from_history",
-                        lambda *a, **k: called.append(1) or {"action": "created"})
+                        lambda *a, **k: called.append(1) or {"action": "accepted", "requestId": "req-called"})
     app = _gate_graph()
     config = {"configurable": {"thread_id": "gate-empty-address"}}
     for _ in app.stream({"task_phase": "confirm"}, config):
@@ -494,17 +495,17 @@ def test_interrupt_reply_address_end_to_end(monkeypatch):
 
     captured = {}
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
         captured["address_hint"] = address_hint
         captured["coords"] = coords
-        return {"action": "created", "hazardId": 5}
+        return {"action": "accepted", "requestId": "req-5"}
 
     _patch_bridge(monkeypatch, ag, fake_submit)
     asyncio.run(_bridge_turn(ag, "长期摆摊占着盲道，完全堵死", "bridge-addr-2"))
     reply = json.dumps({"decision": "confirm", "address": "梅列区东新四路万达广场"})
     out = asyncio.run(_bridge_turn(ag, "好的", "bridge-addr-2", interrupt_reply=reply))
     assert captured["address_hint"] == "梅列区东新四路万达广场"
-    assert any(kind == "chunk" and "已创建隐患任务" in str(text) for kind, text in out)
+    assert any(kind == "chunk" and "已受理，正在创建隐患任务" in str(text) for kind, text in out)
 
 
 def test_bad_interrupt_reply_falls_back_to_classify(monkeypatch):
@@ -515,12 +516,12 @@ def test_bad_interrupt_reply_falls_back_to_classify(monkeypatch):
 
     captured = {}
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
         captured["address_hint"] = address_hint
-        return {"action": "created", "hazardId": 6}
+        return {"action": "accepted", "requestId": "req-6"}
 
     _patch_bridge(monkeypatch, ag, fake_submit)
     asyncio.run(_bridge_turn(ag, "长期摆摊占着盲道，完全堵死", "bridge-bad-2"))
     out = asyncio.run(_bridge_turn(ag, "好的", "bridge-bad-2", interrupt_reply="{broken"))
     assert captured["address_hint"] == "预抽取地址"
-    assert any(kind == "chunk" and "已创建隐患任务" in str(text) for kind, text in out)
+    assert any(kind == "chunk" and "已受理，正在创建隐患任务" in str(text) for kind, text in out)

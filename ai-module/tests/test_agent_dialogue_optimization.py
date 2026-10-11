@@ -149,7 +149,7 @@ def test_empty_or_unsupported_submit_category_never_becomes_roadblock(monkeypatc
         pytest.fail("unsupported category must not call external services")
 
     monkeypatch.setattr(hazard_submit, "geocode", forbid_external)
-    monkeypatch.setattr(hazard_submit, "create_hazard", forbid_external)
+    monkeypatch.setattr(hazard_submit, "enqueue_hazard_create", forbid_external)
 
     for category in ("", "燃气安全"):
         monkeypatch.setattr(

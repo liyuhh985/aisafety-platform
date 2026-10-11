@@ -11,6 +11,24 @@ vector-sync:
     batch-size: ${VECTOR_SYNC_DELETE_BATCH_SIZE:50}
 
 spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:127.0.0.1}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    listener:
+      simple:
+        acknowledge-mode: auto
+        default-requeue-rejected: false
+        concurrency: ${RABBITMQ_LISTENER_CONCURRENCY:4}
+        max-concurrency: ${RABBITMQ_LISTENER_MAX_CONCURRENCY:8}
+        prefetch: ${RABBITMQ_LISTENER_PREFETCH:16}
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 2s
+          multiplier: 2
   profiles:
     active: local
   servlet:
@@ -51,3 +69,19 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+hazard:
+  create:
+    exchange: ${HAZARD_CREATE_EXCHANGE:safety.hazard}
+    dlx: ${HAZARD_CREATE_DLX:safety.hazard.dlx}
+    queue: ${HAZARD_CREATE_QUEUE:hazard.create}
+    routing-key: ${HAZARD_CREATE_ROUTING_KEY:hazard.create.requested}
+    dlq: ${HAZARD_CREATE_DLQ:hazard.create.dlq}
+    result-queue: ${HAZARD_RESULT_QUEUE:hazard.create.result.q}
+    result-routing-key: ${HAZARD_RESULT_ROUTING_KEY:hazard.create.result}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus

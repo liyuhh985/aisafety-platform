@@ -31,9 +31,10 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.ERROR).permitAll()
                 .requestMatchers("/api/auth/**", "/api/ai/health").permitAll()
+                .requestMatchers("/actuator/health", "/actuator/info", "/actuator/metrics", "/actuator/prometheus").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/case/**", "/api/knowledge/**", "/api/regulation/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/hazard/ai/requests/{requestId}").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/hazard", "/api/hazard/stats", "/api/hazard/{id}").permitAll()
-                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/hazard/ai").permitAll()
                 .requestMatchers("/uploads/**").permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,11 +1,30 @@
 """Base Agent — 工具调用循环 + SSE 流式输出。"""
 import json
+import time
 from typing import Generator, Optional
 
 import requests
 
-from config import MIMO_MODEL_BACKUP
+from config import (
+    MIMO_MODEL_BACKUP,
+    FALLBACK_LLM_BASE_URL,
+    FALLBACK_LLM_API_KEY,
+    FALLBACK_LLM_MODEL,
+    FALLBACK_LLM_EFFORT,
+    LLM_RETRY_PER_ENDPOINT,
+    LLM_RETRY_BACKOFF_SECONDS,
+)
 from .cancellation import CancellationToken, StreamCancelled
+
+
+def _is_transient(exc) -> bool:
+    """只有瞬时错误才值得重试：400/401/403 这类重试多少次结果都一样。"""
+    if isinstance(exc, requests.Timeout):
+        return True
+    if isinstance(exc, requests.HTTPError):
+        code = exc.response.status_code if exc.response is not None else 0
+        return code in (408, 409, 425, 429, 500, 502, 503, 504)
+    return isinstance(exc, requests.RequestException)   # 连接被切 / ChunkedEncodingError
 
 
 class Agent:
@@ -156,73 +175,126 @@ class Agent:
 
     def _call_llm_stream_events(self, messages: list,
                                 cancellation: CancellationToken = None) -> Generator[tuple, None, None]:
-        """流式调用 LLM，逐 token yield ('chunk', text)。"""
-        payload = self._build_payload(messages, stream=True)
-        if cancellation:
-            cancellation.throw_if_cancelled()
-        resp = None
-        close = None
-        try:
-            resp = requests.post(
-                f"{self.base_url}/chat/completions",
-                headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
-                json=payload, timeout=120, stream=True,
-            )
-            close = resp.close
-            if cancellation:
-                cancellation.register(close)
-                cancellation.throw_if_cancelled()
-            resp.raise_for_status()
-            for line in resp.iter_lines():
-                if cancellation:
-                    cancellation.throw_if_cancelled()
-                if line and line.startswith(b"data: "):
-                    data = line[6:]
-                    if data == b"[DONE]":
-                        break
-                    try:
-                        chunk = json.loads(data)
-                        delta = chunk["choices"][0].get("delta", {})
-                        if "content" in delta and delta["content"]:
-                            yield ("chunk", delta["content"])
-                    except (json.JSONDecodeError, KeyError, IndexError):
-                        continue
-        except StreamCancelled:
-            raise
-        except requests.RequestException as e:
-            if cancellation and cancellation.is_cancelled():
-                raise StreamCancelled() from e
-            print(f"[ERROR] {self.name} 流式调用失败: {e}")
-            yield ("error", f"[流式中断: {e}]")
-        finally:
-            if cancellation and close:
-                cancellation.unregister(close)
-            if resp is not None:
-                resp.close()
+        """流式调用 LLM，逐 token yield ('chunk', text)。
 
-    def _call_llm(self, messages: list,
-                  cancellation: CancellationToken = None,
-                  required_tool: bool = False) -> dict:
-        """非流式调用 LLM，带主备降级（主 mimo-v2.5-pro -> 备 mimo-v2.5）。"""
-        models = [self.model]
-        try:
-            from config import MIMO_MODEL_BACKUP
-            if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
-                models.append(MIMO_MODEL_BACKUP)
-        except Exception:
-            pass
-        last_exc = None
-        for idx, model in enumerate(models):
-            payload = self._build_payload(messages, stream=False, required_tool=required_tool)
-            payload["model"] = model
+        降级取舍：只在「一个 token 都还没吐出去」时才重试/换端点 —— 已经吐出正文后
+        重试会重复内容，宁可中断报错。只读 delta["content"]，所以推理模型的
+        reasoning_content 不会被当成正文写进报告。
+        """
+        plan = self._attempt_plan()
+        i = 0
+        while i < len(plan):
+            base, key, model, effort, attempt = plan[i]
+            if attempt:
+                time.sleep(LLM_RETRY_BACKOFF_SECONDS * (2 ** (attempt - 1)))
             if cancellation:
                 cancellation.throw_if_cancelled()
+            payload = self._build_payload(messages, stream=True)
+            payload["model"] = model
+            if effort:
+                payload["effort"] = effort
+            emitted = False
             resp = None
             close = None
             try:
                 resp = requests.post(
-                    f"{self.base_url}/chat/completions",
-                    headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
+                    f"{base}/chat/completions",
+                    headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                    json=payload, timeout=120, stream=True,
+                )
+                close = resp.close
+                if cancellation:
+                    cancellation.register(close)
+                    cancellation.throw_if_cancelled()
+                resp.raise_for_status()
+                for line in resp.iter_lines():
+                    if cancellation:
+                        cancellation.throw_if_cancelled()
+                    if line and line.startswith(b"data: "):
+                        data = line[6:]
+                        if data == b"[DONE]":
+                            break
+                        try:
+                            chunk = json.loads(data)
+                            delta = chunk["choices"][0].get("delta", {})
+                            if "content" in delta and delta["content"]:
+                                emitted = True
+                                yield ("chunk", delta["content"])
+                        except (json.JSONDecodeError, KeyError, IndexError):
+                            continue
+                return
+            except StreamCancelled:
+                raise
+            except requests.RequestException as e:
+                if cancellation and cancellation.is_cancelled():
+                    raise StreamCancelled() from e
+                j = i + 1
+                if not _is_transient(e):
+                    while j < len(plan) and (plan[j][0], plan[j][2]) == (base, model):
+                        j += 1
+                if emitted or j >= len(plan):
+                    print(f"[ERROR] {self.name} 流式调用失败: {e}")
+                    yield ("error", f"[流式中断: {e}]")
+                    return
+                nxt = plan[j]
+                if (nxt[0], nxt[2]) != (base, model):
+                    print(f"[FALLBACK] {model} -> {nxt[2]} err={e}")
+                else:
+                    print(f"[RETRY] {model} 第 {nxt[4] + 1}/{LLM_RETRY_PER_ENDPOINT} 次 err={e}")
+                i = j
+                continue
+            finally:
+                if cancellation and close:
+                    cancellation.unregister(close)
+                if resp is not None:
+                    resp.close()
+
+    def _llm_endpoints(self) -> list:
+        """调用链：主端点 -> 同供应商备用模型（若确实不同）-> 跨供应商降级（若已配置）。
+
+        为什么要有第三段：.env 里 MIMO_MODEL_BACKUP 与主模型同名时（本项目就是），
+        第二段等于不存在 —— 原来的"降级"从来没生效过。
+        """
+        chain = [(self.base_url, self.api_key, self.model, None)]
+        if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
+            chain.append((self.base_url, self.api_key, MIMO_MODEL_BACKUP, None))
+        if FALLBACK_LLM_BASE_URL and FALLBACK_LLM_API_KEY and FALLBACK_LLM_MODEL:
+            chain.append((FALLBACK_LLM_BASE_URL.rstrip("/"), FALLBACK_LLM_API_KEY,
+                          FALLBACK_LLM_MODEL, FALLBACK_LLM_EFFORT or None))
+        return chain
+
+    def _attempt_plan(self) -> list:
+        """把「端点 x 每端点重试次数」摊平成一张顺序清单，便于单层循环控制。"""
+        attempts = max(1, int(LLM_RETRY_PER_ENDPOINT))
+        plan = []
+        for base, key, model, effort in self._llm_endpoints():
+            for attempt in range(attempts):
+                plan.append((base, key, model, effort, attempt))
+        return plan
+
+    def _call_llm(self, messages: list,
+                  cancellation: CancellationToken = None,
+                  required_tool: bool = False) -> dict:
+        """非流式调用 LLM：主端点重试 -> 备用模型 -> 跨供应商降级。"""
+        plan = self._attempt_plan()
+        last_err = None
+        i = 0
+        while i < len(plan):
+            base, key, model, effort, attempt = plan[i]
+            if attempt:
+                time.sleep(LLM_RETRY_BACKOFF_SECONDS * (2 ** (attempt - 1)))
+            if cancellation:
+                cancellation.throw_if_cancelled()
+            payload = self._build_payload(messages, stream=False, required_tool=required_tool)
+            payload["model"] = model
+            if effort:
+                payload["effort"] = effort
+            resp = None
+            close = None
+            try:
+                resp = requests.post(
+                    f"{base}/chat/completions",
+                    headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
                     json=payload, timeout=90,
                 )
                 close = resp.close
@@ -231,43 +303,33 @@ class Agent:
                     cancellation.throw_if_cancelled()
                 resp.raise_for_status()
                 return resp.json()["choices"][0]["message"]
-            except requests.Timeout as e:
-                last_exc = e
-                if idx == 0 and len(models) > 1:
-                    print(f"[FALLBACK] {model} 超时 -> {models[1]}")
-                    continue
-                if cancellation and cancellation.is_cancelled():
-                    raise StreamCancelled() from e
-                print(f"[ERROR] {self.name} LLM 调用失败: {e}")
-                return {"content": f"调用失败: {e}"}
-            except requests.HTTPError as e:
-                last_exc = e
-                code = e.response.status_code if e.response is not None else 0
-                if code in (429, 500, 502, 503, 504) and idx == 0 and len(models) > 1:
-                    print(f"[FALLBACK] {model} -> {models[1]} code={code}")
-                    continue
-                if cancellation and cancellation.is_cancelled():
-                    raise StreamCancelled() from e
-                print(f"[ERROR] {self.name} LLM 调用失败: {e}")
-                return {"content": f"调用失败: {e}"}
-            except requests.RequestException as e:
-                last_exc = e
-                if idx == 0 and len(models) > 1:
-                    print(f"[FALLBACK] {model} -> {models[1]} err={e}")
-                    continue
-                if cancellation and cancellation.is_cancelled():
-                    raise StreamCancelled() from e
-                print(f"[ERROR] {self.name} LLM 调用失败: {e}")
-                return {"content": f"调用失败: {e}"}
             except StreamCancelled:
                 raise
+            except requests.RequestException as e:
+                last_err = e
+                if cancellation and cancellation.is_cancelled():
+                    raise StreamCancelled() from e
+                j = i + 1
+                if not _is_transient(e):
+                    # 非瞬时：跳过本端点剩下的重试，直接看下一个端点
+                    while j < len(plan) and (plan[j][0], plan[j][2]) == (base, model):
+                        j += 1
+                if j >= len(plan):
+                    print(f"[ERROR] {self.name} LLM 调用失败（已穷尽 {len(plan)} 次尝试）: {e}")
+                    return {"content": f"调用失败: {e}"}
+                nxt = plan[j]
+                if (nxt[0], nxt[2]) != (base, model):
+                    print(f"[FALLBACK] {model} -> {nxt[2]} err={e}")
+                else:
+                    print(f"[RETRY] {model} 第 {nxt[4] + 1}/{LLM_RETRY_PER_ENDPOINT} 次 err={e}")
+                i = j
+                continue
             finally:
                 if cancellation and close:
                     cancellation.unregister(close)
                 if resp is not None:
                     resp.close()
-        return {"content": f"调用失败: {last_exc}"}
-
+        return {"content": f"调用失败: {last_err}"}
 
     def _call_llm_stream(self, messages: list,
                          cancellation: CancellationToken = None) -> Generator[str, None, None]:

@@ -84,3 +84,73 @@ MAX_IMAGE_SIZE = (1600, 900)
 MAX_IMAGE_PIXELS = 12_000_000
 MAX_UPLOAD_BYTES = 20 * 1024 * 1024
 SUPPORTED_FORMATS = ("JPEG", "PNG", "GIF", "WEBP")
+
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "127.0.0.1")
+RABBITMQ_PORT = int(os.getenv("RABBITMQ_PORT", "5672"))
+RABBITMQ_USER = os.getenv("RABBITMQ_USER", "guest")
+RABBITMQ_PASSWORD = os.getenv("RABBITMQ_PASSWORD", "guest")
+RABBITMQ_VHOST = os.getenv("RABBITMQ_VHOST", "/")
+
+# 拓扑（与 Java 侧 RabbitConfig 必须一致）
+RABBITMQ_EXCHANGE = os.getenv("RABBITMQ_EXCHANGE", "safety.hazard")
+RABBITMQ_DLX = os.getenv("RABBITMQ_DLX", "safety.hazard.dlx")
+HAZARD_CREATE_QUEUE = os.getenv("HAZARD_CREATE_QUEUE", "hazard.create")
+HAZARD_CREATE_ROUTING_KEY = os.getenv("HAZARD_CREATE_ROUTING_KEY", "hazard.create.requested")
+HAZARD_CREATE_DLQ = os.getenv("HAZARD_CREATE_DLQ", "hazard.create.dlq")
+HAZARD_RESULT_QUEUE = os.getenv("HAZARD_RESULT_QUEUE", "hazard.create.result.q")
+HAZARD_RESULT_ROUTING_KEY = os.getenv("HAZARD_RESULT_ROUTING_KEY", "hazard.create.result")
+
+# Relay / Outbox 行为
+HAZARD_OUTBOX_POLL_SECONDS = float(os.getenv("HAZARD_OUTBOX_POLL_SECONDS", "2"))
+HAZARD_OUTBOX_BATCH_SIZE = int(os.getenv("HAZARD_OUTBOX_BATCH_SIZE", "50"))
+HAZARD_OUTBOX_MAX_RETRY = int(os.getenv("HAZARD_OUTBOX_MAX_RETRY", "10"))
+HAZARD_OUTBOX_LOCK_SECONDS = int(os.getenv("HAZARD_OUTBOX_LOCK_SECONDS", "300"))
+HAZARD_RECONCILE_AFTER_SECONDS = int(os.getenv("HAZARD_RECONCILE_AFTER_SECONDS", "300"))
+HAZARD_RECONCILE_BATCH_SIZE = int(os.getenv("HAZARD_RECONCILE_BATCH_SIZE", "50"))
+HAZARD_RECONCILE_POLL_SECONDS = float(os.getenv("HAZARD_RECONCILE_POLL_SECONDS", "30"))
+
+# 本地开发可把 worker 跑在 FastAPI lifespan 里（生产用独立进程）
+HAZARD_CREATE_WORKER_INLINE = _env_bool("HAZARD_CREATE_WORKER_INLINE", "false")
+
+# ===== 跨供应商降级 + 重试（P0）=====
+# 为什么需要：主模型（MiMo）在长输出时偶发 "Response ended prematurely"（响应流被上游中途切断）。
+# 原来的降级只在「同一 base_url/api_key 下换模型名」，而 .env 里备份模型和主模型同名
+# （都是 mimo-v2.6-flash）-> models 只有 1 个 -> 降级分支永远不触发、也不重试，用户直接吃兜底。
+# 现在改成「端点链」：主端点（重试 N 次）-> 同供应商备用模型（若确实不同）-> 跨供应商降级。
+LLM_RETRY_PER_ENDPOINT = int(os.getenv("LLM_RETRY_PER_ENDPOINT", "2"))
+LLM_RETRY_BACKOFF_SECONDS = float(os.getenv("LLM_RETRY_BACKOFF_SECONDS", "1.0"))
+
+FALLBACK_LLM_BASE_URL = os.getenv("FALLBACK_LLM_BASE_URL", "")
+FALLBACK_LLM_API_KEY = os.getenv("FALLBACK_LLM_API_KEY", "")
+FALLBACK_LLM_MODEL = os.getenv("FALLBACK_LLM_MODEL", "")
+# 该模型特有参数（deepseek-flash 支持 effort=low/high/max）
+FALLBACK_LLM_EFFORT = os.getenv("FALLBACK_LLM_EFFORT", "")
+
+# ===== 会话与 LangGraph Checkpoint 后端（多 worker 支持，Task 7）=====
+# 见 docs/superpowers/plans/2026-10-10-ai-hazard-mq-hardening.md
+# memory：进程内，只在本地开发/单 worker 用（默认，行为和改造前完全一致）；
+# redis ：跨进程共享，多 worker / 多副本部署必须切到这个。
+SESSION_BACKEND = os.getenv("SESSION_BACKEND", "memory").strip().lower()
+if SESSION_BACKEND not in {"memory", "redis"}:
+    raise ValueError(
+        f"Unsupported SESSION_BACKEND={SESSION_BACKEND!r}; expected 'memory' or 'redis'"
+    )
+
+CHECKPOINT_BACKEND = os.getenv("CHECKPOINT_BACKEND", "memory").strip().lower()
+if CHECKPOINT_BACKEND not in {"memory", "redis"}:
+    raise ValueError(
+        f"Unsupported CHECKPOINT_BACKEND={CHECKPOINT_BACKEND!r}; expected 'memory' or 'redis'"
+    )
+
+# 会话 key 前缀与 TTL：TTL 每次追加都会续期（滑动窗口），活跃会话不会过期。
+SESSION_REDIS_PREFIX = os.getenv("SESSION_REDIS_PREFIX", "ai:sess:")
+SESSION_REDIS_TTL_SECONDS = int(os.getenv("SESSION_REDIS_TTL_SECONDS", "7200"))
+
+# Redis 会话后端不可用时的策略：
+#   degrade（默认）：告警 + 退回进程内记忆，服务继续可用（会丢跨 worker 共享能力）；
+#   strict        ：直接抛 SessionStoreUnavailable，宁可不服务也不静默丢历史。
+SESSION_REDIS_FALLBACK = os.getenv("SESSION_REDIS_FALLBACK", "degrade").strip().lower()
+if SESSION_REDIS_FALLBACK not in {"degrade", "strict"}:
+    raise ValueError(
+        f"Unsupported SESSION_REDIS_FALLBACK={SESSION_REDIS_FALLBACK!r}; expected 'degrade' or 'strict'"
+    )

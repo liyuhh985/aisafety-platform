@@ -32,6 +32,7 @@ from config import (
 )
 from core.cancellation import CancellationToken, StreamCancelled
 from db_config import DB_CONFIG
+from tools import db_pool
 
 EMBEDDING_CACHE_FILE = os.path.join(os.path.dirname(__file__), "..", "db", "case_embeddings.json")
 LOGGER = logging.getLogger(__name__)
@@ -77,18 +78,20 @@ def _call_with_optional_kwargs(func, *args, **kwargs):
 
 
 def _mysql_connection(timeout_seconds: float, cancellation: CancellationToken | None):
-    timeout = max(0.001, float(timeout_seconds))
+    """从检索池取连接。
+
+    注意取舍：原来是**每次查询按剩余预算**设 socket 超时；池化后 socket 超时固定为
+    RETRIEVAL_TIMEOUT_SECONDS（建池时定），逐次收紧只剩应用侧 deadline 检查。
+    代价：单条查询最长等 RETRIEVAL_TIMEOUT_SECONDS（默认 10s，与原来首次预算相同），
+    而不是"剩余预算"。换来的是每轮检索省掉 2~4 次 ~45ms 握手。
+    取消路径一律 discard，不复用半途的连接。
+    """
     try:
-        conn = pymysql.connect(
-            **DB_CONFIG,
-            connect_timeout=timeout,
-            read_timeout=timeout,
-            write_timeout=timeout,
-        )
+        conn = db_pool.retrieval_pool().acquire()
     except Exception as exc:
         _raise_for_cancel_or_timeout(exc, cancellation)
         raise
-    closer = conn.close
+    closer = lambda: db_pool.retrieval_pool().discard(conn)
     if cancellation:
         cancellation.register(closer)
         try:
@@ -590,7 +593,7 @@ class HybridSearcher:
         finally:
             if cancellation:
                 cancellation.unregister(closer)
-            conn.close()
+            db_pool.retrieval_pool().release(conn)
         ranked = _rank_keyword_rows(table, rows, tokens)
         return [_keyword_row_to_dict(table, item[3]) for item in ranked[:max(0, limit)]]
 
@@ -765,7 +768,7 @@ class HybridSearcher:
         finally:
             if cancellation:
                 cancellation.unregister(closer)
-            conn.close()
+            db_pool.retrieval_pool().release(conn)
 
     # ====== 缓存 ======
 
@@ -792,7 +795,7 @@ class HybridSearcher:
         finally:
             if cancellation:
                 cancellation.unregister(closer)
-            conn.close()
+            db_pool.retrieval_pool().release(conn)
 
     def _load_cache(self):
         if os.path.exists(EMBEDDING_CACHE_FILE):

@@ -1,3 +1,7 @@
+> 状态：current
+> 最后核对：2026-10-09
+> 说明：Milvus 运维附录
+
 # Milvus Remote Runbook
 
 Milvus runs on the cloud server as a standalone deployment. MySQL remains the

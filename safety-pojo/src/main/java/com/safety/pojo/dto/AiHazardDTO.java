@@ -14,6 +14,9 @@ public class AiHazardDTO {
     /** 上报用户（由 Python 从会话/用户上下文带入） */
     private Long userId;
 
+    /** MQ 建单幂等键；旧同步链路为 null */
+    private String requestId;
+
     /** 隐患类别（4 类：占道 / 井盖与道路 / 消防通道 / 施工） */
     @NotBlank(message = "隐患类别不能为空")
     private String category;

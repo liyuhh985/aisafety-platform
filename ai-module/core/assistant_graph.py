@@ -1,4 +1,4 @@
-﻿"""LangGraph 助手：语义理解 + 并行检索 + 报告。
+"""LangGraph 助手：语义理解 + 并行检索 + 报告。
 
 流程：begin_turn -> understand（唯一的事实与决策写入者）-> scope_guard -> route
       -> direct_reply（回答/最多一个追问）
@@ -11,6 +11,7 @@ route 只把 understand 定好的 next_action 映射成 Command(goto=...)；
 import asyncio
 import json
 import logging
+import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Annotated, Generator, Literal
@@ -21,7 +22,11 @@ from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.types import Command, Send, interrupt
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
-from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
+from config import (
+    MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL,
+    CHECKPOINT_BACKEND, REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_DB,
+    REDIS_TIMEOUT_SECONDS,
+)
 from core.agent import Agent
 from core.langgraph_state import AssistantState, merge_category_results
 from core.cancellation import CancellationToken, StreamCancelled
@@ -2139,16 +2144,15 @@ def submit_task(state: AssistantState) -> Command:
     result = submit_from_history(
         state.get("user_id"), history, latest,
         address_hint=state.get("address_text") or "", coords=coords,
+        session_id=state.get("session_id") or "",
     )
     action = result.get("action")
-    if action == "created":
-        hazard_id = result.get("hazardId")
-        _emit_chunk("✅ 已创建隐患任务")
-        if hazard_id is not None:
-            _emit_event("task_created", {
-                "hazard_id": hazard_id,
-                "hazard_code": "#HAZ-%s" % hazard_id,
-            })
+    if action == "accepted":
+        # MQ 模式：只表示"已受理"，不代表已落库；前端按 request_id 轮询。
+        request_id = result.get("requestId")
+        _emit_chunk("✅ 已受理，正在创建隐患任务")
+        if request_id:
+            _emit_event("task_accepted", {"request_id": request_id, "status": "PENDING"})
         return Command(goto=END, update={"address_text": "", "task_phase": ""})
     if action == "ask_address":
         return Command(goto="task_gate", update={"task_phase": "address"})
@@ -2197,7 +2201,8 @@ def route_after_report(state: AssistantState):
     return END
 
 
-def build_graph():
+def build_graph(checkpointer=None):
+    """编译助手图。checkpointer 由 get_checkpointer() 按 CHECKPOINT_BACKEND 决定。"""
     g = StateGraph(AssistantGraphState)
     g.add_node("begin_turn", begin_turn)
     g.add_node("understand", understand)
@@ -2235,14 +2240,134 @@ def build_graph():
     for _reply_node in ("boundary_reply", "smalltalk_reply", "answer_reply",
                         "fallback_reply", "emergency_guidance"):
         g.add_edge(_reply_node, END)
-    return g.compile(checkpointer=InMemorySaver())
+    return g.compile(checkpointer=checkpointer or InMemorySaver())
+
+
+def _checkpoint_backend() -> str:
+    """运行时读取后端，便于测试和不改代码切换；非法值按 memory 处理。"""
+    value = os.getenv("CHECKPOINT_BACKEND", CHECKPOINT_BACKEND).strip().lower()
+    return value if value in {"memory", "redis"} else "memory"
+
+
+def _build_redis_checkpointer():
+    """构造 Redis checkpointer，返回 (saver, error)。
+
+    任何一步失败都不外抛，交给 get_checkpointer() 降级到 InMemorySaver：
+    没装 langgraph-checkpoint-redis、Redis 连不上、Redis 没有 RediSearch 模块
+    （自建 Redis / redis:7-alpine 没有 FT.* 命令，setup() 会失败）都算在这一类。
+    """
+    try:
+        import redis as redis_module
+        from langgraph.checkpoint.redis import RedisSaver
+    except Exception as exc:
+        # 兼容适配：这套包是可选依赖，没装/版本不对都不影响服务启动
+        return None, (
+            f"langgraph-checkpoint-redis 不可用: {exc}"
+            "（pip install -r requirements.txt 后重启；或先用 CHECKPOINT_BACKEND=memory）"
+        )
+
+    try:
+        client = redis_module.Redis(
+            host=REDIS_HOST,
+            port=REDIS_PORT,
+            password=REDIS_PASSWORD or None,
+            db=REDIS_DB,
+            decode_responses=False,
+            socket_connect_timeout=REDIS_TIMEOUT_SECONDS,
+            socket_timeout=REDIS_TIMEOUT_SECONDS,
+        )
+        saver = RedisSaver(redis_client=client)
+    except Exception as exc:
+        return None, f"RedisSaver 初始化失败: {exc}"
+
+    try:
+        client.ping()
+    except Exception as exc:
+        return None, f"Redis 连不上 {REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}: {exc}"
+
+    try:
+        # setup() 建 RediSearch 索引，需要 Redis Stack；幂等，重复调用只补索引。
+        saver.setup()
+    except Exception as exc:
+        # 关键约束：RedisSaver 依赖 RedisJSON + RediSearch（Redis Stack 专属模块），
+        # 普通 redis:7-alpine 没有 FT.* / JSON.* 命令，必然走到这里。
+        return None, (
+            "RedisSaver.setup() 失败（Redis 缺 RediSearch/RedisJSON 模块）: "
+            f"{exc}"
+            "（换成 redis/redis-stack-server 镜像后再开 CHECKPOINT_BACKEND=redis；"
+            "否则多 worker 的 interrupt 状态无法跨进程恢复）"
+        )
+
+    return saver, None
+
+
+_CHECKPOINTER = None
+_CHECKPOINTER_KEY = None          # 配置要求的后端（缓存键）
+_CHECKPOINTER_EFFECTIVE = None    # 实际生效的后端：redis | memory
+_CHECKPOINTER_ERROR = None
+
+
+def get_checkpointer():
+    """按 CHECKPOINT_BACKEND 返回 checkpointer（带缓存，同一个后端只构造一次）。
+
+    memory -> InMemorySaver：进程内，单 worker/本地开发（重启即丢，符合原行为）
+    redis  -> RedisSaver  ：跨 worker / 跨重启恢复 interrupt，多副本必须用这个
+    """
+    global _CHECKPOINTER, _CHECKPOINTER_KEY, _CHECKPOINTER_EFFECTIVE, _CHECKPOINTER_ERROR
+    backend = _checkpoint_backend()
+    if _CHECKPOINTER is not None and _CHECKPOINTER_KEY == backend:
+        return _CHECKPOINTER
+
+    saver, error, effective = None, None, "memory"
+    if backend == "redis":
+        saver, error = _build_redis_checkpointer()
+        if saver is None:
+            logger.warning(
+                "checkpoint backend=redis 不可用，降级 InMemorySaver"
+                "（多 worker 会各存一份，interrupt 跨 worker 恢复不了）: %s",
+                error,
+            )
+        else:
+            effective = "redis"
+    if saver is None:
+        saver = InMemorySaver()
+
+    _CHECKPOINTER = saver
+    _CHECKPOINTER_KEY = backend
+    _CHECKPOINTER_EFFECTIVE = effective
+    _CHECKPOINTER_ERROR = error
+    return _CHECKPOINTER
+
+
+def checkpoint_backend_status() -> dict:
+    """给 /api/ai/health 和排障用：配置的后端、实际生效的后端、降级原因。"""
+    get_checkpointer()  # 先确保缓存就绪，status 才反映"真的在用哪个"
+    backend = _checkpoint_backend()
+    effective = _CHECKPOINTER_EFFECTIVE or "memory"
+    return {
+        "configured": backend,
+        "effective": effective,
+        "error": _CHECKPOINTER_ERROR,
+    }
+
+
+def reset_checkpointer() -> None:
+    """清空 checkpointer 缓存与图缓存（测试用；生产只在切后端时用）。"""
+    global _APP, _CHECKPOINTER, _CHECKPOINTER_KEY, _CHECKPOINTER_EFFECTIVE, _CHECKPOINTER_ERROR
+    _APP = None
+    _CHECKPOINTER = None
+    _CHECKPOINTER_KEY = None
+    _CHECKPOINTER_EFFECTIVE = None
+    _CHECKPOINTER_ERROR = None
 
 
 _APP = None
+
+
 def get_app():
     global _APP
     if _APP is None:
-        _APP = build_graph()
+        _APP = build_graph(checkpointer=get_checkpointer())
     return _APP
 
 

@@ -1,3 +1,7 @@
+> 状态：current
+> 最后核对：2026-10-09
+> 说明：独立项目 yydp 的部署 Runbook
+
 # yydp 全栈部署 Runbook
 
 适用项目：`E:\java\yydp`（Git: `https://github.com/liyuhh985/hmdp.git`）

@@ -21,7 +21,11 @@ public interface HazardService {
     java.util.List<HazardVO> batchReview(java.util.List<Long> ids, Long adminId, boolean pass, String remark);
     /** 用户撤回自己尚未被受理的上报：0 待处理 -> 5 已撤回（仅创建人本人，不审核） */
     HazardVO withdraw(Long id, Long userId);
+
+    /** 建单人本人或管理员修改定位与片区：仅 status=0（待处理）可改 */
+    HazardVO updateLocation(Long id, Long userId, Integer role, com.safety.pojo.dto.HazardLocationUpdateDTO dto);
     Page<HazardVO> page(int current, int size, Long userId, Integer role);
     HazardVO getById(Long id);
+    HazardVO getByRequestId(String requestId);
     HazardStatsVO getStats();
 }

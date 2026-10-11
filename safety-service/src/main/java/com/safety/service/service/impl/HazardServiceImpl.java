@@ -11,6 +11,7 @@ import com.safety.common.constant.RedisConstant;
 import com.safety.common.exception.BusinessException;
 import com.safety.pojo.dto.AiHazardDTO;
 import com.safety.pojo.dto.HazardDTO;
+import com.safety.pojo.dto.HazardLocationUpdateDTO;
 import com.safety.pojo.entity.Hazard;
 import com.safety.pojo.entity.HazardAction;
 import com.safety.pojo.vo.HazardStatsVO;
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -116,6 +118,15 @@ public class HazardServiceImpl implements HazardService {
         if (dto.getUserId() == null) {
             throw new BusinessException("missing user id");
         }
+        // 幂等：MQ 重复消费不能建两条。requestId 非空时先查已有。
+        String requestId = dto.getRequestId();
+        boolean hasRequestId = requestId != null && !requestId.isBlank();
+        if (hasRequestId) {
+            Hazard existing = hazardMapper.selectByRequestId(requestId);
+            if (existing != null) {
+                return toVO(existing);
+            }
+        }
         // 分布式锁: 防止同一用户并发重复上报
         String lockKey = RedisConstant.KEY_PREFIX + "lock:hazard:create:" + dto.getUserId();
         RLock lock;
@@ -147,7 +158,18 @@ public class HazardServiceImpl implements HazardService {
             if (dto.getCategory() != null && !dto.getCategory().isBlank()) {
                 hazard.setHazardType(dto.getCategory());
             }
-            hazardMapper.insert(hazard);
+            try {
+                hazardMapper.insert(hazard);
+            } catch (DuplicateKeyException e) {
+                // 唯一索引冲突 = 并发/重复消费：回查已有记录直接返回
+                if (hasRequestId) {
+                    Hazard existing = hazardMapper.selectByRequestId(requestId);
+                    if (existing != null) {
+                        return toVO(existing);
+                    }
+                }
+                throw e;
+            }
             hazard = hazardMapper.selectById(hazard.getId());
             invalidateDetailCache(hazard.getId());
             invalidateListCache();
@@ -296,6 +318,33 @@ public class HazardServiceImpl implements HazardService {
         return toVO(hazardMapper.selectById(id));
     }
 
+    @Override
+    public HazardVO updateLocation(Long id, Long userId, Integer role, HazardLocationUpdateDTO dto) {
+        Hazard hazard = hazardMapper.selectById(id);
+        if (hazard == null) {
+            throw new BusinessException(404, "隐患不存在");
+        }
+        if (hazard.getStatus() == null || hazard.getStatus() != 0) {
+            throw new BusinessException(409, "仅待处理状态的隐患任务可修改定位");
+        }
+        boolean isAdmin = (role != null && role == 1);
+        if (!isAdmin && !java.util.Objects.equals(hazard.getUserId(), userId)) {
+            throw new BusinessException(403, "只能修改自己创建的隐患任务定位");
+        }
+        hazard.setLongitude(dto.getLongitude());
+        hazard.setLatitude(dto.getLatitude());
+        hazard.setAddress(dto.getAddress());
+        if (dto.getDistrict() != null && !dto.getDistrict().isBlank()) {
+            hazard.setDistrict(dto.getDistrict());
+        }
+        hazardMapper.updateById(hazard);
+        String remark = String.format("定位变更: [%s, %s], 地址: %s", dto.getLongitude(), dto.getLatitude(), dto.getAddress());
+        saveAction(id, userId, "UPDATE_LOCATION", remark);
+        invalidateDetailCache(id);
+        invalidateListCache();
+        return toVO(hazardMapper.selectById(id));
+    }
+
     private void saveAction(Long hazardId, Long operatorId, String actionType, String remark) {
         try {
             HazardAction action = new HazardAction();
@@ -349,6 +398,15 @@ public class HazardServiceImpl implements HazardService {
         } catch (RuntimeException e) {
             log.warn("隐患详情缓存失效失败, id={}", id, e);
         }
+    }
+
+    @Override
+    public HazardVO getByRequestId(String requestId) {
+        if (requestId == null || requestId.isBlank()) {
+            return null;
+        }
+        Hazard hazard = hazardMapper.selectByRequestId(requestId);
+        return hazard == null ? null : toVO(hazard);
     }
 
     @Override

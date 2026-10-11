@@ -343,6 +343,20 @@ public class AiService {
         return emitter;
     }
 
+/** 代理 Python 的 AI 建单状态查询；404 返回 null。 */
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> hazardCreateStatus(String requestId, Long userId) {
+        try {
+            String url = aiBase + "/hazard-create/requests/" + requestId;
+            if (userId != null) {
+                url += "?user_id=" + userId;
+            }
+            return rest.getForObject(url, Map.class);
+        } catch (HttpClientErrorException.NotFound e) {
+            return null;
+        }
+    }
+
 /** 获取会话历史 */
     @SuppressWarnings("unchecked")
     public Map<String, Object> getHistory(String sessionId) {
@@ -449,6 +463,3 @@ public class AiService {
         }
     }
 }
-
-
-

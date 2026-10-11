@@ -12,11 +12,11 @@ def _patch_pipeline(monkeypatch, info, geo, captured):
     monkeypatch.setattr(hazard_submit, "_extract", lambda *a, **k: dict(info))
     monkeypatch.setattr(hazard_submit, "geocode", lambda address: dict(geo))
 
-    def fake_create_hazard(payload):
+    def fake_enqueue(user_id, session_id, payload):
         captured.update(payload)
-        return {"ok": True, "hazardId": 42, "message": "已创建"}
+        return {"ok": True, "requestId": "req-test", "message": "已受理"}
 
-    monkeypatch.setattr(hazard_submit, "create_hazard", fake_create_hazard)
+    monkeypatch.setattr(hazard_submit, "enqueue_hazard_create", fake_enqueue)
 
 
 def test_submit_payload_types_are_coerced_at_the_java_boundary(monkeypatch):
@@ -32,7 +32,7 @@ def test_submit_payload_types_are_coerced_at_the_java_boundary(monkeypatch):
 
     result = hazard_submit.submit_from_history(1, [], "占道了")
 
-    assert result["action"] == "created"
+    assert result["action"] == "accepted"
     payload = captured
     assert isinstance(payload["district"], str) and payload["district"] == ""
     assert isinstance(payload["description"], str) and payload["description"] == "a、b"

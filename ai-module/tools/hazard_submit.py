@@ -1,7 +1,7 @@
 """AI 上报闭环：从对话抽取隐患信息 -> 高德地理编码 -> 调 Java 建库。
 
 - _extract：用 LLM 从（历史 + 最新消息）抽 category/address/district/description/severity。
-- submit_from_history：geocode 补坐标（失败降级），再调 java_client.create_hazard。
+- submit_from_history：geocode 补坐标（失败降级），再写 request+outbox 交给 MQ。
 """
 import json
 import logging
@@ -16,8 +16,8 @@ from core.hazard_taxonomy import (
     normalize_taxonomy,
 )
 from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
+from tools.hazard_create_queue import enqueue_hazard_create
 from tools.amap_geo import geocode
-from tools.java_client import create_hazard
 
 LOGGER = logging.getLogger(__name__)
 
@@ -203,11 +203,13 @@ def extract_location(history, latest) -> str:
     return fallback if _looks_like_address(fallback) else ""
 
 
-def submit_from_history(user_id, history, latest, *, address_hint: str = "", coords=None) -> dict:
+def submit_from_history(user_id, history, latest, *, address_hint: str = "", coords=None,
+                        session_id: str = "") -> dict:
     """返回 {action, hazardId?, message?}。
 
     action:
-      created      -> 已建任务
+      created      -> 已建任务（旧同步链路，MQ 关闭时）
+      accepted     -> 已受理，等待 MQ/Java 建单（MQ 打开时）
       ask_address  -> 缺地址，需要追问用户具体地址
       no_category  -> 无法识别类别
       fail         -> 建库失败
@@ -242,8 +244,14 @@ def submit_from_history(user_id, history, latest, *, address_hint: str = "", coo
         "report": _as_text(info.get("report")),
     }
     LOGGER.info("AI hazard submit payload=%s", payload)
-    result = create_hazard(payload)
-    if result.get("ok"):
-        return {"action": "created", "hazardId": result.get("hazardId"),
-                "message": result.get("message")}
-    return {"action": "fail", "message": result.get("message", "建库失败")}
+
+    # MQ 唯一链路：事务内写 request + outbox，返回 accepted（先写库再返回）。
+    try:
+        accepted = enqueue_hazard_create(user_id, session_id, payload)
+    except Exception as e:  # noqa: BLE001
+        LOGGER.exception("hazard create enqueue failed")
+        return {"action": "fail", "message": f"受理失败：{e}"}
+    if accepted.get("ok"):
+        return {"action": "accepted", "requestId": accepted.get("requestId"),
+                "message": "已受理，正在创建"}
+    return {"action": "fail", "message": accepted.get("message", "受理失败")}

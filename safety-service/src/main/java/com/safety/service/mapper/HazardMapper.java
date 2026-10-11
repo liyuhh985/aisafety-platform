@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.safety.pojo.entity.Hazard;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 @Mapper
@@ -16,4 +17,8 @@ public interface HazardMapper extends BaseMapper<Hazard> {
     @Update("UPDATE tb_hazard SET status = 5, withdrawn_at = NOW(), withdrawn_by = #{userId},"
             + " update_time = NOW() WHERE id = #{id} AND user_id = #{userId} AND status = 0")
     int withdraw(@Param("id") Long id, @Param("userId") Long userId);
+
+    /** AI 建单幂等：按 request_id 回查已建记录。 */
+    @Select("SELECT * FROM tb_hazard WHERE request_id = #{requestId} LIMIT 1")
+    Hazard selectByRequestId(@Param("requestId") String requestId);
 }
