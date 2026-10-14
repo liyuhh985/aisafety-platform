@@ -103,12 +103,17 @@ MySQL 唯一索引允许多个 `NULL`，存量行不受影响。
 建单消息体：
 ```json
 { "requestId": "req-…", "userId": 10, "sessionId": "…",
-  "category": "fire/fire_lane_blocked", "address": "…", "district": "…",
+  "category": "fire/fire_lane_blocked",
+  "categoryList": ["fire/fire_lane_blocked", "municipal/manhole_damage"],
+  "address": "…", "district": "…",
   "longitude": 117.6, "latitude": 26.2, "description": "…",
   "severity": 1, "imageUrl": "…", "report": "…",
   "createdAt": "2026-10-10T12:00:00" }
 ```
 > 比原方案多保留 `imageUrl`（现有 payload 就带）。
+> 2026-10-14：新增 `categoryList`（一次上报可能有多个隐患，最多 3 条、第一条为主类别）。
+> `category` 语义不变（= 列表第一条），所以老消费端不受影响；消费端把它拼成逗号串写入
+> `tb_hazard.hazard_types`，`hazard_type` 仍是主类别。
 
 回执消息体：
 ```json

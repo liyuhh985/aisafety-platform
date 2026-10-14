@@ -55,6 +55,7 @@ public class HazardCreateConsumer {
         dto.setRequestId(msg.getRequestId());
         dto.setUserId(msg.getUserId());
         dto.setCategory(msg.getCategory());
+        dto.setCategoryList(msg.getCategoryList());
         dto.setAddress(msg.getAddress());
         dto.setDistrict(msg.getDistrict());
         dto.setLongitude(msg.getLongitude());

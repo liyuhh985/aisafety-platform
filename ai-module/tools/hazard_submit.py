@@ -1,6 +1,6 @@
 """AI 上报闭环：从对话抽取隐患信息 -> 高德地理编码 -> 调 Java 建库。
 
-- _extract：用 LLM 从（历史 + 最新消息）抽 category/address/district/description/severity。
+- _extract：用 LLM 从（历史 + 最新消息）抽 categoryList(最多3条)/address/district/description/severity。
 - submit_from_history：geocode 补坐标（失败降级），再写 request+outbox 交给 MQ。
 """
 import json
@@ -95,6 +95,36 @@ def _as_severity(value) -> int:
     return max(0, min(2, int(match.group(0))))
 
 
+# 一次上报最多允许的隐患类别数（第一条为主类别）。
+MAX_CATEGORY_LIST = 3
+
+
+def _normalize_category_list(value) -> list:
+    """把抽取模型给的类别（列表或单值）归一化成 canonical major/subcategory 列表。
+
+    契约：最多 MAX_CATEGORY_LIST 条、按原顺序去重、第一条为主类别；
+    解析不出的条目直接丢弃。模型给单值（非列表）时按一条处理，坏格式退化成空列表。
+    """
+    if isinstance(value, str):
+        items = [value]
+    elif isinstance(value, (list, tuple)):
+        items = list(value)
+    else:
+        items = []
+    result = []
+    for item in items:
+        pair = normalize_taxonomy(_as_text(item))
+        if not pair:
+            continue
+        code = format_hazard_type(pair[0], pair[1])
+        if not code or code in result:
+            continue
+        result.append(code)
+        if len(result) >= MAX_CATEGORY_LIST:
+            break
+    return result
+
+
 def _render(history, latest) -> str:
     parts = []
     for h in (history or [])[-10:]:
@@ -106,7 +136,8 @@ def _render(history, latest) -> str:
 def _extract(history, latest) -> dict:
     prompt = (
         "请从下面对话中抽取隐患上报信息，只返回 JSON，字段："
-        "category(必须使用 major_code/subcategory_code 格式)，"
+        "categoryList(隐患类别列表，最多 3 条，按重要程度从高到低排序，第一条为主类别，"
+        "每条必须使用 major_code/subcategory_code 格式)，"
         "address(最具体的地点文本，如'XX市XX区XX路XX小区门口'，没有为空)，"
         "district(省/市/区，没有为空)，description(隐患描述，简短)，severity(0一般/1较重/2严重，默认1)。\n"
         "允许的类别：\n"
@@ -130,20 +161,21 @@ def _extract(history, latest) -> dict:
             data = json.loads(content[s:e + 1])
         else:
             data = json.loads(content)
-        # category 归一化到 canonical major/subcategory 编码
-        cat = (data.get("category") or "").strip()
-        pair = normalize_taxonomy(cat)
-        if pair:
-            data["category"] = format_hazard_type(pair[0], pair[1])
-        else:
-            data["category"] = ""
+        # categoryList 归一化成 canonical major/subcategory 形式：
+        # 丢弃解析不出的、按原顺序去重、最多保留 MAX_CATEGORY_LIST 条（第一条为主类别）。
+        category_list = _normalize_category_list(data.get("categoryList"))
+        if not category_list:
+            # 兼容模型只给单类别、或 categoryList 坏格式：退回单类别
+            category_list = _normalize_category_list(data.get("category"))
+        data["categoryList"] = category_list
+        data["category"] = category_list[0] if category_list else ""
         data["severity"] = _as_severity(data.get("severity"))
         if not data.get("address"):
             data["address"] = _regex_address(_render(history, latest))
         return data
     except Exception as e:  # noqa: BLE001
         LOGGER.warning("hazard extract failed: %s", e)
-        return {"category": "", "address": "", "district": "",
+        return {"category": "", "categoryList": [], "address": "", "district": "",
                 "description": "", "severity": 1}
 
 
@@ -218,7 +250,14 @@ def submit_from_history(user_id, history, latest, *, address_hint: str = "", coo
     coords: (longitude, latitude) 二元组；用户在图上选点时直接当坐标用，跳过 geocode。
     """
     info = _extract(history, latest)
+    category_list = _normalize_category_list(info.get("categoryList"))
+    if not category_list:
+        # 兼容本次改造前的单类别 info，也兜住 categoryList 坏格式
+        category_list = _normalize_category_list(info.get("category"))
     category = _as_text(info.get("category"))
+    # 防御：category 为空但 categoryList 非空 -> 用主类别（categoryList[0]）
+    if not category and category_list:
+        category = category_list[0]
     if not category:
         return {"action": "no_category", "message": "未能识别隐患类别，暂不建任务"}
     # 用户确认/改过的地址优先于重抽取器给出的地址
@@ -234,6 +273,7 @@ def submit_from_history(user_id, history, latest, *, address_hint: str = "", coo
     payload = {
         "userId": user_id,
         "category": category,
+        "categoryList": category_list,
         "address": address,
         "district": _as_text(info.get("district")) or _as_text(geo.get("district")),
         "longitude": geo.get("longitude"),

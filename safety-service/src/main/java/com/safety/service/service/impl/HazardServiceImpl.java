@@ -29,6 +29,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.LinkedHashSet;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -157,6 +158,22 @@ public class HazardServiceImpl implements HazardService {
             // 4 类特化：hazard_type 承载类别（category 仅作入参，不落库）
             if (dto.getCategory() != null && !dto.getCategory().isBlank()) {
                 hazard.setHazardType(dto.getCategory());
+            }
+            // 多类别：hazard_types 存去空白、去重、保序后的英文逗号串；无有效项时回退主类别
+            LinkedHashSet<String> hazardTypes = new LinkedHashSet<>();
+            if (dto.getCategoryList() != null) {
+                for (String item : dto.getCategoryList()) {
+                    if (item != null && !item.isBlank()) {
+                        hazardTypes.add(item.trim());
+                    }
+                }
+            }
+            if (hazardTypes.isEmpty()) {
+                if (dto.getCategory() != null && !dto.getCategory().isBlank()) {
+                    hazard.setHazardTypes(dto.getCategory().trim());
+                }
+            } else {
+                hazard.setHazardTypes(String.join(",", hazardTypes));
             }
             try {
                 hazardMapper.insert(hazard);
@@ -475,7 +492,7 @@ public class HazardServiceImpl implements HazardService {
         }
         return new HazardVO(
                 hazard.getId(), hazard.getUserId(), hazard.getImageUrl(),
-                hazard.getHazardType(), hazard.getDescription(),
+                hazard.getHazardType(), hazard.getHazardTypes(), hazard.getDescription(),
                 hazard.getLongitude(), hazard.getLatitude(), hazard.getAddress(),
                 hazard.getDistrict(), hazard.getReport(), hazard.getHandlerId(),
                 hazard.getSeverity(), hazard.getStatus(), hazard.getReviewed(),

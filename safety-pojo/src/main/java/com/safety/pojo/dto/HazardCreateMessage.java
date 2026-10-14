@@ -3,6 +3,7 @@ package com.safety.pojo.dto;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * MQ 建单消息体（Python 生产，Java 消费）。
@@ -15,6 +16,8 @@ public class HazardCreateMessage {
     private Long userId;
     private String sessionId;
     private String category;
+    /** 多类别上报（最多 3 条，第一条为主类别） */
+    private List<String> categoryList;
     private String address;
     private String district;
     private BigDecimal longitude;

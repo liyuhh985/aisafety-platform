@@ -84,6 +84,14 @@
 
 字段：`hazard_id` / `operator_id` / `action_type` / `remark` / `create_time`。
 
+## 类别字段（2026-10-14）
+
+- `hazard_type`：**主类别**，canonical `major_code/subcategory_code`，语义未变。
+- `hazard_types`：**全部类别**，英文逗号分隔、最多 3 条、第一条恒等于 `hazard_type`。
+  一次上报里含多个隐患时用它；单类别工单两列相同。存量数据已回填（= `hazard_type`）。
+- 迁移脚本：`ai-module/db/schema/migrate_multi_hazard.py`（幂等）。
+- 前端筛选要按「列表里任一命中」判，见 `docs/current/hazard-multi-category-frontend-patch.md`。
+
 ## 六、缓存
 
 流转成功后失效详情缓存 + 列表缓存（`invalidateDetailCache` / `invalidateListCache`）；隐患详情走 Caffeine + Redis + MySQL 多级缓存。

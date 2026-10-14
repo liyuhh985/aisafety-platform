@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * AI 上报专用 DTO：由 Python 侧生成，经用户确认后由 Python 调用 Java 写入 tb_hazard。
@@ -20,6 +21,9 @@ public class AiHazardDTO {
     /** 隐患类别（4 类：占道 / 井盖与道路 / 消防通道 / 施工） */
     @NotBlank(message = "隐患类别不能为空")
     private String category;
+
+    /** 多类别上报（最多 3 条，第一条为主类别）；缺省或全空时回退 category */
+    private List<String> categoryList;
 
     /** 自然语言地址文本（尽量有，允许空） */
     private String address;
