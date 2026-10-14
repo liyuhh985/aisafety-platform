@@ -612,6 +612,11 @@ def understand(state: AssistantState, config=None) -> dict:
         source_messages, vision_summary, selected_major_code, **planner_context
     )
     if not plan or not plan.get("ok"):
+        # 不静默：规划器拿不到有效计划（回空 / JSON 破）时，这一轮只能走兜底 ——
+        # 这条路径原先一声不响，「到底有几次、是回空还是解析不出来」只能靠猜。
+        # 先补可观测性：有频率再谈要不要加一次重试，没频率就结案。
+        logger.warning("planner_failed reason=%s text=%s",
+                       "no_plan" if not plan else "unparsable", user_text[:60])
         verdict = assess({}, source_messages, vision_summary)
         announced = announced or bool(verdict["danger_veto"])
         return {
@@ -651,9 +656,10 @@ def understand(state: AssistantState, config=None) -> dict:
     if prev_majors:
         locked_majors = prev_majors
         if frontend_majors and set(frontend_majors) != set(prev_majors):
-            # 不静默：前端中途改选被忽略，留一条日志（前端本该把选择器锁上）
-            logger.info("major_lock_kept locked=%s frontend=%s",
-                        prev_majors, frontend_majors)
+            # 不静默：前端中途改选被忽略 —— 前端本该把选择器锁上，所以这算异常，用 warning。
+            # （用 info 会等于没写：实测本项目 INFO 级日志不上盘，只有 warning 起才落地。）
+            logger.warning("major_lock_kept locked=%s frontend=%s",
+                           prev_majors, frontend_majors)
     elif frontend_majors:
         locked_majors = frontend_majors[:MAX_ACTIVE_MAJORS]
     else:
