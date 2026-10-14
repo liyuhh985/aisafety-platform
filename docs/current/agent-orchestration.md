@@ -49,7 +49,7 @@ begin_turn
 | `answer_reply` | 基于 plan 的直接回答 |
 | `fallback_reply` | 无有效 plan 的兜底 |
 | `emergency_guidance` | 正在发生的危险：安全处置指引（压过一切） |
-| `ask_slot_question` | A 类关键槽缺失时的唯一问句来源 |
+| `ask_slot_question` | A 类关键槽缺失时的唯一问句来源；多条隐患时由代码拼成并列追问（每条一个问点，见 `_parallel_slot_question`），不调模型 |
 
 ## 二、状态通道
 
@@ -79,7 +79,12 @@ begin_turn
 | `environment_other` | 环境与其他 | 3 |
 
 - `normalize_taxonomy()` 兼容旧标签（`LEGACY_CATEGORY_MAP`，如「占道」→ `traffic/road_occupancy`）。
-- 会话内**一条会话一个活跃隐患**：大类锁定后只由前端 `selected_major_code` 改，小类只由用户纠正改。
+- 会话内**最多 3 条活跃隐患**（`MAX_ACTIVE_HAZARDS`），且都落在锁定的大类集合
+  `locked_majors` 里：集合由前端多选（`selected_major_code` 里用逗号拼多个 code）或
+  自动判断模式下首轮由模型判定 —— **一句话涉及几个大类就锁几个**。
+  **集合一旦锁定就硬锁**：模型改不了，前端中途改选也被忽略（只留一条日志）；要换大类
+  只能**新开一个对话**。小类只在同集合内由用户明确纠正换。
+  集合之外的条目只发一句通知、不记录（一张工单只有一个 `category`）。
 
 ## 四、槽位三分类（A/B/C）
 

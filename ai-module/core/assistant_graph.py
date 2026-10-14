@@ -1,4 +1,4 @@
-"""LangGraph 助手：语义理解 + 并行检索 + 报告。
+﻿"""LangGraph 助手：语义理解 + 并行检索 + 报告。
 
 流程：begin_turn -> understand（唯一的事实与决策写入者）-> scope_guard -> route
       -> direct_reply（回答/最多一个追问）
@@ -211,7 +211,7 @@ def rebuild_report_missing(categories, category_slots) -> list[str]:
 # 决策 7 的"事实"集合：越界时按快照把这些整体回滚。
 # 刻意不含 category_results —— 它带 reducer（merge_category_results），只能合并不能替换，
 # 而且越界那一轮根本走不到 search，本来就不会被改。
-_SNAPSHOT_KEYS = ("locked_major", "locked_subcategory", "categories",
+_SNAPSHOT_KEYS = ("locked_major", "locked_majors", "locked_subcategory", "categories",
                   "issues", "category_slots", "missing")
 
 
@@ -226,6 +226,7 @@ def _facts_snapshot(state) -> dict:
     # `categories: None` 这种与声明不符的值。归一之后回滚就是一次干净的还原。
     return {
         "locked_major": str(state.get("locked_major") or ""),
+        "locked_majors": list(state.get("locked_majors") or []),
         "locked_subcategory": str(state.get("locked_subcategory") or ""),
         "categories": list(state.get("categories") or []),
         "issues": list(state.get("issues") or []),
@@ -269,13 +270,14 @@ _ROLE_BUILDERS = {
 
 
 def build_turn_input(session_id: str, message: str, vision_summary: str,
-                     selected_major_code: str) -> dict:
+                     selected_major_code: str, selected_major_codes=None) -> dict:
     """本轮只传新增事实；结构化状态由 checkpointer 持有，不再每轮清空。"""
     return {
         "session_id": session_id,
         "messages": [HumanMessage(content=message)],
         "vision_summary": vision_summary,
         "selected_major_code": selected_major_code,
+        "selected_major_codes": list(selected_major_codes or []),
     }
 
 
@@ -453,32 +455,111 @@ def _in_major_question(major_code: str) -> str:
     return "具体是哪一类「%s」隐患？比如%s。" % (label, "、".join(options))
 
 
-def _scope_notice(locked_major: str, other_major: str, tracking: str) -> str:
+def _scope_notice(locked_majors, other_major: str, tracking: str) -> str:
     """越界只给通知：不改锁、不改小类、不发问句。"""
+    scope = "、".join(_major_label(code) for code in (locked_majors or [])) or "这条对话"
     return (
         "（这是「%s」范围的对话，刚才那句更像是「%s」类的问题。"
         "如果确实是这一类，建议另开一个对话并选择对应大类；"
         "如果还是「%s」的问题，直接继续补充就行。）"
-        % (_major_label(locked_major), _major_label(other_major), tracking)
+        % (scope, _major_label(other_major), tracking)
     )
+
+
+MAX_ACTIVE_HAZARDS = 3
+MAX_ACTIVE_MAJORS = 3
+
+
+def _locked_majors(state) -> list:
+    """锁定的大类集合。没有集合字段时退回单值字段 —— 兼容旧状态与既有测试。"""
+    majors = [str(m) for m in (state.get("locked_majors") or []) if m]
+    if majors:
+        return majors
+    single = str(state.get("locked_major") or "")
+    return [single] if single else []
+
+
+def _major_codes(value) -> list:
+    """把前端的大类提示归一成一个集合：支持列表、逗号/空格分隔的串、单个编码。
+
+    为什么支持逗号串：前端多选不必新增字段 —— 把几个 code 用逗号拼进原来那个
+    `selected_major_code` 就能用，Java 那一层一个字都不用改。
+    """
+    if isinstance(value, (list, tuple, set)):
+        raw = list(value)
+    else:
+        raw = re.split(r"[,，、\s]+", str(value or ""))
+    out = []
+    for item in raw:
+        code = str(item or "").strip()
+        if code in MAJOR_LABELS and code not in out:
+            out.append(code)
+    return out
+
+# 并列追问里的序号：只做展示，不进任何判据。
+_CLAUSE_NUMBERS = ("①", "②", "③")
+_CLAUSE_COUNTS = {2: "两", 3: "三"}
+
+
+def _focus_candidate(in_major, plan) -> dict:
+    """这一轮把焦点放在哪一条：优先模型说的「这句话指的是哪一件」，其次本轮第一条。
+
+    为什么不信顺序：契约要求模型把「当前仍有效的问题一起放进 issues」，它会把历史里
+    那件也报上来 —— 顺序因此不可靠。perceived_subcategory 在契约边界已经校验过
+    （不在词表里就清空），这里再要求它必须落在 in_major 里（＝锁定的大类集合内），
+    取不到就退回第一条。
+    """
+    seen = str((plan or {}).get("perceived_subcategory") or "").strip()
+    if seen:
+        for issue in in_major:
+            if issue.get("subcategory_code") == seen:
+                return issue
+    return in_major[0]
+
+
+def _active_issues(focus, in_major) -> list:
+    """本轮活动的隐患条目：焦点那条打头，其余同大类条目跟上（上限 MAX_ACTIVE_HAZARDS）。
+
+    跨大类的条目刻意不在这里 —— 一张工单只有一个类别，那类只发通知（见 _scope_notice）。
+    """
+    if not focus:
+        return []
+    out = [focus]
+    seen = {focus.get("subcategory_code")}
+    for issue in in_major:
+        code = issue.get("subcategory_code")
+        if not code or code in seen:
+            continue
+        out.append(issue)
+        seen.add(code)
+        if len(out) >= MAX_ACTIVE_HAZARDS:
+            break
+    return out
 
 
 def understand(state: AssistantState, config=None) -> dict:
     """本轮唯一的结构化事实写入者；下一步动作也在这里定，route 只做去向映射。
 
-    一条会话一个活跃隐患：
-      - 大类一旦确定就锁死，只有前端改选才能改；
+    一条会话最多同时跟 MAX_ACTIVE_HAZARDS 条隐患，且**同属锁定的大类集合**
+    （前端多选，或自动判断模式下首轮由模型判定 —— 一句话涉及几个大类就锁几个）：
+      - 大类集合一旦确定就锁死，只有前端改选才能改；模型只能建议，动不了它；
       - 小类只有用户主动纠正（intent=correction）才能改；
+      - 本轮识别到、且落在这个集合里的其余条目照实记下 —— 规划器契约本来就要求
+        「把当前仍有效的问题一起放进 issues」，曾经只留一条等于把用户一次说的
+        第二件事静默丢掉；集合之外的大类仍然只发通知、不记录（一张工单一个类别）；
       - 每一轮都拿用户这句话去抽**当前锁定类别**的槽位（哪怕这句话在讲别的隐患）。
     """
     user_text = _latest_user_text(state)
     vision_summary = state.get("vision_summary", "")
     selected_major_code = state.get("selected_major_code", "")
+    selected_major_codes = state.get("selected_major_codes") or []
     source_messages = list(state.get("messages") or [])
     prev_major = state.get("locked_major") or ""
+    prev_majors = _locked_majors(state)
     prev_sub = state.get("locked_subcategory") or ""
     lock_keep = {
         "locked_major": prev_major,
+        "locked_majors": prev_majors,
         "locked_subcategory": prev_sub,
         "premises_scope": state.get("premises_scope") or "public",
     }
@@ -556,39 +637,57 @@ def understand(state: AssistantState, config=None) -> dict:
         for item in echoes.get(issue["subcategory_code"], []):
             (issue.get("slots") or {}).pop(item.split("=", 1)[0], None)
 
-    # 二、定大类：前端是唯一权威（中途改选也在这里生效）
-    frontend_major = (selected_major_code or "").strip()
+    # 二、定大类**集合**：前端只在"第一次"说话，之后谁都不能改（硬锁）。
+    frontend_majors = _major_codes(selected_major_codes) or _major_codes(selected_major_code)
     correction = plan.get("intent") == "correction"
-    frontend_changed = bool(frontend_major) and frontend_major != prev_major
     # 模型"真正认为"的大类：它可能为了配合前端提示而把 issues 写成该大类，
     # 所以不能只看 issues，必须读 perceived_major；没有时再退回 issues。
     planner_major = (plan.get("perceived_major") or "").strip() or next(
         (i.get("major_code") for i in issues if i.get("major_code")), "")
-    if frontend_major:
-        locked_major = frontend_major
-    elif correction and planner_major:
-        locked_major = planner_major          # 自动判断模式下，用户纠正可以改大类
+    # 集合一旦锁定，**谁都不能改**：模型动不了（用户纠正也只能换同大类里的小类），
+    # 前端中途改选也不再生效 —— 要换大类只能**新开一个对话**（新会话天然重来）。
+    # 自动判断模式下，第一次判定时**这一句话涉及几个大类就锁几个** —— 一次说了消防和
+    # 市政两件事，就该两条都跟，而不是丢弃一条再说一句"建议另开一个对话"。
+    if prev_majors:
+        locked_majors = prev_majors
+        if frontend_majors and set(frontend_majors) != set(prev_majors):
+            # 不静默：前端中途改选被忽略，留一条日志（前端本该把选择器锁上）
+            logger.info("major_lock_kept locked=%s frontend=%s",
+                        prev_majors, frontend_majors)
+    elif frontend_majors:
+        locked_majors = frontend_majors[:MAX_ACTIVE_MAJORS]
     else:
-        locked_major = prev_major or planner_major
+        fresh = [i.get("major_code") for i in issues if i.get("major_code")]
+        locked_majors = list(dict.fromkeys(fresh))[:MAX_ACTIVE_MAJORS]
+    locked_major = locked_majors[0] if locked_majors else ""
 
     # 三、定小类：只在类内匹配；能匹配到就锁，匹配不到就留空，绝不硬造
     # 越界看"模型认为属于哪个大类"，不看它是否配合提示写了类内的 issues：
     # 配合写出来的那条本身就是硬填，不能采信。
     out_of_major = (
-        bool(locked_major) and bool(planner_major) and planner_major != locked_major
+        bool(locked_majors) and bool(planner_major) and planner_major not in locked_majors
     )
     in_major = [] if out_of_major else [
-        i for i in issues if i.get("major_code") == locked_major
+        i for i in issues if i.get("major_code") in locked_majors
     ]
-    relock_sub = correction or frontend_changed or not prev_sub
+    # 焦点默认**继承**上一轮的锁定小类，只在两种情况下才换：用户明确纠正 / 还没锁过。
+    # 大类集合同理：锁定后模型和前端都动不了，只有新开对话才能重来。
+    # 换的时候优先听模型说的 perceived_subcategory（「这句话指的是哪一件」），
+    # 而不是本轮 issues 的顺序 —— 契约要求模型「把当前仍有效的问题一起放进 issues」，所以
+    # 它会把历史里那件也报上来，顺序因此不可靠（实测：两条都报、井盖排在前面时，
+    # 锁会被拉回井盖，而模型自己明明说了焦点是路灯杆）。
+    # 一句话同时说两件时不需要"选"焦点：两件都进活动集、都会被追问（见 _parallel_slot_question）。
+    # 集合锁死之后，唯一还能换小类的就是"用户明确纠正"（外加第一次锁定）。
+    # 原来的 `frontend_changed` 已经作废：前端改选大类被硬锁忽略，永远进不来。
+    relock_sub = correction or not prev_sub
     locked_subcategory = prev_sub
     focus = None
     if in_major:
-        candidate = in_major[0]
+        candidate = _focus_candidate(in_major, plan)
         if relock_sub:
             locked_subcategory = candidate["subcategory_code"]
-        if candidate["subcategory_code"] == locked_subcategory:
-            focus = candidate
+        focus = next((i for i in in_major
+                      if i.get("subcategory_code") == locked_subcategory), None)
     if focus is None and locked_subcategory:
         # 锁还在：用锁定的小类继续累积槽位（跨轮补充信息靠这里回捞）。
         # **槽位必须带上已持久化的那一份**：这里曾经硬写 `slots: {}`，于是一旦某一轮规划器
@@ -597,11 +696,11 @@ def understand(state: AssistantState, config=None) -> dict:
         focus = {"major_code": locked_major,
                  "subcategory_code": locked_subcategory,
                  "slots": dict((state.get("category_slots") or {}).get(locked_subcategory) or {})}
-    issues = [focus] if focus else []
+    issues = _active_issues(focus, in_major)
 
     if out_of_major:
         _emit_chunk(_scope_notice(
-            locked_major, planner_major,
+            locked_majors, planner_major,
             SUBCATEGORY_LABELS.get(locked_subcategory, _major_label(locked_major)),
         ))
 
@@ -722,6 +821,7 @@ def understand(state: AssistantState, config=None) -> dict:
         "category_slots": category_slots,
         "missing": missing,
         "locked_major": locked_major,
+        "locked_majors": locked_majors,
         "locked_subcategory": locked_subcategory,
         "suggested_major_code": planner_major if out_of_major else "",
         "immediate_danger": bool(plan.get("immediate_danger")),
@@ -839,6 +939,45 @@ def _decision_slot_keys(state: AssistantState) -> list:
     return [slot.key for slot in missing_decision_slots(code, slots)]
 
 
+def _active_issue_codes(state: AssistantState) -> list:
+    """本轮活动隐患的小类编码，按 issues 顺序去重。"""
+    out = []
+    for issue in _report_issues(state):
+        code = str((issue or {}).get("subcategory_code") or "")
+        if code and code not in out:
+            out.append(code)
+    return out
+
+
+def _parallel_slot_question(state: AssistantState) -> str:
+    """多条隐患时的并列追问：每条取它自己最靠前的一个 A 类缺失，拼成一句。
+
+    只在「至少两条各缺一个 A 类槽」时才返回；否则返回空串、走原来的单条路径
+    （所以单条隐患的行为一个字都没变）。
+
+    为什么让代码拼、不让模型写：多条的归属歧义比单条大得多，而槽位问句本来就
+    写死在 slot_schemas 里 —— 交回代码更准，还省掉这一路上那次模型调用。
+    每条只问一个槽：并列问点一多用户就答不动，剩下的留到下一轮。
+    """
+    clauses = []
+    codes = _active_issue_codes(state)[:MAX_ACTIVE_HAZARDS]
+    for code in codes:
+        keys = decision_missing_keys(state, code)
+        if not keys:
+            continue                      # 这条不缺决策级信息，不占问句名额
+        slot = next((s for s in get_slot_schema(code) if s.key == keys[0]), None)
+        if slot is None:
+            continue
+        clauses.append("%s『%s』%s" % (
+            _CLAUSE_NUMBERS[len(clauses)], SUBCATEGORY_LABELS.get(code, code),
+            slot.question))
+    if len(clauses) < 2:
+        return ""
+    logger.info("slot_question_multi clauses=%d codes=%s", len(clauses), codes)
+    return "还想确认%s件事：%s" % (
+        _CLAUSE_COUNTS.get(len(clauses), len(clauses)), "".join(clauses))
+
+
 def _will_ask_slot_question(action, missing, danger_veto: bool) -> bool:
     """这一轮会不会进 ask_slot_question 节点。
 
@@ -871,6 +1010,16 @@ def ask_slot_question(state: AssistantGraphState, config=None) -> Command:
         return Command(goto=_reply_destination(state))
     code = str(state.get("locked_subcategory") or "")
     keys = _decision_slot_keys(state)
+    # 多条隐患：这一轮的追问由代码拼（每条一个问点）。**必须放在 keys 判断之前** ——
+    # 焦点那条已经齐、缺的是别的条时，keys 是空的，放在后面就永远走不到并列追问。
+    # 只有一条缺时它返回空串，走下面的单条路径（三级降级、target 审核都保持原样）。
+    parallel = _parallel_slot_question(state)
+    if parallel:
+        return Command(goto=_reply_destination(state), update={
+            "clarification_question": parallel,
+            "question_source": "multi_hazard",
+            "asked_question_last_turn": True,
+        })
     if not keys:
         return Command(goto=_reply_destination(state))
     slots = dict((state.get("category_slots") or {}).get(code) or {})
@@ -2377,6 +2526,7 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             cancellation: CancellationToken = None,
                             user_id: int = None,
                             selected_major_code: str = "",
+                            selected_major_codes=None,
                             interrupt_reply: str = "") -> Generator[tuple, None, None]:
     app = get_app()
     loop = asyncio.get_running_loop()
@@ -2392,7 +2542,8 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
         },
         "recursion_limit": GRAPH_RECURSION_LIMIT,
     }
-    initial = build_turn_input(session_id, message, vision_summary, selected_major_code)
+    initial = build_turn_input(session_id, message, vision_summary, selected_major_code,
+                               selected_major_codes)
     initial["user_id"] = user_id
 
 
@@ -2462,6 +2613,7 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             "issues": (update or {}).get("issues") or [],
                             # 锁定状态与危险标志：给前端渲染"改报"入口，也给量化用
                             "locked_major": (update or {}).get("locked_major", ""),
+                            "locked_majors": (update or {}).get("locked_majors", []),
                             "locked_subcategory": (update or {}).get("locked_subcategory", ""),
                             "suggested_major_code": (update or {}).get("suggested_major_code", ""),
                             "immediate_danger": bool((update or {}).get("immediate_danger")),

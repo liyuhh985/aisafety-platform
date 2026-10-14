@@ -24,7 +24,8 @@ def test_append_messages_handles_empty_sides():
 
 def test_build_turn_input_carries_only_the_new_turn():
     payload = build_turn_input("s1", "楼下消防栓坏了", "", "fire")
-    assert set(payload) == {"session_id", "messages", "vision_summary", "selected_major_code"}
+    assert set(payload) == {"session_id", "messages", "vision_summary",
+                            "selected_major_code", "selected_major_codes"}
     assert len(payload["messages"]) == 1
     assert payload["messages"][0].content == "楼下消防栓坏了"
     for wiped in ("categories", "category_slots", "missing", "issues", "dialogue_plan"):

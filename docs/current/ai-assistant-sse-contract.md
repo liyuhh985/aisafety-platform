@@ -23,7 +23,7 @@
 |------|------|------|
 | `message` | 与 `file` 至少一个 | 用户文本 |
 | `session_id` | 否 | 缺省时 Java 生成 UUID 并通过响应头 `X-Session-Id` 返回 |
-| `selected_major_code` | 否 | 前端大类提示（用于两级分类校正） |
+| `selected_major_code` | 否 | 前端大类提示；**多选就把几个 code 用逗号拼起来**（如 `fire,municipal`）。只在会话**第一次**判定时有效 —— 锁定后再发不再生效（要换大类只能新开对话） |
 | `interrupt_reply` | 否 | JSON 字符串，确认卡片的结构化回复 |
 | `file` | 否 | 图片（有图走 multipart 分支） |
 
@@ -42,7 +42,7 @@ data: {"type": <kind>, "content": <payload>}\n\n
 | type | content | 说明 |
 |------|---------|------|
 | `status` | string | 节点级进度文案，**带上下文**（如「正在检索「消防通道占用」的法规与案例...」） |
-| `taxonomy` | `{selected_major_code, major_mismatch, issues[]}` | 两级分类结果 |
+| `taxonomy` | `{selected_major_code, major_mismatch, issues[], locked_major, locked_majors, locked_subcategory, suggested_major_code, immediate_danger, premises_scope}` | 两级分类结果与锁定状态；`issues[]` 一次最多 3 条（同属 `locked_majors`） |
 | `chunk` | string | 流式正文：报告 token、回答、追问、确认问句 |
 | `interrupt` | `{type, question, issues?, address?}` | 结构化中断（确认建单 / 追问地址） |
 | `task_accepted` | `{request_id, status}` | 建单已受理，尚未落库；前端轮询状态查询 |

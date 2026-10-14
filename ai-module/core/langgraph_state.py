@@ -30,8 +30,11 @@ class AssistantState(TypedDict, total=False):
     session_id: str                     # checkpointer 的 thread_id
     user_id: int
     messages: Annotated[list, append_messages]
-    # 一条会话一个活跃隐患：大类锁定后只由前端改，小类只由用户纠正改
-    locked_major: str
+    # 一条会话最多 MAX_ACTIVE_HAZARDS 条活跃隐患，且都落在 locked_majors 里：
+    # 大类集合锁定后只由前端改（模型只能建议），小类只由用户纠正改；
+    # 集合之外的条目只发通知、不记录
+    locked_major: str                   # 集合的第一项（兼容 SSE / 前端状态条）
+    locked_majors: list[str]            # 锁定的大类集合：前端多选或首轮模型判定，之后只由前端改
     locked_subcategory: str
     suggested_major_code: str          # 越界时模型认为的真实大类（给前端渲染"改报"入口）
     immediate_danger: bool             # 模型自己判定的即时危险（可观测、可量化）
@@ -43,9 +46,10 @@ class AssistantState(TypedDict, total=False):
     missing: list[str]                  # 全局并集，形如 "{code}_{slot_key}"（只含 A 类）
     question_missing: list[str]         # missing 非空但这轮没问出问题（不静默）
     question_missing_reason: str        # danger_veto | cautious | report | planner_no_question
-    question_source: str                # 本轮问句出处：ask_slot_question | understand | slot_schema | ""
+    question_source: str                # 本轮问句出处：ask_slot_question | understand
+                                        # | slot_schema | multi_hazard（多条并列，代码拼）| ""
     question_dropped: str               # A 类缺失为空却拿到问句 → 丢弃原因（不静默）
-    issues: list[dict]                  # canonical issue list from the planner
+    issues: list[dict]                  # 本轮活动隐患：焦点打头，同大类，上限 MAX_ACTIVE_HAZARDS
     facts_snapshot: dict                # 本轮**之前**的事实快照（begin_turn 写）；
                                         # scope_guard 判越界时按它整体回滚，见 spec 决策 7
     vision_summary: str
@@ -60,7 +64,8 @@ class AssistantState(TypedDict, total=False):
     policy_reason: str                  # explainable policy reason
     optional_question: bool             # question is optional, not required
     asked_question_last_turn: bool      # prev turn ended by asking the user a question
-    selected_major_code: str            # frontend major-category hint
+    selected_major_code: str            # frontend major-category hint（可逗号分隔多个 code）
+    selected_major_codes: list[str]     # 同上，列表形态；空则看 selected_major_code
     major_mismatch: bool                # planner corrected the frontend hint
     # 建任务确认（interrupt 闸门）
     offer_task: bool                    # report decided the task invitation is allowed

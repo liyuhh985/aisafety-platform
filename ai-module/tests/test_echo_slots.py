@@ -1,4 +1,4 @@
-"""回声填充：把隐患名称复述进槽位，不算答过 → 按"缺"处理，应该重新问。"""
+﻿"""回声填充：把隐患名称复述进槽位，不算答过 → 按"缺"处理，应该重新问。"""
 import core.assistant_graph as ag
 from core.uncertainty import echo_slots, is_echo_slot
 
@@ -18,6 +18,24 @@ def test_real_answers_are_not_treated_as_echo():
 
 def test_too_short_values_are_not_echo():
     assert is_echo_slot("占", "road_occupancy") is False
+
+
+def test_option_words_are_not_echoes():
+    """选项词大多是两个字，而它们往往正好是事件名字的一部分 —— 不能因此判成复述。
+
+    实测：用户答「楼下井盖是缺失的」→ defect="缺失" 被判复述丢掉 → 同一道题再问一遍。
+    """
+    assert is_echo_slot("缺失", "manhole_damage") is False
+    assert is_echo_slot("破损", "manhole_damage") is False
+    assert is_echo_slot("松动", "manhole_damage") is False
+    assert is_echo_slot("裂缝", "wall_crack_lean") is False
+
+
+def test_longer_names_are_still_echoes():
+    """长度下限只放行两个字；四个字的隐患名照旧判成复述（既有行为不变）。"""
+    assert is_echo_slot("消防通道", "fire_lane_blocked") is True
+    assert is_echo_slot("消防设施", "fire_equipment_fault") is True
+    assert is_echo_slot("危房", "dangerous_building") is True
 
 
 def test_echo_slots_groups_by_issue():

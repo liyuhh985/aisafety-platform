@@ -98,6 +98,12 @@ def _echo_labels(code) -> set:
     return labels
 
 
+# 「包含在事件名字里」这条路要加长度下限：选项词大多是两个字（缺失/破损/松动），
+# 而它们往往正好是事件名字的一部分（「井盖缺失/破损」含「缺失」）。
+# 实测：用户答「楼下井盖是缺失的」→ 被当成复述丢掉 → 同一道题再问一遍，永远问不完。
+ECHO_SUBSTRING_MIN_LENGTH = 3
+
+
 def is_echo_slot(value, code) -> bool:
     """槽位值只是把隐患名称复述了一遍，不算回答。
 
@@ -112,7 +118,9 @@ def is_echo_slot(value, code) -> bool:
         normalized_label = normalize_text(label)
         if not normalized_label:
             continue
-        if text == normalized_label or text in normalized_label:
+        if text == normalized_label:
+            return True
+        if len(text) >= ECHO_SUBSTRING_MIN_LENGTH and text in normalized_label:
             return True
     return False
 
