@@ -77,10 +77,7 @@
 - **小类/大类权威通道** → 已于 10/13–10/14 修复（见 §6），待回填讲稿。
 - 规划器 intent 漂移 → 10/13 已补"失败不静默"日志（可观测性），行为未改。
 - 语料覆盖、CI/CD 缺失 → 讲得清"是什么问题、为什么现在不做、要做怎么做"即可，不修。
-- **7 个文档改动未提交**（10/14 晚，改到一半）：`docs/README.md`、`docs/current/README.md`、
-  `ai-hazard-create-mq.md`、`hazard-lifecycle.md`、`hazard-multi-category-frontend-patch.md`、
-  `project-overview.md`、`deployment/safety-platform-deployment.md`。**讲稿以 docs/current 为准，
-  这份不能长期停在半成品状态，需收尾并提交。**
+- ~~7 个文档改动未提交~~ → **已于 10/15 收尾并提交**（`e94fa60`）：顺带纠了一处口径矛盾（`project-overview.md` 原写"地图统一走栅格渲染"，与最终形态"矢量优先 + 栅格自动兜底"冲突，已改）；三个前端补丁文档状态头已统一；跨文档链接断链 0、无半成品标记。
 
 ## 6. 2026-10-14 新增代码（讲稿必须同步，旧口径作废）
 
