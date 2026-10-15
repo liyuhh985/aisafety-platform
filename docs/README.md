@@ -1,7 +1,7 @@
 # 文档入口
 
 > 状态：current
-> 最后核对：2026-10-09
+> 最后核对：2026-10-14
 
 **读文档先看这里。最高规则：当前代码 > current 文档 > 历史设计/计划。**
 
@@ -11,8 +11,13 @@
 - [current/project-overview.md](./current/project-overview.md) — 项目总览
 - [current/architecture.md](./current/architecture.md) — 总体架构
 - [current/ai-assistant-sse-contract.md](./current/ai-assistant-sse-contract.md) — AI 助手 SSE 契约
+- [current/ai-hazard-create-mq.md](./current/ai-hazard-create-mq.md) — AI 建任务 MQ 契约
+- [current/ai-hazard-create-observability.md](./current/ai-hazard-create-observability.md) — MQ 可观测性
 - [current/hazard-lifecycle.md](./current/hazard-lifecycle.md) — 隐患生命周期
 - [current/agent-orchestration.md](./current/agent-orchestration.md) — Agent 编排
+- [current/hazard-multi-category-frontend-patch.md](./current/hazard-multi-category-frontend-patch.md) — 工单多类别展示与地图底图修复（前端补丁）
+- [current/ai-multi-hazard-frontend-patch.md](./current/ai-multi-hazard-frontend-patch.md) — 助手多隐患会话大类锁定（前端补丁）
+- [current/ai-hazard-create-mq-frontend-patch.md](./current/ai-hazard-create-mq-frontend-patch.md) — 建单 MQ 状态轮询（前端补丁）
 
 ## 部署
 

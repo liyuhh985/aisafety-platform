@@ -1,5 +1,5 @@
 > 状态：current
-> 最后核对：2026-10-11
+> 最后核对：2026-10-14
 > 说明：部署主入口
 
 # 安全隐患平台全栈部署 Runbook
@@ -631,6 +631,27 @@ grep -nE "ERROR|Exception|Caused by" /home/ubuntu/safety-backend.log | tail -40
 ### 前端页面是旧版本
 
 检查 `index.html` 是否 no-cache，以及 `dist` 是否真的同步到 `/var/www/safety-platform`。
+
+### 地图页底图空白（控制台报 `Unimplemented type: 3` / `INVALID_USER_DOMAIN`，或底图近乎空白 / 切换风格后变空白）
+
+当前实现为"**矢量优先 + 栅格自动兜底**"：`MapPage.vue` 加载 SDK 前预检矢量样式接口，可用走 WebGL 官方风格
+（macaron / whitesmoke / dark），不可用自动降级栅格瓦片 + 滤镜。历史根因（均已修复）：
+
+1. Key 未配域名白名单 → 矢量样式接口（`custyle.amap.com` / `o4.amap.com`）返回 `INVALID_USER_DOMAIN`，
+   PBF 解析失败 → 底图空白。**修复：在高德控制台为该 Key 配置域名白名单**
+   （`106.53.219.214`、`safety.onlyliyuu.online`、`onlyliyuu.online`、`www.onlyliyuu.online`）。
+2. 栅格兜底时 SDK 默认 `webrd` + `style=8` 浅色瓦片低缩放近乎空白。修复：显式彩色路网瓦片
+   `wprd0{1,2,3,4}.is.autonavi.com/appmaptile?...&style=8`（浅白用 `webrd` + `style=7`）。
+3. Tailwind v4 preflight 的 `img,video{max-width:100%;height:auto}` 把瓦片 `<img>` 在 0 宽瓦片层内压成
+   0 宽（**切换风格后整片空白的主因**）。修复：`src/map-tile-fix.css` 豁免 `.amap-layer img{max-width:none}`。
+
+再次出现时的排查顺序：
+
+1. 确认线上产物：`grep -c getMergedStyleData <MapPage-*.js>`、`grep -c wprd0 <MapPage-*.js>`、
+   `grep -c "max-width:none" <index-*.css>` 均非 0；
+2. 确认 `dist` 已 rsync 到 `/var/www/safety-platform` 并 reload nginx（见第 7 节）；
+3. 浏览器强刷（`Ctrl + F5`），Network 里应看到 `custyle.amap.com/...getMergedStyleData`（200，protobuf，
+   矢量模式）或 `wprd0*.is.autonavi.com`（栅格兜底）其一。
 
 
 ## 12. Redis Stack（Python AI 专用，单实例重启恢复）

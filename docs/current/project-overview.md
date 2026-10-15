@@ -1,7 +1,7 @@
 # 项目总览（当前真相）
 
 > 状态：current
-> 最后核对：2026-10-11
+> 最后核对：2026-10-14
 > 事实来源：当前代码。与本文冲突的旧文档一律以代码为准。
 > 最高规则：当前代码 > current 文档 > 历史设计/计划
 
@@ -86,6 +86,8 @@ Python AI :8000
 - 隐患报告：上传图片、流式分析、保存、历史列表、详情、删除。
 - AI 助手：多轮对话、两级隐患分类、范围护栏、不确定性门控、并行检索与自评重试、报告生成。
 - 建单闭环：报告后确认卡片 → 地址追问 → 地图选点 → 异步建单（`task_accepted` + 轮询）。
+- 工单多类别（2026-10-14）：一张单最多 3 个类别（`hazard_types` 逗号串，首条 = `hazard_type`）；列表/地图/详情**同级等样并排展示**，前端**只按一级大类「任一命中」检索**（不做二级小类筛选）。见 `docs/current/hazard-multi-category-frontend-patch.md`。
+- 地图底图（2026-10-14）：**矢量优先 + 栅格自动兜底**——加载 SDK 前预检高德矢量样式接口，可用则走 WebGL 官方风格（`macaron` / `whitesmoke` / `dark`），不可用才置 `window.forbidenWebGL = true` 降级为 DOM 栅格瓦片 + CSS 滤镜。前提是高德 Key 已配域名白名单（缺白名单时矢量接口返回 `INVALID_USER_DOMAIN`）。见 `docs/current/hazard-multi-category-frontend-patch.md`。
 - 建单可靠性：Outbox 至少一次投递、`request_id` 幂等（`tb_hazard.request_id` 唯一索引）、DLX/DLQ、失败重试；回执失败与卡单的处置见「已知边界」。
 - 隐患生命周期：派单 / 整改 / 完成 / 验收 / 驳回 / 撤回，`HazardAction` 全量留痕。
 - 语料：案例 / 法规 / 知识库；向量同步与删除 outbox。
@@ -115,5 +117,6 @@ Python AI :8000
 - AI 助手 SSE 契约：`docs/current/ai-assistant-sse-contract.md`
 - AI 建任务 MQ 契约：`docs/current/ai-hazard-create-mq.md`
 - 隐患生命周期：`docs/current/hazard-lifecycle.md`
+- 前端补丁（多类别展示 / 地图底图）：`docs/current/hazard-multi-category-frontend-patch.md`
 - Agent 编排：`docs/current/agent-orchestration.md`
 - 部署：`docs/deployment/safety-platform-deployment.md`

@@ -1,7 +1,7 @@
 # AI 建任务：MQ + Outbox 契约（当前真相）
 
 > 状态：current
-> 最后核对：2026-10-11
+> 最后核对：2026-10-14
 > 事实来源：当前代码（`ai-module/tools/hazard_create_queue.py`、`ai-module/hazard_create_worker.py`、`ai-module/server.py`、`safety-web/.../RabbitConfig.java`、`HazardCreateConsumer.java`、`HazardCreateResultPublisher.java`、`HazardServiceImpl.createAi`）+ 线上运行形态（队列 `hazard.create` / `hazard.create.result.q` / `hazard.create.dlq` 存在，worker 进程在跑）。
 > 关联：`docs/current/ai-assistant-sse-contract.md`、`docs/current/hazard-lifecycle.md`、`docs/deployment/safety-platform-deployment.md`
 
@@ -114,6 +114,8 @@ MySQL 唯一索引允许多个 `NULL`，存量行不受影响。
 > 2026-10-14：新增 `categoryList`（一次上报可能有多个隐患，最多 3 条、第一条为主类别）。
 > `category` 语义不变（= 列表第一条），所以老消费端不受影响；消费端把它拼成逗号串写入
 > `tb_hazard.hazard_types`，`hazard_type` 仍是主类别。
+> 前端展示/筛选口径（全部类别同级并排、只按一级大类「任一命中」检索）见
+> `docs/current/hazard-multi-category-frontend-patch.md`。
 
 回执消息体：
 ```json

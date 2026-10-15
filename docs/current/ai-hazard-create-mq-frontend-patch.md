@@ -1,6 +1,7 @@
 # 前端补丁：AI 建任务 MQ `task_accepted` + 轮询
 
-> 状态：current  
+> 状态：current
+> 最后核对：2026-10-11
 > 适用文件：`/home/ubuntu/aisafety-platform-frontend/src/views/HomeView.vue`  
 > 背景：MQ 模式下 Python 只发 `task_accepted`，不再同步发 `task_created`；前端必须轮询状态接口直到 `SUCCESS/FAILED`。
 > 2026-10-11：Task 13 已删除旧同步链路，前端里的 `task_created` 分支已成为死代码，可后续清理。

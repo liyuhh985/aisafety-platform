@@ -1,7 +1,7 @@
 # 隐患生命周期（当前真相）
 
 > 状态：current
-> 最后核对：2026-10-09
+> 最后核对：2026-10-14
 > 事实来源：`safety-pojo/.../entity/Hazard.java`、`HazardAction.java`、`User.java`、`safety-service/.../impl/HazardServiceImpl.java`、`HazardMapper.java`、`safety-web/.../HazardController.java`。
 > 命名以代码为准：状态 1 是 **「已接单」**（不是「已派单」）；状态 3 的文案取决于 `reviewed`。
 
@@ -84,24 +84,26 @@
 
 字段：`hazard_id` / `operator_id` / `action_type` / `remark` / `create_time`。
 
-## 类别字段（2026-10-14）
+## 六、类别字段（2026-10-14）
 
 - `hazard_type`：**主类别**，canonical `major_code/subcategory_code`，语义未变。
 - `hazard_types`：**全部类别**，英文逗号分隔、最多 3 条、第一条恒等于 `hazard_type`。
   一次上报里含多个隐患时用它；单类别工单两列相同。存量数据已回填（= `hazard_type`）。
 - 迁移脚本：`ai-module/db/schema/migrate_multi_hazard.py`（幂等）。
-- 前端筛选要按「列表里任一命中」判，见 `docs/current/hazard-multi-category-frontend-patch.md`。
+- 前端筛选口径（2026-10-14 起）：列表页/地图页**只按一级大类**筛选，工单任一类别的 `major_code`
+  命中即显示；**不做二级子类筛选**（级联「细分类型」Chips 已移除）；列表/地图/详情三处
+  对多类别**同级等样并排展示**，无 `+N` 角标、无主副区分。见 `docs/current/hazard-multi-category-frontend-patch.md`。
 
-## 六、缓存
+## 七、缓存
 
 流转成功后失效详情缓存 + 列表缓存（`invalidateDetailCache` / `invalidateListCache`）；隐患详情走 Caffeine + Redis + MySQL 多级缓存。
 
-## 七、图片与删除
+## 八、图片与删除
 
 - 报告删除触发 MinIO 图片硬删；失败进 `ResourceCleanupOutbox` 重试。
 - 语料（案例/法规/知识）DELETE 收紧为 ADMIN，删除后入 `VectorSyncOutbox` 做向量最终一致删除。
 
-## 八、AI 上报与建单的关系
+## 九、AI 上报与建单的关系
 
 - AI 建单走 MQ：Python Outbox → RabbitMQ → Java 消费写 `tb_hazard`（`status=0`、`reviewed=0`）；AI 侧只发 `task_accepted`，前端轮询状态查询。
 - `AiHazardDTO.district` 是 `String`；Python 侧 `geocode()` 未命中必须收敛成字符串（历史 bug：返回 `[]` 导致 Jackson 反序列化 500）。
