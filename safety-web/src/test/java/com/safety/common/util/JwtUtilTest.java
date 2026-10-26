@@ -44,8 +44,11 @@ class JwtUtilTest {
     void tamperedTokenIsRejected() {
         JwtUtil jwtUtil = new JwtUtil(VALID_SECRET, 60_000L);
         String token = jwtUtil.generate(7L, 0);
-        String tampered = token.substring(0, token.length() - 1)
-                + (token.endsWith("a") ? "b" : "a");
+        int payloadStart = token.indexOf('.') + 1;
+        char original = token.charAt(payloadStart);
+        String tampered = token.substring(0, payloadStart)
+                + (original == 'A' ? 'B' : 'A')
+                + token.substring(payloadStart + 1);
 
         assertNull(jwtUtil.parse(tampered));
     }
