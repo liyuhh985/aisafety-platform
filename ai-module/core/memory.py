@@ -12,8 +12,11 @@
 import json
 import logging
 import os
+import threading
 import time
+import uuid
 from dataclasses import dataclass, field
+from typing import Any
 
 import pymysql
 
@@ -143,6 +146,76 @@ _redis_sessions: dict[str, "RedisWorkingMemory"] = {}
 
 class SessionStoreUnavailable(RuntimeError):
     """会话后端（Redis）不可用。只有 SESSION_REDIS_FALLBACK=strict 才会抛出来。"""
+
+
+class SessionTurnBusy(RuntimeError):
+    """同一个用户会话已有一个 turn 在执行。"""
+
+
+_SESSION_TURN_LOCKS: dict[str, threading.Lock] = {}
+_SESSION_TURN_LOCKS_GUARD = threading.Lock()
+_SESSION_TURN_LOCK_PREFIX = f"{SESSION_REDIS_PREFIX}turn-lock:"
+_SESSION_TURN_LOCK_TTL_SECONDS = max(30, min(300, SESSION_REDIS_TTL_SECONDS))
+_RELEASE_SESSION_TURN_LOCK_SCRIPT = """
+if redis.call("get", KEYS[1]) == ARGV[1] then
+    return redis.call("del", KEYS[1])
+end
+return 0
+"""
+
+
+def session_namespace(user_id: int, session_id: str) -> str:
+    """会话与 LangGraph checkpoint 共用的安全命名空间。"""
+    if user_id is None:
+        raise ValueError("user_id is required for session access")
+    sid = (session_id or "").strip()
+    if not sid:
+        raise ValueError("session_id is required")
+    return f"{int(user_id)}:{sid}"
+
+
+class SessionTurnLease:
+    """一次会话 turn 的锁持有凭据；release 幂等。"""
+
+    def __init__(self, key: str, *, local_lock: Any = None,
+                 redis_client=None, redis_token: str = ""):
+        self._key = key
+        self._local_lock = local_lock
+        self._redis_client = redis_client
+        self._redis_token = redis_token
+        self._released = False
+
+    def release(self) -> None:
+        if self._released:
+            return
+        self._released = True
+        if self._redis_client is not None:
+            try:
+                self._redis_client.eval(
+                    _RELEASE_SESSION_TURN_LOCK_SCRIPT,
+                    1,
+                    self._key,
+                    self._redis_token,
+                )
+            except Exception as exc:
+                LOGGER.warning("release session turn lock failed key=%s: %s", self._key, exc)
+            return
+        if self._local_lock is None:
+            return
+        with _SESSION_TURN_LOCKS_GUARD:
+            try:
+                self._local_lock.release()
+            except RuntimeError:
+                pass
+            if (not self._local_lock.locked()
+                    and _SESSION_TURN_LOCKS.get(self._key) is self._local_lock):
+                _SESSION_TURN_LOCKS.pop(self._key, None)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        self.release()
 
 
 def _decode_session_message(raw) -> dict | None:
@@ -362,40 +435,78 @@ def _session_redis():
     return _redis()
 
 
-def _memory_session(session_id: str) -> WorkingMemory:
-    if session_id not in sessions:
-        sessions[session_id] = WorkingMemory(session_id=session_id)
-    return sessions[session_id]
+def _memory_session(session_key: str) -> WorkingMemory:
+    if session_key not in sessions:
+        sessions[session_key] = WorkingMemory(session_id=session_key)
+    return sessions[session_key]
 
 
-def get_session(session_id: str) -> WorkingMemory:
-    """按 SESSION_BACKEND 取会话对象。
-
-    memory：进程内 dict（本地开发；多 worker 下每个 worker 各记一份）
-    redis ：Redis LIST 存 messages（多 worker / 多副本共享同一份对话历史）
-    """
+def get_session(user_id: int, session_id: str) -> WorkingMemory:
+    """按 user_id + session_id 取隔离会话对象。"""
+    session_key = session_namespace(user_id, session_id)
     if _session_backend() != "redis":
-        return _memory_session(session_id)
+        return _memory_session(session_key)
 
-    mem = _redis_sessions.get(session_id)
+    mem = _redis_sessions.get(session_key)
     if mem is None:
         strict = _session_redis_fallback() == "strict"
         try:
             client = _session_redis()
         except Exception as exc:
-            LOGGER.warning("session redis client unavailable session_id=%s: %s", session_id, exc)
+            LOGGER.warning("session redis client unavailable session_key=%s: %s", session_key, exc)
             if strict:
                 raise SessionStoreUnavailable("redis session client unavailable") from exc
-            return _memory_session(session_id)
-        mem = RedisWorkingMemory(session_id, client, strict=strict)
-        _redis_sessions[session_id] = mem
+            return _memory_session(session_key)
+        mem = RedisWorkingMemory(session_key, client, strict=strict)
+        _redis_sessions[session_key] = mem
     return mem
+
+
+def _acquire_local_session_turn(session_key: str) -> SessionTurnLease:
+    with _SESSION_TURN_LOCKS_GUARD:
+        lock = _SESSION_TURN_LOCKS.setdefault(session_key, threading.Lock())
+        if not lock.acquire(blocking=False):
+            raise SessionTurnBusy(f"session turn already running: {session_key}")
+    return SessionTurnLease(session_key, local_lock=lock)
+
+
+def acquire_session_turn(user_id: int, session_id: str) -> SessionTurnLease:
+    """获取会话级单飞锁；Redis 后端优先使用跨 worker 的 SET NX 锁。"""
+    session_key = session_namespace(user_id, session_id)
+    if _session_backend() == "redis":
+        strict = _session_redis_fallback() == "strict"
+        try:
+            client = _session_redis()
+            token = uuid.uuid4().hex
+            lock_key = f"{_SESSION_TURN_LOCK_PREFIX}{session_key}"
+            acquired = client.set(
+                lock_key,
+                token,
+                nx=True,
+                ex=_SESSION_TURN_LOCK_TTL_SECONDS,
+            )
+            if not acquired:
+                raise SessionTurnBusy(f"session turn already running: {session_key}")
+            return SessionTurnLease(
+                lock_key,
+                redis_client=client,
+                redis_token=token,
+            )
+        except SessionTurnBusy:
+            raise
+        except Exception as exc:
+            LOGGER.warning("session turn redis lock unavailable session_key=%s: %s", session_key, exc)
+            if strict:
+                raise SessionStoreUnavailable("redis session turn lock unavailable") from exc
+    return _acquire_local_session_turn(session_key)
 
 
 def reset_sessions() -> None:
     """清空本进程的会话缓存（测试用；不动 Redis 里的数据）。"""
     sessions.clear()
     _redis_sessions.clear()
+    with _SESSION_TURN_LOCKS_GUARD:
+        _SESSION_TURN_LOCKS.clear()
 
 
 def session_backend_status() -> dict:

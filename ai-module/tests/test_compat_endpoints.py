@@ -6,6 +6,9 @@ from fastapi.testclient import TestClient
 import server
 
 
+INTERNAL_HEADERS = {"X-Internal-Token": "test-internal-token"}
+
+
 def _fake_graph(events):
     async def _run(**_kwargs):
         for kind, text in events:
@@ -38,12 +41,14 @@ def test_compat_vision_without_a_file_is_a_noop():
 
 
 def test_analyze_keeps_the_old_response_shape(monkeypatch):
+    monkeypatch.setattr(server, "AI_INTERNAL_TOKEN", "test-internal-token")
     monkeypatch.setattr(server, "assistant_graph_stream", _fake_graph([
         ("status", "x"), ("chunk", "报告"), ("chunk", "正文"),
         ("taxonomy", {"issues": []}), ("done", ""),
     ]))
     resp = TestClient(server.app).post(
-        "/api/ai/analyze", data={"text": "消防通道被堵", "session_id": "compat-1"})
+        "/api/ai/analyze", headers=INTERNAL_HEADERS,
+        data={"text": "消防通道被堵", "session_id": "compat-1", "user_id": "1"})
     assert resp.status_code == 200
     body = resp.json()
     assert body["session_id"] == "compat-1"
@@ -53,11 +58,13 @@ def test_analyze_keeps_the_old_response_shape(monkeypatch):
 
 
 def test_analyze_stream_maps_chunk_to_report(monkeypatch):
+    monkeypatch.setattr(server, "AI_INTERNAL_TOKEN", "test-internal-token")
     monkeypatch.setattr(server, "assistant_graph_stream", _fake_graph([
         ("status", "thinking"), ("chunk", "A"), ("taxonomy", {}), ("done", ""),
     ]))
     resp = TestClient(server.app).post(
-        "/api/ai/analyze/stream", data={"text": "x", "session_id": "compat-2"})
+        "/api/ai/analyze/stream", headers=INTERNAL_HEADERS,
+        data={"text": "x", "session_id": "compat-2", "user_id": "1"})
     types = [json.loads(line[6:])["type"]
              for line in resp.text.splitlines() if line.startswith("data: ")]
     assert "status" in types and "report" in types and "done" in types
@@ -65,14 +72,18 @@ def test_analyze_stream_maps_chunk_to_report(monkeypatch):
 
 
 def test_chat_returns_reply(monkeypatch):
+    monkeypatch.setattr(server, "AI_INTERNAL_TOKEN", "test-internal-token")
     monkeypatch.setattr(server, "assistant_graph_stream", _fake_graph([("chunk", "回话")]))
     resp = TestClient(server.app).post(
-        "/api/ai/chat", data={"message": "然后呢", "session_id": "compat-3"})
+        "/api/ai/chat", headers=INTERNAL_HEADERS,
+        data={"message": "然后呢", "session_id": "compat-3", "user_id": "1"})
     assert resp.json() == {"session_id": "compat-3", "reply": "回话"}
 
 
 def test_chat_stream_passes_events_through(monkeypatch):
+    monkeypatch.setattr(server, "AI_INTERNAL_TOKEN", "test-internal-token")
     monkeypatch.setattr(server, "assistant_graph_stream", _fake_graph([("chunk", "B")]))
     resp = TestClient(server.app).post(
-        "/api/ai/chat/stream", data={"message": "嗯", "session_id": "compat-4"})
+        "/api/ai/chat/stream", headers=INTERNAL_HEADERS,
+        data={"message": "嗯", "session_id": "compat-4", "user_id": "1"})
     assert "data: " in resp.text and '"chunk"' in resp.text

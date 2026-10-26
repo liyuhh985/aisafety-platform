@@ -9,4 +9,5 @@ public interface UserService {
     LoginVO login(LoginDTO dto);
     LoginVO register(RegisterDTO dto);
     UserVO getUserById(Long id);
+    void updateRole(Long userId, Integer role);
 }

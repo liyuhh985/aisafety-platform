@@ -27,6 +27,17 @@ SF_API_KEY = os.getenv("SF_API_KEY", "")
 SF_EMBED_MODEL = os.getenv("SF_EMBED_MODEL", "BAAI/bge-m3")
 AI_INTERNAL_TOKEN = os.getenv("AI_INTERNAL_TOKEN", "")
 
+# AI 服务默认只监听本机。容器部署必须显式设置 AI_BIND_HOST=0.0.0.0，
+# 并由容器网络/防火墙限制为仅 Java 可访问，避免默认暴露公网。
+AI_BIND_HOST = (os.getenv("AI_BIND_HOST", "127.0.0.1").strip() or "127.0.0.1")
+AI_BIND_PORT = int(os.getenv("AI_BIND_PORT", "8000"))
+# Python 不应被浏览器直连；只有显式配置时才允许指定来源。
+AI_CORS_ORIGINS = tuple(
+    origin.strip()
+    for origin in os.getenv("AI_CORS_ORIGINS", "").split(",")
+    if origin.strip()
+)
+
 # 高德 Web 服务 Key（地理编码，后端 Python 调用）
 AMAP_WEB_KEY = os.getenv("AMAP_WEB_KEY", "")
 

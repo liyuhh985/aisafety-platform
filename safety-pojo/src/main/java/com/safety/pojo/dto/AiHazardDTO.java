@@ -37,7 +37,10 @@ public class AiHazardDTO {
     /** 纬度（可空） */
     private BigDecimal latitude;
 
-    /** 图片 URL（可空：AI 可能无图） */
+    /** 受控图片文件 ID（来自 /api/upload/image） */
+    private Long imageFileId;
+
+    /** 图片 URL（服务端生成；外部不应直接信任） */
     private String imageUrl;
 
     private String description;

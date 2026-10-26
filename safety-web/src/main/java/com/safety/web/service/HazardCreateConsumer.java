@@ -62,6 +62,7 @@ public class HazardCreateConsumer {
         dto.setLatitude(msg.getLatitude());
         dto.setDescription(msg.getDescription());
         dto.setSeverity(msg.getSeverity());
+        dto.setImageFileId(msg.getImageFileId());
         dto.setImageUrl(msg.getImageUrl());
         dto.setReport(msg.getReport());
 
@@ -83,3 +84,4 @@ public class HazardCreateConsumer {
         return new AmqpRejectAndDontRequeueException(message, cause);
     }
 }
+

@@ -1,5 +1,10 @@
 # 复制此文件为 application-local.yml，仅填写本地开发凭据。
 # 不要将真实密码、Token 或密钥提交到 Git。
+# JWT_SECRET 至少 32 个 UTF-8 字节，建议使用密码学安全随机值。
+
+jwt:
+  secret: ${JWT_SECRET:}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
 
 spring:
   datasource:
@@ -23,7 +28,6 @@ minio:
   access-key: ${MINIO_ACCESS_KEY:}
   secret-key: ${MINIO_SECRET_KEY:}
   bucket: ${MINIO_BUCKET:safety-images}
-  base-url: ${MINIO_BASE_URL:http://127.0.0.1:9000}
 
 ai:
   base-url: ${AI_BASE_URL:http://127.0.0.1:8000/api/ai}
@@ -33,3 +37,4 @@ vector-sync:
   delete:
     poll-delay-ms: ${VECTOR_SYNC_DELETE_POLL_DELAY_MS:30000}
     batch-size: ${VECTOR_SYNC_DELETE_BATCH_SIZE:50}
+

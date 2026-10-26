@@ -1,8 +1,9 @@
 """
 安全隐患分析 AI 服务 — FastAPI HTTP 接口。
-启动: python server.py  (默认 0.0.0.0:8000)
+启动: python server.py  (默认 127.0.0.1:8000)
 """
 import asyncio
+import hmac
 import json
 import logging
 import shutil
@@ -15,20 +16,24 @@ from pathlib import Path
 from fastapi import Body, FastAPI, File, Form, Header, Query, Request, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from core.memory import (
+    SessionStoreUnavailable,
+    SessionTurnBusy,
+    acquire_session_turn,
     get_session,
     session_backend_status,
 )
 from core.cancellation import CancellationToken
 from core.assistant_graph import (
     checkpoint_backend_status,
+    clear_thread,
     run_stream_events as assistant_graph_stream,
 )
 from tools.milvus_store import MilvusVectorStore
-from config import (AI_INTERNAL_TOKEN, MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL,
-                      HAZARD_CREATE_WORKER_INLINE)
+from config import (AI_BIND_HOST, AI_BIND_PORT, AI_CORS_ORIGINS, AI_INTERNAL_TOKEN,
+                      MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL, HAZARD_CREATE_WORKER_INLINE)
 
 logger = logging.getLogger("safety.ai")
 
@@ -76,7 +81,26 @@ async def _lifespan(_app):
 
 
 app = FastAPI(title="Safety AI", version="1.0", lifespan=_lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=list(AI_CORS_ORIGINS),
+    allow_methods=["GET", "POST", "DELETE"],
+    allow_headers=["Content-Type", "X-Internal-Token"],
+)
+
+
+@app.middleware("http")
+async def require_internal_token(request: Request, call_next):
+    """Python 只作为 Java 的内部服务；health 是唯一公开端点。"""
+    path = request.url.path
+    if path == "/api/ai/health":
+        return await call_next(request)
+    if path == "/api/ai" or path.startswith("/api/ai/"):
+        supplied = request.headers.get("X-Internal-Token", "")
+        if not AI_INTERNAL_TOKEN or not hmac.compare_digest(supplied, AI_INTERNAL_TOKEN):
+            return JSONResponse(status_code=401, content={"detail": "Unauthorized"})
+    return await call_next(request)
+
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
@@ -103,6 +127,24 @@ def _sse(event_type: str, content) -> str:
     return "data: " + json.dumps(
         {"type": event_type, "content": content}, ensure_ascii=False
     ) + "\n\n"
+
+
+def _require_user_id(user_id) -> int:
+    if user_id is None:
+        raise HTTPException(status_code=400, detail="user_id required")
+    try:
+        return int(user_id)
+    except (TypeError, ValueError):
+        raise HTTPException(status_code=400, detail="user_id must be an integer")
+
+
+def _begin_session_turn(user_id: int, session_id: str):
+    try:
+        return acquire_session_turn(user_id, session_id)
+    except SessionTurnBusy:
+        raise HTTPException(status_code=409, detail="session turn already in progress")
+    except SessionStoreUnavailable:
+        raise HTTPException(status_code=503, detail="session store unavailable")
 
 
 def _find_vision_summary(history) -> str:
@@ -162,36 +204,39 @@ async def analyze(
     user_id: int = Form(None),
 ):
     """兼容（非流式）：返回 {session_id, vision, report}，内部走助手图。"""
-    image_path = await _run_blocking(_save_upload, file) if file else None
+    uid = _require_user_id(user_id)
     sid = session_id or str(uuid.uuid4())
-    vision_json, extra = await _run_blocking(_compat_vision, image_path)
-    mem = get_session(sid)
-    history = (mem.get_history() if mem else []) + extra
-    if not text and image_path:
-        text = "请分析这张图片中的安全隐患"
-    if mem:
+    lease = _begin_session_turn(uid, sid)
+    image_path = None
+    try:
+        image_path = await _run_blocking(_save_upload, file) if file else None
+        vision_json, extra = await _run_blocking(_compat_vision, image_path)
+        mem = get_session(uid, sid)
+        history = mem.get_history() + extra
+        if not text and image_path:
+            text = "请分析这张图片中的安全隐患"
         try:
             mem.add_user(text + (" [含图片]" if image_path else ""))
         except Exception:
             pass
-    reply = []
-    try:
-        async for kind, chunk in _compat_run(text, history, sid, user_id):
+        reply = []
+        async for kind, chunk in _compat_run(text, history, sid, uid):
             if kind == "chunk":
                 reply.append(str(chunk))
             elif kind == "interrupt":
                 question = str((chunk or {}).get("question") or "")
                 if question:
                     reply.append(question)
+        body = _collect_reply(reply)
+        if body:
+            try:
+                mem.add_assistant(body)
+            except Exception:
+                pass
+        return {"session_id": sid, "vision": vision_json, "report": body}
     finally:
+        lease.release()
         _unlink_quietly(image_path)
-    body = _collect_reply(reply)
-    if mem and body:
-        try:
-            mem.add_assistant(body)
-        except Exception:
-            pass
-    return {"session_id": sid, "vision": vision_json, "report": body}
 
 
 @app.post("/api/ai/analyze/stream")
@@ -203,55 +248,62 @@ async def analyze_stream(
     user_id: int = Form(None),
 ):
     """兼容（SSE）：事件名沿用旧契约 status/vision/no_hazard/report/error/done。"""
-    image_path = await _run_blocking(_save_upload, file) if file else None
+    uid = _require_user_id(user_id)
     sid = session_id or str(uuid.uuid4())
-    vision_json, extra = await _run_blocking(_compat_vision, image_path)
-    mem = get_session(sid)
-    history = (mem.get_history() if mem else []) + extra
-    if not text and image_path:
-        text = "请分析这张图片中的安全隐患"
-    if mem:
+    lease = _begin_session_turn(uid, sid)
+    image_path = None
+    try:
+        image_path = await _run_blocking(_save_upload, file) if file else None
+        vision_json, extra = await _run_blocking(_compat_vision, image_path)
+        mem = get_session(uid, sid)
+        history = mem.get_history() + extra
+        if not text and image_path:
+            text = "请分析这张图片中的安全隐患"
         try:
             mem.add_user(text + (" [含图片]" if image_path else ""))
         except Exception:
             pass
 
-    async def generate():
-        reply = []
-        yield _sse("status", "正在识别图片中的安全隐患...")
-        if vision_json is not None:
-            yield _sse("vision", vision_json)
-            if isinstance(vision_json, dict) and vision_json.get("has_hazard") is False:
-                yield _sse("no_hazard", vision_json.get("reason_if_no_hazard", ""))
-                yield _sse("done", "")
+        async def generate():
+            reply = []
+            try:
+                yield _sse("status", "正在识别图片中的安全隐患...")
+                if vision_json is not None:
+                    yield _sse("vision", vision_json)
+                    if isinstance(vision_json, dict) and vision_json.get("has_hazard") is False:
+                        yield _sse("no_hazard", vision_json.get("reason_if_no_hazard", ""))
+                        yield _sse("done", "")
+                        return
+                elif image_path:
+                    yield _sse("error", "视觉识别失败")
+                async for kind, chunk in _compat_run(text, history, sid, uid):
+                    if await request.is_disconnected():
+                        break
+                    if kind == "chunk":
+                        reply.append(str(chunk))
+                        yield _sse("report", chunk)
+                    elif kind == "interrupt":
+                        question = str((chunk or {}).get("question") or "")
+                        if question:
+                            reply.append(question)
+                            yield _sse("report", question)
+                    elif kind in ("status", "error", "done"):
+                        yield _sse(kind, chunk)
+            finally:
+                if reply:
+                    try:
+                        mem.add_assistant(_collect_reply(reply))
+                    except Exception:
+                        pass
+                lease.release()
                 _unlink_quietly(image_path)
-                return
-        elif image_path:
-            yield _sse("error", "视觉识别失败")
-        try:
-            async for kind, chunk in _compat_run(text, history, sid, user_id):
-                if await request.is_disconnected():
-                    break
-                if kind == "chunk":
-                    reply.append(str(chunk))
-                    yield _sse("report", chunk)
-                elif kind == "interrupt":
-                    question = str((chunk or {}).get("question") or "")
-                    if question:
-                        reply.append(question)
-                        yield _sse("report", question)
-                elif kind in ("status", "error", "done"):
-                    yield _sse(kind, chunk)
-        finally:
-            if mem and reply:
-                try:
-                    mem.add_assistant(_collect_reply(reply))
-                except Exception:
-                    pass
-            _unlink_quietly(image_path)
 
-    return StreamingResponse(generate(), media_type="text/event-stream",
-                             headers={"X-Session-Id": sid})
+        return StreamingResponse(generate(), media_type="text/event-stream",
+                                 headers={"X-Session-Id": sid})
+    except Exception:
+        lease.release()
+        _unlink_quietly(image_path)
+        raise
 
 
 @app.post("/api/ai/chat")
@@ -261,28 +313,32 @@ async def chat(
     user_id: int = Form(None),
 ):
     """兼容（非流式）：追问，返回 {session_id, reply}。"""
-    mem = get_session(session_id)
-    history = mem.get_history() if mem else []
-    if mem:
+    uid = _require_user_id(user_id)
+    lease = _begin_session_turn(uid, session_id)
+    try:
+        mem = get_session(uid, session_id)
+        history = mem.get_history()
         try:
             mem.add_user(message)
         except Exception:
             pass
-    reply = []
-    async for kind, chunk in _compat_run(message, history, session_id, user_id):
-        if kind == "chunk":
-            reply.append(str(chunk))
-        elif kind == "interrupt":
-            question = str((chunk or {}).get("question") or "")
-            if question:
-                reply.append(question)
-    body = _collect_reply(reply)
-    if mem and body:
-        try:
-            mem.add_assistant(body)
-        except Exception:
-            pass
-    return {"session_id": session_id, "reply": body}
+        reply = []
+        async for kind, chunk in _compat_run(message, history, session_id, uid):
+            if kind == "chunk":
+                reply.append(str(chunk))
+            elif kind == "interrupt":
+                question = str((chunk or {}).get("question") or "")
+                if question:
+                    reply.append(question)
+        body = _collect_reply(reply)
+        if body:
+            try:
+                mem.add_assistant(body)
+            except Exception:
+                pass
+        return {"session_id": session_id, "reply": body}
+    finally:
+        lease.release()
 
 
 @app.post("/api/ai/chat/stream")
@@ -293,31 +349,37 @@ async def chat_stream(
     user_id: int = Form(None),
 ):
     """兼容（SSE）：追问。事件名与助手接口一致（type/content）。"""
-    mem = get_session(session_id)
-    history = mem.get_history() if mem else []
-    if mem:
+    uid = _require_user_id(user_id)
+    lease = _begin_session_turn(uid, session_id)
+    try:
+        mem = get_session(uid, session_id)
+        history = mem.get_history()
         try:
             mem.add_user(message)
         except Exception:
             pass
 
-    async def generate():
-        reply = []
-        try:
-            async for kind, chunk in _compat_run(message, history, session_id, user_id):
-                if await request.is_disconnected():
-                    break
-                if kind == "chunk":
-                    reply.append(str(chunk))
-                yield _sse(kind, chunk)
-        finally:
-            if mem and reply:
-                try:
-                    mem.add_assistant(_collect_reply(reply))
-                except Exception:
-                    pass
+        async def generate():
+            reply = []
+            try:
+                async for kind, chunk in _compat_run(message, history, session_id, uid):
+                    if await request.is_disconnected():
+                        break
+                    if kind == "chunk":
+                        reply.append(str(chunk))
+                    yield _sse(kind, chunk)
+            finally:
+                if reply:
+                    try:
+                        mem.add_assistant(_collect_reply(reply))
+                    except Exception:
+                        pass
+                lease.release()
 
-    return StreamingResponse(generate(), media_type="text/event-stream")
+        return StreamingResponse(generate(), media_type="text/event-stream")
+    except Exception:
+        lease.release()
+        raise
 
 @app.post("/api/ai/assistant/stream")
 async def assistant_stream(
@@ -327,6 +389,8 @@ async def assistant_stream(
     user_id: int = Form(None),
     selected_major_code: str = Form(None),
     interrupt_reply: str = Form(None),
+    image_url: str = Form(None),
+    image_file_id: int = Form(None),
     file: UploadFile = File(None),
 ):
     # 兼容 JSON 和 multipart：有 file 走 FormData，无 file 走 JSON
@@ -346,118 +410,134 @@ async def assistant_stream(
                 or body.get("interruptReply")
                 or ""
             )
+            image_url = body.get("image_url") or body.get("imageUrl") or ""
+            image_file_id = body.get("image_file_id") or body.get("imageFileId")
         except Exception:
             message = ""
             session_id = ""
+    uid = _require_user_id(user_id)
     message = (message or "").strip()
     if not message and (file is None or not getattr(file, "filename", "")):
         raise HTTPException(status_code=400, detail="message or file required")
     sid = session_id or str(uuid.uuid4())
-    mem = get_session(sid)
-    history = mem.get_history() if mem else []
-    max_keep = getattr(mem, "max_turns", 10) * 2
-    if len(history) > max_keep:
-        history = history[-max_keep:]
-    # 有图写死必调：先跑视觉，结果注入历史，保证有图必看
+    lease = _begin_session_turn(uid, sid)
     image_path = None
-    if file is not None and getattr(file, "filename", ""):
-        try:
-            image_path = await _run_blocking(_save_upload, file)
-            # 同步注入视觉结果到 history（不依赖模型是否调工具）
+    try:
+        mem = get_session(uid, sid)
+        history = mem.get_history()
+        max_keep = getattr(mem, "max_turns", 10) * 2
+        if len(history) > max_keep:
+            history = history[-max_keep:]
+        # 有图写死必调：先跑视觉，结果注入历史，保证有图必看
+        if file is not None and getattr(file, "filename", ""):
             try:
-                from mimo_client import MiMoVisionClient
-                from prompts import VISION_PROMPT
-                vc = MiMoVisionClient()
-                vision_json = await _run_blocking(vc.analyze_json, image_path, VISION_PROMPT)
-            except Exception:
-                vision_json = None
-            vision_content = (
-                f"[视觉分析] {vision_json}"
-                if vision_json
-                else "[视觉分析失败，请仅按用户文字描述判断，不要编造图中细节]"
-            )
-            history = history + [{"role": "system", "content": vision_content}]
-            # 立刻落库，保证第二轮能读到；失败也只记录这一条失败信息
-            try:
-                # add_system 在两种后端下语义一致（memory 追加到列表 / redis RPUSH+LTRIM），
-                # 不要再 mem.messages.append(...)：Redis 后端下 messages 是即时读出来的副本。
-                mem.add_system(vision_content)
-            except Exception:
-                pass
-            if len(history) > max_keep:
-                history = history[-max_keep:]
-        except Exception as e:
-            raise HTTPException(status_code=400, detail=f"图片处理失败: {e}")
+                image_path = await _run_blocking(_save_upload, file)
+                # 同步注入视觉结果到 history（不依赖模型是否调工具）
+                try:
+                    from mimo_client import MiMoVisionClient
+                    from prompts import VISION_PROMPT
+                    vc = MiMoVisionClient()
+                    vision_json = await _run_blocking(vc.analyze_json, image_path, VISION_PROMPT)
+                except Exception:
+                    vision_json = None
+                vision_content = (
+                    f"[视觉分析] {vision_json}"
+                    if vision_json
+                    else "[视觉分析失败，请仅按用户文字描述判断，不要编造图中细节]"
+                )
+                history = history + [{"role": "system", "content": vision_content}]
+                # 立刻落库，保证第二轮能读到；失败也只记录这一条失败信息
+                try:
+                    # add_system 在两种后端下语义一致（memory 追加到列表 / redis RPUSH+LTRIM），
+                    # 不要再 mem.messages.append(...)：Redis 后端下 messages 是即时读出来的副本。
+                    mem.add_system(vision_content)
+                except Exception:
+                    pass
+                if len(history) > max_keep:
+                    history = history[-max_keep:]
+            except Exception as e:
+                raise HTTPException(status_code=400, detail=f"图片处理失败: {e}")
 
-
-    if not message and image_path:
-        message = "请分析这张图片中的安全隐患"
-    # 立刻落库用户消息，保证第二轮多轮能读到（原来在 generate 结束后才落库，第二轮来得快就读不到）
-    if mem:
+        if not message and image_path:
+            message = "请分析这张图片中的安全隐患"
+        # 立刻落库用户消息，保证第二轮多轮能读到（原来在 generate 结束后才落库，第二轮来得快就读不到）
         try:
             mem.add_user(message + (" [含图片]" if image_path else ""))
-        except: pass
+        except Exception:
+            pass
 
-    async def generate():
-        try:
-            sent_any = False
-            reply_parts = []
-            vision_summary = ""
-            for _h in history:
-                _c = (_h.get("content") or "")
-                if _c.startswith("[视觉分析]"):
-                    vision_summary = _c
-            cancel_token = CancellationToken()
-            async for kind, text in assistant_graph_stream(
-                message=message, history=history, slots={},
-                vision_summary=vision_summary, session_id=sid, max_rounds=5,
-                cancellation=cancel_token, user_id=user_id,
-                selected_major_code=selected_major_code or "",
-                interrupt_reply=interrupt_reply or "",
-            ):
-                if await request.is_disconnected():
-                    cancel_token.cancel()
-                    print("[Assistant] 客户端断开，停止")
-                    break
-                yield f"data: {json.dumps({'type': kind, 'content': text}, ensure_ascii=False)}\n\n"
-                sent_any = True
-                if kind in ("chunk", "error"):
-                    reply_parts.append(text)
-            if mem:
+        async def generate():
+            try:
+                sent_any = False
+                reply_parts = []
+                vision_summary = ""
+                for item in history:
+                    content = (item.get("content") or "")
+                    if content.startswith("[视觉分析]"):
+                        vision_summary = content
+                cancel_token = CancellationToken()
+                async for kind, text in assistant_graph_stream(
+                    message=message, history=history, slots={},
+                    vision_summary=vision_summary, session_id=sid, max_rounds=5,
+                    cancellation=cancel_token, user_id=uid,
+                    selected_major_code=selected_major_code or "",
+                    interrupt_reply=interrupt_reply or "",
+                    image_url=image_url or "",
+                    image_file_id=image_file_id,
+                ):
+                    if await request.is_disconnected():
+                        cancel_token.cancel()
+                        print("[Assistant] 客户端断开，停止")
+                        break
+                    yield f"data: {json.dumps({'type': kind, 'content': text}, ensure_ascii=False)}\n\n"
+                    sent_any = True
+                    if kind in ("chunk", "error"):
+                        reply_parts.append(text)
                 try:
                     if reply_parts:
                         mem.add_assistant("".join(reply_parts))
                 except Exception:
                     pass
-            if not sent_any:
-                yield f"data: {json.dumps({'type':'done','content':''}, ensure_ascii=False)}\n\n"
-        except Exception as e:
-            yield f"data: {json.dumps({'type':'error','content':str(e)}, ensure_ascii=False)}\n\n"
-        finally:
-            if image_path:
-                try:
-                    Path(image_path).unlink(missing_ok=True)
-                except Exception:
-                    pass
-    return StreamingResponse(generate(), media_type="text/event-stream", headers={"X-Session-Id": sid})
+                if not sent_any:
+                    yield f"data: {json.dumps({'type':'done','content':''}, ensure_ascii=False)}\n\n"
+            except Exception as e:
+                yield f"data: {json.dumps({'type':'error','content':str(e)}, ensure_ascii=False)}\n\n"
+            finally:
+                lease.release()
+                _unlink_quietly(image_path)
+
+        return StreamingResponse(generate(), media_type="text/event-stream", headers={"X-Session-Id": sid})
+    except Exception:
+        lease.release()
+        _unlink_quietly(image_path)
+        raise
+
 
 @app.get("/api/ai/history")
-def history(session_id: str = Query(...)):
-    """获取会话历史（redis 后端下读的是跨 worker 共享的那一份）。"""
-    mem = get_session(session_id)
+def history(session_id: str = Query(...), user_id: int = Query(...)):
+    """获取会话历史；user_id 由 Java 从当前登录态注入。"""
+    mem = get_session(user_id, session_id)
     return {"session_id": session_id, "messages": mem.get_history()}
 
 
 @app.delete("/api/ai/session")
-def clear_session(session_id: str = Query(...)):
-    """清除会话。"""
-    mem = get_session(session_id)
-    mem.clear()
-    return {"session_id": session_id, "status": "cleared"}
+def clear_session(session_id: str = Query(...), user_id: int = Query(...)):
+    """清除当前用户的会话；活跃 turn 先拒绝，避免 checkpoint 被并发写回。"""
+    try:
+        lease = acquire_session_turn(user_id, session_id)
+    except SessionTurnBusy as exc:
+        raise HTTPException(status_code=409, detail="会话正在处理中，请稍后再清空") from exc
+    try:
+        clear_thread(user_id, session_id)
+        mem = get_session(user_id, session_id)
+        mem.clear()
+        return {"session_id": session_id, "status": "cleared"}
+    finally:
+        lease.release()
 
 
 @app.get("/api/ai/hazard-create/requests/{request_id}")
-def hazard_create_status(request_id: str, user_id: int = Query(None)):
+def hazard_create_status(request_id: str, user_id: int = Query(...)):
     """AI 建单状态查询。Java 侧 /api/hazard/requests/{id} 代理到这里（前端只认 Java）。"""
     from tools.hazard_create_queue import get_request_status
     body = get_request_status(request_id, user_id=user_id)
@@ -497,7 +577,7 @@ def delete_vectors(payload: dict = Body(...), x_internal_token: str = Header(def
     不能退化成 FastAPI 默认的 422 —— Java 侧把 400/401/422 都当永久失败，
     但 422 的报文对排查没有帮助。
     """
-    if not AI_INTERNAL_TOKEN or x_internal_token != AI_INTERNAL_TOKEN:
+    if not AI_INTERNAL_TOKEN or not hmac.compare_digest(x_internal_token, AI_INTERNAL_TOKEN):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
     table = payload.get("table")
@@ -535,4 +615,6 @@ def _save_upload(file: UploadFile) -> str:
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host=AI_BIND_HOST, port=AI_BIND_PORT)
+
+

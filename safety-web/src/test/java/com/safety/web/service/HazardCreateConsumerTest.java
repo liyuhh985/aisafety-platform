@@ -63,6 +63,23 @@ class HazardCreateConsumerTest {
 
         verify(publisher, times(2)).succeeded("req-1", 61L);
     }
-}
+    @Test
+    void imageFileIdIsForwardedToHazardCreation() {
+        HazardService service = mock(HazardService.class);
+        HazardCreateResultPublisher publisher = mock(HazardCreateResultPublisher.class);
+        when(service.createAi(any(AiHazardDTO.class))).thenReturn(HazardVO.builder().id(61L).build());
+        HazardCreateConsumer consumer = new HazardCreateConsumer(
+                service, publisher, new ObjectMapper(), new SimpleMeterRegistry());
+        String body = "{\"requestId\":\"req-img\",\"userId\":1,"
+                + "\"category\":\"fire/fire_lane_blocked\",\"imageFileId\":88}";
+        Message message = new Message(body.getBytes(StandardCharsets.UTF_8));
+
+        consumer.onMessage(message);
+
+        org.mockito.ArgumentCaptor<AiHazardDTO> captor =
+                org.mockito.ArgumentCaptor.forClass(AiHazardDTO.class);
+        verify(service).createAi(captor.capture());
+        org.junit.jupiter.api.Assertions.assertEquals(88L, captor.getValue().getImageFileId());
+    }}
 
 

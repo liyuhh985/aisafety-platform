@@ -1,4 +1,10 @@
+jwt:
+  secret: ${JWT_SECRET:}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
 server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  forward-headers-strategy: framework
   port: ${SERVER_PORT:8080}
 
 ai:
@@ -60,7 +66,6 @@ minio:
   access-key: ${MINIO_ACCESS_KEY:}
   secret-key: ${MINIO_SECRET_KEY:}
   bucket: ${MINIO_BUCKET:safety-images}
-  base-url: ${MINIO_BASE_URL:http://127.0.0.1:9000}
 
 mybatis-plus:
   configuration:
@@ -85,3 +90,9 @@ management:
     web:
       exposure:
         include: health,info,metrics,prometheus
+
+file-asset:
+  cleanup:
+    poll-delay-ms: ${FILE_ASSET_CLEANUP_POLL_DELAY_MS:600000}
+    batch-size: ${FILE_ASSET_CLEANUP_BATCH_SIZE:50}
+

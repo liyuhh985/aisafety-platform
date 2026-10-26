@@ -3,6 +3,7 @@ package com.safety.service.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.safety.pojo.dto.AiHazardDTO;
 import com.safety.pojo.dto.HazardDTO;
+import com.safety.pojo.vo.HazardMapVO;
 import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
 
@@ -25,6 +26,8 @@ public interface HazardService {
     /** 建单人本人或管理员修改定位与片区：仅 status=0（待处理）可改 */
     HazardVO updateLocation(Long id, Long userId, Integer role, com.safety.pojo.dto.HazardLocationUpdateDTO dto);
     Page<HazardVO> page(int current, int size, Long userId, Integer role);
+    /** 匿名地图点位：SQL 仅选择 id/经纬度/类别/状态/区县白名单字段。 */
+    java.util.List<HazardMapVO> getMap(int limit);
     HazardVO getById(Long id);
     HazardVO getByRequestId(String requestId);
     HazardStatsVO getStats();

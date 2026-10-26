@@ -2,6 +2,8 @@ package com.safety.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safety.common.result.R;
+import com.safety.pojo.vo.FileUploadVO;
+import com.safety.service.service.FileUploadService;
 import com.safety.web.service.AiService;
 import com.safety.web.service.AiStreamBusyException;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +29,9 @@ public class AiController {
     @Autowired(required = false)
     private AiService aiService;
 
+    @Autowired(required = false)
+    private FileUploadService fileUploadService;
+
     @GetMapping("/health")
     public R<String> health() {
         if (aiService == null || !aiService.isHealthy()) {
@@ -40,7 +46,7 @@ public class AiController {
             @RequestParam(defaultValue = "请分析这张图片中的安全隐患，并生成报告") String text) {
         if (aiService == null) return R.fail("AI 服务未就绪");
         try {
-            Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Long userId = currentUserId();
             return R.ok(aiService.analyze(file, text, userId));
         } catch (Exception e) {
             log.error("AI 分析失败", e);
@@ -58,7 +64,7 @@ public class AiController {
             return e;
         }
         try {
-            Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Long userId = currentUserId();
             return aiService.analyzeStream(file, text, userId);
         } catch (AiStreamBusyException e) {
             throw e;
@@ -110,13 +116,19 @@ public class AiController {
         }
 
         if (message == null) message = "";
+        if (selectedMajorCode == null) selectedMajorCode = "";
         if (interruptReply == null) interruptReply = "";
         if (sessionId == null || sessionId.isBlank()) sessionId = java.util.UUID.randomUUID().toString();
 
-        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = currentUserId();
         response.setHeader("X-Session-Id", sessionId);
         if (file != null && !file.isEmpty()) {
-            return aiService.assistantStream(message, sessionId, userId, selectedMajorCode, file);
+            if (fileUploadService == null) {
+                throw new IllegalStateException("file upload service is unavailable");
+            }
+            FileUploadVO uploaded = fileUploadService.upload(userId, file);
+            return aiService.assistantStream(message, sessionId, userId, selectedMajorCode,
+                    file, uploaded.getUrl(), uploaded.getFileId());
         } else {
             return aiService.assistantStream(message, sessionId, userId, selectedMajorCode, interruptReply);
         }
@@ -125,13 +137,21 @@ public class AiController {
     @GetMapping("/history")
     public R<Map<String, Object>> history(@RequestParam String sessionId) {
         if (aiService == null) return R.fail("AI 服务未就绪");
-        return R.ok(aiService.getHistory(sessionId));
+        return R.ok(aiService.getHistory(sessionId, currentUserId()));
     }
 
     @DeleteMapping("/session")
     public R<Void> clearSession(@RequestParam String sessionId) {
         if (aiService == null) return R.fail("AI 服务未就绪");
-        aiService.clearSession(sessionId);
+        aiService.clearSession(sessionId, currentUserId());
         return R.ok();
+    }
+
+    private Long currentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof Number principal)) {
+            throw new IllegalStateException("authenticated user is required");
+        }
+        return principal.longValue();
     }
 }

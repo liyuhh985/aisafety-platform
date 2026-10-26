@@ -1,6 +1,5 @@
 package com.safety.web.config;
 
-import com.safety.common.constant.RedisConstant;
 import com.safety.common.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,6 +24,7 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final StringRedisTemplate redisTemplate;
+    private final JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -32,26 +32,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws ServletException, IOException {
         String token = extractToken(request);
         if (StringUtils.hasText(token)) {
-            Long userId = JwtUtil.parseUserId(token);
-            // JWT 解析失败，回退 Redis 查询（兼容旧 token）
-            if (userId == null) {
-                String uidStr = redisTemplate.opsForValue().get(RedisConstant.TOKEN_PREFIX + token);
-                if (StringUtils.hasText(uidStr)) {
-                    userId = Long.parseLong(uidStr);
-                }
-            }
-            if (userId != null) {
-                Integer role = JwtUtil.parseRole(token);
-                String roleName = roleName(role);
+            JwtUtil.TokenPayload payload = jwtUtil.parse(token);
+            if (payload != null && hasActiveSession(payload)) {
+                String roleName = roleName(payload.role());
                 List<GrantedAuthority> authorities = roleName == null
                         ? Collections.emptyList()
                         : Collections.singletonList(new SimpleGrantedAuthority(roleName));
                 UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(userId, null, authorities);
+                        new UsernamePasswordAuthenticationToken(payload.userId(), null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
         chain.doFilter(request, response);
+    }
+
+    private boolean hasActiveSession(JwtUtil.TokenPayload payload) {
+        var values = redisTemplate.opsForValue();
+        String activeSession = values.get(jwtUtil.sessionKey(payload.jti()));
+        String expectedSession = payload.userId() + ":" + payload.role();
+        if (!expectedSession.equals(activeSession)) {
+            return false;
+        }
+        String rawVersion = values.get(jwtUtil.authVersionKey(payload.userId()));
+        try {
+            long currentVersion = rawVersion == null || rawVersion.isBlank()
+                    ? 0L : Long.parseLong(rawVersion);
+            return currentVersion == payload.authVersion();
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     private String extractToken(HttpServletRequest request) {
@@ -74,3 +83,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         };
     }
 }
+

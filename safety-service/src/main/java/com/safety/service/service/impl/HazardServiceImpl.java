@@ -12,24 +12,33 @@ import com.safety.common.exception.BusinessException;
 import com.safety.pojo.dto.AiHazardDTO;
 import com.safety.pojo.dto.HazardDTO;
 import com.safety.pojo.dto.HazardLocationUpdateDTO;
+import com.safety.pojo.entity.FileAsset;
 import com.safety.pojo.entity.Hazard;
 import com.safety.pojo.entity.HazardAction;
+import com.safety.pojo.vo.HazardMapVO;
 import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
 import com.safety.service.mapper.HazardActionMapper;
 import com.safety.service.mapper.HazardMapper;
+import com.safety.service.service.FileAssetService;
 import com.safety.service.service.HazardService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.time.Duration;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -40,6 +49,7 @@ public class HazardServiceImpl implements HazardService {
     private final HazardActionMapper hazardActionMapper;
     private final StringRedisTemplate redisTemplate;
     private final RedissonClient redissonClient;
+    private final FileAssetService fileAssetService;
     /** 已撤回：仅创建人本人、仅 status=0 时可达；普通用户与处理人不可见，管理员可见可统计 */
     private static final int STATUS_WITHDRAWN = 5;
     private static final ObjectMapper objectMapper = new ObjectMapper()
@@ -51,10 +61,20 @@ public class HazardServiceImpl implements HazardService {
                              HazardActionMapper hazardActionMapper,
                              StringRedisTemplate redisTemplate,
                              RedissonClient redissonClient) {
+        this(hazardMapper, hazardActionMapper, redisTemplate, redissonClient, null);
+    }
+
+    @Autowired
+    public HazardServiceImpl(HazardMapper hazardMapper,
+                             HazardActionMapper hazardActionMapper,
+                             StringRedisTemplate redisTemplate,
+                             RedissonClient redissonClient,
+                             FileAssetService fileAssetService) {
         this.hazardMapper = hazardMapper;
         this.hazardActionMapper = hazardActionMapper;
         this.redisTemplate = redisTemplate;
         this.redissonClient = redissonClient;
+        this.fileAssetService = fileAssetService;
     }
 
     @PostConstruct
@@ -67,7 +87,9 @@ public class HazardServiceImpl implements HazardService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public HazardVO create(Long userId, HazardDTO dto) {
+        FileAsset imageAsset = resolveClientImage(dto, userId);
         // 分布式锁: 防止同一用户并发重复上报
         String lockKey = RedisConstant.KEY_PREFIX + "lock:hazard:create:" + userId;
         RLock lock;
@@ -90,12 +112,16 @@ public class HazardServiceImpl implements HazardService {
             }
             Hazard hazard = new Hazard();
             BeanUtils.copyProperties(dto, hazard);
+            hazard.setImageUrl(imageAsset == null ? null : fileAssetService.accessPath(imageAsset));
             hazard.setUserId(userId);
             hazard.setStatus(0);
             if (hazard.getSeverity() == null) {
                 hazard.setSeverity(1);
             }
             hazardMapper.insert(hazard);
+            if (imageAsset != null) {
+                fileAssetService.markAttached(imageAsset.getId(), userId);
+            }
             hazard = hazardMapper.selectById(hazard.getId());
             invalidateDetailCache(hazard.getId());
             invalidateListCache();
@@ -115,6 +141,7 @@ public class HazardServiceImpl implements HazardService {
     }
 
     @Override
+    @Transactional
     public HazardVO createAi(AiHazardDTO dto) {
         if (dto.getUserId() == null) {
             throw new BusinessException("missing user id");
@@ -127,6 +154,21 @@ public class HazardServiceImpl implements HazardService {
             if (existing != null) {
                 return toVO(existing);
             }
+        }
+        FileAsset imageAsset = null;
+        if (dto.getImageFileId() == null
+                && dto.getImageUrl() != null && !dto.getImageUrl().isBlank()) {
+            throw new BusinessException(400, "AI 图片缺少受控 fileId");
+        }
+        if (dto.getImageFileId() != null) {
+            if (fileAssetService == null) {
+                throw new BusinessException(500, "file asset service unavailable");
+            }
+            imageAsset = fileAssetService.requireOwned(dto.getImageFileId(), dto.getUserId());
+            if (!FileAssetService.STATUS_TEMP.equals(imageAsset.getStatus())) {
+                throw new BusinessException(409, "image file already used");
+            }
+            dto.setImageUrl(fileAssetService.accessPath(imageAsset));
         }
         // 分布式锁: 防止同一用户并发重复上报
         String lockKey = RedisConstant.KEY_PREFIX + "lock:hazard:create:" + dto.getUserId();
@@ -188,6 +230,9 @@ public class HazardServiceImpl implements HazardService {
                 throw e;
             }
             hazard = hazardMapper.selectById(hazard.getId());
+            if (imageAsset != null) {
+                fileAssetService.markAttached(imageAsset.getId(), dto.getUserId());
+            }
             invalidateDetailCache(hazard.getId());
             invalidateListCache();
             return toVO(hazard);
@@ -206,71 +251,63 @@ public class HazardServiceImpl implements HazardService {
     }
 
     @Override
+    @Transactional
     public HazardVO assign(Long id, Long adminId, Long handlerId) {
-        Hazard hazard = hazardMapper.selectById(id);
-        if (hazard == null) {
-            throw new BusinessException(404, "隐患不存在");
+        int rows = hazardMapper.assign(id, handlerId);
+        if (rows == 0) {
+            Hazard current = requireHazard(id);
+            if (current.getStatus() == null || (current.getStatus() != 0 && current.getStatus() != 4)) {
+                throw new BusinessException(409, "仅待处理或已驳回任务可指派责任人");
+            }
+            throw new BusinessException(409, "工单状态已变化，请刷新后重试");
         }
-        if (hazard.getStatus() == null || (hazard.getStatus() != 0 && hazard.getStatus() != 4)) {
-            throw new BusinessException("仅待处理或已驳回任务可指派责任人");
-        }
-        hazard.setStatus(1);
-        hazard.setReviewed(0);
-        hazard.setHandlerId(handlerId);
-        hazardMapper.updateById(hazard);
         saveAction(id, adminId, "ASSIGN", "status -> 1 (handler=" + handlerId + ")");
-        invalidateDetailCache(id);
+        invalidateDetailCacheAfterCommit(id);
         invalidateListCache();
-        return toVO(hazardMapper.selectById(id));
+        return toVO(requireHazard(id));
     }
 
     @Override
+    @Transactional
     public HazardVO start(Long id, Long userId, Integer role) {
-        return transition(id, 1, 2, "START", userId, false, role);
+        return transition(id, 1, 2, "START", userId, role);
     }
 
     @Override
+    @Transactional
     public HazardVO complete(Long id, Long userId, Integer role) {
-        return transition(id, 2, 3, "COMPLETE", userId, false, role);
+        return transition(id, 2, 3, "COMPLETE", userId, role);
     }
 
     @Override
+    @Transactional
     public HazardVO review(Long id, Long adminId, boolean pass, String remark) {
-        Hazard hazard = hazardMapper.selectById(id);
-        if (hazard == null) {
-            throw new BusinessException(404, "隐患不存在");
+        int toStatus = pass ? 3 : 4;
+        int rows = hazardMapper.review(id, toStatus, 1);
+        if (rows == 0) {
+            Hazard current = requireHazard(id);
+            Integer status = current.getStatus();
+            Integer reviewed = current.getReviewed();
+            if (status != null && status == 3 && reviewed != null && reviewed == 1) {
+                throw new BusinessException(409, "该工单已办结归档，不可重复审核");
+            }
+            if (status != null && status == 4) {
+                throw new BusinessException(409, "该工单已驳回，不可重复审核");
+            }
+            if (status == null || status != 3) {
+                throw new BusinessException(409, "仅处于待验收状态的工单可执行终审");
+            }
+            throw new BusinessException(409, "审核状态已变化，请刷新后重试");
         }
-        Integer st = hazard.getStatus();
-        Integer rev = hazard.getReviewed();
-        if (pass) {
-            if (st != null && st == 3 && rev != null && rev == 1) {
-                throw new BusinessException("该工单已办结归档，不可重复办结");
-            }
-            if (st == null || st != 3) {
-                throw new BusinessException("仅处于待验收状态的工单可执行终审办结");
-            }
-            hazard.setStatus(3);
-            hazard.setReviewed(1);
-            hazardMapper.updateById(hazard);
-            saveAction(id, adminId, "REVIEW_PASS", "验收通过; " + (remark == null ? "" : remark));
-        } else {
-            if (st != null && ((st == 3 && rev != null && rev == 1) || st == 4)) {
-                throw new BusinessException("已办结归档或已驳回的任务不可重复驳回");
-            }
-            if (st == null || st != 3) {
-                throw new BusinessException("仅处于待验收状态的工单可执行审查驳回");
-            }
-            hazard.setStatus(4);
-            hazard.setReviewed(1);
-            hazardMapper.updateById(hazard);
-            saveAction(id, adminId, "REVIEW_REJECT", "审查驳回; " + (remark == null ? "" : remark));
-        }
-        invalidateDetailCache(id);
+        saveAction(id, adminId, pass ? "REVIEW_PASS" : "REVIEW_REJECT",
+                (pass ? "验收通过; " : "审查驳回; ") + (remark == null ? "" : remark));
+        invalidateDetailCacheAfterCommit(id);
         invalidateListCache();
-        return toVO(hazardMapper.selectById(id));
+        return toVO(requireHazard(id));
     }
 
     @Override
+    @Transactional
     public java.util.List<HazardVO> batchReview(java.util.List<Long> ids, Long adminId, boolean pass, String remark) {
         if (ids == null || ids.isEmpty()) {
             return java.util.Collections.emptyList();
@@ -279,43 +316,37 @@ public class HazardServiceImpl implements HazardService {
         for (Long id : ids) {
             try {
                 results.add(review(id, adminId, pass, remark));
-            } catch (RuntimeException e) {
+            } catch (BusinessException e) {
                 log.warn("批量审批工单跳过, id={}, error={}", id, e.getMessage());
             }
         }
         return results;
     }
 
-    private HazardVO transition(Long id, int from, int to, String actionType, Long userId, boolean setHandler, Integer role) {
-        Hazard hazard = hazardMapper.selectById(id);
-        if (hazard == null) {
-            throw new BusinessException(404, "隐患不存在");
-        }
-        Integer cur = hazard.getStatus();
-        if (cur == null || cur != from) {
-            throw new BusinessException(409, "当前状态不允许流转到该状态");
-        }
+    private HazardVO transition(Long id, int from, int to, String actionType, Long userId, Integer role) {
         boolean isAdmin = (role != null && role == 1);
-        if (!isAdmin) {
-            if (hazard.getHandlerId() == null || !hazard.getHandlerId().equals(userId)) {
+        int rows = isAdmin
+                ? hazardMapper.transitionAsAdmin(id, from, to)
+                : hazardMapper.transitionForHandler(id, from, to, userId);
+        if (rows == 0) {
+            Hazard current = requireHazard(id);
+            Integer status = current.getStatus();
+            if (status == null || status != from) {
+                throw new BusinessException(409, "当前状态不允许流转到该状态");
+            }
+            if (!isAdmin && !Objects.equals(current.getHandlerId(), userId)) {
                 throw new BusinessException(403, "只能处理分配给自己的任务");
             }
+            throw new BusinessException(409, "工单状态已变化，请刷新后重试");
         }
-        hazard.setStatus(to);
-        if (setHandler) {
-            hazard.setHandlerId(userId);
-        }
-        if (to == 3) {
-            hazard.setReviewed(0); // 专员完成整改，流转为待验收(reviewed=0)
-        }
-        hazardMapper.updateById(hazard);
         saveAction(id, userId, actionType, "status " + from + " -> " + to);
-        invalidateDetailCache(id);
+        invalidateDetailCacheAfterCommit(id);
         invalidateListCache();
-        return toVO(hazardMapper.selectById(id));
+        return toVO(requireHazard(id));
     }
 
     @Override
+    @Transactional
     public HazardVO withdraw(Long id, Long userId) {
         int rows = hazardMapper.withdraw(id, userId);
         if (rows == 0) {
@@ -330,70 +361,75 @@ public class HazardServiceImpl implements HazardService {
             throw new BusinessException(409, "该任务已被受理，无法撤回");
         }
         saveAction(id, userId, "WITHDRAW", "status 0 -> " + STATUS_WITHDRAWN);
-        invalidateDetailCache(id);
+        invalidateDetailCacheAfterCommit(id);
         invalidateListCache();
         return toVO(hazardMapper.selectById(id));
     }
 
     @Override
+    @Transactional
     public HazardVO updateLocation(Long id, Long userId, Integer role, HazardLocationUpdateDTO dto) {
+        boolean isAdmin = (role != null && role == 1);
+        int rows = isAdmin
+                ? hazardMapper.updateLocationAsAdmin(id, dto.getLongitude(), dto.getLatitude(),
+                        dto.getAddress(), dto.getDistrict())
+                : hazardMapper.updateLocationByCreator(id, userId, dto.getLongitude(), dto.getLatitude(),
+                        dto.getAddress(), dto.getDistrict());
+        if (rows == 0) {
+            Hazard current = requireHazard(id);
+            if (current.getStatus() == null || current.getStatus() != 0) {
+                throw new BusinessException(409, "仅待处理状态的隐患任务可修改定位");
+            }
+            if (!isAdmin && !Objects.equals(current.getUserId(), userId)) {
+                throw new BusinessException(403, "只能修改自己创建的隐患任务定位");
+            }
+            throw new BusinessException(409, "工单状态已变化，请刷新后重试");
+        }
+        String remark = String.format("定位变更: [%s, %s], 地址: %s", dto.getLongitude(), dto.getLatitude(), dto.getAddress());
+        saveAction(id, userId, "UPDATE_LOCATION", remark);
+        invalidateDetailCacheAfterCommit(id);
+        invalidateListCache();
+        return toVO(requireHazard(id));
+    }
+
+    private void saveAction(Long hazardId, Long operatorId, String actionType, String remark) {
+        HazardAction action = new HazardAction();
+        action.setHazardId(hazardId);
+        action.setOperatorId(operatorId);
+        action.setActionType(actionType);
+        action.setRemark(remark);
+        hazardActionMapper.insert(action);
+    }
+
+    private Hazard requireHazard(Long id) {
         Hazard hazard = hazardMapper.selectById(id);
         if (hazard == null) {
             throw new BusinessException(404, "隐患不存在");
         }
-        if (hazard.getStatus() == null || hazard.getStatus() != 0) {
-            throw new BusinessException(409, "仅待处理状态的隐患任务可修改定位");
-        }
-        boolean isAdmin = (role != null && role == 1);
-        if (!isAdmin && !java.util.Objects.equals(hazard.getUserId(), userId)) {
-            throw new BusinessException(403, "只能修改自己创建的隐患任务定位");
-        }
-        hazard.setLongitude(dto.getLongitude());
-        hazard.setLatitude(dto.getLatitude());
-        hazard.setAddress(dto.getAddress());
-        if (dto.getDistrict() != null && !dto.getDistrict().isBlank()) {
-            hazard.setDistrict(dto.getDistrict());
-        }
-        hazardMapper.updateById(hazard);
-        String remark = String.format("定位变更: [%s, %s], 地址: %s", dto.getLongitude(), dto.getLatitude(), dto.getAddress());
-        saveAction(id, userId, "UPDATE_LOCATION", remark);
-        invalidateDetailCache(id);
-        invalidateListCache();
-        return toVO(hazardMapper.selectById(id));
-    }
-
-    private void saveAction(Long hazardId, Long operatorId, String actionType, String remark) {
-        try {
-            HazardAction action = new HazardAction();
-            action.setHazardId(hazardId);
-            action.setOperatorId(operatorId);
-            action.setActionType(actionType);
-            action.setRemark(remark);
-            hazardActionMapper.insert(action);
-        } catch (RuntimeException e) {
-            log.warn("记录隐患操作失败, hazardId={}, actionType={}", hazardId, actionType, e);
-        }
+        return hazard;
     }
 
     @Override
     public Page<HazardVO> page(int current, int size, Long userId, Integer role) {
-        // 普通用户(role=0)只能看自己上报的；处理人员/管理员看全部
-        boolean restricted = (role != null && role == 0);
-        boolean isAdmin = (role != null && role == 1);
-        Page<Hazard> pg = new Page<>(current, size);
+        int safeCurrent = Math.max(current, 1);
+        int safeSize = Math.max(1, Math.min(size, 100));
+        Page<Hazard> pg = new Page<>(safeCurrent, safeSize);
         LambdaQueryWrapper<Hazard> qw = new LambdaQueryWrapper<Hazard>()
                 .orderByDesc(Hazard::getCreateTime);
-        if (restricted && userId != null) {
-            qw.eq(Hazard::getUserId, userId);
-        }
         if (hidesWithdrawn(role)) {
             // 已撤回只对管理员可见（创建人自己、处理团队都看不到）
             qw.ne(Hazard::getStatus, STATUS_WITHDRAWN);
         }
         Page<Hazard> result = hazardMapper.selectPage(pg, qw);
-        Page<HazardVO> voPage = new Page<>(current, size, result.getTotal());
+        Page<HazardVO> voPage = new Page<>(safeCurrent, safeSize, result.getTotal());
         voPage.setRecords(result.getRecords().stream().map(this::toVO).toList());
         return voPage;
+    }
+
+    @Override
+    public List<HazardMapVO> getMap(int limit) {
+        int safeLimit = Math.max(1, Math.min(limit, 100));
+        return hazardMapper.selectMapPoints(safeLimit);
     }
 
     /**
@@ -406,6 +442,19 @@ public class HazardServiceImpl implements HazardService {
 
     private void invalidateListCache() {
         // 列表已改为轻量直接查库，无需跨公网遍历 keys
+    }
+
+    private void invalidateDetailCacheAfterCommit(Long id) {
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void afterCommit() {
+                    invalidateDetailCache(id);
+                }
+            });
+            return;
+        }
+        invalidateDetailCache(id);
     }
 
     private void invalidateDetailCache(Long id) {
@@ -475,6 +524,23 @@ public class HazardServiceImpl implements HazardService {
         return vo;
     }
 
+    private FileAsset resolveClientImage(HazardDTO dto, Long userId) {
+        if (dto.getImageUrl() != null && !dto.getImageUrl().isBlank()) {
+            throw new BusinessException(400, "图片必须先上传并通过 fileId 绑定");
+        }
+        if (dto.getFileId() == null) {
+            return null;
+        }
+        if (fileAssetService == null) {
+            throw new BusinessException(500, "文件服务未就绪");
+        }
+        FileAsset asset = fileAssetService.requireOwned(dto.getFileId(), userId);
+        if (!FileAssetService.STATUS_TEMP.equals(asset.getStatus())) {
+            throw new BusinessException(409, "图片已使用或状态无效");
+        }
+        return asset;
+    }
+
     private HazardVO toVO(Hazard hazard) {
         String statusText;
         if (hazard.getStatus() == null) {
@@ -520,3 +586,6 @@ public class HazardServiceImpl implements HazardService {
                 .build();
     }
 }
+
+
+

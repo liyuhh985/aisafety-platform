@@ -309,7 +309,7 @@ def test_assistant_stream_passes_selected_major(monkeypatch):
 
     seen = {}
     mem = WorkingMemory(session_id="taxonomy-passthrough-test")
-    monkeypatch.setattr(server, "get_session", lambda _: mem)
+    monkeypatch.setattr(server, "get_session", lambda *_: mem)
 
     async def fake_stream(**kwargs):
         seen.update(kwargs)
@@ -326,6 +326,7 @@ def test_assistant_stream_passes_selected_major(monkeypatch):
             Request(),
             message="消防设施老旧",
             session_id="taxonomy-passthrough-test",
+            user_id=1,
             selected_major_code="fire",
         )
         return [event async for event in response.body_iterator]

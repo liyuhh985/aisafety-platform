@@ -49,8 +49,9 @@
 | 接口 | 权限 | 作用 |
 |------|------|------|
 | `POST /api/hazard` | 登录 | 用户上报 |
-| `GET /api/hazard` | 匿名 | 分页（服务层按角色过滤） |
-| `GET /api/hazard/{id}` | 匿名 | 详情 |
+| `GET /api/hazard` | 登录 | 业务列表（登录用户可看全量） |
+| `GET /api/hazard/map` | 匿名 | 脱敏地图点位（最多 100） |
+| `GET /api/hazard/{id}` | 登录 | 详情 |
 | `GET /api/hazard/stats` | 匿名 | 统计 |
 | `POST /api/hazard/{id}/assign` | `hasRole('ADMIN')` | 派单 |
 | `POST /api/hazard/{id}/accept` | `hasRole('HANDLER')` | 接单 |
@@ -64,10 +65,11 @@
 
 ## 四、可见性与数据隔离（`page`）
 
-- 普通用户（role=0）：只看自己上报的。
-- 非管理员：已撤回（status=5）一律不显示。
+- 业务列表和详情要求登录；产品约定登录用户可查看全量业务隐患。
+- 匿名只能访问 `/api/hazard/map`，响应仅含 `id/经纬度/类别/状态/区县`，不含上报人、描述、地址、图片和报告。
+- 非管理员：已撤回（status=5）不显示在业务列表。
 - 管理员（role=1）：可看全部，含已撤回，可统计。
-- `/api/hazard`、`/{id}`、`/stats` 在 SecurityConfig 中 `permitAll`（产品选择，风险已登记）；服务层仍按角色过滤列表。
+- 所有状态流转使用条件 UPDATE/CAS；更新行数为 0 时返回 409，不允许旧实体整行回写。
 
 ## 五、留痕 `HazardAction`
 

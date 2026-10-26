@@ -24,6 +24,7 @@ public class HazardCreateMessage {
     private BigDecimal latitude;
     private String description;
     private Integer severity;
+    private Long imageFileId;
     private String imageUrl;
     private String report;
     private String createdAt;

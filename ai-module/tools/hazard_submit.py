@@ -236,7 +236,8 @@ def extract_location(history, latest) -> str:
 
 
 def submit_from_history(user_id, history, latest, *, address_hint: str = "", coords=None,
-                        session_id: str = "") -> dict:
+                        session_id: str = "", image_url: str = "",
+                        image_file_id=None) -> dict:
     """返回 {action, hazardId?, message?}。
 
     action:
@@ -280,7 +281,8 @@ def submit_from_history(user_id, history, latest, *, address_hint: str = "", coo
         "latitude": geo.get("latitude"),
         "description": _as_text(info.get("description")),
         "severity": _as_severity(info.get("severity")),
-        "imageUrl": _as_text(info.get("imageUrl")),
+        "imageUrl": _as_text(image_url) or _as_text(info.get("imageUrl")),
+        "imageFileId": image_file_id,
         "report": _as_text(info.get("report")),
     }
     LOGGER.info("AI hazard submit payload=%s", payload)

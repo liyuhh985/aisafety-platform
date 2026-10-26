@@ -8,6 +8,7 @@ import com.safety.pojo.dto.AiBatchReviewDTO;
 import com.safety.pojo.dto.AiReviewDTO;
 import com.safety.pojo.dto.HazardDTO;
 import com.safety.pojo.dto.HazardLocationUpdateDTO;
+import com.safety.pojo.vo.HazardMapVO;
 import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
 import com.safety.service.service.HazardService;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -52,9 +54,15 @@ public class HazardController {
             @RequestParam(defaultValue = "1") int current,
             @RequestParam(defaultValue = "10") int size,
             Authentication auth) {
-        Long userId = auth == null ? null : (Long) auth.getPrincipal();
+        Long userId = requireUserId(auth);
         Integer role = roleOf(auth);
         return R.ok(hazardService.page(current, size, userId, role));
+    }
+
+    /** 匿名公开地图：只返回脱敏点位投影，limit 由服务层限制在 1..100。 */
+    @GetMapping("/map")
+    public R<List<HazardMapVO>> map(@RequestParam(defaultValue = "100") int limit) {
+        return R.ok(hazardService.getMap(limit));
     }
 
     /** 管理员派单：指定处理人，0 待处理 -> 1 已接单 */
@@ -139,6 +147,7 @@ public class HazardController {
 
     @GetMapping("/{id:\\d+}")
     public R<HazardVO> getById(@PathVariable Long id, Authentication auth) {
+        requireUserId(auth);
         HazardVO vo = hazardService.getById(id);
         Integer role = roleOf(auth);
         boolean isAdmin = (role != null && role == 1);
@@ -169,6 +178,13 @@ public class HazardController {
         }
         Long userId = (Long) auth.getPrincipal();
         return R.ok(hazardService.updateLocation(id, userId, roleOf(auth), dto));
+    }
+
+    private Long requireUserId(Authentication auth) {
+        if (auth == null || auth.getPrincipal() == null) {
+            throw new BusinessException(401, "未登录");
+        }
+        return (Long) auth.getPrincipal();
     }
 
     /** 从 SecurityContext 推导角色数字：0 普通 / 1 管理员 / 2 处理人员 */

@@ -9,8 +9,12 @@ import java.util.List;
 
 @Data
 public class HazardDTO {
-    @NotBlank(message = "图片URL不能为空")
+    /** 旧字段仅用于识别并拒绝不可信客户端 URL；新客户端必须先上传再传 fileId。 */
+    @Deprecated
     private String imageUrl;
+
+    /** 通过 /api/upload/image 获取的文件标识。 */
+    private Long fileId;
 
     @NotBlank(message = "隐患类型不能为空")
     private String hazardType;
@@ -30,3 +34,5 @@ public class HazardDTO {
 
     private Integer severity;
 }
+
+

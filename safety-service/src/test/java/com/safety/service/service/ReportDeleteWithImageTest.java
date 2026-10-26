@@ -2,6 +2,7 @@ package com.safety.service.service;
 
 import com.safety.common.exception.BusinessException;
 import com.safety.pojo.dto.ReportSaveDTO;
+import com.safety.pojo.entity.FileAsset;
 import com.safety.pojo.entity.HazardReport;
 import com.safety.service.mapper.HazardReportMapper;
 import io.minio.MinioClient;
@@ -55,6 +56,8 @@ class ReportDeleteWithImageTest {
     @Mock
     private ResourceCleanupOutboxService cleanupOutboxService;
     @Mock
+    private FileAssetService fileAssetService;
+    @Mock
     private PlatformTransactionManager transactionManager;
 
     private ReportService service;
@@ -62,7 +65,7 @@ class ReportDeleteWithImageTest {
     @BeforeEach
     void setUp() {
         service = new ReportService(
-                mapper, fileUploadService, cleanupOutboxService, transactionManager);
+                mapper, fileUploadService, cleanupOutboxService, fileAssetService, transactionManager);
     }
 
     @Test
@@ -85,7 +88,7 @@ class ReportDeleteWithImageTest {
                 .when(minioClient).removeObject(any(RemoveObjectArgs.class));
         FileUploadService realUploadService = new FileUploadService(minioClient, BUCKET);
         ReportService realService = new ReportService(
-                mapper, realUploadService, cleanupOutboxService, transactionManager);
+                mapper, realUploadService, cleanupOutboxService, fileAssetService, transactionManager);
         when(mapper.selectOne(any())).thenReturn(report(1L, ME, OBJECT_KEY, IMAGE_URL));
 
         realService.delete(1L, ME);
@@ -161,18 +164,37 @@ class ReportDeleteWithImageTest {
     }
 
     @Test
-    void saveStoresObjectNameDerivedFromImageUrl() {
+    void saveStoresOwnedFileAssetAndMarksItAttached() {
         ReportSaveDTO dto = new ReportSaveDTO();
-        dto.setImageUrl(IMAGE_URL);
+        dto.setFileId(99L);
         dto.setHazardCategory("消防通道占用");
         dto.setRectification(List.of("清理通道"));
+        FileAsset asset = new FileAsset();
+        asset.setId(99L);
+        asset.setUserId(ME);
+        asset.setBucket(BUCKET);
+        asset.setObjectKey(OBJECT_KEY);
+        asset.setStatus(FileAssetService.STATUS_TEMP);
+        when(fileAssetService.requireOwned(99L, ME)).thenReturn(asset);
+        when(fileAssetService.accessPath(asset)).thenReturn(IMAGE_URL);
 
         service.save(ME, dto);
 
         ArgumentCaptor<HazardReport> saved = ArgumentCaptor.forClass(HazardReport.class);
         verify(mapper).insert(saved.capture());
         assertEquals(OBJECT_KEY, saved.getValue().getImageKey());
+        assertEquals(IMAGE_URL, saved.getValue().getImageUrl());
         assertEquals(ME, saved.getValue().getUserId());
+        verify(fileAssetService).markAttached(99L, ME, FileAssetService.VISIBILITY_PRIVATE);
+    }
+
+    @Test
+    void saveRejectsLegacyBlobOrArbitraryImageUrl() {
+        ReportSaveDTO dto = new ReportSaveDTO();
+        dto.setImageUrl("blob:http://localhost/123");
+
+        assertThrows(BusinessException.class, () -> service.save(ME, dto));
+        verify(mapper, never()).insert(any(HazardReport.class));
     }
 
     @Test
@@ -204,3 +226,5 @@ class ReportDeleteWithImageTest {
         return exception;
     }
 }
+
+

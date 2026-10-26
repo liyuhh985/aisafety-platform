@@ -171,7 +171,7 @@ def test_stream_stores_user_and_vision_context_once(monkeypatch, tmp_path, visio
 
     mem = WorkingMemory(session_id="dialogue-test")
     seen = []
-    monkeypatch.setattr(server, "get_session", lambda _: mem)
+    monkeypatch.setattr(server, "get_session", lambda *_: mem)
     monkeypatch.setattr(server, "_save_upload", lambda _: str(tmp_path / "upload.png"))
 
     def analyze(*_):
@@ -197,7 +197,8 @@ def test_stream_stores_user_and_vision_context_once(monkeypatch, tmp_path, visio
 
     async def collect():
         response = await server.assistant_stream(
-            Request(), message="请看看是否危险", session_id="dialogue-test", file=File()
+            Request(), message="请看看是否危险", session_id="dialogue-test",
+            user_id=1, file=File()
         )
         return [event async for event in response.body_iterator]
 

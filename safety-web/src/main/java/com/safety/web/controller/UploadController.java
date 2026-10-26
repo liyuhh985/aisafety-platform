@@ -4,6 +4,7 @@ import com.safety.common.result.R;
 import com.safety.pojo.vo.FileUploadVO;
 import com.safety.service.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,7 @@ public class UploadController {
     private final FileUploadService fileUploadService;
 
     @PostMapping("/image")
-    public R<FileUploadVO> uploadImage(@RequestParam("file") MultipartFile file) {
-        return R.ok(fileUploadService.upload(file));
+    public R<FileUploadVO> uploadImage(@RequestParam("file") MultipartFile file, Authentication auth) {
+        return R.ok(fileUploadService.upload((Long) auth.getPrincipal(), file));
     }
 }

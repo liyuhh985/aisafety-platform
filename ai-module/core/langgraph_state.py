@@ -53,6 +53,8 @@ class AssistantState(TypedDict, total=False):
     facts_snapshot: dict                # 本轮**之前**的事实快照（begin_turn 写）；
                                         # scope_guard 判越界时按它整体回滚，见 spec 决策 7
     vision_summary: str
+    image_url: str                    # 本轮上传图片的受控 URL
+    image_file_id: int               # 本轮上传图片的 fileId（Java/MQ 用于附加）
     # 本轮语义与决策
     dialogue_plan: dict                 # structured semantic plan for this turn
     intent: str                         # planner intent label

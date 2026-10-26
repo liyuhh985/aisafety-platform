@@ -1,4 +1,4 @@
-﻿"""LangGraph 助手：语义理解 + 并行检索 + 报告。
+"""LangGraph 助手：语义理解 + 并行检索 + 报告。
 
 流程：begin_turn -> understand（唯一的事实与决策写入者）-> scope_guard -> route
       -> direct_reply（回答/最多一个追问）
@@ -269,16 +269,28 @@ _ROLE_BUILDERS = {
 }
 
 
+def _thread_id(user_id: int | None, session_id: str) -> str:
+    """LangGraph checkpoint 必须按用户隔离；生产调用始终有 user_id。"""
+    owner = str(user_id) if user_id is not None else "anonymous"
+    return f"{owner}:{session_id}"
+
+
 def build_turn_input(session_id: str, message: str, vision_summary: str,
-                     selected_major_code: str, selected_major_codes=None) -> dict:
+                     selected_major_code: str, selected_major_codes=None,
+                     image_url: str = '', image_file_id: int = None) -> dict:
     """本轮只传新增事实；结构化状态由 checkpointer 持有，不再每轮清空。"""
-    return {
+    state = {
         "session_id": session_id,
         "messages": [HumanMessage(content=message)],
         "vision_summary": vision_summary,
         "selected_major_code": selected_major_code,
         "selected_major_codes": list(selected_major_codes or []),
     }
+    # 图片只在本轮有新上传时覆盖；后续确认/补地址继续沿用上轮 fileId。
+    if image_file_id is not None:
+        state["image_url"] = image_url or ""
+        state["image_file_id"] = image_file_id
+    return state
 
 
 def seed_messages(history) -> list:
@@ -2296,10 +2308,17 @@ def submit_task(state: AssistantState) -> Command:
         if picked_longitude is not None and picked_latitude is not None
         else None
     )
+    image_args = {}
+    if state.get("image_file_id") is not None:
+        image_args = {
+            "image_url": state.get("image_url") or "",
+            "image_file_id": state.get("image_file_id"),
+        }
     result = submit_from_history(
         state.get("user_id"), history, latest,
         address_hint=state.get("address_text") or "", coords=coords,
         session_id=state.get("session_id") or "",
+        **image_args,
     )
     action = result.get("action")
     if action == "accepted":
@@ -2308,7 +2327,7 @@ def submit_task(state: AssistantState) -> Command:
         _emit_chunk("✅ 已受理，正在创建隐患任务")
         if request_id:
             _emit_event("task_accepted", {"request_id": request_id, "status": "PENDING"})
-        return Command(goto=END, update={"address_text": "", "task_phase": ""})
+        return Command(goto=END, update={"address_text": "", "task_phase": "", "image_url": "", "image_file_id": None})
     if action == "ask_address":
         return Command(goto="task_gate", update={"task_phase": "address"})
     _emit_chunk("⚠️ " + str(result.get("message")))
@@ -2317,9 +2336,13 @@ def submit_task(state: AssistantState) -> Command:
 
 def close_task(state: AssistantState) -> dict:
     # 只往 messages 里追加；SSE 桥会把它流出去，避免重复输出
-    return {"messages": [AIMessage(
-        content="好的，那我不建任务。如果还有其他现场情况，直接说就行。"
-    )]}
+    return {
+        "messages": [AIMessage(
+            content="好的，那我不建任务。如果还有其他现场情况，直接说就行。"
+        )],
+        "image_url": "",
+        "image_file_id": None,
+    }
 
 
 def after_report(state: AssistantState) -> dict:
@@ -2506,6 +2529,11 @@ def checkpoint_backend_status() -> dict:
     }
 
 
+def clear_thread(user_id: int, session_id: str) -> None:
+    """Delete one user's LangGraph checkpoint after authorization was checked."""
+    get_checkpointer().delete_thread(_thread_id(user_id, session_id))
+
+
 def reset_checkpointer() -> None:
     """清空 checkpointer 缓存与图缓存（测试用；生产只在切后端时用）。"""
     global _APP, _CHECKPOINTER, _CHECKPOINTER_KEY, _CHECKPOINTER_EFFECTIVE, _CHECKPOINTER_ERROR
@@ -2533,7 +2561,9 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             user_id: int = None,
                             selected_major_code: str = "",
                             selected_major_codes=None,
-                            interrupt_reply: str = "") -> Generator[tuple, None, None]:
+                            interrupt_reply: str = "",
+                            image_url: str = "",
+                            image_file_id: int = None) -> Generator[tuple, None, None]:
     app = get_app()
     loop = asyncio.get_running_loop()
     q: asyncio.Queue = asyncio.Queue()
@@ -2543,13 +2573,15 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
 
     config = {
         "configurable": {
-            "thread_id": session_id,
+            "thread_id": _thread_id(user_id, session_id),
             "cancel_token": cancellation,
         },
         "recursion_limit": GRAPH_RECURSION_LIMIT,
     }
-    initial = build_turn_input(session_id, message, vision_summary, selected_major_code,
-                               selected_major_codes)
+    initial = build_turn_input(
+        session_id, message, vision_summary, selected_major_code,
+        selected_major_codes, image_url=image_url, image_file_id=image_file_id,
+    )
     initial["user_id"] = user_id
 
 
@@ -2658,3 +2690,8 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
     finally:
         if not worker.done():
             worker.cancel()
+
+
+
+
+

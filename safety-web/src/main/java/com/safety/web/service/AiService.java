@@ -1,5 +1,7 @@
 package com.safety.web.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -10,10 +12,13 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import jakarta.annotation.PreDestroy;
 import java.io.IOException;
+import java.net.URI;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -36,6 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AiService {
 
     private static final String DEFAULT_AI_BASE = "http://127.0.0.1:8000/api/ai";
+    private static final String INTERNAL_TOKEN_HEADER = "X-Internal-Token";
+    private static final ObjectMapper JSON = new ObjectMapper();
 
     private final RestTemplate rest;
     @Value("${ai.base-url:" + DEFAULT_AI_BASE + "}")
@@ -78,6 +85,22 @@ public class AiService {
         }
     }
 
+    private String requireInternalToken() {
+        if (internalToken == null || internalToken.isBlank()) {
+            throw new IllegalStateException("ai.internal-token is not configured");
+        }
+        return internalToken;
+    }
+
+    private HttpHeaders internalHeaders(MediaType contentType) {
+        HttpHeaders headers = new HttpHeaders();
+        if (contentType != null) {
+            headers.setContentType(contentType);
+        }
+        headers.set(INTERNAL_TOKEN_HEADER, requireInternalToken());
+        return headers;
+    }
+
     private static RestTemplate createRestTemplate() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(10_000);
@@ -106,8 +129,7 @@ public class AiService {
                 public String getFilename() { return file.getOriginalFilename(); }
             });
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        HttpHeaders headers = internalHeaders(MediaType.MULTIPART_FORM_DATA);
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
 
         ResponseEntity<Map> response = rest.postForEntity(
@@ -120,6 +142,7 @@ public class AiService {
      */
     public SseEmitter analyzeStream(MultipartFile file, String text, Long userId) throws IOException {
         SseEmitter emitter = new SseEmitter(300_000L);
+        final String requestToken = requireInternalToken();
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("text", text != null ? text : "请分析这张图片中的安全隐患，并生成报告");
@@ -141,15 +164,12 @@ public class AiService {
 
         Future<?> future = submitStreamTask(() -> {
             try {
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-                HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(finalBody, headers);
-
                 rest.execute(
                         aiBase + "/analyze/stream",
                         HttpMethod.POST,
                         req -> {
                             req.getHeaders().setContentType(MediaType.MULTIPART_FORM_DATA);
+                            req.getHeaders().set(INTERNAL_TOKEN_HEADER, requestToken);
                             new org.springframework.http.converter.FormHttpMessageConverter()
                                     .write(finalBody, MediaType.MULTIPART_FORM_DATA, req);
                         },
@@ -200,16 +220,20 @@ public class AiService {
     public SseEmitter assistantStream(String message, String sessionId, Long userId,
                                       String selectedMajorCode, String interruptReply) {
         SseEmitter emitter = new SseEmitter(300_000L);
+        final String requestToken = requireInternalToken();
 
-        String body = String.format(
-                "{\"message\":\"%s\",\"session_id\":\"%s\",\"user_id\":%s,\"selected_major_code\":\"%s\",\"interrupt_reply\":\"%s\"}",
-                message == null ? "" : message.replace("\"", "\\\""),
-                sessionId == null ? "" : sessionId,
-                userId == null ? "null" : userId.toString(),
-                selectedMajorCode == null ? "" : selectedMajorCode.replace("\"", "\\\""),
-                interruptReply == null ? "" : interruptReply.replace("\"", "\\\""));
-
-        final String finalBody = body;
+        Map<String, Object> payload = new LinkedHashMap<>();
+        payload.put("message", message == null ? "" : message);
+        payload.put("session_id", sessionId == null ? "" : sessionId);
+        payload.put("user_id", userId);
+        payload.put("selected_major_code", selectedMajorCode == null ? "" : selectedMajorCode);
+        payload.put("interrupt_reply", interruptReply == null ? "" : interruptReply);
+        final String finalBody;
+        try {
+            finalBody = JSON.writeValueAsString(payload);
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("failed to encode AI assistant request", e);
+        }
         StreamCancellation cancellation = new StreamCancellation();
         emitter.onCompletion(cancellation::cancel);
         emitter.onTimeout(cancellation::cancel);
@@ -217,18 +241,12 @@ public class AiService {
 
         Future<?> future = submitStreamTask(() -> {
             try {
-                HttpHeaders headers = new HttpHeaders();
-                headers.setContentType(MediaType.APPLICATION_JSON);
-                if (internalToken != null && !internalToken.isEmpty()) {
-                    headers.set("X-Internal-Token", internalToken);
-                }
-                HttpEntity<String> request = new HttpEntity<>(finalBody, headers);
-
                 rest.execute(
                         aiBase + "/assistant/stream",
                         HttpMethod.POST,
                         req -> {
                             req.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+                            req.getHeaders().set(INTERNAL_TOKEN_HEADER, requestToken);
                             req.getHeaders().setAccept(java.util.Collections.singletonList(MediaType.TEXT_EVENT_STREAM));
 
                             var bytes = finalBody.getBytes(java.nio.charset.StandardCharsets.UTF_8);
@@ -279,16 +297,29 @@ public class AiService {
      */
     public SseEmitter assistantStream(String message, String sessionId, Long userId,
                                       String selectedMajorCode, MultipartFile file) throws IOException {
+        return assistantStream(message, sessionId, userId, selectedMajorCode, file, null, null);
+    }
+
+    public SseEmitter assistantStream(String message, String sessionId, Long userId,
+                                      String selectedMajorCode, MultipartFile file,
+                                      String imageUrl, Long imageFileId) throws IOException {
         if (file == null || file.isEmpty()) {
             return assistantStream(message, sessionId, userId, selectedMajorCode, "");
         }
         SseEmitter emitter = new SseEmitter(300_000L);
+        final String requestToken = requireInternalToken();
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("message", message == null ? "" : message);
         body.add("session_id", sessionId == null ? "" : sessionId);
         body.add("user_id", userId);
         body.add("selected_major_code", selectedMajorCode == null ? "" : selectedMajorCode);
+        if (imageUrl != null && !imageUrl.isBlank()) {
+            body.add("image_url", imageUrl);
+        }
+        if (imageFileId != null) {
+            body.add("image_file_id", imageFileId);
+        }
         body.add("file", new ByteArrayResource(file.getBytes()) {
             @Override public String getFilename() { return file.getOriginalFilename(); }
         });
@@ -306,6 +337,7 @@ public class AiService {
                         HttpMethod.POST,
                         req -> {
                             req.getHeaders().setContentType(MediaType.MULTIPART_FORM_DATA);
+                            req.getHeaders().set(INTERNAL_TOKEN_HEADER, requestToken);
                             new org.springframework.http.converter.FormHttpMessageConverter()
                                     .write(finalBody, MediaType.MULTIPART_FORM_DATA, req);
                         },
@@ -347,26 +379,49 @@ public class AiService {
     @SuppressWarnings("unchecked")
     public Map<String, Object> hazardCreateStatus(String requestId, Long userId) {
         try {
-            String url = aiBase + "/hazard-create/requests/" + requestId;
-            if (userId != null) {
-                url += "?user_id=" + userId;
-            }
-            return rest.getForObject(url, Map.class);
+            URI url = UriComponentsBuilder
+                    .fromHttpUrl(aiBase + "/hazard-create/requests/{requestId}")
+                    .queryParam("user_id", userId)
+                    .buildAndExpand(requestId)
+                    .encode()
+                    .toUri();
+            HttpHeaders headers = internalHeaders(null);
+            ResponseEntity<Map> response = rest.exchange(
+                    url, HttpMethod.GET, new HttpEntity<Void>(null, headers), Map.class);
+            return response.getBody();
         } catch (HttpClientErrorException.NotFound e) {
             return null;
         }
     }
 
-/** 获取会话历史 */
+/** 获取当前用户会话历史 */
     @SuppressWarnings("unchecked")
-    public Map<String, Object> getHistory(String sessionId) {
-        return rest.getForObject(
-                aiBase + "/history?session_id=" + sessionId, Map.class);
+    public Map<String, Object> getHistory(String sessionId, Long userId) {
+        URI url = UriComponentsBuilder
+                .fromHttpUrl(aiBase + "/history")
+                .queryParam("user_id", userId)
+                .queryParam("session_id", sessionId)
+                .build()
+                .encode()
+                .toUri();
+        HttpHeaders headers = internalHeaders(null);
+        ResponseEntity<Map> response = rest.exchange(
+                url, HttpMethod.GET, new HttpEntity<Void>(null, headers), Map.class);
+        return response.getBody();
     }
 
-    /** 清除会话 */
-    public void clearSession(String sessionId) {
-        rest.delete(aiBase + "/session?session_id=" + sessionId);
+    /** 清除当前用户会话 */
+    public void clearSession(String sessionId, Long userId) {
+        URI url = UriComponentsBuilder
+                .fromHttpUrl(aiBase + "/session")
+                .queryParam("user_id", userId)
+                .queryParam("session_id", sessionId)
+                .build()
+                .encode()
+                .toUri();
+        HttpHeaders headers = internalHeaders(null);
+        rest.exchange(url, HttpMethod.DELETE,
+                new HttpEntity<Void>(null, headers), Map.class);
     }
 
     private static final class StreamCancellation {
@@ -427,9 +482,7 @@ public class AiService {
     }
 
     public void deleteVectors(String sourceTable, List<Long> ids) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("X-Internal-Token", internalToken);
+        HttpHeaders headers = internalHeaders(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(
                 Map.of("table", sourceTable, "ids", ids), headers);
         try {

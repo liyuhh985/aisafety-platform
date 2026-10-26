@@ -100,4 +100,14 @@ class HazardServiceImplCacheTest {
 
         assertEquals(500, raised.getCode());
     }
-}
+    @Test
+    void rejectsClientSuppliedImageUrlWithoutControlledFileId() {
+        HazardDTO dto = new HazardDTO();
+        dto.setImageUrl("https://evil.example/tracker.png");
+
+        BusinessException raised = assertThrows(BusinessException.class,
+                () -> service.create(7L, dto));
+
+        assertEquals(400, raised.getCode());
+    }}
+

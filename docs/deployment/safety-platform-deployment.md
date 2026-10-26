@@ -72,12 +72,14 @@ worker 在跑（MQ 模式；开关为 false 时可不跑）
 
 | 文件 | 用途 |
 |---|---|
-| `/home/ubuntu/.backend.env` | Java 后端：DB、Redis、MinIO、邮件、AI 内部 Token、`RABBITMQ_*` |
-| `/home/ubuntu/ai-module/.env` | Python AI：MiMo、MySQL、Milvus、Redis、高德、JAVA_BASE_URL、`RABBITMQ_*` |
+| `/home/ubuntu/.backend.env` | Java 后端：`JWT_SECRET`、DB、Redis、MinIO、邮件、AI 内部 Token、`RABBITMQ_*` |
+| `/home/ubuntu/ai-module/.env` | Python AI：MiMo、MySQL、Milvus、Redis、高德、`AI_INTERNAL_TOKEN`、`AI_BIND_HOST`、`JAVA_BASE_URL`、`RABBITMQ_*` |
 
 已确认的关键非敏感配置：
 
 ```text
+Java: JWT_SECRET 必填（>=32 bytes）；JWT_SECRET/AI_INTERNAL_TOKEN 不写入仓库
+Python AI: AI_BIND_HOST=127.0.0.1, AI_BIND_PORT=8000, AI_CORS_ORIGINS 默认留空
 Python AI: VECTOR_BACKEND=milvus, MILVUS_ENABLED=true, MILVUS_FALLBACK_TO_MYSQL=true
 Python AI: MILVUS_HOST=106.53.219.214, MILVUS_PORT=19530
 Python AI: DB_NAME=safety_platform
@@ -404,6 +406,22 @@ ssh -o BatchMode=yes ubuntu@106.53.219.214 '
 
 如果前端源码只在本机，先在本地 `npm run build`，再把 `dist/` 上传到云端。
 
+Nginx 的 `/api/` 必须覆盖客户端可控转发头，并禁止旧文件路径直接暴露：
+
+```nginx
+location /api/ {
+    proxy_pass http://127.0.0.1:8080;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    # 其余 SSE、Host、Authorization 配置保持原样
+}
+
+location /minio/ { return 404; }
+location /uploads/ { return 404; }
+```
+
+不要使用 `$proxy_add_x_forwarded_for` 接收客户端自带左值；否则登录/验证码限流可通过伪造 IP 绕过。
+
 ### 7.3 发布并 reload
 
 ```bash
@@ -450,6 +468,14 @@ ssh -o BatchMode=yes ubuntu@106.53.219.214 '
 ```
 
 复核四项：tb_hazard.request_id 列、唯一索引 uk_tb_hazard_request_id、ai_hazard_create_request、ai_hazard_create_outbox。
+
+图片元数据表：
+
+```bash
+ssh -o BatchMode=yes ubuntu@106.53.219.214 '
+  cd /home/ubuntu/ai-module && venv/bin/python3 db/schema/migrate_file_assets.py
+'
+```
 
 至少检查：
 
@@ -530,9 +556,14 @@ AI 对话冒烟：
 
 ```bash
 ssh -o BatchMode=yes ubuntu@106.53.219.214 '
+  set -a
+  . /home/ubuntu/ai-module/.env
+  set +a
   curl -sS -N --max-time 60 \
+    -H "X-Internal-Token: $AI_INTERNAL_TOKEN" \
     -F "message=消防设施老旧，无法正常使用" \
     -F "session_id=deploy-smoke-$(date +%s)" \
+    -F "user_id=1" \
     http://127.0.0.1:8000/api/ai/assistant/stream | tail -c 1500
 '
 ```
@@ -705,3 +736,5 @@ checkpoint_backend.error = null
 2. 重启 `server.py`；
 3. 用同一 `session_id` 发送确认；
 4. 必须恢复 `task_gate` 并完成建单，而不是被当成新会话。
+
+

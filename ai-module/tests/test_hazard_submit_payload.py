@@ -66,6 +66,7 @@ def test_submit_payload_normal_strings_stay_identical(monkeypatch):
         "description": "占道",
         "severity": 2,
         "imageUrl": "",
+        "imageFileId": None,
         "report": "",
     }
 
@@ -205,3 +206,20 @@ def test_payload_category_defends_against_empty_category(monkeypatch):
     assert hazard_submit.submit_from_history(1, [], "x")["action"] == "accepted"
     assert captured["categoryList"] == ["fire/fire_equipment_fault", "utility/gas_leak"]
     assert captured["category"] == "fire/fire_equipment_fault"
+
+
+def test_submit_payload_carries_uploaded_image_file_id(monkeypatch):
+    captured = {}
+    _patch_pipeline(
+        monkeypatch,
+        info={"category": "traffic/road_occupancy", "address": "三明市梅列区某路",
+              "district": "梅列区", "description": "占道", "severity": 1},
+        geo=_GEO,
+        captured=captured,
+    )
+    from tools import hazard_submit
+
+    hazard_submit.submit_from_history(
+        1, [], "占道了", image_url="http://minio/safety-images/a.png", image_file_id=99)
+    assert captured["imageUrl"] == "http://minio/safety-images/a.png"
+    assert captured["imageFileId"] == 99

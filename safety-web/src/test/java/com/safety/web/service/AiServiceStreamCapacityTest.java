@@ -39,7 +39,7 @@ class AiServiceStreamCapacityTest {
     void analyzeStreamReportsBusyWhenWorkerSubmissionIsRejected() {
         ExecutorService executor = mock(ExecutorService.class);
         doThrow(new RejectedExecutionException()).when(executor).submit(org.mockito.ArgumentMatchers.any(Runnable.class));
-        AiService service = new AiService(mock(RestTemplate.class), "http://python", "", executor);
+        AiService service = new AiService(mock(RestTemplate.class), "http://python", "shared-token", executor);
 
         assertThrows(AiStreamBusyException.class, () -> service.analyzeStream(null, "test", 1L));
     }

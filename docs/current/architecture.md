@@ -78,7 +78,8 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 
 | 前缀 | Controller | 主要接口 |
 |------|-----------|----------|
-| `/api/hazard` | HazardController | `POST`（上报）/ `GET` / `GET /stats` / `GET /{id}` / **`GET /requests/{requestId}`（AI 建单状态查询，代理 Python）** / `GET /ai/requests/{requestId}`（内部对账，校验 `X-Internal-Token`，供 Python `RequestReconciler` 调用）；`assign`、`accept`、`start`、`complete`、`review`、`batch-review`、`withdraw`、`PUT /{id}/location` |
+| `/api/hazard` | HazardController | `POST`（上报）/ `GET` / `GET /map`（匿名脱敏）/ `GET /stats`（匿名）/ `GET /{id}` / **`GET /requests/{requestId}`（AI 建单状态查询，代理 Python）** / `GET /ai/requests/{requestId}`（内部对账，校验 `X-Internal-Token`，供 Python `RequestReconciler` 调用）；`assign`、`accept`、`start`、`complete`、`review`、`batch-review`、`withdraw`、`PUT /{id}/location` |
+| `/api/users` | UserController | `PUT /{id}/role`（管理员修改角色并撤销该用户全部 Token） |
 | `/api/report` | ReportController | `POST` / `GET` / `GET /{id}` / `DELETE /{id}` |
 | `/api/upload` | UploadController | `POST /image` |
 | `/api/case` | CaseController | `GET` / `DELETE /{id}` |
@@ -87,9 +88,10 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 
 ## 4. 安全与权限（`SecurityConfig`）
 
-- 无状态 JWT；`JwtAuthenticationFilter` 注入 `ROLE_USER` / `ROLE_ADMIN` / `ROLE_HANDLER`。
-- 匿名：`/api/auth/**`、`/api/ai/health`、`GET /api/case|knowledge|regulation/**`、`GET /api/hazard`、`/api/hazard/stats`、`/api/hazard/{id}`、`/uploads/**`。
-- **`GET /api/hazard/requests/{requestId}` 不在匿名白名单**（路径比 `/api/hazard/{id}` 多一段，不会被它匹配），需登录后带 JWT 访问。
+- JWT 密钥由 `JWT_SECRET` 注入；Token 带 `jti`，Redis 保存有效会话；`JwtAuthenticationFilter` 校验验签和服务端会话后注入 `ROLE_USER` / `ROLE_ADMIN` / `ROLE_HANDLER`。
+- 匿名：`/api/auth/**`、`/api/ai/health`、`GET /api/case|knowledge|regulation/**`、`GET /api/hazard/map`、`GET /api/hazard/stats`。
+- 需登录：`GET /api/hazard`、`GET /api/hazard/{id}`、AI 分析、报告、上传和业务写操作。
+- `GET /api/hazard/requests/{requestId}` 需登录并只返回当前用户请求；内部 `/api/hazard/ai/requests/{requestId}` 需 `X-Internal-Token`。
 - ASYNC / ERROR dispatcher 放行（避免 SSE 异步派发被误判 403）。
 - 方法级：
   - `assign` / `review` / `batch-review` → `hasRole('ADMIN')`
@@ -99,11 +101,11 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 
 ## 5. 数据与缓存
 
-- **MySQL** `safety_platform`：`tb_user`、`tb_hazard`（含 `request_id` 唯一索引 `uk_tb_hazard_request_id`）、`tb_hazard_action`、`tb_hazard_report`、`tb_hazard_case`、`tb_regulation`、`tb_hazard_knowledge`、`tb_vector_sync_outbox`、`tb_resource_cleanup_outbox`、**`ai_hazard_create_request`、`ai_hazard_create_outbox`**（后两张只有 Python 写）。
+- **MySQL** `safety_platform`：`tb_user`、`tb_file_asset`、`tb_hazard`（含 `request_id` 唯一索引 `uk_tb_hazard_request_id`）、`tb_hazard_action`、`tb_hazard_report`、`tb_hazard_case`、`tb_regulation`、`tb_hazard_knowledge`、`tb_vector_sync_outbox`、`tb_resource_cleanup_outbox`、**`ai_hazard_create_request`、`ai_hazard_create_outbox`**（后两张只有 Python 写）。
 - **RabbitMQ**：topic exchange `safety.hazard`；`hazard.create`（Java 消费）与 `hazard.create.result.q`（Python 消费）均带 `x-dead-letter-exchange=safety.hazard.dlx`；死信进 `hazard.create.dlq`。
 - **Redis**：验证码、Token、限流、缓存、用户级历史记忆。
 - **Caffeine**：本地热点缓存（如隐患详情多级缓存 L1）。
-- **MinIO** `safety-images`：报告关联图片，桶匿名可读不可列。
+- **MinIO** `safety-images`：文件本体；MySQL `tb_file_asset` 保存 `userId/objectKey/status/expiresAt` 元数据。报告保存只接受当前用户上传得到的 `fileId`，不再接受任意 `imageUrl`。临时文件由 `FileAssetCleanupWorker` 定时清理；图片不再暴露 MinIO 公网路径，统一通过需登录的 `GET /api/files/{fileId}` 读取，未绑定业务的临时图片仅上传者本人可读。
 - **Milvus**：案例/法规/知识向量；删除走 outbox 最终一致，Python 侧 `/api/ai/internal/vectors/delete` 承接。
 
 ## 6. 关键横切
@@ -124,7 +126,7 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 
 - **Python MySQL 连接池**：`tools/db_pool.py`（默认池 + 检索池），使用方 `hazard_create_queue` / `core/memory` / `hybrid_search`。
 - **LLM 调用链**：主端点重试 → 同供应商备用模型 → 跨供应商降级（DeepSeek）。
-- **并发闸门**：Java `streamExecutor` 8+32（超限 429）；Python 图执行受默认线程池限制（2 核 = 6）。
+- **并发闸门**：Java `streamExecutor` 8+32（超限 429）；Python 图执行在线程池中运行，并按 `userId:sessionId` 做单飞锁（重复 turn 409）。
 
 ## 8. 构建与部署
 
@@ -136,3 +138,4 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 ## 9. 敏感约定
 
 `.env`、`application-local.yml`、真实密码/密钥/Token 一律不入库、不入文档、不入聊天。
+

@@ -26,7 +26,7 @@ class AiServiceStreamCancellationTest {
         doReturn(analyzeFuture)
                 .when(executor).submit(any(Runnable.class));
 
-        AiService service = new AiService(rest, "http://python", "", executor);
+        AiService service = new AiService(rest, "http://python", "shared-token", executor);
         SseEmitter analyze = service.analyzeStream(null, "test", 1L);
 
         assertCallbacksRegistered(analyze);

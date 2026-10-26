@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -20,6 +21,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CaseController.class)
+@TestPropertySource(properties = {
+        "jwt.secret=task-a-test-only-jwt-secret-at-least-thirty-two-bytes",
+        "jwt.expiration-ms=60000"
+})
 @ContextConfiguration(classes = {
         CaseController.class,
         SecurityConfig.class,

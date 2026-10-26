@@ -156,16 +156,16 @@ def redis_session_backend(monkeypatch):
 def _new_worker(fake):
     """模拟"另一个 worker 进程"：同一台 Redis，全新的进程内会话对象。"""
     memory._redis_sessions.clear()
-    return memory.get_session("s1")
+    return memory.get_session(1, "s1")
 
 
 def test_redis_session_survives_new_store_instance(redis_session_backend):
     """同一 session_id 在两个实例间读到同一 messages（多 worker 的核心诉求）。"""
-    first = memory.get_session("s1")
+    first = memory.get_session(1, "s1")
     first.add_user("消防通道被车占了")
     first.add_assistant("已记录")
 
-    second = memory.RedisWorkingMemory("s1", redis_session_backend)
+    second = memory.RedisWorkingMemory(memory.session_namespace(1, "s1"), redis_session_backend)
     assert second.get_history() == [
         {"role": "user", "content": "消防通道被车占了"},
         {"role": "assistant", "content": "已记录"},
@@ -174,7 +174,7 @@ def test_redis_session_survives_new_store_instance(redis_session_backend):
 
 def test_redis_session_visible_across_worker_objects(redis_session_backend):
     """get_session 换一个进程内缓存（等价于换 worker）后仍能看到同一份历史。"""
-    a = memory.get_session("s1")
+    a = memory.get_session(1, "s1")
     a.add_user("第一条")
     b = _new_worker(redis_session_backend)
 
@@ -188,11 +188,20 @@ def test_redis_session_visible_across_worker_objects(redis_session_backend):
 
 def test_redis_session_isolates_different_sessions(redis_session_backend):
     """不同 session_id 必须互不可见。"""
-    memory.get_session("s1").add_user("s1 的内容")
-    memory.get_session("s2").add_user("s2 的内容")
+    memory.get_session(1, "s1").add_user("s1 的内容")
+    memory.get_session(1, "s2").add_user("s2 的内容")
 
-    assert [m["content"] for m in memory.get_session("s1").get_history()] == ["s1 的内容"]
-    assert [m["content"] for m in memory.get_session("s2").get_history()] == ["s2 的内容"]
+    assert [m["content"] for m in memory.get_session(1, "s1").get_history()] == ["s1 的内容"]
+    assert [m["content"] for m in memory.get_session(1, "s2").get_history()] == ["s2 的内容"]
+
+
+def test_redis_session_isolates_users_with_same_session_id(redis_session_backend):
+    """session_id 被猜到也不能跨用户读取。"""
+    memory.get_session(1, "shared").add_user("用户1")
+    memory.get_session(2, "shared").add_user("用户2")
+
+    assert [m["content"] for m in memory.get_session(1, "shared").get_history()] == ["用户1"]
+    assert [m["content"] for m in memory.get_session(2, "shared").get_history()] == ["用户2"]
 
 
 def test_redis_session_keeps_last_n_and_ttl(redis_session_backend):
@@ -206,7 +215,7 @@ def test_redis_session_keeps_last_n_and_ttl(redis_session_backend):
 
 
 def test_redis_session_add_report_and_system_are_system_messages(redis_session_backend):
-    mem = memory.get_session("s1")
+    mem = memory.get_session(1, "s1")
     mem.add_report("报告正文")
     mem.add_system("[视觉分析] {...}")
 
@@ -217,7 +226,7 @@ def test_redis_session_add_report_and_system_are_system_messages(redis_session_b
 
 
 def test_redis_session_clear_removes_history(redis_session_backend):
-    mem = memory.get_session("s1")
+    mem = memory.get_session(1, "s1")
     mem.add_user("要清掉")
     mem.clear()
     assert mem.get_history() == []
@@ -232,7 +241,7 @@ def test_redis_session_degrades_to_local_when_redis_down(monkeypatch, caplog):
     memory.reset_sessions()
     fake.fail = True
 
-    mem = memory.get_session("s-down")
+    mem = memory.get_session(1, "s-down")
     mem.add_user("Redis 挂的时候写的")   # 不抛异常
     assert [m["content"] for m in mem.get_history()] == ["Redis 挂的时候写的"]
     assert mem._degraded is True
@@ -249,7 +258,7 @@ def test_redis_session_strict_mode_raises(monkeypatch):
     monkeypatch.setattr(memory, "_session_redis", lambda: fake)
     memory.reset_sessions()
 
-    mem = memory.get_session("s-strict")
+    mem = memory.get_session(1, "s-strict")
     with pytest.raises(memory.SessionStoreUnavailable):
         mem.add_user("写不进去")
     memory.reset_sessions()
@@ -260,9 +269,9 @@ def test_session_backend_memory_keeps_in_process_sessions(monkeypatch):
     monkeypatch.setenv("SESSION_BACKEND", "memory")
     memory.reset_sessions()
 
-    a = memory.get_session("local-1")
+    a = memory.get_session(1, "local-1")
     a.add_user("本地记忆")
     assert type(a).__name__ == "WorkingMemory"
-    assert memory.get_session("local-1") is a
+    assert memory.get_session(1, "local-1") is a
     assert memory.session_backend_status()["configured"] == "memory"
     memory.reset_sessions()

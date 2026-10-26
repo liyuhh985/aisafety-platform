@@ -4,11 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safety.common.exception.BusinessException;
 import com.safety.pojo.dto.ReportSaveDTO;
+import com.safety.pojo.entity.FileAsset;
 import com.safety.pojo.entity.HazardReport;
 import com.safety.service.mapper.HazardReportMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -23,26 +27,55 @@ public class ReportService {
     private final HazardReportMapper mapper;
     private final FileUploadService fileUploadService;
     private final ResourceCleanupOutboxService cleanupOutboxService;
+    private final FileAssetService fileAssetService;
     private final TransactionTemplate cleanupTransaction;
 
     private static final ObjectMapper json = new ObjectMapper();
 
+    @Autowired
     public ReportService(
             HazardReportMapper mapper,
             FileUploadService fileUploadService,
             ResourceCleanupOutboxService cleanupOutboxService,
+            FileAssetService fileAssetService,
             PlatformTransactionManager transactionManager) {
         this.mapper = mapper;
         this.fileUploadService = fileUploadService;
         this.cleanupOutboxService = cleanupOutboxService;
+        this.fileAssetService = fileAssetService;
         this.cleanupTransaction = new TransactionTemplate(transactionManager);
     }
 
+    /** 兼容旧单元测试的构造器；生产环境使用带 FileAssetService 的构造器。 */
+    ReportService(
+            HazardReportMapper mapper,
+            FileUploadService fileUploadService,
+            ResourceCleanupOutboxService cleanupOutboxService,
+            PlatformTransactionManager transactionManager) {
+        this(mapper, fileUploadService, cleanupOutboxService, null, transactionManager);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public HazardReport save(Long userId, ReportSaveDTO dto) {
+        FileAsset asset = null;
+        if (dto.getFileId() != null) {
+            if (fileAssetService == null) {
+                throw new BusinessException(500, "文件服务未就绪");
+            }
+            asset = fileAssetService.requireOwned(dto.getFileId(), userId);
+            if (!FileAssetService.STATUS_TEMP.equals(asset.getStatus())) {
+                throw new BusinessException(409, "图片已使用或状态无效");
+            }
+        } else if (dto.getImageUrl() != null && !dto.getImageUrl().isBlank()) {
+            throw new BusinessException(400, "请先通过上传接口上传图片");
+        }
+
         HazardReport r = new HazardReport();
         r.setUserId(userId);
-        r.setImageUrl(dto.getImageUrl());
-        r.setImageKey(objectKeyOf(dto.getImageUrl()));
+        if (asset != null) {
+            r.setImageUrl(fileAssetService.accessPath(asset));
+            r.setImageKey(asset.getObjectKey());
+        }
         r.setHazardCategory(dto.getHazardCategory());
         r.setSeverity(dto.getSeverity());
         r.setDescription(dto.getDescription());
@@ -53,6 +86,9 @@ public class ReportService {
             r.setRectification("[]");
         }
         mapper.insert(r);
+        if (asset != null) {
+            fileAssetService.markAttached(asset.getId(), userId, FileAssetService.VISIBILITY_PRIVATE);
+        }
         return r;
     }
 
@@ -102,12 +138,18 @@ public class ReportService {
         }
         if (removeObjectQuietly(objectKey)) {
             mapper.deleteById(row.getId());
+            if (fileAssetService != null) {
+                fileAssetService.deleteByObjectKey(objectKey);
+            }
             return;
         }
         cleanupTransaction.executeWithoutResult(status -> {
             cleanupOutboxService.enqueueObjectDelete(
                     fileUploadService.bucketName(), objectKey, REPORT_SOURCE_TABLE, row.getId());
             mapper.deleteById(row.getId());
+            if (fileAssetService != null) {
+                fileAssetService.deleteByObjectKey(objectKey);
+            }
         });
     }
 
@@ -150,3 +192,5 @@ public class ReportService {
         return key;
     }
 }
+
+

@@ -7,12 +7,15 @@ import com.safety.service.service.RegulationService;
 import com.safety.web.controller.CaseController;
 import com.safety.web.controller.KnowledgeController;
 import com.safety.web.controller.RegulationController;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
@@ -33,6 +36,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         SecurityConfig.class,
         JwtAuthenticationFilter.class
 })
+@TestPropertySource(properties = {
+        "jwt.secret=task-a-test-only-jwt-secret-at-least-thirty-two-bytes",
+        "jwt.expiration-ms=60000"
+})
 class CorpusDeleteAuthorizationTest {
 
     private static final String[] CORPUS_DELETE_PATHS = {
@@ -43,6 +50,8 @@ class CorpusDeleteAuthorizationTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @MockBean
     private CaseService caseService;
@@ -52,9 +61,20 @@ class CorpusDeleteAuthorizationTest {
     private KnowledgeService knowledgeService;
     @MockBean
     private StringRedisTemplate redisTemplate;
+    @MockBean
+    private ValueOperations<String, String> valueOperations;
 
-    private static String bearer(long userId, int role) {
-        return "Bearer " + JwtUtil.generate(userId, role);
+    @BeforeEach
+    void setUpRedisSessions() {
+        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+    }
+
+    private String bearer(long userId, int role) {
+        String token = jwtUtil.generate(userId, role);
+        JwtUtil.TokenPayload payload = jwtUtil.parse(token);
+        when(valueOperations.get(jwtUtil.sessionKey(payload.jti())))
+                .thenReturn(userId + ":" + role);
+        return "Bearer " + token;
     }
 
     @Test
