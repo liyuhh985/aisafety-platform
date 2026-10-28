@@ -1,7 +1,7 @@
 # 隐患生命周期（当前真相）
 
 > 状态：current
-> 最后核对：2026-10-14
+> 最后核对：2026-10-28
 > 事实来源：`safety-pojo/.../entity/Hazard.java`、`HazardAction.java`、`User.java`、`safety-service/.../impl/HazardServiceImpl.java`、`HazardMapper.java`、`safety-web/.../HazardController.java`。
 > 命名以代码为准：状态 1 是 **「已接单」**（不是「已派单」）；状态 3 的文案取决于 `reviewed`。
 
@@ -20,7 +20,7 @@
 | status | 含义 | 备注 |
 |--------|------|------|
 | `0` | 待处理 | 新建/AI 建单的初始状态 |
-| `1` | 已接单 | 管理员派单后（写 `handler_id`） |
+| `1` | 已接单 | 管理员派单或改派后（写 `handler_id`） |
 | `2` | 整改中 | 处理人开始整改 |
 | `3` | 待验收 / 已办结 | `reviewed=0` → 待验收；`reviewed=1` → 已办结 |
 | `4` | 已驳回 | 管理员审查驳回 |
@@ -30,13 +30,15 @@
 0 待处理 --(管理员派单 assign)--> 1 已接单 --(处理人 start)--> 2 整改中 --(处理人 complete)--> 3 待验收
 3 待验收 --(管理员 review pass)--> 3 + reviewed=1 已办结
 3 待验收 --(管理员 review reject)--> 4 已驳回
+1 已接单 --(管理员改派 assign)--> 1 已接单（替换 handler_id）
 4 已驳回 --(管理员重新 assign)--> 1 已接单
 0 待处理 --(创建人 withdraw)--> 5 已撤回
 ```
 
 流转规则（服务层强校验）：
 
-- `assign`：仅 `status ∈ {0, 4}` 可派；管理员；写 `handler_id`，`reviewed=0`。
+- `assign`：仅 `status ∈ {0, 1, 4}` 可派/改派；管理员；写 `handler_id`，`reviewed=0`。
+- 派单目标必须存在且角色为 `HANDLER`；`accept`、`start`、`complete` 也会在服务层复核处理人员身份。
 - `start`：仅 `1 → 2`；处理人必须是 `handler_id` 本人（管理员可任意）。
 - `complete`：仅 `2 → 3`；同样要求 `handler_id==自己`（管理员可任意）；`reviewed` 置 0。
 - `review(pass=true)`：仅 `status=3`；`reviewed` 置 1；已办结不可重复办结。
@@ -53,15 +55,16 @@
 | `GET /api/hazard/map` | 匿名 | 脱敏地图点位（最多 100） |
 | `GET /api/hazard/{id}` | 登录 | 详情 |
 | `GET /api/hazard/stats` | 匿名 | 统计 |
-| `POST /api/hazard/{id}/assign` | `hasRole('ADMIN')` | 派单 |
+| `POST /api/hazard/{id}/assign` | `hasRole('ADMIN')` | 派单 / 改派 |
 | `POST /api/hazard/{id}/accept` | `hasRole('HANDLER')` | 接单 |
 | `POST /api/hazard/{id}/start` | `hasRole('HANDLER')` | 开始整改 |
 | `POST /api/hazard/{id}/complete` | `hasRole('HANDLER')` | 完成整改 |
 | `POST /api/hazard/{id}/review` | `hasRole('ADMIN')` | 验收/驳回 |
 | `POST /api/hazard/batch-review` | `hasRole('ADMIN')` | 批量验收/驳回 |
 | `POST /api/hazard/{id}/withdraw` | 登录 | 创建人撤回 |
+| `GET /api/users/handlers` | `hasRole('ADMIN')` | 管理员派单用处理人员目录 |
 
-> 注：`accept` 接口存在且要求 HANDLER；但当前主流程的 `0→1` 是管理员 `assign`（写 handler）。以服务层规则为准。
+> 注：`accept` 接口存在且要求 HANDLER；管理员 `assign` 与处理人员自主认领共同完成 `0/4→1`，管理员可在 `status=1` 改派。以服务层规则为准。
 
 ## 四、可见性与数据隔离（`page`）
 
@@ -77,7 +80,7 @@
 
 | action_type | 触发 |
 |-------------|------|
-| `ASSIGN` | 管理员派单 |
+| `ASSIGN` | 管理员派单 / 改派 |
 | `START` | 处理人开始整改 |
 | `COMPLETE` | 处理人完成 |
 | `REVIEW_PASS` | 验收通过 |

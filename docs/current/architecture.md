@@ -79,7 +79,7 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 | 前缀 | Controller | 主要接口 |
 |------|-----------|----------|
 | `/api/hazard` | HazardController | `POST`（上报）/ `GET` / `GET /map`（匿名脱敏）/ `GET /stats`（匿名）/ `GET /{id}` / **`GET /requests/{requestId}`（AI 建单状态查询，代理 Python）** / `GET /ai/requests/{requestId}`（内部对账，校验 `X-Internal-Token`，供 Python `RequestReconciler` 调用）；`assign`、`accept`、`start`、`complete`、`review`、`batch-review`、`withdraw`、`PUT /{id}/location` |
-| `/api/users` | UserController | `PUT /{id}/role`（管理员修改角色并撤销该用户全部 Token） |
+| `/api/users` | UserController | `GET /handlers`（管理员处理人员目录）/ `PUT /{id}/role`（管理员修改角色并撤销该用户全部 Token） |
 | `/api/report` | ReportController | `POST` / `GET` / `GET /{id}` / `DELETE /{id}` |
 | `/api/upload` | UploadController | `POST /image` |
 | `/api/case` | CaseController | `GET` / `DELETE /{id}` |
@@ -94,7 +94,8 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 - `GET /api/hazard/requests/{requestId}` 需登录并只返回当前用户请求；内部 `/api/hazard/ai/requests/{requestId}` 需 `X-Internal-Token`。
 - ASYNC / ERROR dispatcher 放行（避免 SSE 异步派发被误判 403）。
 - 方法级：
-  - `assign` / `review` / `batch-review` → `hasRole('ADMIN')`
+  - `assign` / `review` / `batch-review` / `GET /api/users/handlers` → `hasRole('ADMIN')`
+  - `assign` 目标用户及 `accept` / `start` / `complete` 操作人需在服务层校验为 `HANDLER`
   - `accept` / `start` / `complete` → `hasRole('HANDLER')`
   - 语料 `DELETE`（case / regulation / knowledge）→ `hasRole('ADMIN')`
   - `withdraw` → 需登录，服务层校验「仅创建人 + 仅 status=0」
