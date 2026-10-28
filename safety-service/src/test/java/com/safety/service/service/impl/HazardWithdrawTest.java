@@ -121,6 +121,64 @@ class HazardWithdrawTest {
     }
 
     @Test
+    void adminCanWithdrawAcceptedHazardWithReason() {
+        when(hazardMapper.adminWithdraw(1L, ME, "AI 误识别")).thenReturn(1);
+        Hazard after = hazard(1L, OTHER, 5);
+        after.setWithdrawnBy(ME);
+        after.setWithdrawnReason("AI 误识别");
+        when(hazardMapper.selectById(1L)).thenReturn(after);
+
+        HazardVO vo = service.adminWithdraw(1L, ME, "AI 误识别");
+
+        assertEquals(5, vo.getStatus());
+        assertEquals(ME, vo.getWithdrawnBy());
+        assertEquals("AI 误识别", vo.getWithdrawnReason());
+        ArgumentCaptor<HazardAction> action = ArgumentCaptor.forClass(HazardAction.class);
+        verify(hazardActionMapper).insert(action.capture());
+        assertEquals("ADMIN_WITHDRAW", action.getValue().getActionType());
+        assertEquals("AI 误识别", action.getValue().getRemark());
+    }
+
+    @Test
+    void adminCanWithdrawInProgressHazard() {
+        when(hazardMapper.adminWithdraw(1L, ME, "重复上报")).thenReturn(1);
+        Hazard after = hazard(1L, OTHER, 5);
+        after.setWithdrawnBy(ME);
+        after.setWithdrawnReason("重复上报");
+        when(hazardMapper.selectById(1L)).thenReturn(after);
+
+        HazardVO vo = service.adminWithdraw(1L, ME, "重复上报");
+
+        assertEquals(5, vo.getStatus());
+        verify(hazardMapper).adminWithdraw(1L, ME, "重复上报");
+        verify(hazardMapper, org.mockito.Mockito.never()).withdraw(1L, ME);
+    }
+
+    @Test
+    void adminCannotWithdrawPendingReviewHazard() {
+        when(hazardMapper.adminWithdraw(1L, ME, "无效")).thenReturn(0);
+        when(hazardMapper.selectById(1L)).thenReturn(hazard(1L, OTHER, 3));
+
+        BusinessException error = assertThrows(BusinessException.class,
+                () -> service.adminWithdraw(1L, ME, "无效"));
+
+        assertEquals(409, error.getCode());
+    }
+
+    @Test
+    void repeatedAdminWithdrawIsIdempotent() {
+        when(hazardMapper.adminWithdraw(1L, ME, "重复")).thenReturn(0);
+        Hazard withdrawn = hazard(1L, OTHER, 5);
+        withdrawn.setWithdrawnBy(ME);
+        withdrawn.setWithdrawnReason("重复");
+        when(hazardMapper.selectById(1L)).thenReturn(withdrawn);
+
+        HazardVO vo = service.adminWithdraw(1L, ME, "重复");
+
+        assertEquals(5, vo.getStatus());
+    }
+
+    @Test
     void withdrawnIsVisibleOnlyToAdmin() {
         // 规则：只有管理员(1) 能看到已撤回
         assertTrue(HazardServiceImpl.hidesWithdrawn(0), "普通用户应看不到");

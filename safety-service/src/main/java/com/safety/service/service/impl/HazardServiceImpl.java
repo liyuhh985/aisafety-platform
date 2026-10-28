@@ -377,6 +377,26 @@ public class HazardServiceImpl implements HazardService {
 
     @Override
     @Transactional
+    public HazardVO adminWithdraw(Long id, Long adminId, String reason) {
+        int rows = hazardMapper.adminWithdraw(id, adminId, reason);
+        if (rows == 0) {
+            Hazard current = hazardMapper.selectById(id);
+            if (current == null) {
+                throw new BusinessException(404, "隐患不存在");
+            }
+            if (Objects.equals(current.getStatus(), STATUS_WITHDRAWN)) {
+                return toVO(current);
+            }
+            throw new BusinessException(409, "仅待处理、已接单或整改中的工单可撤回");
+        }
+        saveAction(id, adminId, "ADMIN_WITHDRAW", reason);
+        invalidateDetailCacheAfterCommit(id);
+        invalidateListCache();
+        return toVO(hazardMapper.selectById(id));
+    }
+
+    @Override
+    @Transactional
     public HazardVO updateLocation(Long id, Long userId, Integer role, HazardLocationUpdateDTO dto) {
         boolean isAdmin = (role != null && role == 1);
         int rows = isAdmin
@@ -585,7 +605,8 @@ public class HazardServiceImpl implements HazardService {
                 statusText,
                 hazard.getCreateTime(),
                 hazard.getWithdrawnAt(),
-                hazard.getWithdrawnBy());
+                hazard.getWithdrawnBy(),
+                hazard.getWithdrawnReason());
     }
 
     @Override

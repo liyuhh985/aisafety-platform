@@ -22,6 +22,14 @@ public interface HazardMapper extends BaseMapper<Hazard> {
             + " update_time = NOW() WHERE id = #{id} AND user_id = #{userId} AND status = 0")
     int withdraw(@Param("id") Long id, @Param("userId") Long userId);
 
+    /** 管理员撤回无效工单：仅待处理/已接单/整改中可进入已撤回。 */
+    @Update("UPDATE tb_hazard SET status = 5, withdrawn_at = NOW(),"
+            + " withdrawn_by = #{adminId}, withdrawn_reason = #{reason}, update_time = NOW()"
+            + " WHERE id = #{id} AND status IN (0, 1, 2)")
+    int adminWithdraw(@Param("id") Long id,
+                      @Param("adminId") Long adminId,
+                      @Param("reason") String reason);
+
     /** 派单/改派：待处理、已接单或已驳回任务可原子流转到已接单并替换处理人。 */
     @Update("UPDATE tb_hazard SET status = 1, reviewed = 0, handler_id = #{handlerId},"
             + " update_time = NOW() WHERE id = #{id} AND status IN (0, 1, 4)")

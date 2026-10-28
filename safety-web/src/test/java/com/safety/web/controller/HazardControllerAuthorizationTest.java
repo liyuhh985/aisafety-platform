@@ -1,6 +1,7 @@
 package com.safety.web.controller;
 
 import com.safety.common.exception.BusinessException;
+import com.safety.pojo.dto.AdminWithdrawDTO;
 import com.safety.pojo.vo.HazardMapVO;
 import com.safety.service.service.HazardService;
 import com.safety.web.service.AiService;
@@ -8,7 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+
+import jakarta.validation.constraints.NotBlank;
+import java.lang.reflect.Method;
 
 import java.util.List;
 
@@ -46,6 +51,17 @@ class HazardControllerAuthorizationTest {
         BusinessException error = assertThrows(BusinessException.class,
                 () -> controller.getById(1L, null));
         assertEquals(401, error.getCode());
+    }
+
+    @Test
+    void adminWithdrawRequiresAdminAndValidatedReason() throws Exception {
+        Method method = HazardController.class.getMethod(
+                "adminWithdraw", Long.class, AdminWithdrawDTO.class, Authentication.class);
+        PreAuthorize annotation = method.getAnnotation(PreAuthorize.class);
+        assertEquals("hasRole('ADMIN')", annotation.value());
+        assertEquals(NotBlank.class,
+                AdminWithdrawDTO.class.getDeclaredField("reason")
+                        .getAnnotation(NotBlank.class).annotationType());
     }
 
     @Test

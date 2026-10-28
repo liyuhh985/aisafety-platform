@@ -32,4 +32,5 @@ public class HazardVO {
     private LocalDateTime createTime;
     private LocalDateTime withdrawnAt;
     private Long withdrawnBy;
+    private String withdrawnReason;
 }

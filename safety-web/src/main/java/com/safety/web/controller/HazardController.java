@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.safety.common.exception.BusinessException;
 import com.safety.common.result.R;
 import com.safety.pojo.dto.AiAssignDTO;
+import com.safety.pojo.dto.AdminWithdrawDTO;
 import com.safety.pojo.dto.AiBatchReviewDTO;
 import com.safety.pojo.dto.AiReviewDTO;
 import com.safety.pojo.dto.HazardDTO;
@@ -166,6 +167,15 @@ public class HazardController {
         }
         Long userId = (Long) auth.getPrincipal();
         return R.ok(hazardService.withdraw(id, userId));
+    }
+
+    /** 管理员撤回无效工单：status=0/1/2 -> 5，必须记录原因。 */
+    @PostMapping("/{id:\\d+}/admin-withdraw")
+    @PreAuthorize("hasRole('ADMIN')")
+    public R<HazardVO> adminWithdraw(@PathVariable Long id,
+                                     @Valid @RequestBody AdminWithdrawDTO dto,
+                                     Authentication auth) {
+        return R.ok(hazardService.adminWithdraw(id, (Long) auth.getPrincipal(), dto.getReason()));
     }
 
     /** 建任务者本人或管理员修改定位与片区：仅 status=0（待处理）可改 */

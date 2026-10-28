@@ -34,6 +34,8 @@ public class Hazard {
     private LocalDateTime withdrawnAt;
     /** 撤回人 userId */
     private Long withdrawnBy;
+    /** 管理员撤回原因 */
+    private String withdrawnReason;
     /** AI 建单请求 id（幂等键，唯一索引） */
     private String requestId;
 }
