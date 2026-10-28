@@ -15,11 +15,13 @@ import com.safety.pojo.dto.HazardLocationUpdateDTO;
 import com.safety.pojo.entity.FileAsset;
 import com.safety.pojo.entity.Hazard;
 import com.safety.pojo.entity.HazardAction;
+import com.safety.pojo.entity.User;
 import com.safety.pojo.vo.HazardMapVO;
 import com.safety.pojo.vo.HazardStatsVO;
 import com.safety.pojo.vo.HazardVO;
 import com.safety.service.mapper.HazardActionMapper;
 import com.safety.service.mapper.HazardMapper;
+import com.safety.service.mapper.UserMapper;
 import com.safety.service.service.FileAssetService;
 import com.safety.service.service.HazardService;
 import jakarta.annotation.PostConstruct;
@@ -47,6 +49,7 @@ public class HazardServiceImpl implements HazardService {
 
     private final HazardMapper hazardMapper;
     private final HazardActionMapper hazardActionMapper;
+    private final UserMapper userMapper;
     private final StringRedisTemplate redisTemplate;
     private final RedissonClient redissonClient;
     private final FileAssetService fileAssetService;
@@ -61,17 +64,19 @@ public class HazardServiceImpl implements HazardService {
                              HazardActionMapper hazardActionMapper,
                              StringRedisTemplate redisTemplate,
                              RedissonClient redissonClient) {
-        this(hazardMapper, hazardActionMapper, redisTemplate, redissonClient, null);
+        this(hazardMapper, hazardActionMapper, null, redisTemplate, redissonClient, null);
     }
 
     @Autowired
     public HazardServiceImpl(HazardMapper hazardMapper,
                              HazardActionMapper hazardActionMapper,
+                             UserMapper userMapper,
                              StringRedisTemplate redisTemplate,
                              RedissonClient redissonClient,
                              FileAssetService fileAssetService) {
         this.hazardMapper = hazardMapper;
         this.hazardActionMapper = hazardActionMapper;
+        this.userMapper = userMapper;
         this.redisTemplate = redisTemplate;
         this.redissonClient = redissonClient;
         this.fileAssetService = fileAssetService;
@@ -253,6 +258,7 @@ public class HazardServiceImpl implements HazardService {
     @Override
     @Transactional
     public HazardVO assign(Long id, Long adminId, Long handlerId) {
+        requireHandlerUser(handlerId);
         int rows = hazardMapper.assign(id, handlerId);
         if (rows == 0) {
             Hazard current = requireHazard(id);
@@ -325,6 +331,9 @@ public class HazardServiceImpl implements HazardService {
 
     private HazardVO transition(Long id, int from, int to, String actionType, Long userId, Integer role) {
         boolean isAdmin = (role != null && role == 1);
+        if (!isAdmin) {
+            requireHandlerUser(userId);
+        }
         int rows = isAdmin
                 ? hazardMapper.transitionAsAdmin(id, from, to)
                 : hazardMapper.transitionForHandler(id, from, to, userId);
@@ -407,6 +416,17 @@ public class HazardServiceImpl implements HazardService {
             throw new BusinessException(404, "隐患不存在");
         }
         return hazard;
+    }
+
+    private User requireHandlerUser(Long userId) {
+        User user = userMapper.selectByIdForUpdate(userId);
+        if (user == null) {
+            throw new BusinessException(404, "处理人员不存在");
+        }
+        if (!Objects.equals(user.getRole(), 2)) {
+            throw new BusinessException(400, "目标用户不是处理人员");
+        }
+        return user;
     }
 
     @Override

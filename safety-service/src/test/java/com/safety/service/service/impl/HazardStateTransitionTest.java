@@ -6,9 +6,11 @@ import com.safety.common.exception.BusinessException;
 import com.safety.pojo.dto.HazardLocationUpdateDTO;
 import com.safety.pojo.entity.Hazard;
 import com.safety.pojo.entity.HazardAction;
+import com.safety.pojo.entity.User;
 import com.safety.pojo.vo.HazardMapVO;
 import com.safety.service.mapper.HazardActionMapper;
 import com.safety.service.mapper.HazardMapper;
+import com.safety.service.mapper.UserMapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -49,6 +52,8 @@ class HazardStateTransitionTest {
     @Mock
     private HazardActionMapper hazardActionMapper;
     @Mock
+    private UserMapper userMapper;
+    @Mock
     private StringRedisTemplate redisTemplate;
     @Mock
     private RedissonClient redissonClient;
@@ -57,12 +62,14 @@ class HazardStateTransitionTest {
 
     @BeforeEach
     void setUp() {
-        service = new HazardServiceImpl(hazardMapper, hazardActionMapper, redisTemplate, redissonClient);
+        service = new HazardServiceImpl(hazardMapper, hazardActionMapper, userMapper,
+                redisTemplate, redissonClient, null);
         service.init();
     }
 
     @Test
     void assignUsesConditionalUpdateAndLogsAction() {
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(handlerUser(HANDLER_ID));
         when(hazardMapper.assign(HAZARD_ID, HANDLER_ID)).thenReturn(1);
         when(hazardMapper.selectById(HAZARD_ID)).thenReturn(hazard(1, USER_ID, HANDLER_ID));
 
@@ -79,7 +86,59 @@ class HazardStateTransitionTest {
     }
 
     @Test
+    void reassignAcceptedHazardToAnotherHandler() {
+        Long nextHandlerId = 9L;
+        when(userMapper.selectByIdForUpdate(nextHandlerId)).thenReturn(handlerUser(nextHandlerId));
+        when(hazardMapper.assign(HAZARD_ID, nextHandlerId)).thenReturn(1);
+        when(hazardMapper.selectById(HAZARD_ID)).thenReturn(hazard(1, USER_ID, nextHandlerId));
+
+        var result = service.assign(HAZARD_ID, USER_ID, nextHandlerId);
+
+        assertEquals(1, result.getStatus());
+        assertEquals(nextHandlerId, result.getHandlerId());
+        verify(hazardMapper).assign(HAZARD_ID, nextHandlerId);
+    }
+
+    @Test
+    void assignRejectsMissingHandler() {
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(null);
+
+        BusinessException error = assertThrows(BusinessException.class,
+                () -> service.assign(HAZARD_ID, USER_ID, HANDLER_ID));
+
+        assertEquals(404, error.getCode());
+        verify(hazardMapper, never()).assign(any(), any());
+    }
+
+    @Test
+    void assignRejectsNonHandlerUser() {
+        User ordinary = handlerUser(HANDLER_ID);
+        ordinary.setRole(0);
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(ordinary);
+
+        BusinessException error = assertThrows(BusinessException.class,
+                () -> service.assign(HAZARD_ID, USER_ID, HANDLER_ID));
+
+        assertEquals(400, error.getCode());
+        verify(hazardMapper, never()).assign(any(), any());
+    }
+
+    @Test
+    void startRejectsNonHandlerAccount() {
+        User ordinary = handlerUser(HANDLER_ID);
+        ordinary.setRole(0);
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(ordinary);
+
+        BusinessException error = assertThrows(BusinessException.class,
+                () -> service.start(HAZARD_ID, HANDLER_ID, 2));
+
+        assertEquals(400, error.getCode());
+        verify(hazardMapper, never()).transitionForHandler(any(), anyInt(), anyInt(), any());
+    }
+
+    @Test
     void repeatedAssignReturnsConflictWithoutSecondUpdate() {
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(handlerUser(HANDLER_ID));
         when(hazardMapper.assign(HAZARD_ID, HANDLER_ID)).thenReturn(0);
         when(hazardMapper.selectById(HAZARD_ID)).thenReturn(hazard(1, USER_ID, HANDLER_ID));
 
@@ -92,6 +151,7 @@ class HazardStateTransitionTest {
 
     @Test
     void startUsesHandlerScopedConditionalUpdate() {
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(handlerUser(HANDLER_ID));
         when(hazardMapper.transitionForHandler(HAZARD_ID, 1, 2, HANDLER_ID)).thenReturn(1);
         when(hazardMapper.selectById(HAZARD_ID)).thenReturn(hazard(2, USER_ID, 2));
 
@@ -104,6 +164,7 @@ class HazardStateTransitionTest {
 
     @Test
     void completeSuccessMarksPendingReview() {
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(handlerUser(HANDLER_ID));
         when(hazardMapper.transitionForHandler(HAZARD_ID, 2, 3, HANDLER_ID)).thenReturn(1);
         when(hazardMapper.selectById(HAZARD_ID)).thenReturn(hazard(3, USER_ID, HANDLER_ID));
 
@@ -116,6 +177,7 @@ class HazardStateTransitionTest {
     }
     @Test
     void staleStartStatusReturnsConflict() {
+        when(userMapper.selectByIdForUpdate(HANDLER_ID)).thenReturn(handlerUser(HANDLER_ID));
         when(hazardMapper.transitionForHandler(HAZARD_ID, 1, 2, HANDLER_ID)).thenReturn(0);
         when(hazardMapper.selectById(HAZARD_ID)).thenReturn(hazard(4, USER_ID, 4));
 
@@ -240,7 +302,7 @@ class HazardStateTransitionTest {
                 BigDecimal.class, BigDecimal.class, String.class, String.class).toLowerCase();
         String withdrawSql = updateSql("withdraw", Long.class, Long.class).toLowerCase();
 
-        assertTrue(assignSql.contains("status in (0, 4)"));
+        assertTrue(assignSql.contains("status in (0, 1, 4)"));
         assertTrue(assignSql.contains("handler_id"));
         assertTrue(handlerSql.contains("status = #{fromstatus}"));
         assertTrue(handlerSql.contains("handler_id = #{userid}"));
@@ -252,6 +314,13 @@ class HazardStateTransitionTest {
     private String updateSql(String name, Class<?>... parameterTypes) throws Exception {
         Method method = HazardMapper.class.getMethod(name, parameterTypes);
         return String.join(" ", method.getAnnotation(Update.class).value());
+    }
+
+    private User handlerUser(long id) {
+        User user = new User();
+        user.setId(id);
+        user.setRole(2);
+        return user;
     }
 
     private Hazard hazard(int status, long userId, long handlerId) {

@@ -22,9 +22,9 @@ public interface HazardMapper extends BaseMapper<Hazard> {
             + " update_time = NOW() WHERE id = #{id} AND user_id = #{userId} AND status = 0")
     int withdraw(@Param("id") Long id, @Param("userId") Long userId);
 
-    /** 派单：只有待处理或被驳回的任务可以原子流转到已接单。 */
+    /** 派单/改派：待处理、已接单或已驳回任务可原子流转到已接单并替换处理人。 */
     @Update("UPDATE tb_hazard SET status = 1, reviewed = 0, handler_id = #{handlerId},"
-            + " update_time = NOW() WHERE id = #{id} AND status IN (0, 4)")
+            + " update_time = NOW() WHERE id = #{id} AND status IN (0, 1, 4)")
     int assign(@Param("id") Long id, @Param("handlerId") Long handlerId);
 
     /** 处理人流转：状态和 handler_id 在同一条 UPDATE 中校验，避免旧实体覆盖并发撤回。 */
