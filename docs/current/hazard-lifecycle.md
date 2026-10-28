@@ -10,7 +10,7 @@
 | role | 含义 | 权限概要 |
 |------|------|----------|
 | `0` | 普通用户（举报者） | 上报、查看/撤回**自己**的上报 |
-| `1` | 管理员 | 派单、审查、批量审查、看全部、可统计已撤回 |
+| `1` | 管理员 | 派单/改派、撤回无效工单、审查、批量审查、看全部、可统计已撤回 |
 | `2` | 处理人员 | 对**派给自己**的任务整改/完成 |
 
 `User.role`；JWT 携带 role，`JwtAuthenticationFilter` 注入 `ROLE_USER/ROLE_ADMIN/ROLE_HANDLER`。
@@ -24,7 +24,7 @@
 | `2` | 整改中 | 处理人开始整改 |
 | `3` | 待验收 / 已办结 | `reviewed=0` → 待验收；`reviewed=1` → 已办结 |
 | `4` | 已驳回 | 管理员审查驳回 |
-| `5` | 已撤回 | 创建人撤回（`withdrawn_at`/`withdrawn_by` 留痕） |
+| `5` | 已撤回 | 创建人撤回或管理员撤回无效工单（`withdrawn_at`/`withdrawn_by`/`withdrawn_reason` 留痕） |
 
 ```
 0 待处理 --(管理员派单 assign)--> 1 已接单 --(处理人 start)--> 2 整改中 --(处理人 complete)--> 3 待验收
@@ -33,6 +33,7 @@
 1 已接单 --(管理员改派 assign)--> 1 已接单（替换 handler_id）
 4 已驳回 --(管理员重新 assign)--> 1 已接单
 0 待处理 --(创建人 withdraw)--> 5 已撤回
+0/1/2 --(管理员 admin-withdraw，必须填写原因)--> 5 已撤回
 ```
 
 流转规则（服务层强校验）：
@@ -44,6 +45,8 @@
 - `review(pass=true)`：仅 `status=3`；`reviewed` 置 1；已办结不可重复办结。
 - `review(pass=false)`：仅 `status=3`；置 `status=4`，`reviewed=1`；已办结/已驳回不可重复驳回。
 - `withdraw`：仅 `status=0` 且仅创建人本人；**不审核**，立即生效；重复点幂等返回当前状态。
+- `admin-withdraw`：管理员可将 `status=0/1/2` 的无效工单撤回为 `status=5`，必须填写原因；`status=3/4` 返回 409。
+- 管理员撤回后原处理人员无法继续 `start` / `complete`；工单仅管理员可见。
 - 非法跳转/越权：`BusinessException`（404 不存在或无权限 / 403 非本人 handler / 409 状态不允许）。
 
 ## 三、接口与权限
@@ -62,6 +65,7 @@
 | `POST /api/hazard/{id}/review` | `hasRole('ADMIN')` | 验收/驳回 |
 | `POST /api/hazard/batch-review` | `hasRole('ADMIN')` | 批量验收/驳回 |
 | `POST /api/hazard/{id}/withdraw` | 登录 | 创建人撤回 |
+| `POST /api/hazard/{id}/admin-withdraw` | `hasRole('ADMIN')` | 管理员撤回无效工单（必填原因） |
 | `GET /api/users/handlers` | `hasRole('ADMIN')` | 管理员派单用处理人员目录 |
 
 > 注：`accept` 接口存在且要求 HANDLER；管理员 `assign` 与处理人员自主认领共同完成 `0/4→1`，管理员可在 `status=1` 改派。以服务层规则为准。
@@ -81,6 +85,7 @@
 | action_type | 触发 |
 |-------------|------|
 | `ASSIGN` | 管理员派单 / 改派 |
+| `ADMIN_WITHDRAW` | 管理员撤回无效工单（remark=撤回原因） |
 | `START` | 处理人开始整改 |
 | `COMPLETE` | 处理人完成 |
 | `REVIEW_PASS` | 验收通过 |

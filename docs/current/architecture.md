@@ -78,7 +78,7 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 
 | 前缀 | Controller | 主要接口 |
 |------|-----------|----------|
-| `/api/hazard` | HazardController | `POST`（上报）/ `GET` / `GET /map`（匿名脱敏）/ `GET /stats`（匿名）/ `GET /{id}` / **`GET /requests/{requestId}`（AI 建单状态查询，代理 Python）** / `GET /ai/requests/{requestId}`（内部对账，校验 `X-Internal-Token`，供 Python `RequestReconciler` 调用）；`assign`、`accept`、`start`、`complete`、`review`、`batch-review`、`withdraw`、`PUT /{id}/location` |
+| `/api/hazard` | HazardController | `POST`（上报）/ `GET` / `GET /map`（匿名脱敏）/ `GET /stats`（匿名）/ `GET /{id}` / **`GET /requests/{requestId}`（AI 建单状态查询，代理 Python）** / `GET /ai/requests/{requestId}`（内部对账，校验 `X-Internal-Token`，供 Python `RequestReconciler` 调用）；`assign`、`accept`、`start`、`complete`、`review`、`batch-review`、`withdraw`、`admin-withdraw`、`PUT /{id}/location` |
 | `/api/users` | UserController | `GET /handlers`（管理员处理人员目录）/ `PUT /{id}/role`（管理员修改角色并撤销该用户全部 Token） |
 | `/api/report` | ReportController | `POST` / `GET` / `GET /{id}` / `DELETE /{id}` |
 | `/api/upload` | UploadController | `POST /image` |
@@ -94,15 +94,16 @@ db/load_hazard_create_mq.py  建单 MQ 压测脚本（运维用）
 - `GET /api/hazard/requests/{requestId}` 需登录并只返回当前用户请求；内部 `/api/hazard/ai/requests/{requestId}` 需 `X-Internal-Token`。
 - ASYNC / ERROR dispatcher 放行（避免 SSE 异步派发被误判 403）。
 - 方法级：
-  - `assign` / `review` / `batch-review` / `GET /api/users/handlers` → `hasRole('ADMIN')`
+  - `assign` / `review` / `batch-review` / `admin-withdraw` / `GET /api/users/handlers` → `hasRole('ADMIN')`
   - `assign` 目标用户及 `accept` / `start` / `complete` 操作人需在服务层校验为 `HANDLER`
   - `accept` / `start` / `complete` → `hasRole('HANDLER')`
   - 语料 `DELETE`（case / regulation / knowledge）→ `hasRole('ADMIN')`
   - `withdraw` → 需登录，服务层校验「仅创建人 + 仅 status=0」
+  - `admin-withdraw` → 仅 ADMIN，允许 `status=0/1/2 -> 5`，原因写入 `tb_hazard.withdrawn_reason` 与 `ADMIN_WITHDRAW` 留痕
 
 ## 5. 数据与缓存
 
-- **MySQL** `safety_platform`：`tb_user`、`tb_file_asset`、`tb_hazard`（含 `request_id` 唯一索引 `uk_tb_hazard_request_id`）、`tb_hazard_action`、`tb_hazard_report`、`tb_hazard_case`、`tb_regulation`、`tb_hazard_knowledge`、`tb_vector_sync_outbox`、`tb_resource_cleanup_outbox`、**`ai_hazard_create_request`、`ai_hazard_create_outbox`**（后两张只有 Python 写）。
+- **MySQL** `safety_platform`：`tb_user`、`tb_file_asset`、`tb_hazard`（含 `request_id` 唯一索引及 `withdrawn_reason` 撤回原因）、`tb_hazard_action`、`tb_hazard_report`、`tb_hazard_case`、`tb_regulation`、`tb_hazard_knowledge`、`tb_vector_sync_outbox`、`tb_resource_cleanup_outbox`、**`ai_hazard_create_request`、`ai_hazard_create_outbox`**（后两张只有 Python 写）。
 - **RabbitMQ**：topic exchange `safety.hazard`；`hazard.create`（Java 消费）与 `hazard.create.result.q`（Python 消费）均带 `x-dead-letter-exchange=safety.hazard.dlx`；死信进 `hazard.create.dlq`。
 - **Redis**：验证码、Token、限流、缓存、用户级历史记忆。
 - **Caffeine**：本地热点缓存（如隐患详情多级缓存 L1）。

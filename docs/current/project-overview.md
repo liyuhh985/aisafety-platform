@@ -74,7 +74,7 @@ Python AI :8000
   -> Python 同事务写 ai_hazard_create_request + ai_hazard_create_outbox，返回 accepted
   -> Relay 发 RabbitMQ → Java 幂等写 tb_hazard（status=0）→ 回执 → Python request 置 SUCCESS
   -> 管理员派单 status=1 -> 处理人整改 status=2 -> 完成 status=3 -> 管理员验收
-  -> 支持创建人撤回（status=0 时）-> status=5
+  -> 支持创建人撤回（status=0 时）或管理员撤回无效工单（status=0/1/2）-> status=5
   -> 报告/历史查询、删除（删除报告硬删图片）
 ```
 
@@ -89,7 +89,7 @@ Python AI :8000
 - 工单多类别（2026-10-14）：一张单最多 3 个类别（`hazard_types` 逗号串，首条 = `hazard_type`）；列表/地图/详情**同级等样并排展示**，前端**只按一级大类「任一命中」检索**（不做二级小类筛选）。见 `docs/current/hazard-multi-category-frontend-patch.md`。
 - 地图底图（2026-10-14）：**矢量优先 + 栅格自动兜底**——加载 SDK 前预检高德矢量样式接口，可用则走 WebGL 官方风格（`macaron` / `whitesmoke` / `dark`），不可用才置 `window.forbidenWebGL = true` 降级为 DOM 栅格瓦片 + CSS 滤镜。前提是高德 Key 已配域名白名单（缺白名单时矢量接口返回 `INVALID_USER_DOMAIN`）。见 `docs/current/hazard-multi-category-frontend-patch.md`。
 - 建单可靠性：Outbox 至少一次投递、`request_id` 幂等（`tb_hazard.request_id` 唯一索引）、DLX/DLQ、失败重试；回执失败与卡单的处置见「已知边界」。
-- 隐患生命周期：派单 / 整改 / 完成 / 验收 / 驳回 / 撤回，`HazardAction` 全量留痕。
+- 隐患生命周期：派单 / 改派 / 整改 / 完成 / 验收 / 驳回 / 撤回；管理员可撤回 0/1/2 阶段无效工单并记录原因，`HazardAction` 全量留痕。
 - 语料：案例 / 法规 / 知识库；向量同步与删除 outbox。
 - 部署：单台云服务器（`106.53.219.214`）承载全部组件 —— Nginx 前端 `8081` / Java `8080` / Python `8000` / MySQL / Redis / Milvus / MinIO / RabbitMQ；MQ worker 由 cron watchdog 守护。
 
