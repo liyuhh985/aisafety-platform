@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -83,6 +84,20 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new BusinessException(404, "用户不存在");
         }
+        return toVO(user);
+    }
+
+    @Override
+    public List<UserVO> listHandlers() {
+        return userMapper.selectList(new LambdaQueryWrapper<User>()
+                        .eq(User::getRole, 2)
+                        .orderByAsc(User::getId))
+                .stream()
+                .map(this::toVO)
+                .toList();
+    }
+
+    private UserVO toVO(User user) {
         return UserVO.builder()
                 .id(user.getId())
                 .email(user.getEmail())
