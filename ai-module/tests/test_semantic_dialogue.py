@@ -1,5 +1,7 @@
 from tests.reply_helpers import render_reply, render_update
 import asyncio
+import json
+import re
 
 import core.assistant_graph as assistant_graph
 import pytest
@@ -13,10 +15,139 @@ def test_fire_facilities_are_distinct_from_fire_lanes():
     assert "消防通道" in CONSULT_CATEGORIES
 
 
-def test_vision_prompt_distinguishes_fire_facility_from_fire_lane():
+def _parse_vision_taxonomy(prompt):
+    taxonomy_start = prompt.index("\n  【") + 1
+    taxonomy_block = prompt[taxonomy_start:prompt.index("\n- 判别要点", taxonomy_start)]
+    headings = list(
+        re.finditer(
+            r"^  【([a-z_]+) ([^】]+)】$",
+            taxonomy_block,
+            flags=re.MULTILINE,
+        )
+    )
+
+    parsed = []
+    for index, heading in enumerate(headings):
+        body_end = (
+            headings[index + 1].start()
+            if index + 1 < len(headings)
+            else len(taxonomy_block)
+        )
+        subcategory_codes = re.findall(
+            r"^    ([a-z][a-z0-9_]*)\s{2,}\S",
+            taxonomy_block[heading.end():body_end],
+            flags=re.MULTILINE,
+        )
+        parsed.append(
+            {
+                "code": heading.group(1),
+                "label": heading.group(2),
+                "subcategories": subcategory_codes,
+            }
+        )
+    return parsed
+
+
+def test_vision_prompt_uses_complete_two_level_taxonomy():
+    from core.hazard_taxonomy import HAZARD_TAXONOMY
     from prompts import VISION_PROMPT
-    assert "消防设施" in VISION_PROMPT
-    assert "消防通道" in VISION_PROMPT
+
+    expected = [
+        {
+            "code": item["code"],
+            "label": item["label"],
+            "subcategories": [
+                code for code, _ in item["subcategories"]
+            ],
+        }
+        for item in HAZARD_TAXONOMY
+    ]
+    assert _parse_vision_taxonomy(VISION_PROMPT) == expected
+
+
+def test_vision_prompt_taxonomy_alias_uses_compatible_prompt():
+    from prompts import VISION_PROMPT, VISION_PROMPT_TAXONOMY
+
+    assert VISION_PROMPT_TAXONOMY == VISION_PROMPT
+
+
+def test_vision_prompt_keeps_legacy_json_fields():
+    from prompts import VISION_PROMPT
+
+    json_start = VISION_PROMPT.index("{")
+    json_end = VISION_PROMPT.index("\n}", json_start) + 2
+    schema = json.loads(VISION_PROMPT[json_start:json_end])
+    assert {
+        "has_hazard",
+        "confidence",
+        "hazard_category",
+        "severity",
+        "description",
+        "reason_if_no_hazard",
+        "location_hint",
+        "rectification",
+    } <= schema.keys()
+
+
+def test_vision_prompt_defines_false_and_ambiguous_fallbacks():
+    from prompts import VISION_PROMPT
+
+    false_rule = next(
+        line
+        for line in VISION_PROMPT.splitlines()
+        if "has_hazard 为 false 时" in line
+    )
+    assert "必须填写 reason_if_no_hazard" in false_rule
+    assert (
+        "hazard_category、major_category、subcategory、severity、description、"
+        "location_hint 填空字符串"
+    ) in false_rule
+    assert "rectification 和 secondary_subcategories 填空数组" in false_rule
+
+    ambiguous_rule = next(
+        line
+        for line in VISION_PROMPT.splitlines()
+        if "图片模棱两可" in line
+    )
+    assert "has_hazard 为 true" in ambiguous_rule
+    assert "major_category 为 environment_other" in ambiguous_rule
+    assert "subcategory 为 other" in ambiguous_rule
+    assert "hazard_category 为 环境与其他" in ambiguous_rule
+    assert "confidence 为 低" in ambiguous_rule
+
+
+def test_vision_prompt_has_ten_confusion_guidelines():
+    from prompts import VISION_PROMPT
+
+    guidelines = VISION_PROMPT.split("- 判别要点（易混淆项）:", 1)[1].split(
+        "\n- 消防通道占用", 1
+    )[0]
+    numbered_lines = re.findall(
+        r"^\s*(\d+)\.\s+(.+)$",
+        guidelines,
+        flags=re.MULTILINE,
+    )
+    assert [int(number) for number, _ in numbered_lines] == list(range(1, 11))
+
+    expected_keywords = {
+        1: ("井盖破损", "manhole_damage", "路面整体塌陷", "road_surface_collapse"),
+        2: ("施工无警示", "no_warning", "路面塌陷", "road_surface_collapse"),
+        3: ("未设置围挡", "no_barrier", "无安全警示", "no_warning"),
+        4: ("墙体开裂", "wall_crack_lean", "危房", "dangerous_building"),
+        5: ("外立面脱落", "facade_fall", "高空坠物", "falling_object"),
+        6: ("燃气泄漏", "gas_leak", "管道老化", "gas_pipe_aging"),
+        7: ("裸露电线", "exposed_wire", "私拉乱接", "illegal_wiring"),
+        8: ("施工临时用电", "temporary_power", "裸露电线", "exposed_wire"),
+        9: ("电梯停运", "elevator_stopped", "电梯困人", "elevator_trapped"),
+        10: ("车辆占道", "vehicle_occupancy", "消防通道占用", "fire_lane_blocked"),
+    }
+    for number, line in numbered_lines:
+        missing = [
+            keyword
+            for keyword in expected_keywords[int(number)]
+            if keyword not in line
+        ]
+        assert missing == [], f"判别要点 {number} 缺少关键词: {missing}"
 
 
 def test_planner_prompt_requires_one_information_point_and_no_default_location_question():
