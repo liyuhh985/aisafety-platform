@@ -263,7 +263,7 @@ class HazardStateTransitionTest {
     void mapQueryClampsLimitAndReturnsWhitelistProjection() {
         HazardMapVO point = HazardMapVO.builder()
                 .id(HAZARD_ID).longitude(new BigDecimal("117.1")).latitude(new BigDecimal("26.2"))
-                .hazardType("FIRE").status(0).district("三元区").build();
+                .hazardTypes("消防安全/消防通道占用").status(0).district("三元区").build();
         when(hazardMapper.selectMapPoints(100)).thenReturn(List.of(point));
 
         List<HazardMapVO> result = service.getMap(999);
@@ -272,7 +272,25 @@ class HazardStateTransitionTest {
         verify(hazardMapper).selectMapPoints(100);
         Set<String> fields = new HashSet<>(Arrays.stream(HazardMapVO.class.getDeclaredFields())
                 .map(java.lang.reflect.Field::getName).toList());
-        assertEquals(Set.of("id", "longitude", "latitude", "hazardType", "status", "district"), fields);
+        assertEquals(Set.of("id", "longitude", "latitude", "hazardTypes", "status", "district"), fields);
+    }
+
+    @Test
+    void persistedAndResponseModelsExposeOnlyHazardTypes() {
+        assertFalse(hasField(Hazard.class, "hazardType"));
+        assertFalse(hasField(com.safety.pojo.vo.HazardVO.class, "hazardType"));
+        assertFalse(hasField(HazardMapVO.class, "hazardType"));
+        assertTrue(hasField(Hazard.class, "hazardTypes"));
+        assertTrue(hasField(com.safety.pojo.vo.HazardVO.class, "hazardTypes"));
+        assertTrue(hasField(HazardMapVO.class, "hazardTypes"));
+    }
+
+    @Test
+    void hazardDtoRequiresBoundedNonEmptyCategoryListAndHasNoHazardType() throws Exception {
+        assertFalse(hasField(com.safety.pojo.dto.HazardDTO.class, "hazardType"));
+        java.lang.reflect.Field field = com.safety.pojo.dto.HazardDTO.class.getDeclaredField("categoryList");
+        assertTrue(field.isAnnotationPresent(jakarta.validation.constraints.NotEmpty.class));
+        assertEquals(3, field.getAnnotation(jakarta.validation.constraints.Size.class).max());
     }
 
     @Test
@@ -283,7 +301,8 @@ class HazardStateTransitionTest {
         assertTrue(sql.contains("id"));
         assertTrue(sql.contains("longitude"));
         assertTrue(sql.contains("latitude"));
-        assertTrue(sql.contains("hazard_type"));
+        assertTrue(sql.contains("hazard_types"));
+        assertFalse(sql.contains("hazard_type "));
         assertTrue(sql.contains("status"));
         assertTrue(sql.contains("district"));
         assertFalse(sql.contains("user_id"));
@@ -309,6 +328,10 @@ class HazardStateTransitionTest {
         assertTrue(locationSql.contains("status = 0"));
         assertTrue(locationSql.contains("user_id = #{userid}"));
         assertTrue(withdrawSql.contains("status = 0"));
+    }
+
+    private boolean hasField(Class<?> type, String name) {
+        return Arrays.stream(type.getDeclaredFields()).anyMatch(field -> field.getName().equals(name));
     }
 
     private String updateSql(String name, Class<?>... parameterTypes) throws Exception {

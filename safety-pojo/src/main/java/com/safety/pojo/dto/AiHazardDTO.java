@@ -1,6 +1,7 @@
 package com.safety.pojo.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -22,8 +23,9 @@ public class AiHazardDTO {
     @NotBlank(message = "隐患类别不能为空")
     private String category;
 
-    /** 多类别上报（最多 3 条，第一条为主类别）；缺省或全空时回退 category */
-    private List<String> categoryList;
+    /** 多类别上报（最多 3 条，无主次）；缺省或全空时回退 category */
+    @Size(max = 3, message = "隐患类别最多 3 个")
+    private List<@NotBlank(message = "隐患类别不能为空") String> categoryList;
 
     /** 自然语言地址文本（尽量有，允许空） */
     private String address;

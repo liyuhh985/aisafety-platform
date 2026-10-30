@@ -15,8 +15,7 @@ public class Hazard {
     private Long id;
     private Long userId;
     private String imageUrl;
-    private String hazardType;
-    /** 多类别列表（逗号分隔，第一条为主类别），单类别时与 hazardType 相同 */
+    /** 全部隐患类别，中文路径、英文逗号分隔、最多 3 条，无主次。 */
     private String hazardTypes;
     private String description;
     private BigDecimal longitude;

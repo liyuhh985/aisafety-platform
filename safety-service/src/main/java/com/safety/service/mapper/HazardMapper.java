@@ -82,7 +82,7 @@ public interface HazardMapper extends BaseMapper<Hazard> {
                               @Param("district") String district);
 
     /** 公开地图只读取脱敏白名单列，且最多由服务层限制为 100 行。 */
-    @Select("SELECT id, longitude, latitude, hazard_type, status, district"
+    @Select("SELECT id, longitude, latitude, hazard_types, status, district"
             + " FROM tb_hazard WHERE status <> 5 AND longitude IS NOT NULL AND latitude IS NOT NULL"
             + " ORDER BY create_time DESC LIMIT #{limit}")
     List<HazardMapVO> selectMapPoints(@Param("limit") int limit);

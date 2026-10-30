@@ -18,7 +18,7 @@ public class HazardMapVO {
     private Long id;
     private BigDecimal longitude;
     private BigDecimal latitude;
-    private String hazardType;
+    private String hazardTypes;
     private Integer status;
     private String district;
 }

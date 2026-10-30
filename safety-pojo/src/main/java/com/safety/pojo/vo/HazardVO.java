@@ -16,7 +16,6 @@ public class HazardVO {
     private Long id;
     private Long userId;
     private String imageUrl;
-    private String hazardType;
     private String hazardTypes;
     private String description;
     private BigDecimal longitude;
