@@ -21,6 +21,22 @@ MIMO_MODEL = os.getenv("MIMO_MODEL", "mimo-v2.6-flash")
 MIMO_MODEL_BACKUP = os.getenv("MIMO_MODEL_BACKUP", "mimo-v2.6-flash")
 MIMO_VISION_MODEL = os.getenv("MIMO_VISION_MODEL", "mimo-v2.6-flash")
 
+# OpenDesign Go 视觉模型（OpenAI-compatible）
+OPENDESIGN_BASE_URL = os.getenv("OPENDESIGN_BASE_URL", "https://amr-link.open-design.ai/v1")
+OPENDESIGN_API_KEY = os.getenv("OPENDESIGN_API_KEY", "")
+OPENDESIGN_VISION_MODEL = os.getenv("OPENDESIGN_VISION_MODEL", "deepseek-v4.1-flash")
+
+# 视觉识别使用哪个供应商：opendesign（默认）/ mimo
+VISION_PROVIDER = os.getenv("VISION_PROVIDER", "opendesign").strip().lower()
+
+# 视觉请求结果缓存：同一张图 + 同一提示词只真正请求一次
+# OpenDesign 按请求次数计费，缓存能让重跑成本归零，不影响结果正确性
+VISION_CACHE = os.getenv("VISION_CACHE", "true").strip().lower() in {
+    "1", "true", "yes", "on"}
+VISION_CACHE_DIR = os.getenv(
+    "VISION_CACHE_DIR",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".vision_cache"))
+
 # 硅基流动 Embedding (免费)
 SF_BASE_URL = os.getenv("SF_BASE_URL", "https://api.siliconflow.cn/v1")
 SF_API_KEY = os.getenv("SF_API_KEY", "")
