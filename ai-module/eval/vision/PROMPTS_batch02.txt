@@ -1,0 +1,383 @@
+================================================================
+Batch 02 — 生成提示词（22 条）
+用途：补齐 Batch 01 未覆盖的 18 个小类 + 扩充负样本
+================================================================
+
+【使用方法】
+1. 在 Antigravity 里逐条发送下面的英文提示词
+2. 图片存到 E:\java\newProject\ai-module\eval\vision\images\
+3. 文件名用编号：q01.jpg ~ q22.jpg
+4. 生成后不要看本文档的"目标类别"列，标注阶段需盲标
+
+【通用后缀】（每条已内置，无需重复添加）
+realistic documentary photograph, natural colors, no watermarks,
+no captions, no arrows, no bounding boxes, no UI overlays,
+no text of any kind, 16:9 aspect ratio
+
+【重要：避免文字泄题】
+本次所有提示词都强调 no text of any kind。
+因为 Batch 01 中 p14 曾因地面文字 "FIRE LANE NO PARKING" 导致模型靠读字作弊。
+若生成的图仍出现可读文字，请重新生成。
+
+================================================================
+第一部分：交通与通行（3 张）
+================================================================
+
+----------------------------------------------------------------
+q01  目标类别：traffic/road_occupancy（占道经营、乱堆乱放）
+易混淆：vehicle_occupancy（本张不应出现车辆占道）
+----------------------------------------------------------------
+A documentary photo of a Chinese urban sidewalk where a ground-floor
+shop has placed its goods, shelving units and stacked cardboard boxes
+directly onto the pedestrian walkway. The display extends well beyond
+the shop's own frontage onto the public sidewalk, leaving only a narrow
+gap for pedestrians to squeeze through. No cars or scooters are parked
+here — the obstruction is entirely shop goods and merchandise.
+Bright daylight, realistic documentary photograph, natural colors,
+no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, no Chinese characters,
+16:9 aspect ratio.
+
+----------------------------------------------------------------
+q02  目标类别：traffic/vehicle_occupancy（车辆占道）
+易混淆：road_occupancy（本张不应出现商铺堆物）
+----------------------------------------------------------------
+A documentary photo of a residential street in a Chinese city where a
+row of private cars is illegally parked along the side of a narrow
+two-lane road. The parked cars take up roughly one third of the roadway
+width, forcing passing traffic to squeeze past. There are no shops
+displaying goods and no piled-up objects — the obstruction is purely
+from parked vehicles. Overcast daylight, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows,
+no bounding boxes, no UI overlays, no text of any kind, no Chinese
+characters, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q03  目标类别：traffic/traffic_facility_damage（交通设施损坏）
+易混淆：street_light_pole（本张聚焦交通护栏/标志，不是路灯）
+----------------------------------------------------------------
+A close documentary photo of a damaged pedestrian guardrail along an
+urban road. Several vertical metal bars are bent outward and broken,
+leaving a clear gap in the barrier. The reflective paint is chipped off
+in large patches and the base is rusted loose from the pavement. No
+people, no vehicles. Daylight, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+================================================================
+第二部分：市政设施（3 张）
+================================================================
+
+----------------------------------------------------------------
+q04  目标类别：municipal/road_surface_collapse（路面塌陷）
+易混淆：manhole_damage（不是井盖碎裂）、no_warning（不是人工开挖）
+判别要点：塌陷是自然形成的漏斗状坑洞，边缘不规则、向内塌
+----------------------------------------------------------------
+A documentary photo of a large irregular sinkhole that has formed in
+an asphalt city road. The pavement has collapsed inward forming a
+funnel-shaped cavity with jagged, uneven broken edges. Cracks radiate
+outward from the rim. No manhole cover is visible anywhere in the
+frame. No construction equipment, no workers, no traffic cones —
+this is sudden natural subsidence, not a planned excavation.
+Overcast daylight, realistic documentary photograph, natural colors,
+no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q05  目标类别：municipal/drainage_flood（排水不畅、积水内涝）
+易混淆：sewage_odor（不是污水外渗，是雨水积聚）
+----------------------------------------------------------------
+A documentary photo of an underpass road section in a city that is
+heavily flooded after rain. Brownish rainwater covers the entire
+carriageway to a depth that would submerge a car tire. The water is
+standing still, not flowing. A road lane marking is barely visible
+beneath the surface. No manhole overflow, no sewage stain — this is
+accumulated rainwater from blocked drainage. Overcast daylight,
+realistic documentary photograph, natural colors, no watermarks,
+no captions, no arrows, no bounding boxes, no UI overlays,
+no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q06  目标类别：municipal/street_light_pole（路灯/线杆损坏）
+易混淆：exposed_wire（本张主体是杆体倾斜，不是电线裸露）
+----------------------------------------------------------------
+A documentary photo of a municipal street light pole on a residential
+road that has been struck and is leaning at a noticeable angle. The
+lower section of the pole is visibly bent and the concrete base is
+cracked and pulled partly out of the pavement. The lamp head at the
+top is tilted. No visible exposed wires and no broken cables on the
+ground. Late afternoon light, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+================================================================
+第三部分：消防安全（3 张）
+================================================================
+
+----------------------------------------------------------------
+q07  目标类别：fire/fire_lane_blocked（消防通道占用）
+易混淆：vehicle_occupancy（本张关键是有明确消防通道标识与通道被堵）
+注意：不要在地面画任何文字，只用黄黑斜纹标线表示消防通道
+----------------------------------------------------------------
+A documentary photo of a building's fire access lane marked with
+diagonal yellow-and-black striped painted markings on the ground.
+Two private cars are parked directly on top of the striped zone,
+completely blocking the lane. The lane leads to a building entrance
+where a large roller shutter door is visible in the background.
+Camera at a low oblique angle so the ground markings are seen in
+perspective. Daylight, realistic documentary photograph, natural
+colors, no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, no lettering, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q08  目标类别：fire/fire_equipment_fault（消防设施故障）
+易混淆：p15 是完好的消防柜（负样本），本张必须是损坏的
+----------------------------------------------------------------
+A close documentary photo of a damaged wall-mounted fire equipment
+cabinet in a building corridor. The glass door is shattered with
+jagged shards remaining in the frame. Inside, the fire hose is
+tangled and knotted rather than neatly coiled, and a coupling is
+visibly cracked. The cabinet frame is bent and rusted. Indoor
+fluorescent lighting, realistic documentary photograph, natural
+colors, no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no legible text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q09  目标类别：fire/fire_water_abnormal（消防水源异常）
+----------------------------------------------------------------
+A documentary photo of an outdoor fire hydrant on a city sidewalk
+where the hydrant body is heavily rusted and the side cap is missing,
+exposing the threaded outlet. The ground around the hydrant base is
+wet and stained with rust-colored water marks suggesting a slow
+leak. No vehicles, no people nearby. Overcast daylight, realistic
+documentary photograph, natural colors, no watermarks, no captions,
+no arrows, no bounding boxes, no UI overlays, no text of any kind,
+16:9 aspect ratio.
+
+================================================================
+第四部分：建筑安全（3 张）
+================================================================
+
+----------------------------------------------------------------
+q10  目标类别：building/facade_fall（外立面脱落）
+易混淆：wall_crack_lean（本张是表层脱落，不是结构裂缝）
+----------------------------------------------------------------
+A documentary photo looking up at the exterior facade of a mid-rise
+building where a large patch of wall tiles has detached and fallen
+away, leaving a bare grey cement substrate exposed. Several adjacent
+tiles are visibly loose, bulging outward and hanging at an angle.
+Fragments have fallen onto the ledge below. There is no long
+structural crack in the wall — the damage is surface cladding
+delamination. Daylight, realistic documentary photograph, natural
+colors, no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q11  目标类别：building/falling_object（高空坠物风险）
+易混淆：facade_fall（本张是外挂物松动，不是墙体面层脱落）
+----------------------------------------------------------------
+A documentary photo looking up at a residential building facade where
+an air conditioning outdoor unit is mounted on a rusty, badly corroded
+bracket. The bracket is bent and one anchor bolt has pulled out of the
+wall, so the unit is hanging at a visible tilt. Below, a narrow
+pedestrian walkway is visible with people walking. The risk is the
+unit itself falling. Daylight, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q12  目标类别：building/illegal_structure（违规搭建）
+易混淆：dangerous_building（本张是新增违建，不是原有房屋失稳）
+----------------------------------------------------------------
+A documentary photo of a rooftop where a makeshift structure has been
+built illegally. It is assembled from corrugated metal sheets, scrap
+timber and tarpaulin, sitting on top of the original flat roof of a
+residential building. The structure is clearly improvised rather than
+part of the original design, with uneven edges and visible tie-down
+ropes. Other similar rooftop add-ons are visible in the distance.
+Daylight, realistic documentary photograph, natural colors,
+no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+================================================================
+第五部分：电气与燃气（3 张）
+================================================================
+
+----------------------------------------------------------------
+q13  目标类别：utility/exposed_wire（裸露/老化电线）
+易混淆：illegal_wiring（本张是原有线路老化破损，不是人为私接）
+----------------------------------------------------------------
+A close documentary photo of aging electrical wiring on the exterior
+wall of an old building. The cable insulation is cracked and peeling
+away in several places, exposing the bare copper conductor. The wire
+clips have rusted off so the cable sags loosely away from the wall.
+There is no deliberate tap-off or added branch — this is simply
+deteriorated original wiring. Daylight, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows,
+no bounding boxes, no UI overlays, no text of any kind, 16:9
+aspect ratio.
+
+----------------------------------------------------------------
+q14  目标类别：utility/distribution_box_fault（配电设施故障）
+易混淆：temporary_power（本张是固定配电箱损坏，不是工地临时用电）
+----------------------------------------------------------------
+A close documentary photo of an outdoor electrical distribution box
+mounted on a street pole. The metal enclosure door is hanging open and
+bent, the lock is broken. Inside, the wiring is exposed with the
+terminal cover missing, and there are burn marks and scorching around
+one of the breaker positions. Rust covers the bottom of the casing.
+No construction site in the background — this is a permanent street
+installation. Overcast daylight, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q15  目标类别：utility/illegal_wiring（私拉乱接）
+易混淆：exposed_wire（本张是人为飞线私接，有明显拉线路径）
+----------------------------------------------------------------
+A documentary photo of a residential building exterior where a
+resident has run a long improvised power cable from an upper floor
+window down to the ground, suspended in mid-air. The cable is a
+domestic extension cord, tied off with rope at intermediate points,
+and terminates at a power strip lying on the ground next to an
+electric scooter being charged. This is a deliberate illegal tap,
+not deteriorated original wiring. Daylight, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows,
+no bounding boxes, no UI overlays, no text of any kind, 16:9
+aspect ratio.
+
+================================================================
+第六部分：施工安全（2 张）
+================================================================
+
+----------------------------------------------------------------
+q16  目标类别：construction/no_barrier（未设置围挡）
+易混淆：no_warning（p08 是无警示，本张是无围挡）
+判别要点：围挡是沿工地边界的连续实体屏障
+----------------------------------------------------------------
+A documentary photo of an open construction site in a city where the
+site perimeter along the public sidewalk has NO hoarding, NO fence and
+NO physical barrier of any kind. Building materials, excavated soil
+and debris are directly exposed to the public walkway. Pedestrians
+are walking directly alongside the open site with nothing separating
+them from it. Daylight, realistic documentary photograph, natural
+colors, no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q17  目标类别：construction/scaffold_guard（脚手架/临边防护缺陷）
+易混淆：deep_pit（本张主体是脚手架，不是基坑）
+----------------------------------------------------------------
+A documentary photo of bamboo-and-steel scaffolding erected on a
+building under renovation, viewed from below at an angle. The
+protective safety netting is torn and hanging loose over a large
+section, leaving the scaffold decks fully exposed. Several horizontal
+guard rails are missing on the upper levels and the working platform
+has gaps with no toe boards. Workers are absent from the frame.
+Daylight, realistic documentary photograph, natural colors,
+no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+================================================================
+第七部分：电梯（1 张）
+================================================================
+
+----------------------------------------------------------------
+q18  目标类别：elevator_special/elevator_trapped（电梯困人）
+易混淆：elevator_stopped（p04 是停层异常，本张是有人被困）
+----------------------------------------------------------------
+A documentary photo taken inside an elevator lobby showing an
+elevator car stopped between floors with its doors slightly parted.
+Inside the dark gap, the silhouettes of two people are visible
+standing in the stalled car, one with a hand pressed against the
+inner door. A person outside is standing close to the door looking
+in. The floor indicator above shows a position inconsistent with
+the floor level. Indoor artificial lighting, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows,
+no bounding boxes, no UI overlays, no text of any kind,
+16:9 aspect ratio.
+
+================================================================
+第八部分：负样本（4 张）——必须生成
+================================================================
+
+----------------------------------------------------------------
+q19  负样本：规范占道（商铺未越界）
+用途：测 road_occupancy 的误报
+----------------------------------------------------------------
+A documentary photo of a street-front shop in a Chinese city where all
+goods and display shelving are kept strictly within the shop's own
+frontage, behind the shopfront line. The public sidewalk in front is
+completely clear and unobstructed, wide and clean, with pedestrians
+walking freely. Nothing has been placed on the public walkway.
+Daylight, realistic documentary photograph, natural colors,
+no watermarks, no captions, no arrows, no bounding boxes, no UI
+overlays, no text of any kind, no Chinese characters, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q20  负样本：交通设施完好
+用途：测 traffic_facility_damage 的误报
+----------------------------------------------------------------
+A documentary photo of a well-maintained pedestrian guardrail along an
+urban road. All vertical bars are straight and intact, the paint is
+clean and unblemished, and the base is firmly anchored to the pavement
+with no rust or movement. The barrier is continuous with no gaps.
+Daylight, realistic documentary photograph, natural colors,
+no watermarks, no captions, no arrows, no bounding boxes,
+no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q21  负样本：电气设施规范
+用途：测 exposed_wire / distribution_box_fault 的误报
+----------------------------------------------------------------
+A close documentary photo of a properly installed outdoor electrical
+distribution box. The metal enclosure door is fully closed and locked.
+The casing is clean and free of rust. The conduit entries are sealed
+with proper cable glands and no wiring is visible outside the box.
+Mounted neatly on a pole with no sagging cables. Overcast daylight,
+realistic documentary photograph, natural colors, no watermarks,
+no captions, no arrows, no bounding boxes, no UI overlays,
+no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+q22  负样本：脚手架防护规范
+用途：测 scaffold_guard 的误报
+----------------------------------------------------------------
+A documentary photo of properly erected scaffolding on a building
+under renovation. Green safety netting covers the entire face
+continuously with no tears or gaps. Every level has complete
+horizontal guard rails and toe boards. The working platforms are
+fully decked with no openings. Workers on the deck are wearing
+helmets and harnesses. Daylight, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+================================================================
+汇总
+================================================================
+
+总数：22 张
+  隐患样本：18 张（q01–q18）—— 每个缺失小类各 1 张
+  负样本：  4 张（q19–q22）
+
+覆盖新增小类：18 个
+  traffic:     road_occupancy, vehicle_occupancy, traffic_facility_damage
+  municipal:   road_surface_collapse, drainage_flood, street_light_pole
+  fire:        fire_lane_blocked, fire_equipment_fault, fire_water_abnormal
+  building:    facade_fall, falling_object, illegal_structure
+  utility:     exposed_wire, distribution_box_fault, illegal_wiring
+  construction: no_barrier, scaffold_guard
+  elevator_special: elevator_trapped
+
+未覆盖（预期）：environment_other/other —— 兜底类别，不单独生成
+
+================================================================
+重点检查项（生成后自查）
+================================================================
+
+1. q07 消防通道：地面不能出现任何文字，只能用黄黑斜纹表示
+2. q04 路面塌陷 vs q16 无围挡：塌陷是自然漏斗状，围挡缺失是人工工地
+3. q13 老化电线 vs q15 私拉乱接：前者破损，后者有明确的"从窗口拉下来"路径
+4. q10 外立面脱落 vs q11 高空坠物：前者是墙面层脱落，后者是外挂空调机松动
+5. 全部图片不得出现中文或其他可读文字
+6. 负样本 q19–q22 必须一眼看出是规范状态，不能有歧义

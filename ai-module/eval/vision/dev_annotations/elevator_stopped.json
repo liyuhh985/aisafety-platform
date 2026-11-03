@@ -1,0 +1,346 @@
+{
+ "_meta": {
+  "name": "elevator_stopped 真实图评测集",
+  "category": "elevator_special/elevator_stopped",
+  "category_label": "电梯与特种设备/停运/异响",
+  "source": "百度图片 → 原站直链下载 → 自动筛选 → 粗筛 → 标注 → 严格复检",
+  "rebuild": "2026-10-31",
+  "positive": 10,
+  "negative": 0,
+  "audit_removed": 6
+ },
+ "rejected": [
+  {
+   "file": "ELE0003.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "仅见墙上一张打印的温馨提示和正常显示的电梯外呼面板"
+  },
+  {
+   "file": "ELE0008.jpg",
+   "reason": "正面案例",
+   "detail": "电梯按钮面板及铭牌完好，未见明显损坏或停运迹象"
+  },
+  {
+   "file": "ELE0015.jpg",
+   "reason": "非该类别",
+   "detail": "电梯门大面积掉漆，未见停运标识或异响迹象"
+  },
+  {
+   "file": "ELE0013.jpg",
+   "reason": "非该类别",
+   "detail": "电梯门表面污渍划痕，贴有告示和小广告，未见围挡或停运标识"
+  },
+  {
+   "file": "ELE0001.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电视新闻合成截图，无停运或异响的具体特征"
+  },
+  {
+   "file": "ELE0016.jpg",
+   "reason": "非该类别",
+   "detail": "电梯门敞开，内部照明和外呼面板正常亮起，无停运或故障迹象"
+  },
+  {
+   "file": "ELE0024.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "画面仅为关闭的电梯门和按钮面板，无异常状态，损坏信息全靠字幕"
+  },
+  {
+   "file": "ELE0023.png",
+   "reason": "非该类别",
+   "detail": "电梯按钮面板完好，楼层数字亮起，无停运或故障警示标志"
+  },
+  {
+   "file": "ELE0032.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "仅见一张电梯停运维修通知单，无电梯设备故障现场画面"
+  },
+  {
+   "file": "ELE0022.jpg",
+   "reason": "非该类别",
+   "detail": "电梯外呼面板金属表面大面积脱漆破损，楼层显示亮着、按钮有电，未见停运或异响迹象"
+  },
+  {
+   "file": "ELE0050.png",
+   "reason": "文字是唯一信息源",
+   "detail": "模糊的电梯按钮特写，无故障迹象，仅靠大字标明故障报警"
+  },
+  {
+   "file": "ELE0038.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯门紧闭，贴有停运告示纸"
+  },
+  {
+   "file": "ELE0039.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "模糊线缆特写，遮盖文字后无法辨认电梯设备及具体隐患特征"
+  },
+  {
+   "file": "ELE0042.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯门贴白纸通知，遮住文字后仅见门板，无法判断停运隐患"
+  },
+  {
+   "file": "ELE0051.png",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "ELE0035.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯门关闭，门前黄色A字牌上放有白纸，门上有贴纸"
+  },
+  {
+   "file": "ELE0048.png",
+   "reason": "文字是唯一信息源",
+   "detail": "旧电梯门关闭，门前放置黄色“电梯保养”警示牌"
+  },
+  {
+   "file": "ELE0059.png",
+   "reason": "文字是唯一信息源",
+   "detail": "画面昏暗模糊，除叠加大字外难以辨认电梯结构及停运异响特征"
+  },
+  {
+   "file": "ELE0063.png",
+   "reason": "文字是唯一信息源",
+   "detail": "画面为两人在楼梯间行走，无电梯画面，隐患信息全靠大字标题告知"
+  },
+  {
+   "file": "ELE0056.png",
+   "reason": "文字是唯一信息源",
+   "detail": "画面只有手按电梯楼层按钮，面板灯亮正常，无停运或异响的任何可见迹象"
+  },
+  {
+   "file": "ELE0058.png",
+   "reason": "文字是唯一信息源",
+   "detail": "画面仅显示走廊墙面、门牌181及开关面板，无电梯实体或故障特征。"
+  },
+  {
+   "file": "ELE0052.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "遮住文字仅为商场扶梯正常客流画面，无法看出停运"
+  },
+  {
+   "file": "ELE0065.png",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯门半开，门缝中有人影，但画面被大字标题覆盖，遮住文字后无法确认停运或异响"
+  },
+  {
+   "file": "ELE0072.png",
+   "reason": "文字是唯一信息源",
+   "detail": "普通关闭的电梯门，无故障或停运标识"
+  },
+  {
+   "file": "ELE0055.jpg",
+   "reason": "非该类别",
+   "detail": "电梯门关闭，楼道内金属围栏围住设备，男子站立旁观"
+  },
+  {
+   "file": "ELE0054.jpg",
+   "reason": "非该类别",
+   "detail": "电梯按钮面板嵌在木板上，周边未完工，无停运告示或异响表现"
+  },
+  {
+   "file": "ELE0078.png",
+   "reason": "文字是唯一信息源",
+   "detail": "画面仅电梯钢丝绳与螺栓特写，无异常，大字系后期添加"
+  },
+  {
+   "file": "ELE0075.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "新闻截图，画面被大字幕覆盖，主体为黄色电梯维护围挡"
+  },
+  {
+   "file": "ELE0073.jpg",
+   "reason": "整改中",
+   "detail": "电梯门前设黄色维护围挡，上有警示标志和暂停使用字样"
+  },
+  {
+   "file": "ELE0085.jpg",
+   "reason": "整改中",
+   "detail": "电梯门口已架设黄色围挡隔离，属已处置的维护现场"
+  },
+  {
+   "file": "ELE0080.png",
+   "reason": "非该类别",
+   "detail": "电梯门紧闭布满污渍，无停运或故障迹象"
+  },
+  {
+   "file": "ELE0090.jpg",
+   "reason": "正面案例",
+   "detail": "电梯轿厢内金属墙面完好，按钮正常，女子正在按键，无停运或异响迹象"
+  },
+  {
+   "file": "ELE0088.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "截屏界面，电梯门关闭完好，无停运或异响的直接画面特征"
+  },
+  {
+   "file": "ELE0092.png",
+   "reason": "整改中",
+   "detail": "右侧电梯被黄色围挡挡住，上写电梯保养"
+  },
+  {
+   "file": "ELE0083.jpg",
+   "reason": "整改中",
+   "detail": "电梯门关闭，门前放置黄色“例行保养中”警示围挡，已隔离"
+  },
+  {
+   "file": "ELE0091.jpg",
+   "reason": "整改中",
+   "detail": "右侧电梯门被黄色围挡封住，围挡有检修提示"
+  }
+ ],
+ "items": {
+  "ELE0011.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "中",
+   "key_evidence": "电梯呼叫面板屏幕显示停用，按键旁有红色封条和破损标签",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "停用",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0010.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "中",
+   "key_evidence": "电梯门紧闭，前方放置黄色隔离护栏，状态停运",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "OTIS, 不准靠近, NO ACCESS",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0012.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "高",
+   "key_evidence": "电梯门敞开无防护，内部破败无轿厢，存在坠落风险",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "电梯安全标识",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0005.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "高",
+   "key_evidence": "电梯门面严重破损剥落，贴有停运提示纸张",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "温馨提示 电梯正在维修 暂停运行",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0037.png": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "中",
+   "key_evidence": "电梯门前放置黄色推车阻挡，导致电梯门无法关闭运行",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "客梯、严禁电动车进楼入户",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0044.png": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "中",
+   "key_evidence": "电梯门面大面积破损剥落，门前摆放黄色停用警示围挡。",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "2；正在保养中 停止使用；禁止进入 NOENTRANCE",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0089.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "高",
+   "key_evidence": "钢丝绳严重断丝散股，金属丝外露呈破损状",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0074.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "中",
+   "key_evidence": "电梯门关闭，前有黄色围挡，门上贴故障停用告示",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "货梯-1；电梯故障 暂停使用；电梯维护中 暂停使用",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0087.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "高",
+   "key_evidence": "电梯门未正常关闭，门缝中伸出一只手套，门体有手写广告",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "纱窗护栏159...；沙发...131...",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0082.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_stopped",
+   "severity": "高",
+   "key_evidence": "右侧电梯门敞开内部漆黑无照明，疑似停运故障",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "安全出口，电梯门上的禁止警示标识",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  }
+ }
+}

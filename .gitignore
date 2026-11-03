@@ -47,11 +47,18 @@ venv/
 
 # Python AI 运行时数据
 ai-module/uploads/
+ai-module/.vision_cache/
 ai-module/db/historical_memory.json
 ai-module/db/case_embeddings.json
 ai-module/test_images/
 uploads/
 demo.png
+ai-module/eval/vision/_*.json
+ai-module/eval/vision/_archive/
+ai-module/eval/vision/images_merged/
+ai-module/eval/vision/negatives/
+ai-module/eval/vision/pool/
+ai-module/eval/vision/test_set/
 
 # ====== 临时诊断脚本与运行产物（不入库）======
 *.bak
