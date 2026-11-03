@@ -110,6 +110,25 @@ class FakeConn:
         return [(s, p) for s, p in self.executed if needle in s]
 
 
+class DuplicateOnceCursor(FakeCursor):
+    def execute(self, sql, params=None):
+        if ("INSERT INTO ai_hazard_create_request" in sql
+                and not getattr(self.conn, "duplicate_seen", False)):
+            self.conn.duplicate_seen = True
+            self.conn.fetchone_queue.append(self.conn.existing_row)
+            raise q.pymysql.err.IntegrityError(1062, "duplicate request id")
+        return super().execute(sql, params)
+
+
+class DuplicateOnceConn(FakeConn):
+    def __init__(self, existing_row):
+        super().__init__()
+        self.existing_row = existing_row
+
+    def cursor(self):
+        return DuplicateOnceCursor(self)
+
+
 class FakePublisher(q.Publisher):
     def __init__(self, raise_on_publish=False):
         self.calls = []
@@ -144,6 +163,66 @@ def test_enqueue_writes_request_and_outbox_then_commits():
     # outbox.payload 与 request.payload 是同一份消息体，含 requestId
     _, params = conn.sql_containing("INSERT INTO ai_hazard_create_outbox")[0]
     assert res["requestId"] in params[2]
+
+
+def test_enqueue_uses_preallocated_request_id():
+    conn = FakeConn()
+    res = q.enqueue_hazard_create(
+        7, "sess-1", {"category": "fire/x"},
+        request_id="req-confirm-fixed", connect=lambda: conn,
+    )
+
+    assert res["ok"] is True
+    assert res["requestId"] == "req-confirm-fixed"
+    _, params = conn.sql_containing("INSERT INTO ai_hazard_create_request")[0]
+    assert params[0] == "req-confirm-fixed"
+    _, outbox_params = conn.sql_containing("INSERT INTO ai_hazard_create_outbox")[0]
+    assert '"requestId": "req-confirm-fixed"' in outbox_params[2]
+
+
+def test_enqueue_same_request_id_returns_existing_without_insert():
+    conn = FakeConn(fetchone=(
+        "req-confirm-fixed", q.REQ_PUBLISHED, None, None, 7, "sess-1",
+    ))
+    res = q.enqueue_hazard_create(
+        7, "sess-1", {"category": "fire/x"},
+        request_id="req-confirm-fixed", connect=lambda: conn,
+    )
+
+    assert res["ok"] is True
+    assert res["requestId"] == "req-confirm-fixed"
+    assert res["status"] == q.REQ_PUBLISHED
+    assert not conn.sql_containing("INSERT INTO ai_hazard_create_request")
+    assert not conn.sql_containing("INSERT INTO ai_hazard_create_outbox")
+
+
+def test_enqueue_rejects_request_id_owned_by_another_user():
+    conn = FakeConn(fetchone=(
+        "req-confirm-fixed", q.REQ_PENDING, None, None, 8, "sess-1",
+    ))
+    res = q.enqueue_hazard_create(
+        7, "sess-1", {"category": "fire/x"},
+        request_id="req-confirm-fixed", connect=lambda: conn,
+    )
+
+    assert res["ok"] is False
+    assert "confirmation" in res["message"].lower()
+    assert not conn.sql_containing("INSERT INTO ai_hazard_create_request")
+
+
+def test_enqueue_duplicate_race_returns_winner_after_unique_conflict():
+    conn = DuplicateOnceConn((
+        "req-confirm-fixed", q.REQ_PENDING, None, None, 7, "sess-1",
+    ))
+    res = q.enqueue_hazard_create(
+        7, "sess-1", {"category": "fire/x"},
+        request_id="req-confirm-fixed", connect=lambda: conn,
+    )
+
+    assert res["ok"] is True
+    assert res["requestId"] == "req-confirm-fixed"
+    assert res["idempotent"] is True
+    assert conn.rollbacks == 1
 
 
 def test_enqueue_missing_user_id_does_not_touch_db():

@@ -39,6 +39,7 @@ class _GateState(TypedDict, total=False):
     task_phase: str
     task_offered: bool
     address_text: str
+    request_id: str
     submitted: dict
     reentered: bool
 
@@ -164,7 +165,8 @@ def test_stream_bridge_asks_then_creates_the_task(monkeypatch):
     )
     calls = []
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
+                    session_id="", request_id=""):
         calls.append((user_id, latest))
         return {"action": "accepted", "requestId": "req-42"}
 
@@ -294,6 +296,7 @@ class _GateSubmitState(TypedDict, total=False):
     task_phase: str
     task_offered: bool
     address_text: str
+    request_id: str
     picked_longitude: float
     picked_latitude: float
     reentered: bool
@@ -321,6 +324,7 @@ def test_after_report_prefills_address_before_confirm(monkeypatch):
         "tools.hazard_submit.extract_location",
         lambda history, latest: "三明市梅列区东新四路万达广场",
     )
+    monkeypatch.setattr(ag, "new_request_id", lambda: "req-confirm-fixed")
     state = {
         "messages": [ag.HumanMessage(content="万达广场门口长期摆摊占道")],
         "issues": [{"subcategory_code": "road_occupancy"}],
@@ -329,7 +333,9 @@ def test_after_report_prefills_address_before_confirm(monkeypatch):
         "address_text": "",
     }
     assert ag.after_report(state) == {
-        "address_text": "三明市梅列区东新四路万达广场"}
+        "address_text": "三明市梅列区东新四路万达广场",
+        "request_id": "req-confirm-fixed",
+    }
 
 
 def test_after_report_skips_when_address_present_or_no_offer(monkeypatch):
@@ -340,10 +346,11 @@ def test_after_report_skips_when_address_present_or_no_offer(monkeypatch):
         "tools.hazard_submit.extract_location",
         lambda history, latest: calls.append(1) or "新地址",
     )
+    monkeypatch.setattr(ag, "new_request_id", lambda: "req-confirm-fixed")
     assert ag.after_report({
         "issues": [{"subcategory_code": "road_occupancy"}],
         "missing": [], "address_text": "已有地址",
-    }) == {}
+    }) == {"request_id": "req-confirm-fixed"}
     assert ag.after_report({
         "issues": [], "categories": [], "missing": [], "address_text": "",
     }) == {}
@@ -354,11 +361,13 @@ def test_task_gate_payload_includes_preextracted_address():
     app = _gate_graph()
     config = {"configurable": {"thread_id": "gate-address-payload"}}
     events = list(app.stream(
-        {"task_phase": "confirm", "address_text": "三明市梅列区东新四路万达广场"},
+        {"task_phase": "confirm", "address_text": "三明市梅列区东新四路万达广场",
+         "request_id": "req-confirm-fixed"},
         config, stream_mode=["updates"]))
     payload = _interrupt_payload(events)
     assert payload["type"] == "confirm_create_task"
     assert payload["address"] == "三明市梅列区东新四路万达广场"
+    assert payload["request_id"] == "req-confirm-fixed"
 
 
 def test_task_gate_payload_address_empty_string_when_unknown():
@@ -373,25 +382,54 @@ def test_dict_resume_address_overrides_preextracted(monkeypatch):
     """字典 resume 带改过的地址 -> submit_from_history 收到那个新地址。"""
     captured = {}
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
+                    session_id="", request_id=""):
         captured["address_hint"] = address_hint
         captured["coords"] = coords
+        captured["request_id"] = request_id
         return {"action": "accepted", "requestId": "req-1"}
 
     monkeypatch.setattr("tools.hazard_submit.submit_from_history", fake_submit)
     app = _gate_submit_graph()
     config = {"configurable": {"thread_id": "gate-dict-address"}}
     for _ in app.stream(
-        {"task_phase": "confirm", "address_text": "预抽取地址"}, config
+        {"task_phase": "confirm", "address_text": "预抽取地址",
+         "request_id": "req-confirm-fixed"}, config
     ):
         pass
     for _ in app.stream(
-        Command(resume={"decision": "confirm", "address": "梅列区东新四路万达广场"}),
+        Command(resume={
+            "decision": "confirm",
+            "request_id": "req-confirm-fixed",
+            "address": "梅列区东新四路万达广场",
+        }),
         config,
     ):
         pass
     assert captured["address_hint"] == "梅列区东新四路万达广场"
     assert captured["coords"] is None
+    assert captured["request_id"] == "req-confirm-fixed"
+
+
+def test_task_gate_rejects_mismatched_request_id_without_submitting(monkeypatch):
+    called = []
+    monkeypatch.setattr(
+        "tools.hazard_submit.submit_from_history",
+        lambda *a, **k: called.append(1) or {"action": "accepted", "requestId": "req-x"},
+    )
+    app = _gate_submit_graph()
+    config = {"configurable": {"thread_id": "gate-request-id-mismatch"}}
+    for _ in app.stream(
+        {"task_phase": "confirm", "address_text": "预抽取地址",
+         "request_id": "req-confirm-fixed"}, config
+    ):
+        pass
+    for _ in app.stream(Command(resume={
+        "decision": "confirm",
+        "request_id": "req-confirm-other",
+    }), config):
+        pass
+    assert called == []
 
 
 def test_dict_resume_coords_skip_geocode_and_reach_payload(monkeypatch):
@@ -410,7 +448,8 @@ def test_dict_resume_coords_skip_geocode_and_reach_payload(monkeypatch):
     captured = {}
     monkeypatch.setattr(
         hazard_submit, "enqueue_hazard_create",
-        lambda user_id, session_id, payload: captured.update(payload) or {"ok": True, "requestId": "req-coords"})
+        lambda user_id, session_id, payload, request_id=None:
+        captured.update(payload) or {"ok": True, "requestId": "req-coords"})
 
     app = _gate_submit_graph()
     config = {"configurable": {"thread_id": "gate-dict-coords"}}
@@ -495,7 +534,8 @@ def test_interrupt_reply_address_end_to_end(monkeypatch):
 
     captured = {}
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
+                    session_id="", request_id=""):
         captured["address_hint"] = address_hint
         captured["coords"] = coords
         return {"action": "accepted", "requestId": "req-5"}
@@ -516,7 +556,8 @@ def test_bad_interrupt_reply_falls_back_to_classify(monkeypatch):
 
     captured = {}
 
-    def fake_submit(user_id, history, latest, *, address_hint="", coords=None, session_id=""):
+    def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
+                    session_id="", request_id=""):
         captured["address_hint"] = address_hint
         return {"action": "accepted", "requestId": "req-6"}
 

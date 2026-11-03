@@ -65,6 +65,7 @@ from core.slot_schemas import (
 from core.stream_guard import QUESTION_DROP, guard_stream, question_limiter
 from core.uncertainty import active_danger_term, assess, echo_slots
 from tools.assistant_tools import ASSISTANT_TOOLS
+from tools.hazard_create_queue import new_request_id
 
 # report 用不带 tools 的轻量 Agent（流式生成纯文本报告，避免 tools 导致 400）
 _report_llm = Agent(
@@ -2229,24 +2230,36 @@ def task_gate(state: AssistantState) -> Command:
     这段代码在恢复时整体重跑，所以 interrupt() 之前不能有副作用。
     """
     phase = state.get("task_phase") or "confirm"
+    request_id = str(state.get("request_id") or "").strip()
     if phase == "address":
         answer = interrupt({
             "type": "ask_address",
             "question": "请提供具体地址（如 XX 市 XX 区 XX 路 XX 小区或明显地标），我好帮你定位并创建隐患任务。",
+            "request_id": request_id,
         })
         return Command(
             goto="submit_task",
-            update={"address_text": str(answer or "").strip(), "task_offered": True},
+            update={
+                "address_text": str(answer or "").strip(),
+                "task_offered": True,
+                "request_id": request_id or new_request_id(),
+            },
         )
     answer = interrupt({
         "type": "confirm_create_task",
         "question": task_invitation_question(state),
         "issues": state.get("issues") or [],
         "address": str(state.get("address_text") or ""),
+        "request_id": request_id,
     })
     if isinstance(answer, dict):
         # 新路径：前端把确认卡片连同改过的地址 / 图选点坐标一起回传
         decision = str(answer.get("decision") or "other")
+        supplied_request_id = str(answer.get("request_id") or "").strip()
+        if supplied_request_id and request_id and supplied_request_id != request_id:
+            _emit_chunk("⚠️ 确认信息已失效，请重新发起建单")
+            return Command(goto=END, update={"task_offered": True})
+        request_id = request_id or supplied_request_id or new_request_id()
         address = str(answer.get("address") or "").strip()
         longitude = answer.get("longitude")
         latitude = answer.get("latitude")
@@ -2256,7 +2269,7 @@ def task_gate(state: AssistantState) -> Command:
             and isinstance(latitude, (int, float))
             and not isinstance(latitude, bool)
         )
-        update = {"task_offered": True}
+        update = {"task_offered": True, "request_id": request_id}
         if address:
             update["address_text"] = address
         if has_coords:
@@ -2267,7 +2280,11 @@ def task_gate(state: AssistantState) -> Command:
             if not (address or str(state.get("address_text") or "").strip()):
                 return Command(
                     goto="task_gate",
-                    update={"task_phase": "address", "task_offered": True},
+                    update={
+                        "task_phase": "address",
+                        "task_offered": True,
+                        "request_id": request_id,
+                    },
                 )
             return Command(goto="submit_task", update=update)
         if decision == "decline":
@@ -2275,13 +2292,21 @@ def task_gate(state: AssistantState) -> Command:
         return Command(goto="understand", update=update)
     # 老路径：整段文本回复，回到纯文本分类
     decision = classify_task_reply(answer if isinstance(answer, str) else "")
+    request_id = request_id or new_request_id()
     if decision == "confirm":
         if not str(state.get("address_text") or "").strip():
             return Command(
                 goto="task_gate",
-                update={"task_phase": "address", "task_offered": True},
+                update={
+                    "task_phase": "address",
+                    "task_offered": True,
+                    "request_id": request_id,
+                },
             )
-        return Command(goto="submit_task", update={"task_offered": True})
+        return Command(
+            goto="submit_task",
+            update={"task_offered": True, "request_id": request_id},
+        )
     if decision == "decline":
         return Command(goto="close_task", update={"task_offered": True})
     return Command(goto="understand", update={"task_offered": True})
@@ -2318,6 +2343,7 @@ def submit_task(state: AssistantState) -> Command:
         state.get("user_id"), history, latest,
         address_hint=state.get("address_text") or "", coords=coords,
         session_id=state.get("session_id") or "",
+        request_id=state.get("request_id") or "",
         **image_args,
     )
     action = result.get("action")
@@ -2327,11 +2353,14 @@ def submit_task(state: AssistantState) -> Command:
         _emit_chunk("✅ 已受理，正在创建隐患任务")
         if request_id:
             _emit_event("task_accepted", {"request_id": request_id, "status": "PENDING"})
-        return Command(goto=END, update={"address_text": "", "task_phase": "", "image_url": "", "image_file_id": None})
+        return Command(goto=END, update={
+            "address_text": "", "task_phase": "", "request_id": "",
+            "image_url": "", "image_file_id": None,
+        })
     if action == "ask_address":
         return Command(goto="task_gate", update={"task_phase": "address"})
     _emit_chunk("⚠️ " + str(result.get("message")))
-    return Command(goto=END, update={"address_text": "", "task_phase": ""})
+    return Command(goto=END, update={"address_text": "", "task_phase": "", "request_id": ""})
 
 
 def close_task(state: AssistantState) -> dict:
@@ -2342,6 +2371,7 @@ def close_task(state: AssistantState) -> dict:
         )],
         "image_url": "",
         "image_file_id": None,
+        "request_id": "",
     }
 
 
@@ -2353,8 +2383,11 @@ def after_report(state: AssistantState) -> dict:
     """
     if not can_offer_task_creation(state):
         return {}
+    update = {}
+    if not str(state.get("request_id") or "").strip():
+        update["request_id"] = new_request_id()
     if str(state.get("address_text") or "").strip():
-        return {}
+        return update
     from tools.hazard_submit import extract_location
 
     history = [
@@ -2370,7 +2403,8 @@ def after_report(state: AssistantState) -> dict:
         if item["role"] == "user":
             latest = item["content"]
             break
-    return {"address_text": extract_location(history, latest)}
+    update["address_text"] = extract_location(history, latest)
+    return update
 
 
 def route_after_report(state: AssistantState):

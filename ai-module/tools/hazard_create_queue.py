@@ -75,6 +75,35 @@ def new_request_id() -> str:
     return "req-" + uuid.uuid4().hex
 
 
+def _existing_request_result(row, user_id, session_id):
+    """把已有 request 行转成幂等返回；归属不一致时拒绝复用。"""
+    if not row:
+        return None
+    request_id, status, hazard_id, error_message, owner_id, owner_session = row
+    if owner_id != user_id:
+        return {"ok": False, "message": "request confirmation id conflict"}
+    if owner_session and session_id and owner_session != session_id:
+        return {"ok": False, "message": "request confirmation id session conflict"}
+    body = status_payload(status, hazard_id=hazard_id, error_message=error_message)
+    return {
+        "ok": True,
+        "requestId": request_id,
+        "status": status,
+        "hazardId": hazard_id,
+        "message": body["message"],
+        "idempotent": True,
+    }
+
+
+def _select_existing_request(cur, request_id):
+    cur.execute(
+        "SELECT request_id, status, hazard_id, error_message, user_id, session_id "
+        "FROM ai_hazard_create_request WHERE request_id = %s LIMIT 1",
+        (request_id,),
+    )
+    return cur.fetchone()
+
+
 def backoff_seconds(retry_count: int) -> int:
     """退避：30 * 2^n，上限 3600s。与 Java 现有 outbox 语义一致。"""
     exponent = max(0, min(int(retry_count), 30))
@@ -118,7 +147,8 @@ def _truncate(text, limit: int = MSG_MAX_ERROR) -> str:
 # 1. 入队：先写库，再返回 accepted
 # ============================================================
 
-def enqueue_hazard_create(user_id, session_id, payload: dict, *, connect=None) -> dict:
+def enqueue_hazard_create(user_id, session_id, payload: dict, *, request_id=None,
+                          connect=None) -> dict:
     """事务内写 request + outbox；提交成功后才返回 accepted。
 
     返回 {"ok": True, "requestId": ..., "status": "PENDING"}。
@@ -126,13 +156,20 @@ def enqueue_hazard_create(user_id, session_id, payload: dict, *, connect=None) -
     """
     if user_id is None:
         return {"ok": False, "message": "缺少 user_id，无法建单"}
-    request_id = new_request_id()
+    request_id = str(request_id or "").strip() or new_request_id()
+    if len(request_id) > 64:
+        return {"ok": False, "message": "request id too long"}
     message = build_message(request_id, user_id, session_id or "", payload)
     message_json = json.dumps(message, ensure_ascii=False)
 
     conn = (connect or _connect)()
     try:
         with conn.cursor() as cur:
+            existing = _select_existing_request(cur, request_id)
+            if existing:
+                result = _existing_request_result(existing, user_id, session_id or "")
+                conn.rollback()
+                return result
             cur.execute(
                 "INSERT INTO ai_hazard_create_request "
                 "(request_id, user_id, session_id, payload, status) "
@@ -146,6 +183,15 @@ def enqueue_hazard_create(user_id, session_id, payload: dict, *, connect=None) -
                 (request_id, EVENT_TYPE, message_json, OB_PENDING),
             )
         conn.commit()
+    except pymysql.err.IntegrityError:
+        # 两个确认请求并发使用同一 requestId：回滚后回查赢家，返回同一请求。
+        conn.rollback()
+        with conn.cursor() as cur:
+            existing = _select_existing_request(cur, request_id)
+        result = _existing_request_result(existing, user_id, session_id or "")
+        if result:
+            return result
+        raise
     except Exception:
         conn.rollback()
         raise

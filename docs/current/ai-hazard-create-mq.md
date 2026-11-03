@@ -1,7 +1,7 @@
 # AI 建任务：MQ + Outbox 契约（当前真相）
 
 > 状态：current
-> 最后核对：2026-10-14
+> 最后核对：2026-11-01
 > 事实来源：当前代码（`ai-module/tools/hazard_create_queue.py`、`ai-module/hazard_create_worker.py`、`ai-module/server.py`、`safety-web/.../RabbitConfig.java`、`HazardCreateConsumer.java`、`HazardCreateResultPublisher.java`、`HazardServiceImpl.createAi`）+ 线上运行形态（队列 `hazard.create` / `hazard.create.result.q` / `hazard.create.dlq` 存在，worker 进程在跑）。
 > 关联：`docs/current/ai-assistant-sse-contract.md`、`docs/current/hazard-lifecycle.md`、`docs/deployment/safety-platform-deployment.md`
 
@@ -41,6 +41,8 @@
 
 ```
 用户确认建单
+  → 报告阶段提前生成 request_id 并写入 checkpoint / interrupt 卡片
+  → 用户确认时原样回传 request_id
   → Python 本地事务：INSERT ai_hazard_create_request + INSERT ai_hazard_create_outbox
   → 立即返回 accepted(request_id)          ← 先写库再返回，绝不反过来
   → Relay（独立进程）扫 outbox → 发 RabbitMQ
@@ -54,6 +56,12 @@
 - `ai_hazard_create_request` / `ai_hazard_create_outbox`：**只有 Python 写**，Java 一行都不写。
 - `tb_hazard`：**只有 Java 写**，Python 通过 MQ 间接触发。
 - 两者共用同一个 MySQL `safety_platform`（一期不拆库）。
+
+**确认级幂等（2026-11-01）**
+- `request_id` 不再等到 enqueue 时才生成，而是在报告后的确认卡阶段生成并写入 checkpoint；前端点击确认时必须原样回传。
+- `enqueue_hazard_create()` 接受预分配 `request_id`，先按主键回查；已存在且归属同一用户/会话时直接返回已有状态，不重复写 request/outbox。
+- 并发重复确认由 `ai_hazard_create_request.request_id` 主键兜底；唯一冲突后回查赢家记录，返回幂等成功。
+- 这解决了“request+outbox 已提交，但 accepted 响应在浏览器收到前丢失，用户重新确认”的窗口。前端仍需持久化 `request_id` 并用它轮询，不能重新生成。
 
 ## 2. 数据表
 
@@ -129,8 +137,9 @@ MySQL 唯一索引允许多个 `NULL`，存量行不受影响。
 2. Relay 发成功后才标 `PUBLISHED`；「已发未标」崩溃 → 允许重发，靠 Java 幂等兜。
 3. Java 消费按 `request_id` 去重：先查 → 无则插 → 唯一冲突则回查返回已有。
 4. 消费者遇到重复消息**不报错**，直接返回已有任务。
-5. `request_id` / `userId` / `category` 为空或 body 非法 → `AmqpRejectAndDontRequeueException`，**不重试、直接进 DLQ，不写库**。
-6. Java listener 重试上限 `max-attempts=3`；耗尽后 `MessageRecoverer` 回一条 FAILED（前提：回执发送本身成功）并把消息丢 DLQ。
+5. 同一用户/会话的重复确认必须复用 interrupt 卡片里的 `request_id`；后端按该键返回已有 request，不新增 Outbox。
+6. `request_id` / `userId` / `category` 为空或 body 非法 → `AmqpRejectAndDontRequeueException`，**不重试、直接进 DLQ，不写库**。
+7. Java listener 重试上限 `max-attempts=3`；耗尽后 `MessageRecoverer` 回一条 FAILED（前提：回执发送本身成功）并把消息丢 DLQ。
 
 ## 5. 降级开关与上线顺序
 

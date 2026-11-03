@@ -19,6 +19,33 @@ def _patch_pipeline(monkeypatch, info, geo, captured):
     monkeypatch.setattr(hazard_submit, "enqueue_hazard_create", fake_enqueue)
 
 
+def test_submit_passes_confirmation_request_id_to_enqueue(monkeypatch):
+    from tools import hazard_submit
+
+    captured = {}
+    monkeypatch.setattr(hazard_submit, "_extract", lambda *a, **k: {
+        "category": "traffic/road_occupancy",
+        "address": "三明市梅列区某路",
+        "description": "占道",
+        "severity": 1,
+    })
+    monkeypatch.setattr(hazard_submit, "geocode", lambda address: {
+        "longitude": 117.6, "latitude": 26.2, "district": "梅列区",
+    })
+
+    def fake_enqueue(user_id, session_id, payload, *, request_id=None):
+        captured["request_id"] = request_id
+        return {"ok": True, "requestId": request_id, "status": "PENDING"}
+
+    monkeypatch.setattr(hazard_submit, "enqueue_hazard_create", fake_enqueue)
+    result = hazard_submit.submit_from_history(
+        1, [], "占道了", request_id="req-confirm-fixed",
+    )
+
+    assert result["requestId"] == "req-confirm-fixed"
+    assert captured["request_id"] == "req-confirm-fixed"
+
+
 def test_submit_payload_types_are_coerced_at_the_java_boundary(monkeypatch):
     captured = {}
     _patch_pipeline(

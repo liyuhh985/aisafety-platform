@@ -237,7 +237,7 @@ def extract_location(history, latest) -> str:
 
 def submit_from_history(user_id, history, latest, *, address_hint: str = "", coords=None,
                         session_id: str = "", image_url: str = "",
-                        image_file_id=None) -> dict:
+                        image_file_id=None, request_id: str = "") -> dict:
     """返回 {action, hazardId?, message?}。
 
     action:
@@ -289,7 +289,8 @@ def submit_from_history(user_id, history, latest, *, address_hint: str = "", coo
 
     # MQ 唯一链路：事务内写 request + outbox，返回 accepted（先写库再返回）。
     try:
-        accepted = enqueue_hazard_create(user_id, session_id, payload)
+        enqueue_kwargs = {"request_id": request_id} if request_id else {}
+        accepted = enqueue_hazard_create(user_id, session_id, payload, **enqueue_kwargs)
     except Exception as e:  # noqa: BLE001
         LOGGER.exception("hazard create enqueue failed")
         return {"action": "fail", "message": f"受理失败：{e}"}
