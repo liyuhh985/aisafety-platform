@@ -12,8 +12,12 @@ def test_small_agents_use_small_slot(monkeypatch):
     monkeypatch.setattr(agent_mod, "SMALL_MODEL", _slot("smallp", "http://small", "small-model"))
     small = agent_mod.Agent("rewrite_query", "", [], "http://x", "k", "x")
     text = agent_mod.Agent("report", "", [], "http://x", "k", "x")
+    planner = agent_mod.Agent("dialogue_planner", "", [], "http://x", "k", "x")
+    question = agent_mod.Agent("ask_slot_question", "", [], "http://x", "k", "x")
     assert small._llm_endpoints()[0][:3] == ("http://small", "k", "small-model")
     assert text._llm_endpoints()[0][:3] == ("http://text", "k", "text-model")
+    assert planner._llm_endpoints()[0][:3] == ("http://text", "k", "text-model")
+    assert question._llm_endpoints()[0][:3] == ("http://small", "k", "small-model")
 
 
 def test_explicit_slot_overrides_name(monkeypatch):

@@ -6,8 +6,8 @@
 
 | 槽位 | 用途 | 环境变量前缀 |
 |---|---|---|
-| `text` | 报告生成、长回答 | `LLM_TEXT_` |
-| `small` | 意图规划、槽位抽取、检索词改写、地址抽取 | `LLM_SMALL_` |
+| `text` | 报告生成、长回答、意图识别与槽位规划 | `LLM_TEXT_` |
+| `small` | 追问句生成、建单前参数抽取、地址抽取、检索词改写 | `LLM_SMALL_` |
 | `vision` | 图片识别 | `LLM_VISION_` |
 
 每个槽位支持以下变量（以 `LLM_TEXT_` 为例）：
@@ -48,7 +48,7 @@ LLM_VISION_MODEL=deepseek-flash
 
 ## 代码里的映射
 
-- `core/agent.py`：`Agent(slot="text" | "small")`；未显式指定时按注册名判断，`hazard_extract / hazard_address_extract / dialogue_planner / rewrite_query` 走 small。
+- `core/agent.py`：`Agent(slot="text" | "small")`；未显式指定时按注册名判断，`hazard_extract / hazard_address_extract / ask_slot_question / rewrite_query` 走 small；`dialogue_planner`（意图识别）走 text。
 - `mimo_client.py`：`VISION_PROVIDER=deepseek` 时使用 `LLM_VISION_*`。
 - `GET /api/ai/health` 返回 `models.text / models.small / models.vision`，用于确认线上实际生效的配置。
 

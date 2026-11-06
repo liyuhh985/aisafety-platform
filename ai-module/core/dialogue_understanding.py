@@ -495,11 +495,22 @@ def resolve_slot_question(candidate_question, candidate_target, missing_keys,
     return "", "none"
 
 
+_question_llm = Agent(
+    name="ask_slot_question",
+    system_prompt=_SLOT_QUESTION_SYSTEM,
+    tools=[],
+    base_url=MIMO_BASE_URL,
+    api_key=MIMO_API_KEY,
+    model=MIMO_MODEL,
+    slot="small",
+)
+
+
 def ask_slot_question(missing=None, known_slots=None, subcategory_code: str = "",
                       user_text: str = "") -> dict:
     """小调用：只产出 {question, target_slot}。失败返回 {}，由调用方降级。"""
     try:
-        response = _planner_llm._call_llm(
+        response = _question_llm._call_llm(
             build_slot_question_messages(missing, known_slots, subcategory_code, user_text),
             cancellation=None,
         )

@@ -22,7 +22,7 @@ from .cancellation import CancellationToken, StreamCancelled
 _SMALL_AGENT_NAMES = {
     "hazard_extract",
     "hazard_address_extract",
-    "dialogue_planner",
+    "ask_slot_question",
     "rewrite_query",
 }
 
