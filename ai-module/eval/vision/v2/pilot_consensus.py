@@ -26,6 +26,9 @@ SUB_BY_MAJOR = {
     "environment_other": {"garbage_pile", "sewage_overflow"},
 }
 
+DEFAULT_MODEL_A = "mimo-v2.6-flash"
+DEFAULT_MODEL_B = "glm-5.3-flash"
+
 ANNOTATOR_PROMPT = """你是城市安全隐患标注员。只根据画面中清晰可见的证据判断，不得依据新闻标题、字幕、常识或推测。
 
 只输出 JSON：
@@ -253,8 +256,8 @@ def main() -> int:
     parser.add_argument("--sample-size", type=int, default=60)
     parser.add_argument("--seed", type=int, default=20261106)
     parser.add_argument("--workers", type=int, default=4)
-    parser.add_argument("--model-a", default="mimo-v2.6-flash")
-    parser.add_argument("--model-b", default="glm-5.3-flashx")
+    parser.add_argument("--model-a", default=DEFAULT_MODEL_A)
+    parser.add_argument("--model-b", default=DEFAULT_MODEL_B)
     parser.add_argument("--temperature", type=float, default=0.0)
     args = parser.parse_args()
 
@@ -300,4 +303,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
 

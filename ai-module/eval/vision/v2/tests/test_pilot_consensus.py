@@ -119,3 +119,7 @@ def test_run_model_passes_temperature_to_client(tmp_path):
 
     assert result["abc"]["status"] == "valid"
     assert client.seen == [0.3]
+
+def test_default_annotator_models_use_glm_flash_not_flashx():
+    assert pc.DEFAULT_MODEL_A == "mimo-v2.6-flash"
+    assert pc.DEFAULT_MODEL_B == "glm-5.3-flash"
