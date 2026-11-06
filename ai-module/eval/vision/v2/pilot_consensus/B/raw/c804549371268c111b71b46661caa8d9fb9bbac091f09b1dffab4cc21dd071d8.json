@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"blind_path_occupied\", \"evidence\": \"施工围挡占用人行道，盲道被围挡覆盖阻断\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "evidence": "施工围挡占用人行道，盲道被围挡覆盖阻断"
+  }
+}
