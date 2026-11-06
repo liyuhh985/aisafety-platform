@@ -26,7 +26,7 @@ SUB_BY_MAJOR = {
 }
 
 
-def make_final_manifest(path: Path) -> None:
+def make_final_manifest(path: Path, label_source: str = "human_reviewed") -> None:
     items = []
     for major in c.MAJOR_CODES:
         for kind, count in (("positive", 10), ("negative", 10)):
@@ -54,7 +54,7 @@ def make_final_manifest(path: Path) -> None:
                     "notes": "fixture",
                     "reviewer": "余博洋",
                     "review_time": "2026-11-06T10:00:00+08:00",
-                    "label_source": "human_reviewed",
+                    "label_source": label_source,
                 })
     path.write_text(
         json.dumps({"_meta": {"version": "v2.1"}, "items": items}, ensure_ascii=False),
@@ -169,4 +169,35 @@ def test_freeze_refuses_overwrite_without_force(tmp_path):
             frozen_path,
             protocol_version="v2.1",
             prompt_manifest_path=prompt_manifest,
+        )
+
+def test_freeze_accepts_model_consensus_mode(tmp_path):
+    manifest_path = tmp_path / "manifest.json"
+    frozen_path = tmp_path / "frozen.json"
+    make_final_manifest(manifest_path, label_source=c.MODEL_LABEL_SOURCE)
+
+    ft.freeze_test_manifest(
+        manifest_path,
+        frozen_path,
+        protocol_version=c.MODEL_PROTOCOL_VERSION,
+        prompt_manifest_path=make_prompt_manifest(tmp_path),
+        annotation_mode="model_consensus",
+    )
+
+    frozen = json.loads(frozen_path.read_text(encoding="utf-8"))
+    assert frozen["_meta"]["annotation_mode"] == "model_consensus"
+    assert frozen["_meta"]["label_source"] == c.MODEL_LABEL_SOURCE
+    assert all(item["label_source"] == c.MODEL_LABEL_SOURCE for item in frozen["items"])
+
+
+def test_freeze_human_mode_rejects_model_consensus_labels(tmp_path):
+    manifest_path = tmp_path / "manifest.json"
+    make_final_manifest(manifest_path, label_source=c.MODEL_LABEL_SOURCE)
+
+    with pytest.raises(ValueError, match="label source"):
+        ft.freeze_test_manifest(
+            manifest_path,
+            tmp_path / "frozen.json",
+            protocol_version="v2.1",
+            prompt_manifest_path=make_prompt_manifest(tmp_path),
         )

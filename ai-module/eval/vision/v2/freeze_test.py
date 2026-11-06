@@ -54,12 +54,21 @@ def freeze_test_manifest(
     prompt_manifest_path: Path,
     force: bool = False,
     taxonomy_path: Path | None = None,
+    annotation_mode: str = "human",
 ) -> dict:
     output_path = Path(output_path)
     if output_path.exists() and not force:
         raise FileExistsError(f"frozen manifest already exists: {output_path}")
-    if protocol_version != contract.PROTOCOL_VERSION:
-        raise ValueError(f"protocol version must be {contract.PROTOCOL_VERSION}")
+    if annotation_mode not in {"human", "model_consensus"}:
+        raise ValueError(f"unsupported annotation_mode: {annotation_mode}")
+    expected_protocol = contract.MODEL_PROTOCOL_VERSION if annotation_mode == "model_consensus" else contract.PROTOCOL_VERSION
+    if protocol_version != expected_protocol:
+        raise ValueError(f"protocol version must be {expected_protocol}")
+    allowed_sources = (
+        {contract.MODEL_LABEL_SOURCE}
+        if annotation_mode == "model_consensus"
+        else contract.ALLOWED_LABEL_SOURCES
+    )
 
     manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
     items = manifest.get("items", [])
@@ -67,7 +76,7 @@ def freeze_test_manifest(
         raise ValueError(f"expected 160 items, got {len(items)}")
     if any(item.get("label_status") != "reviewed" for item in items):
         raise ValueError("all final items must be reviewed")
-    if any(item.get("label_source") not in contract.ALLOWED_LABEL_SOURCES for item in items):
+    if any(item.get("label_source") not in allowed_sources for item in items):
         raise ValueError("final manifest contains disallowed label source")
 
     test = [item for item in items if item.get("split") == "test"]
@@ -105,8 +114,10 @@ def freeze_test_manifest(
         major = item.get("major_category", "")
         subcategory = item.get("subcategory", "")
         if has_hazard:
-            if taxonomy.get(subcategory) != major:
+            if subcategory and taxonomy.get(subcategory) != major:
                 raise ValueError(f"invalid taxonomy label: {item.get('file')}")
+            if not subcategory and annotation_mode != "model_consensus":
+                raise ValueError(f"human-reviewed positive requires subcategory: {item.get('file')}")
         elif major or subcategory:
             raise ValueError(f"negative label contains categories: {item.get('file')}")
         if not Path(item.get("source_path", "")).is_file():
@@ -145,6 +156,9 @@ def freeze_test_manifest(
             "dev_total": len(dev),
             "major_positive_counts": {major: contract.TEST_PER_MAJOR for major in contract.MAJOR_CODES},
             "prompt_manifest": prompt_manifest,
+            "annotation_mode": annotation_mode,
+            "label_source": contract.MODEL_LABEL_SOURCE if annotation_mode == "model_consensus" else "human_reviewed",
+            "human_reviewed": annotation_mode == "human",
         },
         "items": frozen_items,
     }
@@ -161,6 +175,7 @@ def main() -> int:
     parser.add_argument("--prompt-manifest", type=Path, required=True)
     parser.add_argument("--taxonomy", type=Path, default=None)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument("--annotation-mode", default="human", choices=["human", "model_consensus"])
     args = parser.parse_args()
     frozen = freeze_test_manifest(
         args.manifest,
@@ -169,6 +184,7 @@ def main() -> int:
         prompt_manifest_path=args.prompt_manifest,
         force=args.force,
         taxonomy_path=args.taxonomy,
+        annotation_mode=args.annotation_mode,
     )
     print(f"froze {len(frozen['items'])} test items to {args.output}")
     return 0

@@ -23,3 +23,8 @@ def test_v21_contract_has_exact_interview_quotas():
     assert c.TEST_PER_CONFUSER_GROUP == 5
     assert len(c.MAJOR_CODES) == 8
     assert "ai_direct" not in c.ALLOWED_LABEL_SOURCES
+
+def test_model_consensus_contract_is_separate_from_human_review():
+    assert c.MODEL_PROTOCOL_VERSION == "v2.1-model-consensus"
+    assert c.MODEL_LABEL_SOURCE == "model_consensus"
+    assert c.MODEL_LABEL_SOURCE not in c.ALLOWED_LABEL_SOURCES

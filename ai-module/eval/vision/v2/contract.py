@@ -1,6 +1,8 @@
 """Shared v2.1 evaluation contract constants."""
 
 PROTOCOL_VERSION = "v2.1"
+MODEL_PROTOCOL_VERSION = "v2.1-model-consensus"
+MODEL_LABEL_SOURCE = "model_consensus"
 
 TOTAL_ITEMS = 160
 POSITIVES = 80
@@ -31,3 +33,4 @@ ALLOWED_LABEL_SOURCES = frozenset({
     "human_confirmed_ai_prelabel",
     "legacy_review",
 })
+
