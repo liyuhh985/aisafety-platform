@@ -25,6 +25,7 @@ from config import (
     MAX_IMAGE_SIZE,
     VISION_PROVIDER,
     VISION_CACHE, VISION_CACHE_DIR,
+    VISION_MODEL,
     OPENDESIGN_BASE_URL, OPENDESIGN_API_KEY, OPENDESIGN_VISION_MODEL,
     MIMO_BASE_URL, MIMO_API_KEY, MIMO_VISION_MODEL,
 )
@@ -40,6 +41,13 @@ _PROVIDERS = {
         "base_url": MIMO_BASE_URL,
         "api_key": MIMO_API_KEY,
         "model": MIMO_VISION_MODEL,
+    },
+    # 统一槽位：视觉配置来自 LLM_VISION_*（默认 DeepSeek）
+    "deepseek": {
+        "base_url": VISION_MODEL.base_url,
+        "api_key": VISION_MODEL.api_key,
+        "model": VISION_MODEL.model,
+        "max_tokens": VISION_MODEL.max_tokens,
     },
 }
 
@@ -79,7 +87,7 @@ class VisionClient:
     """视觉模型客户端，支持图片识别 + 结构化 JSON 输出。"""
 
     def __init__(self, provider: str = None):
-        name = (provider or VISION_PROVIDER or "opendesign").strip().lower()
+        name = (provider or VISION_PROVIDER or "deepseek").strip().lower()
         if name not in _PROVIDERS:
             raise ValueError(f"未知的视觉供应商: {name}；可选 {list(_PROVIDERS)}")
         conf = _PROVIDERS[name]
@@ -87,6 +95,7 @@ class VisionClient:
         self.base_url = (conf["base_url"] or "").rstrip("/")
         self.api_key = conf["api_key"]
         self.model = conf["model"]
+        self.max_tokens = conf.get("max_tokens")
         if not self.api_key:
             raise ValueError(f"供应商 {name} 缺少 API Key，请检查 .env")
         if not self.base_url:
@@ -129,6 +138,8 @@ class VisionClient:
             }],
             "temperature": temperature,
         }
+        if self.max_tokens:
+            payload["max_tokens"] = self.max_tokens
 
         try:
             resp = requests.post(

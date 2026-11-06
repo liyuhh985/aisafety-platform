@@ -1,4 +1,5 @@
 import os
+from dataclasses import dataclass
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -27,7 +28,7 @@ OPENDESIGN_API_KEY = os.getenv("OPENDESIGN_API_KEY", "")
 OPENDESIGN_VISION_MODEL = os.getenv("OPENDESIGN_VISION_MODEL", "deepseek-v4.1-flash")
 
 # 视觉识别使用哪个供应商：opendesign（默认）/ mimo
-VISION_PROVIDER = os.getenv("VISION_PROVIDER", "opendesign").strip().lower()
+VISION_PROVIDER = os.getenv("VISION_PROVIDER", "deepseek").strip().lower()
 
 # 视觉请求结果缓存：同一张图 + 同一提示词只真正请求一次
 # OpenDesign 按请求次数计费，缓存能让重跑成本归零，不影响结果正确性
@@ -159,6 +160,75 @@ PRIMARY_LLM_BASE_URL = os.getenv("PRIMARY_LLM_BASE_URL", "").strip()
 PRIMARY_LLM_API_KEY = os.getenv("PRIMARY_LLM_API_KEY", "").strip()
 PRIMARY_LLM_MODEL = os.getenv("PRIMARY_LLM_MODEL", "").strip()
 PRIMARY_LLM_EFFORT = os.getenv("PRIMARY_LLM_EFFORT", "").strip()
+
+
+@dataclass(frozen=True)
+class ModelSlot:
+    """一个模型槽位的完整配置：文本 / 小模型 / 视觉各一份。"""
+    provider: str
+    base_url: str
+    api_key: str
+    model: str
+    effort: str = ""
+    max_tokens: int | None = None
+    temperature: float | None = None
+
+
+def _env_int(name: str):
+    raw = (os.getenv(name) or "").strip()
+    return int(raw) if raw else None
+
+
+def _env_float(name: str):
+    raw = (os.getenv(name) or "").strip()
+    return float(raw) if raw else None
+
+
+def _slot(prefix: str, default: ModelSlot) -> ModelSlot:
+    return ModelSlot(
+        provider=(os.getenv(f"{prefix}_PROVIDER") or default.provider).strip().lower(),
+        base_url=(os.getenv(f"{prefix}_BASE_URL") or default.base_url).strip(),
+        api_key=(os.getenv(f"{prefix}_API_KEY") or default.api_key).strip(),
+        model=(os.getenv(f"{prefix}_MODEL") or default.model).strip(),
+        effort=(os.getenv(f"{prefix}_EFFORT") or default.effort).strip(),
+        max_tokens=_env_int(f"{prefix}_MAX_TOKENS") or default.max_tokens,
+        temperature=(
+            _env_float(f"{prefix}_TEMPERATURE")
+            if _env_float(f"{prefix}_TEMPERATURE") is not None
+            else default.temperature
+        ),
+    )
+
+
+# 三个槽位的默认值都指向 DeepSeek；可用 LLM_TEXT_* / LLM_SMALL_* / LLM_VISION_* 单独覆盖。
+_DEFAULT_BASE = (
+    os.getenv("DEEPSEEK_BASE_URL") or PRIMARY_LLM_BASE_URL
+    or FALLBACK_LLM_BASE_URL or MIMO_BASE_URL
+).strip()
+_DEFAULT_KEY = (
+    os.getenv("DEEPSEEK_API_KEY") or PRIMARY_LLM_API_KEY
+    or FALLBACK_LLM_API_KEY or MIMO_API_KEY
+).strip()
+_DEFAULT_MODEL = (
+    os.getenv("DEEPSEEK_MODEL") or PRIMARY_LLM_MODEL
+    or FALLBACK_LLM_MODEL or MIMO_MODEL
+).strip()
+_DEFAULT_EFFORT = (
+    os.getenv("DEEPSEEK_EFFORT") or PRIMARY_LLM_EFFORT
+    or FALLBACK_LLM_EFFORT or ""
+).strip()
+
+_DEFAULT_SLOT = ModelSlot(
+    provider="deepseek",
+    base_url=_DEFAULT_BASE,
+    api_key=_DEFAULT_KEY,
+    model=_DEFAULT_MODEL,
+    effort=_DEFAULT_EFFORT,
+)
+
+TEXT_MODEL = _slot("LLM_TEXT", _DEFAULT_SLOT)
+SMALL_MODEL = _slot("LLM_SMALL", TEXT_MODEL)
+VISION_MODEL = _slot("LLM_VISION", TEXT_MODEL)
 
 # ===== 会话与 LangGraph Checkpoint 后端（多 worker 支持，Task 7）=====
 # 见 docs/superpowers/plans/2026-10-10-ai-hazard-mq-hardening.md

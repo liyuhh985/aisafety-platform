@@ -11,14 +11,20 @@ from config import (
     FALLBACK_LLM_API_KEY,
     FALLBACK_LLM_MODEL,
     FALLBACK_LLM_EFFORT,
-    PRIMARY_LLM_BASE_URL,
-    PRIMARY_LLM_API_KEY,
-    PRIMARY_LLM_MODEL,
-    PRIMARY_LLM_EFFORT,
+    TEXT_MODEL,
+    SMALL_MODEL,
     LLM_RETRY_PER_ENDPOINT,
     LLM_RETRY_BACKOFF_SECONDS,
 )
 from .cancellation import CancellationToken, StreamCancelled
+
+
+_SMALL_AGENT_NAMES = {
+    "hazard_extract",
+    "hazard_address_extract",
+    "dialogue_planner",
+    "rewrite_query",
+}
 
 
 def _is_transient(exc) -> bool:
@@ -43,6 +49,7 @@ class Agent:
         api_key: str,
         model: str = "mimo-v2.5",
         tool_choice: str = "auto",
+        slot: str = "",
     ):
         self.name = name
         self.system_prompt = system_prompt
@@ -51,6 +58,7 @@ class Agent:
         self.api_key = api_key
         self.model = model
         self.tool_choice = tool_choice
+        self.slot = slot or ("small" if name in _SMALL_AGENT_NAMES else "text")
         self._tool_map = {t.name: t for t in tools}
 
     # ====== 非流式执行 ======
@@ -254,15 +262,11 @@ class Agent:
                     resp.close()
 
     def _llm_endpoints(self) -> list:
-        """调用链：主端点 -> 同供应商备用模型（若确实不同）-> 跨供应商降级（若已配置）。
-
-        为什么要有第三段：.env 里 MIMO_MODEL_BACKUP 与主模型同名时（本项目就是），
-        第二段等于不存在 —— 原来的"降级"从来没生效过。
-        """
-        if PRIMARY_LLM_BASE_URL and PRIMARY_LLM_API_KEY and PRIMARY_LLM_MODEL:
-            # 显式指定了文本主模型（如 DeepSeek）：不再沿用 MIMO 的备用模型。
-            chain = [(PRIMARY_LLM_BASE_URL.rstrip("/"), PRIMARY_LLM_API_KEY,
-                      PRIMARY_LLM_MODEL, PRIMARY_LLM_EFFORT or None)]
+        """调用链：槽位主端点 -> 跨供应商降级（若已配置且不是同一端点）。"""
+        conf = SMALL_MODEL if self.slot == "small" else TEXT_MODEL
+        if conf.base_url and conf.api_key and conf.model:
+            chain = [(conf.base_url.rstrip("/"), conf.api_key,
+                      conf.model, conf.effort or None)]
         else:
             chain = [(self.base_url, self.api_key, self.model, None)]
             if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
