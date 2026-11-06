@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"墙面悬挂绳索与瓶罐，用途不明，难以确认隐患类型\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "墙面悬挂绳索与瓶罐，用途不明，难以确认隐患类型"
+  }
+}

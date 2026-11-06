@@ -1,0 +1,27 @@
+{
+  "sha256": "1ba9b4b3d6d51efd31e3c9ecd85f39b2b3131772b61c6de1a8f7abf9103de29f",
+  "file": "ROA0005.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"road_occupancy\",\"severity\":\"中\",\"description\":\"两辆流动餐车停放在道路边占道经营，周边多人聚集购买，挤占通行空间，易造成人车混行、交通拥堵及碰撞风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"玻璃幕墙建筑前道路旁，占道餐车处\",\"rectification\":[\"劝离流动摊贩，清理占道车辆和经营物品\",\"划定合规经营区域并加强日常巡查\",\"在人流高峰时段设置隔离和疏导措施\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "两辆流动餐车停放在道路边占道经营，周边多人聚集购买，挤占通行空间，易造成人车混行、交通拥堵及碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "玻璃幕墙建筑前道路旁，占道餐车处",
+    "rectification": [
+      "劝离流动摊贩，清理占道车辆和经营物品",
+      "划定合规经营区域并加强日常巡查",
+      "在人流高峰时段设置隔离和疏导措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

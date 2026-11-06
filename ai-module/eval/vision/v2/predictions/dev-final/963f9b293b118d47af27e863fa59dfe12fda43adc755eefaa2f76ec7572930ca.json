@@ -1,0 +1,27 @@
+{
+  "sha256": "963f9b293b118d47af27e863fa59dfe12fda43adc755eefaa2f76ec7572930ca",
+  "file": "FAC0063.png",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"建筑安全\",\"major_category\":\"building\",\"subcategory\":\"facade_fall\",\"severity\":\"高\",\"description\":\"门框旁墙面瓷砖大面积脱落，碎块散落地面，存在行人被割伤、绊倒及剩余瓷砖继续脱落砸伤的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"门框旁墙面及地面\",\"rectification\":[\"立即设置警戒区域并清理地面碎砖\",\"排查相邻瓷砖空鼓、松动情况，铲除危险面层\",\"按规范重新铺贴或加固，修复后验收\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "facade_fall",
+    "severity": "高",
+    "description": "门框旁墙面瓷砖大面积脱落，碎块散落地面，存在行人被割伤、绊倒及剩余瓷砖继续脱落砸伤的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "门框旁墙面及地面",
+    "rectification": [
+      "立即设置警戒区域并清理地面碎砖",
+      "排查相邻瓷砖空鼓、松动情况，铲除危险面层",
+      "按规范重新铺贴或加固，修复后验收"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

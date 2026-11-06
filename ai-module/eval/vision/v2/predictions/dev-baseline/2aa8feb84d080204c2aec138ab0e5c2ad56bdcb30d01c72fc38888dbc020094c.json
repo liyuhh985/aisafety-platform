@@ -1,0 +1,31 @@
+{
+  "sha256": "2aa8feb84d080204c2aec138ab0e5c2ad56bdcb30d01c72fc38888dbc020094c",
+  "file": "NEGCON07.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"道路旁开挖较深管道沟槽，沟壁土体裸露，木板桩支护不连续，沟边无连续围挡及明显警示，工人正在沟内作业，存在边坡坍塌、人员坠落及机械伤害风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路旁管道施工深沟区域\",\"rectification\":[\"按规范设置连续硬质围挡、临边防护栏杆及夜间警示灯\",\"完善沟槽支护和边坡监测，严格按施工方案放坡或支撑\",\"在沟槽周边设置安全警示标志，禁止非施工人员靠近\",\"沟内作业人员须佩戴防护用品并设专人监护\"],\"secondary_subcategories\":[\"no_barrier\",\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路旁开挖较深管道沟槽，沟壁土体裸露，木板桩支护不连续，沟边无连续围挡及明显警示，工人正在沟内作业，存在边坡坍塌、人员坠落及机械伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁管道施工深沟区域",
+    "rectification": [
+      "按规范设置连续硬质围挡、临边防护栏杆及夜间警示灯",
+      "完善沟槽支护和边坡监测，严格按施工方案放坡或支撑",
+      "在沟槽周边设置安全警示标志，禁止非施工人员靠近",
+      "沟内作业人员须佩戴防护用品并设专人监护"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

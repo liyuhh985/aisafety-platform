@@ -1,0 +1,27 @@
+{
+  "sha256": "30af993a8fa21abce66d14d86b3245d130f74fafbac3df755284b11baed632d9",
+  "file": "FIR0078.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内大量灭火器成堆随意堆放，部分瓶体锈蚀、附件缺失，未按消防规范分散配置和固定，紧急时难以快速取用，且受压碰撞可能损坏或失效。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内角落/靠墙地面\",\n  \"rectification\": [\n    \"立即清点分拣，将有效灭火器按规范配置到指定点位并标识、固定，确保取用方便\",\n    \"对过期、锈蚀、损坏或无法确认有效的灭火器交专业机构报废处理，不得继续堆放\",\n    \"清理堆放区域，保持通道和消防设施周边畅通，并建立灭火器巡检维保台账\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室内大量灭火器成堆随意堆放，部分瓶体锈蚀、附件缺失，未按消防规范分散配置和固定，紧急时难以快速取用，且受压碰撞可能损坏或失效。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内角落/靠墙地面",
+    "rectification": [
+      "立即清点分拣，将有效灭火器按规范配置到指定点位并标识、固定，确保取用方便",
+      "对过期、锈蚀、损坏或无法确认有效的灭火器交专业机构报废处理，不得继续堆放",
+      "清理堆放区域，保持通道和消防设施周边畅通，并建立灭火器巡检维保台账"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

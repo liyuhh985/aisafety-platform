@@ -1,0 +1,23 @@
+{
+  "sha256": "a09fcae8437e1be7389802231e75538d6a7234805733e0909cfa166fad427d00",
+  "file": "NEGWIR07.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面为室内仓储货架，成卷软管有缠绕膜包裹，堆放基本整齐，未见明显倾斜、散落、坠落、通道堵塞或设施损坏等可见安全隐患；货架承重及堆高合规性需现场复核。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为室内仓储货架，成卷软管有缠绕膜包裹，堆放基本整齐，未见明显倾斜、散落、坠落、通道堵塞或设施损坏等可见安全隐患；货架承重及堆高合规性需现场复核。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

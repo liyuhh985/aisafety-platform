@@ -1,0 +1,27 @@
+{
+  "sha256": "deb425b606174c9ade97cf87c1abfe08410e1a91e87453edc70af6a7a9ea3199",
+  "file": "NEGROA01.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_warning\",\"severity\":\"中\",\"description\":\"施工人员在开放道路车道内弯腰作业，未佩戴安全帽，来车方向仅见少量锥桶，未见警示牌、围挡或专人警戒，易引起来往车辆误入撞人。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路施工/养护作业区，画面近处车道内\",\"rectification\":[\"按规范在作业区来车方向设置警示牌并保留足够警示距离\",\"补齐锥桶等隔离设施，安排专人警戒\",\"施工人员应佩戴安全帽并减少在行车道内停留\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "中",
+    "description": "施工人员在开放道路车道内弯腰作业，未佩戴安全帽，来车方向仅见少量锥桶，未见警示牌、围挡或专人警戒，易引起来往车辆误入撞人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路施工/养护作业区，画面近处车道内",
+    "rectification": [
+      "按规范在作业区来车方向设置警示牌并保留足够警示距离",
+      "补齐锥桶等隔离设施，安排专人警戒",
+      "施工人员应佩戴安全帽并减少在行车道内停留"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

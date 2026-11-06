@@ -1,0 +1,27 @@
+{
+  "sha256": "d4e2e8fdcc235dd0091b18cacb0e97949a34d0c32f421afac8ddb64297df20bc",
+  "file": "EXP0003.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"黄色线缆绝缘外皮破损，内部线芯裸露并散落在地砖路面，现场有残雪潮湿，存在漏电触电风险；线缆横穿人行道也易绊倒行人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"铺装人行道地砖上，黄色线缆破损段\",\n  \"rectification\": [\n    \"立即设置警戒并通知产权单位断电处理\",\n    \"更换破损线缆，规范架空或穿管埋地敷设\",\n    \"清理现场残雪和散落线芯，恢复路面安全\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "黄色线缆绝缘外皮破损，内部线芯裸露并散落在地砖路面，现场有残雪潮湿，存在漏电触电风险；线缆横穿人行道也易绊倒行人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "铺装人行道地砖上，黄色线缆破损段",
+    "rectification": [
+      "立即设置警戒并通知产权单位断电处理",
+      "更换破损线缆，规范架空或穿管埋地敷设",
+      "清理现场残雪和散落线芯，恢复路面安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

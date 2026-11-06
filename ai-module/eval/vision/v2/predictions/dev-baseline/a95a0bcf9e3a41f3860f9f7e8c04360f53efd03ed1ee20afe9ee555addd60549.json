@@ -1,0 +1,27 @@
+{
+  "sha256": "a95a0bcf9e3a41f3860f9f7e8c04360f53efd03ed1ee20afe9ee555addd60549",
+  "file": "GAR0101.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_lane_blocked\",\"severity\":\"高\",\"description\":\"室内走廊尽头消火栓箱前堆放储物箱、袋子和婴儿车等杂物，导致疏散通道变窄并遮挡消火栓，火灾时影响人员疏散和消防设施取用。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内走廊尽头消火栓箱及周边通道\",\"rectification\":[\"立即清理消火栓箱前及走廊内堆放的杂物\",\"保持疏散通道和消火栓前净空，不得占用、遮挡\",\"加强日常巡查并设置禁止堆放标识\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "室内走廊尽头消火栓箱前堆放储物箱、袋子和婴儿车等杂物，导致疏散通道变窄并遮挡消火栓，火灾时影响人员疏散和消防设施取用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内走廊尽头消火栓箱及周边通道",
+    "rectification": [
+      "立即清理消火栓箱前及走廊内堆放的杂物",
+      "保持疏散通道和消火栓前净空，不得占用、遮挡",
+      "加强日常巡查并设置禁止堆放标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

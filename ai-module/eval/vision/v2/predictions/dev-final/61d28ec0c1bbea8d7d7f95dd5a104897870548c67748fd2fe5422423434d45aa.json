@@ -1,0 +1,27 @@
+{
+  "sha256": "61d28ec0c1bbea8d7d7f95dd5a104897870548c67748fd2fe5422423434d45aa",
+  "file": "ELE0005.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"中\",\n  \"description\": \"图片显示电梯门表面贴膜大面积破损剥落，并张贴“电梯正在维修 暂停运行”提示，电梯处于停运状态，影响正常使用，门体外观及可能相关部件存在损坏风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"图片中张贴维修提示的电梯门口\",\n  \"rectification\": [\n    \"联系电梯维保单位对门体及运行系统进行全面检修\",\n    \"维修期间设置围挡和醒目的安全警示，防止人员误入或倚靠\",\n    \"修复电梯门破损贴膜或面板，检验合格后再恢复运行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "图片显示电梯门表面贴膜大面积破损剥落，并张贴“电梯正在维修 暂停运行”提示，电梯处于停运状态，影响正常使用，门体外观及可能相关部件存在损坏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "图片中张贴维修提示的电梯门口",
+    "rectification": [
+      "联系电梯维保单位对门体及运行系统进行全面检修",
+      "维修期间设置围挡和醒目的安全警示，防止人员误入或倚靠",
+      "修复电梯门破损贴膜或面板，检验合格后再恢复运行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

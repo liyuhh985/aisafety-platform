@@ -1,0 +1,27 @@
+{
+  "sha256": "b1904f7e436cd314ef919d5b8df2036494a543e1c83ecdd410b3f1600009ee3e",
+  "file": "SCA0083.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"中\",\n  \"description\": \"施工现场脚手架密目安全网出现大面积开口、破损，未有效封闭，工人上身从开口处探出，防护不连续，易导致人员坠落或物料飞出，存在施工安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中部脚手架安全网开口处\",\n  \"rectification\": [\n    \"立即修复或更换破损安全网，封闭开口并确保防护连续有效\",\n    \"检查脚手架防护栏杆、连墙件和扣件，作业人员规范佩戴安全带\",\n    \"设置安全警示并加强现场巡查，发现防护缺陷及时处理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "中",
+    "description": "施工现场脚手架密目安全网出现大面积开口、破损，未有效封闭，工人上身从开口处探出，防护不连续，易导致人员坠落或物料飞出，存在施工安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中部脚手架安全网开口处",
+    "rectification": [
+      "立即修复或更换破损安全网，封闭开口并确保防护连续有效",
+      "检查脚手架防护栏杆、连墙件和扣件，作业人员规范佩戴安全带",
+      "设置安全警示并加强现场巡查，发现防护缺陷及时处理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

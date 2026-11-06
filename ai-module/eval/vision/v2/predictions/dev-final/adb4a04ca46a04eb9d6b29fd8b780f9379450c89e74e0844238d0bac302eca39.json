@@ -1,0 +1,23 @@
+{
+  "sha256": "adb4a04ca46a04eb9d6b29fd8b780f9379450c89e74e0844238d0bac302eca39",
+  "file": "NEGMAN08.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为井盖生产或翻新场景，井盖完好、成批堆放，未见道路井盖缺失、破损或塌陷等市政隐患；喷漆及气罐作业细节不清，需人工复核。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "低",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为井盖生产或翻新场景，井盖完好、成批堆放，未见道路井盖缺失、破损或塌陷等市政隐患；喷漆及气罐作业细节不清，需人工复核。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,28 @@
+{
+  "sha256": "af17a7dbc3a3b0097926a9d51b6205f4247a623e448fb94a65fe6092e1161b19",
+  "file": "DAN0004.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"wall_crack_lean\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙底部与突出构件交接处存在一条长而宽的不规则水平裂缝，伴有修补痕迹，地面铺装也有断裂。裂缝可能由地基不均匀沉降或结构变形引起，存在墙体继续开裂、局部失稳的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙底部与凸出结构交接处及周边地面\",\n  \"rectification\": [\n    \"委托专业机构对裂缝及地基基础进行检测鉴定，查明原因\",\n    \"对裂缝设置监测点并封闭处理，必要时采取结构加固措施\",\n    \"完善墙脚排水，避免积水加剧沉降\",\n    \"裂缝未处理前设置警示隔离，防止人员靠近\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "wall_crack_lean",
+    "severity": "高",
+    "description": "建筑外墙底部与突出构件交接处存在一条长而宽的不规则水平裂缝，伴有修补痕迹，地面铺装也有断裂。裂缝可能由地基不均匀沉降或结构变形引起，存在墙体继续开裂、局部失稳的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙底部与凸出结构交接处及周边地面",
+    "rectification": [
+      "委托专业机构对裂缝及地基基础进行检测鉴定，查明原因",
+      "对裂缝设置监测点并封闭处理，必要时采取结构加固措施",
+      "完善墙脚排水，避免积水加剧沉降",
+      "裂缝未处理前设置警示隔离，防止人员靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

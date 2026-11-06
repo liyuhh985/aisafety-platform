@@ -1,0 +1,29 @@
+{
+  "sha256": "559ff5d319e44be026762d2573f127b24bc5c094ae78b2f6905ffd6f556175b2",
+  "file": "ILL0054.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_barrier\",\"severity\":\"高\",\"description\":\"店铺夜间装修，人行道上搭设金属架并有人高处作业，未见连续硬质围挡，行人在架下穿行，且无明显安全警示，存在坠物、碰撞及触电风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"临街店铺门前人行道施工区域\",\"rectification\":[\"沿施工区域设置连续硬质围挡，隔离人行道与作业区\",\"增设安全警示标志、锥桶并安排专人看护引导行人\",\"规范材料、线缆和梯具摆放，高处作业下方禁止行人通行\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "店铺夜间装修，人行道上搭设金属架并有人高处作业，未见连续硬质围挡，行人在架下穿行，且无明显安全警示，存在坠物、碰撞及触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街店铺门前人行道施工区域",
+    "rectification": [
+      "沿施工区域设置连续硬质围挡，隔离人行道与作业区",
+      "增设安全警示标志、锥桶并安排专人看护引导行人",
+      "规范材料、线缆和梯具摆放，高处作业下方禁止行人通行"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

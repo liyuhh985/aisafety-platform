@@ -1,0 +1,26 @@
+{
+  "sha256": "116e94e47654e9b4f67417151fd75d620d97e5889d3f1bf1048090573cf16dfc",
+  "file": "NEGMAN01.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_warning\",\n  \"severity\": \"中\",\n  \"description\": \"一人正在用工具撬开路面圆形井盖，井口周边未见警示锥、围挡或专人看护；若井盖被打开，行人或车辆经过易坠入井口，造成伤害。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路路面井盖处\",\n  \"rectification\": [\n    \"作业前设置围挡和反光警示标志，必要时安排专人看护\",\n    \"开启后及时复位或临时覆盖，作业完毕立即恢复井盖\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "中",
+    "description": "一人正在用工具撬开路面圆形井盖，井口周边未见警示锥、围挡或专人看护；若井盖被打开，行人或车辆经过易坠入井口，造成伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路路面井盖处",
+    "rectification": [
+      "作业前设置围挡和反光警示标志，必要时安排专人看护",
+      "开启后及时复位或临时覆盖，作业完毕立即恢复井盖"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

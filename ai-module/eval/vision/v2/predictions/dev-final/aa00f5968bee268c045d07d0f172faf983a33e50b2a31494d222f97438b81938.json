@@ -1,0 +1,29 @@
+{
+  "sha256": "aa00f5968bee268c045d07d0f172faf983a33e50b2a31494d222f97438b81938",
+  "file": "GAR0009.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"垃圾桶旁大量袋装垃圾随意堆放并溢出，占压路面，影响行人与车辆通行和环境卫生，可能产生异味、招引鼠虫。前方人行道地砖大面积破损缺失，形成绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道垃圾桶旁及前方铺装路面\",\n  \"rectification\": [\n    \"立即清运堆积垃圾，保持垃圾桶周边整洁并加盖\",\n    \"修复破损缺失的人行道地砖，消除绊倒隐患\",\n    \"增加垃圾清运频次并加强日常巡查\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_surface_collapse\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "垃圾桶旁大量袋装垃圾随意堆放并溢出，占压路面，影响行人与车辆通行和环境卫生，可能产生异味、招引鼠虫。前方人行道地砖大面积破损缺失，形成绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道垃圾桶旁及前方铺装路面",
+    "rectification": [
+      "立即清运堆积垃圾，保持垃圾桶周边整洁并加盖",
+      "修复破损缺失的人行道地砖，消除绊倒隐患",
+      "增加垃圾清运频次并加强日常巡查"
+    ],
+    "secondary_subcategories": [
+      "road_surface_collapse"
+    ]
+  },
+  "error": ""
+}

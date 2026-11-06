@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"排水沟施工区域，旁侧有开挖土沟与碎砖，是否属隐患难以确认\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "排水沟施工区域，旁侧有开挖土沟与碎砖，是否属隐患难以确认"
+  }
+}

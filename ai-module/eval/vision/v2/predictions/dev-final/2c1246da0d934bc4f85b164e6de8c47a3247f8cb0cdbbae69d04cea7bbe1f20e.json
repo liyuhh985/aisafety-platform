@@ -1,0 +1,29 @@
+{
+  "sha256": "2c1246da0d934bc4f85b164e6de8c47a3247f8cb0cdbbae69d04cea7bbe1f20e",
+  "file": "NEGDEE07.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"夜间施工形成较深沟槽/基坑，临边未见连续硬质防护栏杆，挖掘机靠近坑边停放，坑边土体和管材堆载存在坠落、坍塌风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"夜间道路旁施工沟槽/深基坑临边\",\n  \"rectification\": [\n    \"沿基坑临边设置连续硬质防护栏杆并挂设警示标志\",\n    \"夜间增设警示灯，禁止人员靠近坑边\",\n    \"挖掘机及材料不得紧邻坑边停放或堆载，按方案做好支护和监测\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "夜间施工形成较深沟槽/基坑，临边未见连续硬质防护栏杆，挖掘机靠近坑边停放，坑边土体和管材堆载存在坠落、坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "夜间道路旁施工沟槽/深基坑临边",
+    "rectification": [
+      "沿基坑临边设置连续硬质防护栏杆并挂设警示标志",
+      "夜间增设警示灯，禁止人员靠近坑边",
+      "挖掘机及材料不得紧邻坑边停放或堆载，按方案做好支护和监测"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

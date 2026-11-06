@@ -1,0 +1,29 @@
+{
+  "sha256": "f380dbe2ef3507209a2e2dc1d38df3d4410418129d1f0d9aec2e643ddcf68a66",
+  "file": "SCA0047.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"脚手架底部多根立杆直接落于地面，未见垫板或底座，架体基础可能受力不均、沉降失稳；施工区域底部敞通且材料堆放，人员误入存在碰撞和坠物风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外立面脚手架底部及周边施工区域\",\n  \"rectification\": [\n    \"为脚手架立杆加设合格垫板和底座，检查扫地杆、连墙件及基础排水，验收合格后使用。\",\n    \"沿施工区域边界设置连续硬质围挡并管理出入口，禁止无关人员进入。\",\n    \"及时清理通道和脚手架下方材料杂物，保持作业及通行空间畅通。\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "脚手架底部多根立杆直接落于地面，未见垫板或底座，架体基础可能受力不均、沉降失稳；施工区域底部敞通且材料堆放，人员误入存在碰撞和坠物风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外立面脚手架底部及周边施工区域",
+    "rectification": [
+      "为脚手架立杆加设合格垫板和底座，检查扫地杆、连墙件及基础排水，验收合格后使用。",
+      "沿施工区域边界设置连续硬质围挡并管理出入口，禁止无关人员进入。",
+      "及时清理通道和脚手架下方材料杂物，保持作业及通行空间畅通。"
+    ],
+    "secondary_subcategories": [
+      "no_barrier"
+    ]
+  },
+  "error": ""
+}

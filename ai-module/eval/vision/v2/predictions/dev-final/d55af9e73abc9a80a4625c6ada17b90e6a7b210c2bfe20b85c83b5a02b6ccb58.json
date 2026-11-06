@@ -1,0 +1,26 @@
+{
+  "sha256": "d55af9e73abc9a80a4625c6ada17b90e6a7b210c2bfe20b85c83b5a02b6ccb58",
+  "file": "NEGFIR04.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"消火栓接口及阀体严重锈蚀，接口内部可见破损/堵塞，手轮也锈蚀老化，可能导致连接不严或无法正常出水，影响灭火救援使用。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"消火栓接口及阀门处\",\"rectification\":[\"更换锈蚀、损坏的消火栓接口和密封件，确保连接紧密、出水正常\",\"对消火栓进行除锈防腐维护，并定期开展检查、试水试验和压力测试\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "消火栓接口及阀体严重锈蚀，接口内部可见破损/堵塞，手轮也锈蚀老化，可能导致连接不严或无法正常出水，影响灭火救援使用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "消火栓接口及阀门处",
+    "rectification": [
+      "更换锈蚀、损坏的消火栓接口和密封件，确保连接紧密、出水正常",
+      "对消火栓进行除锈防腐维护，并定期开展检查、试水试验和压力测试"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

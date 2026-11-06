@@ -1,0 +1,27 @@
+{
+  "sha256": "f7f819e32772a30a499ef5775dec0feb270ae17ffe87472421a882824aa3cbac",
+  "file": "NEGGAS01.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"厨房灶台、抽油烟机及墙面插座、右侧白色垂直管道可见。插座距烟道/灶具较近且明装插头，管道紧邻调料架，但无法确认线路防护、管道性质及固定情况；若为电气或燃气设施，油污受热、碰撞可能引发漏电、短路或燃气泄漏。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厨房灶台、抽油烟机左上方插座及右侧垂直白色管道区域\",\n  \"rectification\": [\n    \"核实插座回路及防护情况，加装防溅防油盒，必要时移位并远离灶具热源。\",\n    \"核实右侧白色管道性质；若为燃气管道，应由燃气专业人员检查，确保明敷固定、远离火源和碰撞物。\",\n    \"清理灶具周边易燃物，调料架与灶具保持安全距离。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "厨房灶台、抽油烟机及墙面插座、右侧白色垂直管道可见。插座距烟道/灶具较近且明装插头，管道紧邻调料架，但无法确认线路防护、管道性质及固定情况；若为电气或燃气设施，油污受热、碰撞可能引发漏电、短路或燃气泄漏。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厨房灶台、抽油烟机左上方插座及右侧垂直白色管道区域",
+    "rectification": [
+      "核实插座回路及防护情况，加装防溅防油盒，必要时移位并远离灶具热源。",
+      "核实右侧白色管道性质；若为燃气管道，应由燃气专业人员检查，确保明敷固定、远离火源和碰撞物。",
+      "清理灶具周边易燃物，调料架与灶具保持安全距离。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

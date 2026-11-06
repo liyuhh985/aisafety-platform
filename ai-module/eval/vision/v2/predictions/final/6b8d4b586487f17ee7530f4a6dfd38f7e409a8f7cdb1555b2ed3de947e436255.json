@@ -1,0 +1,27 @@
+{
+  "sha256": "6b8d4b586487f17ee7530f4a6dfd38f7e409a8f7cdb1555b2ed3de947e436255",
+  "file": "SEW0002.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"垃圾桶旁及周边地面大量生活垃圾散落堆积，占用部分人行道和路缘，易滋生蚊虫、产生异味，并影响行人通行和环境卫生。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"垃圾桶及周边人行道路面\",\n  \"rectification\": [\n    \"及时清运散落垃圾并清扫地面，保持垃圾桶周边整洁\",\n    \"合理增设或维护垃圾桶，防止垃圾外溢\",\n    \"加强日常巡查和商户、居民环境卫生宣传\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "垃圾桶旁及周边地面大量生活垃圾散落堆积，占用部分人行道和路缘，易滋生蚊虫、产生异味，并影响行人通行和环境卫生。",
+    "reason_if_no_hazard": "",
+    "location_hint": "垃圾桶及周边人行道路面",
+    "rectification": [
+      "及时清运散落垃圾并清扫地面，保持垃圾桶周边整洁",
+      "合理增设或维护垃圾桶，防止垃圾外溢",
+      "加强日常巡查和商户、居民环境卫生宣传"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "```json\n{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"wire_fault\", \"evidence\": \"人员攀爬高压接触网电杆，存在触电风险\"}\n```",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "人员攀爬高压接触网电杆，存在触电风险"
+  }
+}

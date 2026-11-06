@@ -1,0 +1,28 @@
+{
+  "sha256": "87363f135ccbeaec09c784e49cf47b096cc9b08576fae81320be6e346b08afb1",
+  "file": "NEGGAS06.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"燃气热水器与燃气表间的黄色燃气软管过长、悬垂且未固定，横跨水槽上方，长期受潮或受碰撞摩擦易老化破损，存在燃气泄漏、起火爆炸风险；水槽旁插座无防水保护。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厨房水槽上方及燃气表、热水器连接处\",\n  \"rectification\": [\n    \"更换长度适宜的燃气专用软管并沿墙固定，避开潮湿、热源和易碰撞区域，定期检漏。\",\n    \"水槽附近插座加装防水盒或移离溅水范围，并确保漏电保护装置有效。\"\n  ],\n  \"secondary_subcategories\": [\n    \"distribution_box_fault\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "燃气热水器与燃气表间的黄色燃气软管过长、悬垂且未固定，横跨水槽上方，长期受潮或受碰撞摩擦易老化破损，存在燃气泄漏、起火爆炸风险；水槽旁插座无防水保护。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厨房水槽上方及燃气表、热水器连接处",
+    "rectification": [
+      "更换长度适宜的燃气专用软管并沿墙固定，避开潮湿、热源和易碰撞区域，定期检漏。",
+      "水槽附近插座加装防水盒或移离溅水范围，并确保漏电保护装置有效。"
+    ],
+    "secondary_subcategories": [
+      "distribution_box_fault"
+    ]
+  },
+  "error": ""
+}

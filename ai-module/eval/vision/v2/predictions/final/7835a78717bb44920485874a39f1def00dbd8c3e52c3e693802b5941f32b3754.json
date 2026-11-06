@@ -1,0 +1,27 @@
+{
+  "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+  "file": "NEGELE03.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"电梯楼层按钮面板上6层按钮附近明显破损、凹陷，可能导致按键失灵或误触，影响乘客正常选择楼层，存在使用不便与设备故障风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内楼层按钮面板（6层按钮处）\",\n  \"rectification\": [\n    \"更换破损的楼层按钮面板或按钮组件\",\n    \"对电梯按钮及控制面板进行检修，确保按键功能正常\",\n    \"设置临时提示或安排人员引导，避免乘客误操作\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "电梯楼层按钮面板上6层按钮附近明显破损、凹陷，可能导致按键失灵或误触，影响乘客正常选择楼层，存在使用不便与设备故障风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内楼层按钮面板（6层按钮处）",
+    "rectification": [
+      "更换破损的楼层按钮面板或按钮组件",
+      "对电梯按钮及控制面板进行检修，确保按键功能正常",
+      "设置临时提示或安排人员引导，避免乘客误操作"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

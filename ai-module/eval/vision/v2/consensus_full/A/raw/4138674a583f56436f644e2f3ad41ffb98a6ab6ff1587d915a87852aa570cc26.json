@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"gas_pipe_aging\", \"evidence\": \"黄色燃气管道外皮破损开裂，内部波纹管裸露\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "evidence": "黄色燃气管道外皮破损开裂，内部波纹管裸露"
+  }
+}

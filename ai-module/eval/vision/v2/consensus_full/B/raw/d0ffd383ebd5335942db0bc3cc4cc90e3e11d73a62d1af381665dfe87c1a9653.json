@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"围挡外有碎砖堆放，但属工地周边，是否构成隐患不明确\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "围挡外有碎砖堆放，但属工地周边，是否构成隐患不明确"
+  }
+}

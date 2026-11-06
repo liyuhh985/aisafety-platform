@@ -1,0 +1,27 @@
+{
+  "sha256": "ac85e91439e99d85f1f6c775b2bf6ab74aa9f9f11840dd5f2d7e4f72b4d2b6eb",
+  "file": "ELE0054.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_stopped\",\"severity\":\"高\",\"description\":\"电梯层门异常闭合，两名消防人员正在强行开启处置，现场未见警示围挡，存在人员被困、夹伤或坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯层站门口，楼层显示为3层\",\"rectification\":[\"立即由电梯维保单位断电挂牌，检查层门锁、门机及控制系统，禁止非专业人员强行开门\",\"设置警戒并核实轿厢内是否有人，必要时由专业救援人员实施救援\",\"恢复后按规定检验检测，测试应急通话和报警装置并完善维保记录\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "高",
+    "description": "电梯层门异常闭合，两名消防人员正在强行开启处置，现场未见警示围挡，存在人员被困、夹伤或坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯层站门口，楼层显示为3层",
+    "rectification": [
+      "立即由电梯维保单位断电挂牌，检查层门锁、门机及控制系统，禁止非专业人员强行开门",
+      "设置警戒并核实轿厢内是否有人，必要时由专业救援人员实施救援",
+      "恢复后按规定检验检测，测试应急通话和报警装置并完善维保记录"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

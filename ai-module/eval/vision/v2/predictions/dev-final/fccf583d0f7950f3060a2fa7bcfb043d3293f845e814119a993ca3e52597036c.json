@@ -1,0 +1,26 @@
+{
+  "sha256": "fccf583d0f7950f3060a2fa7bcfb043d3293f845e814119a993ca3e52597036c",
+  "file": "NEGFIR01.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"中\",\"description\":\"消火栓箱内白色消防水带散放于底部，未与消火栓出口连接，出口仍加盖闷盖，且未见水枪连接；发生火灾时无法快速形成有效出水，影响初期灭火。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"消防栓箱内部\",\"rectification\":[\"按规范将水带盘卷并与消火栓接口、水枪可靠连接，确保紧急时可快速取用。\",\"补齐并固定水枪等配件，定期检查消火栓箱内设施完好性。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "中",
+    "description": "消火栓箱内白色消防水带散放于底部，未与消火栓出口连接，出口仍加盖闷盖，且未见水枪连接；发生火灾时无法快速形成有效出水，影响初期灭火。",
+    "reason_if_no_hazard": "",
+    "location_hint": "消防栓箱内部",
+    "rectification": [
+      "按规范将水带盘卷并与消火栓接口、水枪可靠连接，确保紧急时可快速取用。",
+      "补齐并固定水枪等配件，定期检查消火栓箱内设施完好性。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

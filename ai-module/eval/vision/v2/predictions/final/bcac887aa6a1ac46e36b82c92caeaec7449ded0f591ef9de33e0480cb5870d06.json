@@ -1,0 +1,23 @@
+{
+  "sha256": "bcac887aa6a1ac46e36b82c92caeaec7449ded0f591ef9de33e0480cb5870d06",
+  "file": "NEGROA04.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片显示自行车道/人行道铺装平整、标线清晰，绿化、路灯杆和交通标志未见损坏或缺失，未见占道、积水、塌陷等安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示自行车道/人行道铺装平整、标线清晰，绿化、路灯杆和交通标志未见损坏或缺失，未见占道、积水、塌陷等安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "963f9b293b118d47af27e863fa59dfe12fda43adc755eefaa2f76ec7572930ca",
+  "file": "FAC0063.png",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"facade_fall\",\n  \"severity\": \"高\",\n  \"description\": \"墙面瓷砖大面积脱落，碎块散落在落地门旁地面，存在砸伤人员风险；剩余墙砖可能空鼓松动，仍有继续脱落隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内落地门旁墙脚及地面\",\n  \"rectification\": [\n    \"立即清理地面碎砖并设置警戒，防止人员踩踏或割伤\",\n    \"检查相邻墙砖空鼓、松动情况，铲除隐患瓷砖\",\n    \"由专业维修人员重新处理基层并规范铺贴或加固\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "facade_fall",
+    "severity": "高",
+    "description": "墙面瓷砖大面积脱落，碎块散落在落地门旁地面，存在砸伤人员风险；剩余墙砖可能空鼓松动，仍有继续脱落隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内落地门旁墙脚及地面",
+    "rectification": [
+      "立即清理地面碎砖并设置警戒，防止人员踩踏或割伤",
+      "检查相邻墙砖空鼓、松动情况，铲除隐患瓷砖",
+      "由专业维修人员重新处理基层并规范铺贴或加固"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

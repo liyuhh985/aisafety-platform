@@ -1,0 +1,27 @@
+{
+  "sha256": "370597ddaa32289e26c99d6eb6ba0379aa3a591cccd049594d127271cafae862",
+  "file": "VEH0001.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"狭窄街道两侧及行车道内多辆机动车停放，通行空间被明显挤占，行人与会车困难，紧急情况下可能阻碍救援车辆。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"商铺前狭窄道路两侧及行车道\",\"rectification\":[\"清理违停车辆，恢复道路通行宽度\",\"设置禁停标志、标线并加强巡查\",\"引导车辆到周边规范停车区域停放\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "狭窄街道两侧及行车道内多辆机动车停放，通行空间被明显挤占，行人与会车困难，紧急情况下可能阻碍救援车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商铺前狭窄道路两侧及行车道",
+    "rectification": [
+      "清理违停车辆，恢复道路通行宽度",
+      "设置禁停标志、标线并加强巡查",
+      "引导车辆到周边规范停车区域停放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

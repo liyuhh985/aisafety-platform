@@ -1,0 +1,27 @@
+{
+  "sha256": "4c1a8cb607fe33d13beafe7a92447f0058dbaa153a26b7b22f7d15c94a0e784e",
+  "file": "ELE0043.png",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"3楼电梯门关闭，多名消防员在电梯口实施处置，疑似电梯故障导致人员被困轿厢。若救援不及时，可能造成被困人员恐慌、缺氧或发生二次伤害。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"3楼电梯厅（电梯门处）\",\n  \"rectification\": [\n    \"立即联系电梯维保单位并配合专业救援，禁止强行扒门\",\n    \"排查电梯门锁、控制系统及平层故障，修复后经检验合格再投用\",\n    \"加强日常维保和应急演练，确保轿厢内紧急呼叫有效\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "3楼电梯门关闭，多名消防员在电梯口实施处置，疑似电梯故障导致人员被困轿厢。若救援不及时，可能造成被困人员恐慌、缺氧或发生二次伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "3楼电梯厅（电梯门处）",
+    "rectification": [
+      "立即联系电梯维保单位并配合专业救援，禁止强行扒门",
+      "排查电梯门锁、控制系统及平层故障，修复后经检验合格再投用",
+      "加强日常维保和应急演练，确保轿厢内紧急呼叫有效"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

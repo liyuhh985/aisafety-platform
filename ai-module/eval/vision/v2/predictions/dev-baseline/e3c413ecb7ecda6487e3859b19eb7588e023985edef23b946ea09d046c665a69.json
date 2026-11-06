@@ -1,0 +1,30 @@
+{
+  "sha256": "e3c413ecb7ecda6487e3859b19eb7588e023985edef23b946ea09d046c665a69",
+  "file": "DAN0044.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"高\",\n  \"description\": \"拆除作业紧邻道路，未见连续围挡和警戒标志，墙体残破、碎砖木料堆积，挖掘机作业时人员靠近，存在坠物、墙体坍塌及行人误入伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁拆除施工现场\",\n  \"rectification\": [\n    \"立即设置硬质围挡和警戒线，禁止无关人员进入作业区\",\n    \"增设安全警示标志并安排专人监护\",\n    \"拆除时采取分段拆除和防尘降尘措施，及时清理坠落物\",\n    \"作业人员佩戴安全帽并与挖掘机保持安全距离\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "拆除作业紧邻道路，未见连续围挡和警戒标志，墙体残破、碎砖木料堆积，挖掘机作业时人员靠近，存在坠物、墙体坍塌及行人误入伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁拆除施工现场",
+    "rectification": [
+      "立即设置硬质围挡和警戒线，禁止无关人员进入作业区",
+      "增设安全警示标志并安排专人监护",
+      "拆除时采取分段拆除和防尘降尘措施，及时清理坠落物",
+      "作业人员佩戴安全帽并与挖掘机保持安全距离"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

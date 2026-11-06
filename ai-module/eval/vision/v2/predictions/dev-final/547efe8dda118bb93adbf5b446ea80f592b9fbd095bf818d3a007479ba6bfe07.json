@@ -1,0 +1,23 @@
+{
+  "sha256": "547efe8dda118bb93adbf5b446ea80f592b9fbd095bf818d3a007479ba6bfe07",
+  "file": "NEGBLI08.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片显示公园步道及盲道铺装基本完好，未见井盖破损、路面塌陷、设施损坏等明显安全隐患。红色路面有轻微磨损污渍，但未形成坑洞或绊倒风险。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示公园步道及盲道铺装基本完好，未见井盖破损、路面塌陷、设施损坏等明显安全隐患。红色路面有轻微磨损污渍，但未形成坑洞或绊倒风险。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

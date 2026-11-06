@@ -1,0 +1,28 @@
+{
+  "sha256": "30af993a8fa21abce66d14d86b3245d130f74fafbac3df755284b11baed632d9",
+  "file": "FIR0078.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"室内角落大量灭火器杂乱堆积，部分老旧、锈蚀，未按点位规范配置和维保，紧急情况下难以取用，且可能失效，影响初期火灾扑救。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内地下室或设备间角落\",\"rectification\":[\"立即清理并分类核查灭火器，确认有效期、压力及外观状态\",\"对失效或报废灭火器按规定转运处置，不得随意堆放\",\"按消防规范在重点部位配齐有效灭火器并设置明显标识\",\"建立灭火器巡检维保台账，明确责任人和检查周期\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室内角落大量灭火器杂乱堆积，部分老旧、锈蚀，未按点位规范配置和维保，紧急情况下难以取用，且可能失效，影响初期火灾扑救。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内地下室或设备间角落",
+    "rectification": [
+      "立即清理并分类核查灭火器，确认有效期、压力及外观状态",
+      "对失效或报废灭火器按规定转运处置，不得随意堆放",
+      "按消防规范在重点部位配齐有效灭火器并设置明显标识",
+      "建立灭火器巡检维保台账，明确责任人和检查周期"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

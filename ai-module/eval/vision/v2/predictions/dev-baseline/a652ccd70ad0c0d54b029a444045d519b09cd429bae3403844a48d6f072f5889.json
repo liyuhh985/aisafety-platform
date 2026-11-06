@@ -1,0 +1,26 @@
+{
+  "sha256": "a652ccd70ad0c0d54b029a444045d519b09cd429bae3403844a48d6f072f5889",
+  "file": "ILL0057.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙大量线缆杂乱缠绕、盘绕成团，部分线缆低垂并连接箱体设备，存在绝缘层老化破损、短路漏电、引发火灾及线缆坠落伤人的风险，也影响检修和市容。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙线缆汇聚处及设备箱附近\",\n  \"rectification\": [\n    \"由线缆产权单位排查并梳理，拆除废弃线缆，将在用线缆规范捆扎入槽或桥架。\",\n    \"检查线缆绝缘层、接线盒及箱体，修复破损并做好防雨防漏电保护，设置警示标识并定期巡检。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "建筑外墙大量线缆杂乱缠绕、盘绕成团，部分线缆低垂并连接箱体设备，存在绝缘层老化破损、短路漏电、引发火灾及线缆坠落伤人的风险，也影响检修和市容。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙线缆汇聚处及设备箱附近",
+    "rectification": [
+      "由线缆产权单位排查并梳理，拆除废弃线缆，将在用线缆规范捆扎入槽或桥架。",
+      "检查线缆绝缘层、接线盒及箱体，修复破损并做好防雨防漏电保护，设置警示标识并定期巡检。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

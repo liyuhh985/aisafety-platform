@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"facade_risk\", \"evidence\": \"杆上广告布严重破损撕裂，悬挂残片有坠落风险\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "facade_risk",
+    "evidence": "杆上广告布严重破损撕裂，悬挂残片有坠落风险"
+  }
+}

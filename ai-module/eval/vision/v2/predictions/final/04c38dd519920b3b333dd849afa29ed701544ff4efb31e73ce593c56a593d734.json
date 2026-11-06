@@ -1,0 +1,23 @@
+{
+  "sha256": "04c38dd519920b3b333dd849afa29ed701544ff4efb31e73ce593c56a593d734",
+  "file": "NEGVEH05.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"画面为住宅区停车区域，车辆停放规范，路面平整、标线清晰，未发现井盖破损、路面塌陷、占道或消防设施故障等可见安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为住宅区停车区域，车辆停放规范，路面平整、标线清晰，未发现井盖破损、路面塌陷、占道或消防设施故障等可见安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

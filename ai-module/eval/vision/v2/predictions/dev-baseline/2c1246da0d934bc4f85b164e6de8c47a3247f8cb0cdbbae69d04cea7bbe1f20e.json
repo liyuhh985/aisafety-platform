@@ -1,0 +1,29 @@
+{
+  "sha256": "2c1246da0d934bc4f85b164e6de8c47a3247f8cb0cdbbae69d04cea7bbe1f20e",
+  "file": "NEGDEE07.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"夜间道路旁开挖深窄沟槽，临路一侧仅零星锥桶，未见连续硬质防护栏和夜间警示，行人或车辆误入有高处坠落、坍塌伤亡风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"夜间道路旁深沟槽开挖处及临路边缘\",\n  \"rectification\": [\n    \"沿沟槽周边立即设置连续硬质防护栏杆并封闭临路侧\",\n    \"增设夜间警示灯、反光标志和充足照明，安排人员巡查值守\",\n    \"完善基坑支护、边坡监测及上下通道，禁止无关人员靠近\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "夜间道路旁开挖深窄沟槽，临路一侧仅零星锥桶，未见连续硬质防护栏和夜间警示，行人或车辆误入有高处坠落、坍塌伤亡风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "夜间道路旁深沟槽开挖处及临路边缘",
+    "rectification": [
+      "沿沟槽周边立即设置连续硬质防护栏杆并封闭临路侧",
+      "增设夜间警示灯、反光标志和充足照明，安排人员巡查值守",
+      "完善基坑支护、边坡监测及上下通道，禁止无关人员靠近"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

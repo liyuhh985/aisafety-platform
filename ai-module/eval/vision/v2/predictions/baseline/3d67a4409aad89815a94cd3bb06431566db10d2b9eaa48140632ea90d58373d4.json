@@ -1,0 +1,26 @@
+{
+  "sha256": "3d67a4409aad89815a94cd3bb06431566db10d2b9eaa48140632ea90d58373d4",
+  "file": "NEGELE05.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"低\",\n  \"description\": \"图片仅见电梯楼层显示屏显示“F10”及额定载重标识，无法确认该显示是10层正常楼层还是故障代码，也看不到轿厢门、运行状态或人员情况，暂不能排除电梯停运或停层异常，需现场核实。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯楼层显示屏及轿厢外呼区域\",\n  \"rectification\": [\n    \"现场核实“F10”显示含义及电梯实际运行状态\",\n    \"若确认为故障代码，应立即停用电梯并联系维保单位检修，设置停用警示\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "图片仅见电梯楼层显示屏显示“F10”及额定载重标识，无法确认该显示是10层正常楼层还是故障代码，也看不到轿厢门、运行状态或人员情况，暂不能排除电梯停运或停层异常，需现场核实。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯楼层显示屏及轿厢外呼区域",
+    "rectification": [
+      "现场核实“F10”显示含义及电梯实际运行状态",
+      "若确认为故障代码，应立即停用电梯并联系维保单位检修，设置停用警示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

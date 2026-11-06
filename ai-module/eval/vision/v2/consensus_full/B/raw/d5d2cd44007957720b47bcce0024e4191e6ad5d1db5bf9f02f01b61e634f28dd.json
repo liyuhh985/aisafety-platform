@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"楼体外立面老化有污渍，防护栏锈蚀，但无明确破损坠落风险\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "楼体外立面老化有污渍，防护栏锈蚀，但无明确破损坠落风险"
+  }
+}

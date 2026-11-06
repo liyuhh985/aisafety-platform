@@ -1,0 +1,29 @@
+{
+  "sha256": "61ed143191049037e427bc1ce630a3c9d09766800f2981abcd8912372d4cf3fe",
+  "file": "ROA0073.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"主干道机动车道内存在较大路面坑洞，边缘破损不规则，车辆临近时难以及时避让，易造成爆胎、颠簸失控或追尾，现场还有人员在车道内作业但未见警示防护。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市主干道机动车道内，临近正常行驶车辆的车道\",\n  \"rectification\": [\n    \"立即在坑洞周边设置反光锥桶、警示牌，必要时临时封闭车道并引导交通\",\n    \"按规范开挖回填、压实并恢复路面，检查周边路基和排水状况\",\n    \"作业人员应穿反光服，落实临时作业安全防护\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "主干道机动车道内存在较大路面坑洞，边缘破损不规则，车辆临近时难以及时避让，易造成爆胎、颠簸失控或追尾，现场还有人员在车道内作业但未见警示防护。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市主干道机动车道内，临近正常行驶车辆的车道",
+    "rectification": [
+      "立即在坑洞周边设置反光锥桶、警示牌，必要时临时封闭车道并引导交通",
+      "按规范开挖回填、压实并恢复路面，检查周边路基和排水状况",
+      "作业人员应穿反光服，落实临时作业安全防护"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

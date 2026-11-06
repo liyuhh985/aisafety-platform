@@ -1,0 +1,26 @@
+{
+  "sha256": "7fddd788cc45050196b689b9cc479449903d51ffcc3b5db3d35dd4c6a4a524f7",
+  "file": "VEH0003.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"棕色轿车停放在临街铺装人行道上，挤占行人通行空间；后方沿路还有多辆车停放，行人可能被迫绕行机动车道，存在碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街人行道，近幼儿园路段\",\n  \"rectification\": [\"劝离违停车辆，恢复人行道通行功能\", \"在人行道边缘设置隔离桩并加强巡查执法\"],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "棕色轿车停放在临街铺装人行道上，挤占行人通行空间；后方沿路还有多辆车停放，行人可能被迫绕行机动车道，存在碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街人行道，近幼儿园路段",
+    "rectification": [
+      "劝离违停车辆，恢复人行道通行功能",
+      "在人行道边缘设置隔离桩并加强巡查执法"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

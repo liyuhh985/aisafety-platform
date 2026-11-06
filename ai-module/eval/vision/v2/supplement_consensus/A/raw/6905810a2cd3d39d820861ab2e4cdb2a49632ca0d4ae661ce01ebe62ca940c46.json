@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"河道水体发黑有油污浮沫，岸边有垃圾，但主隐患类别难确定\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "河道水体发黑有油污浮沫，岸边有垃圾，但主隐患类别难确定"
+  }
+}

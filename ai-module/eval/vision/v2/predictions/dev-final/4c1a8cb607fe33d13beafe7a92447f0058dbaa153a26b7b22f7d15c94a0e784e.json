@@ -1,0 +1,28 @@
+{
+  "sha256": "4c1a8cb607fe33d13beafe7a92447f0058dbaa153a26b7b22f7d15c94a0e784e",
+  "file": "ELE0043.png",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"画面显示多名消防员聚集在3楼电梯门前，电梯门有破损痕迹，消防员正进行破拆救援操作。明确存在电梯困人险情，可能导致人员受伤或缺氧窒息等严重后果。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"3楼电梯门口\",\n  \"rectification\": [\n    \"立即实施专业救援，安全救出被困人员\",\n    \"电梯停运并挂设检修警示牌\",\n    \"全面排查电梯系统故障原因并检修\",\n    \"加强日常维保及紧急报警系统测试\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "画面显示多名消防员聚集在3楼电梯门前，电梯门有破损痕迹，消防员正进行破拆救援操作。明确存在电梯困人险情，可能导致人员受伤或缺氧窒息等严重后果。",
+    "reason_if_no_hazard": "",
+    "location_hint": "3楼电梯门口",
+    "rectification": [
+      "立即实施专业救援，安全救出被困人员",
+      "电梯停运并挂设检修警示牌",
+      "全面排查电梯系统故障原因并检修",
+      "加强日常维保及紧急报警系统测试"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "f430737c2543bdd2763a28922a2982bfb0dbc7354ef35ab8a1efd8aa03095612",
+  "file": "NEGDIS07.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片为配电箱产品展示图，箱体外观完好，设有“有电危险”警示标识、锁具及通风孔，未发现现场安装、线路裸露、箱体破损等安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为配电箱产品展示图，箱体外观完好，设有“有电危险”警示标识、锁具及通风孔，未发现现场安装、线路裸露、箱体破损等安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

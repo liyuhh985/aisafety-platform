@@ -1,0 +1,27 @@
+{
+  "sha256": "f8f71ff4c01bbf5adcd20b3c028c4ac2bb6ac3ac1c4b8c722d41cdb525f4e405",
+  "file": "BLI0099.png",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"商业楼前人行步道及绿化带旁密集停放大量电动自行车、摩托车，挤占行人通行空间；行人可能被迫绕行至旁边非机动车道，增加人车混行和碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商业楼前人行步道，黑色非机动车道左侧、绿化带旁\",\n  \"rectification\": [\n    \"清理占用人行步道的车辆，恢复行人通行空间\",\n    \"施划并明确非机动车停放区域，引导车辆入位停放\",\n    \"在人行道与车行道之间设置隔离或警示设施，加强巡查管理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "商业楼前人行步道及绿化带旁密集停放大量电动自行车、摩托车，挤占行人通行空间；行人可能被迫绕行至旁边非机动车道，增加人车混行和碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商业楼前人行步道，黑色非机动车道左侧、绿化带旁",
+    "rectification": [
+      "清理占用人行步道的车辆，恢复行人通行空间",
+      "施划并明确非机动车停放区域，引导车辆入位停放",
+      "在人行道与车行道之间设置隔离或警示设施，加强巡查管理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

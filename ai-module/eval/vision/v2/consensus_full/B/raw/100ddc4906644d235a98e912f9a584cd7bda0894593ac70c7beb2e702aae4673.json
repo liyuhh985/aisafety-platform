@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"工人乘吊篮作业，佩戴安全帽，未见明显防护缺失\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "工人乘吊篮作业，佩戴安全帽，未见明显防护缺失"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "binary": {
+    "n": 80,
+    "tp": 37,
+    "tn": 37,
+    "fp": 3,
+    "fn": 3,
+    "recall": 0.925,
+    "precision": 0.925,
+    "fpr": 0.075,
+    "f1": 0.925,
+    "accuracy": 0.925
+  },
+  "binary_recall_ci": {
+    "estimate": 0.925,
+    "low": 0.8013546984090248,
+    "high": 0.9741644432281419
+  },
+  "binary_fpr_ci": {
+    "estimate": 0.075,
+    "low": 0.025835556771858226,
+    "high": 0.19864530159097524
+  },
+  "review_aware": {
+    "review_rate": 0.2,
+    "auto_coverage": 0.8,
+    "auto_recall": 0.625,
+    "critical_miss_rate": 0.075,
+    "auto_fpr": 0.025,
+    "review_positive": 12,
+    "review_negative": 4,
+    "auto_tp": 25,
+    "auto_tn": 35,
+    "auto_fp": 1,
+    "auto_fn": 3
+  },
+  "major": {
+    "macro_recall": 0.825,
+    "by_major": {
+      "traffic": {
+        "n": 5,
+        "correct": 5,
+        "recall": 1.0
+      },
+      "municipal": {
+        "n": 5,
+        "correct": 5,
+        "recall": 1.0
+      },
+      "fire": {
+        "n": 3,
+        "correct": 3,
+        "recall": 1.0
+      },
+      "building": {
+        "n": 1,
+        "correct": 0,
+        "recall": 0.0
+      },
+      "utility": {
+        "n": 1,
+        "correct": 1,
+        "recall": 1.0
+      },
+      "construction": {
+        "n": 4,
+        "correct": 4,
+        "recall": 1.0
+      },
+      "elevator_special": {
+        "n": 5,
+        "correct": 3,
+        "recall": 0.6
+      },
+      "environment_other": {
+        "n": 4,
+        "correct": 4,
+        "recall": 1.0
+      }
+    },
+    "confusion": {
+      "building -> FN": 1,
+      "construction -> construction": 4,
+      "elevator_special -> FN": 2,
+      "elevator_special -> elevator_special": 3,
+      "environment_other -> environment_other": 4,
+      "fire -> fire": 3,
+      "municipal -> municipal": 5,
+      "traffic -> traffic": 5,
+      "utility -> utility": 1
+    }
+  },
+  "invalid": {
+    "parse_failed": 0,
+    "invalid_has_hazard": 0,
+    "invalid_confidence": 2,
+    "invalid_category": 14
+  },
+  "limitations": [
+    "public-scene diagnostic set, not production-traffic distribution",
+    "small balanced test set; confidence intervals are wide",
+    "single reviewer; labels are not expert consensus",
+    "subcategory accuracy is not reported"
+  ],
+  "split": "test",
+  "items": 80
+}

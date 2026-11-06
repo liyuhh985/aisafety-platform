@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"灭火器箱内两具干粉灭火器齐全，配检查卡，无明显异常\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "灭火器箱内两具干粉灭火器齐全，配检查卡，无明显异常"
+  }
+}

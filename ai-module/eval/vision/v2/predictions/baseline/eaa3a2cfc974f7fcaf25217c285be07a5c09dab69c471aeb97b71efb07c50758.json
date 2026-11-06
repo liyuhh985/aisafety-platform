@@ -1,0 +1,27 @@
+{
+  "sha256": "eaa3a2cfc974f7fcaf25217c285be07a5c09dab69c471aeb97b71efb07c50758",
+  "file": "NO0013.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"施工区域与通行道路之间仅用警戒线简单隔离，未设置连续硬质围挡，工程机械作业时行人或车辆可能误入，存在碰撞、碾压等风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工重地入口及工程机械作业区域\",\n  \"rectification\": [\n    \"沿施工边界设置连续、稳固的硬质围挡并实施封闭管理\",\n    \"出入口设置专人值守，禁止无关人员和车辆进入\",\n    \"完善夜间警示灯、反光标识等安全防护措施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "施工区域与通行道路之间仅用警戒线简单隔离，未设置连续硬质围挡，工程机械作业时行人或车辆可能误入，存在碰撞、碾压等风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工重地入口及工程机械作业区域",
+    "rectification": [
+      "沿施工边界设置连续、稳固的硬质围挡并实施封闭管理",
+      "出入口设置专人值守，禁止无关人员和车辆进入",
+      "完善夜间警示灯、反光标识等安全防护措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

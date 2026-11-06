@@ -1,0 +1,23 @@
+{
+  "sha256": "a07b33fc17d4320cb5b99a60ebbc4f0ee67edf9b45a52e2aac6f373ac47afc40",
+  "file": "NEGELE02.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片为观光电梯的三维产品效果图，展示绿色框架、玻璃井道、控制面板和扶手等结构，无真实场景、人员或可辨识的安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为观光电梯的三维产品效果图，展示绿色框架、玻璃井道、控制面板和扶手等结构，无真实场景、人员或可辨识的安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

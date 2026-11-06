@@ -1,0 +1,27 @@
+{
+  "sha256": "3dc580869f8326de52ab7e461743daeb791a08ecafd3f36d3b7c1e0a8912dd7d",
+  "file": "MAN0118.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"高\",\"description\":\"道路井盖严重破损、塌陷，井口敞开且可见内部空洞，行人或车辆经过易发生坠落、卡陷事故，存在较高安全风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路井盖处，井口周边路面\",\"rectification\":[\"立即在井口周边设置围挡、反光警示和临时防护\",\"尽快更换破损井盖并修复井座，确保与路面平齐稳固\",\"排查周边同类井盖，发现破损缺失及时处理\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "道路井盖严重破损、塌陷，井口敞开且可见内部空洞，行人或车辆经过易发生坠落、卡陷事故，存在较高安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路井盖处，井口周边路面",
+    "rectification": [
+      "立即在井口周边设置围挡、反光警示和临时防护",
+      "尽快更换破损井盖并修复井座，确保与路面平齐稳固",
+      "排查周边同类井盖，发现破损缺失及时处理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+  "file": "FIR0008.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"道路路面存在大面积龟裂、裂缝和疑似沉陷，裂缝网状扩展且局部边缘不平整，影响车辆和行人通行，可能造成车辆颠簸、轮胎受损或行人绊倒摔伤。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"临街建筑前道路路面，路边停放车辆旁\",\"rectification\":[\"对开裂沉陷区域设置围挡和警示标志，避免车辆行人误入\",\"尽快凿除破损面层，检查基层并按规范修复路面\",\"排查周边排水及路基情况，防止裂缝继续扩展\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路路面存在大面积龟裂、裂缝和疑似沉陷，裂缝网状扩展且局部边缘不平整，影响车辆和行人通行，可能造成车辆颠簸、轮胎受损或行人绊倒摔伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街建筑前道路路面，路边停放车辆旁",
+    "rectification": [
+      "对开裂沉陷区域设置围挡和警示标志，避免车辆行人误入",
+      "尽快凿除破损面层，检查基层并按规范修复路面",
+      "排查周边排水及路基情况，防止裂缝继续扩展"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "f24e6f8b0fc2719e04f327d4554d296a39e4ea15eb180723319e568b123f7300",
+  "file": "BLI0032.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"中\",\n  \"description\": \"盲道正中的圆形井盖边缘存在破损、锈蚀及与路面不平整迹象，黄色盲道直接铺过井盖，可能误导盲人通行并造成绊倒、崴脚风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"前景人行道盲道与车行道交界处的圆形井盖\",\n  \"rectification\": [\n    \"修复或更换破损井盖，并调平至与周边路面齐平\",\n    \"盲道应避开井盖或设置规范过渡，确保连续、安全、不被阻断\",\n    \"加强该路段井盖及盲道设施的日常巡查维护\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "盲道正中的圆形井盖边缘存在破损、锈蚀及与路面不平整迹象，黄色盲道直接铺过井盖，可能误导盲人通行并造成绊倒、崴脚风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "前景人行道盲道与车行道交界处的圆形井盖",
+    "rectification": [
+      "修复或更换破损井盖，并调平至与周边路面齐平",
+      "盲道应避开井盖或设置规范过渡，确保连续、安全、不被阻断",
+      "加强该路段井盖及盲道设施的日常巡查维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "e9a1088038ceedc8f3850b09524bb979f58e9eccb5ed47d46a9b75a575b36352",
+  "file": "NO0017.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片为新闻视频截图，显示人员在泥土地中进行挖坑测试，并非城市公共设施、道路或施工场所的安全隐患场景；画面中未见井盖、路面、消防、电气等市政安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为新闻视频截图，显示人员在泥土地中进行挖坑测试，并非城市公共设施、道路或施工场所的安全隐患场景；画面中未见井盖、路面、消防、电气等市政安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

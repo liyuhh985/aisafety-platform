@@ -1,0 +1,28 @@
+{
+  "sha256": "9c4212a920fcd33cc87b149257b5f2ec79e4cd4a2e3a9e66cedc7bcea20824ef",
+  "file": "GAR0007.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"垃圾分类台旁及人行道区域大量生活垃圾、塑料袋、枯枝落叶堆积，占用通行空间，易滋生蚊虫、产生异味，并存在可燃物起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"垃圾分类台旁、建筑外侧人行道及路面区域\",\n  \"rectification\": [\n    \"立即清运堆积垃圾并按规定分类处置\",\n    \"完善垃圾收集点围挡或封闭设施，防止垃圾外溢\",\n    \"加强日常巡查和宣传，禁止在收集点外乱倒垃圾\",\n    \"清理地面污渍并进行消杀，保持周边环境整洁\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "垃圾分类台旁及人行道区域大量生活垃圾、塑料袋、枯枝落叶堆积，占用通行空间，易滋生蚊虫、产生异味，并存在可燃物起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "垃圾分类台旁、建筑外侧人行道及路面区域",
+    "rectification": [
+      "立即清运堆积垃圾并按规定分类处置",
+      "完善垃圾收集点围挡或封闭设施，防止垃圾外溢",
+      "加强日常巡查和宣传，禁止在收集点外乱倒垃圾",
+      "清理地面污渍并进行消杀，保持周边环境整洁"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

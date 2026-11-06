@@ -1,0 +1,26 @@
+{
+  "sha256": "fccf583d0f7950f3060a2fa7bcfb043d3293f845e814119a993ca3e52597036c",
+  "file": "NEGFIR01.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"消火栓箱内主消火栓阀门顶部未见启闭手轮，操作部位被标牌覆盖，火灾时可能无法正常开启供水，影响初期灭火。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内消火栓箱内主消火栓阀体顶部\",\n  \"rectification\": [\n    \"补装匹配的消火栓阀门手轮，确保启闭灵活、无卡阻。\",\n    \"对该消火栓进行放水试验和巡检，确认阀门及供水功能完好并做好记录。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "消火栓箱内主消火栓阀门顶部未见启闭手轮，操作部位被标牌覆盖，火灾时可能无法正常开启供水，影响初期灭火。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内消火栓箱内主消火栓阀体顶部",
+    "rectification": [
+      "补装匹配的消火栓阀门手轮，确保启闭灵活、无卡阻。",
+      "对该消火栓进行放水试验和巡检，确认阀门及供水功能完好并做好记录。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

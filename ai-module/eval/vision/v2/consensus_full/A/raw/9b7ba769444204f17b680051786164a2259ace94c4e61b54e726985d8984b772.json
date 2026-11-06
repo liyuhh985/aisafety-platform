@@ -1,0 +1,7 @@
+{
+  "raw": "{\"uncertain\": true}",
+  "label": {
+    "status": "invalid",
+    "reason": "has_hazard_not_bool"
+  }
+}

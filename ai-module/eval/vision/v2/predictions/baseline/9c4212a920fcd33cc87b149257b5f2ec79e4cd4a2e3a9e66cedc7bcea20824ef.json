@@ -1,0 +1,29 @@
+{
+  "sha256": "9c4212a920fcd33cc87b149257b5f2ec79e4cd4a2e3a9e66cedc7bcea20824ef",
+  "file": "GAR0007.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"图片右侧垃圾分类台旁，大量生活垃圾和落叶堆积如山，已溢出至路面及黄色网格线区域，占用道路并散发异味，影响通行及环境卫生，且存在堵塞消防通道及火灾隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"右侧垃圾分类台及相邻道路\",\n  \"rectification\": [\n    \"尽快清运堆积的生活垃圾和落叶\",\n    \"规范垃圾分类收运频次，避免垃圾满溢\",\n    \"清理地面污渍，保持周边环境卫生\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "图片右侧垃圾分类台旁，大量生活垃圾和落叶堆积如山，已溢出至路面及黄色网格线区域，占用道路并散发异味，影响通行及环境卫生，且存在堵塞消防通道及火灾隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "右侧垃圾分类台及相邻道路",
+    "rectification": [
+      "尽快清运堆积的生活垃圾和落叶",
+      "规范垃圾分类收运频次，避免垃圾满溢",
+      "清理地面污渍，保持周边环境卫生"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

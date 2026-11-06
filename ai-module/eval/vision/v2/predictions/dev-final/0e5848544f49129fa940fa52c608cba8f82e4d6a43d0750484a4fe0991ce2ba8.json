@@ -1,0 +1,23 @@
+{
+  "sha256": "0e5848544f49129fa940fa52c608cba8f82e4d6a43d0750484a4fe0991ce2ba8",
+  "file": "NEGFIR03.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"消火栓箱外观完好，标识清晰，箱门关闭，可见消防水带，未见缺失、破损、遮挡或失效迹象。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "消火栓箱外观完好，标识清晰，箱门关闭，可见消防水带，未见缺失、破损、遮挡或失效迹象。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

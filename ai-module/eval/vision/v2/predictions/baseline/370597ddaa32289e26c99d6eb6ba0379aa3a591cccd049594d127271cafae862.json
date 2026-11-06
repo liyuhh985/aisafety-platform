@@ -1,0 +1,26 @@
+{
+  "sha256": "370597ddaa32289e26c99d6eb6ba0379aa3a591cccd049594d127271cafae862",
+  "file": "VEH0001.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"道路两侧及商铺前多辆机动车停放，左侧白车斜停占用部分行车道，导致通行空间变窄、会车困难，紧急车辆通行可能受影响。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商铺前狭窄道路两侧\",\n  \"rectification\": [\n    \"清理占道车辆，保障道路通行宽度\",\n    \"设置禁停标志和停车引导，加强巡查执法\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "道路两侧及商铺前多辆机动车停放，左侧白车斜停占用部分行车道，导致通行空间变窄、会车困难，紧急车辆通行可能受影响。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商铺前狭窄道路两侧",
+    "rectification": [
+      "清理占道车辆，保障道路通行宽度",
+      "设置禁停标志和停车引导，加强巡查执法"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

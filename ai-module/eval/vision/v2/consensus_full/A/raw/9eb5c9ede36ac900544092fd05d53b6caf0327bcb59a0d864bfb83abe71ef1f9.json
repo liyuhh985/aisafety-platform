@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": true, \"major_category\": \"traffic\", \"subcategory\": \"\", \"evidence\": \"人行道上多辆电动车停放，另有推车摊位占道，主类别难定\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "人行道上多辆电动车停放，另有推车摊位占道，主类别难定"
+  }
+}

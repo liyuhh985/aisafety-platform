@@ -1,0 +1,23 @@
+{
+  "sha256": "555293e235f8b252ced091d9f60e50b3806a7ee13e740d0deeb134f25390d771",
+  "file": "NEGELE08.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"电梯厅及楼梯间外观整洁，楼梯踏步、扶手、电梯门及控制面板未见明显破损、缺失、占道或设施故障等安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "电梯厅及楼梯间外观整洁，楼梯踏步、扶手、电梯门及控制面板未见明显破损、缺失、占道或设施故障等安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

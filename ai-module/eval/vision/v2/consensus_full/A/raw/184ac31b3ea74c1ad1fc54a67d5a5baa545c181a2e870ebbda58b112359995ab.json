@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"室内更换地漏施工过程，新地漏待安装，无匹配隐患类别\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "室内更换地漏施工过程，新地漏待安装，无匹配隐患类别"
+  }
+}

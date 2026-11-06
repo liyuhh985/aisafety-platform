@@ -1,0 +1,28 @@
+{
+  "sha256": "d76deb66ac0c909b3207e55493c78676c5cf82515bce65f1997ce67142d1ca59",
+  "file": "NEGDEE08.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"道路旁开挖形成较深沟槽/基坑，坑壁陡直裸露，底部积水，边缘未见连续防护栏杆和安全警示，存在人员坠落、土体坍塌及积水浸泡导致边坡失稳风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁开挖沟槽及深基坑区域\",\n  \"rectification\": [\n    \"沿基坑边缘设置连续、牢固的防护栏杆和警示标志\",\n    \"对坑壁采取支护或放坡措施，并加强边坡监测\",\n    \"及时排除基坑积水，防止浸泡导致土体失稳\",\n    \"设置夜间警示灯并禁止无关人员进入施工区域\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路旁开挖形成较深沟槽/基坑，坑壁陡直裸露，底部积水，边缘未见连续防护栏杆和安全警示，存在人员坠落、土体坍塌及积水浸泡导致边坡失稳风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁开挖沟槽及深基坑区域",
+    "rectification": [
+      "沿基坑边缘设置连续、牢固的防护栏杆和警示标志",
+      "对坑壁采取支护或放坡措施，并加强边坡监测",
+      "及时排除基坑积水，防止浸泡导致土体失稳",
+      "设置夜间警示灯并禁止无关人员进入施工区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

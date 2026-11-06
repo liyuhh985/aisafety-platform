@@ -1,0 +1,27 @@
+{
+  "sha256": "d664638fcce82a98259e7a58b86e8876ef89af178f1ba93ba3c97a5c19c49afd",
+  "file": "ELE0003.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"消防员携带救援绳索聚集在电梯门口，正在协助人员脱困，画面显示发生电梯困人事件。电梯故障可能导致被困人员恐慌、缺氧或其他次生伤害。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼电梯间\",\n  \"rectification\": [\n    \"立即排查电梯故障原因并修复\",\n    \"加强电梯日常维护保养和定期检验\",\n    \"完善电梯内应急报警和通讯装置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "消防员携带救援绳索聚集在电梯门口，正在协助人员脱困，画面显示发生电梯困人事件。电梯故障可能导致被困人员恐慌、缺氧或其他次生伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼电梯间",
+    "rectification": [
+      "立即排查电梯故障原因并修复",
+      "加强电梯日常维护保养和定期检验",
+      "完善电梯内应急报警和通讯装置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "e0d770e4295bf6d0e92f1a20df02f68c24984e42a61cd98b9ee9b62a2159fcaa",
+  "file": "MAN0081.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"城市道路发生大面积塌陷形成深坑，多辆汽车坠入坑内，坑边有人受困或靠近，存在人员伤亡、车辆损毁及次生坍塌风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路路面（具体路段不详）\",\n  \"rectification\": [\n    \"立即封闭塌陷区域并设置硬质围挡和警示标志，禁止车辆行人通行\",\n    \"疏散围观群众，救援被困人员及车辆，排查地下管线和相邻路面空洞\",\n    \"组织专业单位回填加固并检测周边道路结构，查明塌陷原因后修复\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "城市道路发生大面积塌陷形成深坑，多辆汽车坠入坑内，坑边有人受困或靠近，存在人员伤亡、车辆损毁及次生坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路路面（具体路段不详）",
+    "rectification": [
+      "立即封闭塌陷区域并设置硬质围挡和警示标志，禁止车辆行人通行",
+      "疏散围观群众，救援被困人员及车辆，排查地下管线和相邻路面空洞",
+      "组织专业单位回填加固并检测周边道路结构，查明塌陷原因后修复"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

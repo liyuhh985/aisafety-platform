@@ -1,0 +1,23 @@
+{
+  "sha256": "2dd13142007de69c489d195c8f2b561bd91250d291527a41b400fc35bfe85e88",
+  "file": "NEGROA06.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面显示城市道路、人行道和非机动车道场景正常，未发现井盖缺失破损、路面塌陷、占道、设施损坏等明确安全隐患；局部地面细节受分辨率限制，建议必要时现场复核。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示城市道路、人行道和非机动车道场景正常，未发现井盖缺失破损、路面塌陷、占道、设施损坏等明确安全隐患；局部地面细节受分辨率限制，建议必要时现场复核。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

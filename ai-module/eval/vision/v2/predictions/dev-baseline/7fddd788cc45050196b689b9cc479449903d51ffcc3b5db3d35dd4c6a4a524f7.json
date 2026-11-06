@@ -1,0 +1,27 @@
+{
+  "sha256": "7fddd788cc45050196b689b9cc479449903d51ffcc3b5db3d35dd4c6a4a524f7",
+  "file": "VEH0003.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"多辆机动车停放在幼儿园门前道路边缘，部分车辆紧邻并可能占用人行道或通行空间，影响行人及接送儿童通行，存在人车混行和剐蹭风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"幼儿园门前道路边缘及人行道交界处\",\n  \"rectification\": [\n    \"清理该路段违停车辆，恢复人行和非机动车通行空间\",\n    \"增设禁停标志、隔离桩或护栏，规范停车秩序\",\n    \"上下学高峰加强巡查疏导，保障儿童通行安全\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "多辆机动车停放在幼儿园门前道路边缘，部分车辆紧邻并可能占用人行道或通行空间，影响行人及接送儿童通行，存在人车混行和剐蹭风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "幼儿园门前道路边缘及人行道交界处",
+    "rectification": [
+      "清理该路段违停车辆，恢复人行和非机动车通行空间",
+      "增设禁停标志、隔离桩或护栏，规范停车秩序",
+      "上下学高峰加强巡查疏导，保障儿童通行安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

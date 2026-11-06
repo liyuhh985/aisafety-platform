@@ -1,0 +1,23 @@
+{
+  "sha256": "8862f3df1138b8e3c73eeecd045e2b2032163e0048c15e16a3fe9265af6b84ce",
+  "file": "NEGCON02.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片为建筑施工安全技术规范书籍的广告展示，属于纯文字和商品封面图片，未呈现实际城市场景、设施或作业现场，无法识别具体安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为建筑施工安全技术规范书籍的广告展示，属于纯文字和商品封面图片，未呈现实际城市场景、设施或作业现场，无法识别具体安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

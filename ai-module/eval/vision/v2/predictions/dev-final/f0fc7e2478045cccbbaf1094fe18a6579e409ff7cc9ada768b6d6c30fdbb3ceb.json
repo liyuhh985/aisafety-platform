@@ -1,0 +1,23 @@
+{
+  "sha256": "f0fc7e2478045cccbbaf1094fe18a6579e409ff7cc9ada768b6d6c30fdbb3ceb",
+  "file": "ELE0063.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"低\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"画面显示电梯机房内一名佩戴安全帽的作业人员正在操作设备，未见井盖缺失、消防堵塞、结构失稳等明确隐患；但作业是否断电、持证及完整防护无法从图中确认，建议现场复核。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "低",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示电梯机房内一名佩戴安全帽的作业人员正在操作设备，未见井盖缺失、消防堵塞、结构失稳等明确隐患；但作业是否断电、持证及完整防护无法从图中确认，建议现场复核。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

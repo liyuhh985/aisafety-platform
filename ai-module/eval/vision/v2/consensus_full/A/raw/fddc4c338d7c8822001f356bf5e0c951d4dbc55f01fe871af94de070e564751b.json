@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"distribution_box_fault\", \"evidence\": \"地面两处混凝土基座钢筋裸露，配电设施故障\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "evidence": "地面两处混凝土基座钢筋裸露，配电设施故障"
+  }
+}
