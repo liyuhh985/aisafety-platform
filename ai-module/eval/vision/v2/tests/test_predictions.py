@@ -76,3 +76,17 @@ def test_prepare_prompts_hashes_and_appends_rules(tmp_path):
     assert "无法判断时，输出 has_hazard=false" in final
     assert final.startswith(baseline)
 
+
+def test_run_arm_accepts_parallel_workers(tmp_path):
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps({"items": [
+        {"sha256": f"item-{i}", "source_path": f"image-{i}.jpg", "split": "test"}
+        for i in range(4)
+    ]}), encoding="utf-8")
+    prompt = tmp_path / "prompt.txt"
+    prompt.write_text("prompt", encoding="utf-8")
+
+    result = rp.run_arm(manifest, prompt, tmp_path / "out", FakeClient(), workers=2)
+
+    assert result == {"total": 4, "written": 4, "failed": 0}
+    assert len(list((tmp_path / "out").glob("*.json"))) == 4
