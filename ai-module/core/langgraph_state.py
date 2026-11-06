@@ -71,6 +71,7 @@ class AssistantState(TypedDict, total=False):
     major_mismatch: bool                # planner corrected the frontend hint
     # 建任务确认（interrupt 闸门）
     offer_task: bool                    # report decided the task invitation is allowed
+    task_draft: dict                     # report 阶段并行生成、确认时直接提交的建单草稿
     task_offered: bool                  # per-turn: the gate already asked
     task_phase: str                     # "confirm" | "address"
     address_text: str                   # address captured by the gate

@@ -133,6 +133,81 @@ def _render(history, latest) -> str:
     return "\n".join(parts)
 
 
+def _parse_json_object(content: str) -> dict:
+    text = (content or "").strip()
+    if "```" in text:
+        text = text.split("```")[1] if text.find("```") < text.rfind("```") else text
+        if text.startswith("json"):
+            text = text[4:]
+    start, end = text.find("{"), text.rfind("}")
+    if start != -1 and end != -1:
+        text = text[start:end + 1]
+    data = json.loads(text)
+    if not isinstance(data, dict):
+        raise ValueError("expected JSON object")
+    return data
+
+
+def _latest_user_text(state) -> str:
+    for message in reversed(state.get("messages") or []):
+        if isinstance(message, dict):
+            role = message.get("role")
+            content = message.get("content")
+        else:
+            role = "user" if getattr(message, "type", "") == "human" else ""
+            content = getattr(message, "content", "")
+        if role == "user" and isinstance(content, str):
+            return content.strip()
+    return ""
+
+
+def _task_draft_base(state) -> dict:
+    categories = state.get("categories") or []
+    if not isinstance(categories, (list, tuple)):
+        categories = [categories]
+    category_list = []
+    for code in categories:
+        pair = normalize_taxonomy(str(code or ""))
+        full = format_hazard_type(pair[0], pair[1]) if pair else ""
+        if full and full not in category_list:
+            category_list.append(full)
+        if len(category_list) >= MAX_CATEGORY_LIST:
+            break
+    return {
+        "categoryList": category_list,
+        "address": _as_text(state.get("address_text")),
+        "district": state.get("district") or "",
+        "description": "",
+        "severity": 1,
+        "longitude": state.get("picked_longitude"),
+        "latitude": state.get("picked_latitude"),
+        "image_file_id": state.get("image_file_id"),
+    }
+
+
+def build_task_draft(state, cancellation) -> dict:
+    """报告生成期间并行产出建单草稿；任何失败都返回 state 兜底草稿。"""
+    draft = _task_draft_base(state)
+    try:
+        categories = draft["categoryList"]
+        slots = state.get("category_slots") or {}
+        prompt = (
+            "根据下面信息生成隐患任务草稿，只返回 JSON："
+            '{"description": "...", "severity": 0|1|2}。\n'
+            f"类别：{json.dumps(categories, ensure_ascii=False, default=str)}\n"
+            f"已填槽位：{json.dumps(slots, ensure_ascii=False, default=str)}\n"
+            f"用户最近一句：{_latest_user_text(state)}"
+        )
+        resp = _extractor._call_llm(
+            [{"role": "user", "content": prompt}], cancellation=cancellation)
+        data = _parse_json_object((resp or {}).get("content") or "")
+        draft["description"] = _as_text(data.get("description"))
+        draft["severity"] = _as_severity(data.get("severity"))
+    except Exception as e:  # noqa: BLE001
+        LOGGER.warning("task draft generation failed: %s", e)
+    return draft
+
+
 def _extract(history, latest) -> dict:
     prompt = (
         "请从下面对话中抽取隐患上报信息，只返回 JSON，字段："
@@ -237,7 +312,8 @@ def extract_location(history, latest) -> str:
 
 def submit_from_history(user_id, history, latest, *, address_hint: str = "", coords=None,
                         session_id: str = "", image_url: str = "",
-                        image_file_id=None, request_id: str = "") -> dict:
+                        image_file_id=None, request_id: str = "",
+                        draft: dict | None = None) -> dict:
     """返回 {action, hazardId?, message?}。
 
     action:
@@ -250,7 +326,7 @@ def submit_from_history(user_id, history, latest, *, address_hint: str = "", coo
     address_hint: 用户确认或改过的地址字符串，优先于重抽取器结果（可为空）。
     coords: (longitude, latitude) 二元组；用户在图上选点时直接当坐标用，跳过 geocode。
     """
-    info = _extract(history, latest)
+    info = dict(draft) if draft else _extract(history, latest)
     category_list = _normalize_category_list(info.get("categoryList"))
     if not category_list:
         # 兼容本次改造前的单类别 info，也兜住 categoryList 坏格式
@@ -266,11 +342,23 @@ def submit_from_history(user_id, history, latest, *, address_hint: str = "", coo
     if not address:
         return {"action": "ask_address",
                 "message": "请提供具体地址（如 XX 市 XX 区 XX 路 XX 小区 / XX 地标），我好帮您定位并创建隐患任务。"}
+    if not coords and draft:
+        draft_longitude = info.get("longitude")
+        draft_latitude = info.get("latitude")
+        if (
+            isinstance(draft_longitude, (int, float))
+            and not isinstance(draft_longitude, bool)
+            and isinstance(draft_latitude, (int, float))
+            and not isinstance(draft_latitude, bool)
+        ):
+            coords = (draft_longitude, draft_latitude)
     if coords:
         # 用户在图上选点：直接当坐标用，不调 geocode
         geo = {"longitude": coords[0], "latitude": coords[1]}
     else:
         geo = geocode(address)
+    if image_file_id is None and draft:
+        image_file_id = info.get("image_file_id")
     payload = {
         "userId": user_id,
         "category": category,

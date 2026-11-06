@@ -39,6 +39,7 @@ class _GateState(TypedDict, total=False):
     task_phase: str
     task_offered: bool
     address_text: str
+    task_draft: dict
     request_id: str
     submitted: dict
     reentered: bool
@@ -166,7 +167,7 @@ def test_stream_bridge_asks_then_creates_the_task(monkeypatch):
     calls = []
 
     def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
-                    session_id="", request_id=""):
+                    session_id="", request_id="", draft=None):
         calls.append((user_id, latest))
         return {"action": "accepted", "requestId": "req-42"}
 
@@ -296,6 +297,7 @@ class _GateSubmitState(TypedDict, total=False):
     task_phase: str
     task_offered: bool
     address_text: str
+    task_draft: dict
     request_id: str
     picked_longitude: float
     picked_latitude: float
@@ -383,7 +385,7 @@ def test_dict_resume_address_overrides_preextracted(monkeypatch):
     captured = {}
 
     def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
-                    session_id="", request_id=""):
+                    session_id="", request_id="", draft=None):
         captured["address_hint"] = address_hint
         captured["coords"] = coords
         captured["request_id"] = request_id
@@ -535,7 +537,7 @@ def test_interrupt_reply_address_end_to_end(monkeypatch):
     captured = {}
 
     def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
-                    session_id="", request_id=""):
+                    session_id="", request_id="", draft=None):
         captured["address_hint"] = address_hint
         captured["coords"] = coords
         return {"action": "accepted", "requestId": "req-5"}
@@ -557,7 +559,7 @@ def test_bad_interrupt_reply_falls_back_to_classify(monkeypatch):
     captured = {}
 
     def fake_submit(user_id, history, latest, *, address_hint="", coords=None,
-                    session_id="", request_id=""):
+                    session_id="", request_id="", draft=None):
         captured["address_hint"] = address_hint
         return {"action": "accepted", "requestId": "req-6"}
 

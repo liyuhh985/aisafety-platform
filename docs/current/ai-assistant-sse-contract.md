@@ -44,7 +44,7 @@ data: {"type": <kind>, "content": <payload>}\n\n
 | `status` | string | 节点级进度文案，**带上下文**（如「正在检索「消防通道占用」的法规与案例...」） |
 | `taxonomy` | `{selected_major_code, major_mismatch, issues[], locked_major, locked_majors, locked_subcategory, suggested_major_code, immediate_danger, premises_scope}` | 两级分类结果与锁定状态；`issues[]` 一次最多 3 条（同属 `locked_majors`） |
 | `chunk` | string | 流式正文：报告 token、回答、追问、确认问句 |
-| `interrupt` | `{type, question, issues?, address?, request_id}` | 结构化中断（确认建单 / 追问地址）；`request_id` 是确认阶段的稳定幂等键 |
+| `interrupt` | `{type, question, issues?, address?, request_id, draft?}` | 结构化中断（确认建单 / 追问地址）；`request_id` 是确认阶段的稳定幂等键；`draft` 是可编辑的工单草稿 |
 | `task_accepted` | `{request_id, status}` | 建单已受理，尚未落库；前端轮询状态查询 |
 | `done` | `""` | 本轮结束 |
 | `error` | string | 错误 |
@@ -64,8 +64,25 @@ data: {"type": <kind>, "content": <payload>}\n\n
 
 `interrupt` 的 `type` 有两种：
 
-- `confirm_create_task`：报告后询问是否建单。payload 含 `question`、`issues`、`address`（预抽取地址，可能为空）和 `request_id`。
+- `confirm_create_task`：报告后询问是否建单。payload 含 `question`、`issues`、`address`（预抽取地址，可能为空）、`request_id` 和 `draft`。
 - `ask_address`：用户已同意但无可定位地址，追问具体地址；payload 同样携带 `request_id`。
+
+`draft` 是报告阶段并行生成、并已冻结的建单草稿，字段：
+
+```json
+{
+  "categoryList": ["fire/fire_water_abnormal"],
+  "address": "三明市…XX路XX小区",
+  "district": "三明市…",
+  "description": "消防栓锈蚀、超期且无法出水",
+  "severity": 1,
+  "longitude": 117.63,
+  "latitude": 26.26,
+  "image_file_id": 123
+}
+```
+
+前端必须用这份草稿渲染预览，而不是自己从 `issues` 拼；用户改哪项就改哪个字段。
 
 **前端回传**：在**同一 `session_id`** 的下一轮请求里带 `interrupt_reply`（JSON 字符串）：
 
@@ -73,16 +90,25 @@ data: {"type": <kind>, "content": <payload>}\n\n
 {
   "decision": "confirm",
   "request_id": "req-3f1c…",
-  "address": "三明市…XX路XX小区",
-  "longitude": 117.63,
-  "latitude": 26.26
+  "draft": {
+    "categoryList": ["fire/fire_water_abnormal"],
+    "address": "三明市…XX路XX小区",
+    "district": "三明市…",
+    "description": "消防栓锈蚀、超期且无法出水",
+    "severity": 1,
+    "longitude": 117.63,
+    "latitude": 26.26,
+    "image_file_id": 123
+  }
 }
 ```
 
 - `decision`：`confirm` | `decline`（其他值 → 当作新话题回到 `understand`）。
 - `request_id`：**必须原样回传 interrupt 卡片中的值**。这是确认动作的幂等键，不能让前端重新生成；后端会校验它和 checkpoint 中的值一致。
-- `address`：用户改后的地址；`confirm` 且地址仍为空 → 后端回到 `ask_address` 追问。
-- `longitude`/`latitude`：地图选点结果。**有坐标则跳过地理编码**；坐标系为 GCJ-02，**不要转换**。
+- `draft`：用户确认/修改后的完整草稿；后端按 `categoryList`（必须在 `locked_majors` 内）+ `address` + `severity` + 坐标清洗后提交，**不再重新抽取**。
+- `address`：兼容字段；有 `draft` 时以 `draft.address` 为准，`confirm` 且地址仍为空 → 后端回到 `ask_address` 追问。
+- `longitude`/`latitude`：兼容字段；坐标系为 GCJ-02，**不要转换**。
+- 结构化确认时 `message` 可以为空（`interrupt_reply` 存在即可），后端不会把占位文案写入对话历史。
 - 老路径兼容：直接发文本「好的」/「不用了」仍可完成当前会话确认，但无法覆盖“request+outbox 已提交、accepted 响应丢失后重新确认”的窗口。新前端必须回传 `request_id`。
 
 **响应丢失处理（强制）**：前端在用户点击确认前先保存 interrupt 卡片里的 `request_id`。即使 `task_accepted` 没收到，也不能重新生成建单请求；应直接用这个 `request_id` 轮询状态接口。重复确认时，Python 先查已有 request，返回同一个 `requestId` 和当前状态，不会创建第二条 Outbox。

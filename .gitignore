@@ -114,3 +114,9 @@ ai-module/db/graph_shape.txt
 ai-module/db/score_dist.txt
 ai-module/db/slot_audit.txt
 ai-module/db/question_source.txt
+
+# 前端改动工作副本（仅本地同步用）
+.frontend-work/
+
+# 个人简历/面试材料
+/output/

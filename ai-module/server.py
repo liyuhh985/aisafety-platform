@@ -417,7 +417,8 @@ async def assistant_stream(
             session_id = ""
     uid = _require_user_id(user_id)
     message = (message or "").strip()
-    if not message and (file is None or not getattr(file, "filename", "")):
+    if (not message and not (interrupt_reply or "").strip()
+            and (file is None or not getattr(file, "filename", ""))):
         raise HTTPException(status_code=400, detail="message or file required")
     sid = session_id or str(uuid.uuid4())
     lease = _begin_session_turn(uid, sid)

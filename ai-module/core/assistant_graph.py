@@ -44,6 +44,7 @@ from core.hazard_taxonomy import (
     HAZARD_TAXONOMY,
     MAJOR_LABELS,
     SUBCATEGORY_LABELS,
+    format_hazard_type,
     normalize_taxonomy,
 )
 from core.scope_policy import (
@@ -66,6 +67,7 @@ from core.stream_guard import QUESTION_DROP, guard_stream, question_limiter
 from core.uncertainty import active_danger_term, assess, echo_slots
 from tools.assistant_tools import ASSISTANT_TOOLS
 from tools.hazard_create_queue import new_request_id
+from tools.hazard_submit import build_task_draft
 
 # report 用不带 tools 的轻量 Agent（流式生成纯文本报告，避免 tools 导致 400）
 _report_llm = Agent(
@@ -77,6 +79,7 @@ _report_llm = Agent(
     model=MIMO_MODEL,
 )
 _TOOL_MAP = {t.name: t for t in ASSISTANT_TOOLS}
+_TASK_DRAFT_EXECUTOR = ThreadPoolExecutor(max_workers=2, thread_name_prefix="task-draft")
 
 logger = logging.getLogger(__name__)
 _RESULT_FIELD = {"search_regulation": "regulation", "search_cases": "case"}
@@ -1612,6 +1615,44 @@ def can_offer_task_creation(state: AssistantState) -> bool:
     return bool(issues) and not (state.get("missing") or [])
 
 
+def _fallback_task_draft(state: AssistantState) -> dict:
+    categories = state.get("categories") or []
+    if not isinstance(categories, (list, tuple)):
+        categories = [categories]
+    category_list = []
+    for code in categories:
+        pair = normalize_taxonomy(str(code or ""))
+        full = format_hazard_type(pair[0], pair[1]) if pair else ""
+        if full and full not in category_list:
+            category_list.append(full)
+        if len(category_list) >= 3:
+            break
+    return {
+        "categoryList": category_list,
+        "address": str(state.get("address_text") or ""),
+        "district": state.get("district") or "",
+        "description": "",
+        "severity": 1,
+        "longitude": state.get("picked_longitude"),
+        "latitude": state.get("picked_latitude"),
+        "image_file_id": state.get("image_file_id"),
+    }
+
+
+def _finish_task_draft(state: AssistantState, future, update: dict) -> dict:
+    if future is None:
+        return {**update, "task_draft": {}}
+    try:
+        draft = future.result(timeout=20)
+    except Exception as e:  # noqa: BLE001
+        logger.warning("task draft unavailable, using state fallback: %s", e)
+        future.cancel()
+        draft = _fallback_task_draft(state)
+    if not isinstance(draft, dict):
+        draft = _fallback_task_draft(state)
+    return {**update, "task_draft": draft}
+
+
 def _slot_questions(code, missing_keys) -> list[str]:
     """把缺的槽翻译成代码里已有的固定问句：别让模型去猜"仍需确认"什么。"""
     wanted = set(missing_keys or [])
@@ -2095,6 +2136,12 @@ def _report_rules(premises_scope: str, preliminary: bool = False,
 def report(state: AssistantState, config=None) -> dict:
     messages = list(state.get("messages", []))
     ask_create = can_offer_task_creation(state)
+    draft_future = None
+    if ask_create:
+        draft_state = dict(state)
+        draft_state["messages"] = list(messages)
+        draft_future = _TASK_DRAFT_EXECUTOR.submit(
+            build_task_draft, draft_state, _cancel_token(config))
     preliminary = _is_preliminary(state)
     ctx = ("\n\n".join(_issue_blocks(state))
            + _report_rules(state.get("premises_scope"), preliminary,
@@ -2135,7 +2182,8 @@ def report(state: AssistantState, config=None) -> dict:
             # 弱层次核对：词面标记漏检是已知的，所以只告警、不改写正文
             logger.warning("preliminary_coverage_missing blocks=%s code=%s",
                            coverage, state.get("locked_subcategory"))
-        return _deliver_report(state, body, ask_create)
+        return _finish_task_draft(
+            state, draft_future, _deliver_report(state, body, ask_create))
     # 完整报告也走同一个逐句执行器：项目原则是「同一个约束不要两套判定」。
     # 为什么不用「token 粒度只剥问号」那套：它只处理问号、不管别的约束，以后必然分叉。
     # 问号上限是 0（不是 1）：完整报告里不许出现任何问句，模型多写出来的问句
@@ -2151,7 +2199,8 @@ def report(state: AssistantState, config=None) -> dict:
     body = "".join(buf)
     _warn_empty_talk(state, body)
     _warn_redundancy(state, body)
-    return _deliver_report(state, body, ask_create)
+    return _finish_task_draft(
+        state, draft_future, _deliver_report(state, body, ask_create))
 
 
 # ---------- 建任务确认闸门（durable human-in-the-loop） ----------
@@ -2224,6 +2273,52 @@ def _emit_event(kind: str, payload) -> None:
         pass
 
 
+def _clean_task_draft(draft, state: AssistantState) -> dict:
+    raw = draft if isinstance(draft, dict) else {}
+    locked = set(_locked_majors(state))
+    category_list = []
+    categories = raw.get("categoryList")
+    if isinstance(categories, str):
+        categories = [categories]
+    elif not isinstance(categories, (list, tuple)):
+        categories = []
+    for item in categories:
+        if not isinstance(item, str):
+            continue
+        pair = normalize_taxonomy(item)
+        if not pair or (locked and pair[0] not in locked):
+            continue
+        code = format_hazard_type(pair[0], pair[1])
+        if code and code not in category_list:
+            category_list.append(code)
+        if len(category_list) >= 3:
+            break
+
+    address = raw.get("address")
+    address = address.strip()[:200] if isinstance(address, str) else ""
+    description = raw.get("description")
+    description = description[:500] if isinstance(description, str) else ""
+    severity = raw.get("severity")
+    if not (isinstance(severity, int) and not isinstance(severity, bool)
+            and severity in (0, 1, 2)):
+        severity = 1
+
+    def coord(value):
+        return value if isinstance(value, (int, float)) and not isinstance(value, bool) else None
+
+    district = raw.get("district")
+    return {
+        "categoryList": category_list,
+        "address": address,
+        "district": district if isinstance(district, str) else "",
+        "description": description,
+        "severity": severity,
+        "longitude": coord(raw.get("longitude")),
+        "latitude": coord(raw.get("latitude")),
+        "image_file_id": state.get("image_file_id"),
+    }
+
+
 def task_gate(state: AssistantState) -> Command:
     """中断等待用户决定；恢复值由下一轮请求以 Command(resume=...) 传入。
 
@@ -2231,11 +2326,19 @@ def task_gate(state: AssistantState) -> Command:
     """
     phase = state.get("task_phase") or "confirm"
     request_id = str(state.get("request_id") or "").strip()
+    draft = dict(state.get("task_draft") or {})
+    if not draft.get("address"):
+        draft["address"] = str(state.get("address_text") or "")
+    if draft.get("longitude") is None:
+        draft["longitude"] = state.get("picked_longitude")
+    if draft.get("latitude") is None:
+        draft["latitude"] = state.get("picked_latitude")
     if phase == "address":
         answer = interrupt({
             "type": "ask_address",
             "question": "请提供具体地址（如 XX 市 XX 区 XX 路 XX 小区或明显地标），我好帮你定位并创建隐患任务。",
             "request_id": request_id,
+            "draft": draft,
         })
         return Command(
             goto="submit_task",
@@ -2251,9 +2354,10 @@ def task_gate(state: AssistantState) -> Command:
         "issues": state.get("issues") or [],
         "address": str(state.get("address_text") or ""),
         "request_id": request_id,
+        "draft": draft,
     })
     if isinstance(answer, dict):
-        # 新路径：前端把确认卡片连同改过的地址 / 图选点坐标一起回传
+        # 新路径：前端把确认卡片连同改过的草稿 / 地址 / 图选点坐标一起回传
         decision = str(answer.get("decision") or "other")
         supplied_request_id = str(answer.get("request_id") or "").strip()
         if supplied_request_id and request_id and supplied_request_id != request_id:
@@ -2263,21 +2367,43 @@ def task_gate(state: AssistantState) -> Command:
         address = str(answer.get("address") or "").strip()
         longitude = answer.get("longitude")
         latitude = answer.get("latitude")
+        update = {"task_offered": True, "request_id": request_id}
+        cleaned_draft = None
+        if "draft" in answer:
+            cleaned_draft = _clean_task_draft(answer.get("draft"), state)
+            if not cleaned_draft["categoryList"]:
+                _emit_chunk("⚠️ 所选隐患类别不在当前对话范围，暂不创建任务")
+                return Command(goto=END, update={
+                    "task_offered": True, "task_draft": cleaned_draft,
+                })
+            update["task_draft"] = cleaned_draft
+            address = address or cleaned_draft["address"]
+            if longitude is None:
+                longitude = cleaned_draft["longitude"]
+            if latitude is None:
+                latitude = cleaned_draft["latitude"]
+        else:
+            # 旧前端只回 decision/address：继续走 _extract，不使用报告期草稿。
+            update["task_draft"] = {}
         has_coords = (
             isinstance(longitude, (int, float))
             and not isinstance(longitude, bool)
             and isinstance(latitude, (int, float))
             and not isinstance(latitude, bool)
         )
-        update = {"task_offered": True, "request_id": request_id}
         if address:
-            update["address_text"] = address
+            update["address_text"] = address[:200]
         if has_coords:
             update["picked_longitude"] = float(longitude)
             update["picked_latitude"] = float(latitude)
+        elif cleaned_draft is not None:
+            update["picked_longitude"] = None
+            update["picked_latitude"] = None
         if decision == "confirm":
             # 最终地址仍为空（预抽取为空且用户没改）-> 回到地址追问（既有恢复路径）
-            if not (address or str(state.get("address_text") or "").strip()):
+            final_address = address if cleaned_draft is not None else (
+                address or str(state.get("address_text") or "").strip())
+            if not final_address:
                 return Command(
                     goto="task_gate",
                     update={
@@ -2301,11 +2427,12 @@ def task_gate(state: AssistantState) -> Command:
                     "task_phase": "address",
                     "task_offered": True,
                     "request_id": request_id,
+                    "task_draft": {},
                 },
             )
         return Command(
             goto="submit_task",
-            update={"task_offered": True, "request_id": request_id},
+            update={"task_offered": True, "request_id": request_id, "task_draft": {}},
         )
     if decision == "decline":
         return Command(goto="close_task", update={"task_offered": True})
@@ -2339,13 +2466,18 @@ def submit_task(state: AssistantState) -> Command:
             "image_url": state.get("image_url") or "",
             "image_file_id": state.get("image_file_id"),
         }
-    result = submit_from_history(
-        state.get("user_id"), history, latest,
-        address_hint=state.get("address_text") or "", coords=coords,
-        session_id=state.get("session_id") or "",
-        request_id=state.get("request_id") or "",
+    submit_kwargs = {
+        "address_hint": state.get("address_text") or "",
+        "coords": coords,
+        "session_id": state.get("session_id") or "",
+        "request_id": state.get("request_id") or "",
         **image_args,
-    )
+    }
+    draft = state.get("task_draft")
+    if draft:
+        submit_kwargs["draft"] = draft
+    result = submit_from_history(
+        state.get("user_id"), history, latest, **submit_kwargs)
     action = result.get("action")
     if action == "accepted":
         # MQ 模式：只表示"已受理"，不代表已落库；前端按 request_id 轮询。
@@ -2635,10 +2767,11 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                         parse_interrupt_reply(interrupt_reply)
                         or {"decision": classify_task_reply(message)}
                     )
-                payload = Command(
-                    resume=resume_value,
-                    update={"messages": [HumanMessage(content=message)]},
+                # 结构化确认可以不带 message：不要把占位文案写进对话历史
+                resume_update = (
+                    {"messages": [HumanMessage(content=message)]} if message else {}
                 )
+                payload = Command(resume=resume_value, update=resume_update)
             else:
                 payload = initial
                 if not snapshot.values.get("messages"):
