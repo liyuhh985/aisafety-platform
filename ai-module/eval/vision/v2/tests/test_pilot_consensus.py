@@ -123,3 +123,9 @@ def test_run_model_passes_temperature_to_client(tmp_path):
 def test_default_annotator_models_use_glm_flash_not_flashx():
     assert pc.DEFAULT_MODEL_A == "mimo-v2.6-flash"
     assert pc.DEFAULT_MODEL_B == "glm-5.3-flash"
+
+def test_select_pilot_sample_zero_returns_full_candidate_pool():
+    pool = make_pool()
+    items = pc.select_pilot_sample(pool, sample_size=0, seed=7)
+    assert len(items) == len(pool["items"])
+    assert {item["sha256"] for item in items} == {item["sha256"] for item in pool["items"]}

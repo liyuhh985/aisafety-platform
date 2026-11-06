@@ -60,6 +60,8 @@ def _shuffle(items: list[dict], seed: int) -> list[dict]:
 
 def select_pilot_sample(pool: dict, sample_size: int = 60, seed: int = 20261106) -> list[dict]:
     items = pool.get("items", [])
+    if sample_size <= 0:
+        return list(items)
     positives = [item for item in items if item.get("candidate_kind") == "positive"]
     negatives = [item for item in items if item.get("candidate_kind") == "negative"]
 
