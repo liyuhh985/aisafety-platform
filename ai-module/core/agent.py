@@ -11,6 +11,10 @@ from config import (
     FALLBACK_LLM_API_KEY,
     FALLBACK_LLM_MODEL,
     FALLBACK_LLM_EFFORT,
+    PRIMARY_LLM_BASE_URL,
+    PRIMARY_LLM_API_KEY,
+    PRIMARY_LLM_MODEL,
+    PRIMARY_LLM_EFFORT,
     LLM_RETRY_PER_ENDPOINT,
     LLM_RETRY_BACKOFF_SECONDS,
 )
@@ -255,12 +259,19 @@ class Agent:
         为什么要有第三段：.env 里 MIMO_MODEL_BACKUP 与主模型同名时（本项目就是），
         第二段等于不存在 —— 原来的"降级"从来没生效过。
         """
-        chain = [(self.base_url, self.api_key, self.model, None)]
-        if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
-            chain.append((self.base_url, self.api_key, MIMO_MODEL_BACKUP, None))
+        if PRIMARY_LLM_BASE_URL and PRIMARY_LLM_API_KEY and PRIMARY_LLM_MODEL:
+            # 显式指定了文本主模型（如 DeepSeek）：不再沿用 MIMO 的备用模型。
+            chain = [(PRIMARY_LLM_BASE_URL.rstrip("/"), PRIMARY_LLM_API_KEY,
+                      PRIMARY_LLM_MODEL, PRIMARY_LLM_EFFORT or None)]
+        else:
+            chain = [(self.base_url, self.api_key, self.model, None)]
+            if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
+                chain.append((self.base_url, self.api_key, MIMO_MODEL_BACKUP, None))
         if FALLBACK_LLM_BASE_URL and FALLBACK_LLM_API_KEY and FALLBACK_LLM_MODEL:
-            chain.append((FALLBACK_LLM_BASE_URL.rstrip("/"), FALLBACK_LLM_API_KEY,
-                          FALLBACK_LLM_MODEL, FALLBACK_LLM_EFFORT or None))
+            fallback = (FALLBACK_LLM_BASE_URL.rstrip("/"), FALLBACK_LLM_API_KEY,
+                        FALLBACK_LLM_MODEL, FALLBACK_LLM_EFFORT or None)
+            if (fallback[0], fallback[2]) != (chain[0][0], chain[0][2]):
+                chain.append(fallback)
         return chain
 
     def _attempt_plan(self) -> list:

@@ -153,6 +153,13 @@ FALLBACK_LLM_MODEL = os.getenv("FALLBACK_LLM_MODEL", "")
 # 该模型特有参数（deepseek-flash 支持 effort=low/high/max）
 FALLBACK_LLM_EFFORT = os.getenv("FALLBACK_LLM_EFFORT", "")
 
+# 文本 LLM 主端点覆盖：四项都配齐时优先于各 Agent 构造时传入的 MIMO_*。
+# 用于把默认模型切到 DeepSeek 等 OpenAI 兼容供应商，不影响视觉模型。
+PRIMARY_LLM_BASE_URL = os.getenv("PRIMARY_LLM_BASE_URL", "").strip()
+PRIMARY_LLM_API_KEY = os.getenv("PRIMARY_LLM_API_KEY", "").strip()
+PRIMARY_LLM_MODEL = os.getenv("PRIMARY_LLM_MODEL", "").strip()
+PRIMARY_LLM_EFFORT = os.getenv("PRIMARY_LLM_EFFORT", "").strip()
+
 # ===== 会话与 LangGraph Checkpoint 后端（多 worker 支持，Task 7）=====
 # 见 docs/superpowers/plans/2026-10-10-ai-hazard-mq-hardening.md
 # memory：进程内，只在本地开发/单 worker 用（默认，行为和改造前完全一致）；

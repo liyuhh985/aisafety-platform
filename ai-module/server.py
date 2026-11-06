@@ -33,7 +33,8 @@ from core.assistant_graph import (
 )
 from tools.milvus_store import MilvusVectorStore
 from config import (AI_BIND_HOST, AI_BIND_PORT, AI_CORS_ORIGINS, AI_INTERNAL_TOKEN,
-                      MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL, HAZARD_CREATE_WORKER_INLINE)
+                      MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL, PRIMARY_LLM_MODEL,
+                      HAZARD_CREATE_WORKER_INLINE)
 
 logger = logging.getLogger("safety.ai")
 
@@ -551,7 +552,7 @@ def hazard_create_status(request_id: str, user_id: int = Query(...)):
 def health():
     return {
         "status": "ok",
-        "model": MIMO_MODEL,
+        "model": PRIMARY_LLM_MODEL or MIMO_MODEL,
         "session_backend": session_backend_status(),
         "checkpoint_backend": checkpoint_backend_status(),
     }
