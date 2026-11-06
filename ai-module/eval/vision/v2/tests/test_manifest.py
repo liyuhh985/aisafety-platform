@@ -111,9 +111,32 @@ def test_candidate_pool_reserves_fifteen_negatives_per_confuser_group():
     assert counts == Counter({major: 15 for major in c.MAJOR_CODES})
 
 
+def test_candidate_pool_uses_all_available_when_below_reservoir_target():
+    items = make_balanced_candidates()
+    keep = {f"environment_other-pos-{index}.jpg" for index in range(20)}
+    items = [
+        item
+        for item in items
+        if not (
+            item["candidate_kind"] == "positive"
+            and item["major_category"] == "environment_other"
+            and item["file"] not in keep
+        )
+    ]
+
+    pool = bm.select_candidate_reservoir(items, seed=7)
+
+    count = sum(
+        item["candidate_kind"] == "positive"
+        and item["major_category"] == "environment_other"
+        for item in pool
+    )
+    assert count == 20
+
+
 def test_candidate_pool_refuses_insufficient_group_capacity():
     items = make_balanced_candidates()
-    removed = {f"fire-pos-{index}.jpg" for index in range(29, 40)}
+    removed = {f"fire-pos-{index}.jpg" for index in range(9, 40)}
     items = [
         item
         for item in items
@@ -205,5 +228,8 @@ def test_collect_positive_candidates_uses_human_review_pool(tmp_path):
     assert candidates[0]["major_category"] == "municipal"
     assert isinstance(candidates[0]["dhash64"], int)
     assert candidates[0]["label_status"] == "pending_review"
+
+
+
 
 

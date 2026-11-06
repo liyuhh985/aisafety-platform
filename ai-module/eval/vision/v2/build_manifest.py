@@ -287,22 +287,21 @@ def select_candidate_reservoir(
 
     for major in contract.MAJOR_CODES:
         group = [item for item in positives if item.get("major_category") == major]
-        if len(group) < positives_per_major:
-            raise ValueError(
-                f"{major}: {len(group)} positive candidates, need {positives_per_major}"
-            )
-        selected.extend(_pick_with_seed_priority(group, positives_per_major, seed))
+        if len(group) < contract.PER_MAJOR:
+            raise ValueError(f"{major}: {len(group)} positive candidates, need {contract.PER_MAJOR}")
+        quota = min(positives_per_major, len(group))
+        selected.extend(_pick_with_seed_priority(group, quota, seed))
 
     for offset, group_name in enumerate(contract.MAJOR_CODES, start=1):
         group = [item for item in negatives if item.get("confuser_group") == group_name]
-        if len(group) < negatives_per_group:
+        if len(group) < contract.PER_CONFUSER_GROUP:
             raise ValueError(
-                f"{group_name}: {len(group)} negative candidates, need {negatives_per_group}"
+                f"{group_name}: {len(group)} negative candidates, need {contract.PER_CONFUSER_GROUP}"
             )
-        selected.extend(_pick_with_seed_priority(group, negatives_per_group, seed + offset * 100))
+        quota = min(negatives_per_group, len(group))
+        selected.extend(_pick_with_seed_priority(group, quota, seed + offset * 100))
 
     return selected
-
 
 def apply_seed_decisions(items: list[dict[str, Any]], decisions_path: Path) -> int:
     path = Path(decisions_path)
@@ -435,3 +434,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
