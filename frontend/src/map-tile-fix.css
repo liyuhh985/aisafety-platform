@@ -1,0 +1,17 @@
+/* ============================================================
+   地图瓦片豁免（独立文件，避免被其它样式重写覆盖）
+
+   背景：项目引入 Tailwind v4（style.css 里的 @import "tailwindcss"），
+   其 preflight 会对所有 img 注入 max-width:100%; height:auto。
+   高德地图的栅格瓦片 <img> 位于宽度为 0 的绝对定位瓦片层内，
+   max-width:100% 会被解析成 0，把瓦片压成 0 宽（地图空白，
+   切换底图风格后尤其明显）。这里对高德图层内的图片做豁免。
+
+   详见 docs/current/hazard-multi-category-frontend-patch.md 第 3.1 节。
+   ============================================================ */
+.amap-layer img,
+.amap-marker img,
+.amap-info-card img,
+.amap-info-content img {
+  max-width: none;
+}

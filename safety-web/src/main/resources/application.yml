@@ -1,0 +1,98 @@
+jwt:
+  secret: ${JWT_SECRET:}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  forward-headers-strategy: framework
+  port: ${SERVER_PORT:8080}
+
+ai:
+  base-url: ${AI_BASE_URL:http://127.0.0.1:8000/api/ai}
+  internal-token: ${AI_INTERNAL_TOKEN:}
+
+vector-sync:
+  delete:
+    poll-delay-ms: ${VECTOR_SYNC_DELETE_POLL_DELAY_MS:30000}
+    batch-size: ${VECTOR_SYNC_DELETE_BATCH_SIZE:50}
+
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:127.0.0.1}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    listener:
+      simple:
+        acknowledge-mode: auto
+        default-requeue-rejected: false
+        concurrency: ${RABBITMQ_LISTENER_CONCURRENCY:4}
+        max-concurrency: ${RABBITMQ_LISTENER_MAX_CONCURRENCY:8}
+        prefetch: ${RABBITMQ_LISTENER_PREFETCH:16}
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 2s
+          multiplier: 2
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/safety_platform?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DB:2}
+  mail:
+    host: ${MAIL_HOST:smtp.163.com}
+    port: ${MAIL_PORT:465}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+
+minio:
+  endpoint: ${MINIO_ENDPOINT:http://127.0.0.1:9000}
+  access-key: ${MINIO_ACCESS_KEY:}
+  secret-key: ${MINIO_SECRET_KEY:}
+  bucket: ${MINIO_BUCKET:safety-images}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+hazard:
+  create:
+    exchange: ${HAZARD_CREATE_EXCHANGE:safety.hazard}
+    dlx: ${HAZARD_CREATE_DLX:safety.hazard.dlx}
+    queue: ${HAZARD_CREATE_QUEUE:hazard.create}
+    routing-key: ${HAZARD_CREATE_ROUTING_KEY:hazard.create.requested}
+    dlq: ${HAZARD_CREATE_DLQ:hazard.create.dlq}
+    result-queue: ${HAZARD_RESULT_QUEUE:hazard.create.result.q}
+    result-routing-key: ${HAZARD_RESULT_ROUTING_KEY:hazard.create.result}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+file-asset:
+  cleanup:
+    poll-delay-ms: ${FILE_ASSET_CLEANUP_POLL_DELAY_MS:600000}
+    batch-size: ${FILE_ASSET_CLEANUP_BATCH_SIZE:50}
+

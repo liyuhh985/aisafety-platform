@@ -1,0 +1,39 @@
+{
+  "baseline": {
+    "recall": 0.95,
+    "precision": 0.76,
+    "fpr": 0.3,
+    "f1": 0.8444444444444444,
+    "accuracy": 0.825,
+    "macro_recall": 0.825,
+    "review_rate": 0.275,
+    "auto_recall": 0.625,
+    "auto_fpr": 0.075,
+    "critical_miss_rate": 0.05
+  },
+  "final": {
+    "recall": 0.925,
+    "precision": 0.925,
+    "fpr": 0.075,
+    "f1": 0.925,
+    "accuracy": 0.925,
+    "macro_recall": 0.825,
+    "review_rate": 0.2,
+    "auto_recall": 0.625,
+    "auto_fpr": 0.025,
+    "critical_miss_rate": 0.075
+  },
+  "delta": {
+    "recall": -0.02499999999999991,
+    "precision": 0.16500000000000004,
+    "fpr": -0.22499999999999998,
+    "f1": 0.0805555555555556,
+    "accuracy": 0.10000000000000009,
+    "macro_recall": 0.0,
+    "review_rate": -0.07500000000000001,
+    "auto_recall": 0.0,
+    "auto_fpr": -0.049999999999999996,
+    "critical_miss_rate": 0.024999999999999994
+  },
+  "winner": "baseline"
+}

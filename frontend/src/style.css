@@ -1,0 +1,356 @@
+@import "tailwindcss";
+
+@theme {
+  --color-light-bg: #ffffff;
+  --color-light-surface: #ffffff;
+  --color-light-border: rgba(226, 232, 240, 0.85);
+  --color-primary-blue: #1a73e8;
+  --color-primary-hover: #1557b0;
+  --color-text-main: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-light: #94a3b8;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden !important;
+  position: relative;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-family: -apple-system, BlinkMacSystemFont, "Google Sans Flex", "Google Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+#app, #app-root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden !important;
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+/* ========================================================
+   纯白通透高级动态背景系统 (Fixed 视口锁定微光，真正肉眼可感知的温润呼吸流动)
+   ======================================================== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image:
+    /* 左上：温润清透的科技微蓝光晕 (锁定视口，绝不被内容拉伸稀释) */
+    radial-gradient(circle at 14% 15%, rgba(37, 99, 235, 0.12) 0%, rgba(59, 130, 246, 0.06) 42%, transparent 70%),
+    /* 右上：清新淡雅的治理安全薄荷微光 */
+    radial-gradient(circle at 86% 20%, rgba(16, 185, 129, 0.10) 0%, rgba(5, 150, 105, 0.04) 40%, transparent 68%),
+    /* 底部：极浅雅致的紫青漫反射微光 */
+    radial-gradient(circle at 50% 92%, rgba(99, 102, 241, 0.07) 0%, transparent 65%),
+    /* 纯净温润白底 */
+    linear-gradient(180deg, #ffffff 0%, #fbfdff 60%, #f8fafd 100%);
+  background-size: 130% 130%;
+  animation: natural-ambient-drift 14s ease-in-out infinite alternate;
+}
+
+/* 14s 周期自然光影缓动位移呼吸，肉眼清晰可感，水润通透绝不刺眼 */
+@keyframes natural-ambient-drift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 70%;
+  }
+  100% {
+    background-position: 25% 100%;
+  }
+}
+
+/* 优雅细滚动条 */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.55);
+}
+
+/* 高阶物理阻尼缓动曲线与微光弥散阴影 */
+:root {
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* 雪白微光悬浮卡片 (温润双层漫反射柔和阴影与内发光复合微边框) */
+.glass-card, .light-card {
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02), 0 10px 28px -4px rgba(15, 23, 42, 0.04);
+  transition: all 0.28s var(--ease-spring);
+}
+
+.glass-card-hover {
+  cursor: pointer;
+}
+.glass-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03), 0 20px 38px -6px rgba(37, 99, 235, 0.1);
+}
+
+/* 胶囊药丸按钮 (带温润阻尼微动效、顶部微高光与主题彩色弥散阴影) */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9.5px 20px;
+  border-radius: 9999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.22s var(--ease-spring);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  will-change: transform, box-shadow;
+}
+.btn-pill:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.btn-pill:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-pill-primary {
+  background: linear-gradient(135deg, #1a73e8 0%, #2563eb 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 4px 14px -2px rgba(37, 99, 235, 0.28),
+    0 1px 3px rgba(15, 23, 42, 0.08);
+}
+.btn-pill-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1557b0 0%, #1d4ed8 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 8px 22px -3px rgba(37, 99, 235, 0.36),
+    0 2px 5px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1.5px);
+}
+.btn-pill-primary:active:not(:disabled) {
+  transform: scale(0.97) translateY(0);
+}
+
+.btn-pill-secondary {
+  background: rgba(255, 255, 255, 0.92);
+  color: #334155;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 3px rgba(15, 23, 42, 0.03);
+}
+.btn-pill-secondary:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: rgba(37, 99, 235, 0.35);
+  color: #1a73e8;
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 4px 12px rgba(37, 99, 235, 0.08);
+}
+.btn-pill-secondary:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* 按钮微光兼容类名 */
+.btn-glow {
+  background: linear-gradient(135deg, #1a73e8, #2563eb);
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.22);
+  transition: all 0.24s var(--ease-spring);
+}
+.btn-glow:hover {
+  background: linear-gradient(135deg, #1557b0, #1d4ed8);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.32);
+  transform: translateY(-1.5px);
+}
+.btn-glow:active {
+  transform: scale(0.97);
+}
+
+/* 等宽数字 */
+.tabular-nums, .num-font {
+  font-family: "Geist Mono", "Google Sans Code", "JetBrains Mono", Consolas, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 白底环境下的温润果冻微光标签体系 */
+.sev-high, .sev-高 {
+  background: #fff1f2 !important;
+  color: #e11d48 !important;
+  border: 1px solid #ffe4e6 !important;
+}
+.sev-medium, .sev-中 {
+  background: #fff7ed !important;
+  color: #ea580c !important;
+  border: 1px solid #ffedd5 !important;
+}
+.sev-low, .sev-低 {
+  background: #f0fdf4 !important;
+  color: #059669 !important;
+  border: 1px solid #dcfce7 !important;
+}
+
+/* 在线呼吸指示灯 */
+.status-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #16a34a;
+  box-shadow: 0 0 6px rgba(22, 163, 74, 0.4);
+  display: inline-block;
+  animation: pulse-dot 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* 镜头光学瞬间聚焦动效 (Blur-to-Clear 精致微聚焦：首屏 0.35s, 5px -> 0) */
+@keyframes lensFocusIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.animate-hero-appear,
+.animate-lens-focus {
+  animation: lensFocusIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform, filter;
+}
+
+/* 操作示范区角色/步骤切换微聚焦动效 (0.22s, 3px -> 0 超轻微快速扫描) */
+@keyframes scanFocusFade {
+  from {
+    opacity: 0.4;
+    transform: translateY(4px);
+    filter: blur(2.5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.scan-focus-enter-active {
+  animation: scanFocusFade 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.scan-focus-leave-active {
+  transition: opacity 0.1s ease, filter 0.1s ease;
+  opacity: 0;
+  filter: blur(2px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s var(--ease-spring) both;
+}
+
+.delay-1 { animation-delay: 0.06s; }
+.delay-2 { animation-delay: 0.12s; }
+.delay-3 { animation-delay: 0.18s; }
+.delay-4 { animation-delay: 0.24s; }
+
+/* 移动端平滑横向滚动与隐藏滚动条 */
+.touch-scroll-x {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 触控友好标准（最小触控尺寸 40px+） */
+.touch-target {
+  min-height: 40px;
+  min-width: 40px;
+}
+
+/* 移动端安全区底部吸附工具类 */
+.safe-bottom-fixed {
+  position: fixed;
+  bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+  left: 0;
+  right: 0;
+  z-index: 900;
+}
+
+/* 桌面高分屏绝对适配保障：有精细指针时，全局屏蔽移动端专用底栏与遮挡浮层 */
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav-bar,
+  .safe-bottom-fixed-mobile-only {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}

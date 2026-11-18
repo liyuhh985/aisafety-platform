@@ -1,0 +1,106 @@
+{
+  "binary": {
+    "n": 80,
+    "tp": 40,
+    "tn": 29,
+    "fp": 11,
+    "fn": 0,
+    "recall": 1.0,
+    "precision": 0.7843137254901961,
+    "fpr": 0.275,
+    "f1": 0.8791208791208792,
+    "accuracy": 0.8625
+  },
+  "binary_recall_ci": {
+    "estimate": 1.0,
+    "low": 0.9123754607496077,
+    "high": 1.0
+  },
+  "binary_fpr_ci": {
+    "estimate": 0.275,
+    "low": 0.1610785343314309,
+    "high": 0.4283525083312457
+  },
+  "review_aware": {
+    "review_rate": 0.2625,
+    "auto_coverage": 0.7375,
+    "auto_recall": 0.65,
+    "critical_miss_rate": 0.0,
+    "auto_fpr": 0.1,
+    "review_positive": 14,
+    "review_negative": 7,
+    "auto_tp": 26,
+    "auto_tn": 29,
+    "auto_fp": 4,
+    "auto_fn": 0
+  },
+  "major": {
+    "macro_recall": 0.85,
+    "by_major": {
+      "traffic": {
+        "n": 5,
+        "correct": 4,
+        "recall": 0.8
+      },
+      "municipal": {
+        "n": 5,
+        "correct": 5,
+        "recall": 1.0
+      },
+      "fire": {
+        "n": 1,
+        "correct": 1,
+        "recall": 1.0
+      },
+      "building": {
+        "n": 0,
+        "correct": 0,
+        "recall": 0.0
+      },
+      "utility": {
+        "n": 2,
+        "correct": 2,
+        "recall": 1.0
+      },
+      "construction": {
+        "n": 4,
+        "correct": 4,
+        "recall": 1.0
+      },
+      "elevator_special": {
+        "n": 5,
+        "correct": 5,
+        "recall": 1.0
+      },
+      "environment_other": {
+        "n": 4,
+        "correct": 4,
+        "recall": 1.0
+      }
+    },
+    "confusion": {
+      "construction -> construction": 4,
+      "elevator_special -> elevator_special": 5,
+      "environment_other -> environment_other": 4,
+      "fire -> fire": 1,
+      "municipal -> municipal": 5,
+      "traffic -> municipal": 1,
+      "traffic -> traffic": 4,
+      "utility -> utility": 2
+    }
+  },
+  "invalid": {
+    "parse_failed": 0,
+    "invalid_has_hazard": 0,
+    "invalid_confidence": 3,
+    "invalid_category": 21
+  },
+  "limitations": [
+    "public-scene diagnostic set, not production-traffic distribution",
+    "small balanced test set; confidence intervals are wide",
+    "single reviewer; labels are not expert consensus",
+    "subcategory accuracy is not reported"
+  ],
+  "split": "dev",
+  "items": 80
+}
