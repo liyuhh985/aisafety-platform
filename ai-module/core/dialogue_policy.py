@@ -254,7 +254,9 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
                 question=question,
             )
 
-    if answer:
+    # 描述隐患（report_hazard / create_task）时，规划器顺手写的一段回答
+    # 不能截断报告链路：有缺口就继续问，缺口问不出来就出初步报告。
+    if answer and not (issues and intent in {"report_hazard", "create_task"}):
         question = str(plan.get("question") or "").strip()
         if question and incomplete:
             return _decision(

@@ -592,3 +592,42 @@ def test_planner_history_window_is_configurable(monkeypatch):
     blob = json.dumps(out, ensure_ascii=False)
     assert "m9" in blob and "m6" in blob
     assert "m0" not in blob
+
+
+def test_report_hazard_with_answer_does_not_short_answer():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "medium",
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["persistence"]}],
+        "question": "摊贩占道是长期还是临时？",
+        "answer": "这属于占道经营类隐患。",
+    }
+    out = decide_next_action(plan, {"user_text": "三明万达广场东北角有摊贩违规占道"})
+    assert out["action"] == "ask_critical_question"
+
+
+def test_report_hazard_without_next_question_returns_preliminary():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "medium",
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["unknown_slot"]}],
+        "question": "",
+        "answer": "这属于占道经营类隐患。",
+    }
+    out = decide_next_action(plan, {"user_text": "三明万达广场东北角有摊贩违规占道"})
+    assert out["action"] == "report_preliminary"
+
+
+def test_ask_solution_with_answer_stays_short():
+    plan = {
+        "ok": True,
+        "intent": "ask_solution",
+        "risk_level": "medium",
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["unknown_slot"]}],
+        "question": "",
+        "answer": "这类情况一般找城管或属地街道。",
+    }
+    out = decide_next_action(plan, {"user_text": "这个归谁管"})
+    assert out["action"] == "answer_now"
