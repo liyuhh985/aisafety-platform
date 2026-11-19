@@ -2,7 +2,7 @@
 import json
 import re
 
-from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL
+from config import MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL, PLANNER_HISTORY_MESSAGES
 from core.agent import Agent
 from core.hazard_taxonomy import (
     ALL_SUBCATEGORY_CODES,
@@ -349,7 +349,7 @@ def build_planner_messages(messages: list, vision_summary: str = "",
             "role": "system",
             "content": _planner_focus_context(missing, known_slots, subcategory_code),
         })
-    for message in (messages or [])[-12:]:
+    for message in (messages or [])[-max(2, PLANNER_HISTORY_MESSAGES):]:
         role = getattr(message, "type", None) or (message.get("role") if isinstance(message, dict) else None)
         content = getattr(message, "content", None) or (message.get("content") if isinstance(message, dict) else None)
         if role == "human":

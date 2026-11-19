@@ -159,6 +159,31 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
             report_mode=mode,
         )
 
+    # 「正在回答上一轮的追问」优先于模式继承：
+    # 用户只回了一个槽位值时，不能被上一轮的 plain 模式粘住，
+    # 否则「追问 → 回答」链路永远进不了报告。
+    if state.get("asked_question_last_turn") and issues:
+        if complete and not incomplete:
+            return _decision(
+                "report_full",
+                reason="user answered the clarification; facts are complete",
+                needs_search=True,
+                report_mode="full",
+            )
+        question = _question_for_missing(plan)
+        if question:
+            return _decision(
+                "ask_critical_question",
+                reason="user answered one slot; next critical fact is still missing",
+                question=question,
+            )
+        return _decision(
+            "report_preliminary",
+            reason="user answered the clarification but facts are still incomplete",
+            needs_search=True,
+            report_mode="preliminary",
+        )
+
     # M1：明确信号都用完之后，才轮到「沿用上一轮模式」。
     # 它同时干两件事：
     #   ① 解省略句 —— 用户说「那 X 呢」时单看这一句判不出要什么产物，沿用上一轮；
@@ -178,13 +203,6 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
                 needs_search=True, report_mode="preliminary",
             )
 
-    if complete and state.get("asked_question_last_turn"):
-        return _decision(
-            "report_full",
-            reason="user answered the clarification and facts are complete",
-            needs_search=True,
-            report_mode="full",
-        )
 
     if (
         complete

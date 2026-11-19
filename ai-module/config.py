@@ -161,6 +161,11 @@ PRIMARY_LLM_API_KEY = os.getenv("PRIMARY_LLM_API_KEY", "").strip()
 PRIMARY_LLM_MODEL = os.getenv("PRIMARY_LLM_MODEL", "").strip()
 PRIMARY_LLM_EFFORT = os.getenv("PRIMARY_LLM_EFFORT", "").strip()
 
+# 规划器读取的历史消息条数（用户+助手各算一条）。
+# 与 MAX_THREAD_MESSAGES / 会话记忆上限对齐：20 条 = 10 轮，
+# 保证“线程里还留着的上下文，规划器都看得到”。
+PLANNER_HISTORY_MESSAGES = int(os.getenv("PLANNER_HISTORY_MESSAGES", "20"))
+
 
 @dataclass(frozen=True)
 class ModelSlot:
