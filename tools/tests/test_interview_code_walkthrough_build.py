@@ -1,0 +1,80 @@
+from pathlib import Path
+
+import pytest
+
+from tools.interview_code_walkthrough.build import (
+    WalkthroughError,
+    extract_snippet,
+    load_manifest,
+    validate_manifest,
+)
+
+
+def _snippet(**overrides):
+    base = {
+        "file": "Demo.java",
+        "method": "Demo.run",
+        "start": 1,
+        "end": 1,
+        "startAnchor": "first",
+        "title": "run",
+        "explain": "Explain this method.",
+        "interviewQuestions": ["Why is this called?"],
+        "pitfalls": ["Do not claim it is asynchronous."],
+    }
+    base.update(overrides)
+    return base
+
+
+def test_extract_snippet_uses_exact_source_lines(tmp_path: Path):
+    source = tmp_path / "src" / "Demo.java"
+    source.parent.mkdir()
+    source.write_text("class Demo {\n  void run() {\n  }\n}\n", encoding="utf-8")
+    resolved = extract_snippet(
+        tmp_path,
+        _snippet(
+            file="src/Demo.java",
+            method="Demo.run",
+            start=2,
+            end=3,
+            startAnchor="  void run() {",
+        ),
+    )
+
+    assert resolved["code"] == "  void run() {\n  }"
+    assert resolved["lineStart"] == 2
+    assert resolved["lineEnd"] == 3
+    assert resolved["sourcePath"] == str(source.resolve())
+
+
+def test_extract_snippet_rejects_anchor_mismatch(tmp_path: Path):
+    source = tmp_path / "Demo.java"
+    source.write_text("first\nsecond\n", encoding="utf-8")
+
+    with pytest.raises(WalkthroughError, match="anchor mismatch"):
+        extract_snippet(tmp_path, _snippet(startAnchor="wrong"))
+
+
+def test_extract_snippet_rejects_path_escape(tmp_path: Path):
+    outside = tmp_path.parent / "outside.java"
+    outside.write_text("first\n", encoding="utf-8")
+
+    with pytest.raises(WalkthroughError, match="outside project root"):
+        extract_snippet(
+            tmp_path,
+            _snippet(file="../outside.java", end=1),
+        )
+
+
+def test_validate_manifest_requires_nine_chapters():
+    with pytest.raises(WalkthroughError, match="nine chapters"):
+        validate_manifest({"title": "x", "subtitle": "y", "chapters": []})
+
+
+def test_load_manifest_reports_invalid_json(tmp_path: Path):
+    path = tmp_path / "broken.json"
+    path.write_text("{not-json", encoding="utf-8")
+
+    with pytest.raises(WalkthroughError, match="invalid manifest JSON"):
+        load_manifest(path)
+
