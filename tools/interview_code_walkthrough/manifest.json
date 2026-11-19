@@ -37,6 +37,16 @@
               "lineOffset": 1,
               "text": "方法作用：定义 SSE 助手入口，后续会把认证和参数交给服务层。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "读取前端回传的结构化确认 JSON。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 4,
+              "text": "message 是普通聊天内容，结构化确认时可以缺省。",
+              "kind": "data"
             }
           ]
         },
@@ -75,6 +85,16 @@
               "lineOffset": 8,
               "text": "方法作用：读取原始 JSON 请求体，兼容非表单调用。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 37,
+              "text": "先上传图片，取得受控 fileId 和访问 URL。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 31,
+              "text": "从 Spring Security 上下文获取当前登录用户。",
+              "kind": "method"
             }
           ]
         },
@@ -108,6 +128,16 @@
               "lineOffset": 10,
               "text": "方法作用：把结构化确认原样传给 Python，普通聊天时为空字符串。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 8,
+              "text": "将认证后的用户 ID 传给内部 Python 服务。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 2,
+              "text": "创建最长等待 5 分钟的 SSE 发射器。",
+              "kind": "data"
             }
           ]
         },
@@ -146,6 +176,16 @@
               "lineOffset": 23,
               "text": "方法作用：去掉上游 SSE 的 data: 前缀，再把事件推给浏览器。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 2,
+              "text": "向 Python 内部服务发起 HTTP 调用。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 30,
+              "text": "上游正常结束后关闭浏览器 SSE 连接。",
+              "kind": "call"
             }
           ]
         },
@@ -179,6 +219,16 @@
               "lineOffset": 15,
               "text": "方法作用：异步读取 JSON 请求体；await 让出事件循环等待网络数据。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 34,
+              "text": "校验内部调用必须携带 user_id。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 38,
+              "text": "没有消息、确认回复和文件时返回 400，避免空请求进入图。",
+              "kind": "edge"
             }
           ]
         },
@@ -212,6 +262,16 @@
               "lineOffset": 15,
               "text": "方法作用：把结构化确认回复继续传入 LangGraph，恢复上一轮中断节点。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 11,
+              "text": "把本轮消息、历史和空槽位传给图执行器。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 12,
+              "text": "传入视觉摘要、会话 ID 和最大推理轮数。",
+              "kind": "data"
             }
           ]
         }
@@ -257,6 +317,16 @@
               "lineOffset": 18,
               "text": "方法作用：把稳定 request_id 放进确认卡片，前端确认时必须原样回传。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "从 checkpoint 状态恢复并复制建单草稿。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 6,
+              "text": "恢复确认级稳定幂等键。",
+              "kind": "data"
             }
           ]
         },
@@ -295,6 +365,16 @@
               "lineOffset": 14,
               "text": "方法作用：清洗用户改过的草稿，并限制在当前会话锁定的大类范围内。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 4,
+              "text": "request_id 不一致说明确认卡片过期或被篡改。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 8,
+              "text": "读取用户在确认卡片中修改后的地址。",
+              "kind": "data"
             }
           ]
         },
@@ -328,6 +408,16 @@
               "lineOffset": 45,
               "text": "方法作用：向浏览器广播已受理事件，触发前端保存 requestId 并轮询。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 1,
+              "text": "在节点内延迟导入提交函数，避免模块加载期耦合。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 47,
+              "text": "受理完成后清理当前图的建单临时状态。",
+              "kind": "data"
             }
           ]
         }
@@ -373,6 +463,16 @@
               "lineOffset": 8,
               "text": "方法作用：文档说明 accepted 只是受理，不是建单成功。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 0,
+              "text": "history 提供上下文，latest 是用户确认或地址补充文本。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 2,
+              "text": "稳定确认 ID，用来打通 request、outbox 和 Java 幂等。",
+              "kind": "data"
             }
           ]
         },
@@ -411,6 +511,16 @@
               "lineOffset": 30,
               "text": "方法作用：没有图选坐标时，把文本地址解析成经纬度。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 1,
+              "text": "统一清洗品类列表格式，挡住空值和非法大类。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 13,
+              "text": "地址缺失时直接返回 ask_address，不继续建单。",
+              "kind": "edge"
             }
           ]
         },
@@ -449,6 +559,16 @@
               "lineOffset": 10,
               "text": "方法作用：把事务层结果转换成 LangGraph 可识别的 accepted 动作。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "写库异常时保留堆栈，便于排查 outbox 受理失败。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 9,
+              "text": "只有 enqueue 返回 ok 才转成 accepted。",
+              "kind": "edge"
             }
           ]
         },
@@ -487,6 +607,16 @@
               "lineOffset": 9,
               "text": "方法作用：复用上游稳定 requestId，没有时才新建。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 12,
+              "text": "组装后续投递到 RabbitMQ 的完整消息体。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 13,
+              "text": "把消息序列化为 JSON，并保持中文内容可读。",
+              "kind": "call"
             }
           ]
         },
@@ -525,6 +655,16 @@
               "lineOffset": 17,
               "text": "方法作用：只有 commit 完成才返回受理成功。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 3,
+              "text": "异常或唯一键冲突时撤销未提交事务。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 9,
+              "text": "无法转换成幂等成功时继续抛出，避免假受理。",
+              "kind": "edge"
             }
           ]
         }
@@ -570,6 +710,16 @@
               "lineOffset": 29,
               "text": "方法作用：把 outbox 里的 payload 真正发送到 RabbitMQ。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 20,
+              "text": "原子认领本批 outbox 行，防止多 worker 重复发送。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 31,
+              "text": "发布失败时记录错误并安排下一轮重试。",
+              "kind": "call"
             }
           ]
         },
@@ -608,6 +758,16 @@
               "lineOffset": 5,
               "text": "方法作用：每轮循环执行一次扫描和投递。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 4,
+              "text": "处理 RabbitMQ 心跳和连接事件，避免空闲断连。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 19,
+              "text": "只允许重新认领超过租期的 PUBLISHING 行。",
+              "kind": "data"
             }
           ]
         }
@@ -653,6 +813,16 @@
               "lineOffset": 5,
               "text": "方法作用：把 JSON 反序列化成 Java 消息对象，后续才能读取字段。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 8,
+              "text": "非法 JSON 重试也不会成功，直接拒绝并进 DLQ。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 10,
+              "text": "空 requestId 无法建立幂等关系，必须拒绝。",
+              "kind": "edge"
             }
           ]
         },
@@ -691,6 +861,16 @@
               "lineOffset": 18,
               "text": "方法作用：工单事务返回后补发 SUCCESS 回执。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 19,
+              "text": "成功消费打点，用于监控吞吐和成功率。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 20,
+              "text": "记录 requestId 与 hazardId 的对应关系，便于追踪。",
+              "kind": "call"
             }
           ]
         }
@@ -736,6 +916,16 @@
               "lineOffset": 9,
               "text": "方法作用：重复消息先回查已有工单，是幂等的快速路径。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 23,
+              "text": "校验图片文件属于当前用户，防止越权引用。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 27,
+              "text": "用受控文件服务的访问路径覆盖客户端 imageUrl。",
+              "kind": "data"
             }
           ]
         },
@@ -769,6 +959,16 @@
               "lineOffset": 3,
               "text": "方法作用：按 userId 获取 Redisson 分布式锁。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 11,
+              "text": "最多等 3 秒获取 10 秒租期的用户创建锁。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 17,
+              "text": "没有抢到锁时快速失败，避免同一用户并发创建。",
+              "kind": "edge"
             }
           ]
         },
@@ -807,6 +1007,16 @@
               "lineOffset": 11,
               "text": "方法作用：执行真正的 tb_hazard 插入；唯一键在这里兜住并发。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 17,
+              "text": "冲突后返回赢家工单，形成幂等成功。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 24,
+              "text": "工单落库后把图片从 TEMP 改为 ATTACHED。",
+              "kind": "call"
             }
           ]
         }
@@ -847,6 +1057,16 @@
               "lineOffset": 1,
               "text": "方法作用：成功回执携带真实 hazardId。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 10,
+              "text": "把回执对象发送到结果队列对应路由。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 16,
+              "text": "发送失败必须抛出，触发 MQ 重试而不是静默丢回执。",
+              "kind": "edge"
             }
           ]
         },
@@ -885,6 +1105,16 @@
               "lineOffset": 13,
               "text": "方法作用：用 Java 回执中的终态和 hazardId 更新 Python request。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 12,
+              "text": "更新前端轮询所读取的 request 状态。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 26,
+              "text": "只有数据库更新成功才结束本次回执处理。",
+              "kind": "data"
             }
           ]
         },
@@ -923,6 +1153,16 @@
               "lineOffset": 12,
               "text": "方法作用：建立 RabbitMQ 阻塞连接，供结果消费者使用。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 15,
+              "text": "限制未确认消息数量，避免单个消费者一次拿太多。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 24,
+              "text": "处理失败时拒绝并丢弃到 DLQ，避免无限重投。",
+              "kind": "call"
             }
           ]
         }
@@ -968,6 +1208,16 @@
               "lineOffset": 12,
               "text": "方法作用：Java 查询异常时立即跳过，不能误判成未建单。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 11,
+              "text": "测试可注入状态，生产则调用 Java 内部接口。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 18,
+              "text": "只有真正查到 hazardId 才能补 SUCCESS。",
+              "kind": "edge"
             }
           ]
         },
@@ -1001,6 +1251,16 @@
               "lineOffset": 1,
               "text": "方法作用：读取 outbox 当前状态和剩余重试信息。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 27,
+              "text": "把仍有余额的任务重置为可再次投递的 RETRY。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 8,
+              "text": "同步把前端 request 退回 PENDING。",
+              "kind": "data"
             }
           ]
         },
@@ -1039,6 +1299,16 @@
               "lineOffset": 28,
               "text": "方法作用：逐条查询 Java 真实结果并修正 Python 状态。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 25,
+              "text": "读取本轮需要对账的超时请求列表。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 31,
+              "text": "单条对账失败只记日志，不阻断其他请求。",
+              "kind": "edge"
             }
           ]
         },
@@ -1077,6 +1347,16 @@
               "lineOffset": 9,
               "text": "方法作用：按 requestId 回查 Java tb_hazard。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 6,
+              "text": "内部 Token 不匹配时直接拒绝查询。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 11,
+              "text": "返回 Python 对账所需的 found 和 hazardId。",
+              "kind": "data"
             }
           ]
         }
@@ -1122,6 +1402,16 @@
               "lineOffset": 20,
               "text": "方法作用：避免最后一次延迟越过十分钟边界。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 12,
+              "text": "过滤非法负数或非有限时间值。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 14,
+              "text": "默认进入 60 秒后的 30 秒慢轮询。",
+              "kind": "data"
             }
           ]
         },
@@ -1160,6 +1450,16 @@
               "lineOffset": 24,
               "text": "方法作用：真正发起 HTTP 请求并等待响应。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "自动为请求注入 JWT Bearer Token。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 32,
+              "text": "401 统一清理登录态并跳转登录页。",
+              "kind": "edge"
             }
           ]
         },
@@ -1198,6 +1498,16 @@
               "lineOffset": 3,
               "text": "方法作用：把结构化确认 JSON 放进 multipart 请求体。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 21,
+              "text": "创建取消句柄，只取消当前浏览器请求。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 22,
+              "text": "调用 Java SSE 接口并等待响应头。",
+              "kind": "call"
             }
           ]
         },
@@ -1236,6 +1546,16 @@
               "lineOffset": 15,
               "text": "方法作用：持久化 pending requestId，刷新或重登后继续轮询。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 10,
+              "text": "读取 task_accepted 事件体并兜底为空对象。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 16,
+              "text": "拿到 requestId 后立即启动分级轮询。",
+              "kind": "call"
             }
           ]
         },
@@ -1274,6 +1594,16 @@
               "lineOffset": 34,
               "text": "方法作用：到点后发起一次状态查询。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 19,
+              "text": "隐藏页面或已停止状态不再安排下一次查询。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 22,
+              "text": "根据有效可见时间计算下一次轮询间隔。",
+              "kind": "call"
             }
           ]
         },
@@ -1307,6 +1637,16 @@
               "lineOffset": 8,
               "text": "方法作用：回到前台后立即刷新，而不是等旧 timer。",
               "kind": "method"
+            },
+            {
+              "lineOffset": 2,
+              "text": "进入后台时暂停所有 request 的计时和 timer。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 7,
+              "text": "恢复可见时重新记录有效计时起点。",
+              "kind": "data"
             }
           ]
         }

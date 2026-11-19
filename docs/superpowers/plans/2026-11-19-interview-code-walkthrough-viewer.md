@@ -396,3 +396,5 @@ git commit -m "test: verify offline walkthrough viewer"
 ## Implementation Status
 
 All tasks completed on 2026-11-19. The generated HTML also includes line-level syntax notes and collapsible reference answers requested after initial implementation.
+
+The viewer was later revised to a two-column source + margin-note layout, with 161 code notes across syntax, method, call, data, and edge categories.

@@ -11,28 +11,76 @@ def _vscode_uri(source_path: str, line_start: int) -> str:
     return f"vscode://file/{posix_path}:{line_start}"
 
 
-def _render_code(code: str, line_start: int, line_notes: list[dict]) -> str:
-    notes_by_offset = {note["lineOffset"]: note for note in line_notes}
-    rows = []
-    for offset, line in enumerate(code.splitlines()):
-        line_number = line_start + offset
-        rows.append(
-            '<div class="code-line">'
-            f'<span class="line-number">{line_number}</span>'
-            f'<span class="line-text">{escape(line) or " "}</span>'
+NOTE_KIND_LABELS = {
+    "syntax": "语法",
+    "method": "方法",
+    "call": "调用",
+    "data": "数据",
+    "edge": "边界",
+}
+
+
+def _render_note_items(notes: list[dict]) -> str:
+    items = []
+    for note in notes:
+        kind = note.get("kind", "syntax")
+        label = NOTE_KIND_LABELS[kind]
+        items.append(
+            f'<div class="note-item note-{kind}">'
+            f'<span class="note-kind">{label}</span>'
+            f'<span class="note-copy">{escape(note["text"])}</span>'
             "</div>"
         )
-        note = notes_by_offset.get(offset)
-        if note:
-            kind = note.get("kind", "syntax")
-            kind_label = "方法注" if kind == "method" else "语法注"
-            rows.append(
-                '<div class="syntax-note annotation">'
-                f'<span class="syntax-badge">L{line_number} · {kind_label}</span>'
-                f'<span>{escape(note["text"])}</span>'
+    return "".join(items)
+
+
+def _render_code(code: str, line_start: int, line_notes: list[dict]) -> str:
+    notes_by_offset: dict[int, list[dict]] = {}
+    for note in line_notes:
+        notes_by_offset.setdefault(note["lineOffset"], []).append(note)
+
+    rows = []
+    mobile_notes = []
+    for offset, line in enumerate(code.splitlines()):
+        line_number = line_start + offset
+        notes = notes_by_offset.get(offset, [])
+        note_items = _render_note_items(notes)
+        rows.append(
+            '<tr class="annotated-row">'
+            f'<td class="line-number-cell">{line_number}</td>'
+            f'<td class="line-text-cell"><span>{escape(line) or " "}</span></td>'
+            f'<td class="line-note-cell annotation">{note_items}</td>'
+            "</tr>"
+        )
+        if notes:
+            mobile_notes.append(
+                '<div class="mobile-note annotation">'
+                f'<span class="mobile-line">L{line_number}</span>'
+                f'<div>{note_items}</div>'
                 "</div>"
             )
-    return "\n".join(rows)
+
+    mobile_html = (
+        '<div class="mobile-note-list">'
+        '<p class="mobile-note-title">逐行代码边注</p>'
+        f'{"".join(mobile_notes)}'
+        '</div>'
+        if mobile_notes
+        else ""
+    )
+    return (
+        '<div class="annotated-code-wrap">'
+        '<table class="annotated-code">'
+        '<thead><tr>'
+        '<th class="line-number-head">行</th>'
+        '<th class="code-head">源码</th>'
+        '<th class="annotation-head annotation">代码边注</th>'
+        '</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody>'
+        '</table>'
+        f'{mobile_html}'
+        '</div>'
+    )
 
 
 def _render_interview_questions(questions: list[str], answers: list[str]) -> str:
@@ -351,30 +399,74 @@ h3 {{ margin: 0; font-family: var(--mono); font-size: 20px; line-height: 1.25; }
 .code-toolbar span {{ margin-right: auto; letter-spacing: 0.12em; }}
 .icon-button {{ border: 1px solid #36535c; background: transparent; color: #c5dcde; padding: 5px 8px; text-decoration: none; font-size: 10px; font-family: var(--mono); }}
 .icon-button:hover, .icon-button:focus-visible {{ border-color: #75bdb2; color: white; outline: none; }}
-.code-lines {{ max-height: 540px; overflow: auto; padding: 13px 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.62; tab-size: 4; }}
-.code-line {{ display: grid; grid-template-columns: 68px minmax(0, 1fr); min-width: max-content; color: #d9e8e6; }}
-.line-number {{ color: #638087; text-align: right; padding-right: 17px; user-select: none; border-right: 1px solid #29444e; }}
-.line-text {{ white-space: pre; padding-left: 17px; padding-right: 24px; }}
-.syntax-note {{
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  margin: 3px 22px 8px 86px;
-  padding: 7px 10px;
-  border-left: 2px solid #75bdb2;
-  background: rgba(46,143,131,0.11);
-  color: #b9d8d5;
-  font-size: 11px;
+.code-lines {{ max-height: 620px; overflow: auto; padding: 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.62; tab-size: 4; }}
+.annotated-code-wrap {{ min-width: 980px; }}
+.annotated-code {{ width: 100%; table-layout: fixed; border-collapse: collapse; color: #d9e8e6; }}
+.annotated-code thead th {{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px 12px;
+  color: #8fc8c2;
+  background: #132b35;
+  border-bottom: 1px solid #36515b;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-align: left;
+}}
+.line-number-head, .line-number-cell {{ width: 64px; }}
+.code-head {{ width: 58%; }}
+.annotation-head {{ width: 34%; }}
+.annotated-row {{ vertical-align: top; border-bottom: 1px solid rgba(52,82,92,0.34); }}
+.line-number-cell {{
+  color: #638087;
+  text-align: right;
+  padding: 3px 14px 3px 4px;
+  user-select: none;
+  border-right: 1px solid #29444e;
+}}
+.line-text-cell {{
+  padding: 3px 18px;
+  white-space: pre;
+  overflow-wrap: normal;
+}}
+.line-note-cell {{
+  padding: 4px 10px;
+  border-left: 1px solid #2d4852;
+  background: rgba(255,255,255,0.025);
+  white-space: normal;
+}}
+.note-item {{
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 8px;
+  padding: 4px 7px;
+  margin: 2px 0;
+  border-left: 2px solid #6aa99f;
+  background: rgba(46,143,131,0.08);
+  color: #bcd7d4;
+  font-family: var(--body);
+  font-size: 12px;
   line-height: 1.55;
 }}
-.syntax-badge {{
-  flex: 0 0 auto;
-  color: #93d8ce;
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
+.note-kind {{
+  align-self: start;
+  padding: 1px 4px;
+  color: #a6e2d9;
+  background: rgba(46,143,131,0.2);
+  font-family: var(--mono);
+  font-size: 9px;
+  text-align: center;
 }}
-.syntax-note span:last-child {{ white-space: normal; }}
+.note-copy {{ overflow-wrap: anywhere; }}
+.note-call {{ border-left-color: #7fb2d4; }}
+.note-call .note-kind {{ color: #c2e5fa; background: rgba(72,136,181,0.2); }}
+.note-data {{ border-left-color: #d2a85c; }}
+.note-data .note-kind {{ color: #f1d9a9; background: rgba(199,139,43,0.22); }}
+.note-edge {{ border-left-color: #cf7f72; }}
+.note-edge .note-kind {{ color: #f2c6be; background: rgba(180,87,74,0.2); }}
+.mobile-note-list {{ display: none; }}
 .answer-disclosure {{
   border: 1px solid #d8e1dc;
   background: #f8fbf8;
@@ -404,7 +496,8 @@ h3 {{ margin: 0; font-family: var(--mono); font-size: 20px; line-height: 1.25; }
 .pitfall-list li::marker {{ color: var(--amber); }}
 .snippet-footer {{ display: flex; justify-content: space-between; gap: 16px; padding: 10px 22px; border-top: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 10px; }}
 
-.interview-mode .annotation {{ display: none; }}
+.interview-mode .annotation, .interview-mode .mobile-note-list {{ display: none; }}
+.interview-mode .annotation-head, .interview-mode .line-note-cell {{ display: none; }}
 .interview-mode .snippet-footer span:first-child {{ display: none; }}
 .interview-mode .content {{ max-width: 1200px; }}
 .no-results {{
@@ -417,6 +510,17 @@ h3 {{ margin: 0; font-family: var(--mono); font-size: 20px; line-height: 1.25; }
 }}
 body.is-searching .no-results:not(.has-visible) {{ display: block; }}
 
+@media (max-width: 1180px) {{
+  .line-note-cell, .annotation-head {{ display: none; }}
+  .annotated-code-wrap {{ min-width: 0; }}
+  .annotated-code {{ table-layout: auto; }}
+  .code-head {{ width: auto; }}
+  .line-text-cell {{ white-space: pre-wrap; overflow-wrap: anywhere; }}
+  .mobile-note-list {{ display: block; padding: 12px 14px 16px; border-top: 1px solid #34505a; background: #102630; }}
+  .mobile-note-title {{ margin: 0 0 8px; color: #8fc8c2; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; }}
+  .mobile-note {{ margin: 8px 0; }}
+  .mobile-line {{ display: inline-block; margin-bottom: 4px; color: #88aeb2; font-family: var(--mono); font-size: 10px; }}
+}}
 @media (max-width: 900px) {{
   .sidebar {{ position: static; width: auto; padding: 20px; }}
   .nav {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }}

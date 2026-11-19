@@ -152,16 +152,12 @@ def validate_manifest(data: dict) -> None:
                     raise WalkthroughError(
                         f"{note_context}: lineOffset must be a non-negative integer"
                     )
-                if note_offset in note_offsets:
-                    raise WalkthroughError(
-                        f"{note_context}: duplicate lineOffset {note_offset}"
-                    )
                 note_offsets.add(note_offset)
                 _require_text(line_note.get("text"), "text", note_context)
                 kind = line_note.get("kind", "syntax")
-                if kind not in {"syntax", "method"}:
+                if kind not in {"syntax", "method", "call", "data", "edge"}:
                     raise WalkthroughError(
-                        f"{note_context}: kind must be 'syntax' or 'method'"
+                        f"{note_context}: kind must be syntax, method, call, data, or edge"
                     )
 
             start = snippet.get("start")

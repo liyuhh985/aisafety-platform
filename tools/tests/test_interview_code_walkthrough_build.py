@@ -129,3 +129,36 @@ def test_validate_manifest_rejects_unknown_line_note_kind():
     }
     with pytest.raises(WalkthroughError, match="kind"):
         validate_manifest({"title": "x", "subtitle": "y", "chapters": [chapter] * 9})
+
+
+def test_extract_snippet_allows_multiple_notes_on_same_line(tmp_path: Path):
+    source = tmp_path / "Demo.java"
+    source.write_text("first\n", encoding="utf-8")
+
+    resolved = extract_snippet(
+        tmp_path,
+        _snippet(
+            lineNotes=[
+                {"lineOffset": 0, "text": "syntax", "kind": "syntax"},
+                {"lineOffset": 0, "text": "call", "kind": "call"},
+            ]
+        ),
+    )
+
+    assert len(resolved["lineNotes"]) == 2
+
+
+def test_checked_in_manifest_has_expanded_note_coverage():
+    root = Path(__file__).parents[2]
+    data = load_manifest(root / "tools/interview_code_walkthrough/manifest.json")
+    validate_manifest(data)
+    notes = [
+        note
+        for chapter in data["chapters"]
+        for snippet in chapter["snippets"]
+        for note in snippet["lineNotes"]
+    ]
+    kinds = {note.get("kind", "syntax") for note in notes}
+
+    assert len(notes) >= 160
+    assert kinds == {"syntax", "method", "call", "data", "edge"}
