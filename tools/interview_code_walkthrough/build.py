@@ -24,7 +24,9 @@ REQUIRED_SNIPPET_FIELDS = {
     "title",
     "explain",
     "interviewQuestions",
+    "interviewAnswers",
     "pitfalls",
+    "lineNotes",
 }
 
 
@@ -113,10 +115,48 @@ def validate_manifest(data: dict) -> None:
             _require_text(snippet.get("startAnchor"), "startAnchor", snippet_context)
             _require_text(snippet.get("title"), "title", snippet_context)
             _require_text(snippet.get("explain"), "explain", snippet_context)
-            _require_string_list(
+            questions = _require_string_list(
                 snippet.get("interviewQuestions"), "interviewQuestions", snippet_context
             )
+            answers = _require_string_list(
+                snippet.get("interviewAnswers"), "interviewAnswers", snippet_context
+            )
+            if len(answers) != len(questions):
+                raise WalkthroughError(
+                    f"{snippet_context}: interviewAnswers length must match "
+                    "interviewQuestions length"
+                )
             _require_string_list(snippet.get("pitfalls"), "pitfalls", snippet_context)
+
+            line_notes = snippet.get("lineNotes")
+            if not isinstance(line_notes, list) or not line_notes:
+                raise WalkthroughError(
+                    f"{snippet_context}: lineNotes must be a non-empty list"
+                )
+            note_offsets: set[int] = set()
+            for note_index, line_note in enumerate(line_notes):
+                note_context = f"{snippet_context}.lineNotes[{note_index}]"
+                if not isinstance(line_note, dict):
+                    raise WalkthroughError(f"{note_context} must be an object")
+                if set(line_note.keys()) != {"lineOffset", "text"}:
+                    raise WalkthroughError(
+                        f"{note_context}: expected exactly lineOffset and text"
+                    )
+                note_offset = line_note.get("lineOffset")
+                if (
+                    isinstance(note_offset, bool)
+                    or not isinstance(note_offset, int)
+                    or note_offset < 0
+                ):
+                    raise WalkthroughError(
+                        f"{note_context}: lineOffset must be a non-negative integer"
+                    )
+                if note_offset in note_offsets:
+                    raise WalkthroughError(
+                        f"{note_context}: duplicate lineOffset {note_offset}"
+                    )
+                note_offsets.add(note_offset)
+                _require_text(line_note.get("text"), "text", note_context)
 
             start = snippet.get("start")
             end = snippet.get("end")
@@ -172,6 +212,13 @@ def extract_snippet(project_root: Path, snippet: dict) -> dict:
         )
 
     code = "\n".join(lines[start - 1 : end])
+    for line_note in snippet["lineNotes"]:
+        if line_note["lineOffset"] >= end - start + 1:
+            raise WalkthroughError(
+                f"{snippet['file']}: line note offset {line_note['lineOffset']} "
+                f"is outside snippet range {start}-{end}"
+            )
+
     return {
         **snippet,
         "sourcePath": str(source_path),

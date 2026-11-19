@@ -11,7 +11,8 @@ def _vscode_uri(source_path: str, line_start: int) -> str:
     return f"vscode://file/{posix_path}:{line_start}"
 
 
-def _render_code(code: str, line_start: int) -> str:
+def _render_code(code: str, line_start: int, line_notes: list[dict]) -> str:
+    notes_by_offset = {note["lineOffset"]: note["text"] for note in line_notes}
     rows = []
     for offset, line in enumerate(code.splitlines()):
         line_number = line_start + offset
@@ -21,7 +22,30 @@ def _render_code(code: str, line_start: int) -> str:
             f'<span class="line-text">{escape(line) or " "}</span>'
             "</div>"
         )
+        note = notes_by_offset.get(offset)
+        if note:
+            rows.append(
+                '<div class="syntax-note annotation">'
+                f'<span class="syntax-badge">L{line_number} · 语法注</span>'
+                f'<span>{escape(note)}</span>'
+                "</div>"
+            )
     return "\n".join(rows)
+
+
+def _render_interview_questions(questions: list[str], answers: list[str]) -> str:
+    items = []
+    for question, answer in zip(questions, answers, strict=True):
+        items.append(
+            '<details class="answer-disclosure">'
+            f'<summary>{escape(question)}</summary>'
+            '<div class="answer-body">'
+            '<span class="answer-label">参考答案</span>'
+            f'<p>{escape(answer)}</p>'
+            '</div>'
+            '</details>'
+        )
+    return "".join(items)
 
 
 def _render_list(items: list[str], class_name: str) -> str:
@@ -39,7 +63,9 @@ def _render_snippet(snippet: dict, chapter_id: str, snippet_index: int) -> str:
             snippet["file"],
             snippet["explain"],
             *snippet["interviewQuestions"],
+            *snippet["interviewAnswers"],
             *snippet["pitfalls"],
+            *(note["text"] for note in snippet["lineNotes"]),
         ]
     ).casefold()
 
@@ -68,7 +94,7 @@ def _render_snippet(snippet: dict, chapter_id: str, snippet_index: int) -> str:
           <button class="icon-button copy-path" data-copy="{escape(snippet["sourcePath"], quote=True)}">复制路径</button>
           <a class="icon-button" href="{escape(source_uri, quote=True)}">在 VS Code 打开</a>
         </div>
-        <div class="code-lines">{_render_code(snippet["code"], snippet["lineStart"])}</div>
+        <div class="code-lines">{_render_code(snippet["code"], snippet["lineStart"], snippet["lineNotes"])}</div>
       </div>
 
       <div class="annotation explain-block">
@@ -78,8 +104,8 @@ def _render_snippet(snippet: dict, chapter_id: str, snippet_index: int) -> str:
 
       <div class="annotation interview-grid">
         <section>
-          <p class="annotation-label">面试官可能问</p>
-          {_render_list(snippet["interviewQuestions"], "question-list")}
+          <p class="annotation-label">面试官可能问 · 点击展开答案</p>
+          {_render_interview_questions(snippet["interviewQuestions"], snippet["interviewAnswers"])}
         </section>
         <section>
           <p class="annotation-label">容易讲错的边界</p>
@@ -327,6 +353,44 @@ h3 {{ margin: 0; font-family: var(--mono); font-size: 20px; line-height: 1.25; }
 .code-line {{ display: grid; grid-template-columns: 68px minmax(0, 1fr); min-width: max-content; color: #d9e8e6; }}
 .line-number {{ color: #638087; text-align: right; padding-right: 17px; user-select: none; border-right: 1px solid #29444e; }}
 .line-text {{ white-space: pre; padding-left: 17px; padding-right: 24px; }}
+.syntax-note {{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 3px 22px 8px 86px;
+  padding: 7px 10px;
+  border-left: 2px solid #75bdb2;
+  background: rgba(46,143,131,0.11);
+  color: #b9d8d5;
+  font-size: 11px;
+  line-height: 1.55;
+}}
+.syntax-badge {{
+  flex: 0 0 auto;
+  color: #93d8ce;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}}
+.syntax-note span:last-child {{ white-space: normal; }}
+.answer-disclosure {{
+  border: 1px solid #d8e1dc;
+  background: #f8fbf8;
+  margin: 6px 0;
+}}
+.answer-disclosure summary {{
+  cursor: pointer;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: #23424b;
+}}
+.answer-disclosure summary:hover, .answer-disclosure summary:focus-visible {{
+  color: var(--signal);
+  outline: none;
+}}
+.answer-body {{ padding: 0 12px 12px; border-top: 1px solid #e2e9e5; }}
+.answer-label {{ display: inline-block; margin-top: 10px; color: var(--signal); font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; }}
+.answer-body p {{ margin: 6px 0 0; color: #35494f; }}
 .annotation {{ margin: 18px 22px 0; }}
 .annotation-label {{ margin: 0 0 7px; color: var(--signal); font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }}
 .explain-block {{ padding: 16px 18px; border-left: 4px solid var(--signal); background: var(--signal-soft); }}

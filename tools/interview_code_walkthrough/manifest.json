@@ -22,6 +22,16 @@
           "pitfalls": [
             "Controller 只做入口、登录态和参数处理，不在这里写 request/outbox。",
             "不能把一次 HTTP 请求成功当成工单已经创建。"
+          ],
+          "interviewAnswers": [
+            "Controller 只负责接收请求、获取当前登录用户并转发给 AI 服务，真正的建单属于 Java 业务边界。让 Python 事务先写 request/outbox，再通过 MQ 交给 Java，才能同时保证流式体验和业务一致性。",
+            "interrupt_reply 是结构化确认 JSON，会恢复 LangGraph 的 interrupt 节点并携带 decision、draft、地址等字段；普通 message 只是对话文本，两者语义不同。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Java 注解：把下面的方法映射到 HTTP POST 路径。"
+            }
           ]
         },
         {
@@ -39,6 +49,20 @@
           "pitfalls": [
             "userId 必须来自认证上下文，不能信任客户端自报身份。",
             "sessionId 为空不代表可以跳过会话身份校验。"
+          ],
+          "interviewAnswers": [
+            "user_id 必须由 Java 从 JWT 认证上下文取得，前端传来的用户字段可以被伪造。Python 的 user_id 只是 Java 内部调用时传下来的身份参数。",
+            "图片和建单的关联需要校验 fileId 属于当前用户，并在工单事务中原子地把 TEMP 改为 ATTACHED，避免越权引用和孤儿图片。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 10,
+              "text": "Java 变量声明：new 创建对象，ObjectMapper 负责 JSON 序列化/反序列化。"
+            },
+            {
+              "lineOffset": 31,
+              "text": "Long 是包装类型，userId 来自认证上下文而不是请求参数。"
+            }
           ]
         },
         {
@@ -56,6 +80,16 @@
           "pitfalls": [
             "SSE 只解决服务端向浏览器持续推送，不等于建单任务本身是同步完成的。",
             "内部 Token 不能代替用户身份。"
+          ],
+          "interviewAnswers": [
+            "SSE 适合服务端单向持续推送模型 token、interrupt 和 task_accepted；同步 HTTP 会让长任务占用请求线程，也无法逐步展示生成过程。",
+            "内部 Token 证明请求来自受信任的 Java 服务，用户 JWT 证明当前操作人身份；两者作用域不同，不能互相替代。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "Map<K,V> 表示键值映射；LinkedHashMap 保留插入顺序，方括号中的类型是泛型。"
+            }
           ]
         },
         {
@@ -73,6 +107,20 @@
           "pitfalls": [
             "断开的是展示连接，不应把已提交的异步建单任务一起取消。",
             "这里的 Future 是转发线程，不是建单消费者线程。"
+          ],
+          "interviewAnswers": [
+            "浏览器断开通常只会停止 Java 到 Python 的展示连接；一旦建单受理已提交，后台任务仍由数据库、MQ 和 worker 管理。",
+            "SSE 是展示通道，不是建单事务的所有者；取消展示不能让已经提交的 outbox 任务回滚，否则会破坏最终一致性。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Future<?> 表示异步任务句柄，? 是未知泛型；() -> { ... } 是 Java Lambda。"
+            },
+            {
+              "lineOffset": 15,
+              "text": "try-with-resources 会在代码块结束时自动关闭 reader；var 由编译器推断类型。"
+            }
           ]
         },
         {
@@ -90,6 +138,16 @@
           "pitfalls": [
             "async 不等于自动并行；阻塞数据库或 HTTP 调用仍要放到线程池。",
             "Python 仍要校验内部 Token 和 user_id。"
+          ],
+          "interviewAnswers": [
+            "async 接口运行在事件循环上，直接执行阻塞数据库、同步 HTTP 或大文件操作会卡住其他协程；项目因此把阻塞操作放入线程池。",
+            "Python 内部中间件仍要验证 X-Internal-Token，业务函数还会检查 user_id，形成服务间认证和业务身份的两层校验。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "async def 定义协程函数；await request.json() 会等待异步 I/O，不阻塞事件循环。"
+            }
           ]
         },
         {
@@ -107,6 +165,16 @@
           "pitfalls": [
             "async for 不是普通 for；它消费的是异步事件流，中间可能长时间等待。",
             "不能把 task_accepted 误讲成 task_created。"
+          ],
+          "interviewAnswers": [
+            "一次性返回要等完整报告和确认信息生成，首字延迟和等待时间都更长；流式事件能让前端及时显示进度和确认卡片。",
+            "task_accepted 只表示 Python 已把 request 和 outbox 写入数据库，Java 可能还没消费消息；SUCCESS 才代表 tb_hazard 已提交。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 10,
+              "text": "async for 用于消费异步迭代器；每次 await 到下一个事件后才进入循环体。"
+            }
           ]
         }
       ]
@@ -131,6 +199,20 @@
           "pitfalls": [
             "interrupt 恢复时节点会整体重跑，前面不能有业务副作用。",
             "request_id 是确认级幂等键，不是建单消息 ID。"
+          ],
+          "interviewAnswers": [
+            "request_id 在 interrupt 前生成并写入 checkpoint，用户确认、恢复节点和重复确认都复用它，才能建立稳定的幂等键。",
+            "interrupt 恢复时节点会重新执行，若在 interrupt() 前写库或发消息，恢复一次就可能重复产生副作用；有副作用的操作要放在 interrupt 之后。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "state 是 dict，.get(key) 取不到时返回 None；or 提供默认值。"
+            },
+            {
+              "lineOffset": 15,
+              "text": "interrupt() 是 LangGraph 的中断点，恢复时节点会重新执行到这里。"
+            }
           ]
         },
         {
@@ -148,6 +230,20 @@
           "pitfalls": [
             "前端限制只是体验层，后端和 LangGraph 仍必须校验。",
             "不能接受会话范围外的类别继续建单。"
+          ],
+          "interviewAnswers": [
+            "前端校验只是减少误操作，攻击者可以绕过页面直接发请求；后端校验才是安全边界。",
+            "request_id 不一致说明当前确认卡片已过期、被篡改或属于另一轮会话，继续提交会产生错误归属或重放风险。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "isinstance 检查运行时类型；dict 是 Python 字典。"
+            },
+            {
+              "lineOffset": 2,
+              "text": "链式调用：先取值，再用 or 兜底，最后转成字符串。"
+            }
           ]
         },
         {
@@ -165,6 +261,16 @@
           "pitfalls": [
             "accepted 不是建单成功。",
             "这个节点成功后应清空会话建单草稿，但前端仍保留 request_id 用于轮询。"
+          ],
+          "interviewAnswers": [
+            "accepted 是受理态，表示 request/outbox 已落库；SUCCESS 是终态，表示 Java 已提交工单并回传 hazardId。",
+            "task_accepted 的 HTTP/SSE 响应可能丢失，但 request 已经持久化；前端只要保存 request_id，就能重新轮询同一条请求。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 27,
+              "text": "字典字面量；后续 **submit_kwargs 会把字典展开成关键字参数。"
+            }
           ]
         }
       ]
@@ -189,6 +295,20 @@
           "pitfalls": [
             "不要把 action=accepted 说成 status=SUCCESS。",
             "Python 类型注解只是提示，运行时仍要做数据校验。"
+          ],
+          "interviewAnswers": [
+            "同一个 request_id 从确认卡片进入 Python request、outbox、MQ payload 和 Java 唯一索引，保证整条链路指向同一次业务请求。",
+            "address_hint 是用户确认后的文本地址，coords 是用户在图上选的点；有 coords 时可直接定位，避免重复地理编码和地址漂移。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "* 后面的参数必须用关键字传入；类型标注只是提示，不是运行时强校验。"
+            },
+            {
+              "lineOffset": 3,
+              "text": "dict | None 是联合类型，表示草稿可能是字典或空值。"
+            }
           ]
         },
         {
@@ -206,6 +326,20 @@
           "pitfalls": [
             "模型抽取是软约束，不能替代后端字段校验。",
             "地址过长、类别越界或坐标非法时不能继续入队。"
+          ],
+          "interviewAnswers": [
+            "模型抽取地址可能误识别或不完整，用户确认能让人工兜底；地址是正式工单的必要字段，不能只依赖软性模型输出。",
+            "猜一个地址可能创建错误工单；返回 ask_address 让用户补全，宁可多一轮交互，也不把不确定数据写进正式业务。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "条件表达式；draft 为真时复制字典，否则调用抽取函数。"
+            },
+            {
+              "lineOffset": 1,
+              "text": ".get 是安全取字典字段，键不存在时不会抛出 KeyError。"
+            }
           ]
         },
         {
@@ -223,6 +357,20 @@
           "pitfalls": [
             "如果写库失败却返回 accepted，用户会看到永远不进入 MQ 的假任务。",
             "生产日志要避免泄露敏感字段。"
+          ],
+          "interviewAnswers": [
+            "如果先返回 accepted 再写库，写库失败时前端会看到一条永远不会进入 MQ 的任务；因此必须事务提交成功后才能返回。",
+            "日志可能包含地址、图片 URL、报告正文等敏感信息；只记录必要的 request_id、状态和错误码，避免泄露用户数据。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "使用参数化日志而不是字符串拼接，便于延迟格式化和避免敏感信息误拼。"
+            },
+            {
+              "lineOffset": 5,
+              "text": "双星号把字典展开为函数的命名参数。"
+            }
           ]
         },
         {
@@ -240,6 +388,20 @@
           "pitfalls": [
             "先查后插是快速路径，并发正确性最终靠 request_id 主键/唯一约束。",
             "Python 这里不是 Spring @Transactional。"
+          ],
+          "interviewAnswers": [
+            "request 和 outbox 是同一业务意图的两部分，分开提交会出现“有请求没消息”或“有消息没请求”的双写不一致。",
+            "先查是避免重复工作的快速路径；并发竞争时最终要靠 request_id 主键/唯一约束，否则两个线程可能同时通过查询。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 17,
+              "text": "with 是上下文管理器，代码块结束会自动关闭 cursor。"
+            },
+            {
+              "lineOffset": 25,
+              "text": "相邻字符串在括号中自动拼接；%s 是数据库参数占位符。"
+            }
           ]
         },
         {
@@ -257,6 +419,20 @@
           "pitfalls": [
             "commit 失败绝不能返回 accepted。",
             "accepted HTTP 响应丢失后，重复确认应回查现有 request，而不是新建第二条。"
+          ],
+          "interviewAnswers": [
+            "唯一键冲突表示另一个并发事务已经插入同一 request；当前事务回滚后回查赢家记录，返回同一个 requestId，形成幂等成功。",
+            "accepted 响应丢失不会删除已提交数据；前端应保存 request_id 重新轮询，重复确认也应由 request 主键回查返回同一请求。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "except 捕获指定异常；事务异常时先 rollback，再按业务规则回查。"
+            },
+            {
+              "lineOffset": 13,
+              "text": "finally 无论成功或异常都会执行，用于归还连接。"
+            }
           ]
         }
       ]
@@ -281,6 +457,20 @@
           "pitfalls": [
             "RabbitMQ 是至少一次投递，发布成功不等于 Java 已消费。",
             "Relay 的 PUBLISHED 不是 request 的 SUCCESS。"
+          ],
+          "interviewAnswers": [
+            "两个 Relay 先 SELECT 再发送会同时看到同一行并重复投递；应该用条件 UPDATE 先原子认领，只有 claim 成功的 worker 才能发送。",
+            "PUBLISHING 可能代表 worker 在发送前或发送后崩溃；超过锁租期后允许重新认领，用至少一次投递换取任务不会永久卡住。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "* 表示 connect 必须按关键字传入；-> int 是返回类型提示。"
+            },
+            {
+              "lineOffset": 25,
+              "text": "元组解包会把查询结果的一行拆成四个变量。"
+            }
           ]
         },
         {
@@ -298,6 +488,20 @@
           "pitfalls": [
             "先 SELECT 再 UPDATE 会有并发窗口。",
             "claim 只是减少重复投递，不能代替 Java 消费端幂等。"
+          ],
+          "interviewAnswers": [
+            "条件更新把状态改成 PUBLISHING，并带上 locked_at 和状态条件；只有 rowcount 为 1 的 worker 才拿到该行。",
+            "claim 后 worker 崩溃时，任务留在 PUBLISHING；锁超时后其他 worker 可重新 claim，最终由重试和 RequestReconciler 兜底。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 8,
+              "text": "Event.wait(seconds) 等待指定秒数，同时可被停止事件提前唤醒。"
+            },
+            {
+              "lineOffset": 24,
+              "text": "rowcount 是条件 UPDATE 实际影响的行数，用来判断 claim 是否成功。"
+            }
           ]
         }
       ]
@@ -322,6 +526,20 @@
           "pitfalls": [
             "非法 JSON 和缺关键字段重试也不会成功。",
             "ACK 是处理完成后确认；不是收到消息就 ACK。"
+          ],
+          "interviewAnswers": [
+            "Python 消息可能没有 content_type，Spring 的自动转换不可靠；直接读取 UTF-8 JSON 能让解析失败进入明确的拒绝/DLQ 分支。",
+            "瞬时网络错误、数据库临时不可用可以重试；非法 JSON、缺 requestId/userId/category 这类永久错误应直接拒绝并进入 DLQ。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Spring 注解：把方法注册为指定 RabbitMQ 队列的监听器。"
+            },
+            {
+              "lineOffset": 4,
+              "text": "用指定字符集把 byte[] 解成 String，避免平台默认编码不一致。"
+            }
           ]
         },
         {
@@ -339,6 +557,20 @@
           "pitfalls": [
             "回执不能放进工单数据库事务内部提前发送。",
             "事务提交后回执失败不会回滚已提交工单，MQ 会重新消费并依靠幂等回查。"
+          ],
+          "interviewAnswers": [
+            "如果事务还没提交就发成功回执，会出现前端显示建单成功但数据库没有工单；createAi 返回代表 Spring 事务已经提交。",
+            "createAi 的事务已经提交后发送回执失败，不会自动回滚已提交工单；MQ 重试会重新消费，先查 request_id 并再次补发回执。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 17,
+              "text": "声明 HazardVO 类型变量并接收 createAi 的返回值。"
+            },
+            {
+              "lineOffset": 24,
+              "text": "rethrow 原异常，让上层事务和 MQ 框架继续处理。"
+            }
           ]
         }
       ]
@@ -363,6 +595,20 @@
           "pitfalls": [
             "先查后插是快速路径，唯一索引才是并发正确性边界。",
             "图片必须校验归属和临时状态，避免越权引用。"
+          ],
+          "interviewAnswers": [
+            "两个消费者可能同时先查不到记录，然后都尝试插入；唯一索引会让其中一个失败，从而兜住并发窗口。",
+            "imageUrl 是字符串，可被伪造或指向别人的资源；fileId 能绑定当前用户和受控文件状态，才适合做权限校验。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Spring 注解：方法由事务代理包裹，正常返回时提交，运行期异常时回滚。"
+            },
+            {
+              "lineOffset": 7,
+              "text": "boolean 是基本类型；&& 表示短路与，前半段为 false 时不再执行后半段。"
+            }
           ]
         },
         {
@@ -380,6 +626,16 @@
           "pitfalls": [
             "锁不能代替数据库约束。",
             "锁租期过短可能在业务未完成时失效，因此还要依赖唯一索引兜底。"
+          ],
+          "interviewAnswers": [
+            "分布式锁按 userId 降低同一用户并发，数据库唯一索引按 requestId 保证跨线程/跨实例的业务幂等，两者保护维度不同。",
+            "tryLock 获取租期 10 秒的锁，正常调用 finally 释放；进程崩溃时租期到期后其他实例可继续创建，唯一索引仍负责最终幂等。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 11,
+              "text": "tryLock 的三个参数分别是最长等待、锁租期和时间单位；有租期时不会启用看门狗续期。"
+            }
           ]
         },
         {
@@ -397,6 +653,20 @@
           "pitfalls": [
             "DuplicateKeyException 可能代表另一个消费者已经成功建单，回查后应返回同一 hazardId。",
             "图片从 TEMP 转 ATTACHED 要和工单落库保持原子性。"
+          ],
+          "interviewAnswers": [
+            "唯一键冲突通常代表另一个消费者已经成功插入；回查能返回同一 hazardId，而不是把一次合法重试变成用户可见错误。",
+            "工单写库和图片 TEMP→ATTACHED 必须原子提交；否则可能出现工单成功但图片仍可被清理，或图片已占用但工单未建成。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "反射式属性复制，把 DTO 同名属性复制到实体；字段名不一致时不会自动映射。"
+            },
+            {
+              "lineOffset": 12,
+              "text": "捕获数据库唯一键冲突异常，再执行业务级幂等回查。"
+            }
           ]
         }
       ]
@@ -421,6 +691,16 @@
           "pitfalls": [
             "吞异常会导致前端长期卡在创建中。",
             "成功回执只能携带真实已提交的 hazardId。"
+          ],
+          "interviewAnswers": [
+            "吞掉回执异常并 ACK 会让 request 永远停在 PUBLISHED；抛出异常才能触发 MQ 重试和日志/指标告警。",
+            "成功回执携带已提交的 hazardId；失败回执只表示最终失败，不应伪造 hazardId，也不能覆盖已经成功的记录。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 10,
+              "text": "RabbitTemplate 把对象转换后发送到交换机，并带上 routing key。"
+            }
           ]
         },
         {
@@ -438,6 +718,20 @@
           "pitfalls": [
             "终态更新必须带条件，防止后到的失败消息覆盖成功事实。",
             "Python 状态表是前端轮询的数据源，不能和 Java tb_hazard 说成同一张表。"
+          ],
+          "interviewAnswers": [
+            "重复 SUCCESS 会被 SQL 的 status <> SUCCESS 条件挡住，不会重复改状态；结果处理本身是幂等的。",
+            "成功是终态事实，后到的失败消息不能覆盖它；否则数据库已经有工单，前端却显示失败，破坏用户体验和状态一致性。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 3,
+              "text": "先防止 message 为 None，再安全取字段、转字符串、去空格并转大写。"
+            },
+            {
+              "lineOffset": 9,
+              "text": "with 管理数据库 cursor 的生命周期，异常时仍会释放。"
+            }
           ]
         },
         {
@@ -455,6 +749,20 @@
           "pitfalls": [
             "ACK 表示消费者处理完成，Broker 可删除消息。",
             "坏消息无限 requeue 会形成重试风暴。"
+          ],
+          "interviewAnswers": [
+            "ACK 应在消费者完成业务处理并确认数据库操作成功后发送；收到消息立即 ACK 会在处理失败时丢掉可重试消息。",
+            "requeue=False 让坏消息进入结果队列的 DLQ，避免无限循环；瞬时异常通常由消息重试或对账补偿处理。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "函数内 import 是延迟导入，只有真正启动消费者时才需要 pika 依赖。"
+            },
+            {
+              "lineOffset": 21,
+              "text": "ACK 使用 delivery_tag 告诉 Broker 这条消息已成功处理。"
+            }
           ]
         }
       ]
@@ -479,6 +787,20 @@
           "pitfalls": [
             "查不到和查询失败不是一回事。",
             "不能把网络异常当成确认未建单。"
+          ],
+          "interviewAnswers": [
+            "Java 查询报错只能说明本次无法确认，不能证明工单不存在；此时重投可能重复建单，所以本轮应跳过并等待下次对账。",
+            "对账重查 Java 已找到 request_id 对应工单时，只需把 Python request 补成 SUCCESS + hazardId，不应再次投递建单消息。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 11,
+              "text": "条件表达式：测试注入时用 java_status，生产时调用真实 HTTP 查询。"
+            },
+            {
+              "lineOffset": 18,
+              "text": "and 表示两个条件都成立；is not None 排除空值。"
+            }
           ]
         },
         {
@@ -496,6 +818,16 @@
           "pitfalls": [
             "RequestReconciler 只改状态，实际投递仍由 Relay 完成。",
             "要防止确认未落库前过早终止。"
+          ],
+          "interviewAnswers": [
+            "RequestReconciler 的职责是查询真实状态和修正 request/outbox 状态，投递 MQ 仍由 Relay 统一执行，避免绕过 outbox claim 和重试规则。",
+            "重试耗尽后继续无限重置会让坏任务永久循环；达到上限应标记 FAILED，让前端得到明确终态并保留运维证据。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 15,
+              "text": "元组/下标取值并解包；int 把数据库值转整数，or 0 处理 NULL。"
+            }
           ]
         },
         {
@@ -513,6 +845,20 @@
           "pitfalls": [
             "RequestReconciler 扫的是超时 request，不是待发送 outbox。",
             "批量补偿要隔离单条异常。"
+          ],
+          "interviewAnswers": [
+            "RelayWorker 负责扫 outbox 并投递 MQ；RequestReconciler 负责查超时 request 的 Java 真实结果，两者一个管发送、一个管对账。",
+            "每条 request 有独立状态和 retry 信息，单条对账异常如果影响整批，会让其他健康任务也无法补偿，所以必须隔离异常。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "class 定义类；__init__ 和 run_once 的第一个参数 self 代表当前实例。"
+            },
+            {
+              "lineOffset": 26,
+              "text": "单元素元组解包，逗号表示只取查询结果第一列。"
+            }
           ]
         },
         {
@@ -530,6 +876,20 @@
           "pitfalls": [
             "读取权边界仍然保持：Python 通过受控 HTTP 间接查询 Java 数据。",
             "内部 Token 不能为空，否则是越权查询入口。"
+          ],
+          "interviewAnswers": [
+            "Python 不直接读 Java 的 tb_hazard，是为了保持 Java 业务边界和数据所有权；它通过受控内部接口查询，避免跨层直写/直读。",
+            "内部接口能读取 request_id 与工单映射，若对普通用户开放会泄露工单存在性和内部数据；X-Internal-Token 用于限制调用范围。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 4,
+              "text": "读取请求头；required=false 表示缺头时得到 null，随后由代码主动拒绝。"
+            },
+            {
+              "lineOffset": 10,
+              "text": "创建可变键值对象，最后序列化成 found/hazardId 响应。"
+            }
           ]
         }
       ]
@@ -554,6 +914,20 @@
           "pitfalls": [
             "10 分钟只停止前端轮询，不等于后端任务失败。",
             "页面不可见时不能继续把隐藏时间计入有效轮询时间。"
+          ],
+          "interviewAnswers": [
+            "前期用户刚提交，状态变化快，1 秒级轮询能给出及时反馈；后期任务大多在正常处理，30 秒间隔可减少无效请求和系统压力。",
+            "返回 -1 是明确的停止信号，前端应停止当前 request 的轮询；超过 10 分钟不代表后端任务一定失败，所以只停止展示层轮询并保留 request_id。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "export 导出模块成员，const 声明不可重新赋值的常量。"
+            },
+            {
+              "lineOffset": 11,
+              "text": "函数声明导出给其他模块使用，参数是有效轮询时间。"
+            }
           ]
         },
         {
@@ -571,13 +945,27 @@
           "pitfalls": [
             "请求封装只能处理展示层登录态，真正的权限校验仍在 Java。",
             "不要把 404、401 和临时网络失败混成同一种业务终态。"
+          ],
+          "interviewAnswers": [
+            "浏览器需要自己生成 multipart boundary；手动设置 Content-Type 会覆盖 boundary，导致后端解析失败。",
+            "401 说明登录态失效，应清 token 并重新登录；临时网络失败或 5xx 可以按退避继续轮询，不能直接判定建单失败。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "const 声明块级常量；localStorage 保存浏览器登录态。"
+            },
+            {
+              "lineOffset": 40,
+              "text": "throw 抛出异常；调用方可以统一捕获 ApiError。"
+            }
           ]
         },
         {
           "file": ".frontend-work/src/views/HomeView.vue",
           "method": "sendMessage FormData",
-          "start": 1097,
-          "end": 1124,
+          "start": 1112,
+          "end": 1139,
           "startAnchor": "const fd = new FormData()",
           "title": "确认为 SSE 请求携带 interrupt_reply",
           "explain": "前端在 FormData 中放入 message、session_id、interrupt_reply、user_id、大类提示和图片。interrupt_reply 存在时 message 可以为空。fetch 携带 JWT 和 AbortController，停止的是当前浏览器展示请求。",
@@ -588,13 +976,27 @@
           "pitfalls": [
             "浏览器中断展示连接不能回滚数据库或 MQ 任务。",
             "user_id 仍由 Java 认证上下文决定，不能把前端字段当最终身份。"
+          ],
+          "interviewAnswers": [
+            "结构化确认已经携带 decision、draft、地址等必要信息，message 可以为空；普通文本确认只是兼容旧前端。",
+            "AbortController 只取消当前浏览器的 fetch 展示，不会回滚已提交的 request/outbox 或已进入 MQ 的业务任务。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "FormData 用来构造 multipart 表单，浏览器自动生成 boundary。"
+            },
+            {
+              "lineOffset": 22,
+              "text": "await 等待 fetch 返回响应；fetch 的第二个参数是请求配置对象。"
+            }
           ]
         },
         {
           "file": ".frontend-work/src/views/HomeView.vue",
           "method": "task_accepted",
-          "start": 1192,
-          "end": 1210,
+          "start": 1207,
+          "end": 1225,
           "startAnchor": "} else if (event.type === 'interrupt') {",
           "title": "解析 interrupt 与 task_accepted",
           "explain": "收到 interrupt 时把确认卡片挂到当前助手消息；收到 task_accepted 时从事件中取 request_id，保存到用户隔离的 localStorage，并启动轮询。这里 task_accepted 只表示受理，不立即显示工单创建成功。",
@@ -605,13 +1007,27 @@
           "pitfalls": [
             "不能把 task_accepted 渲染成“建单成功”。",
             "页面刷新或重新登录后要恢复仍然存在的 pending request。"
+          ],
+          "interviewAnswers": [
+            "task_accepted 显示“创建中”，SUCCESS 显示工单号和查看入口，FAILED 显示失败原因并停止轮询。",
+            "按 userId 隔离可以防止另一个用户读取同一 request_id 的轮询记录；重新登录后仍能恢复自己的 pending request。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "=== 是严格相等，避免隐式类型转换。"
+            },
+            {
+              "lineOffset": 11,
+              "text": "|| 提供字段名兼容兜底，但要注意空字符串也会触发右值。"
+            }
           ]
         },
         {
           "file": ".frontend-work/src/views/HomeView.vue",
           "method": "pause/schedule hazard polling",
-          "start": 783,
-          "end": 819,
+          "start": 798,
+          "end": 834,
           "startAnchor": "function pauseHazardPollingState(state) {",
           "title": "暂停、恢复和调度下一次轮询",
           "explain": "state.activeElapsedMs 只累计页面可见期间的时间；document.hidden 时不安排 timer。回到前台后重新设置 activeStartedAt 并立即 refresh。scheduleHazardPoll 根据当前有效耗时算下一次延迟，到 10 分钟调用超时收尾。",
@@ -622,13 +1038,27 @@
           "pitfalls": [
             "隐藏期间不计入有效等待时间。",
             "刷新后先查一次，避免继续显示离开前的旧状态。"
+          ],
+          "interviewAnswers": [
+            "后台标签页不能计入用户可见等待时间，而且浏览器会节流 timer；暂停计时避免回到前台后误判已经超过 10 分钟。",
+            "回到前台后状态可能已经变化，立即查询一次能避免继续展示离开前的旧状态，也符合“可见时间”轮询契约。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 3,
+              "text": "+= 是复合赋值；Date.now() 返回毫秒时间戳。"
+            },
+            {
+              "lineOffset": 27,
+              "text": "箭头函数保留外层 this；setTimeout 在延迟后执行回调。"
+            }
           ]
         },
         {
           "file": ".frontend-work/src/views/HomeView.vue",
           "method": "handlePageVisibilityChange",
-          "start": 905,
-          "end": 915,
+          "start": 920,
+          "end": 930,
           "startAnchor": "function handlePageVisibilityChange() {",
           "title": "页面可见性变化时统一暂停和恢复",
           "explain": "visibilitychange 是浏览器页面可见性事件。hidden 时暂停所有轮询计时并清除 timer；可见时恢复计时，并立即刷新每个未停止的 request。这样既避免后台无效请求，也避免回来后继续等待旧的 30 秒间隔。",
@@ -639,6 +1069,16 @@
           "pitfalls": [
             "浏览器 timer 在后台可能被节流，不能依赖它精确计时。",
             "恢复时要立即查询，而不是等待下一轮延迟。"
+          ],
+          "interviewAnswers": [
+            "setTimeout 在后台会被浏览器节流甚至暂停，不能依赖它精确计时；显式监听 visibilitychange 才能正确处理暂停和恢复。",
+            "每个 request 有独立 state，恢复时逐个更新 activeStartedAt 并立即刷新；这样多个并发建单不会互相覆盖计时。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "Array.from 把 Map 的 values 迭代器转成数组；forEach 遍历每个轮询状态。"
+            }
           ]
         }
       ]

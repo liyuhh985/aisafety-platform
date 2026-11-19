@@ -20,7 +20,9 @@ def _snippet(**overrides):
         "title": "run",
         "explain": "Explain this method.",
         "interviewQuestions": ["Why is this called?"],
+        "interviewAnswers": ["It is called to route the request into the next layer."],
         "pitfalls": ["Do not claim it is asynchronous."],
+        "lineNotes": [{"lineOffset": 0, "text": "This annotation declares an HTTP endpoint."}],
     }
     base.update(overrides)
     return base
@@ -102,3 +104,12 @@ def test_checked_in_manifest_resolves_every_snippet():
             snippet_count += 1
 
     assert snippet_count >= 20
+
+
+
+def test_extract_snippet_rejects_line_note_outside_range(tmp_path: Path):
+    source = tmp_path / "Demo.java"
+    source.write_text("first\n", encoding="utf-8")
+
+    with pytest.raises(WalkthroughError, match="line note offset"):
+        extract_snippet(tmp_path, _snippet(lineNotes=[{"lineOffset": 1, "text": "x"}]))

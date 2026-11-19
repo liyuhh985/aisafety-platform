@@ -20,7 +20,9 @@ def sample_data():
                         "code": "@PostMapping\npublic SseEmitter assistantStream",
                         "explain": "This forwards the request to Python.",
                         "interviewQuestions": ["Why use SSE?"],
+                        "interviewAnswers": ["SSE is a one-way stream from server to browser."],
                         "pitfalls": ["Accepted does not mean created."],
+                        "lineNotes": [{"lineOffset": 0, "text": "This annotation maps the HTTP endpoint."}],
                         "sourcePath": r"C:\repo\AiController.java",
                         "codeHash": "abc",
                     }
@@ -57,3 +59,13 @@ def test_renderer_includes_code_hash_and_source_path():
     assert "abc" in html
     assert "AiController.java" in html
     assert "vscode://file/" in html
+
+
+
+def test_renderer_shows_syntax_notes_and_hidden_answers():
+    html = render_html(sample_data(), "2026-11-19T12:00:00+08:00")
+
+    assert "语法注" in html
+    assert "This annotation maps the HTTP endpoint." in html
+    assert "<details" in html
+    assert "SSE is a one-way stream from server to browser." in html

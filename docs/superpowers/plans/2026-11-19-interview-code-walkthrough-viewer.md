@@ -1,6 +1,6 @@
 # Interview Code Walkthrough Viewer Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Build an offline, source-linked HTML study viewer for the asynchronous hazard-creation flow without modifying business source files.
 
@@ -37,7 +37,7 @@
   - `extract_snippet(project_root: Path, snippet: dict) -> dict`
   - `build_walkthrough(project_root: Path, manifest_path: Path, output_path: Path) -> dict`
 
-- [ ] **Step 1: Write failing extraction and validation tests**
+- [x] **Step 1: Write failing extraction and validation tests**
 
 ```python
 from pathlib import Path
@@ -79,12 +79,12 @@ def test_validate_manifest_requires_nine_chapters():
         validate_manifest({"title": "x", "chapters": []})
 ```
 
-- [ ] **Step 2: Run tests to confirm failure**
+- [x] **Step 2: Run tests to confirm failure**
 
 Run: `python -m pytest tools/tests/test_interview_code_walkthrough_build.py -v`  
 Expected: FAIL because the module does not exist.
 
-- [ ] **Step 3: Implement validation, path safety, extraction, and atomic build**
+- [x] **Step 3: Implement validation, path safety, extraction, and atomic build**
 
 Implement `build.py` with these exact behaviors:
 
@@ -120,12 +120,12 @@ def extract_snippet(project_root, snippet):
 
 `build_walkthrough()` must resolve all snippets, call the renderer, write a temporary file in the output directory, and use `Path.replace()` only after rendering succeeds.
 
-- [ ] **Step 4: Run tests to confirm pass**
+- [x] **Step 4: Run tests to confirm pass**
 
 Run: `python -m pytest tools/tests/test_interview_code_walkthrough_build.py -v`  
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/interview_code_walkthrough tools/tests/test_interview_code_walkthrough_build.py
@@ -144,7 +144,7 @@ git commit -m "feat: add code walkthrough source extractor"
 - Consumes: resolved manifest from Task 1 with chapter snippets containing `code`, `lineStart`, `lineEnd`, `sourcePath`, and `codeHash`.
 - Produces: `render_html(data: dict, generated_at: str) -> str`
 
-- [ ] **Step 1: Write failing renderer tests**
+- [x] **Step 1: Write failing renderer tests**
 
 ```python
 from tools.interview_code_walkthrough.render import render_html
@@ -184,12 +184,12 @@ def test_renderer_escapes_source_html():
     assert "<script>alert(1)</script>" not in html
 ```
 
-- [ ] **Step 2: Run tests to confirm failure**
+- [x] **Step 2: Run tests to confirm failure**
 
 Run: `python -m pytest tools/tests/test_interview_code_walkthrough_render.py -v`  
 Expected: FAIL because `render.py` does not exist.
 
-- [ ] **Step 3: Implement the renderer**
+- [x] **Step 3: Implement the renderer**
 
 The HTML must include:
 
@@ -206,12 +206,12 @@ The HTML must include:
 
 Use `html.escape()` for every source or manifest string. Do not interpolate raw code into JavaScript.
 
-- [ ] **Step 4: Run renderer tests**
+- [x] **Step 4: Run renderer tests**
 
 Run: `python -m pytest tools/tests/test_interview_code_walkthrough_render.py -v`  
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/interview_code_walkthrough/render.py tools/tests/test_interview_code_walkthrough_render.py
@@ -230,7 +230,7 @@ git commit -m "feat: add offline walkthrough renderer"
 - Consumes: manifest schema from Task 1.
 - Produces: the nine approved chapters and 20–30 source snippets used by Task 4.
 
-- [ ] **Step 1: Add a failing manifest coverage test**
+- [x] **Step 1: Add a failing manifest coverage test**
 
 ```python
 def test_checked_in_manifest_has_all_chapters():
@@ -242,12 +242,12 @@ def test_checked_in_manifest_has_all_chapters():
     assert "前端确认、SSE 与分级轮询" in titles
 ```
 
-- [ ] **Step 2: Run the test to confirm failure**
+- [x] **Step 2: Run the test to confirm failure**
 
 Run: `python -m pytest tools/tests/test_interview_code_walkthrough_build.py::test_checked_in_manifest_has_all_chapters -v`  
 Expected: FAIL because the manifest is absent.
 
-- [ ] **Step 3: Create the manifest with these exact chapters and source ranges**
+- [x] **Step 3: Create the manifest with these exact chapters and source ranges**
 
 | Chapter | Source ranges |
 |---|---|
@@ -263,12 +263,12 @@ Expected: FAIL because the manifest is absent.
 
 Each snippet must include a concrete explanation, at least one interview question, and at least one pitfall. Python ranges must explain unfamiliar syntax in plain Chinese, especially `with`, exception handling, dictionaries, `async`/`await`, and `async for`.
 
-- [ ] **Step 4: Validate every anchor and range**
+- [x] **Step 4: Validate every anchor and range**
 
 Run: `python tools/build_interview_code_walkthrough.py --check-only`  
 Expected: exit code 0; output reports 9 chapters and at least 20 resolved snippets.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/interview_code_walkthrough/manifest.json tools/tests/test_interview_code_walkthrough_build.py
@@ -289,7 +289,7 @@ git commit -m "feat: add async hazard creation walkthrough manifest"
 - Consumes: `build_walkthrough()` from Task 1 and manifest from Task 3.
 - Produces: CLI exit codes and generated offline artifact.
 
-- [ ] **Step 1: Write a failing CLI test**
+- [x] **Step 1: Write a failing CLI test**
 
 ```python
 import subprocess, sys
@@ -306,12 +306,12 @@ def test_cli_check_only_validates_manifest():
     assert "9 chapters" in result.stdout
 ```
 
-- [ ] **Step 2: Run the CLI test to confirm failure**
+- [x] **Step 2: Run the CLI test to confirm failure**
 
 Run: `python -m pytest tools/tests/test_interview_code_walkthrough_cli.py -v`  
 Expected: FAIL because the CLI entrypoint does not exist.
 
-- [ ] **Step 3: Implement the CLI and README**
+- [x] **Step 3: Implement the CLI and README**
 
 CLI behavior:
 
@@ -327,7 +327,7 @@ python tools/build_interview_code_walkthrough.py --check-only
 
 README must document purpose, commands, update procedure after source-line changes, and the fact that generated HTML is offline and read-only.
 
-- [ ] **Step 4: Generate the HTML and run tests**
+- [x] **Step 4: Generate the HTML and run tests**
 
 Run:
 
@@ -338,7 +338,7 @@ python -m pytest tools/tests/test_interview_code_walkthrough_build.py tools/test
 
 Expected: all tests pass and HTML is generated.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add tools/build_interview_code_walkthrough.py output/interview-code-walkthrough/README.md output/interview-code-walkthrough/index.html tools/tests/test_interview_code_walkthrough_cli.py
@@ -353,7 +353,7 @@ git commit -m "feat: generate offline interview code walkthrough"
 - Modify if browser checks reveal issues: generated renderer or manifest only.
 - Verify: `output/interview-code-walkthrough/index.html`
 
-- [ ] **Step 1: Open the generated page locally**
+- [x] **Step 1: Open the generated page locally**
 
 Open `output/interview-code-walkthrough/index.html` in the Codex browser preview or a local browser.
 
@@ -367,14 +367,14 @@ Expected:
 - copy-path and VS Code link controls exist;
 - no external network request is required.
 
-- [ ] **Step 2: Verify stale-source protection without editing business source**
+- [x] **Step 2: Verify stale-source protection without editing business source**
 
 Create a temporary test source and manifest in a temporary directory, then run `extract_snippet()` with a deliberately wrong anchor.
 
 Run: `python -m pytest tools/tests/test_interview_code_walkthrough_build.py -v`  
 Expected: mismatch test passes and reports `anchor mismatch`.
 
-- [ ] **Step 3: Run the complete verification suite once more**
+- [x] **Step 3: Run the complete verification suite once more**
 
 Run:
 
@@ -386,9 +386,13 @@ git diff --check
 
 Expected: build succeeds, all tests pass, and no whitespace errors.
 
-- [ ] **Step 4: Commit any verification fixes**
+- [x] **Step 4: Commit any verification fixes**
 
 ```bash
 git add tools/interview_code_walkthrough output/interview-code-walkthrough tools/tests
 git commit -m "test: verify offline walkthrough viewer"
 ```
+
+## Implementation Status
+
+All tasks completed on 2026-11-19. The generated HTML also includes line-level syntax notes and collapsible reference answers requested after initial implementation.
