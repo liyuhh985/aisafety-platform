@@ -511,3 +511,84 @@ def test_policy_reason_carries_the_signal():
         "uncertainty_signals": ["danger_term:浓烟"],
     })
     assert "danger_term:浓烟" in result["reason"]
+
+
+def test_answering_clarification_with_complete_facts_reports_full():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "medium",
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": []}],
+        "question": "",
+        "answer": "长期占用公共通道属于占道经营。",
+    }
+    out = decide_next_action(plan, {
+        "user_text": "长期",
+        "dialogue_mode": "plain",
+        "asked_question_last_turn": True,
+    })
+    assert out["action"] == "report_full"
+    assert out["needs_search"] is True
+
+
+def test_answering_clarification_with_missing_slot_asks_next():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "medium",
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["persistence"]}],
+        "question": "这个摊贩占道是长期还是临时？",
+        "answer": "已记录占道经营。",
+    }
+    out = decide_next_action(plan, {
+        "user_text": "长期",
+        "dialogue_mode": "plain",
+        "asked_question_last_turn": True,
+    })
+    assert out["action"] == "ask_critical_question"
+    assert "长期还是临时" in out["question"]
+
+
+def test_answering_clarification_without_next_question_returns_preliminary():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "medium",
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["unknown_slot"]}],
+        "question": "",
+        "answer": "已记录占道经营。",
+    }
+    out = decide_next_action(plan, {
+        "user_text": "长期",
+        "dialogue_mode": "plain",
+        "asked_question_last_turn": True,
+    })
+    assert out["action"] == "report_preliminary"
+    assert out["needs_search"] is True
+
+
+def test_plain_mode_without_pending_question_stays_short():
+    plan = {
+        "ok": True,
+        "intent": "quick_assessment",
+        "risk_level": "medium",
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": []}],
+        "question": "",
+        "answer": "这属于占道经营。",
+    }
+    out = decide_next_action(plan, {
+        "user_text": "这算不算隐患",
+        "dialogue_mode": "plain",
+        "asked_question_last_turn": False,
+    })
+    assert out["action"] == "answer_now"
+
+
+def test_planner_history_window_is_configurable(monkeypatch):
+    from core import dialogue_understanding as du
+    monkeypatch.setattr(du, "PLANNER_HISTORY_MESSAGES", 4)
+    msgs = [{"role": "user", "content": "m%d" % i} for i in range(10)]
+    out = du.build_planner_messages(msgs)
+    blob = json.dumps(out, ensure_ascii=False)
+    assert "m9" in blob and "m6" in blob
+    assert "m0" not in blob
