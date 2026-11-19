@@ -22,7 +22,7 @@ def _snippet(**overrides):
         "interviewQuestions": ["Why is this called?"],
         "interviewAnswers": ["It is called to route the request into the next layer."],
         "pitfalls": ["Do not claim it is asynchronous."],
-        "lineNotes": [{"lineOffset": 0, "text": "This annotation declares an HTTP endpoint."}],
+        "lineNotes": [{"lineOffset": 0, "text": "This annotation declares an HTTP endpoint.", "kind": "syntax"}],
     }
     base.update(overrides)
     return base
@@ -113,3 +113,19 @@ def test_extract_snippet_rejects_line_note_outside_range(tmp_path: Path):
 
     with pytest.raises(WalkthroughError, match="line note offset"):
         extract_snippet(tmp_path, _snippet(lineNotes=[{"lineOffset": 1, "text": "x"}]))
+
+
+
+def test_validate_manifest_rejects_unknown_line_note_kind():
+    chapter = {
+        "id": "c",
+        "title": "t",
+        "summary": "s",
+        "snippets": [
+            _snippet(
+                lineNotes=[{"lineOffset": 0, "text": "x", "kind": "unknown"}]
+            )
+        ],
+    }
+    with pytest.raises(WalkthroughError, match="kind"):
+        validate_manifest({"title": "x", "subtitle": "y", "chapters": [chapter] * 9})

@@ -12,7 +12,7 @@ def _vscode_uri(source_path: str, line_start: int) -> str:
 
 
 def _render_code(code: str, line_start: int, line_notes: list[dict]) -> str:
-    notes_by_offset = {note["lineOffset"]: note["text"] for note in line_notes}
+    notes_by_offset = {note["lineOffset"]: note for note in line_notes}
     rows = []
     for offset, line in enumerate(code.splitlines()):
         line_number = line_start + offset
@@ -24,10 +24,12 @@ def _render_code(code: str, line_start: int, line_notes: list[dict]) -> str:
         )
         note = notes_by_offset.get(offset)
         if note:
+            kind = note.get("kind", "syntax")
+            kind_label = "方法注" if kind == "method" else "语法注"
             rows.append(
                 '<div class="syntax-note annotation">'
-                f'<span class="syntax-badge">L{line_number} · 语法注</span>'
-                f'<span>{escape(note)}</span>'
+                f'<span class="syntax-badge">L{line_number} · {kind_label}</span>'
+                f'<span>{escape(note["text"])}</span>'
                 "</div>"
             )
     return "\n".join(rows)

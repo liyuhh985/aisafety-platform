@@ -138,9 +138,10 @@ def validate_manifest(data: dict) -> None:
                 note_context = f"{snippet_context}.lineNotes[{note_index}]"
                 if not isinstance(line_note, dict):
                     raise WalkthroughError(f"{note_context} must be an object")
-                if set(line_note.keys()) != {"lineOffset", "text"}:
+                allowed_keys = {"lineOffset", "text", "kind"}
+                if not set(line_note.keys()).issubset(allowed_keys):
                     raise WalkthroughError(
-                        f"{note_context}: expected exactly lineOffset and text"
+                        f"{note_context}: allowed fields are lineOffset, text, kind"
                     )
                 note_offset = line_note.get("lineOffset")
                 if (
@@ -157,6 +158,11 @@ def validate_manifest(data: dict) -> None:
                     )
                 note_offsets.add(note_offset)
                 _require_text(line_note.get("text"), "text", note_context)
+                kind = line_note.get("kind", "syntax")
+                if kind not in {"syntax", "method"}:
+                    raise WalkthroughError(
+                        f"{note_context}: kind must be 'syntax' or 'method'"
+                    )
 
             start = snippet.get("start")
             end = snippet.get("end")

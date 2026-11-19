@@ -22,7 +22,10 @@ def sample_data():
                         "interviewQuestions": ["Why use SSE?"],
                         "interviewAnswers": ["SSE is a one-way stream from server to browser."],
                         "pitfalls": ["Accepted does not mean created."],
-                        "lineNotes": [{"lineOffset": 0, "text": "This annotation maps the HTTP endpoint."}],
+                        "lineNotes": [
+                            {"lineOffset": 0, "text": "This annotation maps the HTTP endpoint.", "kind": "syntax"},
+                            {"lineOffset": 1, "text": "This method forwards the request to Python.", "kind": "method"},
+                        ],
                         "sourcePath": r"C:\repo\AiController.java",
                         "codeHash": "abc",
                     }
@@ -66,6 +69,8 @@ def test_renderer_shows_syntax_notes_and_hidden_answers():
     html = render_html(sample_data(), "2026-11-19T12:00:00+08:00")
 
     assert "语法注" in html
+    assert "方法注" in html
     assert "This annotation maps the HTTP endpoint." in html
+    assert "This method forwards the request to Python." in html
     assert "<details" in html
     assert "SSE is a one-way stream from server to browser." in html

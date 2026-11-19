@@ -30,7 +30,13 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "Java 注解：把下面的方法映射到 HTTP POST 路径。"
+              "text": "Java 注解：把下面的方法映射到 HTTP POST 路径。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 1,
+              "text": "方法作用：定义 SSE 助手入口，后续会把认证和参数交给服务层。",
+              "kind": "method"
             }
           ]
         },
@@ -57,11 +63,18 @@
           "lineNotes": [
             {
               "lineOffset": 10,
-              "text": "Java 变量声明：new 创建对象，ObjectMapper 负责 JSON 序列化/反序列化。"
+              "text": "Java 变量声明：new 创建对象，ObjectMapper 负责 JSON 序列化/反序列化。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 31,
-              "text": "Long 是包装类型，userId 来自认证上下文而不是请求参数。"
+              "text": "Long 是包装类型，userId 来自认证上下文而不是请求参数。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 8,
+              "text": "方法作用：读取原始 JSON 请求体，兼容非表单调用。",
+              "kind": "method"
             }
           ]
         },
@@ -88,7 +101,13 @@
           "lineNotes": [
             {
               "lineOffset": 5,
-              "text": "Map<K,V> 表示键值映射；LinkedHashMap 保留插入顺序，方括号中的类型是泛型。"
+              "text": "Map<K,V> 表示键值映射；LinkedHashMap 保留插入顺序，方括号中的类型是泛型。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 10,
+              "text": "方法作用：把结构化确认原样传给 Python，普通聊天时为空字符串。",
+              "kind": "method"
             }
           ]
         },
@@ -115,11 +134,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "Future<?> 表示异步任务句柄，? 是未知泛型；() -> { ... } 是 Java Lambda。"
+              "text": "Future<?> 表示异步任务句柄，? 是未知泛型；() -> { ... } 是 Java Lambda。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 15,
-              "text": "try-with-resources 会在代码块结束时自动关闭 reader；var 由编译器推断类型。"
+              "text": "try-with-resources 会在代码块结束时自动关闭 reader；var 由编译器推断类型。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 23,
+              "text": "方法作用：去掉上游 SSE 的 data: 前缀，再把事件推给浏览器。",
+              "kind": "method"
             }
           ]
         },
@@ -146,7 +172,13 @@
           "lineNotes": [
             {
               "lineOffset": 1,
-              "text": "async def 定义协程函数；await request.json() 会等待异步 I/O，不阻塞事件循环。"
+              "text": "async def 定义协程函数；await request.json() 会等待异步 I/O，不阻塞事件循环。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "方法作用：异步读取 JSON 请求体；await 让出事件循环等待网络数据。",
+              "kind": "method"
             }
           ]
         },
@@ -173,7 +205,13 @@
           "lineNotes": [
             {
               "lineOffset": 10,
-              "text": "async for 用于消费异步迭代器；每次 await 到下一个事件后才进入循环体。"
+              "text": "async for 用于消费异步迭代器；每次 await 到下一个事件后才进入循环体。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "方法作用：把结构化确认回复继续传入 LangGraph，恢复上一轮中断节点。",
+              "kind": "method"
             }
           ]
         }
@@ -207,11 +245,18 @@
           "lineNotes": [
             {
               "lineOffset": 5,
-              "text": "state 是 dict，.get(key) 取不到时返回 None；or 提供默认值。"
+              "text": "state 是 dict，.get(key) 取不到时返回 None；or 提供默认值。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 15,
-              "text": "interrupt() 是 LangGraph 的中断点，恢复时节点会重新执行到这里。"
+              "text": "interrupt() 是 LangGraph 的中断点，恢复时节点会重新执行到这里。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 18,
+              "text": "方法作用：把稳定 request_id 放进确认卡片，前端确认时必须原样回传。",
+              "kind": "method"
             }
           ]
         },
@@ -238,11 +283,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "isinstance 检查运行时类型；dict 是 Python 字典。"
+              "text": "isinstance 检查运行时类型；dict 是 Python 字典。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 2,
-              "text": "链式调用：先取值，再用 or 兜底，最后转成字符串。"
+              "text": "链式调用：先取值，再用 or 兜底，最后转成字符串。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 14,
+              "text": "方法作用：清洗用户改过的草稿，并限制在当前会话锁定的大类范围内。",
+              "kind": "method"
             }
           ]
         },
@@ -269,7 +321,13 @@
           "lineNotes": [
             {
               "lineOffset": 27,
-              "text": "字典字面量；后续 **submit_kwargs 会把字典展开成关键字参数。"
+              "text": "字典字面量；后续 **submit_kwargs 会把字典展开成关键字参数。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 45,
+              "text": "方法作用：向浏览器广播已受理事件，触发前端保存 requestId 并轮询。",
+              "kind": "method"
             }
           ]
         }
@@ -303,11 +361,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "* 后面的参数必须用关键字传入；类型标注只是提示，不是运行时强校验。"
+              "text": "* 后面的参数必须用关键字传入；类型标注只是提示，不是运行时强校验。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 3,
-              "text": "dict | None 是联合类型，表示草稿可能是字典或空值。"
+              "text": "dict | None 是联合类型，表示草稿可能是字典或空值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 8,
+              "text": "方法作用：文档说明 accepted 只是受理，不是建单成功。",
+              "kind": "method"
             }
           ]
         },
@@ -334,11 +399,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "条件表达式；draft 为真时复制字典，否则调用抽取函数。"
+              "text": "条件表达式；draft 为真时复制字典，否则调用抽取函数。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 1,
-              "text": ".get 是安全取字典字段，键不存在时不会抛出 KeyError。"
+              "text": ".get 是安全取字典字段，键不存在时不会抛出 KeyError。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 30,
+              "text": "方法作用：没有图选坐标时，把文本地址解析成经纬度。",
+              "kind": "method"
             }
           ]
         },
@@ -365,11 +437,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "使用参数化日志而不是字符串拼接，便于延迟格式化和避免敏感信息误拼。"
+              "text": "使用参数化日志而不是字符串拼接，便于延迟格式化和避免敏感信息误拼。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 5,
-              "text": "双星号把字典展开为函数的命名参数。"
+              "text": "双星号把字典展开为函数的命名参数。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 10,
+              "text": "方法作用：把事务层结果转换成 LangGraph 可识别的 accepted 动作。",
+              "kind": "method"
             }
           ]
         },
@@ -396,11 +475,18 @@
           "lineNotes": [
             {
               "lineOffset": 17,
-              "text": "with 是上下文管理器，代码块结束会自动关闭 cursor。"
+              "text": "with 是上下文管理器，代码块结束会自动关闭 cursor。",
+              "kind": "method"
             },
             {
               "lineOffset": 25,
-              "text": "相邻字符串在括号中自动拼接；%s 是数据库参数占位符。"
+              "text": "相邻字符串在括号中自动拼接；%s 是数据库参数占位符。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 9,
+              "text": "方法作用：复用上游稳定 requestId，没有时才新建。",
+              "kind": "method"
             }
           ]
         },
@@ -427,11 +513,18 @@
           "lineNotes": [
             {
               "lineOffset": 1,
-              "text": "except 捕获指定异常；事务异常时先 rollback，再按业务规则回查。"
+              "text": "except 捕获指定异常；事务异常时先 rollback，再按业务规则回查。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 13,
-              "text": "finally 无论成功或异常都会执行，用于归还连接。"
+              "text": "finally 无论成功或异常都会执行，用于归还连接。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 17,
+              "text": "方法作用：只有 commit 完成才返回受理成功。",
+              "kind": "method"
             }
           ]
         }
@@ -465,11 +558,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "* 表示 connect 必须按关键字传入；-> int 是返回类型提示。"
+              "text": "* 表示 connect 必须按关键字传入；-> int 是返回类型提示。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 25,
-              "text": "元组解包会把查询结果的一行拆成四个变量。"
+              "text": "元组解包会把查询结果的一行拆成四个变量。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 29,
+              "text": "方法作用：把 outbox 里的 payload 真正发送到 RabbitMQ。",
+              "kind": "method"
             }
           ]
         },
@@ -496,11 +596,18 @@
           "lineNotes": [
             {
               "lineOffset": 8,
-              "text": "Event.wait(seconds) 等待指定秒数，同时可被停止事件提前唤醒。"
+              "text": "Event.wait(seconds) 等待指定秒数，同时可被停止事件提前唤醒。",
+              "kind": "method"
             },
             {
               "lineOffset": 24,
-              "text": "rowcount 是条件 UPDATE 实际影响的行数，用来判断 claim 是否成功。"
+              "text": "rowcount 是条件 UPDATE 实际影响的行数，用来判断 claim 是否成功。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 5,
+              "text": "方法作用：每轮循环执行一次扫描和投递。",
+              "kind": "method"
             }
           ]
         }
@@ -534,11 +641,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "Spring 注解：把方法注册为指定 RabbitMQ 队列的监听器。"
+              "text": "Spring 注解：把方法注册为指定 RabbitMQ 队列的监听器。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 4,
-              "text": "用指定字符集把 byte[] 解成 String，避免平台默认编码不一致。"
+              "text": "用指定字符集把 byte[] 解成 String，避免平台默认编码不一致。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 5,
+              "text": "方法作用：把 JSON 反序列化成 Java 消息对象，后续才能读取字段。",
+              "kind": "method"
             }
           ]
         },
@@ -565,11 +679,18 @@
           "lineNotes": [
             {
               "lineOffset": 17,
-              "text": "声明 HazardVO 类型变量并接收 createAi 的返回值。"
+              "text": "声明 HazardVO 类型变量并接收 createAi 的返回值。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 24,
-              "text": "rethrow 原异常，让上层事务和 MQ 框架继续处理。"
+              "text": "rethrow 原异常，让上层事务和 MQ 框架继续处理。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 18,
+              "text": "方法作用：工单事务返回后补发 SUCCESS 回执。",
+              "kind": "method"
             }
           ]
         }
@@ -603,11 +724,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "Spring 注解：方法由事务代理包裹，正常返回时提交，运行期异常时回滚。"
+              "text": "Spring 注解：方法由事务代理包裹，正常返回时提交，运行期异常时回滚。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 7,
-              "text": "boolean 是基本类型；&& 表示短路与，前半段为 false 时不再执行后半段。"
+              "text": "boolean 是基本类型；&& 表示短路与，前半段为 false 时不再执行后半段。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 9,
+              "text": "方法作用：重复消息先回查已有工单，是幂等的快速路径。",
+              "kind": "method"
             }
           ]
         },
@@ -634,7 +762,13 @@
           "lineNotes": [
             {
               "lineOffset": 11,
-              "text": "tryLock 的三个参数分别是最长等待、锁租期和时间单位；有租期时不会启用看门狗续期。"
+              "text": "tryLock 的三个参数分别是最长等待、锁租期和时间单位；有租期时不会启用看门狗续期。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 3,
+              "text": "方法作用：按 userId 获取 Redisson 分布式锁。",
+              "kind": "method"
             }
           ]
         },
@@ -661,11 +795,18 @@
           "lineNotes": [
             {
               "lineOffset": 1,
-              "text": "反射式属性复制，把 DTO 同名属性复制到实体；字段名不一致时不会自动映射。"
+              "text": "反射式属性复制，把 DTO 同名属性复制到实体；字段名不一致时不会自动映射。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 12,
-              "text": "捕获数据库唯一键冲突异常，再执行业务级幂等回查。"
+              "text": "捕获数据库唯一键冲突异常，再执行业务级幂等回查。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 11,
+              "text": "方法作用：执行真正的 tb_hazard 插入；唯一键在这里兜住并发。",
+              "kind": "method"
             }
           ]
         }
@@ -699,7 +840,13 @@
           "lineNotes": [
             {
               "lineOffset": 10,
-              "text": "RabbitTemplate 把对象转换后发送到交换机，并带上 routing key。"
+              "text": "RabbitTemplate 把对象转换后发送到交换机，并带上 routing key。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 1,
+              "text": "方法作用：成功回执携带真实 hazardId。",
+              "kind": "method"
             }
           ]
         },
@@ -726,11 +873,18 @@
           "lineNotes": [
             {
               "lineOffset": 3,
-              "text": "先防止 message 为 None，再安全取字段、转字符串、去空格并转大写。"
+              "text": "先防止 message 为 None，再安全取字段、转字符串、去空格并转大写。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 9,
-              "text": "with 管理数据库 cursor 的生命周期，异常时仍会释放。"
+              "text": "with 管理数据库 cursor 的生命周期，异常时仍会释放。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 13,
+              "text": "方法作用：用 Java 回执中的终态和 hazardId 更新 Python request。",
+              "kind": "method"
             }
           ]
         },
@@ -757,11 +911,18 @@
           "lineNotes": [
             {
               "lineOffset": 1,
-              "text": "函数内 import 是延迟导入，只有真正启动消费者时才需要 pika 依赖。"
+              "text": "函数内 import 是延迟导入，只有真正启动消费者时才需要 pika 依赖。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 21,
-              "text": "ACK 使用 delivery_tag 告诉 Broker 这条消息已成功处理。"
+              "text": "ACK 使用 delivery_tag 告诉 Broker 这条消息已成功处理。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 12,
+              "text": "方法作用：建立 RabbitMQ 阻塞连接，供结果消费者使用。",
+              "kind": "method"
             }
           ]
         }
@@ -795,11 +956,18 @@
           "lineNotes": [
             {
               "lineOffset": 11,
-              "text": "条件表达式：测试注入时用 java_status，生产时调用真实 HTTP 查询。"
+              "text": "条件表达式：测试注入时用 java_status，生产时调用真实 HTTP 查询。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 18,
-              "text": "and 表示两个条件都成立；is not None 排除空值。"
+              "text": "and 表示两个条件都成立；is not None 排除空值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 12,
+              "text": "方法作用：Java 查询异常时立即跳过，不能误判成未建单。",
+              "kind": "method"
             }
           ]
         },
@@ -826,7 +994,13 @@
           "lineNotes": [
             {
               "lineOffset": 15,
-              "text": "元组/下标取值并解包；int 把数据库值转整数，or 0 处理 NULL。"
+              "text": "元组/下标取值并解包；int 把数据库值转整数，or 0 处理 NULL。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 1,
+              "text": "方法作用：读取 outbox 当前状态和剩余重试信息。",
+              "kind": "method"
             }
           ]
         },
@@ -853,11 +1027,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "class 定义类；__init__ 和 run_once 的第一个参数 self 代表当前实例。"
+              "text": "class 定义类；__init__ 和 run_once 的第一个参数 self 代表当前实例。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 26,
-              "text": "单元素元组解包，逗号表示只取查询结果第一列。"
+              "text": "单元素元组解包，逗号表示只取查询结果第一列。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 28,
+              "text": "方法作用：逐条查询 Java 真实结果并修正 Python 状态。",
+              "kind": "method"
             }
           ]
         },
@@ -884,11 +1065,18 @@
           "lineNotes": [
             {
               "lineOffset": 4,
-              "text": "读取请求头；required=false 表示缺头时得到 null，随后由代码主动拒绝。"
+              "text": "读取请求头；required=false 表示缺头时得到 null，随后由代码主动拒绝。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 10,
-              "text": "创建可变键值对象，最后序列化成 found/hazardId 响应。"
+              "text": "创建可变键值对象，最后序列化成 found/hazardId 响应。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 9,
+              "text": "方法作用：按 requestId 回查 Java tb_hazard。",
+              "kind": "method"
             }
           ]
         }
@@ -922,11 +1110,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "export 导出模块成员，const 声明不可重新赋值的常量。"
+              "text": "export 导出模块成员，const 声明不可重新赋值的常量。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 11,
-              "text": "函数声明导出给其他模块使用，参数是有效轮询时间。"
+              "text": "函数声明导出给其他模块使用，参数是有效轮询时间。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 20,
+              "text": "方法作用：避免最后一次延迟越过十分钟边界。",
+              "kind": "method"
             }
           ]
         },
@@ -953,11 +1148,18 @@
           "lineNotes": [
             {
               "lineOffset": 5,
-              "text": "const 声明块级常量；localStorage 保存浏览器登录态。"
+              "text": "const 声明块级常量；localStorage 保存浏览器登录态。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 40,
-              "text": "throw 抛出异常；调用方可以统一捕获 ApiError。"
+              "text": "throw 抛出异常；调用方可以统一捕获 ApiError。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 24,
+              "text": "方法作用：真正发起 HTTP 请求并等待响应。",
+              "kind": "method"
             }
           ]
         },
@@ -984,11 +1186,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "FormData 用来构造 multipart 表单，浏览器自动生成 boundary。"
+              "text": "FormData 用来构造 multipart 表单，浏览器自动生成 boundary。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 22,
-              "text": "await 等待 fetch 返回响应；fetch 的第二个参数是请求配置对象。"
+              "text": "await 等待 fetch 返回响应；fetch 的第二个参数是请求配置对象。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 3,
+              "text": "方法作用：把结构化确认 JSON 放进 multipart 请求体。",
+              "kind": "method"
             }
           ]
         },
@@ -1015,11 +1224,18 @@
           "lineNotes": [
             {
               "lineOffset": 0,
-              "text": "=== 是严格相等，避免隐式类型转换。"
+              "text": "=== 是严格相等，避免隐式类型转换。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 11,
-              "text": "|| 提供字段名兼容兜底，但要注意空字符串也会触发右值。"
+              "text": "|| 提供字段名兼容兜底，但要注意空字符串也会触发右值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "方法作用：持久化 pending requestId，刷新或重登后继续轮询。",
+              "kind": "method"
             }
           ]
         },
@@ -1046,11 +1262,18 @@
           "lineNotes": [
             {
               "lineOffset": 3,
-              "text": "+= 是复合赋值；Date.now() 返回毫秒时间戳。"
+              "text": "+= 是复合赋值；Date.now() 返回毫秒时间戳。",
+              "kind": "syntax"
             },
             {
               "lineOffset": 27,
-              "text": "箭头函数保留外层 this；setTimeout 在延迟后执行回调。"
+              "text": "箭头函数保留外层 this；setTimeout 在延迟后执行回调。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 34,
+              "text": "方法作用：到点后发起一次状态查询。",
+              "kind": "method"
             }
           ]
         },
@@ -1077,7 +1300,13 @@
           "lineNotes": [
             {
               "lineOffset": 5,
-              "text": "Array.from 把 Map 的 values 迭代器转成数组；forEach 遍历每个轮询状态。"
+              "text": "Array.from 把 Map 的 values 迭代器转成数组；forEach 遍历每个轮询状态。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 8,
+              "text": "方法作用：回到前台后立即刷新，而不是等旧 timer。",
+              "kind": "method"
             }
           ]
         }
