@@ -78,3 +78,27 @@ def test_load_manifest_reports_invalid_json(tmp_path: Path):
     with pytest.raises(WalkthroughError, match="invalid manifest JSON"):
         load_manifest(path)
 
+
+
+def test_checked_in_manifest_has_all_chapters():
+    root = Path(__file__).parents[2]
+    data = load_manifest(root / "tools/interview_code_walkthrough/manifest.json")
+    titles = [chapter["title"] for chapter in data["chapters"]]
+
+    assert len(titles) == 9
+    assert "Java SSE 入口" in titles
+    assert "前端确认、SSE 与分级轮询" in titles
+
+
+def test_checked_in_manifest_resolves_every_snippet():
+    root = Path(__file__).parents[2]
+    data = load_manifest(root / "tools/interview_code_walkthrough/manifest.json")
+    validate_manifest(data)
+
+    snippet_count = 0
+    for chapter in data["chapters"]:
+        for snippet in chapter["snippets"]:
+            extract_snippet(root, snippet)
+            snippet_count += 1
+
+    assert snippet_count >= 20

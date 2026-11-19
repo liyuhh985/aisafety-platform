@@ -1,0 +1,647 @@
+{
+  "title": "异步建单代码链路",
+  "subtitle": "从用户确认、Python Outbox、RabbitMQ 到 Java 幂等落库和前端轮询。每段代码都直接来自当前工作区，可离线阅读，也可在 VS Code 中跳回原文件。",
+  "chapters": [
+    {
+      "id": "java-sse-entry",
+      "title": "Java SSE 入口",
+      "summary": "先看浏览器请求怎样进入 Java，再由 Java 将 SSE 请求转发给 Python。这个节点不负责建单落库。",
+      "snippets": [
+        {
+          "file": "safety-web/src/main/java/com/safety/web/controller/AiController.java",
+          "method": "AiController.assistantStream",
+          "start": 78,
+          "end": 86,
+          "startAnchor": "@PostMapping(value = \"/assistant/stream\")",
+          "title": "确认请求进入 Java Controller",
+          "explain": "这个方法是前端进入 AI 助手链路的 HTTP 入口。它接收 message、session_id、interrupt_reply 和可选图片文件；interrupt_reply 表示前端正在恢复上一轮 LangGraph 的 interrupt 闸门。",
+          "interviewQuestions": [
+            "这个 Controller 为什么不能直接建单？",
+            "interrupt_reply 和普通聊天 message 有什么区别？"
+          ],
+          "pitfalls": [
+            "Controller 只做入口、登录态和参数处理，不在这里写 request/outbox。",
+            "不能把一次 HTTP 请求成功当成工单已经创建。"
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/controller/AiController.java",
+          "method": "AiController.assistantStream",
+          "start": 92,
+          "end": 134,
+          "startAnchor": "String message = messageParam;",
+          "title": "解析参数、校验用户并转发 Python",
+          "explain": "Java 兼容表单和 JSON 两种请求体，最后从 Authentication 中取得当前 userId。无 sessionId 时会生成新会话。有图片时先上传文件，再把 fileId 和 URL 一起交给 AiService；无图片时直接转发文本确认。",
+          "interviewQuestions": [
+            "为什么 user_id 必须由 Java 注入，而不能相信前端随便传？",
+            "图片上传和建单幂等之间有什么关联？"
+          ],
+          "pitfalls": [
+            "userId 必须来自认证上下文，不能信任客户端自报身份。",
+            "sessionId 为空不代表可以跳过会话身份校验。"
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/AiService.java",
+          "method": "AiService.assistantStream",
+          "start": 220,
+          "end": 236,
+          "startAnchor": "public SseEmitter assistantStream(String message, String sessionId, Long userId,",
+          "title": "Java 组装转发给 Python 的请求体",
+          "explain": "AiService 创建 SseEmitter，把浏览器请求转换成 Python 能识别的字段，并写入内部服务 Token。这里的 SseEmitter 是 Java 对浏览器保持单向流式输出的载体。",
+          "interviewQuestions": [
+            "为什么这里用 SSE，而不是普通同步 HTTP？",
+            "内部服务 Token 和用户 JWT 分别解决什么问题？"
+          ],
+          "pitfalls": [
+            "SSE 只解决服务端向浏览器持续推送，不等于建单任务本身是同步完成的。",
+            "内部 Token 不能代替用户身份。"
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/AiService.java",
+          "method": "AiService.assistantStream",
+          "start": 242,
+          "end": 276,
+          "startAnchor": "Future<?> future = submitStreamTask(() -> {",
+          "title": "Java 读取 Python SSE 并转发",
+          "explain": "真正请求 Python 的工作被提交到线程池，避免占用当前 Web 请求线程。代码逐行读取 Python 返回的 data: 内容，再通过 SseEmitter 送回浏览器；浏览器断开时会通过 cancellation 关闭上游连接。",
+          "interviewQuestions": [
+            "如果浏览器断开，Java 和 Python 的连接会发生什么？",
+            "为什么不能因为 SSE 断开就取消已经提交的建单任务？"
+          ],
+          "pitfalls": [
+            "断开的是展示连接，不应把已提交的异步建单任务一起取消。",
+            "这里的 Future 是转发线程，不是建单消费者线程。"
+          ]
+        },
+        {
+          "file": "ai-module/server.py",
+          "method": "FastAPI.assistant_stream",
+          "start": 385,
+          "end": 423,
+          "startAnchor": "@app.post(\"/api/ai/assistant/stream\")",
+          "title": "Python FastAPI 接收 Java 转发",
+          "explain": "async def 表示这个接口是异步函数；Form 参数允许 Java 用 multipart 发送数据。没有 message 时，代码会 await request.json() 读取 JSON。2026-11-19 这天阅读时，把 await 理解为“把等待 I/O 的控制权暂时交回事件循环”，不是新开线程。",
+          "interviewQuestions": [
+            "FastAPI 的 async 接口里为什么不能直接执行长时间阻塞调用？",
+            "Java 已经鉴权后，Python 中间件还校验什么？"
+          ],
+          "pitfalls": [
+            "async 不等于自动并行；阻塞数据库或 HTTP 调用仍要放到线程池。",
+            "Python 仍要校验内部 Token 和 user_id。"
+          ]
+        },
+        {
+          "file": "ai-module/server.py",
+          "method": "assistant_stream.generate",
+          "start": 471,
+          "end": 489,
+          "startAnchor": "async def generate():",
+          "title": "async for 持续消费 LangGraph 事件",
+          "explain": "generate() 是 StreamingResponse 使用的异步生成器。async for 每次等待 LangGraph 产出 chunk、event 或 interrupt，再立即封装成 SSE。这样模型 token、确认卡片和 task_accepted 能按事件顺序到达浏览器。",
+          "interviewQuestions": [
+            "为什么不能等整份报告生成完再一次性返回？",
+            "task_accepted 为什么必须作为独立事件发送？"
+          ],
+          "pitfalls": [
+            "async for 不是普通 for；它消费的是异步事件流，中间可能长时间等待。",
+            "不能把 task_accepted 误讲成 task_created。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "langgraph-confirm-submit",
+      "title": "LangGraph 确认与提交节点",
+      "summary": "LangGraph 用 interrupt 暂停等待用户确认；恢复后进入 submit_task。这里要特别讲清 interrupt 节点重跑和副作用边界。",
+      "snippets": [
+        {
+          "file": "ai-module/core/assistant_graph.py",
+          "method": "task_gate",
+          "start": 2322,
+          "end": 2358,
+          "startAnchor": "def task_gate(state: AssistantState) -> Command:",
+          "title": "interrupt 暂停并生成确认卡片",
+          "explain": "task_gate 读取 checkpoint 中的 task_phase、request_id 和 task_draft，调用 interrupt() 暂停图执行。发给前端的卡片包含确认问题、隐患列表、地址、稳定 request_id 和冻结草稿。interrupt() 之前的代码在恢复时可能重跑。",
+          "interviewQuestions": [
+            "为什么 request_id 要在 interrupt 之前生成？",
+            "为什么 interrupt() 前不能调用模型、写数据库或发消息？"
+          ],
+          "pitfalls": [
+            "interrupt 恢复时节点会整体重跑，前面不能有业务副作用。",
+            "request_id 是确认级幂等键，不是建单消息 ID。"
+          ]
+        },
+        {
+          "file": "ai-module/core/assistant_graph.py",
+          "method": "task_gate",
+          "start": 2359,
+          "end": 2405,
+          "startAnchor": "if isinstance(answer, dict):",
+          "title": "校验确认值、草稿和大类范围",
+          "explain": "用户恢复后会回传 decision、request_id、地址、坐标和可能修改过的 draft。代码先校验 request_id 没有变化，再清洗草稿，拒绝不在当前会话锁定范围内的隐患大类，并把地址与图选坐标写回 state。",
+          "interviewQuestions": [
+            "为什么前端传上来的隐患大类不能直接相信？",
+            "确认 request_id 不一致时为什么要终止？"
+          ],
+          "pitfalls": [
+            "前端限制只是体验层，后端和 LangGraph 仍必须校验。",
+            "不能接受会话范围外的类别继续建单。"
+          ]
+        },
+        {
+          "file": "ai-module/core/assistant_graph.py",
+          "method": "submit_task",
+          "start": 2442,
+          "end": 2495,
+          "startAnchor": "def submit_task(state: AssistantState) -> Command:",
+          "title": "把确认结果提交为 MQ 受理请求",
+          "explain": "submit_task 汇总历史、地址、坐标、request_id、图片和草稿，调用 submit_from_history。拿到 accepted 后只发送 task_accepted 事件，表示 request 和 outbox 已受理，不代表 Java 已经写入 tb_hazard。",
+          "interviewQuestions": [
+            "accepted 和 SUCCESS 分别代表什么？",
+            "如果 task_accepted 响应丢了，前端为什么还能按 request_id 继续查？"
+          ],
+          "pitfalls": [
+            "accepted 不是建单成功。",
+            "这个节点成功后应清空会话建单草稿，但前端仍保留 request_id 用于轮询。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python-outbox-transaction",
+      "title": "Python request + outbox 事务",
+      "summary": "Python 不使用 @Transactional；它通过 autocommit=False 的连接手动 commit/rollback，把 request 和 outbox 作为同一个数据库事务写入。",
+      "snippets": [
+        {
+          "file": "ai-module/tools/hazard_submit.py",
+          "method": "submit_from_history",
+          "start": 313,
+          "end": 328,
+          "startAnchor": "def submit_from_history(user_id, history, latest, *, address_hint: str = \"\", coords=None,",
+          "title": "建单提交函数的输入和返回动作",
+          "explain": "函数接收用户、历史、最新文本、地址提示、坐标、session、图片和 request_id。签名里的 * 表示后面的参数必须按关键字传入。docstring 说明 accepted 是等待 MQ/Java 建单，不是已经创建。",
+          "interviewQuestions": [
+            "为什么 request_id 从上游一路传到入队函数？",
+            "address_hint 和 coords 为什么会同时存在？"
+          ],
+          "pitfalls": [
+            "不要把 action=accepted 说成 status=SUCCESS。",
+            "Python 类型注解只是提示，运行时仍要做数据校验。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_submit.py",
+          "method": "submit_from_history",
+          "start": 329,
+          "end": 375,
+          "startAnchor": "info = dict(draft) if draft else _extract(history, latest)",
+          "title": "清洗类别、地址、坐标并组装 payload",
+          "explain": "代码优先使用报告阶段冻结的 draft；没有 draft 才重新抽取。它规范类别列表，缺少类别时返回 no_category，缺少地址时返回 ask_address。用户在图选的点直接作为坐标，超过 200 字的地址会在更上层被限制。最后组装成 Java 消费端需要的字段。",
+          "interviewQuestions": [
+            "为什么地址抽取结果需要用户确认？",
+            "模型抽取失败时为什么要走 ask_address，而不是猜一个地址？"
+          ],
+          "pitfalls": [
+            "模型抽取是软约束，不能替代后端字段校验。",
+            "地址过长、类别越界或坐标非法时不能继续入队。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_submit.py",
+          "method": "submit_from_history",
+          "start": 376,
+          "end": 388,
+          "startAnchor": "LOGGER.info(\"AI hazard submit payload=%s\", payload)",
+          "title": "调用 enqueue 并返回 accepted",
+          "explain": "payload 组装完后调用 enqueue_hazard_create。只有该函数返回 ok，才向前端返回 accepted 和 requestId；异常会记录日志并返回 fail。这里体现了“先写库，后受理”的顺序。",
+          "interviewQuestions": [
+            "为什么不能先返回 accepted 再异步写 request/outbox？",
+            "日志为什么不能直接记录敏感图片内容或完整身份信息？"
+          ],
+          "pitfalls": [
+            "如果写库失败却返回 accepted，用户会看到永远不进入 MQ 的假任务。",
+            "生产日志要避免泄露敏感字段。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "enqueue_hazard_create",
+          "start": 150,
+          "end": 184,
+          "startAnchor": "def enqueue_hazard_create(user_id, session_id, payload: dict, *, request_id=None,",
+          "title": "同一事务插入 request 和 outbox",
+          "explain": "先按 request_id 查已有记录，做确认级幂等。没有已有记录时，在同一个 autocommit=False 连接里先 INSERT ai_hazard_create_request，再 INSERT ai_hazard_create_outbox。with conn.cursor() as cur 是上下文管理器，离开代码块时自动关闭 cursor。",
+          "interviewQuestions": [
+            "为什么 request 和 outbox 必须在同一事务？",
+            "先查后插和 request_id 主键分别解决哪类重复？"
+          ],
+          "pitfalls": [
+            "先查后插是快速路径，并发正确性最终靠 request_id 主键/唯一约束。",
+            "Python 这里不是 Spring @Transactional。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "enqueue_hazard_create",
+          "start": 185,
+          "end": 202,
+          "startAnchor": "conn.commit()",
+          "title": "提交成功后才返回 accepted",
+          "explain": "两张表都插入后执行 commit。唯一键冲突会 rollback 并回查赢家记录；其他异常 rollback 后继续抛出。只有 try 块完整执行到 commit 之后，函数才返回 ok=True 和 PENDING。",
+          "interviewQuestions": [
+            "并发重复确认时，失败的那条事务怎样返回同一个 requestId？",
+            "commit 之后返回 accepted 丢包了怎么办？"
+          ],
+          "pitfalls": [
+            "commit 失败绝不能返回 accepted。",
+            "accepted HTTP 响应丢失后，重复确认应回查现有 request，而不是新建第二条。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "relay-outbox-publish",
+      "title": "Relay 扫描与 RabbitMQ 投递",
+      "summary": "RelayWorker 定时扫描 outbox，先用条件更新认领，再投递 RabbitMQ。它不是 RequestReconciler。",
+      "snippets": [
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "RelayWorker.run_once",
+          "start": 349,
+          "end": 391,
+          "startAnchor": "def run_once(self, *, connect=None) -> int:",
+          "title": "查询、认领、投递并更新 outbox 状态",
+          "explain": "run_once 查询 PENDING、RETRY，以及 locked_at 已超时、可被重新认领的 PUBLISHING 行。它先尝试批量 claim，再把 payload 发 RabbitMQ；发布失败标 RETRY，成功批量标 PUBLISHED，同时把 request 从 PENDING 推到 PUBLISHED。",
+          "interviewQuestions": [
+            "为什么多个 Relay 同时扫描时不能直接 SELECT 后发送？",
+            "PUBLISHING 超时后为什么能被重新认领？"
+          ],
+          "pitfalls": [
+            "RabbitMQ 是至少一次投递，发布成功不等于 Java 已消费。",
+            "Relay 的 PUBLISHED 不是 request 的 SUCCESS。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "RelayWorker.run_forever/_claim",
+          "start": 393,
+          "end": 438,
+          "startAnchor": "def run_forever(self, stop_event=None, *, connect=None) -> None:",
+          "title": "循环保活和条件更新 claim",
+          "explain": "run_forever 定期调用 run_once 并保持 RabbitMQ 心跳。_claim 和 _claim_batch 用 UPDATE ... WHERE status=... 的条件更新原子抢占记录；只有 rowcount 匹配才说明当前 worker 拿到任务。",
+          "interviewQuestions": [
+            "条件更新怎样避免两个 worker 同时投递同一行？",
+            "claim 成功后 worker 崩溃会怎样？"
+          ],
+          "pitfalls": [
+            "先 SELECT 再 UPDATE 会有并发窗口。",
+            "claim 只是减少重复投递，不能代替 Java 消费端幂等。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "java-rabbit-listener",
+      "title": "Java RabbitMQ Listener",
+      "summary": "Java Consumer 解析 hazard.create 消息、校验必填字段、调用 HazardService，并在事务方法返回后补发结果回执。",
+      "snippets": [
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/HazardCreateConsumer.java",
+          "method": "HazardCreateConsumer.onMessage",
+          "start": 34,
+          "end": 52,
+          "startAnchor": "@RabbitListener(queues = \"${hazard.create.queue}\")",
+          "title": "监听消息并拒绝不可重试的坏 payload",
+          "explain": "@RabbitListener 绑定 hazard.create 队列。代码用原始字节读取 JSON，避免 Python 消息没有 content_type 导致转换异常。缺少 requestId、userId 或 category 时使用 AmqpRejectAndDontRequeueException，直接拒绝并不再 requeue。",
+          "interviewQuestions": [
+            "为什么这里拿原始 Message 自己解析，而不是直接接收转换后的对象？",
+            "什么错误应该重试，什么错误应该直接进 DLQ？"
+          ],
+          "pitfalls": [
+            "非法 JSON 和缺关键字段重试也不会成功。",
+            "ACK 是处理完成后确认；不是收到消息就 ACK。"
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/HazardCreateConsumer.java",
+          "method": "HazardCreateConsumer.onMessage",
+          "start": 54,
+          "end": 80,
+          "startAnchor": "AiHazardDTO dto = new AiHazardDTO();",
+          "title": "组装 DTO、调用 Java 事务并发送回执",
+          "explain": "Consumer 把消息字段复制到 AiHazardDTO，然后调用 hazardService.createAi。createAi 方法返回时 Spring 事务已经提交，随后 publisher.succeeded 才发送 SUCCESS 回执。若运行期异常抛出，Spring AMQP 会重试；耗尽后 Recoverer 发 FAILED 并进 DLQ。",
+          "interviewQuestions": [
+            "成功回执为什么必须在 createAi 返回后发送？",
+            "回执发送失败后原工单事务会回滚吗？"
+          ],
+          "pitfalls": [
+            "回执不能放进工单数据库事务内部提前发送。",
+            "事务提交后回执失败不会回滚已提交工单，MQ 会重新消费并依靠幂等回查。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "java-create-transaction",
+      "title": "Java createAi 事务与幂等",
+      "summary": "真正写 tb_hazard 的边界在 Java。先查后插是快速路径，request_id 唯一索引是并发正确性边界，分布式锁进一步限制同一用户并发创建。",
+      "snippets": [
+        {
+          "file": "safety-service/src/main/java/com/safety/service/service/impl/HazardServiceImpl.java",
+          "method": "HazardServiceImpl.createAi",
+          "start": 151,
+          "end": 179,
+          "startAnchor": "@Transactional",
+          "title": "事务入口、先查已有工单和图片归属",
+          "explain": "@Transactional 表示方法运行在 Spring 事务中。requestId 非空时先按 request_id 查 tb_hazard；如果已有记录直接返回同一个工单。图片必须带受控 fileId，并校验当前用户拥有且状态为 TEMP。",
+          "interviewQuestions": [
+            "为什么先查后插不能单独保证并发幂等？",
+            "为什么不能只相信消息里传来的 imageUrl？"
+          ],
+          "pitfalls": [
+            "先查后插是快速路径，唯一索引才是并发正确性边界。",
+            "图片必须校验归属和临时状态，避免越权引用。"
+          ]
+        },
+        {
+          "file": "safety-service/src/main/java/com/safety/service/service/impl/HazardServiceImpl.java",
+          "method": "HazardServiceImpl.createAi",
+          "start": 181,
+          "end": 199,
+          "startAnchor": "String lockKey = RedisConstant.KEY_PREFIX + \"lock:hazard:create:\" + dto.getUserId();",
+          "title": "同一用户创建锁和失败边界",
+          "explain": "代码使用 Redisson 按 userId 加创建锁，tryLock 最多等 3 秒、租期 10 秒。获取不到锁时返回操作频繁。锁降低同一用户并发压力，但跨用户仍可能相同 requestId 并发，所以后面的数据库唯一索引不可省。",
+          "interviewQuestions": [
+            "分布式锁和数据库唯一索引各自负责什么？",
+            "Java 进程崩溃后 Redisson 锁会怎样释放？"
+          ],
+          "pitfalls": [
+            "锁不能代替数据库约束。",
+            "锁租期过短可能在业务未完成时失效，因此还要依赖唯一索引兜底。"
+          ]
+        },
+        {
+          "file": "safety-service/src/main/java/com/safety/service/service/impl/HazardServiceImpl.java",
+          "method": "HazardServiceImpl.createAi",
+          "start": 200,
+          "end": 228,
+          "startAnchor": "Hazard hazard = new Hazard();",
+          "title": "插入工单、冲突回查并完成事务",
+          "explain": "代码组装 Hazard、规范化大类并调用 hazardMapper.insert。捕获 DuplicateKeyException 后再次按 request_id 回查赢家记录；查到就直接返回。图片随后标记 ATTACHED，缓存失效后方法返回，Spring 事务在返回边界提交。",
+          "interviewQuestions": [
+            "唯一键冲突后为什么还要回查，而不是简单报错？",
+            "markAttached 和工单插入为什么在同一事务？"
+          ],
+          "pitfalls": [
+            "DuplicateKeyException 可能代表另一个消费者已经成功建单，回查后应返回同一 hazardId。",
+            "图片从 TEMP 转 ATTACHED 要和工单落库保持原子性。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "result-feedback",
+      "title": "成功回执与 Python 状态更新",
+      "summary": "Java 建单事务返回后发送结果消息，Python ResultConsumer 消费回执并幂等更新 ai_hazard_create_request。",
+      "snippets": [
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/HazardCreateResultPublisher.java",
+          "method": "HazardCreateResultPublisher",
+          "start": 26,
+          "end": 44,
+          "startAnchor": "public void succeeded(String requestId, Long hazardId) {",
+          "title": "Java 发送 SUCCESS/FAILED 回执",
+          "explain": "succeeded 和 failed 都调用 send，通过 RabbitTemplate 把 HazardCreateResult 发到结果路由键。发送异常不会吞掉，因为消费者必须重试，否则 request 可能永远停在 PUBLISHED。",
+          "interviewQuestions": [
+            "回执发送失败为什么不能吞异常直接 ACK？",
+            "失败回执和成功回执的语义有什么不同？"
+          ],
+          "pitfalls": [
+            "吞异常会导致前端长期卡在创建中。",
+            "成功回执只能携带真实已提交的 hazardId。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "apply_result",
+          "start": 497,
+          "end": 529,
+          "startAnchor": "def apply_result(message: dict, *, connect=None) -> bool:",
+          "title": "幂等更新 Python request 状态",
+          "explain": "回执必须是终态 SUCCESS 或 FAILED，并带 request_id。SQL 使用 WHERE status <> SUCCESS 保护，已成功的记录不会被后来错误状态覆盖。commit 后返回是否实际更新到行；异常会 rollback 后重新抛出。",
+          "interviewQuestions": [
+            "重复收到同一条 SUCCESS 回执会怎样？",
+            "FAILED 回执为什么不能覆盖已经 SUCCESS 的记录？"
+          ],
+          "pitfalls": [
+            "终态更新必须带条件，防止后到的失败消息覆盖成功事实。",
+            "Python 状态表是前端轮询的数据源，不能和 Java tb_hazard 说成同一张表。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "ResultConsumer.run_forever",
+          "start": 539,
+          "end": 573,
+          "startAnchor": "def run_forever(self, stop_event=None) -> None:",
+          "title": "RabbitMQ 结果消息的 ACK/NACK",
+          "explain": "ResultConsumer 消费 hazard.create.result.q。解析和 apply_result 成功后 basic_ack；异常时记录日志并 basic_nack(requeue=False)，让坏消息进入结果队列的 DLQ，避免无限重投。",
+          "interviewQuestions": [
+            "ACK 是在消费开始前还是业务处理成功后发送？",
+            "这里为什么使用 requeue=False？"
+          ],
+          "pitfalls": [
+            "ACK 表示消费者处理完成，Broker 可删除消息。",
+            "坏消息无限 requeue 会形成重试风暴。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "request-reconciler",
+      "title": "RequestReconciler 超时对账",
+      "summary": "RequestReconciler 扫描超时未终态的 request，主动查 Java tb_hazard 是否已经落库，再补 SUCCESS 或把 outbox 重置为 RETRY。",
+      "snippets": [
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "reconcile_request",
+          "start": 587,
+          "end": 614,
+          "startAnchor": "def reconcile_request(request_id: str, *, connect=None, java_status=None) -> bool:",
+          "title": "先查 Java 真实状态，查询异常时本轮跳过",
+          "explain": "对账第一原则：先调用 Java 内部接口。若 Java 已查到 request_id 对应的工单，就把 Python request 补成 SUCCESS 和 hazardId。若 Java 查询本身报错，函数直接返回 False，不把网络异常误判成“没建单”。",
+          "interviewQuestions": [
+            "为什么 Java 查询异常时不能让 outbox 立即重投？",
+            "对账发现工单已存在时还需要发新回执吗？"
+          ],
+          "pitfalls": [
+            "查不到和查询失败不是一回事。",
+            "不能把网络异常当成确认未建单。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "reconcile_request",
+          "start": 616,
+          "end": 659,
+          "startAnchor": "cur.execute(",
+          "title": "未落库时按重试余量重置 outbox",
+          "explain": "如果 Java 明确没查到工单，代码读取 outbox 的重试次数。达到上限或 outbox 已 FAILED 时把 request 标记 FAILED；否则将 outbox 改回 RETRY、next_retry_time 设为 NOW，并把 request 回退 PENDING，让 Relay 再次投递。",
+          "interviewQuestions": [
+            "为什么不是直接由 RequestReconciler 自己发 MQ？",
+            "重试耗尽后才 FAILED 的原因是什么？"
+          ],
+          "pitfalls": [
+            "RequestReconciler 只改状态，实际投递仍由 Relay 完成。",
+            "要防止确认未落库前过早终止。"
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "RequestReconciler",
+          "start": 662,
+          "end": 705,
+          "startAnchor": "class RequestReconciler:",
+          "title": "定时筛选超时 request",
+          "explain": "RequestReconciler.run_once 只扫描 PENDING/PUBLISHED 且 updated_at 超过阈值、同时存在 outbox 的 request。每条单独调用 reconcile_request，一条失败只记日志，不阻断其他请求。run_forever 按配置间隔循环。",
+          "interviewQuestions": [
+            "这个类和 RelayWorker 有什么职责区别？",
+            "为什么单条对账失败不能影响整批？"
+          ],
+          "pitfalls": [
+            "RequestReconciler 扫的是超时 request，不是待发送 outbox。",
+            "批量补偿要隔离单条异常。"
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/controller/HazardController.java",
+          "method": "HazardController.aiCreateRequestStatus",
+          "start": 128,
+          "end": 142,
+          "startAnchor": "/** Python 对账用：按 request_id 查询 Java 侧是否已落库。 */",
+          "title": "Java 内部对账接口",
+          "explain": "这个接口只给 Python 对账使用，必须携带 X-Internal-Token。它按 request_id 调 HazardService 查 tb_hazard，并返回 {found, hazardId}。它不创建工单，也不读 Python ai_* 表。",
+          "interviewQuestions": [
+            "为什么不能让 Python 直接查 tb_hazard？",
+            "这个内部接口为什么不能被普通用户直接调用？"
+          ],
+          "pitfalls": [
+            "读取权边界仍然保持：Python 通过受控 HTTP 间接查询 Java 数据。",
+            "内部 Token 不能为空，否则是越权查询入口。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frontend-confirm-poll",
+      "title": "前端确认、SSE 与分级轮询",
+      "summary": "前端把确认卡片回传给 SSE 接口，解析 task_accepted 后保存 request_id，并按可见时间分级轮询。前端断开只停止展示，不取消后端任务。",
+      "snippets": [
+        {
+          "file": ".frontend-work/src/utils/hazardPoll.js",
+          "method": "nextHazardPollDelay",
+          "start": 1,
+          "end": 22,
+          "startAnchor": "export const HAZARD_POLL_FAST_LIMIT_MS = 10 * 1000",
+          "title": "分级轮询间隔",
+          "explain": "函数按有效轮询时间返回下一次延迟：0–10 秒每 1 秒，10–60 秒每 3 秒，1–10 分钟每 30 秒，达到 10 分钟返回 -1 停止。最后一行还把延迟截断到十 分钟边界，避免超时后多跑一次。",
+          "interviewQuestions": [
+            "为什么前期轮询密、后期轮询疏？",
+            "为什么返回 -1 表示停止而不是固定更长间隔？"
+          ],
+          "pitfalls": [
+            "10 分钟只停止前端轮询，不等于后端任务失败。",
+            "页面不可见时不能继续把隐藏时间计入有效轮询时间。"
+          ]
+        },
+        {
+          "file": ".frontend-work/src/utils/request.js",
+          "method": "request",
+          "start": 43,
+          "end": 100,
+          "startAnchor": "// 2. 组装请求头（自动注入 JWT Token）",
+          "title": "统一请求封装注入 JWT 并处理错误",
+          "explain": "request.js 从 localStorage 读取 token，自动加 Bearer Authorization；FormData 不手写 Content-Type，让浏览器生成 boundary；JSON 才序列化。401 清登录态并跳登录页，非 2xx 解析后端错误信息并抛 ApiError。",
+          "interviewQuestions": [
+            "为什么 FormData 不能手动设置 Content-Type？",
+            "轮询时 401 和网络异常应分别怎样处理？"
+          ],
+          "pitfalls": [
+            "请求封装只能处理展示层登录态，真正的权限校验仍在 Java。",
+            "不要把 404、401 和临时网络失败混成同一种业务终态。"
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "sendMessage FormData",
+          "start": 1097,
+          "end": 1124,
+          "startAnchor": "const fd = new FormData()",
+          "title": "确认为 SSE 请求携带 interrupt_reply",
+          "explain": "前端在 FormData 中放入 message、session_id、interrupt_reply、user_id、大类提示和图片。interrupt_reply 存在时 message 可以为空。fetch 携带 JWT 和 AbortController，停止的是当前浏览器展示请求。",
+          "interviewQuestions": [
+            "为什么结构化确认可以不带普通文本 message？",
+            "AbortController 取消后，已经提交的建单任务会回滚吗？"
+          ],
+          "pitfalls": [
+            "浏览器中断展示连接不能回滚数据库或 MQ 任务。",
+            "user_id 仍由 Java 认证上下文决定，不能把前端字段当最终身份。"
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "task_accepted",
+          "start": 1192,
+          "end": 1210,
+          "startAnchor": "} else if (event.type === 'interrupt') {",
+          "title": "解析 interrupt 与 task_accepted",
+          "explain": "收到 interrupt 时把确认卡片挂到当前助手消息；收到 task_accepted 时从事件中取 request_id，保存到用户隔离的 localStorage，并启动轮询。这里 task_accepted 只表示受理，不立即显示工单创建成功。",
+          "interviewQuestions": [
+            "task_accepted、SUCCESS、FAILED 在前端分别怎样展示？",
+            "为什么 request_id 要按 userId 隔离保存？"
+          ],
+          "pitfalls": [
+            "不能把 task_accepted 渲染成“建单成功”。",
+            "页面刷新或重新登录后要恢复仍然存在的 pending request。"
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "pause/schedule hazard polling",
+          "start": 783,
+          "end": 819,
+          "startAnchor": "function pauseHazardPollingState(state) {",
+          "title": "暂停、恢复和调度下一次轮询",
+          "explain": "state.activeElapsedMs 只累计页面可见期间的时间；document.hidden 时不安排 timer。回到前台后重新设置 activeStartedAt 并立即 refresh。scheduleHazardPoll 根据当前有效耗时算下一次延迟，到 10 分钟调用超时收尾。",
+          "interviewQuestions": [
+            "页面切后台后为什么暂停计时？",
+            "回到前台为什么先立即查一次？"
+          ],
+          "pitfalls": [
+            "隐藏期间不计入有效等待时间。",
+            "刷新后先查一次，避免继续显示离开前的旧状态。"
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "handlePageVisibilityChange",
+          "start": 905,
+          "end": 915,
+          "startAnchor": "function handlePageVisibilityChange() {",
+          "title": "页面可见性变化时统一暂停和恢复",
+          "explain": "visibilitychange 是浏览器页面可见性事件。hidden 时暂停所有轮询计时并清除 timer；可见时恢复计时，并立即刷新每个未停止的 request。这样既避免后台无效请求，也避免回来后继续等待旧的 30 秒间隔。",
+          "interviewQuestions": [
+            "为什么不能只靠 setTimeout 自己判断页面隐藏？",
+            "多个并发建单请求如何一起恢复？"
+          ],
+          "pitfalls": [
+            "浏览器 timer 在后台可能被节流，不能依赖它精确计时。",
+            "恢复时要立即查询，而不是等待下一轮延迟。"
+          ]
+        }
+      ]
+    }
+  ]
+}
