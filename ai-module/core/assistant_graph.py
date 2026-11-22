@@ -351,10 +351,21 @@ def _plan_issues(plan: dict) -> list[dict]:
     若规划器只给了旧的 categories/category_slots 形状，就在这里确定性地补成 issues，
     避免 understand 因为上下游形状漂移而整体失效。
     """
-    issues = [
-        issue for issue in (plan.get("issues") or [])
-        if issue.get("subcategory_code")
-    ]
+    issues = []
+    for raw_issue in (plan.get("issues") or []):
+        if not isinstance(raw_issue, dict):
+            continue
+        code = str(raw_issue.get("subcategory_code") or "").strip()
+        if not code:
+            continue
+        major = SUBCATEGORY_TO_MAJOR.get(code)
+        if not major:
+            major = str(raw_issue.get("major_code") or "").strip()
+        if major not in MAJOR_LABELS:
+            continue
+        issue = dict(raw_issue)
+        issue["major_code"] = major
+        issues.append(issue)
     if issues:
         return issues
     slots_by_category = plan.get("category_slots") or {}
@@ -705,13 +716,16 @@ def understand(state: AssistantState, config=None) -> dict:
             "known_slots": persisted,
             "subcategory_code": prev_sub,
         }
+    routed_active_skills = list(state.get("active_skills") or [])
     skill_bodies = {}
-    for code in state.get("active_skills") or []:
+    for code in routed_active_skills:
         try:
             skill_bodies[code] = _skill_registry.load_body(code)
         except Exception as exc:
             logger.error("skill_body_load_failed code=%s error=%s", code, type(exc).__name__)
     planner_kwargs = dict(planner_context)
+    if routed_active_skills:
+        planner_kwargs["active_skill_codes"] = routed_active_skills
     if skill_bodies:
         planner_kwargs["skill_bodies"] = skill_bodies
     plan = _understand_plan(
@@ -937,6 +951,15 @@ def understand(state: AssistantState, config=None) -> dict:
     reason = policy.get("reason", "")
     if no_questions:
         reason = "%s | %s" % (reason, ",".join(verdict["uncertainty_signals"])[:180])
+    active_skills = routed_active_skills
+    skill_route_source = state.get("skill_route_source") or "fallback"
+    skill_route_confidence = float(state.get("skill_route_confidence") or 0.0)
+    if locked_majors and set(locked_majors) != set(routed_active_skills):
+        logger.warning("skill_route_mismatch active=%s locked=%s",
+                       routed_active_skills, locked_majors)
+        active_skills = list(locked_majors)[:MAX_ACTIVE_MAJORS]
+        skill_route_source = "locked"
+        skill_route_confidence = 1.0
     return {
         **empty,
         "dialogue_plan": plan,
@@ -952,6 +975,10 @@ def understand(state: AssistantState, config=None) -> dict:
         "immediate_danger": bool(plan.get("immediate_danger")),
         "premises_scope": premises_scope,
         "selected_major_code": plan.get("selected_major_code", selected_major_code),
+        "active_skills": active_skills,
+        "skill_route_source": skill_route_source,
+        "skill_route_confidence": skill_route_confidence,
+        "skill_versions": _skill_registry.versions_for(active_skills),
         "major_mismatch": bool(plan.get("major_mismatch")),
         "clarification_question": question,
         "question_source": question_source,
@@ -2528,7 +2555,7 @@ def task_gate(state: AssistantState) -> Command:
     answer = interrupt({
         "type": "confirm_create_task",
         "question": task_invitation_question(state),
-        "issues": state.get("issues") or [],
+        "issues": _public_issues(state.get("issues") or []),
         "address": str(state.get("address_text") or ""),
         "request_id": request_id,
         "draft": draft,

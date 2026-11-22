@@ -38,6 +38,7 @@ class _GateState(TypedDict, total=False):
     messages: Annotated[list, append_messages]
     task_phase: str
     task_offered: bool
+    issues: list
     address_text: str
     task_draft: dict
     request_id: str
@@ -296,6 +297,7 @@ class _GateSubmitState(TypedDict, total=False):
     user_id: int
     task_phase: str
     task_offered: bool
+    issues: list
     address_text: str
     task_draft: dict
     request_id: str
@@ -568,3 +570,23 @@ def test_bad_interrupt_reply_falls_back_to_classify(monkeypatch):
     out = asyncio.run(_bridge_turn(ag, "好的", "bridge-bad-2", interrupt_reply="{broken"))
     assert captured["address_hint"] == "预抽取地址"
     assert any(kind == "chunk" and "已受理，正在创建隐患任务" in str(text) for kind, text in out)
+def test_task_gate_interrupt_redacts_evidence_fields():
+    app = _gate_graph()
+    config = {"configurable": {"thread_id": "gate-redaction"}}
+    events = list(app.stream({
+        "task_phase": "confirm",
+        "issues": [{
+            "major_code": "fire",
+            "subcategory_code": "fire_lane_blocked",
+            "slots": {"blocker": "杂物"},
+            "evidence": [{"slot": "blocker", "quote": "通道有杂物", "source_ref": "u1"}],
+            "slot_evidence": {
+                "blocker": {"status": "grounded", "quote": "通道有杂物", "source_ref": "u1"},
+            },
+        }],
+    }, config, stream_mode=["updates"]))
+    payload = _interrupt_payload(events)
+    issue = payload["issues"][0]
+    assert "evidence" not in issue
+    assert "slot_evidence" not in issue
+    assert issue["slots"] == {"blocker": "杂物"}

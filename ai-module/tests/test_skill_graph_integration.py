@@ -105,3 +105,33 @@ def test_report_includes_only_active_skill_report_sections(monkeypatch):
     assert "allowed_tools" not in captured["prompt"]
     assert "通道里有杂物" not in captured["prompt"]
     assert "slot_evidence" not in captured["prompt"]
+def test_understand_realigns_active_skills_to_final_locked_majors(monkeypatch):
+    def fake_plan(messages, vision, selected_major_code="", **kwargs):
+        return {
+            "ok": True,
+            "intent": "report_hazard",
+            "risk_level": "high",
+            "issues": [{
+                "major_code": "utility",
+                "subcategory_code": "gas_leak",
+                "slots": {"source": "燃气泄漏"},
+            }],
+            "categories": ["gas_leak"],
+            "category_slots": {"gas_leak": {"source": "燃气泄漏"}},
+            "perceived_major": "utility",
+            "perceived_subcategory": "gas_leak",
+            "question": "",
+            "answer": "",
+            "needs_search": True,
+        }
+
+    monkeypatch.setattr(ag, "_understand_plan", fake_plan)
+    out = ag.understand({
+        "messages": [ag.HumanMessage(content="楼道里有燃气味")],
+        "active_skills": ["fire"],
+        "skill_route_source": "keyword",
+    })
+    assert out["locked_majors"] == ["utility"]
+    assert out["active_skills"] == ["utility"]
+    assert out["skill_route_source"] == "locked"
+    assert out["skill_versions"] == {"utility": "1"}

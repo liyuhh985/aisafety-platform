@@ -244,9 +244,15 @@ def parse_plan(raw: str) -> dict:
     }
 
 
-def _planner_system_prompt() -> str:
+def _planner_system_prompt(active_skill_codes=None) -> str:
+    active_codes = [
+        code for code in (active_skill_codes or [])
+        if code in MAJOR_LABELS
+    ]
     schema_lines = []
     for item in HAZARD_TAXONOMY:
+        if active_codes and item["code"] not in active_codes:
+            continue
         subcategories = "、".join(
             f"{label}({code})["
             + ",".join(slot.key for slot in get_slot_schema(code))
@@ -323,6 +329,9 @@ def _planner_system_prompt() -> str:
         "- 不要引用或编造具体法规和案例。\n"
         "- 所有已识别小类都可以进入建任务询问，不再限制四类。\n"
         "- 用户中途新增其他隐患时，把当前仍有效的问题一起放进 issues；relationship_hint 用 add。\n"
+        "- 当前只展开已激活 Skill 的小类和槽位；如果用户明显描述的是未激活大类，\n"
+        "  可依据「全部大类索引」返回 perceived_major/selected_major_code 并令 major_mismatch=true，\n"
+        "  但不要编造未展开的小类或槽位。\n"
     )
 
 
@@ -405,13 +414,19 @@ def build_source_map(messages, vision_summary: str = "") -> dict[str, str]:
 def build_planner_messages(messages: list, vision_summary: str = "",
                            selected_major_code: str = "", missing=None,
                            known_slots=None, subcategory_code: str = "",
-                           skill_bodies: dict[str, str] | None = None) -> list[dict]:
+                           skill_bodies: dict[str, str] | None = None,
+                           active_skill_codes: list[str] | None = None) -> list[dict]:
     """Build a planner request from recent dialogue plus vision context.
 
     missing / known_slots / subcategory_code 描述「当前锁定隐患还缺哪些决策级槽」，
     由调用方（图节点）从上一轮状态里算出来 —— 只有本会话已锁定小类时才有意义。
     """
-    out = [{"role": "system", "content": _planner_system_prompt()}]
+    out = [{"role": "system", "content": _planner_system_prompt(active_skill_codes)}]
+    if active_skill_codes:
+        major_index = "；".join(
+            f"{item['label']}({item['code']})" for item in HAZARD_TAXONOMY
+        )
+        out.append({"role": "system", "content": f"【全部大类索引】{major_index}"})
     selected_major_code = (selected_major_code or "").strip()
     if selected_major_code in MAJOR_LABELS:
         out.append({
@@ -443,7 +458,8 @@ def build_planner_messages(messages: list, vision_summary: str = "",
 def understand(messages: list, vision_summary: str = "",
                selected_major_code: str = "", missing=None,
                known_slots=None, subcategory_code: str = "",
-               skill_bodies: dict[str, str] | None = None) -> dict:
+               skill_bodies: dict[str, str] | None = None,
+               active_skill_codes: list[str] | None = None) -> dict:
     """Return a validated dialogue plan, or an empty plan on planner failure."""
     try:
         response = _planner_llm._call_llm(
@@ -452,6 +468,7 @@ def understand(messages: list, vision_summary: str = "",
                 missing=missing, known_slots=known_slots,
                 subcategory_code=subcategory_code,
                 skill_bodies=skill_bodies,
+                active_skill_codes=active_skill_codes,
             ),
             cancellation=None,
         )

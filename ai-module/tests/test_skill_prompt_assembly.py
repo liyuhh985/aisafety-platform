@@ -45,6 +45,7 @@ def test_understand_loads_bodies_locally_and_does_not_return_them(monkeypatch):
         "active_skills": ["fire"],
     })
     assert captured["skill_bodies"] == {"fire": "fire BODY SECRET"}
+    assert captured["active_skill_codes"] == ["fire"]
     assert "skill_bodies" not in out
     assert all("SECRET" not in str(value) for value in out.values())
 def test_understand_falls_back_when_skill_body_load_fails(monkeypatch):
@@ -70,3 +71,24 @@ def test_understand_falls_back_when_skill_body_load_fails(monkeypatch):
     })
     assert out["dialogue_plan"]["ok"] is True
     assert "skill_bodies" not in captured
+    assert captured["active_skill_codes"] == ["fire"]
+def test_skill_pruned_planner_prompt_excludes_inactive_subcategories():
+    from core.dialogue_understanding import _planner_system_prompt
+    pruned = _planner_system_prompt(active_skill_codes=["fire", "utility"])
+    full = _planner_system_prompt()
+    assert "fire_equipment_fault" in pruned
+    assert "gas_leak" in pruned
+    assert "elevator_trapped" not in pruned
+    assert "elevator_special" not in pruned
+    assert len(pruned) < len(full)
+
+
+def test_build_planner_messages_adds_compact_all_major_index():
+    built = build_planner_messages(
+        [HumanMessage(content="消防通道被占，旁边配电箱冒火花")],
+        skill_bodies={"fire": "FIRE BODY", "utility": "UTILITY BODY"},
+        active_skill_codes=["fire", "utility"],
+    )
+    combined = "\n".join(item["content"] for item in built)
+    assert "elevator_special" in combined
+    assert "elevator_trapped" not in combined
