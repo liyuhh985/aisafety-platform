@@ -1,4 +1,4 @@
-﻿"""LangGraph 助手状态定义。"""
+"""LangGraph 助手状态定义。"""
 from typing import Annotated, TypedDict
 
 from langgraph.graph.message import add_messages
@@ -85,6 +85,11 @@ class AssistantState(TypedDict, total=False):
     ungrounded_slots: list[str]         # 槽位值对不上原文（疑似编造）
     grounding_ratio: float
     uncertainty_signals: list[str]      # 可解释的信号串
+    slot_evidence_audit: dict           # 内部证据审计；不得进入 SSE / 报告
+    legacy_ungrounded_slots: list[str]  # 证据模式切换前的旧结果
+    legacy_uncertainty_level: str
+    legacy_grounding_ratio: float
+    evidence_ungrounded_slots: list[str]
     # guidance_emitted:「这次危险事件的安全文本已交给 emergency_guidance」。
     # 图内已无消费者（危险输入一律走 emergency_guidance 节点）；保留是因为 report() /
     # answer_reply() 被直接调用的非图路径仍靠它去重（见 prepend_guidance / _reply_prefix）。

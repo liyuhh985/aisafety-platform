@@ -166,6 +166,14 @@ PRIMARY_LLM_EFFORT = os.getenv("PRIMARY_LLM_EFFORT", "").strip()
 # 保证“线程里还留着的上下文，规划器都看得到”。
 PLANNER_HISTORY_MESSAGES = int(os.getenv("PLANNER_HISTORY_MESSAGES", "20"))
 
+# 槽位证据灰度：off=旧逻辑；shadow=只计算并记录审计；enforce=证据状态参与降级。
+SLOT_EVIDENCE_MODE = os.getenv("SLOT_EVIDENCE_MODE", "shadow").strip().lower()
+if SLOT_EVIDENCE_MODE not in {"off", "shadow", "enforce"}:
+    raise ValueError(
+        f"Unsupported SLOT_EVIDENCE_MODE={SLOT_EVIDENCE_MODE!r}; "
+        "expected 'off', 'shadow', or 'enforce'"
+    )
+
 
 @dataclass(frozen=True)
 class ModelSlot:

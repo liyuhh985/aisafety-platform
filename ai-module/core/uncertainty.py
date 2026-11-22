@@ -1,4 +1,4 @@
-﻿"""可验证的不确定性信号：不问模型，只做代码能核对的判断。
+"""可验证的不确定性信号：不问模型，只做代码能核对的判断。
 
 三件事：
 1. 槽位值能不能在用户原话/视觉摘要里找到依据（grounding）；
@@ -14,6 +14,8 @@ from core.hazard_taxonomy import (
     SUBCATEGORY_LABELS,
     normalize_taxonomy,
 )
+from core.dialogue_understanding import build_source_map
+from core.slot_schemas import get_slot_schema
 
 _FULL_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
 _PUNCT = re.compile(r"[\s，。、；：！？（）()\"'\-—,.!?;:]+")
@@ -201,34 +203,150 @@ def active_situation_term(text) -> str:
     return ""
 
 
-def assess(plan: dict, messages: list, vision_summary: str = "") -> dict:
-    """三个信号。
+def _numeric_text(value: str) -> str:
+    """Normalize common Chinese numerals that carry facts, without changing text."""
+    return (
+        str(value or "")
+        .translate(_FULL_DIGITS)
+        .replace("两", "2")
+        .replace("二", "2")
+    )
 
-    注意两件事的取文范围**故意不同**：
-    - grounding 用整段对话（事实可能在前几轮说过）；
-    - 危险判定只看本轮原话（加上模型自己给的 immediate_danger）。
-      这里不再做"跨轮延续"：类别已被锁定为一条会话一个隐患，
-      连续性交给看得见完整对话的模型，代码不再拿两次分类结果去猜。
+
+def _quote_in_source(quote: str, source: str) -> bool:
+    quote_norm = normalize_text(_numeric_text(quote))
+    source_norm = normalize_text(_numeric_text(source))
+    return bool(quote_norm) and quote_norm in source_norm
+
+
+def _value_supported_by_quote(value: str, quote: str) -> bool:
+    value_norm = normalize_text(_numeric_text(value))
+    quote_norm = normalize_text(_numeric_text(quote))
+    return bool(value_norm) and value_norm in quote_norm
+
+
+def _negated_near_quote(source: str, quote: str, value: str) -> bool:
+    """Minimal contradiction guard for the common "没有X" / "已清理X" pattern."""
+    source_norm = normalize_text(source)
+    quote_norm = normalize_text(quote)
+    value_norm = normalize_text(value)
+    if not source_norm or not quote_norm or not value_norm:
+        return False
+    start = source_norm.find(quote_norm)
+    if start < 0:
+        return False
+    window = source_norm[max(0, start - 8): start + len(quote_norm) + 8]
+    negative_tokens = (
+        "没有", "没", "未", "无", "不是", "并非", "已清理", "已恢复",
+    )
+    return any(token in window for token in negative_tokens)
+
+
+def verify_slot_evidence(slot_key, value, evidence, source_map, category) -> dict:
+    """Verify model-cited evidence using deterministic text operations only."""
+    value = str(value or "").strip()
+    if not value:
+        return {"status": "missing", "reason": "empty_value", "value": value}
+
+    allowed = {slot.key for slot in get_slot_schema(category)}
+    if slot_key not in allowed:
+        return {
+            "status": "unverified", "reason": "slot_not_allowed",
+            "value": value, "quote": "", "source_ref": "",
+        }
+    if is_echo_slot(value, category):
+        return {
+            "status": "echo", "reason": "echo_slot_name",
+            "value": value, "quote": "", "source_ref": "",
+        }
+
+    evidence = evidence if isinstance(evidence, dict) else {}
+    quote = str(evidence.get("quote") or "").strip()
+    source_ref = str(evidence.get("source_ref") or "").strip()
+    base = {"value": value, "quote": quote, "source_ref": source_ref}
+
+    if not quote:
+        return {"status": "unverified", "reason": "no_evidence", **base}
+    if not source_ref or source_ref not in source_map:
+        return {"status": "unverified", "reason": "invalid_source_ref", **base}
+    if source_ref.startswith("a"):
+        return {"status": "unverified", "reason": "assistant_source", **base}
+    if source_ref[:1] not in {"u", "v"}:
+        return {"status": "unverified", "reason": "invalid_source_ref", **base}
+
+    quote_length = len(normalize_text(quote))
+    if quote_length < 2:
+        return {"status": "unverified", "reason": "quote_too_short", **base}
+    if quote_length > 80:
+        return {"status": "unverified", "reason": "quote_too_long", **base}
+
+    source = str(source_map.get(source_ref) or "")
+    if not _quote_in_source(quote, source):
+        return {"status": "unverified", "reason": "quote_not_found", **base}
+    if not all(
+        digit in normalize_text(_numeric_text(source))
+        for digit in re.findall(r"\d+", normalize_text(_numeric_text(value)))
+    ):
+        return {"status": "unverified", "reason": "numeric_mismatch", **base}
+    if _negated_near_quote(source, quote, value):
+        return {"status": "contradicted", "reason": "negation_conflict", **base}
+    if _value_supported_by_quote(value, quote):
+        return {"status": "grounded", "reason": "", **base}
+    return {"status": "weak", "reason": "value_not_in_quote", **base}
+
+
+def assess(plan: dict, messages: list, vision_summary: str = "") -> dict:
+    """Return both legacy grounding and internal evidence audit.
+
+    ``legacy_*`` fields preserve the pre-evidence behavior for off/shadow mode.
+    The evidence fields become authoritative only when the graph selects enforce
+    mode; direct callers still receive a complete, inspectable audit.
     """
     plan = plan if isinstance(plan, dict) else {}
     source = _source_text(messages, vision_summary)
+    source_map = build_source_map(messages, vision_summary)
     signals = []
-    ungrounded = []
-    slots_total = 0
-    slots_grounded = 0
+    legacy_ungrounded = []
+    legacy_total = 0
+    legacy_grounded = 0
+    evidence_total = 0
+    evidence_grounded = 0
+    evidence_ungrounded = []
+    audit = {}
 
     for issue in plan.get("issues") or []:
-        code = (issue or {}).get("subcategory_code") or ""
-        for key, value in ((issue or {}).get("slots") or {}).items():
-            status = slot_status(value, source)
-            if status == "empty":
+        issue = issue if isinstance(issue, dict) else {}
+        code = issue.get("subcategory_code") or ""
+        evidence_by_slot = {
+            item.get("slot"): item
+            for item in (issue.get("evidence") or [])
+            if isinstance(item, dict) and item.get("slot")
+        }
+        for key, value in (issue.get("slots") or {}).items():
+            legacy_status = slot_status(value, source)
+            if legacy_status == "empty":
                 continue
-            slots_total += 1
-            if status == "grounded":
-                slots_grounded += 1
-            elif status == "strong":
-                ungrounded.append("%s.%s=%s" % (code, key, value))
+            legacy_total += 1
+            if legacy_status == "grounded":
+                legacy_grounded += 1
+            elif legacy_status == "strong":
+                legacy_ungrounded.append("%s.%s=%s" % (code, key, value))
                 signals.append("ungrounded_slot:%s.%s=%s" % (code, key, value))
+
+            typed_evidence = evidence_by_slot.get(key)
+            if typed_evidence:
+                result = verify_slot_evidence(
+                    key, value, typed_evidence, source_map, code,
+                )
+            else:
+                result = {"status": legacy_status, "reason": "legacy", "value": str(value)}
+
+            evidence_total += 1
+            if result.get("status") == "grounded":
+                evidence_grounded += 1
+            if result.get("status") in {"unverified", "contradicted", "strong"}:
+                evidence_ungrounded.append("%s.%s=%s" % (code, key, value))
+            audit.setdefault(code, {})[key] = result
 
     if plan.get("major_mismatch"):
         codes = ",".join((i or {}).get("major_code") or "" for i in plan.get("issues") or [])
@@ -237,9 +355,6 @@ def assess(plan: dict, messages: list, vision_summary: str = "") -> dict:
     danger_term = _first_danger_term(_latest_user_text(messages))
     situation_term = active_situation_term(_latest_user_text(messages))
     model_danger = bool(plan.get("immediate_danger"))
-    # 规划器直接判了 emergency 也算危险：词表会漏，immediate_danger 也可能没给，
-    # 但模型说"这是紧急情况"时我们必须当危险处理，否则删掉 emergency_reply 分支后
-    # 这类输入会一句指引都没有。
     planner_danger = str(plan.get("scope") or "").strip() == "emergency"
     if danger_term:
         signals.append("danger_term:%s" % danger_term)
@@ -250,12 +365,18 @@ def assess(plan: dict, messages: list, vision_summary: str = "") -> dict:
     elif planner_danger:
         signals.append("emergency_scope:planner")
 
-    cautions = bool(ungrounded) or bool(plan.get("major_mismatch"))
+    legacy_cautions = bool(legacy_ungrounded) or bool(plan.get("major_mismatch"))
+    evidence_cautions = bool(evidence_ungrounded) or bool(plan.get("major_mismatch"))
     return {
-        "uncertainty_level": "cautious" if cautions else "ok",
+        "uncertainty_level": "cautious" if evidence_cautions else "ok",
         "danger_veto": bool(danger_term) or bool(situation_term)
         or model_danger or planner_danger,
-        "ungrounded_slots": ungrounded,
-        "grounding_ratio": (slots_grounded / slots_total) if slots_total else 1.0,
+        "ungrounded_slots": evidence_ungrounded,
+        "grounding_ratio": (evidence_grounded / evidence_total) if evidence_total else 1.0,
         "uncertainty_signals": signals,
+        "slot_evidence_audit": audit,
+        "evidence_ungrounded_slots": evidence_ungrounded,
+        "legacy_ungrounded_slots": legacy_ungrounded,
+        "legacy_uncertainty_level": "cautious" if legacy_cautions else "ok",
+        "legacy_grounding_ratio": (legacy_grounded / legacy_total) if legacy_total else 1.0,
     }

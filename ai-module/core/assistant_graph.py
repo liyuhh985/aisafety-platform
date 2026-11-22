@@ -25,7 +25,7 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from config import (
     MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL,
     CHECKPOINT_BACKEND, REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_DB,
-    REDIS_TIMEOUT_SECONDS,
+    REDIS_TIMEOUT_SECONDS, SLOT_EVIDENCE_MODE,
 )
 from core.agent import Agent
 from core.langgraph_state import AssistantState, merge_category_results
@@ -360,15 +360,46 @@ def _plan_issues(plan: dict) -> list[dict]:
     return legacy
 
 
-def _merge_persisted_slots(issues: list[dict], persisted: dict) -> list[dict]:
-    """把图状态里跨轮保留下来的槽位折叠进本轮规划结果（增量，不从头重抽）。"""
+def _merge_persisted_slots(issues: list[dict], persisted: dict,
+                           persisted_issues: list[dict] | None = None) -> list[dict]:
+    """Fold checkpoint slots into this turn while retaining only valid old evidence.
+
+    A slot re-extracted this turn uses this turn's evidence. Evidence for slots
+    carried over from the checkpoint remains attached to its original value.
+    """
+    previous_by_code = {
+        issue.get("subcategory_code"): issue
+        for issue in (persisted_issues or [])
+        if isinstance(issue, dict) and issue.get("subcategory_code")
+    }
     merged = []
     for issue in issues:
         code = issue.get("subcategory_code")
+        incoming_slots = dict(issue.get("slots") or {})
         kept = dict(persisted.get(code) or {})
-        kept.update({k: v for k, v in (issue.get("slots") or {}).items() if v})
+        kept.update({k: v for k, v in incoming_slots.items() if v})
         issue = dict(issue)
         issue["slots"] = kept
+
+        evidence = [
+            dict(item) for item in (issue.get("evidence") or [])
+            if isinstance(item, dict) and item.get("slot")
+        ]
+        seen_slots = {item.get("slot") for item in evidence}
+        previous = previous_by_code.get(code) or {}
+        previous_evidence = {
+            item.get("slot"): item
+            for item in (previous.get("evidence") or [])
+            if isinstance(item, dict) and item.get("slot")
+        }
+        for slot in kept:
+            if slot in incoming_slots or slot in seen_slots:
+                continue
+            old = previous_evidence.get(slot)
+            if old:
+                evidence.append(dict(old))
+                seen_slots.add(slot)
+        issue["evidence"] = evidence
         merged.append(issue)
     return merged
 
@@ -650,13 +681,24 @@ def understand(state: AssistantState, config=None) -> dict:
         }
 
     issues = _merge_persisted_slots(
-        _plan_issues(plan), state.get("category_slots") or {}
+        _plan_issues(plan), state.get("category_slots") or {},
+        state.get("issues") or [],
     )
     # 复述问题不算答过：清掉这类槽，它们会自然落回 missing。
     echoes = echo_slots(issues)
     for issue in issues:
+        removed_slots = []
         for item in echoes.get(issue["subcategory_code"], []):
-            (issue.get("slots") or {}).pop(item.split("=", 1)[0], None)
+            slot = item.split("=", 1)[0]
+            removed_slots.append(slot)
+            (issue.get("slots") or {}).pop(slot, None)
+        if removed_slots:
+            issue["evidence"] = [
+                entry for entry in (issue.get("evidence") or [])
+                if entry.get("slot") not in removed_slots
+            ]
+            for slot in removed_slots:
+                (issue.get("slot_evidence") or {}).pop(slot, None)
 
     # 二、定大类**集合**：前端只在"第一次"说话，之后谁都不能改（硬锁）。
     frontend_majors = _major_codes(selected_major_codes) or _major_codes(selected_major_code)
@@ -749,7 +791,7 @@ def understand(state: AssistantState, config=None) -> dict:
     plan["issues"] = issues
     # 二、模型判定的危险（词表漏了）：不在这里发话，只把结果记进状态 ——
     # 安全文本统一由 emergency_guidance 按类型生成并核对覆盖。
-    verdict = assess(plan, source_messages, vision_summary)
+    verdict = _apply_evidence_mode(assess(plan, source_messages, vision_summary))
     if echoes:
         verdict["uncertainty_signals"] = list(verdict["uncertainty_signals"]) + [
             "echo_slot:%s" % item for items in echoes.values() for item in items
@@ -760,8 +802,10 @@ def understand(state: AssistantState, config=None) -> dict:
     if premises_scope in PREMISES_NOTES and state.get("premises_scope") != premises_scope:
         _emit_chunk(PREMISES_NOTES[premises_scope] + "\n\n")
     unverified = _unverified_by_issue(verdict["ungrounded_slots"])
+    audit_by_issue = verdict.get("slot_evidence_audit") or {}
     for issue in issues:
         issue["unverified"] = unverified.get(issue["subcategory_code"], [])
+        issue["slot_evidence"] = dict(audit_by_issue.get(issue["subcategory_code"]) or {})
     no_questions = verdict["danger_veto"] or verdict["uncertainty_level"] == "cautious"
     policy = decide_next_action(plan, {
         **state, "user_text": user_text, "missing": missing, **verdict,
@@ -1684,6 +1728,57 @@ def _split_ungrounded(entry: str):
     left, _, value = str(entry or "").partition("=")
     code, _, slot = left.partition(".")
     return code, slot, value
+
+
+def _effective_ungrounded_slots(verdict) -> list[str]:
+    """Choose legacy or evidence-backed ungrounded slots for the active rollout mode."""
+    legacy = list(
+        (verdict or {}).get("legacy_ungrounded_slots")
+        or (verdict or {}).get("ungrounded_slots")
+        or []
+    )
+    if SLOT_EVIDENCE_MODE in {"off", "shadow"}:
+        return legacy
+    if not (verdict or {}).get("slot_evidence_audit"):
+        return legacy
+    if "evidence_ungrounded_slots" in (verdict or {}):
+        return list((verdict or {}).get("evidence_ungrounded_slots") or [])
+    return legacy
+
+
+def _apply_evidence_mode(verdict: dict) -> dict:
+    """Apply off/shadow/enforce without leaking internal audit into public output."""
+    verdict = dict(verdict or {})
+    verdict["ungrounded_slots"] = _effective_ungrounded_slots(verdict)
+    if SLOT_EVIDENCE_MODE in {"off", "shadow"}:
+        legacy_level = verdict.get("legacy_uncertainty_level")
+        legacy_ratio = verdict.get("legacy_grounding_ratio")
+        if legacy_level is not None:
+            verdict["uncertainty_level"] = legacy_level
+        if legacy_ratio is not None:
+            verdict["grounding_ratio"] = legacy_ratio
+    audit = verdict.get("slot_evidence_audit") or {}
+    if SLOT_EVIDENCE_MODE == "shadow":
+        summary = [
+            f"{code}.{slot}={result.get('status', '')}/{result.get('reason', '')}"
+            for code, slots in audit.items()
+            for slot, result in slots.items()
+        ]
+        logger.info("slot_evidence_audit mode=shadow entries=%s", summary)
+    return verdict
+
+
+def _public_issues(issues) -> list[dict]:
+    """Return issue objects safe for SSE/API callers: no evidence internals."""
+    out = []
+    for issue in issues or []:
+        if not isinstance(issue, dict):
+            continue
+        public = dict(issue)
+        public.pop("evidence", None)
+        public.pop("slot_evidence", None)
+        out.append(public)
+    return out
 
 
 def _unverified_by_issue(entries) -> dict:
@@ -2815,7 +2910,7 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             "major_mismatch": bool(
                                 (update or {}).get("major_mismatch")
                             ),
-                            "issues": (update or {}).get("issues") or [],
+                            "issues": _public_issues((update or {}).get("issues") or []),
                             # 锁定状态与危险标志：给前端渲染"改报"入口，也给量化用
                             "locked_major": (update or {}).get("locked_major", ""),
                             "locked_majors": (update or {}).get("locked_majors", []),
