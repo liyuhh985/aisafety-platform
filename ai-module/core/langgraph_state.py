@@ -69,6 +69,10 @@ class AssistantState(TypedDict, total=False):
     selected_major_code: str            # frontend major-category hint（可逗号分隔多个 code）
     selected_major_codes: list[str]     # 同上，列表形态；空则看 selected_major_code
     major_mismatch: bool                # planner corrected the frontend hint
+    active_skills: list[str]            # 当前激活的 canonical major Skills
+    skill_route_source: str             # locked | frontend | vision | keyword | llm | fallback | negative
+    skill_route_confidence: float
+    skill_versions: dict[str, str]      # 仅版本元数据；正文不得进入 checkpoint
     # 建任务确认（interrupt 闸门）
     offer_task: bool                    # report decided the task invitation is allowed
     task_draft: dict                     # report 阶段并行生成、确认时直接提交的建单草稿

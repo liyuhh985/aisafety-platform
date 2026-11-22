@@ -1,4 +1,4 @@
-﻿"""C1：结构化事实随图状态跨轮保留；图状态不再每轮被清空重抽。"""
+"""C1：结构化事实随图状态跨轮保留；图状态不再每轮被清空重抽。"""
 from typing import Annotated, TypedDict
 
 from langchain_core.messages import AIMessage, HumanMessage
@@ -111,7 +111,17 @@ def test_new_contract_fields_survive_a_node_return():
     from core.assistant_graph import AssistantGraphState
 
     def writer(state):
-        return {"question_target": "persistence", "facts_snapshot": {"issues": ["x"]}}
+        return {
+            "question_target": "persistence",
+            "facts_snapshot": {"issues": ["x"]},
+            "slot_evidence_audit": {
+                "fire_lane_blocked": {"persistence": {"status": "grounded"}},
+            },
+            "active_skills": ["fire"],
+            "skill_route_source": "keyword",
+            "skill_route_confidence": 0.9,
+            "skill_versions": {"fire": "1"},
+        }
 
     graph = StateGraph(AssistantGraphState)
     graph.add_node("writer", writer)
@@ -125,3 +135,11 @@ def test_new_contract_fields_survive_a_node_return():
 
     assert values.get("question_target") == "persistence"
     assert values.get("facts_snapshot") == {"issues": ["x"]}
+    assert values.get("slot_evidence_audit") == {
+        "fire_lane_blocked": {"persistence": {"status": "grounded"}},
+    }
+    assert values.get("active_skills") == ["fire"]
+    assert values.get("skill_route_source") == "keyword"
+    assert values.get("skill_versions") == {"fire": "1"}
+    assert "skill_bodies" not in values
+    assert "skill_prompt_text" not in values

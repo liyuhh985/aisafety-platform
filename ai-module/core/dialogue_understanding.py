@@ -404,7 +404,8 @@ def build_source_map(messages, vision_summary: str = "") -> dict[str, str]:
 
 def build_planner_messages(messages: list, vision_summary: str = "",
                            selected_major_code: str = "", missing=None,
-                           known_slots=None, subcategory_code: str = "") -> list[dict]:
+                           known_slots=None, subcategory_code: str = "",
+                           skill_bodies: dict[str, str] | None = None) -> list[dict]:
     """Build a planner request from recent dialogue plus vision context.
 
     missing / known_slots / subcategory_code 描述「当前锁定隐患还缺哪些决策级槽」，
@@ -424,6 +425,12 @@ def build_planner_messages(messages: list, vision_summary: str = "",
             "role": "system",
             "content": _planner_focus_context(missing, known_slots, subcategory_code),
         })
+    for code, body in (skill_bodies or {}).items():
+        if str(body or "").strip():
+            out.append({
+                "role": "system",
+                "content": f"【Skill: {code}】\n{str(body).strip()}",
+            })
     visible = list(iter_source_messages(messages))[-max(2, PLANNER_HISTORY_MESSAGES):]
     for ref, role, content in visible:
         if role in {"user", "assistant", "system"} and content:
@@ -435,7 +442,8 @@ def build_planner_messages(messages: list, vision_summary: str = "",
 
 def understand(messages: list, vision_summary: str = "",
                selected_major_code: str = "", missing=None,
-               known_slots=None, subcategory_code: str = "") -> dict:
+               known_slots=None, subcategory_code: str = "",
+               skill_bodies: dict[str, str] | None = None) -> dict:
     """Return a validated dialogue plan, or an empty plan on planner failure."""
     try:
         response = _planner_llm._call_llm(
@@ -443,6 +451,7 @@ def understand(messages: list, vision_summary: str = "",
                 messages, vision_summary, selected_major_code,
                 missing=missing, known_slots=known_slots,
                 subcategory_code=subcategory_code,
+                skill_bodies=skill_bodies,
             ),
             cancellation=None,
         )

@@ -14,6 +14,7 @@ import logging
 import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 from typing import Annotated, Generator, Literal
 
 from langgraph.graph import StateGraph, END
@@ -43,9 +44,16 @@ from core.hazard_taxonomy import (
     ALL_SUBCATEGORY_CODES,
     HAZARD_TAXONOMY,
     MAJOR_LABELS,
+    MAJOR_LABEL_TO_CODE,
     SUBCATEGORY_LABELS,
+    SUBCATEGORY_TO_MAJOR,
     format_hazard_type,
     normalize_taxonomy,
+)
+from core.skill_registry import get_skill_registry
+from core.skill_router import (
+    _skill_route_llm,
+    route_skills as _route_skills,
 )
 from core.scope_policy import (
     AMBIGUOUS_RESPONSE,
@@ -79,6 +87,10 @@ _report_llm = Agent(
     model=MIMO_MODEL,
 )
 _TOOL_MAP = {t.name: t for t in ASSISTANT_TOOLS}
+_skill_registry = get_skill_registry(
+    Path(__file__).parents[1] / "skills",
+    {tool.name for tool in ASSISTANT_TOOLS},
+)
 _TASK_DRAFT_EXECUTOR = ThreadPoolExecutor(max_workers=2, thread_name_prefix="task-draft")
 
 logger = logging.getLogger(__name__)
@@ -90,6 +102,7 @@ EMERGENCY_ACTION = "emergency_guidance"
 
 STATUS_TEXT = {
     "begin_turn": "正在准备本轮对话...",
+    "skill_route": "正在判断隐患领域...",
     "understand": "正在理解您的问题...",
     "scope_guard": "正在判断问题范围...",
     "route": "正在分析您的咨询...",
@@ -517,6 +530,21 @@ MAX_ACTIVE_HAZARDS = 3
 MAX_ACTIVE_MAJORS = 3
 
 
+def _vision_major_codes(vision_summary) -> list:
+    """Extract explicit hazard majors from a system-generated vision summary."""
+    value = str(vision_summary or "")
+    found = []
+    for label, code in MAJOR_LABEL_TO_CODE.items():
+        if label in value and code not in found:
+            found.append(code)
+    for code, label in SUBCATEGORY_LABELS.items():
+        if label in value:
+            major = SUBCATEGORY_TO_MAJOR.get(code, "")
+            if major and major not in found:
+                found.append(major)
+    return found[:MAX_ACTIVE_MAJORS]
+
+
 def _locked_majors(state) -> list:
     """锁定的大类集合。没有集合字段时退回单值字段 —— 兼容旧状态与既有测试。"""
     majors = [str(m) for m in (state.get("locked_majors") or []) if m]
@@ -582,6 +610,28 @@ def _active_issues(focus, in_major) -> list:
         if len(out) >= MAX_ACTIVE_HAZARDS:
             break
     return out
+
+
+def skill_route(state: AssistantState) -> dict:
+    """Choose active hazard-major Skills before this turn's fact extraction."""
+    selected = _major_codes(state.get("selected_major_codes") or [])
+    if not selected:
+        selected = _major_codes(state.get("selected_major_code") or "")
+    result = _route_skills(
+        text=_latest_user_text(state),
+        metadata_catalog=_skill_registry.metadata_catalog(),
+        selected_major_codes=selected,
+        locked_majors=_locked_majors(state),
+        vision_categories=_vision_major_codes(state.get("vision_summary") or ""),
+        route_llm=_skill_route_llm,
+    )
+    active = list(result.get("active_skills") or [])[:MAX_ACTIVE_MAJORS]
+    return {
+        "active_skills": active,
+        "skill_route_source": result.get("source", "fallback"),
+        "skill_route_confidence": float(result.get("confidence") or 0.0),
+        "skill_versions": _skill_registry.versions_for(active),
+    }
 
 
 def understand(state: AssistantState, config=None) -> dict:
@@ -655,8 +705,17 @@ def understand(state: AssistantState, config=None) -> dict:
             "known_slots": persisted,
             "subcategory_code": prev_sub,
         }
+    skill_bodies = {}
+    for code in state.get("active_skills") or []:
+        try:
+            skill_bodies[code] = _skill_registry.load_body(code)
+        except Exception as exc:
+            logger.error("skill_body_load_failed code=%s error=%s", code, type(exc).__name__)
+    planner_kwargs = dict(planner_context)
+    if skill_bodies:
+        planner_kwargs["skill_bodies"] = skill_bodies
     plan = _understand_plan(
-        source_messages, vision_summary, selected_major_code, **planner_context
+        source_messages, vision_summary, selected_major_code, **planner_kwargs
     )
     if not plan or not plan.get("ok"):
         # 不静默：规划器拿不到有效计划（回空 / JSON 破）时，这一轮只能走兜底 ——
@@ -1291,13 +1350,19 @@ def search(state: AssistantState) -> dict:
 def plan_retrieval(state: AssistantGraphState) -> list[Send]:
     """每个（隐患类别, 检索工具）一条并行分支；延迟与隐患数量解耦。"""
     override = state.get("retrieval_keyword_override") or {}
+    active_skills = state.get("active_skills") or []
+    allowed = _skill_registry.resolve_tools(active_skills)
+    allowed_retrieval = (
+        [name for name in _RESULT_FIELD if name in allowed]
+        if active_skills else list(_RESULT_FIELD)
+    )
     sends = []
     for category in state.get("categories") or []:
         slots = (state.get("category_slots") or {}).get(category, {})
         # 重试时用模型改写过的检索串；没有就照旧拼
         keyword = override.get(category) or _pick_keyword(
             category, slots, state.get("premises_scope") or "public")
-        for tool_name in _RESULT_FIELD:
+        for tool_name in allowed_retrieval:
             sends.append(Send("retrieve", {
                 "category": category,
                 "tool": tool_name,
@@ -2228,6 +2293,20 @@ def _report_rules(premises_scope: str, preliminary: bool = False,
     )
 
 
+def _skill_report_rules(state: AssistantState) -> str:
+    parts = []
+    for code in state.get("active_skills") or []:
+        try:
+            section = _skill_registry.load_section(code, "报告约束")
+        except Exception as exc:
+            logger.error("skill_report_section_load_failed code=%s error=%s",
+                         code, type(exc).__name__)
+            continue
+        if section.strip():
+            parts.append(section.strip())
+    return "\n\n".join(parts)
+
+
 def report(state: AssistantState, config=None) -> dict:
     messages = list(state.get("messages", []))
     ask_create = can_offer_task_creation(state)
@@ -2238,10 +2317,13 @@ def report(state: AssistantState, config=None) -> dict:
         draft_future = _TASK_DRAFT_EXECUTOR.submit(
             build_task_draft, draft_state, _cancel_token(config))
     preliminary = _is_preliminary(state)
+    skill_report_rules = _skill_report_rules(state)
     ctx = ("\n\n".join(_issue_blocks(state))
            + _report_rules(state.get("premises_scope"), preliminary,
                            branch=bool(report_branch_keys(state)),
                            followup=_followup_pending(state)))
+    if skill_report_rules:
+        ctx += "\n\n【Skill 报告约束】\n" + skill_report_rules
     # 把 langchain 消息转成 dict，供 _call_llm_stream_events 的 payload 序列化
     dict_msgs = []
     _ROLE_MAP = {"system": "system", "human": "user", "ai": "assistant", "tool": "tool"}
@@ -2644,6 +2726,7 @@ def build_graph(checkpointer=None):
     """编译助手图。checkpointer 由 get_checkpointer() 按 CHECKPOINT_BACKEND 决定。"""
     g = StateGraph(AssistantGraphState)
     g.add_node("begin_turn", begin_turn)
+    g.add_node("skill_route", skill_route)
     g.add_node("understand", understand)
     g.add_node("scope_guard", scope_guard)
     g.add_node("route", route)
@@ -2663,7 +2746,8 @@ def build_graph(checkpointer=None):
     g.add_node("emergency_guidance", emergency_guidance)
     g.add_node("ask_slot_question", ask_slot_question)
     g.set_entry_point("begin_turn")
-    g.add_edge("begin_turn", "understand")
+    g.add_edge("begin_turn", "skill_route")
+    g.add_edge("skill_route", "understand")
     g.add_edge("understand", "scope_guard")
     g.add_edge("scope_guard", "route")
     # route 返回 Command(goto=...)，不需要额外的条件边
