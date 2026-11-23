@@ -1,7 +1,7 @@
 # 当前真相层索引
 
 > 状态：current
-> 最后核对：2026-10-14
+> 最后核对：2026-11-23
 
 **最高规则：当前代码 > current 文档 > 历史设计/计划。**
 
@@ -15,15 +15,16 @@
 | [ai-hazard-create-observability.md](./ai-hazard-create-observability.md) | MQ / Outbox 指标、日志指标、告警建议 |
 | [ai-hazard-create-mq.md](./ai-hazard-create-mq.md) | AI 建任务 MQ 契约：Python Outbox → RabbitMQ → Java 幂等消费 → 回执 → request 状态、拓扑/表/开关/前端契约、已知边界 |
 | [hazard-lifecycle.md](./hazard-lifecycle.md) | 角色、状态流转、接口权限、可见性、HazardAction 留痕、多类别字段与前端筛选口径 |
-| [agent-orchestration.md](./agent-orchestration.md) | LangGraph 19 节点、状态通道、两级分类、槽位 A/B/C、范围/不确定性、检索重试、建单闸门 |
+| [agent-orchestration.md](./agent-orchestration.md) | LangGraph 20 节点、状态通道、两级分类、槽位 A/B/C、证据链灰度、Skill 路由、范围/不确定性、检索重试、建单闸门 |
 
-## 前端补丁（frontend-patch，均在本目录）
+## 前端补丁（含本目录文档与仓库内 patch）
 
 | 文档 | 内容 |
 |------|------|
 | [hazard-multi-category-frontend-patch.md](./hazard-multi-category-frontend-patch.md) | 工单多类别同级展示、仅一级大类筛选、高德底图（矢量优先 + 栅格自动兜底）、图标精修 |
 | [ai-multi-hazard-frontend-patch.md](./ai-multi-hazard-frontend-patch.md) | 助手多隐患会话：大类多选（≤3）、锁定后硬上锁、改报走新会话 |
 | [ai-hazard-create-mq-frontend-patch.md](./ai-hazard-create-mq-frontend-patch.md) | 建单 MQ：`task_accepted` + 状态轮询、`task_created` 清理 |
+| [HomeView 大类多选 patch](../superpowers/patches/2026-11-22-homeview-major-multiselect.patch) | 最多选择 3 个大类、逗号串传参、锁定后只读；部署时必须实际应用 |
 
 ## 部署（保留在 `docs/deployment/`）
 

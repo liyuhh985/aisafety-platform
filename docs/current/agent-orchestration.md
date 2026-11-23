@@ -1,14 +1,15 @@
 # Agent 编排（当前真相）
 
 > 状态：current
-> 最后核对：2026-10-09
-> 事实来源：`ai-module/core/assistant_graph.py::build_graph()` 及 `core/*` 模块。节点以代码为准（**19 个**，不是旧文档写的 11 个或 4 个）。
+> 最后核对：2026-11-23
+> 事实来源：`ai-module/core/assistant_graph.py::build_graph()` 及 `core/*` 模块。节点以代码为准（**20 个**，不是旧文档写的 19 个、11 个或 4 个）。
 > 旧 Orchestrator / clarify / meta_clarify / multi-hazard / 早期 LangGraph 迁移文档已降级为历史，见 `docs/archive/`。
 
-## 一、图结构（19 节点）
+## 一、图结构（20 节点）
 
 ```
 begin_turn
+  -> skill_route             # 按锁定/前端/视觉/关键词/LLM 选择 active Skills
   -> understand              # 唯一的事实与决策写入者
   -> scope_guard             # 范围护栏（越界回滚事实）
   -> route                   # 纯映射，不决策
@@ -32,7 +33,8 @@ begin_turn
 | 节点 | 职责 |
 |------|------|
 | `begin_turn` | 组装本轮输入、写事实快照 |
-| `understand` | **唯一**写入事实与决策：issues / 槽位 / intent / next_action / missing |
+| `skill_route` | 选择当前 active Skills；复用已锁定大类，不加载正文、不调用工具 |
+| `understand` | **唯一**写入事实与决策：issues / 槽位 / evidence / intent / next_action / missing；按需加载 active Skill 正文 |
 | `scope_guard` | 判定 hazard / emergency / smalltalk / ambiguous / out_of_scope；越界按快照整体回滚 |
 | `route` | 把 `next_action` 映射成 `Command(goto=...)`，不做判断 |
 | `search` | 组织检索计划，`Send` 按类别并行扇出 |
@@ -61,7 +63,9 @@ begin_turn
 - `category_results` reducer：按类别浅合并；`None` 表示清空该类别。
 - `dialogue_mode` 跨轮继承：`plain | preliminary | report`。
 
-关键字段：`locked_major`、`locked_subcategory`、`categories`、`category_slots`、`missing`、`issues`、`next_action`、`dialogue_mode`、`premises_scope`、`immediate_danger`、`danger_veto`、`uncertainty_level`、`ungrounded_slots`、`task_phase`、`address_text`、`picked_longitude/latitude`。
+关键字段：`locked_major`、`locked_majors`、`locked_subcategory`、`categories`、`category_slots`、`missing`、`issues`、`slot_evidence_audit`、`next_action`、`dialogue_mode`、`premises_scope`、`immediate_danger`、`danger_veto`、`uncertainty_level`、`ungrounded_slots`、`active_skills`、`skill_route_source`、`skill_route_confidence`、`skill_versions`、`task_phase`、`address_text`、`picked_longitude/latitude`。
+
+Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 Prompt 文本和证据原文不得进入 LangGraph / Redis checkpoint。最终 `locked_majors` 与 `active_skills` 不一致时，`understand` 会按锁定大类重新对齐并更新 `skill_versions`。
 
 ## 三、两级隐患分类（canonical）
 
@@ -116,7 +120,26 @@ begin_turn
 - `danger_veto`：正在发生的危险（火灾/燃气泄漏/被困/坍塌/地震等）→ 禁止追问，直接走 `emergency_guidance`。
 - `major_mismatch`：规划器与前端大类提示矛盾。
 
-## 七、检索自评重试环（evaluator-optimizer）
+### 证据引用式槽位校验（Evidence-First Slot Grounding）
+
+- 规划器为非空槽位返回 `evidence: [{slot, quote, source_ref}]`；`source_ref` 只能引用后端分配的 `uN` / `vN`，`aN` 助手来源不得作为事实证据。
+- 代码确定性校验 quote 是否存在、来源是否合法、数字是否一致，并给出 `grounded / weak / unverified / contradicted / echo / missing`。
+- `SLOT_EVIDENCE_MODE` 支持 `off | shadow | enforce`，默认 `shadow`。`shadow` 只计算并记录内部审计，不改变线上判定；影子日志稳定后再切 `enforce`。
+- 旧 checkpoint 没有证据字段时继续使用旧 `slot_status()` 词面回退，不做一次性重写。
+- 证据只用于内部状态、日志和测试；不进入 SSE taxonomy、报告 Prompt、报告正文、Java DTO 或前端。`task_gate` interrupt 也通过 `_public_issues()` 脱敏。
+
+## 七、Skill Harness（按大类按需加载）
+
+- 8 个 canonical major 各有一份 `skills/<code>/SKILL.md`；启动时只扫描 YAML metadata，不缓存正文。
+- 路由优先级：已锁定大类 → 前端显式选择 → 视觉明确大类 → 关键词高置信 → metadata-only LLM → 无 Skill 降级。
+- `active_skills` 最多 3 个；`understand` 只加载这些 Skill 的正文，并只展开这些大类的小类/槽位 schema；其余大类以一行紧凑索引保留用于漏路由提示。
+- YAML frontmatter 和 `allowed_tools` 不进入模型 Prompt；`allowed_tools` 仅由 Harness 在检索阶段使用。
+- 检索工具取 active Skill 白名单与当前阶段工具的交集；当前所有 Skill 共用 `search_regulation` / `search_cases`，不宣称分类工具收益。
+- 报告只加载 active Skill 的「报告约束」section，不把 Skill 正文写进最终报告。
+- SSE / Java / MySQL 契约不暴露 Skill 正文、路由置信度或内部审计。
+- 前端大类多选改动以补丁交付：[2026-11-22-homeview-major-multiselect.patch](../superpowers/patches/2026-11-22-homeview-major-multiselect.patch)。部署流程必须实际应用该 patch，不能只依赖开发工作区文件。
+
+## 八、检索自评重试环（evaluator-optimizer）
 
 - `WEAK_SCORE=0.58`（实测 p10：法规 0.5426 / 案例 0.5726；向量置信门槛 0.48）。
 - `RETRY_MAX_ATTEMPTS=1`，`RETRY_ENABLED=True`，`PROBE_TOP1_SCORE=True`。
@@ -124,20 +147,20 @@ begin_turn
 - `GRAPH_RECURSION_LIMIT=60`（合法路径约 16 步；显式设限防回边失控烧模型调用）。
 - 检索结果按大类过滤：`core/case_relevance.py` 剔除跨大类「语义邻近」条目，无同类则明确回「库内暂未检索到」。
 
-## 八、建单闸门（human-in-the-loop）
+## 九、建单闸门（human-in-the-loop）
 
 - `after_report` 预抽地址 → `route_after_report`：`offer_task && !task_offered` 才进 `task_gate`。
 - `task_gate` 用 LangGraph `interrupt()` 持久化挂起；恢复时**整段重跑**，所以 `interrupt()` 前不得有副作用（地址抽取因此放在 `after_report`）。
 - `task_phase`：`confirm` → `address`。
 - 恢复值可以是结构化 dict（前端卡片）或纯文本（老路径），见 `docs/current/ai-assistant-sse-contract.md` 第三节。
 
-## 九、状态文案契约
+## 十、状态文案契约
 
 - `STATUS_TEXT` 每节点一条；`STATUS_MAX_LENGTH=24`；带上下文模板如 `retrieve` 注入小类标签。
 - 禁营销词（解构/深度研判/智能研判/赋能/洞察/强大/领先）。
 - 后端自律有测试锁：每节点必须有文案、长度/非空/禁词校验。
 
-## 十、设计原则（改代码前必读）
+## 十一、设计原则（改代码前必读）
 
 1. **决策权只有一处**：`understand` 写事实与决策，`route` 只映射。
 2. **同一约束只有一套判定**：约束走统一的逐句执行器，不留第二套。
@@ -152,16 +175,19 @@ core/langgraph_state.py      状态定义与 reducer
 core/dialogue_understanding.py  语义计划
 core/dialogue_policy.py      确定性 next-action 策略
 core/scope_policy.py         范围护栏
-core/uncertainty.py          不确定性与危险否决
+core/uncertainty.py          不确定性与危险否决 + 证据校验
 core/hazard_taxonomy.py      两级分类
 core/slot_schemas.py         槽位 A/B/C
+core/skill_registry.py       Skill metadata 扫描与正文按需加载
+core/skill_router.py         大类 Skill 路由
+skills/                      8 个 canonical Skill 上下文包
 core/stream_guard.py         流式约束执行器
 core/case_relevance.py       类别相关性过滤
 core/cancellation.py         取消令牌
 tools/                       检索/向量/地理/建单
 ```
 
-## 十一、LLM 调用链与可靠性
+## 十二、LLM 调用链与可靠性
 
 `core/agent.py` 的调用链（2026-10-10 起）：
 
