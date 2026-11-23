@@ -1,0 +1,169 @@
+--- a/.frontend-work/src/views/HomeView.vue
++++ b/.frontend-work/src/views/HomeView.vue
+@@ -374,9 +374,9 @@
+                 <span class="selector-label">
+                   {{ majorSelectorLabel }}
+                 </span>
+                 <button
+-                  v-if="selectedMajor && !majorLocked"
++                  v-if="selectedMajorCodes.length && !majorLocked"
+                   class="remove-major-btn"
+                   type="button"
+                   @click.stop="clearSelectedMajor"
+                   title="清除指定，改为自动判断"
+@@ -386,27 +386,28 @@
+
+               <!-- 下拉大类快捷选择菜单 -->
+               <div v-if="showMajorDropdown && !majorLocked" class="major-dropdown-menu glass-card">
+                 <div class="dropdown-header">
+-                  <span>选择预研判领域（可选）</span>
++                  <span>选择预研判领域（最多 3 个）</span>
+                   <button class="close-dropdown-btn" type="button" @click.stop="showMajorDropdown = false">✕</button>
+                 </div>
++                <div v-if="majorLimitHint" class="major-limit-hint">{{ majorLimitHint }}</div>
+                 <div class="dropdown-chips-grid">
+                   <button
+                     type="button"
+                     class="dropdown-chip"
+-                    :class="{ active: !selectedMajorCode }"
+-                    @click="chooseMajor('')"
++                    :class="{ active: !selectedMajorCodes.length }"
++                    @click="clearSelectedMajor"
+                   >
+                     ⚡ 不确定，自动判断
+                   </button>
+                   <button
+                     v-for="m in HAZARD_TAXONOMY"
+                     :key="m.code"
+                     type="button"
+                     class="dropdown-chip"
+-                    :class="{ active: selectedMajorCode === m.code }"
+-                    @click="chooseMajor(m.code)"
++                    :class="{ active: selectedMajorCodes.includes(m.code) }"
++                    @click="toggleMajor(m.code)"
+                   >
+                     {{ m.label }}
+                   </button>
+                 </div>
+@@ -583,34 +584,46 @@
+   return '我的上报'
+ })
+
+ // 隐患大类预选提示 (规范第 1 条：可选，默认自动判断发空值，中途改选不清空历史)
+-const selectedMajorCode = ref('')
++const selectedMajorCodes = ref([])
++const maxSelectedMajors = 3
++const majorLimitHint = ref('')
+ const showMajorDropdown = ref(false)
+-const selectedMajor = computed(() => {
+-  if (!selectedMajorCode.value || selectedMajorCode.value === 'auto' || selectedMajorCode.value === 'unknown') return null
+-  return HAZARD_TAXONOMY.find(m => m.code === selectedMajorCode.value) || null
+-})
++const selectedMajors = computed(() => selectedMajorCodes.value
++  .map(code => HAZARD_TAXONOMY.find(m => m.code === code))
++  .filter(Boolean))
+
+ function toggleMajorDropdown() {
+   if (majorLocked.value) return
+   showMajorDropdown.value = !showMajorDropdown.value
+-}
+-
+-function chooseMajor(code) {
++  if (showMajorDropdown.value) majorLimitHint.value = ''
++}
++
++function toggleMajor(code) {
+   if (majorLocked.value) return
+   // 规范第 1 条：「自动判断」必须发空值，不能发 "auto" 或 "unknown"
+   if (!code || code === 'auto' || code === 'unknown') {
+-    selectedMajorCode.value = ''
+-  } else {
+-    selectedMajorCode.value = code
+-  }
+-  showMajorDropdown.value = false
++    clearSelectedMajor()
++    return
++  }
++  const current = selectedMajorCodes.value
++  majorLimitHint.value = ''
++  if (current.includes(code)) {
++    selectedMajorCodes.value = current.filter(item => item !== code)
++    return
++  }
++  if (current.length >= maxSelectedMajors) {
++    majorLimitHint.value = '最多选择 3 个领域'
++    return
++  }
++  selectedMajorCodes.value = [...current, code]
+ }
+
+ function clearSelectedMajor() {
+   if (majorLocked.value) return
+-  selectedMajorCode.value = ''
++  selectedMajorCodes.value = []
++  majorLimitHint.value = ''
+   showMajorDropdown.value = false
+ }
+
+ // 规范第 2 条：消费 taxonomy 的 locked_* 字段维护常驻持久状态条
+@@ -783,9 +796,11 @@
+ const conversationStarted = computed(() => messages.value.some((m) => m.role === "user"))
+ const majorLocked = computed(() => conversationStarted.value || !!activeLock.value.title)
+ const majorSelectorLabel = computed(() => {
+   if (majorLocked.value && activeLock.value.title) return "本对话：" + activeLock.value.title
+-  return selectedMajor.value ? selectedMajor.value.label : "隐患领域: 自动判断"
++  if (!selectedMajors.value.length) return "隐患领域: 自动判断"
++  const labels = selectedMajors.value.map(item => item.label).join("、")
++  return selectedMajors.value.length > 1 ? `隐患领域(${selectedMajors.value.length}): ${labels}` : `隐患领域: ${labels}`
+ })
+ const majorSelectorTitle = computed(() => majorLocked.value ? "大类已锁定，要换请新开一个对话" : "点击选择或切换隐患领域")
+
+ const mapPicker = ref({ open: false, msg: null, keyword: "", results: [], picked: null })
+@@ -1278,12 +1293,12 @@
+     if (userId) {
+       fd.append('user_id', userId)
+     }
+
+-    // 规范第 1 条：「自动判断」必须发空值，绝对不能传 'auto' 或 'unknown'
+-    const majorCode = (selectedMajorCode.value || '').trim()
+-    if (majorCode && majorCode !== 'auto' && majorCode !== 'unknown') {
+-      fd.append('selected_major_code', majorCode)
++    // 规范第 1 条：「自动判断」必须发空值；多选用英文逗号拼接，复用现有接口。
++    const majorCodes = selectedMajorCodes.value.slice(0, maxSelectedMajors)
++    if (majorCodes.length) {
++      fd.append('selected_major_code', majorCodes.join(','))
+     }
+
+     if (fileToSend) {
+       fd.append('file', fileToSend)
+@@ -1441,9 +1456,11 @@
+   if (analyzing.value) return
+   msg.suggestedActionHandled = true
+
+   // 1. 设置选择器为目标大类 (大类中途改选，绝不清空聊天历史)
+-  selectedMajorCode.value = targetMajorCode
++  selectedMajorCodes.value = targetMajorCode ? [targetMajorCode] : []
++  majorLimitHint.value = ''
++  showMajorDropdown.value = false
+
+   // 2. 找到该条助手消息前紧邻的用户输入文本或图片
+   let userText = ''
+   let userImg = null
+@@ -2559,8 +2576,17 @@
+   font-size: 12px;
+ }
+ .close-dropdown-btn:hover { color: #0f172a; }
+
++.major-limit-hint {
++  margin-bottom: 8px;
++  color: #b45309;
++  background: #fffbeb;
++  border: 1px solid #fde68a;
++  border-radius: 8px;
++  padding: 5px 8px;
++  font-size: 11px;
++}
+ .dropdown-chips-grid {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 6px;
