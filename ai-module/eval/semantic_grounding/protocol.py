@@ -3,6 +3,7 @@
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 LABELS = ("entailed", "neutral", "contradicted")
@@ -51,3 +52,16 @@ def sha256_text(value: str) -> str:
 
 def sha256_file(path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def normalize_content_text(value) -> str:
+    return re.sub(r"[\s\W_]+", "", str(value or ""), flags=re.UNICODE).casefold()
+
+
+def content_fingerprint(row) -> str:
+    """Normalized quote/value/source identity used for leakage checks."""
+    parts = [
+        normalize_content_text((row or {}).get(field, ""))
+        for field in ("quote", "value", "source_text")
+    ]
+    return sha256_text("|".join(parts))

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 """Validate base/boundary semantic-grounding datasets before labeling."""
 
+import re
 from collections import Counter
 
 from core.slot_schemas import SUBCATEGORY_SLOT_SCHEMAS, get_slot_schema
 from eval.semantic_grounding.protocol import (
     BOUNDARY_MAX,
     BOUNDARY_MIN,
+    BOUNDARY_MAX,
     BOUNDARY_SPLIT,
     BASE_TOTAL,
     DEV_TOTAL,
@@ -14,8 +16,20 @@ from eval.semantic_grounding.protocol import (
     LABEL_TOTAL,
     SPLITS,
     TEST_TOTAL,
+    content_fingerprint,
     load_jsonl,
 )
+
+BOUNDARY_KINDS = {
+    "synonym": 5,
+    "negation": 5,
+    "number": 5,
+    "multi_turn": 5,
+    "vision": 5,
+    "assistant_misuse": 5,
+}
+BOUNDARY_SOURCE_KINDS = {"user", "vision", "assistant"}
+
 
 REQUIRED_FIELDS = (
     "id",
@@ -55,6 +69,40 @@ def _validate_row(row: dict, *, boundary: bool) -> None:
     if boundary:
         if row["split"] != BOUNDARY_SPLIT:
             raise ValueError("boundary row has invalid split: %s" % row["id"])
+        kind = str(row.get("boundary_kind") or "")
+        if kind not in BOUNDARY_KINDS:
+            raise ValueError("invalid boundary_kind %r: %s" % (kind, row["id"]))
+        source_kind = str(row.get("source_kind") or "")
+        source_ref = str(row.get("source_ref") or "")
+        if source_kind not in BOUNDARY_SOURCE_KINDS or not source_ref:
+            raise ValueError("boundary source metadata missing: %s" % row["id"])
+        if kind == "negation":
+            if row["expected_label"] != "contradicted":
+                raise ValueError("negation boundary must be contradicted: %s" % row["id"])
+            if not any(token in row["source_text"] for token in ("没有", "并非", "未", "不是")):
+                raise ValueError("negation boundary lacks negation: %s" % row["id"])
+        elif kind == "number":
+            if row["expected_label"] != "contradicted":
+                raise ValueError("number boundary must be contradicted: %s" % row["id"])
+            digits = re.findall(r"\d+", row["value"])
+            if not digits or all(digit in row["source_text"] for digit in digits):
+                raise ValueError("number boundary lacks numeric mismatch: %s" % row["id"])
+        elif kind == "multi_turn":
+            turns = row.get("turns")
+            if not isinstance(turns, list) or len(turns) < 2:
+                raise ValueError("multi_turn boundary needs >=2 turns: %s" % row["id"])
+        elif kind == "vision":
+            if source_kind != "vision" or not source_ref.startswith("v"):
+                raise ValueError("vision boundary needs vN source: %s" % row["id"])
+        elif kind == "assistant_misuse":
+            if source_kind != "assistant" or not source_ref.startswith("a"):
+                raise ValueError("assistant boundary needs aN source: %s" % row["id"])
+        elif kind == "synonym":
+            from core.uncertainty import normalize_text
+            if row["expected_label"] != "entailed":
+                raise ValueError("synonym boundary must be entailed: %s" % row["id"])
+            if normalize_text(row["value"]) in normalize_text(row["quote"]):
+                raise ValueError("synonym boundary is direct support, not synonym: %s" % row["id"])
     elif row["split"] not in SPLITS:
         raise ValueError("base row has invalid split: %s" % row["id"])
 
@@ -91,6 +139,30 @@ def validate_dataset(base_path, boundary_path) -> dict:
     if leakage:
         raise ValueError("source_group_id leakage across dev/test: %s" % leakage)
 
+    split_hashes = {"dev": {}, "test": {}}
+    for row in base:
+        split_hashes[row["split"]].setdefault(content_fingerprint(row), []).append(row["id"])
+    within_duplicates = []
+    for split, hashes in split_hashes.items():
+        for fingerprint, identifiers in hashes.items():
+            if len(identifiers) > 1:
+                within_duplicates.append({
+                    "split": split,
+                    "fingerprint": fingerprint,
+                    "ids": identifiers,
+                })
+    if within_duplicates:
+        raise ValueError("duplicate content within split: %s" % within_duplicates)
+    dev_hashes = set(split_hashes["dev"])
+    test_hashes = set(split_hashes["test"])
+    cross_leakage = sorted(dev_hashes & test_hashes)
+    if cross_leakage:
+        raise ValueError("content leakage across dev/test: %s" % cross_leakage)
+
+    boundary_kinds = Counter(row["boundary_kind"] for row in boundary)
+    if dict(boundary_kinds) != BOUNDARY_KINDS:
+        raise ValueError("boundary kinds must each have 5 rows: %s" % dict(boundary_kinds))
+
     if not BOUNDARY_MIN <= len(boundary) <= BOUNDARY_MAX:
         raise ValueError("boundary_total must be %d..%d, got %d" % (
             BOUNDARY_MIN, BOUNDARY_MAX, len(boundary)))
@@ -102,5 +174,8 @@ def validate_dataset(base_path, boundary_path) -> dict:
         "test_total": test_total,
         "group_leakage": leakage,
         "boundary_total": len(boundary),
+        "boundary_kinds": dict(boundary_kinds),
         "base_groups": len(split_groups),
+        "within_split_content_duplicates": within_duplicates,
+        "cross_split_content_leakage": cross_leakage,
     }
