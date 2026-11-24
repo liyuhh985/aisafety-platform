@@ -1082,13 +1082,34 @@ def _reply_destination(state: AssistantState) -> str:
 _ASK_SLOT_ACTIONS = ("ask_critical_question", "answer_with_optional_question")
 
 
+def _decision_issue_targets(state: AssistantState) -> list[tuple[str, list[str]]]:
+    """Every active issue that still has A-class gaps, in focus/display order.
+
+    Focus only controls ordering. It is not a gate for whether an issue may
+    supply the next follow-up question.
+    """
+    targets = []
+    seen = set()
+    for issue in _report_issues(state):
+        code = str((issue or {}).get("subcategory_code") or "")
+        if not code or code in seen:
+            continue
+        seen.add(code)
+        keys = decision_missing_keys(state, code)
+        if keys:
+            targets.append((code, keys))
+    return targets
+
+
 def _decision_slot_keys(state: AssistantState) -> list:
-    """当前锁定小类还缺的 A 类槽 key（与 understand 的 rebuild_missing 同源，只读）。"""
-    code = str(state.get("locked_subcategory") or "")
-    if not code:
-        return []
-    slots = (state.get("category_slots") or {}).get(code) or {}
-    return [slot.key for slot in missing_decision_slots(code, slots)]
+    """First askable issue's A-class slot keys (kept as a compatibility helper)."""
+    targets = _decision_issue_targets(state)
+    return list(targets[0][1]) if targets else []
+
+
+def _decision_target_code(state: AssistantState) -> str:
+    targets = _decision_issue_targets(state)
+    return targets[0][0] if targets else ""
 
 
 def _active_issue_codes(state: AssistantState) -> list:
@@ -1160,7 +1181,7 @@ def ask_slot_question(state: AssistantGraphState, config=None) -> Command:
     """
     if not _should_ask_slot_question(state):
         return Command(goto=_reply_destination(state))
-    code = str(state.get("locked_subcategory") or "")
+    code = _decision_target_code(state)
     keys = _decision_slot_keys(state)
     # 多条隐患：这一轮的追问由代码拼（每条一个问点）。**必须放在 keys 判断之前** ——
     # 焦点那条已经齐、缺的是别的条时，keys 是空的，放在后面就永远走不到并列追问。
@@ -2262,7 +2283,8 @@ REPORT_DEDUP_RULE = (
 
 
 def _report_rules(premises_scope: str, preliminary: bool = False,
-                  branch: bool = False, followup: bool = False) -> str:
+                  branch: bool = False, followup: bool = False,
+                  issue_count: int = 1) -> str:
     """户内不能套「触犯法规」：多数户内报修是燃气公司/物业的维护义务，住户是报修方。
 
     完整报告是文档（法规和案例要能对照），保留三段式；
@@ -2312,7 +2334,8 @@ def _report_rules(premises_scope: str, preliminary: bool = False,
             + ("材料里标着「[法规适用待确认]」的那一项不能写成问句。" if branch else "")
         )
     return (
-        "\n本次对话只跟踪这一个隐患，请只针对它输出。"
+        "\n本次对话共有 %d 条活动隐患，请逐条覆盖全部隐患，不遗漏任何一条；"
+        "焦点只决定输出顺序。" % max(1, int(issue_count or 1))
         + shape + indoor_note + increment + (branch_rule if branch else "")
         + (REPORT_DEDUP_RULE if preliminary else "") +
         "法规和案例必须来自上面的检索结果，没有就写「库内暂未检索到」，不编造。"
@@ -2348,7 +2371,8 @@ def report(state: AssistantState, config=None) -> dict:
     ctx = ("\n\n".join(_issue_blocks(state))
            + _report_rules(state.get("premises_scope"), preliminary,
                            branch=bool(report_branch_keys(state)),
-                           followup=_followup_pending(state)))
+                           followup=_followup_pending(state),
+                           issue_count=len(_report_issues(state))))
     if skill_report_rules:
         ctx += "\n\n【Skill 报告约束】\n" + skill_report_rules
     # 把 langchain 消息转成 dict，供 _call_llm_stream_events 的 payload 序列化
