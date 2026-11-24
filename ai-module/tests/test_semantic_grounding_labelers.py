@@ -52,3 +52,11 @@ def test_offline_parser_reads_the_same_batch_envelope():
         '{"labels":[{"id":"qv-001","label":"entailed","confidence":0.91}]}'
     )
     assert parsed == {"id": "qv-001", "label": "entailed", "confidence": 0.91}
+
+
+def test_offline_labelers_do_not_import_runtime_verifier():
+    import inspect
+    from eval.semantic_grounding import labeler_config
+
+    source = inspect.getsource(labeler_config)
+    assert "core.semantic_verifier" not in source

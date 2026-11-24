@@ -10,7 +10,9 @@ import os
 import sys
 from pathlib import Path
 
-from core.semantic_verifier import SEMANTIC_LABELER_PROMPT, _call_labeler
+from eval.semantic_grounding.labeler_config import (
+    OFFLINE_LABELER_PROMPT, call_labeler,
+)
 from eval.semantic_grounding.protocol import LABEL_SET, sha256_text
 
 CANDIDATES = [
@@ -32,7 +34,7 @@ CANDIDATES = [
 
 
 def main(output_path=None):
-    labels = {key: _call_labeler(key, CANDIDATES) for key in ("A", "B")}
+    labels = {key: call_labeler(key, CANDIDATES) for key in ("A", "B")}
     expected_ids = {row["id"] for row in CANDIDATES}
     for key, result in labels.items():
         if set(result) != expected_ids:
@@ -40,7 +42,7 @@ def main(output_path=None):
         if any(row.get("label") not in LABEL_SET for row in result.values()):
             raise RuntimeError(f"labeler {key} returned an invalid label")
     record = {
-        "prompt_sha256": sha256_text(SEMANTIC_LABELER_PROMPT),
+        "prompt_sha256": sha256_text(OFFLINE_LABELER_PROMPT),
         "models": {
             "A": os.getenv("SEMANTIC_LABELER_A_MODEL", ""),
             "B": os.getenv("SEMANTIC_LABELER_B_MODEL", ""),
