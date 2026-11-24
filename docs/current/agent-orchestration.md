@@ -192,9 +192,8 @@ tools/                       检索/向量/地理/建单
 `core/agent.py` 的调用链（2026-10-10 起）：
 
 ```
-主端点（重试 LLM_RETRY_PER_ENDPOINT 次）
-  -> 同供应商备用模型（仅当 MIMO_MODEL_BACKUP 与主模型不同）
-    -> 跨供应商降级（FALLBACK_LLM_*，当前为 DeepSeek deepseek-flash）
+槽位主端点（LLM_TEXT_* / LLM_SMALL_* / LLM_VISION_*，当前 OpenDesign deepseek-v4.1-flash）
+  -> 可选跨供应商降级（FALLBACK_LLM_* 三件套齐全时）
 ```
 
 - 只对**瞬时**错误重试（超时 / 429 / 5xx / 连接被切）；400/401/403 直接跳过本端点。

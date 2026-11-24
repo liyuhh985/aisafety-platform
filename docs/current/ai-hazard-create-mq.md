@@ -195,7 +195,7 @@ GET /api/hazard/requests/{requestId}    （需登录 JWT）
 
 ## 附录 A. LLM 调用链：重试与跨供应商降级
 
-### A.1 为什么需要（原状态是坏的）
+### A.1 历史问题（旧 MiMo 配置）
 
 `.env` 里**没有**配置 `MIMO_MODEL_BACKUP`，它与主模型同名（都是 `mimo-v2.6-flash`）。而 `core/agent.py` 的判断是：
 
@@ -209,9 +209,9 @@ if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
 ### A.2 现在的链路
 
 ```
-主端点（重试 LLM_RETRY_PER_ENDPOINT 次，退避 1s × 2^n）
-  → 同供应商备用模型（仅当 MIMO_MODEL_BACKUP 与主模型确实不同）
-    → 跨供应商降级（仅当 FALLBACK_LLM_* 三件套齐全）
+槽位主端点（当前 OpenDesign deepseek-v4.1-flash，重试 LLM_RETRY_PER_ENDPOINT 次，退避 1s × 2^n）
+  → 可选跨供应商降级（仅当 FALLBACK_LLM_* 三件套齐全）
+
 ```
 
 | 规则 | 说明 |
@@ -224,17 +224,21 @@ if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
 ### A.3 配置（服务端 `ai-module/.env`）
 
 ```
-LLM_RETRY_PER_ENDPOINT=2          # 每个端点重试几次（含首次）
-LLM_RETRY_BACKOFF_SECONDS=1.0     # 退避基数
-FALLBACK_LLM_BASE_URL=https://api.deepseek.com
-FALLBACK_LLM_MODEL=deepseek-flash      # 官方 id，名称 DeepSeek-V4.1-Flash
-FALLBACK_LLM_EFFORT=low                # 该模型特有：low/high/max
+LLM_RETRY_PER_ENDPOINT=2
+LLM_RETRY_BACKOFF_SECONDS=1.0
+LLM_TEXT_PROVIDER=opendesign
+LLM_TEXT_BASE_URL=https://amr-link.open-design.ai/v1
+LLM_TEXT_MODEL=deepseek-v4.1-flash
+# 可选跨供应商降级
+FALLBACK_LLM_BASE_URL=
+FALLBACK_LLM_MODEL=
+FALLBACK_LLM_EFFORT=
 ```
 
-> `deepseek-flash` 是**推理模型**（先 `reasoning_content` 后 `content`），所以 `effort=low` 提速；报告正文只取 `content`，不受影响。
+> 当前主模型是 OpenDesign `deepseek-v4.1-flash`；报告正文只读取 `content`，不会把 `reasoning_content` 混进正文。
 > 该 key 只在 `.env`（gitignored）里；`.env.example` 只放占位符。
 
-### A.4 验证（2026-10-10 实测）
+### A.4 历史验证（2026-10-10，MiMo/DeepSeek 旧配置）
 
 | 场景 | 结果 |
 |---|---|
