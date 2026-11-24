@@ -15,7 +15,7 @@ if _env_file.exists():
                 key, _, val = line.partition("=")
                 os.environ.setdefault(key.strip(), val.strip())
 
-# MiMo API 配置 (OpenAI-compatible)
+# Legacy MiMo 兼容配置。新部署默认使用 OpenDesign；仅保留旧代码/旧环境的读取入口。
 MIMO_BASE_URL = os.getenv("MIMO_BASE_URL", "https://api.xiaomimimo.com/v1")
 MIMO_API_KEY = os.getenv("MIMO_API_KEY", "")
 MIMO_MODEL = os.getenv("MIMO_MODEL", "mimo-v2.6-flash")
@@ -28,7 +28,7 @@ OPENDESIGN_API_KEY = os.getenv("OPENDESIGN_API_KEY", "")
 OPENDESIGN_VISION_MODEL = os.getenv("OPENDESIGN_VISION_MODEL", "deepseek-v4.1-flash")
 
 # 视觉识别使用哪个供应商：opendesign（默认）/ mimo
-VISION_PROVIDER = os.getenv("VISION_PROVIDER", "deepseek").strip().lower()
+VISION_PROVIDER = os.getenv("VISION_PROVIDER", "opendesign").strip().lower()
 
 # 视觉请求结果缓存：同一张图 + 同一提示词只真正请求一次
 # OpenDesign 按请求次数计费，缓存能让重跑成本归零，不影响结果正确性
@@ -205,18 +205,18 @@ def _slot(prefix: str, default: ModelSlot) -> ModelSlot:
     )
 
 
-# 三个槽位的默认值都指向 DeepSeek；可用 LLM_TEXT_* / LLM_SMALL_* / LLM_VISION_* 单独覆盖。
+# 文本、小模型、视觉默认使用 OpenDesign deepseek-v4.1-flash；LLM_* 槽位配置仍可覆盖。
 _DEFAULT_BASE = (
-    os.getenv("DEEPSEEK_BASE_URL") or PRIMARY_LLM_BASE_URL
-    or FALLBACK_LLM_BASE_URL or MIMO_BASE_URL
+    OPENDESIGN_BASE_URL or PRIMARY_LLM_BASE_URL
+    or FALLBACK_LLM_BASE_URL or os.getenv("DEEPSEEK_BASE_URL") or MIMO_BASE_URL
 ).strip()
 _DEFAULT_KEY = (
-    os.getenv("DEEPSEEK_API_KEY") or PRIMARY_LLM_API_KEY
-    or FALLBACK_LLM_API_KEY or MIMO_API_KEY
+    OPENDESIGN_API_KEY or PRIMARY_LLM_API_KEY
+    or FALLBACK_LLM_API_KEY or os.getenv("DEEPSEEK_API_KEY") or MIMO_API_KEY
 ).strip()
 _DEFAULT_MODEL = (
-    os.getenv("DEEPSEEK_MODEL") or PRIMARY_LLM_MODEL
-    or FALLBACK_LLM_MODEL or MIMO_MODEL
+    OPENDESIGN_VISION_MODEL or PRIMARY_LLM_MODEL
+    or FALLBACK_LLM_MODEL or os.getenv("DEEPSEEK_MODEL") or MIMO_MODEL
 ).strip()
 _DEFAULT_EFFORT = (
     os.getenv("DEEPSEEK_EFFORT") or PRIMARY_LLM_EFFORT
@@ -224,7 +224,7 @@ _DEFAULT_EFFORT = (
 ).strip()
 
 _DEFAULT_SLOT = ModelSlot(
-    provider="deepseek",
+    provider="opendesign",
     base_url=_DEFAULT_BASE,
     api_key=_DEFAULT_KEY,
     model=_DEFAULT_MODEL,

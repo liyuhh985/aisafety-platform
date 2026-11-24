@@ -34,3 +34,10 @@ def test_fallback_duplicate_endpoint_is_skipped(monkeypatch):
     monkeypatch.setattr(agent_mod, "FALLBACK_LLM_MODEL", "same-model")
     agent = agent_mod.Agent("report", "", [], "http://x", "k", "x")
     assert len(agent._llm_endpoints()) == 1
+
+
+def test_default_slot_uses_opendesign():
+    from config import _DEFAULT_SLOT
+    assert _DEFAULT_SLOT.provider == "opendesign"
+    assert _DEFAULT_SLOT.base_url == "https://amr-link.open-design.ai/v1"
+    assert _DEFAULT_SLOT.model == "deepseek-v4.1-flash"
