@@ -82,7 +82,9 @@ def run_labeling(base_path, output_dir, split: str = "dev",
     candidates = []
     for row in base_rows:
         decision = prefilter_sample(row)
-        deterministic.append({"id": row["id"], **decision})
+        deterministic.append({
+            "id": row["id"], "slot_class": row.get("slot_class", ""), **decision,
+        })
         if decision["decision"] == "needs_verifier":
             candidates.append(row)
 
