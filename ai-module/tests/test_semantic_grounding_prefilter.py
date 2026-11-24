@@ -33,3 +33,14 @@ def test_synonym_case_requires_verifier():
         "source_text": "房子明显往一边斜",
     }
     assert prefilter_sample(sample)["decision"] == "needs_verifier"
+
+
+def test_wufa_direct_support_is_not_a_negation_conflict():
+    sample = {
+        "category": "fire_lane_blocked",
+        "slot": "impact",
+        "value": "无法进入",
+        "quote": "无法进入",
+        "source_text": "消防车无法进入小区",
+    }
+    assert prefilter_sample(sample)["decision"] == "grounded"

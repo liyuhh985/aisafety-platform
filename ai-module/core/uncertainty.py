@@ -236,8 +236,10 @@ def _negated_near_quote(source: str, quote: str, value: str) -> bool:
     if start < 0:
         return False
     window = source_norm[max(0, start - 8): start + len(quote_norm) + 8]
+    # Do not treat a bare "无" as negation: lexical words such as "无法进入"
+    # describe a supported fact, not a negated one.
     negative_tokens = (
-        "没有", "没", "未", "无", "不是", "并非", "已清理", "已恢复",
+        "没有", "没", "未", "不是", "并非", "已清理", "已恢复",
     )
     return any(token in window for token in negative_tokens)
 

@@ -369,3 +369,15 @@ def test_business_status_mapping():
         BUSINESS_SOURCE_MAP, "dangerous_building",
     )
     assert invalid["business_status"] == "rejected"
+
+
+def test_wufa_is_not_misread_as_plain_negation():
+    from core.uncertainty import verify_slot_evidence
+
+    result = verify_slot_evidence(
+        "impact", "无法进入",
+        {"quote": "无法进入", "source_ref": "u1"},
+        {"u1": "消防车无法进入小区"},
+        "fire_lane_blocked",
+    )
+    assert result["status"] == "grounded"
