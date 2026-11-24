@@ -1,72 +1,51 @@
 {
   "threshold": 0.7,
   "precision": 1.0,
-  "coverage": 1.0,
+  "coverage": 0.8461538461538461,
   "false_reject_proxy": 0.0,
-  "accepted": 27,
+  "accepted": 11,
   "scan": [
     {
       "threshold": 0.7,
       "precision": 1.0,
-      "coverage": 1.0,
+      "coverage": 0.8461538461538461,
       "false_reject_proxy": 0.0,
-      "accepted": 27
+      "accepted": 11
     },
     {
       "threshold": 0.75,
       "precision": 1.0,
-      "coverage": 1.0,
+      "coverage": 0.8461538461538461,
       "false_reject_proxy": 0.0,
-      "accepted": 27
+      "accepted": 11
     },
     {
       "threshold": 0.8,
       "precision": 1.0,
-      "coverage": 1.0,
+      "coverage": 0.8461538461538461,
       "false_reject_proxy": 0.0,
-      "accepted": 27
+      "accepted": 11
     },
     {
       "threshold": 0.85,
       "precision": 1.0,
-      "coverage": 1.0,
+      "coverage": 0.8461538461538461,
       "false_reject_proxy": 0.0,
-      "accepted": 27
-    },
-    {
-      "threshold": 0.86,
-      "precision": 1.0,
-      "coverage": 0.9629629629629629,
-      "false_reject_proxy": 0.0,
-      "accepted": 26
-    },
-    {
-      "threshold": 0.88,
-      "precision": 1.0,
-      "coverage": 0.9259259259259259,
-      "false_reject_proxy": 0.0,
-      "accepted": 25
+      "accepted": 11
     },
     {
       "threshold": 0.9,
       "precision": 1.0,
-      "coverage": 0.8888888888888888,
+      "coverage": 0.7692307692307693,
       "false_reject_proxy": 0.0,
-      "accepted": 24
+      "accepted": 10
     },
     {
       "threshold": 0.95,
       "precision": 1.0,
-      "coverage": 0.7037037037037037,
+      "coverage": 0.5384615384615384,
       "false_reject_proxy": 0.0,
-      "accepted": 19
-    },
-    {
-      "threshold": 0.98,
-      "precision": 0.0,
-      "coverage": 0.0,
-      "false_reject_proxy": 0.0,
-      "accepted": 0
+      "accepted": 7
     }
   ],
   "target_precision": 0.95

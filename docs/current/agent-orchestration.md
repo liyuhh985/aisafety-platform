@@ -129,6 +129,7 @@ Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 P
 - 证据只用于内部状态、日志和测试；不进入 SSE taxonomy、报告 Prompt、报告正文、Java DTO 或前端。`task_gate` interrupt 也通过 `_public_issues()` 脱敏。
 - `enforce` 下，确定性校验后的灰区 `weak` 槽位最多取 5 个，A 类优先，交给两个独立零温度模型复核；每轮最多调用 A、B 模型各一次。
 - A 类接受或拒绝必须双模型同向且达到校准阈值；B 类可由 Model A 单模型高阈值接受，但冲突拒绝必须由 Model B 确认；分歧、低置信度、超时、非法输出一律 `unavailable`。
+- 阈值校准强制 `threshold_a > threshold_b`；若无法在扫描区间内找到更严格且满足精度目标的 A 类阈值，校准直接失败，不允许 A、B 相等。
 - `unavailable / rejected` 槽位会在 `understand` 内被删除并重算：A 类回到 `missing` 继续追问，B 类进入 `report_missing`，只写条件分支，不能当成确定事实。
 - Thresholds are calibrated from dual-model consensus pseudo-labels.
 - No human gold labels exist for this calibration.

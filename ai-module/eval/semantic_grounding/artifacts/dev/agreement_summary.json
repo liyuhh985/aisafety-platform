@@ -1,16 +1,16 @@
 {
-  "overall_agreement": 0.9545454545454546,
-  "cohen_kappa": 0.9302571327932371,
+  "overall_agreement": 0.8596491228070176,
+  "cohen_kappa": 0.7621283255086072,
   "label_agreement": {
-    "entailed": 1.0,
-    "neutral": 0.8636363636363636,
-    "contradicted": 0.9
+    "entailed": 0.6666666666666666,
+    "neutral": 0.8,
+    "contradicted": 0.7222222222222222
   },
   "class_agreement": {
-    "A": 0.9444444444444444,
-    "B": 1.0
+    "A": 0.8723404255319149,
+    "B": 0.8
   },
-  "agreed_count": 63,
-  "disagreed_count": 3,
-  "invalid_count": 0
+  "agreed_count": 49,
+  "disagreed_count": 8,
+  "invalid_count": 1
 }

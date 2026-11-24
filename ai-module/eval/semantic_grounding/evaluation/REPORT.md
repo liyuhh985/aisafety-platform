@@ -8,14 +8,14 @@ No human review was performed.
 
 ## Quality Metrics
 
-- Overall agreement: 0.9783
-- Cohen's kappa: 0.9660
+- Overall agreement: 0.7436
+- Cohen's kappa: 0.5149
 
 ## Frozen Thresholds
 
 ```json
 {
-  "threshold_a": 0.7,
+  "threshold_a": 0.75,
   "threshold_b": 0.7,
   "threshold_c": 0.7,
   "dataset": "qv-pseudo-v1",
@@ -29,17 +29,17 @@ No human review was performed.
 {
   "A": {
     "slot_class": "A",
-    "threshold": 0.7,
+    "threshold": 0.75,
     "precision": 1.0,
-    "coverage": 1.0,
-    "accepted": 10
+    "coverage": 0.6666666666666666,
+    "accepted": 2
   },
   "B": {
     "slot_class": "B",
     "threshold": 0.7,
     "precision": 1.0,
     "coverage": 1.0,
-    "accepted": 2
+    "accepted": 1
   }
 }
 ```

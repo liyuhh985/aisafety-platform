@@ -36,16 +36,16 @@
     {
       "threshold": 0.9,
       "precision": 1.0,
-      "coverage": 1.0,
+      "coverage": 0.6666666666666666,
       "false_accept_proxy": 0.0,
-      "accepted": 3
+      "accepted": 2
     },
     {
       "threshold": 0.95,
-      "precision": 1.0,
-      "coverage": 0.3333333333333333,
+      "precision": 0.0,
+      "coverage": 0.0,
       "false_accept_proxy": 0.0,
-      "accepted": 1
+      "accepted": 0
     }
   ],
   "target_precision": 0.95
