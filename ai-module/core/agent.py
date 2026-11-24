@@ -50,6 +50,9 @@ class Agent:
         model: str = "mimo-v2.5",
         tool_choice: str = "auto",
         slot: str = "",
+        temperature: float = 0.3,
+        use_configured_slot: bool = True,
+        allow_fallback: bool = True,
     ):
         self.name = name
         self.system_prompt = system_prompt
@@ -59,6 +62,9 @@ class Agent:
         self.model = model
         self.tool_choice = tool_choice
         self.slot = slot or ("small" if name in _SMALL_AGENT_NAMES else "text")
+        self.temperature = float(temperature)
+        self.use_configured_slot = bool(use_configured_slot)
+        self.allow_fallback = bool(allow_fallback)
         self._tool_map = {t.name: t for t in tools}
 
     # ====== 非流式执行 ======
@@ -262,16 +268,20 @@ class Agent:
                     resp.close()
 
     def _llm_endpoints(self) -> list:
-        """调用链：槽位主端点 -> 跨供应商降级（若已配置且不是同一端点）。"""
-        conf = SMALL_MODEL if self.slot == "small" else TEXT_MODEL
-        if conf.base_url and conf.api_key and conf.model:
-            chain = [(conf.base_url.rstrip("/"), conf.api_key,
-                      conf.model, conf.effort or None)]
+        """Respect dedicated endpoints, with global fallback only when opted in."""
+        if self.use_configured_slot:
+            conf = SMALL_MODEL if self.slot == "small" else TEXT_MODEL
+            if conf.base_url and conf.api_key and conf.model:
+                chain = [(conf.base_url.rstrip("/"), conf.api_key,
+                          conf.model, conf.effort or None)]
+            else:
+                chain = [(self.base_url, self.api_key, self.model, None)]
+                if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
+                    chain.append((self.base_url, self.api_key, MIMO_MODEL_BACKUP, None))
         else:
             chain = [(self.base_url, self.api_key, self.model, None)]
-            if MIMO_MODEL_BACKUP and MIMO_MODEL_BACKUP != self.model:
-                chain.append((self.base_url, self.api_key, MIMO_MODEL_BACKUP, None))
-        if FALLBACK_LLM_BASE_URL and FALLBACK_LLM_API_KEY and FALLBACK_LLM_MODEL:
+        if (self.allow_fallback and FALLBACK_LLM_BASE_URL
+                and FALLBACK_LLM_API_KEY and FALLBACK_LLM_MODEL):
             fallback = (FALLBACK_LLM_BASE_URL.rstrip("/"), FALLBACK_LLM_API_KEY,
                         FALLBACK_LLM_MODEL, FALLBACK_LLM_EFFORT or None)
             if (fallback[0], fallback[2]) != (chain[0][0], chain[0][2]):
@@ -407,7 +417,11 @@ class Agent:
                 [{"role": "system", "content": self.system_prompt}]
                 + payload_messages
             )
-        payload = {"model": self.model, "messages": payload_messages, "temperature": 0.3}
+        payload = {
+            "model": self.model,
+            "messages": payload_messages,
+            "temperature": self.temperature,
+        }
         if stream:
             payload["stream"] = True
         if self.tools:
