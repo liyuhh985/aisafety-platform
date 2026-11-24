@@ -159,12 +159,19 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
         )
 
     if any(phrase in user_text for phrase in STOP_PHRASES):
+        if issues and incomplete:
+            # Respect the refusal to answer more questions, but never turn an
+            # incomplete issue into a retrieval-backed preliminary/full report.
+            return _decision(
+                "answer_now",
+                reason="user refused questions while A-class facts are incomplete",
+            )
         if issues:
             return _decision(
-                "report_preliminary",
-                reason="user explicitly refused further questions",
+                "report_full",
+                reason="user refused questions and all A-class facts are complete",
                 needs_search=True,
-                report_mode="preliminary",
+                report_mode="full",
             )
         return _decision("answer_now", reason="user refused questions and no issue is defined")
 

@@ -639,3 +639,23 @@ def test_ask_solution_still_asks_while_a_decision_slot_is_missing():
     assert out["action"] == "ask_critical_question"
     assert out["needs_search"] is False
     assert "长期占压还是临时停放" in out["question"]
+
+
+def test_stop_phrase_with_missing_a_slot_does_not_retrieve_or_report():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "high",
+        "issues": [{
+            "major_code": "traffic",
+            "subcategory_code": "road_occupancy",
+            "missing": ["persistence"],
+        }],
+        "question": "是长期占压还是临时停放？",
+        "answer": "先按占道经营类隐患作初步判断。",
+    }
+    out = decide_next_action(plan, {"user_text": "别问了，直接出报告"})
+    assert out["action"] == "answer_now"
+    assert out["needs_search"] is False
+    assert out["report_mode"] == "none"
+    assert out["question"] == ""

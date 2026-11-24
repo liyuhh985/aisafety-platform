@@ -96,3 +96,30 @@ def test_focus_complete_non_focus_missing_is_not_sent_to_search():
     assert out["needs_search"] is False
     assert out["question"] == "房屋有没有裂缝、倾斜或沉降？"
     assert "请确认" not in out["question"]
+
+
+def test_understand_stop_phrase_with_missing_slot_stays_out_of_search(monkeypatch):
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "high",
+        "issues": [{
+            "major_code": "traffic",
+            "subcategory_code": "road_occupancy",
+            "slots": {"behavior": "摆摊", "blocked": "部分占用"},
+        }],
+        "categories": ["road_occupancy"],
+        "category_slots": {"road_occupancy": {"behavior": "摆摊", "blocked": "部分占用"}},
+        "question": "是长期占压还是临时停放？",
+        "answer": "先按占道经营类隐患作初步判断。",
+        "needs_search": True,
+    }
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: plan)
+    out = ag.understand({
+        "messages": [ag.HumanMessage(content="别问了，直接出报告")],
+    })
+    assert out["missing"] == ["road_occupancy_persistence"]
+    assert out["next_action"] == "answer_now"
+    assert out["report_mode"] == "none"
+    assert out["asked_question_last_turn"] is False
+    assert ag.route(out).goto in {"answer_reply", "fallback_reply"}
