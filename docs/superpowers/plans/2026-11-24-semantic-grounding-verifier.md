@@ -1,5 +1,9 @@
 # Semantic Grounding Verifier Implementation Plan
 
+> 状态：superseded
+> 替代计划：docs/superpowers/plans/2026-11-24-dual-model-semantic-verifier.md
+> 不要执行本单模型计划；保留仅用于历史决策追溯。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace manual confirmation for valid-quote but non-literal slot values with one batched semantic-verifier call inside `understand`, using four business states and class-specific confidence thresholds.
