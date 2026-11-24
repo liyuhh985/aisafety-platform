@@ -28,7 +28,7 @@ def _scan_results(rows, target_precision):
         for row in rows
         if isinstance(row.get("min_confidence"), (int, float))
         and not isinstance(row.get("min_confidence"), bool)
-        and 0.0 <= float(row.get("min_confidence")) <= 1.0
+        and min(THRESHOLDS) <= float(row.get("min_confidence")) <= max(THRESHOLDS)
     })
     candidates = sorted(set(THRESHOLDS) | set(observed))
     results = []
@@ -56,12 +56,14 @@ def _scan_results(rows, target_precision):
     return results
 
 
-def scan_thresholds(rows, slot_class, target_precision) -> dict:
+def scan_thresholds(rows, slot_class, target_precision, higher_than=0.0) -> dict:
     filtered = _rows_for_class(rows, slot_class)
     results = _scan_results(filtered, target_precision)
     eligible = [
         result for result in results
-        if result["precision"] >= target_precision and result["coverage"] > 0
+        if result["precision"] >= target_precision
+        and result["coverage"] > 0
+        and result["threshold"] > float(higher_than)
     ]
     if not eligible:
         raise ValueError(
@@ -80,7 +82,7 @@ def scan_rejection_threshold(rows, target_precision=0.95) -> dict:
         for row in rows
         if isinstance(row.get("min_confidence"), (int, float))
         and not isinstance(row.get("min_confidence"), bool)
-        and 0.0 <= float(row.get("min_confidence")) <= 1.0
+        and min(THRESHOLDS) <= float(row.get("min_confidence")) <= max(THRESHOLDS)
     })
     candidates = sorted(set(THRESHOLDS) | set(observed))
     results = []
@@ -147,8 +149,11 @@ ICD_CALIBRATION_NOTICE = (
 def calibrate_from_consensus(consensus_result, output_dir) -> dict:
     assert_quality_gate((consensus_result or {}).get("summary") or {})
     rows = calibration_rows((consensus_result or {}).get("consensus") or [])
-    scan_a = scan_thresholds(rows, "A", PRECISION_TARGETS["A"])
     scan_b = scan_thresholds(rows, "B", PRECISION_TARGETS["B"])
+    scan_a = scan_thresholds(
+        rows, "A", PRECISION_TARGETS["A"],
+        higher_than=scan_b["threshold"],
+    )
     scan_c = scan_rejection_threshold(rows, PRECISION_TARGETS["C"])
     thresholds = {
         "threshold_a": scan_a["threshold"],
