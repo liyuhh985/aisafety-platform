@@ -189,13 +189,13 @@ SEMANTIC_LABELER_B_MODEL = os.getenv(
 # Runtime dual-model semantic verifier. Thresholds are calibrated on consensus
 # pseudo-labels; 1.01 means "never auto-accept" when calibration had no safe cut.
 SEMANTIC_VERIFIER_A_THRESHOLD = float(
-    os.getenv("SEMANTIC_VERIFIER_A_THRESHOLD", "0.91")
+    os.getenv("SEMANTIC_VERIFIER_A_THRESHOLD", "0.70")
 )
 SEMANTIC_VERIFIER_B_THRESHOLD = float(
-    os.getenv("SEMANTIC_VERIFIER_B_THRESHOLD", "0.84")
+    os.getenv("SEMANTIC_VERIFIER_B_THRESHOLD", "0.70")
 )
 SEMANTIC_VERIFIER_C_THRESHOLD = float(
-    os.getenv("SEMANTIC_VERIFIER_C_THRESHOLD", "0.90")
+    os.getenv("SEMANTIC_VERIFIER_C_THRESHOLD", "0.70")
 )
 SEMANTIC_VERIFIER_MAX_ITEMS = int(
     os.getenv("SEMANTIC_VERIFIER_MAX_ITEMS", "5")

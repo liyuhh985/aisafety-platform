@@ -1,0 +1,36 @@
+{
+  "overall_agreement": 0.9347826086956522,
+  "cohen_kappa": 0.8995633187772927,
+  "invalid_count": 0,
+  "thresholds": {
+    "threshold_a": 0.7,
+    "threshold_b": 0.7,
+    "threshold_c": 0.7,
+    "dataset": "qv-pseudo-v1",
+    "notice": "Thresholds were calibrated against dual-model consensus pseudo-labels.\nNo human review was performed."
+  },
+  "auto_accept": {
+    "A": {
+      "slot_class": "A",
+      "threshold": 0.7,
+      "precision": 1.0,
+      "coverage": 1.0,
+      "accepted": 10
+    },
+    "B": {
+      "slot_class": "B",
+      "threshold": 0.7,
+      "precision": 1.0,
+      "coverage": 1.0,
+      "accepted": 2
+    }
+  },
+  "dataset": "qv-pseudo-v1",
+  "models": [
+    "minimax-m3.1-flash",
+    "glm-5.3-flash"
+  ],
+  "test_sha256": "6c92543ca52aa97721744fa6d68b826a20d438256323dcc6621ea1cd12b07a6e",
+  "prompt_sha256": "cb075c21e84cfb63a0cd05ce7f708c21e8a711771609523ca5bd26b351f1b6da",
+  "candidate_count": 46
+}

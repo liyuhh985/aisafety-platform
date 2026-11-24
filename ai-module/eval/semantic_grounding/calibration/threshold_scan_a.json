@@ -1,0 +1,66 @@
+{
+  "threshold": 0.7,
+  "precision": 1.0,
+  "coverage": 1.0,
+  "false_accept_proxy": 0.0,
+  "accepted": 14,
+  "scan": [
+    {
+      "threshold": 0.7,
+      "precision": 1.0,
+      "coverage": 1.0,
+      "false_accept_proxy": 0.0,
+      "accepted": 14
+    },
+    {
+      "threshold": 0.75,
+      "precision": 1.0,
+      "coverage": 1.0,
+      "false_accept_proxy": 0.0,
+      "accepted": 14
+    },
+    {
+      "threshold": 0.8,
+      "precision": 1.0,
+      "coverage": 1.0,
+      "false_accept_proxy": 0.0,
+      "accepted": 14
+    },
+    {
+      "threshold": 0.85,
+      "precision": 1.0,
+      "coverage": 1.0,
+      "false_accept_proxy": 0.0,
+      "accepted": 14
+    },
+    {
+      "threshold": 0.9,
+      "precision": 1.0,
+      "coverage": 0.5,
+      "false_accept_proxy": 0.0,
+      "accepted": 7
+    },
+    {
+      "threshold": 0.94,
+      "precision": 1.0,
+      "coverage": 0.35714285714285715,
+      "false_accept_proxy": 0.0,
+      "accepted": 5
+    },
+    {
+      "threshold": 0.95,
+      "precision": 1.0,
+      "coverage": 0.35714285714285715,
+      "false_accept_proxy": 0.0,
+      "accepted": 5
+    },
+    {
+      "threshold": 0.98,
+      "precision": 1.0,
+      "coverage": 0.14285714285714285,
+      "false_accept_proxy": 0.0,
+      "accepted": 2
+    }
+  ],
+  "target_precision": 0.98
+}

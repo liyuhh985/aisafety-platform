@@ -1,0 +1,18 @@
+{
+  "dataset": "qv-pseudo-v1",
+  "split": "test",
+  "test_sha256": "6c92543ca52aa97721744fa6d68b826a20d438256323dcc6621ea1cd12b07a6e",
+  "prompt_sha256": "cb075c21e84cfb63a0cd05ce7f708c21e8a711771609523ca5bd26b351f1b6da",
+  "models": [
+    "minimax-m3.1-flash",
+    "glm-5.3-flash"
+  ],
+  "thresholds": {
+    "threshold_a": 0.7,
+    "threshold_b": 0.7,
+    "threshold_c": 0.7,
+    "dataset": "qv-pseudo-v1",
+    "notice": "Thresholds were calibrated against dual-model consensus pseudo-labels.\nNo human review was performed."
+  },
+  "frozen_at": "2026-11-24T06:17:32.302478+00:00"
+}

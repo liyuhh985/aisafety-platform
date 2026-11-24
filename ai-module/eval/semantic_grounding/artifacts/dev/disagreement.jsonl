@@ -1,0 +1,7 @@
+{"confidence_a": 0.88, "confidence_b": 0.9, "id": "qv-004", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.98, "confidence_b": 0.9, "id": "qv-009", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.98, "confidence_b": 0.7, "id": "qv-016", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.96, "confidence_b": 0.9, "id": "qv-045", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-063", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.94, "confidence_b": 0.9, "id": "qv-076", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-081", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}

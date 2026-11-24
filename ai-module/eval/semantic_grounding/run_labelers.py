@@ -3,6 +3,7 @@
 
 import json
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from core.slot_schemas import get_slot_schema
@@ -90,8 +91,11 @@ def run_labeling(base_path, output_dir, split: str = "dev",
 
     labeler_a = labeler_a or build_labeler("A")
     labeler_b = labeler_b or build_labeler("B")
-    labels_a = label_rows(candidates, labeler_a)
-    labels_b = label_rows(candidates, labeler_b)
+    with ThreadPoolExecutor(max_workers=2, thread_name_prefix="semantic-labeler") as pool:
+        future_a = pool.submit(label_rows, candidates, labeler_a)
+        future_b = pool.submit(label_rows, candidates, labeler_b)
+        labels_a = future_a.result()
+        labels_b = future_b.result()
     output = Path(output_dir)
     dump_jsonl(output / "deterministic.jsonl", deterministic)
     dump_jsonl(output / "labels_A.jsonl",
