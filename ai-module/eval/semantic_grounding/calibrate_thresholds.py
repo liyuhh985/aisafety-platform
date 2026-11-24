@@ -129,6 +129,7 @@ def calibration_rows(consensus_rows) -> list[dict]:
             "label": row["label"],
             "runtime_label_a": row.get("label_a", ""),
             "runtime_label_b": row.get("label_b", ""),
+            "confidence_a": float(row.get("confidence_a") or 0.0),
             "min_confidence": min(
                 float(row.get("confidence_a") or 0.0),
                 float(row.get("confidence_b") or 0.0),
