@@ -1,59 +1,52 @@
 # -*- coding: utf-8 -*-
-"""Runtime dual-model semantic verifier for grey-zone slot evidence."""
+"""Single production-model verifier for weak slot evidence."""
 
 import json
-import os
 from typing import Optional
 
 from config import (
-    SEMANTIC_VERIFIER_A_THRESHOLD,
-    SEMANTIC_VERIFIER_B_THRESHOLD,
-    SEMANTIC_VERIFIER_C_THRESHOLD,
     SEMANTIC_VERIFIER_MAX_ITEMS,
+    SEMANTIC_VERIFIER_MIN_CONFIDENCE,
+    SMALL_MODEL,
 )
 from core.agent import Agent
 from core.slot_schemas import get_slot_schema
 
-SEMANTIC_LABELER_PROMPT = (
-    "你是槽位证据关系标注器。只判断 quote 是否支持 value。"
-    "relation 只能是 entailed / contradicted / neutral。"
-    "entailed 表示 quote 直接支持 value；contradicted 表示 quote 与 value 冲突；"
-    "neutral 表示 quote 既不能支持也不能否定 value。"
-    "不重新抽取事实，不参考对话，不使用工具。"
+RUNTIME_VERIFIER_PROMPT = (
+    "你是槽位证据复核器。只判断 quote 是否支持 value，label 只能是 "
+    "entailed / contradicted。"
+    "entailed 表示 quote 直接陈述、同义改写或语义蕴含足以支持 value。"
+    "contradicted 表示 quote 不支持 value，包括信息不足、仅同主题、无关、"
+    "明确否定或数字冲突。"
+    "不重新抽取事实，不判断风险等级，不参考完整对话，不使用工具。"
     "输入是一个 JSON 数组，每个元素包含 id、slot、slot_question、value、quote。"
     '只输出一个 JSON 对象：{"labels":[{"id":"...","label":"...","confidence":0.0}]}。'
     "每个输入 id 必须恰好返回一次，不添加其他字段。"
 )
 
-_LABELERS = {}
+_VERIFIER = None
 
 
-def build_labeler(key: str):
-    normalized = str(key or "").upper()
-    if normalized not in {"A", "B"}:
-        raise ValueError("labeler key must be A or B")
-    base = os.getenv(f"SEMANTIC_LABELER_{normalized}_BASE_URL", "").strip()
-    api_key = os.getenv(f"SEMANTIC_LABELER_{normalized}_API_KEY", "").strip()
-    model = os.getenv(f"SEMANTIC_LABELER_{normalized}_MODEL", "").strip()
-    if not base or not api_key or not model:
-        raise RuntimeError(f"semantic labeler {normalized} is not configured")
+def build_verifier():
     return Agent(
-        name=f"semantic_labeler_{normalized.lower()}",
-        system_prompt=SEMANTIC_LABELER_PROMPT,
+        name="semantic_verifier",
+        system_prompt=RUNTIME_VERIFIER_PROMPT,
         tools=[],
-        base_url=base,
-        api_key=api_key,
-        model=model,
+        base_url=SMALL_MODEL.base_url,
+        api_key=SMALL_MODEL.api_key,
+        model=SMALL_MODEL.model,
+        slot="small",
         temperature=0.0,
-        use_configured_slot=False,
-        allow_fallback=False,
+        use_configured_slot=True,
+        allow_fallback=True,
     )
 
 
-def _configured_labeler(key: str):
-    if key not in _LABELERS:
-        _LABELERS[key] = build_labeler(key)
-    return _LABELERS[key]
+def _configured_verifier():
+    global _VERIFIER
+    if _VERIFIER is None:
+        _VERIFIER = build_verifier()
+    return _VERIFIER
 
 
 def _slot_schema(code: str, slot_key: str):
@@ -70,7 +63,7 @@ def _slot_question(code: str, slot_key: str) -> str:
 
 def _slot_class(code: str, slot_key: str) -> str:
     slot = _slot_schema(code, slot_key)
-    return slot.value_class if slot else "C"
+    return slot.value_class if slot else "B"
 
 
 def collect_weak_candidates(issues, audit, max_items=5) -> list[dict]:
@@ -98,8 +91,8 @@ def collect_weak_candidates(issues, audit, max_items=5) -> list[dict]:
                 "quote": quote,
                 "value_class": _slot_class(code, slot),
             })
-    rank = {"A": 0, "B": 1, "C": 2}
-    candidates.sort(key=lambda row: rank.get(row["value_class"], 3))
+    rank = {"A": 0, "B": 1}
+    candidates.sort(key=lambda row: rank.get(row["value_class"], 2))
     return candidates[:max(1, int(max_items or 5))]
 
 
@@ -108,7 +101,7 @@ def _normalize_label(value) -> Optional[dict]:
         return None
     label = value.get("label")
     confidence = value.get("confidence")
-    if label not in {"entailed", "neutral", "contradicted"}:
+    if label not in {"entailed", "contradicted"}:
         return None
     if (not isinstance(confidence, (int, float))
             or isinstance(confidence, bool)
@@ -119,7 +112,7 @@ def _normalize_label(value) -> Optional[dict]:
 
 def parse_batch_response(text) -> dict:
     raw = str(text or "").strip()
-    if raw.startswith("```"):
+    if raw.startswith("`" * 3):
         raw = raw.strip("`")
         raw = raw.split("\n", 1)[1] if "\n" in raw else raw
     try:
@@ -144,8 +137,8 @@ def parse_batch_response(text) -> dict:
     return result
 
 
-def _call_labeler(key, candidates, cancellation=None) -> dict:
-    labeler = _configured_labeler(key)
+def _call_verifier(candidates, cancellation=None) -> dict:
+    verifier = _configured_verifier()
     visible = [
         {field: row.get(field, "") for field in (
             "id", "slot", "slot_question", "value", "quote",
@@ -153,49 +146,28 @@ def _call_labeler(key, candidates, cancellation=None) -> dict:
         for row in candidates
     ]
     messages = [
-        {"role": "system", "content": labeler.system_prompt},
+        {"role": "system", "content": verifier.system_prompt},
         {"role": "user", "content": json.dumps(
             visible, ensure_ascii=False, sort_keys=True
         )},
     ]
-    response = labeler._call_llm(messages, cancellation=cancellation)
+    response = verifier._call_llm(messages, cancellation=cancellation)
     return parse_batch_response((response or {}).get("content"))
 
 
-def _a_class_status(a, b) -> str:
-    if (a["label"] == b["label"] == "entailed"
-            and min(a["confidence"], b["confidence"]) >= SEMANTIC_VERIFIER_A_THRESHOLD):
-        return "grounded_by_model"
-    if (a["label"] == b["label"] == "contradicted"
-            and min(a["confidence"], b["confidence"]) >= SEMANTIC_VERIFIER_C_THRESHOLD):
-        return "rejected"
-    return "unavailable"
-
-
-def _b_class_status(a, b) -> str:
-    if (a["label"] == "entailed"
-            and a["confidence"] >= SEMANTIC_VERIFIER_B_THRESHOLD):
-        return "grounded_by_model"
-    if (a["label"] == "contradicted" and b is not None
-            and b["label"] == "contradicted"
-            and min(a["confidence"], b["confidence"]) >= SEMANTIC_VERIFIER_C_THRESHOLD):
-        return "rejected"
-    return "unavailable"
-
-
-def _apply_status(result, status, a=None, b=None) -> None:
+def _apply_status(result, status, label=None, confidence=None) -> None:
     result["status"] = status
     result["business_status"] = status
     if status == "grounded_by_model":
-        result["reason"] = "model_consensus_entailed"
+        result["reason"] = "runtime_verifier_entailed"
     elif status == "rejected":
-        result["reason"] = "model_consensus_contradicted"
+        result["reason"] = "runtime_verifier_contradicted"
     else:
-        result["reason"] = "model_indeterminate_or_failed"
-    if a is not None:
-        result["model_a"] = dict(a)
-    if b is not None:
-        result["model_b"] = dict(b)
+        result["reason"] = "runtime_verifier_low_confidence_or_invalid"
+    if label is not None:
+        result["verifier_label"] = label
+    if confidence is not None:
+        result["verifier_confidence"] = confidence
 
 
 def verify_weak_slots(issues, audit, cancellation=None) -> dict:
@@ -206,22 +178,9 @@ def verify_weak_slots(issues, audit, cancellation=None) -> dict:
     if not candidates:
         return audit
     try:
-        labels_a = _call_labeler("A", candidates, cancellation=cancellation)
+        labels = _call_verifier(candidates, cancellation=cancellation)
     except Exception:
-        labels_a = {}
-    b_candidates = []
-    for candidate in candidates:
-        a = labels_a.get(candidate["id"])
-        if candidate["value_class"] == "A" or (
-            a is not None and a.get("label") == "contradicted"
-        ):
-            b_candidates.append(candidate)
-    labels_b = {}
-    if b_candidates:
-        try:
-            labels_b = _call_labeler("B", b_candidates, cancellation=cancellation)
-        except Exception:
-            labels_b = {}
+        labels = {}
 
     for candidate in candidates:
         code = candidate["category"]
@@ -229,14 +188,18 @@ def verify_weak_slots(issues, audit, cancellation=None) -> dict:
         result = ((audit.get(code) or {}).get(slot) or {})
         if not result:
             continue
-        a = labels_a.get(candidate["id"])
-        b = labels_b.get(candidate["id"])
-        if a is None:
+        verdict = labels.get(candidate["id"])
+        if verdict is None:
             _apply_status(result, "unavailable")
             continue
-        if candidate["value_class"] == "A":
-            status = _a_class_status(a, b) if b is not None else "unavailable"
-        else:
-            status = _b_class_status(a, b)
-        _apply_status(result, status, a=a, b=b)
+        confidence = verdict["confidence"]
+        if confidence < SEMANTIC_VERIFIER_MIN_CONFIDENCE:
+            _apply_status(result, "unavailable", verdict["label"], confidence)
+            continue
+        status = (
+            "grounded_by_model"
+            if verdict["label"] == "entailed"
+            else "rejected"
+        )
+        _apply_status(result, status, verdict["label"], confidence)
     return audit

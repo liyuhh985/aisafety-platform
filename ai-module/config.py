@@ -174,7 +174,7 @@ if SLOT_EVIDENCE_MODE not in {"off", "shadow", "enforce"}:
         "expected 'off', 'shadow', or 'enforce'"
     )
 
-# Dual-model semantic pseudo-labelers. Keys stay in the deployment environment.
+# Offline pseudo-labelers only. Runtime never imports these credentials.
 SEMANTIC_LABELER_A_BASE_URL = os.getenv("SEMANTIC_LABELER_A_BASE_URL", "")
 SEMANTIC_LABELER_A_API_KEY = os.getenv("SEMANTIC_LABELER_A_API_KEY", "")
 SEMANTIC_LABELER_A_MODEL = os.getenv(
@@ -186,16 +186,9 @@ SEMANTIC_LABELER_B_MODEL = os.getenv(
     "SEMANTIC_LABELER_B_MODEL", "glm-5.3-flash"
 )
 
-# Runtime dual-model semantic verifier. Thresholds are calibrated on consensus
-# pseudo-labels; 1.01 means "never auto-accept" when calibration had no safe cut.
-SEMANTIC_VERIFIER_A_THRESHOLD = float(
-    os.getenv("SEMANTIC_VERIFIER_A_THRESHOLD", "0.75")
-)
-SEMANTIC_VERIFIER_B_THRESHOLD = float(
-    os.getenv("SEMANTIC_VERIFIER_B_THRESHOLD", "0.70")
-)
-SEMANTIC_VERIFIER_C_THRESHOLD = float(
-    os.getenv("SEMANTIC_VERIFIER_C_THRESHOLD", "0.70")
+# One global runtime threshold; A/B classes do not change model confidence policy.
+SEMANTIC_VERIFIER_MIN_CONFIDENCE = float(
+    os.getenv("SEMANTIC_VERIFIER_MIN_CONFIDENCE", "0.85")
 )
 SEMANTIC_VERIFIER_MAX_ITEMS = int(
     os.getenv("SEMANTIC_VERIFIER_MAX_ITEMS", "5")
