@@ -168,7 +168,7 @@ GET /api/hazard/requests/{requestId}    （需登录 JWT）
 
 - 独立 worker 入口：`ai-module/hazard_create_worker.py`（Relay + ResultConsumer + RequestReconciler + MetricsReporter + RequestRetentionWorker 五个线程）。
 - 本地内联：`HAZARD_CREATE_WORKER_INLINE=true` 时跑在 FastAPI lifespan 里。
-- 云端启停：`/opt/aisafety/restart-hazard-worker.sh`；日志 `/opt/aisafety/ai-hazard-worker.log`。
+- 云端启停：`/home/ubuntu/restart-hazard-worker.sh`；日志 `/home/ubuntu/ai-hazard-worker.log`。
 
 ## 7. 状态表归属说明
 
@@ -177,7 +177,7 @@ GET /api/hazard/requests/{requestId}    （需登录 JWT）
 
 ## 8. 卡单、DLQ 与运维告警
 
-线上由 `/opt/aisafety/hazard-mq-watchdog.sh`（cron `*/2 * * * *`）兜底，幂等、只在状态变化时写告警：
+线上由 `/home/ubuntu/hazard-mq-watchdog.sh`（cron `*/2 * * * *`）兜底，幂等、只在状态变化时写告警：
 
 | 检查 | 判据 | 动作 |
 |---|---|---|
@@ -186,7 +186,7 @@ GET /api/hazard/requests/{requestId}    （需登录 JWT）
 | 卡单 PENDING | `status='PENDING' AND created_at < NOW() - 5min` 有值 | 告警（Relay 没发出去？） |
 | DLQ 堆积 | `hazard.create.dlq` messages != 0 | 告警，人工处理 |
 
-- 告警文件：`/opt/aisafety/hazard-mq-alerts.log`；巡检日志：`/opt/aisafety/hazard-mq-watchdog.log`；心跳：`/opt/aisafety/.hazard-mq-watchdog.last`。
+- 告警文件：`/home/ubuntu/hazard-mq-alerts.log`；巡检日志：`/home/ubuntu/hazard-mq-watchdog.log`；心跳：`/home/ubuntu/.hazard-mq-watchdog.last`。
 - watchdog 只做**告警 + 拉起 worker**；代码级超时补状态由 `RequestReconciler` 负责（2026-10-11 已实现）。
 
 ---

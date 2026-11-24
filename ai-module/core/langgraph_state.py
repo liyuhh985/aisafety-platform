@@ -1,4 +1,4 @@
-﻿"""LangGraph 助手状态定义。"""
+"""LangGraph 助手状态定义。"""
 from typing import Annotated, TypedDict
 
 from langgraph.graph.message import add_messages
@@ -69,6 +69,10 @@ class AssistantState(TypedDict, total=False):
     selected_major_code: str            # frontend major-category hint（可逗号分隔多个 code）
     selected_major_codes: list[str]     # 同上，列表形态；空则看 selected_major_code
     major_mismatch: bool                # planner corrected the frontend hint
+    active_skills: list[str]            # 当前激活的 canonical major Skills
+    skill_route_source: str             # locked | frontend | vision | keyword | llm | fallback | negative
+    skill_route_confidence: float
+    skill_versions: dict[str, str]      # 仅版本元数据；正文不得进入 checkpoint
     # 建任务确认（interrupt 闸门）
     offer_task: bool                    # report decided the task invitation is allowed
     task_draft: dict                     # report 阶段并行生成、确认时直接提交的建单草稿
@@ -85,6 +89,11 @@ class AssistantState(TypedDict, total=False):
     ungrounded_slots: list[str]         # 槽位值对不上原文（疑似编造）
     grounding_ratio: float
     uncertainty_signals: list[str]      # 可解释的信号串
+    slot_evidence_audit: dict           # 内部证据审计；不得进入 SSE / 报告
+    legacy_ungrounded_slots: list[str]  # 证据模式切换前的旧结果
+    legacy_uncertainty_level: str
+    legacy_grounding_ratio: float
+    evidence_ungrounded_slots: list[str]
     # guidance_emitted:「这次危险事件的安全文本已交给 emergency_guidance」。
     # 图内已无消费者（危险输入一律走 emergency_guidance 节点）；保留是因为 report() /
     # answer_reply() 被直接调用的非图路径仍靠它去重（见 prepend_guidance / _reply_prefix）。

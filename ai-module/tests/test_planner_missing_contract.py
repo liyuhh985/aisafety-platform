@@ -101,7 +101,7 @@ def test_understand_node_omits_context_without_a_locked_subcategory(monkeypatch)
 
 # ---------- question_missing 校验 ----------
 
-def test_question_missing_is_recorded_when_the_planner_asks_nothing(monkeypatch):
+def test_schema_question_is_delivered_when_the_planner_asks_nothing(monkeypatch):
     plan = _plan(
         intent="quick_assessment", risk_level="medium", needs_search=False,
         issues=[{"major_code": "traffic", "subcategory_code": "manhole_damage",
@@ -112,11 +112,12 @@ def test_question_missing_is_recorded_when_the_planner_asks_nothing(monkeypatch)
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: dict(plan))
     out = ag.understand({"messages": [HumanMessage(content="楼下井盖有问题")]})
     assert out["missing"] == ["manhole_damage_defect"]
-    assert out["question_missing"] == ["manhole_damage_defect"]
-    assert out["question_missing_reason"] == "planner_no_question"
+    assert out["clarification_question"] == "井盖是缺失、破损还是松动？"
+    assert out["question_missing"] == []
+    assert out["question_missing_reason"] == ""
 
 
-def test_question_missing_is_logged_loudly(caplog, monkeypatch):
+def test_schema_question_prevents_a_false_question_missing_warning(caplog, monkeypatch):
     plan = _plan(
         intent="quick_assessment", risk_level="medium", needs_search=False,
         issues=[{"major_code": "traffic", "subcategory_code": "manhole_damage",
@@ -127,11 +128,11 @@ def test_question_missing_is_logged_loudly(caplog, monkeypatch):
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: dict(plan))
     with caplog.at_level(logging.WARNING, logger="core.assistant_graph"):
         ag.understand({"messages": [HumanMessage(content="楼下井盖有问题")]})
-    assert "question_missing" in caplog.text
-    assert "planner_no_question" in caplog.text
+    assert "question_missing" not in caplog.text
+    assert "planner_no_question" not in caplog.text
 
 
-def test_question_missing_reason_is_report_when_a_report_was_requested(monkeypatch):
+def test_report_request_still_asks_the_first_a_class_question(monkeypatch):
     plan = _plan(
         issues=[{"major_code": "traffic", "subcategory_code": "manhole_damage",
                  "slots": {}}],
@@ -139,9 +140,10 @@ def test_question_missing_reason_is_report_when_a_report_was_requested(monkeypat
     )
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: dict(plan))
     out = ag.understand({"messages": [HumanMessage(content="井盖有问题，帮我查法规")]})
-    assert out["next_action"] == "report_preliminary"
-    assert out["question_missing"] == ["manhole_damage_defect"]
-    assert out["question_missing_reason"] == "report"
+    assert out["next_action"] == "ask_critical_question"
+    assert out["report_mode"] == "none"
+    assert out["clarification_question"] == "井盖是缺失、破损还是松动？"
+    assert out["question_missing"] == []
 
 
 def test_question_missing_reason_is_danger_veto_on_the_danger_path(monkeypatch):

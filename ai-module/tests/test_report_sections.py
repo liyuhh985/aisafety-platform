@@ -70,10 +70,33 @@ def test_incomplete_issue_uses_the_preliminary_sections(monkeypatch):
     assert "仍需确认" in prompt and "初步判断" in prompt
 
 
-def test_rules_say_this_conversation_tracks_one_hazard(monkeypatch):
+def test_rules_require_every_active_issue_and_state_the_count(monkeypatch):
     prompt = _capture_prompt(monkeypatch, _state())
-    assert "本次对话只跟踪这一个隐患" in prompt
-    assert "逐个隐患" not in prompt
+    assert "本次对话共有 1 条活动隐患" in prompt
+    assert "逐条覆盖全部隐患" in prompt
+    assert "本次对话只跟踪这一个隐患" not in prompt
+
+
+def test_report_prompt_contains_all_issue_blocks(monkeypatch):
+    state = _state(
+        issues=[
+            {"major_code": "fire", "subcategory_code": "fire_lane_blocked",
+             "slots": {"blocker": "杂物", "persistence": "长期"}, "missing": []},
+            {"major_code": "building", "subcategory_code": "dangerous_building",
+             "slots": {"structure": "墙体倾斜", "occupancy": "有人居住"}, "missing": []},
+        ],
+        categories=["fire_lane_blocked", "dangerous_building"],
+        category_results={
+            "fire_lane_blocked": {"regulation": "消防法第28条", "case": "萍乡案例"},
+            "dangerous_building": {"regulation": "危房管理规定", "case": "危房案例"},
+        },
+    )
+    prompt = _capture_prompt(monkeypatch, state)
+    assert "本次对话共有 2 条活动隐患" in prompt
+    assert "[隐患1] 消防通道占用" in prompt
+    assert "[隐患2] 危房" in prompt
+    assert "危房管理规定" in prompt
+    assert "本次对话只跟踪这一个隐患" not in prompt
 
 
 def test_an_invented_slot_makes_the_issue_incomplete(monkeypatch):

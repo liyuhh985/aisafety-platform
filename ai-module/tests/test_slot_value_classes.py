@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""阶段 2：槽位 A/B/C 三类划分的行为与不变量。"""
+"""阶段 2：槽位 A/B 两类划分的行为与不变量。"""
 import pytest
 from langchain_core.messages import HumanMessage
 
@@ -35,7 +35,7 @@ def test_every_slot_in_every_subcategory_has_a_valid_class():
     seen = 0
     for code in ALL_SUBCATEGORY_CODES:
         for slot in get_slot_schema(code):
-            assert slot.value_class in {"A", "B", "C"}, (code, slot.key)
+            assert slot.value_class in {"A", "B"}, (code, slot.key)
             seen += 1
     assert seen > 0
 
@@ -60,9 +60,21 @@ def test_critical_is_derived_from_the_decision_class():
             assert slot.critical is (slot.value_class == DECISION_CLASS), (code, slot.key)
 
 
+def test_only_a_and_b_value_classes_exist():
+    from core.slot_schemas import VALUE_CLASSES
+    assert VALUE_CLASSES == ("A", "B")
+
+
+def test_decorative_c_slots_are_removed():
+    dangerous = {slot.key for slot in get_slot_schema("dangerous_building")}
+    electrical = {slot.key for slot in get_slot_schema("exposed_wire")}
+    assert "risk" not in dangerous
+    assert "risk" not in electrical
+
+
 def test_unknown_value_class_is_rejected_loudly():
     with pytest.raises(ValueError):
-        Slot("x", "问句", "D")
+        Slot("x", "问句", "C")
 
 
 # ---------- 选择器语义 ----------
@@ -78,12 +90,6 @@ def test_report_selector_includes_b_class_but_decision_selector_does_not():
     report = [s.key for s in missing_report_slots("fire_lane_blocked", {})]
     assert "impact" not in decision            # B 类不追问
     assert report == ["blocker", "persistence", "impact"]   # 但进报告材料
-
-
-def test_decorative_class_is_not_selected_by_either_selector():
-    filled = {"structure": "有裂缝", "occupancy": "有人住"}
-    assert missing_decision_slots("dangerous_building", filled) == []
-    assert missing_report_slots("dangerous_building", filled) == []   # risk=C 不问不提
 
 
 def test_filled_slots_are_never_selected():

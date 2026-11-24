@@ -99,7 +99,7 @@ def test_quick_judgment_goes_through_the_planner(monkeypatch):
     """G5 回归："算隐患吗" 必须交给规划器判断，而不是被关键词短路成无检索的泛泛回答。"""
     seen = {}
 
-    def fake_plan(messages, vision_summary, selected_major_code=""):
+    def fake_plan(messages, vision_summary, selected_major_code="", **kwargs):
         seen["called"] = True
         return {
             "ok": True, "intent": "quick_assessment", "risk_level": "medium",

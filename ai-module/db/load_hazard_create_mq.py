@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """AI 建任务 MQ 高并发压测脚本（Task 9）。
 
-对应计划：私有历史设计文档
+对应计划：docs/superpowers/plans/2026-10-10-ai-hazard-mq-hardening.md
 证据模板：docs/evidence/2026-10-11-hazard-create-mq-load.md
 
 做什么

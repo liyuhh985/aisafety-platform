@@ -138,7 +138,7 @@ def test_real_graph_fans_out_and_joins_into_report(monkeypatch):
     }
     monkeypatch.setattr(
         ag, "_understand_plan",
-        lambda messages, vision_summary="", selected_major_code="": dict(plan),
+        lambda messages, vision_summary="", selected_major_code="", **kwargs: dict(plan),
     )
     monkeypatch.setattr(ag, "_run_tool", lambda name, keyword, cancellation=None: f"{name}:{keyword}")
     monkeypatch.setattr(

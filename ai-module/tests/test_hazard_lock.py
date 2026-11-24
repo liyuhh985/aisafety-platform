@@ -228,6 +228,55 @@ def test_auto_mode_locks_every_major_said_in_the_first_sentence(monkeypatch):
     assert _notice(out) == []
 
 
+def test_auto_route_does_not_persist_planner_major_as_frontend_hint(monkeypatch):
+    """自动路由时，模型建议不能写回成下一轮的前端预选大类。
+
+    否则首轮自动识别 fire + traffic 后，第二轮会把 fire 当成用户明确预选，
+    并把 traffic 误判成 major_mismatch，最终把完整报告降级成初步报告。
+    """
+    plan = _plan(
+        selected_major_code="fire",
+        major_mismatch=True,
+        perceived_major="fire",
+        issues=[
+            {"major_code": "fire", "subcategory_code": "fire_lane_blocked",
+             "slots": {"blocker": "私家车", "persistence": "长期"}},
+            {"major_code": "traffic", "subcategory_code": "blind_path_occupied",
+             "slots": {"behavior": "共享单车"}},
+        ],
+        categories=["fire_lane_blocked", "blind_path_occupied"],
+        category_slots={
+            "fire_lane_blocked": {"blocker": "私家车", "persistence": "长期"},
+            "blind_path_occupied": {"behavior": "共享单车"},
+        },
+    )
+    out = _run(monkeypatch, "消防通道长期被私家车占用，旁边盲道被共享单车占了", plan=plan)
+    assert out["locked_majors"] == ["fire", "traffic"]
+    assert out["selected_major_code"] == ""
+    assert out["major_mismatch"] is False
+    assert out["uncertainty_level"] == "ok"
+
+
+def test_real_frontend_major_mismatch_is_still_reported(monkeypatch):
+    plan = _plan(
+        selected_major_code="municipal",
+        major_mismatch=True,
+        perceived_major="fire",
+        issues=[{"major_code": "fire", "subcategory_code": "fire_lane_blocked",
+                 "slots": {"blocker": "私家车", "persistence": "长期"}}],
+        categories=["fire_lane_blocked"],
+        category_slots={
+            "fire_lane_blocked": {"blocker": "私家车", "persistence": "长期"},
+        },
+    )
+    out = _run(
+        monkeypatch, "消防通道长期被私家车占用", plan=plan,
+        selected_major_code="municipal",
+    )
+    assert out["selected_major_code"] == "municipal"
+    assert out["major_mismatch"] is True
+
+
 def test_picked_majors_are_a_range_not_a_quota(monkeypatch):
     """前端选了两个大类，但这句话只讲了一件 —— 只记这一条，不按大类数硬凑。"""
     plan = _plan(issues=[{"major_code": "municipal", "subcategory_code": "manhole_damage",

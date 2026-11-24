@@ -1,4 +1,4 @@
-﻿"""回声填充：把隐患名称复述进槽位，不算答过 → 按"缺"处理，应该重新问。"""
+"""回声填充：把隐患名称复述进槽位，不算答过 → 按"缺"处理，应该重新问。"""
 import core.assistant_graph as ag
 from core.uncertainty import echo_slots, is_echo_slot
 
@@ -53,7 +53,8 @@ def test_understand_treats_an_echo_slot_as_missing_and_asks(monkeypatch):
     plan = {
         "ok": True, "intent": "report_hazard", "risk_level": "high",
         "issues": [{"major_code": "building", "subcategory_code": "dangerous_building",
-                    "slots": {"structure": "危房", "occupancy": "危房", "risk": "危房"}}],
+                    "slots": {"structure": "危房", "occupancy": "危房", "risk": "危房"},
+                    "evidence": [{"slot": "structure", "quote": "危房", "source_ref": "u1"}]}],
         "categories": ["dangerous_building"],
         "category_slots": {"dangerous_building": {
             "structure": "危房", "occupancy": "危房", "risk": "危房"}},
@@ -63,6 +64,7 @@ def test_understand_treats_an_echo_slot_as_missing_and_asks(monkeypatch):
     out = ag.understand({"messages": [ag.HumanMessage(content="旁边还有一栋危房")]})
 
     assert out["issues"][0]["slots"] == {}
+    assert out["issues"][0]["evidence"] == []
     assert "dangerous_building_structure" in out["missing"]
     assert out["next_action"] == "ask_critical_question"
     assert out["clarification_question"]

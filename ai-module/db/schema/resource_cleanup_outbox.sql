@@ -34,7 +34,7 @@ EXECUTE claim_version_statement;
 DEALLOCATE PREPARE claim_version_statement;
 
 -- 对象（MinIO）清理 outbox：与向量删除 outbox 同一套 claim/退避语义，见
--- 设计依据见私有历史归档
+-- docs/superpowers/specs/2026-09-29-retract-and-image-hard-delete-design.md §3.3
 CREATE TABLE IF NOT EXISTS tb_resource_cleanup_outbox (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     target VARCHAR(16) NOT NULL, ref_id BIGINT NULL, source_table VARCHAR(64) NULL,
@@ -47,4 +47,3 @@ CREATE TABLE IF NOT EXISTS tb_resource_cleanup_outbox (
     INDEX idx_resource_cleanup_due (status, next_retry_time),
     INDEX idx_resource_cleanup_stale (status, locked_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-

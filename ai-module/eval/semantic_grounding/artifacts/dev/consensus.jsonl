@@ -1,0 +1,89 @@
+{"id": "qv-001", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.9, "id": "qv-002", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "B", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-003", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.98, "confidence_b": 0.6, "id": "qv-004", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.98, "confidence_b": 0.95, "id": "qv-006", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-007", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.95, "id": "qv-008", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-009", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.98, "confidence_b": 0.9, "id": "qv-010", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-011", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.95, "id": "qv-012", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-013", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.95, "confidence_b": 0.85, "id": "qv-014", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-015", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.98, "confidence_b": 0.9, "id": "qv-016", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-017", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.97, "confidence_b": 0.85, "id": "qv-018", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "B", "status": "agreed"}
+{"id": "qv-019", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.91, "confidence_b": 0.6, "id": "qv-020", "label": "ambiguous", "label_a": "entailed", "label_b": "neutral", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.99, "confidence_b": 0.95, "id": "qv-021", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.95, "id": "qv-022", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-023", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-024", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-025", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.96, "confidence_b": 0.8, "id": "qv-026", "label": "ambiguous", "label_a": "neutral", "label_b": "entailed", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-027", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.98, "confidence_b": 0.75, "id": "qv-028", "label": "ambiguous", "label_a": "neutral", "label_b": "contradicted", "slot_class": "B", "status": "disagreed"}
+{"id": "qv-029", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-030", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-031", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.6, "id": "qv-032", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.98, "confidence_b": 0.85, "id": "qv-033", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "B", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-034", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-035", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.95, "id": "qv-036", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-037", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.9, "id": "qv-038", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "B", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-039", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.72, "confidence_b": 0.85, "id": "qv-040", "label": "ambiguous", "label_a": "contradicted", "label_b": "neutral", "slot_class": "A", "status": "disagreed"}
+{"id": "qv-041", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.95, "id": "qv-042", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-043", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.9, "id": "qv-044", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "A", "status": "agreed"}
+{"id": "qv-045", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-046", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-047", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.95, "id": "qv-048", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-049", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.91, "confidence_b": 0.7, "id": "qv-050", "label": "ambiguous", "label_a": "entailed", "label_b": "contradicted", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-051", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.95, "id": "qv-052", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-053", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.6, "id": "qv-054", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "B", "status": "agreed"}
+{"id": "qv-055", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.88, "confidence_b": 0.7, "id": "qv-056", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-057", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-058", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-059", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.8, "id": "qv-060", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-061", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.92, "confidence_b": 0.8, "id": "qv-062", "label": "ambiguous", "label_a": "neutral", "label_b": "entailed", "slot_class": "A", "status": "disagreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-063", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.85, "id": "qv-064", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "B", "status": "agreed"}
+{"id": "qv-065", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.87, "confidence_b": 0.6, "id": "qv-066", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-067", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.95, "confidence_b": 0.85, "id": "qv-068", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.98, "confidence_b": 0.85, "id": "qv-069", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "B", "status": "agreed"}
+{"confidence_a": 0.93, "confidence_b": 0.9, "id": "qv-070", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-071", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.95, "id": "qv-072", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-073", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.85, "id": "qv-074", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "B", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-075", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.96, "confidence_b": 0.85, "id": "qv-076", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-077", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.97, "confidence_b": 0.9, "id": "qv-078", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-079", "label": "entailed", "status": "deterministic"}
+{"confidence_a": 0.98, "confidence_b": 0.85, "id": "qv-080", "label": "entailed", "label_a": "entailed", "label_b": "entailed", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.6, "id": "qv-081", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.99, "confidence_b": 0.9, "id": "qv-082", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-083", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.95, "id": "qv-084", "label": "contradicted", "label_a": "contradicted", "label_b": "contradicted", "slot_class": "A", "status": "agreed"}
+{"id": "qv-085", "label": "entailed", "status": "deterministic"}
+{"id": "qv-086", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.99, "confidence_b": 0.85, "id": "qv-087", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"confidence_a": 0.98, "confidence_b": 0.95, "id": "qv-088", "label": "neutral", "label_a": "neutral", "label_b": "neutral", "slot_class": "A", "status": "agreed"}
+{"id": "qv-089", "label": "contradicted", "status": "deterministic"}
+{"confidence_a": 0.95, "confidence_b": 0.85, "id": "qv-090", "label": "ambiguous", "label_a": "contradicted", "label_b": "neutral", "slot_class": "B", "status": "disagreed"}

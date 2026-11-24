@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """阶段 5a：消冗余的观测侧 + 提示词去重规则（只告警，不改写正文）。
 
-按 A/B/C 分工，不靠「抑制某一侧」：
+按 A/B 分工，不靠「抑制某一侧」：
   A 决策级 -> 由末尾那一个追问承载；B 报告级 -> 由正文分情况判断承载、不再追问。
 观测分两档：
   判得出来的（结构化字段）：问句的目标槽 key、A 类缺失是否为空、是否写了 B 类分支；
@@ -330,7 +330,7 @@ def test_understand_defers_the_audit_to_the_node(monkeypatch, caplog):
     with caplog.at_level(logging.WARNING, logger="core.assistant_graph"):
         out = ag.understand({"messages": [HumanMessage(content="消防通道被私家车占了")]})
     assert out["missing"] == ["fire_lane_blocked_persistence"]
-    assert out["clarification_question"] == "这个占用大概在哪个路段？"
+    assert out["clarification_question"] == "是长期还是临时？"
     # understand 侧静默：交付那一句由节点审
     assert not [r for r in caplog.records if "question_target_" in r.getMessage()]
 

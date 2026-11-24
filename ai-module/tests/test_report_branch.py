@@ -1,9 +1,8 @@
 """阶段 4：B 类（报告级）缺失要写成「若…则…」的条件分支，不是省略、也不是空话。
 
-三类缺失的分工（core/slot_schemas.py 的 A/B/C）：
+两类缺失的分工（core/slot_schemas.py 的 A/B）：
   A 决策级 -> 追问，材料里走 [仍缺信息]
   B 报告级 -> 不追问，材料里走 [法规适用待确认]，报告要分情况判断
-  C 装饰级 -> 不追问，也不进材料
 """
 import logging
 
@@ -88,9 +87,9 @@ def test_report_branch_keys_is_only_b_class():
     assert ag.report_branch_keys(state) == ["impact"]
 
 
-def test_c_class_missing_is_not_written_as_a_branch(monkeypatch):
-    """C 类（装饰级）既不追问，也不进报告材料 —— 否则报告又长又绕。"""
-    # dangerous_building: structure(A) / occupancy(A) / risk(C)
+def test_no_branch_is_written_when_required_slots_are_filled(monkeypatch):
+    """A/B 都已齐全时不写条件分支，避免报告变长。"""
+    # dangerous_building: structure(A) / occupancy(A)
     assert ag.rebuild_report_missing(
         ["dangerous_building"],
         {"dangerous_building": {"structure": "有裂缝", "occupancy": "有人居住"}}) == []
@@ -105,7 +104,6 @@ def test_c_class_missing_is_not_written_as_a_branch(monkeypatch):
     assert ag.report_branch_keys(state) == []
     prompt, _ = _capture(monkeypatch, state)
     assert "[法规适用待确认]" not in prompt
-    assert "即时坍塌风险" not in prompt
 
 
 def test_branch_rule_is_not_injected_when_nothing_is_pending(monkeypatch):

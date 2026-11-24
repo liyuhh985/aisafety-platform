@@ -58,7 +58,26 @@ def _drop_question_sentences(value: str) -> str:
     return ("。".join(kept) + "。") if kept else ""
 
 
-def _issue_from_values(major_code, subcategory_code, slots) -> dict:
+def _clean_evidence(raw_evidence, allowed_slots, clean_slots) -> list[dict]:
+    """Constrain model-supplied evidence to real slots and one primary per slot."""
+    out = []
+    seen_slots = set()
+    for item in raw_evidence or []:
+        if not isinstance(item, dict):
+            continue
+        slot = str(item.get("slot") or "").strip()
+        quote = str(item.get("quote") or "").strip()
+        source_ref = str(item.get("source_ref") or "").strip()
+        if slot not in allowed_slots or slot not in clean_slots:
+            continue
+        if slot in seen_slots or not quote or not source_ref:
+            continue
+        seen_slots.add(slot)
+        out.append({"slot": slot, "quote": quote, "source_ref": source_ref})
+    return out
+
+
+def _issue_from_values(major_code, subcategory_code, slots, evidence=None) -> dict:
     pair = normalize_taxonomy(f"{major_code}/{subcategory_code}")
     if not pair:
         return {}
@@ -69,6 +88,7 @@ def _issue_from_values(major_code, subcategory_code, slots) -> dict:
         for key, value in slots.items():
             if key in allowed and value is not None and str(value).strip():
                 clean_slots[key] = str(value).strip()
+    clean_evidence = _clean_evidence(evidence, allowed, clean_slots)
     missing = [slot.key for slot in missing_decision_slots(subcategory_code, clean_slots)]
     report_missing = [slot.key for slot in missing_report_slots(subcategory_code, clean_slots)]
     return {
@@ -79,6 +99,7 @@ def _issue_from_values(major_code, subcategory_code, slots) -> dict:
         "slots": clean_slots,
         "missing": missing,
         "report_missing": report_missing,
+        "evidence": clean_evidence,
     }
 
 
@@ -108,6 +129,7 @@ def _issues_from_plan_items(raw_issues) -> list[dict]:
             item.get("major_code"),
             item.get("subcategory_code"),
             item.get("slots"),
+            item.get("evidence"),
         )
         key = (issue.get("major_code"), issue.get("subcategory_code"))
         if issue and key not in seen:
@@ -193,7 +215,7 @@ def parse_plan(raw: str) -> dict:
 
     # 「当前焦点」：用户这句话指向的那一件事属于哪一个小类。
     # 与 perceived_major 同构 —— 都是"直接问模型这一句在说什么"，而不是从 issues 的
-    # 位置去推（那条路会被历史拖拽，实测见 一次性实验脚本（私有归档））。
+    # 位置去推（那条路会被历史拖拽，实测见 db/experiments/measure_history_bleed.py）。
     perceived_subcategory = str(data.get("perceived_subcategory") or "").strip()
     if perceived_subcategory not in ALL_SUBCATEGORY_CODES:
         perceived_subcategory = ""
@@ -222,9 +244,15 @@ def parse_plan(raw: str) -> dict:
     }
 
 
-def _planner_system_prompt() -> str:
+def _planner_system_prompt(active_skill_codes=None) -> str:
+    active_codes = [
+        code for code in (active_skill_codes or [])
+        if code in MAJOR_LABELS
+    ]
     schema_lines = []
     for item in HAZARD_TAXONOMY:
+        if active_codes and item["code"] not in active_codes:
+            continue
         subcategories = "、".join(
             f"{label}({code})["
             + ",".join(slot.key for slot in get_slot_schema(code))
@@ -239,7 +267,9 @@ def _planner_system_prompt() -> str:
         "\"selected_major_code\":\"\",\"major_mismatch\":false,\"risk_level\":\"high|medium|low\","
         "\"scope\":\"hazard|emergency|smalltalk|ambiguous|out_of_scope\",\"scope_confidence\":0.0,"
         "\"issues\":[{\"major_code\":\"\",\"subcategory_code\":\"\","
-        "\"slots\":{\"槽key\":\"值\"},\"confidence\":0.0}],"
+        "\"slots\":{\"槽key\":\"值\"},"
+        "\"evidence\":[{\"slot\":\"槽key\",\"quote\":\"来源中的原样片段\",\"source_ref\":\"uN或vN\"}],"
+        "\"confidence\":0.0}],"
         "\"perceived_major\":\"你认为这句话真正属于的大类\","
         "\"perceived_subcategory\":\"你认为用户这句话指向的那一件事属于哪一个小类\","
         "\"premises_scope\":\"public|indoor|indoor_risk\","
@@ -262,6 +292,10 @@ def _planner_system_prompt() -> str:
         "  交通标线）才算；商场、办公楼、小区门口、店内的指示牌、导视牌、宣传牌即使长得像交通标志，\n"
         "  也不算 —— 这种输入 scope 判 out_of_scope、issues 留空。\n"
         "- 只填用户明确说过的事实，不要编造。\n"
+        "- 输入中的用户消息带有 [uN]、视觉摘要带有 [v1]、助手历史带有 [aN]。\n"
+        "- 每个非空槽位都要在 evidence 中给出 quote 和 source_ref；quote 必须从对应来源原样复制，\n"
+        "  source_ref 只能填写输入中实际存在的编号，不得自造。assistant 来源只用于理解，禁止作为证据。\n"
+        "- 找不到可原样引用的证据时，不要填写 evidence，不要编造 quote；一个槽位最多一条主证据。\n"
         "- 只抽与当前这一条隐患相关的值；如果这句话讲的是别的隐患，\n"
         "  不要为了填满而把别的说法塞进槽位，留空即可。\n"
         "- premises_scope 只描述这些东西在哪，判据是「在谁的地方」：\n"
@@ -295,6 +329,9 @@ def _planner_system_prompt() -> str:
         "- 不要引用或编造具体法规和案例。\n"
         "- 所有已识别小类都可以进入建任务询问，不再限制四类。\n"
         "- 用户中途新增其他隐患时，把当前仍有效的问题一起放进 issues；relationship_hint 用 add。\n"
+        "- 当前只展开已激活 Skill 的小类和槽位；如果用户明显描述的是未激活大类，\n"
+        "  可依据「全部大类索引」返回 perceived_major/selected_major_code 并令 major_mismatch=true，\n"
+        "  但不要编造未展开的小类或槽位。\n"
     )
 
 
@@ -327,15 +364,69 @@ def _planner_focus_context(missing, known_slots, subcategory_code: str) -> str:
     return "\n".join(lines)
 
 
+def _message_role_and_content(message):
+    """Normalize LangChain messages and dict messages to planner roles."""
+    if isinstance(message, dict):
+        role = message.get("role") or message.get("type") or ""
+        content = message.get("content")
+    else:
+        role = getattr(message, "type", "") or getattr(message, "role", "")
+        content = getattr(message, "content", message)
+    role = str(role or "").strip().lower()
+    if role == "human":
+        role = "user"
+    elif role == "ai":
+        role = "assistant"
+    return role, str(content or "")
+
+
+def iter_source_messages(messages):
+    """Yield (source_ref, planner_role, content) with stable backend-owned refs."""
+    user_index = assistant_index = 0
+    for message in messages or []:
+        role, content = _message_role_and_content(message)
+        ref = ""
+        if role == "user":
+            user_index += 1
+            ref = f"u{user_index}"
+        elif role == "assistant":
+            assistant_index += 1
+            ref = f"a{assistant_index}"
+        yield ref, role, content
+
+
+def build_source_map(messages, vision_summary: str = "") -> dict[str, str]:
+    """Build the only source namespace the model may cite.
+
+    User and vision sources can ground facts. Assistant refs are exposed so they
+    can be recognized and explicitly rejected by deterministic verification.
+    """
+    source_map = {}
+    for ref, _role, content in iter_source_messages(messages):
+        if ref and content:
+            source_map[ref] = content
+    content = str(vision_summary or "").strip()
+    if content:
+        source_map["v1"] = content
+    return source_map
+
+
 def build_planner_messages(messages: list, vision_summary: str = "",
                            selected_major_code: str = "", missing=None,
-                           known_slots=None, subcategory_code: str = "") -> list[dict]:
+                           known_slots=None, subcategory_code: str = "",
+                           skill_bodies: dict[str, str] | None = None,
+                           active_skill_codes: list[str] | None = None) -> list[dict]:
     """Build a planner request from recent dialogue plus vision context.
 
     missing / known_slots / subcategory_code 描述「当前锁定隐患还缺哪些决策级槽」，
     由调用方（图节点）从上一轮状态里算出来 —— 只有本会话已锁定小类时才有意义。
     """
-    out = [{"role": "system", "content": _planner_system_prompt()}]
+    out = [{"role": "system", "content": _planner_system_prompt(active_skill_codes)}]
+    if active_skill_codes:
+        major_index = "；".join(
+            f"{item['label']}({item['code']})" for item in HAZARD_TAXONOMY
+        )
+        out.append({"role": "system", "content": f"【全部大类索引】{major_index}"})
     selected_major_code = (selected_major_code or "").strip()
     if selected_major_code in MAJOR_LABELS:
         out.append({
@@ -343,27 +434,32 @@ def build_planner_messages(messages: list, vision_summary: str = "",
             "content": f"前端预选大类：{MAJOR_LABELS[selected_major_code]}({selected_major_code})",
         })
     if vision_summary:
-        out.append({"role": "system", "content": vision_summary})
+        out.append({"role": "system", "content": f"[v1] {vision_summary}"})
     if (subcategory_code or "").strip() or missing:
         out.append({
             "role": "system",
             "content": _planner_focus_context(missing, known_slots, subcategory_code),
         })
-    for message in (messages or [])[-max(2, PLANNER_HISTORY_MESSAGES):]:
-        role = getattr(message, "type", None) or (message.get("role") if isinstance(message, dict) else None)
-        content = getattr(message, "content", None) or (message.get("content") if isinstance(message, dict) else None)
-        if role == "human":
-            role = "user"
-        elif role == "ai":
-            role = "assistant"
+    for code, body in (skill_bodies or {}).items():
+        if str(body or "").strip():
+            out.append({
+                "role": "system",
+                "content": f"【Skill: {code}】\n{str(body).strip()}",
+            })
+    visible = list(iter_source_messages(messages))[-max(2, PLANNER_HISTORY_MESSAGES):]
+    for ref, role, content in visible:
         if role in {"user", "assistant", "system"} and content:
+            if ref:
+                content = f"[{ref}] {content}"
             out.append({"role": role, "content": content})
     return out
 
 
 def understand(messages: list, vision_summary: str = "",
                selected_major_code: str = "", missing=None,
-               known_slots=None, subcategory_code: str = "") -> dict:
+               known_slots=None, subcategory_code: str = "",
+               skill_bodies: dict[str, str] | None = None,
+               active_skill_codes: list[str] | None = None) -> dict:
     """Return a validated dialogue plan, or an empty plan on planner failure."""
     try:
         response = _planner_llm._call_llm(
@@ -371,6 +467,8 @@ def understand(messages: list, vision_summary: str = "",
                 messages, vision_summary, selected_major_code,
                 missing=missing, known_slots=known_slots,
                 subcategory_code=subcategory_code,
+                skill_bodies=skill_bodies,
+                active_skill_codes=active_skill_codes,
             ),
             cancellation=None,
         )

@@ -322,7 +322,7 @@ def test_bare_tan_is_deliberately_not_a_domain_keyword():
 # 背景：扩表前这一族只有「外墙」「配电箱」两个词，用户说「外立面」「配电设施」就判越界。
 # 实测（plan={}，不调模型）扩表前 10 条本领域表述 10/10 被判 out_of_scope —— 回复是
 # 「不在我的专业范围内」，与占道那次同属"用户描述本领域隐患却被拒绝"。
-# 语料计数见 core/scope_policy.py 的注释（一次性实验脚本（私有归档） 可复现）。
+# 语料计数见 core/scope_policy.py 的注释（db/experiments/measure_scope_words.py 可复现）。
 
 TRAFFIC_FACILITY_PHRASINGS = (
     "路边有个交通标志牌和护栏坏了",
@@ -429,7 +429,7 @@ def test_ambiguous_sign_words_are_deliberately_excluded():
 # 《公路安全保护条例》的完整报告。分类是语义判断，代码看不见；能看见的是
 # "原文有没有交代这件事发生在公共空间、或有没有点到那个物件"。
 # 规则与表见 core/scope_policy.py 的 OBJECT_CLASS_EVIDENCE，设计见
-# 私有历史设计文档
+# docs/superpowers/specs/2026-09-29-object-claim-grounding-design.md
 
 from core.hazard_taxonomy import SUBCATEGORY_TO_MAJOR
 from core.scope_policy import (CATCH_ALL_SUBCATEGORIES, OBJECT_CLASS_EVIDENCE,

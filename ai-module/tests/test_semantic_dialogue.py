@@ -235,7 +235,7 @@ def test_screenshot_utterance_uses_fire_facility_not_fire_lane(monkeypatch):
     monkeypatch.setattr(
         assistant_graph,
         "_understand_plan",
-        lambda messages, vision, selected_major_code="": {
+        lambda messages, vision, selected_major_code="", **kwargs: {
             "ok": True,
             "intent": "quick_assessment",
             "categories": ["消防设施"],
@@ -268,7 +268,7 @@ def test_screenshot_utterance_uses_fire_facility_not_fire_lane(monkeypatch):
 def test_understand_prompt_contains_history_and_vision(monkeypatch):
     seen = {}
 
-    def fake_plan(messages, vision_summary, selected_major_code=""):
+    def fake_plan(messages, vision_summary, selected_major_code="", **kwargs):
         seen["text"] = " ".join(getattr(m, "content", "") for m in messages)
         seen["vision"] = vision_summary
         return {"ok": True, "categories": [], "category_slots": {}, "question": "", "answer": "好"}
@@ -401,7 +401,7 @@ def test_graph_emits_taxonomy_event(monkeypatch):
     monkeypatch.setattr(
         assistant_graph,
         "_understand_plan",
-        lambda messages, vision, selected_major_code="": {
+        lambda messages, vision, selected_major_code="", **kwargs: {
             "ok": True,
             "intent": "quick_assessment",
             "selected_major_code": "fire",
@@ -410,6 +410,11 @@ def test_graph_emits_taxonomy_event(monkeypatch):
                 "major_code": "fire",
                 "subcategory_code": "fire_equipment_fault",
                 "slots": {"condition": "老旧"},
+                "evidence": [{
+                    "slot": "condition",
+                    "quote": "老旧",
+                    "source_ref": "u1",
+                }],
             }],
             "categories": ["fire_equipment_fault"],
             "category_slots": {"fire_equipment_fault": {"condition": "老旧"}},
@@ -431,7 +436,12 @@ def test_graph_emits_taxonomy_event(monkeypatch):
     events = asyncio.run(collect())
     taxonomy_events = [event for event in events if event[0] == "taxonomy"]
     assert taxonomy_events
-    assert taxonomy_events[0][1]["issues"][0]["subcategory_code"] == "fire_equipment_fault"
+    issue = taxonomy_events[0][1]["issues"][0]
+    assert issue["subcategory_code"] == "fire_equipment_fault"
+    assert "evidence" not in issue
+    assert "slot_evidence" not in issue
+    assert "active_skills" not in taxonomy_events[0][1]
+    assert "skill_route_source" not in taxonomy_events[0][1]
 
 
 def test_assistant_stream_passes_selected_major(monkeypatch):
@@ -503,7 +513,7 @@ def test_complete_hazard_report_searches_and_offers_task(monkeypatch):
     monkeypatch.setattr(
         assistant_graph,
         "_understand_plan",
-        lambda messages, vision, selected_major_code="": {
+        lambda messages, vision, selected_major_code="", **kwargs: {
             "ok": True,
             "intent": "report_hazard",
             "selected_major_code": "fire",

@@ -1,0 +1,16 @@
+{
+  "overall_agreement": 0.8596491228070176,
+  "cohen_kappa": 0.7621283255086072,
+  "label_agreement": {
+    "entailed": 0.6666666666666666,
+    "neutral": 0.8,
+    "contradicted": 0.7222222222222222
+  },
+  "class_agreement": {
+    "A": 0.8723404255319149,
+    "B": 0.8
+  },
+  "agreed_count": 49,
+  "disagreed_count": 8,
+  "invalid_count": 1
+}

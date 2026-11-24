@@ -1,0 +1,45 @@
+{
+  "prompt_sha256": "78f756eb52892c38b447d0934de2c6230f3e63ccc618efae3dd1bb68d0c5420c",
+  "models": {
+    "A": "minimax-m3.1-flash",
+    "B": "glm-5.3-flash"
+  },
+  "candidates": [
+    {
+      "id": "smoke-a",
+      "slot": "structure",
+      "slot_question": "房屋是否有裂缝、倾斜或沉降？",
+      "value": "墙体倾斜",
+      "quote": "房子明显往一边斜"
+    },
+    {
+      "id": "smoke-b",
+      "slot": "persistence",
+      "slot_question": "是长期占压还是临时停放？",
+      "value": "长期",
+      "quote": "只是今天临时停了十分钟"
+    }
+  ],
+  "labels": {
+    "A": {
+      "smoke-a": {
+        "label": "entailed",
+        "confidence": 0.99
+      },
+      "smoke-b": {
+        "label": "contradicted",
+        "confidence": 0.99
+      }
+    },
+    "B": {
+      "smoke-a": {
+        "label": "entailed",
+        "confidence": 0.95
+      },
+      "smoke-b": {
+        "label": "contradicted",
+        "confidence": 0.95
+      }
+    }
+  }
+}

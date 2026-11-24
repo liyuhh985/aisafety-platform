@@ -14,6 +14,7 @@ import logging
 import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 from typing import Annotated, Generator, Literal
 
 from langgraph.graph import StateGraph, END
@@ -25,7 +26,7 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from config import (
     MIMO_BASE_URL, MIMO_API_KEY, MIMO_MODEL,
     CHECKPOINT_BACKEND, REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_DB,
-    REDIS_TIMEOUT_SECONDS,
+    REDIS_TIMEOUT_SECONDS, SLOT_EVIDENCE_MODE,
 )
 from core.agent import Agent
 from core.langgraph_state import AssistantState, merge_category_results
@@ -43,9 +44,16 @@ from core.hazard_taxonomy import (
     ALL_SUBCATEGORY_CODES,
     HAZARD_TAXONOMY,
     MAJOR_LABELS,
+    MAJOR_LABEL_TO_CODE,
     SUBCATEGORY_LABELS,
+    SUBCATEGORY_TO_MAJOR,
     format_hazard_type,
     normalize_taxonomy,
+)
+from core.skill_registry import get_skill_registry
+from core.skill_router import (
+    _skill_route_llm,
+    route_skills as _route_skills,
 )
 from core.scope_policy import (
     AMBIGUOUS_RESPONSE,
@@ -65,6 +73,7 @@ from core.slot_schemas import (
 )
 from core.stream_guard import QUESTION_DROP, guard_stream, question_limiter
 from core.uncertainty import active_danger_term, assess, echo_slots
+from core.semantic_verifier import verify_weak_slots
 from tools.assistant_tools import ASSISTANT_TOOLS
 from tools.hazard_create_queue import new_request_id
 from tools.hazard_submit import build_task_draft
@@ -79,6 +88,10 @@ _report_llm = Agent(
     model=MIMO_MODEL,
 )
 _TOOL_MAP = {t.name: t for t in ASSISTANT_TOOLS}
+_skill_registry = get_skill_registry(
+    Path(__file__).parents[1] / "skills",
+    {tool.name for tool in ASSISTANT_TOOLS},
+)
 _TASK_DRAFT_EXECUTOR = ThreadPoolExecutor(max_workers=2, thread_name_prefix="task-draft")
 
 logger = logging.getLogger(__name__)
@@ -90,6 +103,7 @@ EMERGENCY_ACTION = "emergency_guidance"
 
 STATUS_TEXT = {
     "begin_turn": "正在准备本轮对话...",
+    "skill_route": "正在判断隐患领域...",
     "understand": "正在理解您的问题...",
     "scope_guard": "正在判断问题范围...",
     "route": "正在分析您的咨询...",
@@ -121,7 +135,7 @@ STATUS_BANNED_WORDS = ("解构", "深度研判", "智能研判", "赋能", "洞�
 # ====== 检索自评重试环（evaluator-optimizer）======
 # top1 向量分数低于这个值就算检索不够强。0.58 是量出来的：实测 p10 =
 # 0.5426（法规）/ 0.5726（案例），而向量置信门槛 RETRIEVAL_MIN_SCORE = 0.48。
-# 依据：私有历史设计文档
+# 依据：docs/superpowers/specs/2026-09-27-retrieval-retry-loop-design.md
 WEAK_SCORE = 0.58
 
 # 环的上界：一轮最多重试 1 次。判定由代码做，模型只负责改写检索串。
@@ -338,10 +352,21 @@ def _plan_issues(plan: dict) -> list[dict]:
     若规划器只给了旧的 categories/category_slots 形状，就在这里确定性地补成 issues，
     避免 understand 因为上下游形状漂移而整体失效。
     """
-    issues = [
-        issue for issue in (plan.get("issues") or [])
-        if issue.get("subcategory_code")
-    ]
+    issues = []
+    for raw_issue in (plan.get("issues") or []):
+        if not isinstance(raw_issue, dict):
+            continue
+        code = str(raw_issue.get("subcategory_code") or "").strip()
+        if not code:
+            continue
+        major = SUBCATEGORY_TO_MAJOR.get(code)
+        if not major:
+            major = str(raw_issue.get("major_code") or "").strip()
+        if major not in MAJOR_LABELS:
+            continue
+        issue = dict(raw_issue)
+        issue["major_code"] = major
+        issues.append(issue)
     if issues:
         return issues
     slots_by_category = plan.get("category_slots") or {}
@@ -360,15 +385,46 @@ def _plan_issues(plan: dict) -> list[dict]:
     return legacy
 
 
-def _merge_persisted_slots(issues: list[dict], persisted: dict) -> list[dict]:
-    """把图状态里跨轮保留下来的槽位折叠进本轮规划结果（增量，不从头重抽）。"""
+def _merge_persisted_slots(issues: list[dict], persisted: dict,
+                           persisted_issues: list[dict] | None = None) -> list[dict]:
+    """Fold checkpoint slots into this turn while retaining only valid old evidence.
+
+    A slot re-extracted this turn uses this turn's evidence. Evidence for slots
+    carried over from the checkpoint remains attached to its original value.
+    """
+    previous_by_code = {
+        issue.get("subcategory_code"): issue
+        for issue in (persisted_issues or [])
+        if isinstance(issue, dict) and issue.get("subcategory_code")
+    }
     merged = []
     for issue in issues:
         code = issue.get("subcategory_code")
+        incoming_slots = dict(issue.get("slots") or {})
         kept = dict(persisted.get(code) or {})
-        kept.update({k: v for k, v in (issue.get("slots") or {}).items() if v})
+        kept.update({k: v for k, v in incoming_slots.items() if v})
         issue = dict(issue)
         issue["slots"] = kept
+
+        evidence = [
+            dict(item) for item in (issue.get("evidence") or [])
+            if isinstance(item, dict) and item.get("slot")
+        ]
+        seen_slots = {item.get("slot") for item in evidence}
+        previous = previous_by_code.get(code) or {}
+        previous_evidence = {
+            item.get("slot"): item
+            for item in (previous.get("evidence") or [])
+            if isinstance(item, dict) and item.get("slot")
+        }
+        for slot in kept:
+            if slot in incoming_slots or slot in seen_slots:
+                continue
+            old = previous_evidence.get(slot)
+            if old:
+                evidence.append(dict(old))
+                seen_slots.add(slot)
+        issue["evidence"] = evidence
         merged.append(issue)
     return merged
 
@@ -486,6 +542,21 @@ MAX_ACTIVE_HAZARDS = 3
 MAX_ACTIVE_MAJORS = 3
 
 
+def _vision_major_codes(vision_summary) -> list:
+    """Extract explicit hazard majors from a system-generated vision summary."""
+    value = str(vision_summary or "")
+    found = []
+    for label, code in MAJOR_LABEL_TO_CODE.items():
+        if label in value and code not in found:
+            found.append(code)
+    for code, label in SUBCATEGORY_LABELS.items():
+        if label in value:
+            major = SUBCATEGORY_TO_MAJOR.get(code, "")
+            if major and major not in found:
+                found.append(major)
+    return found[:MAX_ACTIVE_MAJORS]
+
+
 def _locked_majors(state) -> list:
     """锁定的大类集合。没有集合字段时退回单值字段 —— 兼容旧状态与既有测试。"""
     majors = [str(m) for m in (state.get("locked_majors") or []) if m]
@@ -551,6 +622,28 @@ def _active_issues(focus, in_major) -> list:
         if len(out) >= MAX_ACTIVE_HAZARDS:
             break
     return out
+
+
+def skill_route(state: AssistantState) -> dict:
+    """Choose active hazard-major Skills before this turn's fact extraction."""
+    selected = _major_codes(state.get("selected_major_codes") or [])
+    if not selected:
+        selected = _major_codes(state.get("selected_major_code") or "")
+    result = _route_skills(
+        text=_latest_user_text(state),
+        metadata_catalog=_skill_registry.metadata_catalog(),
+        selected_major_codes=selected,
+        locked_majors=_locked_majors(state),
+        vision_categories=_vision_major_codes(state.get("vision_summary") or ""),
+        route_llm=_skill_route_llm,
+    )
+    active = list(result.get("active_skills") or [])[:MAX_ACTIVE_MAJORS]
+    return {
+        "active_skills": active,
+        "skill_route_source": result.get("source", "fallback"),
+        "skill_route_confidence": float(result.get("confidence") or 0.0),
+        "skill_versions": _skill_registry.versions_for(active),
+    }
 
 
 def understand(state: AssistantState, config=None) -> dict:
@@ -624,8 +717,20 @@ def understand(state: AssistantState, config=None) -> dict:
             "known_slots": persisted,
             "subcategory_code": prev_sub,
         }
+    routed_active_skills = list(state.get("active_skills") or [])
+    skill_bodies = {}
+    for code in routed_active_skills:
+        try:
+            skill_bodies[code] = _skill_registry.load_body(code)
+        except Exception as exc:
+            logger.error("skill_body_load_failed code=%s error=%s", code, type(exc).__name__)
+    planner_kwargs = dict(planner_context)
+    if routed_active_skills:
+        planner_kwargs["active_skill_codes"] = routed_active_skills
+    if skill_bodies:
+        planner_kwargs["skill_bodies"] = skill_bodies
     plan = _understand_plan(
-        source_messages, vision_summary, selected_major_code, **planner_context
+        source_messages, vision_summary, selected_major_code, **planner_kwargs
     )
     if not plan or not plan.get("ok"):
         # 不静默：规划器拿不到有效计划（回空 / JSON 破）时，这一轮只能走兜底 ——
@@ -650,13 +755,24 @@ def understand(state: AssistantState, config=None) -> dict:
         }
 
     issues = _merge_persisted_slots(
-        _plan_issues(plan), state.get("category_slots") or {}
+        _plan_issues(plan), state.get("category_slots") or {},
+        state.get("issues") or [],
     )
     # 复述问题不算答过：清掉这类槽，它们会自然落回 missing。
     echoes = echo_slots(issues)
     for issue in issues:
+        removed_slots = []
         for item in echoes.get(issue["subcategory_code"], []):
-            (issue.get("slots") or {}).pop(item.split("=", 1)[0], None)
+            slot = item.split("=", 1)[0]
+            removed_slots.append(slot)
+            (issue.get("slots") or {}).pop(slot, None)
+        if removed_slots:
+            issue["evidence"] = [
+                entry for entry in (issue.get("evidence") or [])
+                if entry.get("slot") not in removed_slots
+            ]
+            for slot in removed_slots:
+                (issue.get("slot_evidence") or {}).pop(slot, None)
 
     # 二、定大类**集合**：前端只在"第一次"说话，之后谁都不能改（硬锁）。
     frontend_majors = _major_codes(selected_major_codes) or _major_codes(selected_major_code)
@@ -665,6 +781,12 @@ def understand(state: AssistantState, config=None) -> dict:
     # 所以不能只看 issues，必须读 perceived_major；没有时再退回 issues。
     planner_major = (plan.get("perceived_major") or "").strip() or next(
         (i.get("major_code") for i in issues if i.get("major_code")), "")
+    # major_mismatch 是「前端真实预选」与「模型真实判断」的关系，不是模型自由填写
+    # 的一个提示。自动判断模式没有前端预选时，模型建议不能把自己标成 mismatch，
+    # 否则这个建议会在下一轮被当回前端 hint，进而把完整报告降级成初步报告。
+    major_mismatch = bool(
+        frontend_majors and planner_major and planner_major not in frontend_majors
+    )
     # 集合一旦锁定，**谁都不能改**：模型动不了（用户纠正也只能换同大类里的小类），
     # 前端中途改选也不再生效 —— 要换大类只能**新开一个对话**（新会话天然重来）。
     # 自动判断模式下，第一次判定时**这一句话涉及几个大类就锁几个** —— 一次说了消防和
@@ -726,42 +848,79 @@ def understand(state: AssistantState, config=None) -> dict:
             SUBCATEGORY_LABELS.get(locked_subcategory, _major_label(locked_major)),
         ))
 
-    categories = [issue["subcategory_code"] for issue in issues]
-    category_slots = dict(state.get("category_slots") or {})
-    for issue in issues:
-        category_slots[issue["subcategory_code"]] = dict(issue.get("slots") or {})
-    missing = rebuild_missing(categories, category_slots)
-    missing_keys = set(missing)
-    report_missing_keys = set(rebuild_report_missing(categories, category_slots))
-    for issue in issues:
-        code = issue["subcategory_code"]
-        issue["missing"] = [
-            slot.key for slot in get_slot_schema(code)
-            if f"{code}_{slot.key}" in missing_keys
-        ]
-        # A+B 类缺失：B 类不追问，但报告的条件分支要用（阶段 4）。
-        issue["report_missing"] = [
-            slot.key for slot in get_slot_schema(code)
-            if f"{code}_{slot.key}" in report_missing_keys
-        ]
-
     plan = dict(plan)
     plan["issues"] = issues
+    plan["major_mismatch"] = major_mismatch
     # 二、模型判定的危险（词表漏了）：不在这里发话，只把结果记进状态 ——
     # 安全文本统一由 emergency_guidance 按类型生成并核对覆盖。
-    verdict = assess(plan, source_messages, vision_summary)
+    verdict = _apply_evidence_mode(assess(plan, source_messages, vision_summary))
     if echoes:
         verdict["uncertainty_signals"] = list(verdict["uncertainty_signals"]) + [
             "echo_slot:%s" % item for items in echoes.values() for item in items
         ]
+
+    # Runtime semantic review happens before missing/report-missing is rebuilt.
+    # Only the enforce mode may spend labeler calls; off/shadow keep legacy behavior.
+    if SLOT_EVIDENCE_MODE == "enforce":
+        verdict["slot_evidence_audit"] = verify_weak_slots(
+            issues,
+            verdict.get("slot_evidence_audit") or {},
+            _cancel_token(config),
+        )
+
     announced = announced or bool(verdict["danger_veto"])
     # 户内/公共边界：只影响一句说明，不影响分类、不挡流程
     premises_scope = (plan.get("premises_scope") or "public").strip() or "public"
     if premises_scope in PREMISES_NOTES and state.get("premises_scope") != premises_scope:
         _emit_chunk(PREMISES_NOTES[premises_scope] + "\n\n")
-    unverified = _unverified_by_issue(verdict["ungrounded_slots"])
+
+    categories = [issue["subcategory_code"] for issue in issues]
+    category_slots = dict(state.get("category_slots") or {})
     for issue in issues:
-        issue["unverified"] = unverified.get(issue["subcategory_code"], [])
+        category_slots[issue["subcategory_code"]] = dict(issue.get("slots") or {})
+
+    audit_by_issue = verdict.get("slot_evidence_audit") or {}
+    if SLOT_EVIDENCE_MODE == "enforce":
+        _drop_unusable_slots(issues, category_slots, audit_by_issue)
+        missing = _rebuild_issue_missing(issues, category_slots)
+        # Unusable slots were removed above and now live in missing/report_missing.
+        # They must not keep the legacy "cautious" veto alive and suppress a
+        # decision-critical follow-up.
+        kept = sum(len((issue.get("slots") or {})) for issue in issues)
+        grounded = sum(
+            1 for issue in issues
+            for slot, result in ((audit_by_issue.get(issue["subcategory_code"]) or {}).items())
+            if slot in (issue.get("slots") or {})
+            and result.get("business_status") in {"grounded", "grounded_by_model"}
+        )
+        verdict["grounding_ratio"] = grounded / kept if kept else 1.0
+        verdict["ungrounded_slots"] = []
+        verdict["uncertainty_level"] = (
+            "cautious" if plan.get("major_mismatch") else "ok"
+        )
+        unverified = {}
+    else:
+        missing = rebuild_missing(categories, category_slots)
+        missing_keys = set(missing)
+        report_missing_keys = set(rebuild_report_missing(categories, category_slots))
+        for issue in issues:
+            code = issue["subcategory_code"]
+            issue["missing"] = [
+                slot.key for slot in get_slot_schema(code)
+                if f"{code}_{slot.key}" in missing_keys
+            ]
+            issue["report_missing"] = [
+                slot.key for slot in get_slot_schema(code)
+                if f"{code}_{slot.key}" in report_missing_keys
+            ]
+        unverified = _unverified_by_issue(verdict["ungrounded_slots"])
+
+    for issue in issues:
+        issue["unverified"] = (
+            [] if SLOT_EVIDENCE_MODE == "enforce"
+            else unverified.get(issue["subcategory_code"], [])
+        )
+        issue["slot_evidence"] = dict(audit_by_issue.get(issue["subcategory_code"]) or {})
     no_questions = verdict["danger_veto"] or verdict["uncertainty_level"] == "cautious"
     policy = decide_next_action(plan, {
         **state, "user_text": user_text, "missing": missing, **verdict,
@@ -781,7 +940,7 @@ def understand(state: AssistantState, config=None) -> dict:
     question = "" if no_questions else (policy.get("question") or "")
     question_source = "understand" if question else ""
     # 缺口 2 规则：A 类决策级缺失为空 → 丢弃模型/策略给的问句。
-    # 这是「B 类不追问」的真保证 —— 缺的只是报告级/装饰级信息时不该消耗用户耐心。
+    # 这是「B 类不追问」的真保证 —— 缺的只是报告级信息时不该消耗用户耐心。
     # 例外（有意）：下面那段代码生成的「类内枚举问句」不受影响 —— 它针对的是
     # 「连小类都定不下来」，那时 missing 必然为空，丢了会话就卡死。
     question_dropped = ""
@@ -834,6 +993,15 @@ def understand(state: AssistantState, config=None) -> dict:
     reason = policy.get("reason", "")
     if no_questions:
         reason = "%s | %s" % (reason, ",".join(verdict["uncertainty_signals"])[:180])
+    active_skills = routed_active_skills
+    skill_route_source = state.get("skill_route_source") or "fallback"
+    skill_route_confidence = float(state.get("skill_route_confidence") or 0.0)
+    if locked_majors and set(locked_majors) != set(routed_active_skills):
+        logger.warning("skill_route_mismatch active=%s locked=%s",
+                       routed_active_skills, locked_majors)
+        active_skills = list(locked_majors)[:MAX_ACTIVE_MAJORS]
+        skill_route_source = "locked"
+        skill_route_confidence = 1.0
     return {
         **empty,
         "dialogue_plan": plan,
@@ -848,8 +1016,12 @@ def understand(state: AssistantState, config=None) -> dict:
         "suggested_major_code": planner_major if out_of_major else "",
         "immediate_danger": bool(plan.get("immediate_danger")),
         "premises_scope": premises_scope,
-        "selected_major_code": plan.get("selected_major_code", selected_major_code),
-        "major_mismatch": bool(plan.get("major_mismatch")),
+        "selected_major_code": selected_major_code,
+        "active_skills": active_skills,
+        "skill_route_source": skill_route_source,
+        "skill_route_confidence": skill_route_confidence,
+        "skill_versions": _skill_registry.versions_for(active_skills),
+        "major_mismatch": major_mismatch,
         "clarification_question": question,
         "question_source": question_source,
         "question_dropped": question_dropped,
@@ -952,13 +1124,34 @@ def _reply_destination(state: AssistantState) -> str:
 _ASK_SLOT_ACTIONS = ("ask_critical_question", "answer_with_optional_question")
 
 
+def _decision_issue_targets(state: AssistantState) -> list[tuple[str, list[str]]]:
+    """Every active issue that still has A-class gaps, in focus/display order.
+
+    Focus only controls ordering. It is not a gate for whether an issue may
+    supply the next follow-up question.
+    """
+    targets = []
+    seen = set()
+    for issue in _report_issues(state):
+        code = str((issue or {}).get("subcategory_code") or "")
+        if not code or code in seen:
+            continue
+        seen.add(code)
+        keys = decision_missing_keys(state, code)
+        if keys:
+            targets.append((code, keys))
+    return targets
+
+
 def _decision_slot_keys(state: AssistantState) -> list:
-    """当前锁定小类还缺的 A 类槽 key（与 understand 的 rebuild_missing 同源，只读）。"""
-    code = str(state.get("locked_subcategory") or "")
-    if not code:
-        return []
-    slots = (state.get("category_slots") or {}).get(code) or {}
-    return [slot.key for slot in missing_decision_slots(code, slots)]
+    """First askable issue's A-class slot keys (kept as a compatibility helper)."""
+    targets = _decision_issue_targets(state)
+    return list(targets[0][1]) if targets else []
+
+
+def _decision_target_code(state: AssistantState) -> str:
+    targets = _decision_issue_targets(state)
+    return targets[0][0] if targets else ""
 
 
 def _active_issue_codes(state: AssistantState) -> list:
@@ -1030,7 +1223,7 @@ def ask_slot_question(state: AssistantGraphState, config=None) -> Command:
     """
     if not _should_ask_slot_question(state):
         return Command(goto=_reply_destination(state))
-    code = str(state.get("locked_subcategory") or "")
+    code = _decision_target_code(state)
     keys = _decision_slot_keys(state)
     # 多条隐患：这一轮的追问由代码拼（每条一个问点）。**必须放在 keys 判断之前** ——
     # 焦点那条已经齐、缺的是别的条时，keys 是空的，放在后面就永远走不到并列追问。
@@ -1247,13 +1440,19 @@ def search(state: AssistantState) -> dict:
 def plan_retrieval(state: AssistantGraphState) -> list[Send]:
     """每个（隐患类别, 检索工具）一条并行分支；延迟与隐患数量解耦。"""
     override = state.get("retrieval_keyword_override") or {}
+    active_skills = state.get("active_skills") or []
+    allowed = _skill_registry.resolve_tools(active_skills)
+    allowed_retrieval = (
+        [name for name in _RESULT_FIELD if name in allowed]
+        if active_skills else list(_RESULT_FIELD)
+    )
     sends = []
     for category in state.get("categories") or []:
         slots = (state.get("category_slots") or {}).get(category, {})
         # 重试时用模型改写过的检索串；没有就照旧拼
         keyword = override.get(category) or _pick_keyword(
             category, slots, state.get("premises_scope") or "public")
-        for tool_name in _RESULT_FIELD:
+        for tool_name in allowed_retrieval:
             sends.append(Send("retrieve", {
                 "category": category,
                 "tool": tool_name,
@@ -1686,6 +1885,96 @@ def _split_ungrounded(entry: str):
     return code, slot, value
 
 
+def _effective_ungrounded_slots(verdict) -> list[str]:
+    """Choose legacy or evidence-backed ungrounded slots for the active rollout mode."""
+    legacy = list(
+        (verdict or {}).get("legacy_ungrounded_slots")
+        or (verdict or {}).get("ungrounded_slots")
+        or []
+    )
+    if SLOT_EVIDENCE_MODE in {"off", "shadow"}:
+        return legacy
+    if not (verdict or {}).get("slot_evidence_audit"):
+        return legacy
+    if "evidence_ungrounded_slots" in (verdict or {}):
+        return list((verdict or {}).get("evidence_ungrounded_slots") or [])
+    return legacy
+
+
+def _apply_evidence_mode(verdict: dict) -> dict:
+    """Apply off/shadow/enforce without leaking internal audit into public output."""
+    verdict = dict(verdict or {})
+    verdict["ungrounded_slots"] = _effective_ungrounded_slots(verdict)
+    if SLOT_EVIDENCE_MODE in {"off", "shadow"}:
+        legacy_level = verdict.get("legacy_uncertainty_level")
+        legacy_ratio = verdict.get("legacy_grounding_ratio")
+        if legacy_level is not None:
+            verdict["uncertainty_level"] = legacy_level
+        if legacy_ratio is not None:
+            verdict["grounding_ratio"] = legacy_ratio
+    audit = verdict.get("slot_evidence_audit") or {}
+    if SLOT_EVIDENCE_MODE == "shadow":
+        summary = [
+            f"{code}.{slot}={result.get('status', '')}/{result.get('reason', '')}"
+            for code, slots in audit.items()
+            for slot, result in slots.items()
+        ]
+        logger.info("slot_evidence_audit mode=shadow entries=%s", summary)
+    return verdict
+
+
+def _drop_unusable_slots(issues, category_slots, audit) -> list[str]:
+    """Remove rejected/unavailable values before missing is rebuilt."""
+    removed = []
+    for issue in issues or []:
+        code = str((issue or {}).get("subcategory_code") or "")
+        for slot in list((issue.get("slots") or {}).keys()):
+            result = ((audit.get(code) or {}).get(slot) or {})
+            if result.get("business_status") not in {"rejected", "unavailable"}:
+                continue
+            issue["slots"].pop(slot, None)
+            (category_slots.setdefault(code, {}) or {}).pop(slot, None)
+            removed.append(f"{code}.{slot}")
+            logger.info("slot_evidence_removed code=%s slot=%s status=%s",
+                        code, slot, result.get("business_status"))
+    return removed
+
+
+def _rebuild_issue_missing(issues, category_slots) -> list[str]:
+    categories = [
+        str(issue["subcategory_code"]) for issue in issues or []
+        if issue.get("subcategory_code")
+    ]
+    missing = rebuild_missing(categories, category_slots)
+    report_missing = rebuild_report_missing(categories, category_slots)
+    missing_keys = set(missing)
+    report_keys = set(report_missing)
+    for issue in issues:
+        code = issue["subcategory_code"]
+        issue["missing"] = [
+            slot.key for slot in get_slot_schema(code)
+            if f"{code}_{slot.key}" in missing_keys
+        ]
+        issue["report_missing"] = [
+            slot.key for slot in get_slot_schema(code)
+            if f"{code}_{slot.key}" in report_keys
+        ]
+    return missing
+
+
+def _public_issues(issues) -> list[dict]:
+    """Return issue objects safe for SSE/API callers: no evidence internals."""
+    out = []
+    for issue in issues or []:
+        if not isinstance(issue, dict):
+            continue
+        public = dict(issue)
+        public.pop("evidence", None)
+        public.pop("slot_evidence", None)
+        out.append(public)
+    return out
+
+
 def _unverified_by_issue(entries) -> dict:
     grouped = {}
     for entry in entries or []:
@@ -1813,7 +2102,7 @@ def preliminary_coverage(text) -> dict:
     变成可测、可观测的；不用来改写正文。
     兜不住的：内容是否与上一轮**实质重复** —— 实测两个客观指标都抓不住
     （db/eval_increment_turns.txt：整篇重合度 0.162、逐句重复率 0.00），
-    只能靠提示词 + 人工抽查。见 私有历史设计文档
+    只能靠提示词 + 人工抽查。见 docs/superpowers/plans/2026-09-27-dialogue-quality-execution.md。
     """
     value = str(text or "")
     return {
@@ -1861,9 +2150,8 @@ def report_branch_keys(state: AssistantState) -> list[str]:
 
 
 # ---------- 阶段 5a：消冗余的观测侧（只告警、不改写正文） ----------
-# 分工按 A/B/C 类走，不靠「抑制某一侧」：
-#   A 决策级 -> 由末尾那一个追问承载；B 报告级 -> 由正文分情况判断承载，不再追问；
-#   C 装饰级 -> 都不。
+# 分工按 A/B 类走，不靠「抑制某一侧」：
+#   A 决策级 -> 由末尾那一个追问承载；B 报告级 -> 由正文分情况判断承载，不再追问。
 # 这里的每一条都只是「让我们能看见」：判得出来的用结构化字段判，
 # 判不出来的（正文里那句自由措辞的问句指向哪个槽）只告警，不硬猜。
 _SENTENCE_SPLIT = re.compile(r"(?<=[。！？?!；;\n])")
@@ -2075,7 +2363,8 @@ REPORT_DEDUP_RULE = (
 
 
 def _report_rules(premises_scope: str, preliminary: bool = False,
-                  branch: bool = False, followup: bool = False) -> str:
+                  branch: bool = False, followup: bool = False,
+                  issue_count: int = 1) -> str:
     """户内不能套「触犯法规」：多数户内报修是燃气公司/物业的维护义务，住户是报修方。
 
     完整报告是文档（法规和案例要能对照），保留三段式；
@@ -2125,12 +2414,27 @@ def _report_rules(premises_scope: str, preliminary: bool = False,
             + ("材料里标着「[法规适用待确认]」的那一项不能写成问句。" if branch else "")
         )
     return (
-        "\n本次对话只跟踪这一个隐患，请只针对它输出。"
+        "\n本次对话共有 %d 条活动隐患，请逐条覆盖全部隐患，不遗漏任何一条；"
+        "焦点只决定输出顺序。" % max(1, int(issue_count or 1))
         + shape + indoor_note + increment + (branch_rule if branch else "")
         + (REPORT_DEDUP_RULE if preliminary else "") +
         "法规和案例必须来自上面的检索结果，没有就写「库内暂未检索到」，不编造。"
         "不要询问是否创建任务，也不要提出上报邀请——这一步由对话流程单独负责。"
     )
+
+
+def _skill_report_rules(state: AssistantState) -> str:
+    parts = []
+    for code in state.get("active_skills") or []:
+        try:
+            section = _skill_registry.load_section(code, "报告约束")
+        except Exception as exc:
+            logger.error("skill_report_section_load_failed code=%s error=%s",
+                         code, type(exc).__name__)
+            continue
+        if section.strip():
+            parts.append(section.strip())
+    return "\n\n".join(parts)
 
 
 def report(state: AssistantState, config=None) -> dict:
@@ -2143,10 +2447,14 @@ def report(state: AssistantState, config=None) -> dict:
         draft_future = _TASK_DRAFT_EXECUTOR.submit(
             build_task_draft, draft_state, _cancel_token(config))
     preliminary = _is_preliminary(state)
+    skill_report_rules = _skill_report_rules(state)
     ctx = ("\n\n".join(_issue_blocks(state))
            + _report_rules(state.get("premises_scope"), preliminary,
                            branch=bool(report_branch_keys(state)),
-                           followup=_followup_pending(state)))
+                           followup=_followup_pending(state),
+                           issue_count=len(_report_issues(state))))
+    if skill_report_rules:
+        ctx += "\n\n【Skill 报告约束】\n" + skill_report_rules
     # 把 langchain 消息转成 dict，供 _call_llm_stream_events 的 payload 序列化
     dict_msgs = []
     _ROLE_MAP = {"system": "system", "human": "user", "ai": "assistant", "tool": "tool"}
@@ -2351,7 +2659,7 @@ def task_gate(state: AssistantState) -> Command:
     answer = interrupt({
         "type": "confirm_create_task",
         "question": task_invitation_question(state),
-        "issues": state.get("issues") or [],
+        "issues": _public_issues(state.get("issues") or []),
         "address": str(state.get("address_text") or ""),
         "request_id": request_id,
         "draft": draft,
@@ -2549,6 +2857,7 @@ def build_graph(checkpointer=None):
     """编译助手图。checkpointer 由 get_checkpointer() 按 CHECKPOINT_BACKEND 决定。"""
     g = StateGraph(AssistantGraphState)
     g.add_node("begin_turn", begin_turn)
+    g.add_node("skill_route", skill_route)
     g.add_node("understand", understand)
     g.add_node("scope_guard", scope_guard)
     g.add_node("route", route)
@@ -2568,7 +2877,8 @@ def build_graph(checkpointer=None):
     g.add_node("emergency_guidance", emergency_guidance)
     g.add_node("ask_slot_question", ask_slot_question)
     g.set_entry_point("begin_turn")
-    g.add_edge("begin_turn", "understand")
+    g.add_edge("begin_turn", "skill_route")
+    g.add_edge("skill_route", "understand")
     g.add_edge("understand", "scope_guard")
     g.add_edge("scope_guard", "route")
     # route 返回 Command(goto=...)，不需要额外的条件边
@@ -2815,7 +3125,7 @@ async def run_stream_events(message: str, history: list[dict], slots: dict,
                             "major_mismatch": bool(
                                 (update or {}).get("major_mismatch")
                             ),
-                            "issues": (update or {}).get("issues") or [],
+                            "issues": _public_issues((update or {}).get("issues") or []),
                             # 锁定状态与危险标志：给前端渲染"改报"入口，也给量化用
                             "locked_major": (update or {}).get("locked_major", ""),
                             "locked_majors": (update or {}).get("locked_majors", []),

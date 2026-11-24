@@ -166,6 +166,34 @@ PRIMARY_LLM_EFFORT = os.getenv("PRIMARY_LLM_EFFORT", "").strip()
 # 保证“线程里还留着的上下文，规划器都看得到”。
 PLANNER_HISTORY_MESSAGES = int(os.getenv("PLANNER_HISTORY_MESSAGES", "20"))
 
+# 槽位证据灰度：off=旧逻辑；shadow=只计算并记录审计；enforce=证据状态参与降级。
+SLOT_EVIDENCE_MODE = os.getenv("SLOT_EVIDENCE_MODE", "shadow").strip().lower()
+if SLOT_EVIDENCE_MODE not in {"off", "shadow", "enforce"}:
+    raise ValueError(
+        f"Unsupported SLOT_EVIDENCE_MODE={SLOT_EVIDENCE_MODE!r}; "
+        "expected 'off', 'shadow', or 'enforce'"
+    )
+
+# Offline pseudo-labelers only. Runtime never imports these credentials.
+SEMANTIC_LABELER_A_BASE_URL = os.getenv("SEMANTIC_LABELER_A_BASE_URL", "")
+SEMANTIC_LABELER_A_API_KEY = os.getenv("SEMANTIC_LABELER_A_API_KEY", "")
+SEMANTIC_LABELER_A_MODEL = os.getenv(
+    "SEMANTIC_LABELER_A_MODEL", "minimax-m3.1-flash"
+)
+SEMANTIC_LABELER_B_BASE_URL = os.getenv("SEMANTIC_LABELER_B_BASE_URL", "")
+SEMANTIC_LABELER_B_API_KEY = os.getenv("SEMANTIC_LABELER_B_API_KEY", "")
+SEMANTIC_LABELER_B_MODEL = os.getenv(
+    "SEMANTIC_LABELER_B_MODEL", "glm-5.3-flash"
+)
+
+# One global runtime threshold; A/B classes do not change model confidence policy.
+SEMANTIC_VERIFIER_MIN_CONFIDENCE = float(
+    os.getenv("SEMANTIC_VERIFIER_MIN_CONFIDENCE", "0.85")
+)
+SEMANTIC_VERIFIER_MAX_ITEMS = int(
+    os.getenv("SEMANTIC_VERIFIER_MAX_ITEMS", "5")
+)
+
 
 @dataclass(frozen=True)
 class ModelSlot:

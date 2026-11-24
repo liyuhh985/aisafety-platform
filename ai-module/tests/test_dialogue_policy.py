@@ -79,7 +79,7 @@ def test_complete_report_uses_full_mode():
     assert out["report_mode"] == "full"
 
 
-def test_incomplete_explicit_report_uses_preliminary_mode():
+def test_incomplete_explicit_report_still_asks_critical_question():
     plan = {
         "ok": True,
         "intent": "ask_regulation",
@@ -93,11 +93,13 @@ def test_incomplete_explicit_report_uses_preliminary_mode():
         "answer": "",
     }
     out = decide_next_action(plan, {"user_text": "帮我查危房法规"})
-    assert out["action"] == "report_preliminary"
-    assert out["report_mode"] == "preliminary"
+    assert out["action"] == "ask_critical_question"
+    assert out["needs_search"] is False
+    assert out["report_mode"] == "none"
+    assert "裂缝、倾斜或沉降" in out["question"]
 
 
-def test_complete_issue_still_retrieves_when_another_fact_is_missing():
+def test_complete_issue_waits_when_another_issue_is_missing():
     plan = {
         "ok": True,
         "intent": "report_hazard",
@@ -109,8 +111,9 @@ def test_complete_issue_still_retrieves_when_another_fact_is_missing():
         "answer": "已记录两个问题。",
     }
     out = decide_next_action(plan, {"user_text": "消防设施坏了，旁边还有危房"})
-    assert out["needs_search"] is True
-    assert out["report_mode"] in {"full", "preliminary"}
+    assert out["action"] == "ask_critical_question"
+    assert out["needs_search"] is False
+    assert out["report_mode"] == "none"
 
 
 def test_answering_previous_question_with_complete_facts_reports_full():
@@ -294,7 +297,7 @@ def test_colloquial_directly_is_not_stop_phrase():
     assert out["action"] == "ask_critical_question"
 
 
-def test_incomplete_issue_uses_preliminary_but_still_retrieves():
+def test_incomplete_issue_asks_before_retrieval():
     plan = {
         "ok": True,
         "intent": "report_hazard",
@@ -307,8 +310,8 @@ def test_incomplete_issue_uses_preliminary_but_still_retrieves():
         "question": "",
     }
     out = decide_next_action(plan, {"user_text": "消防设施坏了，旁边还有危房"})
-    assert out["action"] == "report_preliminary"
-    assert out["needs_search"] is True
+    assert out["action"] == "ask_critical_question"
+    assert out["needs_search"] is False
 
 
 def test_complaint_sentence_is_not_a_confirmation():
@@ -423,11 +426,11 @@ def test_understand_downgrades_full_report_when_recomputed_missing(monkeypatch):
         "categories": [], "category_slots": {},
     })
     # 规划器声称 missing 为空，但 critical 槽实际没填：
-    # 确定性重算必须压过规划器，用户又要了报告 → 出初步报告而不是"完整报告"。
+    # 确定性重算必须压过规划器，用户又要了报告 → 先追问，不检索、不出正式报告。
     assert understood["missing"]
-    assert understood["next_action"] == "report_preliminary"
-    assert understood["report_mode"] == "preliminary"
-    assert assistant_graph.route(understood).goto == "search"
+    assert understood["next_action"] == "ask_critical_question"
+    assert understood["report_mode"] == "none"
+    assert assistant_graph.route(understood).goto == "ask_slot_question"
 
 
 def test_plan_parser_keeps_at_most_one_question():
@@ -470,7 +473,7 @@ def test_danger_veto_forbids_asking_but_keeps_retrieval():
     assert result["needs_search"] is True
 
 
-def test_cautious_uncertainty_forbids_asking_and_full_reports():
+def test_cautious_uncertainty_still_asks_while_an_a_slot_is_missing():
     plan = {
         "ok": True, "intent": "report_hazard", "risk_level": "high",
         "issues": [{"major_code": "fire", "subcategory_code": "fire_lane_blocked",
@@ -482,8 +485,8 @@ def test_cautious_uncertainty_forbids_asking_and_full_reports():
         "user_text": "楼道里全是浓烟", "uncertainty_level": "cautious",
         "uncertainty_signals": ["ungrounded_slot:fire_lane_blocked.persistence=持续中"],
     })
-    assert result["action"] != "ask_critical_question"
-    assert result["report_mode"] != "full"
+    assert result["action"] == "ask_critical_question"
+    assert result["needs_search"] is False
 
 
 def test_danger_veto_forbids_an_optional_question_too():
@@ -549,12 +552,12 @@ def test_answering_clarification_with_missing_slot_asks_next():
     assert "长期还是临时" in out["question"]
 
 
-def test_answering_clarification_without_next_question_returns_preliminary():
+def test_answering_clarification_without_planner_question_uses_schema_question():
     plan = {
         "ok": True,
         "intent": "report_hazard",
         "risk_level": "medium",
-        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["unknown_slot"]}],
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["persistence"]}],
         "question": "",
         "answer": "已记录占道经营。",
     }
@@ -563,8 +566,9 @@ def test_answering_clarification_without_next_question_returns_preliminary():
         "dialogue_mode": "plain",
         "asked_question_last_turn": True,
     })
-    assert out["action"] == "report_preliminary"
-    assert out["needs_search"] is True
+    assert out["action"] == "ask_critical_question"
+    assert out["needs_search"] is False
+    assert "长期占压还是临时停放" in out["question"]
 
 
 def test_plain_mode_without_pending_question_stays_short():
@@ -607,27 +611,51 @@ def test_report_hazard_with_answer_does_not_short_answer():
     assert out["action"] == "ask_critical_question"
 
 
-def test_report_hazard_without_next_question_returns_preliminary():
+def test_report_hazard_without_planner_question_uses_schema_question():
     plan = {
         "ok": True,
         "intent": "report_hazard",
         "risk_level": "medium",
-        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["unknown_slot"]}],
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["persistence"]}],
         "question": "",
         "answer": "这属于占道经营类隐患。",
     }
     out = decide_next_action(plan, {"user_text": "三明万达广场东北角有摊贩违规占道"})
-    assert out["action"] == "report_preliminary"
+    assert out["action"] == "ask_critical_question"
+    assert out["needs_search"] is False
+    assert "长期占压还是临时停放" in out["question"]
 
 
-def test_ask_solution_with_answer_stays_short():
+def test_ask_solution_still_asks_while_a_decision_slot_is_missing():
     plan = {
         "ok": True,
         "intent": "ask_solution",
         "risk_level": "medium",
-        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["unknown_slot"]}],
+        "issues": [{"major_code": "traffic", "subcategory_code": "road_occupancy", "missing": ["persistence"]}],
         "question": "",
         "answer": "这类情况一般找城管或属地街道。",
     }
     out = decide_next_action(plan, {"user_text": "这个归谁管"})
+    assert out["action"] == "ask_critical_question"
+    assert out["needs_search"] is False
+    assert "长期占压还是临时停放" in out["question"]
+
+
+def test_stop_phrase_with_missing_a_slot_does_not_retrieve_or_report():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "high",
+        "issues": [{
+            "major_code": "traffic",
+            "subcategory_code": "road_occupancy",
+            "missing": ["persistence"],
+        }],
+        "question": "是长期占压还是临时停放？",
+        "answer": "先按占道经营类隐患作初步判断。",
+    }
+    out = decide_next_action(plan, {"user_text": "别问了，直接出报告"})
     assert out["action"] == "answer_now"
+    assert out["needs_search"] is False
+    assert out["report_mode"] == "none"
+    assert out["question"] == ""

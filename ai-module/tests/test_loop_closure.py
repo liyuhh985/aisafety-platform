@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """闭环的最后一改（M1 产物判据 + M2 危险词表）。
 
-依据：`私有历史设计文档` §3。
+依据：`docs/superpowers/specs/2026-10-01-loop-closure-final.md` §3。
 
 M1 要解决的问题（实测）：同一句话、同一段历史，规划器跑 10 次给出 4 种 intent
 （report_hazard 6 / quick_assessment 2 / other 1 / 空 1），而 intent 是决定进哪个节点的
@@ -55,10 +55,11 @@ def test_report_intent_no_longer_forces_a_report():
     assert d["action"] not in ("report_full", "report_preliminary"), d
 
 
-def test_explicit_report_request_still_switches_to_report():
-    """用户明说要法规/报告 → 必须切报告（这是升级的唯一通道）。"""
+def test_explicit_report_request_waits_for_missing_decision_fact():
+    """用户要报告也不能绕过 A 类缺口；先问，再检索与正式报告。"""
     d = _decide("other", MISSING_ISSUE, "帮我查一下广告牌的法规")
-    assert d["action"] == "report_preliminary"
+    assert d["action"] == "ask_critical_question"
+    assert d["needs_search"] is False
     assert wants_report("帮我查一下广告牌的法规")
 
 
@@ -69,10 +70,11 @@ def test_plain_mode_never_upgrades_even_when_facts_are_complete():
     assert d.get("report_mode") in ("", "none", None)
 
 
-def test_omitted_question_inherits_the_previous_mode():
-    """省略句（"那 X 呢"）单看判不出产物 → 靠继承。"""
+def test_omitted_question_does_not_skip_a_decision_gap():
+    """省略句可以继承产物模式，但不能绕过 active issue 的 A 类缺口。"""
     d = _decide("report_hazard", MISSING_ISSUE, "那那个呢", prev_mode=MODE_PLAIN)
-    assert d["action"] == "answer_now"
+    assert d["action"] == "ask_critical_question"
+    assert d["needs_search"] is False
 
 
 def test_action_to_mode_mapping():

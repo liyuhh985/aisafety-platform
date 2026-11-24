@@ -45,10 +45,29 @@ def _risk_level(plan: dict, issues: list[dict]) -> str:
     return risk if risk in {"high", "medium", "low"} else "medium"
 
 
+_FACT_CONFIRMATION_PHRASES = (
+    "请确认我理解得对不对", "请确认我是否理解正确", "我理解得对吗",
+    "我的理解是否正确", "确认一下我理解",
+)
+
+
 def _question_for_missing(plan: dict) -> str:
-    question = str(plan.get("question") or "").strip()
-    if question:
-        return question
+    """Choose one A-class schema question; planner wording is secondary.
+
+    A follow-up is a fact request, never a "did I understand you" confirmation
+    turn.  Planner text is therefore accepted only when it names a missing
+    target slot and does not ask the user to validate the assistant's model.
+    """
+    target = str(plan.get("question_target") or "").strip()
+    planner_question = str(plan.get("question") or "").strip()
+    if planner_question and not any(
+        phrase in planner_question for phrase in _FACT_CONFIRMATION_PHRASES
+    ):
+        if not target:
+            return planner_question
+        for issue in _incomplete_issues(plan):
+            if target in set(issue.get("missing") or []):
+                return planner_question
     for issue in _incomplete_issues(plan):
         missing = set(issue.get("missing") or [])
         for slot in get_slot_schema(issue.get("subcategory_code")):
@@ -58,7 +77,7 @@ def _question_for_missing(plan: dict) -> str:
 
 
 # M1（闭环）：产物由**代码可判的判据**定，不由模型这一轮的 intent 定。
-# 理由与实测见 私有历史设计文档 §3：
+# 理由与实测见 docs/superpowers/specs/2026-10-01-loop-closure-final.md §3：
 # 同一句话跑 10 次，模型给出 4 种 intent（report_hazard 6 / quick_assessment 2 / other 1 / 空 1），
 # 而 intent 是决定进哪个节点的唯一输入 —— 产物就跟着飘。
 MODE_PLAIN = "plain"
@@ -140,23 +159,40 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
         )
 
     if any(phrase in user_text for phrase in STOP_PHRASES):
+        if issues and incomplete:
+            # Respect the refusal to answer more questions, but never turn an
+            # incomplete issue into a retrieval-backed preliminary/full report.
+            return _decision(
+                "answer_now",
+                reason="user refused questions while A-class facts are incomplete",
+            )
         if issues:
             return _decision(
-                "report_preliminary",
-                reason="user explicitly refused further questions",
+                "report_full",
+                reason="user refused questions and all A-class facts are complete",
                 needs_search=True,
-                report_mode="preliminary",
+                report_mode="full",
             )
         return _decision("answer_now", reason="user refused questions and no issue is defined")
 
+    # A strict gate: any active issue missing an A-class fact blocks both
+    # retrieval and formal reporting.  The focus issue has no special right to
+    # bypass a non-focus issue's missing fact.
+    if issues and incomplete:
+        question = _question_for_missing(plan)
+        return _decision(
+            "ask_critical_question",
+            reason="one or more active issues still need A-class facts",
+            question=question,
+        )
+
     explicit_report = any(phrase in user_text for phrase in REPORT_PHRASES)
     if explicit_report:
-        mode = "full" if complete and not incomplete else "preliminary"
         return _decision(
-            "report_full" if mode == "full" else "report_preliminary",
-            reason="user explicitly requested regulations/report",
+            "report_full",
+            reason="user explicitly requested regulations/report; facts are complete",
             needs_search=True,
-            report_mode=mode,
+            report_mode="full",
         )
 
     # 「正在回答上一轮的追问」优先于模式继承：
@@ -237,23 +273,6 @@ def _decide_next_action_inner(plan: dict, state: dict) -> dict:
             )
         return _decision("answer_now", reason="quick assessment without extra facts")
 
-    if complete and incomplete:
-        return _decision(
-            "report_preliminary",
-            reason="some issues are complete while others still need facts",
-            needs_search=True,
-            report_mode="preliminary",
-        )
-
-    if incomplete and risk == "high":
-        question = _question_for_missing(plan)
-        if question:
-            return _decision(
-                "ask_critical_question",
-                reason="high-risk issue is missing a decision-critical fact",
-                question=question,
-            )
-
     # 描述隐患（report_hazard / create_task）时，规划器顺手写的一段回答
     # 不能截断报告链路：有缺口就继续问，缺口问不出来就出初步报告。
     if answer and not (issues and intent in {"report_hazard", "create_task"}):
@@ -303,10 +322,24 @@ def _apply_no_question_guard(decision: dict, plan: dict, state: dict) -> dict:
 
     触发条件：正在发生的危险（danger_veto），或事实存疑（uncertainty_level=cautious）。
     """
-    no_questions = bool(state.get("danger_veto")) or \
-        state.get("uncertainty_level") == "cautious"
-    if not no_questions:
+    danger_veto = bool(state.get("danger_veto"))
+    cautious = state.get("uncertainty_level") == "cautious"
+    if not danger_veto and not cautious:
         return decision
+
+    # A cautious legacy fact blocks a *full* report, but it must not suppress
+    # an A-class follow-up: otherwise a non-focus issue can never be completed.
+    if cautious and not danger_veto:
+        if decision.get("report_mode") == "full":
+            return _decision(
+                "report_preliminary",
+                reason=(decision.get("reason") or "") + " | cautious facts",
+                needs_search=True,
+                report_mode="preliminary",
+            )
+        return decision
+
+    no_questions = danger_veto
     action = decision.get("action")
     reason = (decision.get("reason") or "") + _signals_suffix(state)
     has_issues = bool(plan.get("issues"))

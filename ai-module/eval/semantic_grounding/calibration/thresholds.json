@@ -1,0 +1,7 @@
+{
+  "threshold_a": 0.75,
+  "threshold_b": 0.7,
+  "threshold_c": 0.7,
+  "dataset": "qv-pseudo-v1",
+  "notice": "Thresholds were calibrated against dual-model consensus pseudo-labels.\nNo human review was performed."
+}

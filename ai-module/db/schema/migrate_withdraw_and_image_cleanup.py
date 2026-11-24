@@ -2,7 +2,7 @@
 """迁移：撤回字段 + image_key(+回填) + 对象清理 outbox 表。
 
 幂等：每步先探测再改，可重复执行。执行： python db/schema/migrate_withdraw_and_image_cleanup.py
-上游 spec：私有历史设计文档
+上游 spec：docs/superpowers/specs/2026-09-29-retract-and-image-hard-delete-design.md
 """
 import os
 import sys
