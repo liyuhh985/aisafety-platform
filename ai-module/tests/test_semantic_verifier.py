@@ -4,6 +4,8 @@
 import json
 from types import SimpleNamespace
 
+import pytest
+
 from langchain_core.messages import HumanMessage
 
 from core.agent import Agent
@@ -222,6 +224,18 @@ def test_verifier_exception_makes_candidate_unavailable(monkeypatch):
     assert result["dangerous_building"]["structure"]["business_status"] == (
         "unavailable"
     )
+
+
+def test_verifier_propagates_stream_cancellation(monkeypatch):
+    from core import semantic_verifier as sv
+    from core.cancellation import StreamCancelled
+
+    monkeypatch.setattr(
+        sv, "_call_verifier",
+        lambda candidates, cancellation=None: (_ for _ in ()).throw(StreamCancelled()),
+    )
+    with pytest.raises(StreamCancelled):
+        sv.verify_weak_slots([_weak_issue()], _weak_audit())
 
 
 def test_verifier_payload_excludes_audit_and_classes(monkeypatch):

@@ -184,7 +184,7 @@ def test_preliminary_report_appends_a_question_when_the_model_asks_none(monkeypa
 
 
 def test_preliminary_question_targets_a_decision_class_slot(monkeypatch):
-    """追问只针对 A 类缺失；A 类不缺失时一个都不补（B/C 类不消耗用户耐心）。"""
+    """追问只针对 A 类缺失；A 类不缺失时一个都不补（B 类不消耗用户耐心）。"""
     update, _sent, _ = _run_report_node(
         monkeypatch, _node_state(),
         ["楼下消防通道被杂物占用。"])

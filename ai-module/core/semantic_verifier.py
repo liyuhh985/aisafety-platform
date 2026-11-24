@@ -10,6 +10,7 @@ from config import (
     SMALL_MODEL,
 )
 from core.agent import Agent
+from core.cancellation import StreamCancelled
 from core.slot_schemas import get_slot_schema
 
 RUNTIME_VERIFIER_PROMPT = (
@@ -179,6 +180,8 @@ def verify_weak_slots(issues, audit, cancellation=None) -> dict:
         return audit
     try:
         labels = _call_verifier(candidates, cancellation=cancellation)
+    except StreamCancelled:
+        raise
     except Exception:
         labels = {}
 

@@ -933,7 +933,7 @@ def understand(state: AssistantState, config=None) -> dict:
     question = "" if no_questions else (policy.get("question") or "")
     question_source = "understand" if question else ""
     # 缺口 2 规则：A 类决策级缺失为空 → 丢弃模型/策略给的问句。
-    # 这是「B 类不追问」的真保证 —— 缺的只是报告级/装饰级信息时不该消耗用户耐心。
+    # 这是「B 类不追问」的真保证 —— 缺的只是报告级信息时不该消耗用户耐心。
     # 例外（有意）：下面那段代码生成的「类内枚举问句」不受影响 —— 它针对的是
     # 「连小类都定不下来」，那时 missing 必然为空，丢了会话就卡死。
     question_dropped = ""
@@ -2143,9 +2143,8 @@ def report_branch_keys(state: AssistantState) -> list[str]:
 
 
 # ---------- 阶段 5a：消冗余的观测侧（只告警、不改写正文） ----------
-# 分工按 A/B/C 类走，不靠「抑制某一侧」：
-#   A 决策级 -> 由末尾那一个追问承载；B 报告级 -> 由正文分情况判断承载，不再追问；
-#   C 装饰级 -> 都不。
+# 分工按 A/B 类走，不靠「抑制某一侧」：
+#   A 决策级 -> 由末尾那一个追问承载；B 报告级 -> 由正文分情况判断承载，不再追问。
 # 这里的每一条都只是「让我们能看见」：判得出来的用结构化字段判，
 # 判不出来的（正文里那句自由措辞的问句指向哪个槽）只告警，不硬猜。
 _SENTENCE_SPLIT = re.compile(r"(?<=[。！？?!；;\n])")

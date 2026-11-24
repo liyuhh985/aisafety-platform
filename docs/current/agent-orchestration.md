@@ -90,7 +90,7 @@ Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 P
   只能**新开一个对话**。小类只在同集合内由用户明确纠正换。
   集合之外的条目只发一句通知、不记录（一张工单只有一个 `category`）。
 
-## 四、槽位三分类（A/B/C）
+## 四、槽位两级分类（A/B）
 
 `core/slot_schemas.py`：
 
@@ -98,7 +98,6 @@ Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 P
 |----|------|------|
 | A 决策级 | 缺了会判错风险等级或该采取的动作 | 追问（进 `missing`） |
 | B 报告级 | 结论/动作不变，但法规适用/责任/处罚档次不同 | 不追问，写进报告「仍需确认」条件分支 |
-| C 装饰级 | 结论、动作、法规都不变 | 不问、不提 |
 
 ## 五、范围护栏 `scope_policy.py`
 
@@ -135,7 +134,7 @@ Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 P
 - `off` / `shadow` 不调用运行时语义复核；当前默认 `shadow`，禁止在本计划中切换 `enforce`。
 - MiniMax/GLM 只用于离线伪标签实验，运行时不得导入或调用 `SEMANTIC_LABELER_A_*` / `SEMANTIC_LABELER_B_*`。
 - 当前 `qv-pseudo-v1` 三分类实验未通过质量门禁，其 agreement/kappa 不是运行时准确率，也不能作为生产验证证据。
-- C 类装饰槽位已删除；槽位 schema 只保留 A/B。A 类缺失继续追问并阻止报告，B 类缺失不追问但进入报告条件分支。
+- 槽位 schema 只保留 A/B。A 类缺失继续追问并阻止报告，B 类缺失不追问但进入报告条件分支。
 
 ## 七、Skill Harness（按大类按需加载）
 
