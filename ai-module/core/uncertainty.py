@@ -242,23 +242,44 @@ def _negated_near_quote(source: str, quote: str, value: str) -> bool:
     return any(token in window for token in negative_tokens)
 
 
+def business_status_for(result) -> str:
+    """Map detailed audit statuses onto the four public business states."""
+    status = str((result or {}).get("status") or "")
+    if status in {"grounded", "grounded_by_model"}:
+        return status
+    if status in {"contradicted", "unverified", "rejected"}:
+        return "rejected"
+    if status in {"unavailable", "weak", "echo", "missing"}:
+        return "unavailable"
+    if status == "strong" and (result or {}).get("reason") == "legacy":
+        return "unavailable"
+    return "unavailable"
+
+
+def _with_business_status(result: dict) -> dict:
+    result["business_status"] = business_status_for(result)
+    return result
+
+
 def verify_slot_evidence(slot_key, value, evidence, source_map, category) -> dict:
     """Verify model-cited evidence using deterministic text operations only."""
     value = str(value or "").strip()
     if not value:
-        return {"status": "missing", "reason": "empty_value", "value": value}
+        return _with_business_status({
+            "status": "missing", "reason": "empty_value", "value": value,
+        })
 
     allowed = {slot.key for slot in get_slot_schema(category)}
     if slot_key not in allowed:
-        return {
+        return _with_business_status({
             "status": "unverified", "reason": "slot_not_allowed",
             "value": value, "quote": "", "source_ref": "",
-        }
+        })
     if is_echo_slot(value, category):
-        return {
+        return _with_business_status({
             "status": "echo", "reason": "echo_slot_name",
             "value": value, "quote": "", "source_ref": "",
-        }
+        })
 
     evidence = evidence if isinstance(evidence, dict) else {}
     quote = str(evidence.get("quote") or "").strip()
@@ -266,33 +287,59 @@ def verify_slot_evidence(slot_key, value, evidence, source_map, category) -> dic
     base = {"value": value, "quote": quote, "source_ref": source_ref}
 
     if not quote:
-        return {"status": "unverified", "reason": "no_evidence", **base}
-    if not source_ref or source_ref not in source_map:
-        return {"status": "unverified", "reason": "invalid_source_ref", **base}
+        return _with_business_status({
+            "status": "unverified", "reason": "no_evidence", **base,
+        })
+    if not source_ref:
+        return _with_business_status({
+            "status": "unverified", "reason": "invalid_source_ref", **base,
+        })
     if source_ref.startswith("a"):
-        return {"status": "unverified", "reason": "assistant_source", **base}
+        return _with_business_status({
+            "status": "unverified", "reason": "assistant_source", **base,
+        })
+    if source_ref not in source_map:
+        return _with_business_status({
+            "status": "unverified", "reason": "invalid_source_ref", **base,
+        })
     if source_ref[:1] not in {"u", "v"}:
-        return {"status": "unverified", "reason": "invalid_source_ref", **base}
+        return _with_business_status({
+            "status": "unverified", "reason": "invalid_source_ref", **base,
+        })
 
     quote_length = len(normalize_text(quote))
     if quote_length < 2:
-        return {"status": "unverified", "reason": "quote_too_short", **base}
+        return _with_business_status({
+            "status": "unverified", "reason": "quote_too_short", **base,
+        })
     if quote_length > 80:
-        return {"status": "unverified", "reason": "quote_too_long", **base}
+        return _with_business_status({
+            "status": "unverified", "reason": "quote_too_long", **base,
+        })
 
     source = str(source_map.get(source_ref) or "")
     if not _quote_in_source(quote, source):
-        return {"status": "unverified", "reason": "quote_not_found", **base}
+        return _with_business_status({
+            "status": "unverified", "reason": "quote_not_found", **base,
+        })
     if not all(
         digit in normalize_text(_numeric_text(source))
         for digit in re.findall(r"\d+", normalize_text(_numeric_text(value)))
     ):
-        return {"status": "unverified", "reason": "numeric_mismatch", **base}
+        return _with_business_status({
+            "status": "unverified", "reason": "numeric_mismatch", **base,
+        })
     if _negated_near_quote(source, quote, value):
-        return {"status": "contradicted", "reason": "negation_conflict", **base}
+        return _with_business_status({
+            "status": "contradicted", "reason": "negation_conflict", **base,
+        })
     if _value_supported_by_quote(value, quote):
-        return {"status": "grounded", "reason": "", **base}
-    return {"status": "weak", "reason": "value_not_in_quote", **base}
+        return _with_business_status({
+            "status": "grounded", "reason": "", **base,
+        })
+    return _with_business_status({
+        "status": "weak", "reason": "value_not_in_quote", **base,
+    })
 
 
 def assess(plan: dict, messages: list, vision_summary: str = "") -> dict:
@@ -339,7 +386,9 @@ def assess(plan: dict, messages: list, vision_summary: str = "") -> dict:
                     key, value, typed_evidence, source_map, code,
                 )
             else:
-                result = {"status": legacy_status, "reason": "legacy", "value": str(value)}
+                result = _with_business_status({
+                    "status": legacy_status, "reason": "legacy", "value": str(value),
+                })
 
             evidence_total += 1
             if result.get("status") == "grounded":

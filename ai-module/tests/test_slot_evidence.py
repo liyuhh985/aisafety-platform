@@ -336,3 +336,33 @@ def test_planner_prompt_requires_quote_and_source_ref():
     assert "source_ref" in system_prompt
     assert "原样" in system_prompt
     assert "assistant" in system_prompt
+
+BUSINESS_SOURCE_MAP = {
+    "u1": "消防通道长期堆着杂物",
+    "u2": "房子明显往一边斜",
+}
+
+
+def test_business_status_mapping():
+    from core.uncertainty import verify_slot_evidence
+
+    grounded = verify_slot_evidence(
+        "persistence", "长期",
+        {"quote": "长期堆着", "source_ref": "u1"},
+        BUSINESS_SOURCE_MAP, "fire_lane_blocked",
+    )
+    assert grounded["business_status"] == "grounded"
+
+    weak = verify_slot_evidence(
+        "structure", "墙体倾斜",
+        {"quote": "房子明显往一边斜", "source_ref": "u2"},
+        BUSINESS_SOURCE_MAP, "dangerous_building",
+    )
+    assert weak["business_status"] == "unavailable"
+
+    invalid = verify_slot_evidence(
+        "structure", "墙体倾斜",
+        {"quote": "墙体倾斜", "source_ref": "u9"},
+        BUSINESS_SOURCE_MAP, "dangerous_building",
+    )
+    assert invalid["business_status"] == "rejected"
