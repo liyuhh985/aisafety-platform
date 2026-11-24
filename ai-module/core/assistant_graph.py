@@ -781,6 +781,12 @@ def understand(state: AssistantState, config=None) -> dict:
     # 所以不能只看 issues，必须读 perceived_major；没有时再退回 issues。
     planner_major = (plan.get("perceived_major") or "").strip() or next(
         (i.get("major_code") for i in issues if i.get("major_code")), "")
+    # major_mismatch 是「前端真实预选」与「模型真实判断」的关系，不是模型自由填写
+    # 的一个提示。自动判断模式没有前端预选时，模型建议不能把自己标成 mismatch，
+    # 否则这个建议会在下一轮被当回前端 hint，进而把完整报告降级成初步报告。
+    major_mismatch = bool(
+        frontend_majors and planner_major and planner_major not in frontend_majors
+    )
     # 集合一旦锁定，**谁都不能改**：模型动不了（用户纠正也只能换同大类里的小类），
     # 前端中途改选也不再生效 —— 要换大类只能**新开一个对话**（新会话天然重来）。
     # 自动判断模式下，第一次判定时**这一句话涉及几个大类就锁几个** —— 一次说了消防和
@@ -844,6 +850,7 @@ def understand(state: AssistantState, config=None) -> dict:
 
     plan = dict(plan)
     plan["issues"] = issues
+    plan["major_mismatch"] = major_mismatch
     # 二、模型判定的危险（词表漏了）：不在这里发话，只把结果记进状态 ——
     # 安全文本统一由 emergency_guidance 按类型生成并核对覆盖。
     verdict = _apply_evidence_mode(assess(plan, source_messages, vision_summary))
@@ -1009,12 +1016,12 @@ def understand(state: AssistantState, config=None) -> dict:
         "suggested_major_code": planner_major if out_of_major else "",
         "immediate_danger": bool(plan.get("immediate_danger")),
         "premises_scope": premises_scope,
-        "selected_major_code": plan.get("selected_major_code", selected_major_code),
+        "selected_major_code": selected_major_code,
         "active_skills": active_skills,
         "skill_route_source": skill_route_source,
         "skill_route_confidence": skill_route_confidence,
         "skill_versions": _skill_registry.versions_for(active_skills),
-        "major_mismatch": bool(plan.get("major_mismatch")),
+        "major_mismatch": major_mismatch,
         "clarification_question": question,
         "question_source": question_source,
         "question_dropped": question_dropped,
