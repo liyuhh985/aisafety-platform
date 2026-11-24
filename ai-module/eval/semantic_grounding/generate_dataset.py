@@ -14,64 +14,101 @@ ROOT = Path(__file__).parent
 
 TEMPLATES = [
     {
-        "category": "fire_lane_blocked",
-        "slot": "blocker",
-        "slot_class": "A",
-        "entailed": ("消防通道长期被私家车占用", "私家车", "私家车"),
-        "entailed_weak": ("消防通道长期被一辆私家车占用", "车辆", "私家车"),
-        "neutral": ("消防通道旁停着一辆自行车，门口还放着纸箱", "私家车", "纸箱"),
-        "contradicted": ("消防通道限高3米，现场没有车辆进入", "限高5米", "限高3米"),
-        "contradicted_weak": ("消防通道内只停放着自行车", "私家车", "只停放着自行车"),
+        "category": "fire_lane_blocked", "slot": "blocker", "slot_class": "A",
+        "values": (
+            "私家车", "电动自行车", "废旧沙发", "纸箱堆", "建筑木板",
+            "塑料周转箱", "旧床垫", "共享单车", "三轮车", "装修垃圾",
+            "广告展架", "垃圾桶", "花盆", "快递包裹", "泡沫箱",
+            "水泥袋", "废旧家电", "儿童推车", "菜筐", "金属货架",
+            "折叠椅", "水桶", "手推车", "煤气罐", "木托盘",
+        ),
+        "source_template": "消防通道被{value}占用",
+        "weak_value": "通道障碍物",
+        "neutral_quote": "消防通道旁装有应急照明灯",
+        "contradicted_prefix": "现场没有发现",
+        "weak_contradiction_quote": "现场画面显示通道畅通",
     },
     {
-        "category": "fire_lane_blocked",
-        "slot": "impact",
-        "slot_class": "B",
-        "entailed": ("消防车无法进入小区", "无法进入", "无法进入"),
-        "entailed_weak": ("消防车无法进入小区", "通行受阻", "无法进入"),
-        "neutral": ("消防车从小区东门进入，通道畅通", "无法通行", "小区东门"),
-        "contradicted": ("消防车可以正常通过，现场测试完成", "无法通行", "正常通过"),
-        "contradicted_weak": ("消防车可以正常通过，现场测试完成", "无法通行", "正常通过"),
+        "category": "fire_lane_blocked", "slot": "impact", "slot_class": "B",
+        "values": (
+            "无法进入", "无法转弯", "无法靠近", "无法展开水带", "通行空间不足",
+            "需要倒车绕行", "只能单侧通过", "人员无法疏散", "救援设备难以进入",
+            "消防车被挡住", "通道宽度不足", "车辆掉头困难", "担架无法通过",
+            "破拆工具难送达", "水枪射程受阻", "登高车无法展开", "消防员需步行进入",
+            "应急车辆受阻", "现场调度困难", "救援路径中断", "出口被封闭",
+            "车辆只能停在外围", "通道出现瓶颈", "消防车通行延误", "人员通行受阻",
+        ),
+        "source_template": "消防车{value}",
+        "weak_value": "通行受到影响",
+        "neutral_quote": "消防车从东门进入后停在车位",
+        "contradicted_prefix": "现场显示并非",
+        "weak_contradiction_quote": "现场画面显示车辆正常通过",
     },
     {
-        "category": "dangerous_building",
-        "slot": "structure",
-        "slot_class": "A",
-        "entailed": ("房屋整体向一侧倾斜", "倾斜", "倾斜"),
-        "entailed_weak": ("房屋整体向一侧倾斜", "墙体倾斜", "整体向一侧倾斜"),
-        "neutral": ("房屋外墙有裂缝，室内家具摆放整齐", "倾斜", "家具摆放整齐"),
-        "contradicted": ("房屋经复核结构稳定，没有倾斜", "倾斜", "没有倾斜"),
-        "contradicted_weak": ("房屋经复核结构稳定，整体笔直", "墙体倾斜", "整体笔直"),
+        "category": "dangerous_building", "slot": "structure", "slot_class": "A",
+        "values": (
+            "墙体倾斜", "承重墙开裂", "地基下沉", "梁柱变形", "屋面塌陷",
+            "外墙脱落", "楼板裂缝", "结构位移", "墙面鼓包", "楼梯断裂",
+            "阳台下沉", "围护墙倒塌", "砖体松动", "屋顶漏水塌边", "门窗整体变形",
+            "柱体倾斜", "墙体贯穿裂缝", "楼体偏移", "基础掏空", "局部坍塌",
+            "烟囱倾斜", "雨棚断裂", "女儿墙开裂", "地下室渗水沉降", "框架节点损坏",
+        ),
+        "source_template": "房屋{value}",
+        "weak_value": "房屋结构异常",
+        "neutral_quote": "楼道墙面新刷了白漆",
+        "contradicted_prefix": "经核查房屋没有",
+        "weak_contradiction_quote": "现场画面显示楼体笔直稳定",
     },
     {
-        "category": "road_occupancy",
-        "slot": "persistence",
-        "slot_class": "A",
-        "entailed": ("摊贩每天从早到晚占着道路", "长期", "每天从早到晚"),
-        "entailed_weak": ("摊贩每天从早到晚占着道路", "长期占道", "每天从早到晚"),
-        "neutral": ("摊贩今天临时停在路边，已经离开", "长期", "已经离开"),
-        "contradicted": ("摊贩只是临时摆放，十分钟后就离开", "长期", "临时摆放"),
-        "contradicted_weak": ("摊贩只是临时摆放，十分钟后就离开", "长期占道", "十分钟后就离开"),
+        "category": "road_occupancy", "slot": "persistence", "slot_class": "A",
+        "values": (
+            "每天从早到晚占道", "连续占用三个月", "每周五天固定摆摊",
+            "早晚高峰持续占用", "半年内一直没有撤离", "从清晨六点占到深夜",
+            "长期固定摊位占路", "连续两个季度未清理", "每天固定时段阻塞",
+            "周末全天占用", "工作日早晚均占用", "已经持续一个多月",
+            "长期停放不移动", "从月初一直占用至今", "摊位连续数周未撤",
+            "每天都在同一位置摆放", "固定商户长期外摆", "每天营业时间全程占道",
+            "持续半年以上", "常年堆放在路边", "早市结束后仍未清理",
+            "连续多日占压盲道", "固定时段反复占用", "长时间摆放货物",
+            "持续占用道路通行空间",
+        ),
+        "source_template": "路边摊贩{value}",
+        "weak_value": "长期占道",
+        "neutral_quote": "摊主正在收拾收款二维码",
+        "contradicted_prefix": "摊贩并非",
+        "weak_contradiction_quote": "现场画面显示摊主已经收摊离开",
     },
     {
-        "category": "manhole_damage",
-        "slot": "defect",
-        "slot_class": "A",
-        "entailed": ("井盖已经破损，边缘翘起", "破损", "破损"),
-        "entailed_weak": ("井盖已经破损，边缘翘起", "井盖损坏", "破损"),
-        "neutral": ("井盖旁有一摊积水，路面有些湿", "破损", "积水"),
-        "contradicted": ("井盖完好，没有破损", "破损", "没有破损"),
-        "contradicted_weak": ("井盖表面平整，边缘完整", "破损", "边缘完整"),
+        "category": "manhole_damage", "slot": "defect", "slot_class": "A",
+        "values": (
+            "井盖缺失", "井盖破损", "井盖松动", "井盖下沉", "井盖周边塌陷",
+            "井盖翘起", "井盖裂纹", "井盖断裂", "井盖倾斜", "井盖移位",
+            "井盖被压坏", "井盖边缘脱落", "井盖与井口错位", "井盖中央塌陷",
+            "井盖盖板破损", "井盖周边空洞", "井盖固定件丢失", "井盖表面碎裂",
+            "井盖承重不足", "井盖被掀起", "井盖边框损坏", "井盖整体翻转",
+            "井盖下方悬空", "井盖密封圈脱落", "井盖被异物卡住",
+        ),
+        "source_template": "道路上的{value}",
+        "weak_value": "井盖损坏",
+        "neutral_quote": "井盖旁边放了两个交通锥",
+        "contradicted_prefix": "现场确认井盖没有",
+        "weak_contradiction_quote": "现场画面显示井盖完整平整",
     },
     {
-        "category": "exposed_wire",
-        "slot": "source",
-        "slot_class": "A",
-        "entailed": ("墙边有一截裸露电线", "裸露电线", "裸露电线"),
-        "entailed_weak": ("墙边有一截裸露电线", "电线裸露", "裸露电线"),
-        "neutral": ("配电箱旁放着维修工具", "裸露电线", "维修工具"),
-        "contradicted": ("电线绝缘层完好，没有裸露", "裸露电线", "没有裸露"),
-        "contradicted_weak": ("电线绝缘层完好，表面完整", "裸露电线", "绝缘层完好"),
+        "category": "exposed_wire", "slot": "source", "slot_class": "A",
+        "values": (
+            "裸露电线", "绝缘层破损", "接线盒敞开", "电线接头外露", "电缆护套开裂",
+            "插座面板缺失", "线路直接暴露", "配电箱门未关", "导线铜芯外露",
+            "临时线未穿管", "插排绝缘破损", "电缆端头裸露", "灯具接线外露",
+            "开关面板脱落", "线路私拉乱接", "电线浸泡在水中", "配电箱接线外露",
+            "明线未做保护", "接地线断开", "电线缠绕金属件", "插座打火烧黑",
+            "电缆表皮破损", "接线端子裸露", "临时接线裸露", "配电箱盖板缺失",
+        ),
+        "source_template": "墙边发现{value}",
+        "weak_value": "电线裸露",
+        "neutral_quote": "配电箱旁挂着维修工具袋",
+        "contradicted_prefix": "现场确认没有",
+        "weak_contradiction_quote": "现场画面显示电线绝缘层完整",
     },
 ]
 
@@ -192,7 +229,24 @@ def build_base_rows():
         split = "dev" if group_index < 15 else "test"
         for row_index, variant in enumerate(variants):
             template = TEMPLATES[(row_index + group_index) % len(TEMPLATES)]
-            source, value, quote = template[variant]
+            base_value = template["values"][group_index]
+            base_source = template["source_template"].format(value=base_value)
+            if variant == "entailed":
+                value, quote, source = base_value, base_value, base_source
+            elif variant == "entailed_weak":
+                value, quote, source = template["weak_value"], base_value, base_source
+            elif variant == "neutral":
+                quote = template["neutral_quote"]
+                value = base_value
+                source = "%s，%s" % (base_source, quote)
+            elif variant == "contradicted":
+                value = base_value
+                quote = template["contradicted_prefix"] + base_value
+                source = quote
+            else:
+                value = base_value
+                quote = template["weak_contradiction_quote"]
+                source = quote
             source = "在%s，%s" % (SITE_CONTEXTS[group_index], source)
             rows.append({
                 "id": "qv-%03d" % (len(rows) + 1),

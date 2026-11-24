@@ -17,6 +17,7 @@ from eval.semantic_grounding.protocol import (
     SPLITS,
     TEST_TOTAL,
     content_fingerprint,
+    labeler_visible_fingerprint,
     load_jsonl,
 )
 
@@ -159,6 +160,34 @@ def validate_dataset(base_path, boundary_path) -> dict:
     if cross_leakage:
         raise ValueError("content leakage across dev/test: %s" % cross_leakage)
 
+    visible_hashes = {"dev": {}, "test": {}}
+    for row in base:
+        visible_hashes[row["split"]].setdefault(
+            labeler_visible_fingerprint(row), []
+        ).append(row["id"])
+    visible_within_duplicates = []
+    for split, hashes in visible_hashes.items():
+        for fingerprint, identifiers in hashes.items():
+            if len(identifiers) > 1:
+                visible_within_duplicates.append({
+                    "split": split,
+                    "fingerprint": fingerprint,
+                    "ids": identifiers,
+                })
+    if visible_within_duplicates:
+        raise ValueError(
+            "duplicate labeler-visible input within split: %s"
+            % visible_within_duplicates
+        )
+    visible_cross_leakage = sorted(
+        set(visible_hashes["dev"]) & set(visible_hashes["test"])
+    )
+    if visible_cross_leakage:
+        raise ValueError(
+            "labeler-visible leakage across dev/test: %s"
+            % visible_cross_leakage
+        )
+
     boundary_kinds = Counter(row["boundary_kind"] for row in boundary)
     if dict(boundary_kinds) != BOUNDARY_KINDS:
         raise ValueError("boundary kinds must each have 5 rows: %s" % dict(boundary_kinds))
@@ -178,4 +207,6 @@ def validate_dataset(base_path, boundary_path) -> dict:
         "base_groups": len(split_groups),
         "within_split_content_duplicates": within_duplicates,
         "cross_split_content_leakage": cross_leakage,
+        "within_split_labeler_visible_duplicates": visible_within_duplicates,
+        "cross_split_labeler_visible_leakage": visible_cross_leakage,
     }

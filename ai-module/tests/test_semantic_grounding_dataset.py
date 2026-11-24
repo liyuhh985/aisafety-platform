@@ -125,3 +125,12 @@ def test_boundary_source_kinds_drive_actual_evidence_verification():
         else:
             assert result["reason"] == "assistant_source"
             assert result["business_status"] == "rejected"
+
+
+def test_labeler_visible_fingerprints_are_unique_within_and_across_splits():
+    summary = validate_dataset(
+        DATASET_DIR / "qv-pseudo-v1.jsonl",
+        DATASET_DIR / "boundary.jsonl",
+    )
+    assert summary["within_split_labeler_visible_duplicates"] == []
+    assert summary["cross_split_labeler_visible_leakage"] == []

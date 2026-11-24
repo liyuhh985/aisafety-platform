@@ -65,3 +65,12 @@ def content_fingerprint(row) -> str:
         for field in ("quote", "value", "source_text")
     ]
     return sha256_text("|".join(parts))
+
+
+def labeler_visible_fingerprint(row) -> str:
+    """Semantic identity of exactly what the labeler can distinguish."""
+    parts = [
+        normalize_content_text((row or {}).get(field, ""))
+        for field in ("category", "slot", "value", "quote")
+    ]
+    return sha256_text("|".join(parts))
