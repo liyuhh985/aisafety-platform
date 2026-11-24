@@ -136,6 +136,8 @@ Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 P
 - Runtime B-class acceptance may use one model above the calibrated threshold.
 - All disagreement, low confidence, timeout, and invalid output become unavailable.
 - `off` / `shadow` 不调用运行时语义复核，保持既有判定路径；只有在 `enforce` 才启用双模型复核。
+- 离线标注与运行时复核共用同一冻结 Prompt：输入为候选 JSON 数组，输出必须为 `{"labels":[{id,label,confidence}, ...]}`，每个输入 id 恰好返回一次。
+- 校准数据按归一化 `quote/value/source_text` 内容指纹检查 split 内唯一性和 dev/test 跨 split 泄漏；boundary 集包含真实的同义、否定、数字、多轮、视觉和 assistant-source 案例。
 
 ## 七、Skill Harness（按大类按需加载）
 
