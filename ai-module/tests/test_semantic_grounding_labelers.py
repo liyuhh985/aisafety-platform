@@ -37,3 +37,18 @@ def test_labeler_input_excludes_ground_truth_and_grouping_fields():
     assert set(payload) == {"slot", "slot_question", "value", "quote"}
     assert "expected_label" not in payload
     assert "source_group_id" not in payload
+
+
+def test_offline_parser_reads_the_same_batch_envelope():
+    from eval.semantic_grounding.run_labelers import build_labeler_input, parse_label_response
+
+    assert set(build_labeler_input({
+        "category": "fire_lane_blocked",
+        "slot": "blocker",
+        "value": "杂物",
+        "quote": "被杂物堵住",
+    })) == {"slot", "slot_question", "value", "quote"}
+    parsed = parse_label_response(
+        '{"labels":[{"id":"qv-001","label":"entailed","confidence":0.91}]}'
+    )
+    assert parsed == {"id": "qv-001", "label": "entailed", "confidence": 0.91}

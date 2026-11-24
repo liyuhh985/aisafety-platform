@@ -20,7 +20,9 @@ SEMANTIC_LABELER_PROMPT = (
     "entailed 表示 quote 直接支持 value；contradicted 表示 quote 与 value 冲突；"
     "neutral 表示 quote 既不能支持也不能否定 value。"
     "不重新抽取事实，不参考对话，不使用工具。"
-    '只输出一个 JSON 对象：{"label":"...","confidence":0.0}。'
+    "输入是一个 JSON 数组，每个元素包含 id、slot、slot_question、value、quote。"
+    '只输出一个 JSON 对象：{"labels":[{"id":"...","label":"...","confidence":0.0}]}。'
+    "每个输入 id 必须恰好返回一次，不添加其他字段。"
 )
 
 _LABELERS = {}

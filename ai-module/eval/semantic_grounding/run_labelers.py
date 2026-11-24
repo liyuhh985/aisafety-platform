@@ -44,27 +44,41 @@ def parse_label_response(text) -> dict:
         payload = json.loads(raw)
     except (json.JSONDecodeError, TypeError):
         return {"label": "invalid", "reason": "parse_or_request_failed"}
-    if not isinstance(payload, dict):
+    if isinstance(payload, dict) and "labels" in payload:
+        payload = payload.get("labels")
+    if not isinstance(payload, list) or len(payload) != 1:
         return {"label": "invalid", "reason": "parse_or_request_failed"}
-    label = payload.get("label")
-    confidence = payload.get("confidence")
+    item = payload[0]
+    if not isinstance(item, dict):
+        return {"label": "invalid", "reason": "parse_or_request_failed"}
+    identifier = item.get("id")
+    label = item.get("label")
+    confidence = item.get("confidence")
+    if not identifier:
+        return {"label": "invalid", "reason": "missing_id"}
     if label not in LABEL_SET:
-        return {"label": "invalid", "reason": "invalid_label"}
+        return {"id": str(identifier), "label": "invalid", "reason": "invalid_label"}
     if (not isinstance(confidence, (int, float))
             or isinstance(confidence, bool)
             or not 0.0 <= float(confidence) <= 1.0):
-        return {"label": "invalid", "reason": "invalid_confidence"}
-    return {"label": label, "confidence": float(confidence)}
+        return {"id": str(identifier), "label": "invalid", "reason": "invalid_confidence"}
+    return {
+        "id": str(identifier),
+        "label": label,
+        "confidence": float(confidence),
+    }
 
 
 def label_rows(rows, labeler) -> dict:
     """Label each row independently and return ``{id: result}``."""
     results = {}
     for row in rows:
+        identifier = str(row.get("id") or "")
+        visible = {"id": identifier, **build_labeler_input(row)}
         messages = [
             {"role": "system", "content": labeler.system_prompt},
             {"role": "user", "content": json.dumps(
-                build_labeler_input(row), ensure_ascii=False, sort_keys=True
+                [visible], ensure_ascii=False, sort_keys=True
             )},
         ]
         try:
@@ -72,7 +86,11 @@ def label_rows(rows, labeler) -> dict:
             parsed = parse_label_response((response or {}).get("content"))
         except Exception:
             parsed = {"label": "invalid", "reason": "parse_or_request_failed"}
-        results[str(row.get("id") or "")] = parsed
+        if parsed.get("id") not in {None, identifier}:
+            parsed = {"label": "invalid", "reason": "id_mismatch"}
+        results[identifier] = {
+            key: value for key, value in parsed.items() if key != "id"
+        }
     return results
 
 

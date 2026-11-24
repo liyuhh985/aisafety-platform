@@ -425,3 +425,58 @@ def test_public_issue_strips_semantic_audit():
     public = _public_issues([issue])[0]
     assert "evidence" not in public
     assert "slot_evidence" not in public
+
+
+def test_labeler_prompt_declares_batch_input_and_output_schema():
+    from core.semantic_verifier import SEMANTIC_LABELER_PROMPT
+
+    assert "JSON 数组" in SEMANTIC_LABELER_PROMPT
+    assert '"labels"' in SEMANTIC_LABELER_PROMPT
+    assert '"id"' in SEMANTIC_LABELER_PROMPT
+    assert "每个输入 id" in SEMANTIC_LABELER_PROMPT
+
+
+def test_parse_batch_response_reads_labels_envelope():
+    from core.semantic_verifier import parse_batch_response
+
+    result = parse_batch_response(
+        '{"labels":[{"id":"fire:blocker","label":"entailed","confidence":0.93},'
+        '{"id":"fire:persistence","label":"neutral","confidence":0.82}]}'
+    )
+    assert result == {
+        "fire:blocker": {"label": "entailed", "confidence": 0.93},
+        "fire:persistence": {"label": "neutral", "confidence": 0.82},
+    }
+
+
+def test_runtime_call_labeler_uses_batch_envelope(monkeypatch):
+    import json
+    from types import SimpleNamespace
+    from core import semantic_verifier as sv
+
+    captured = {}
+
+    def fake_call(messages, cancellation=None):
+        captured["payload"] = json.loads(messages[1]["content"])
+        return {
+            "content": '{"labels":[{"id":"fire:blocker",'
+                       '"label":"entailed","confidence":0.95}]}'
+        }
+
+    fake = SimpleNamespace(
+        system_prompt="BATCH_PROMPT",
+        _call_llm=fake_call,
+    )
+    monkeypatch.setitem(sv._LABELERS, "A", fake)
+    result = sv._call_labeler("A", [{
+        "id": "fire:blocker",
+        "slot": "blocker",
+        "slot_question": "被什么东西占用了？",
+        "value": "杂物",
+        "quote": "消防通道被杂物堵住",
+    }])
+    assert isinstance(captured["payload"], list)
+    assert set(captured["payload"][0]) == {
+        "id", "slot", "slot_question", "value", "quote",
+    }
+    assert result["fire:blocker"] == {"label": "entailed", "confidence": 0.95}
