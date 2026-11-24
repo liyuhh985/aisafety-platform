@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """Shared hazard slot definitions for dialogue routing and planning.
 
-槽位按「缺了它，什么会错」分三类，替代原来的 critical 布尔：
+槽位按「缺了它，什么会错」分两类，替代原来的 critical 布尔：
 
   A 决策级 — 缺了它，**风险等级或用户/系统该采取的动作会判错**
             （包括该不该立即处置、该找谁处置） → 追问（进 missing）
   B 报告级 — 结论与动作不变，但**法规适用/责任归属/处罚档次**会不同
             → 不追问，进报告的「仍需确认」条件分支（阶段 4 消费）
-  C 装饰级 — 结论、动作、法规都不变（或已被其它字段覆盖） → 不问、不提
-
 逐槽判据见 docs/superpowers/specs/2026-09-27-slot-value-classes-design.md。
 **这是初判，需要人工复核**：A/B 的边界（「动作会错」vs「责任归属不同」）
 本身是判断，不是事实。
@@ -20,7 +18,6 @@
                                blocked=A（完全堵死→通行中断，需立即处置）
   危房 / dangerous_building    structure=A（整体倾斜 vs 局部开裂，危险程度不同）
                                occupancy=A（有人住→需疏散；无人→围挡隔离）
-                               risk=C（与规划器已返回的 immediate_danger 重复）
   消防通道 / fire_lane_blocked blocker=A（可燃堆物→火灾风险高；车辆→阻碍通行）
                                persistence=A（长期占用→需执法；临时→可劝离）
                                impact=B（是否影响消防车通行 → 整改要求不同）
@@ -32,8 +29,7 @@ from core.hazard_taxonomy import MAJOR_LABELS, SUBCATEGORY_TO_MAJOR, normalize_t
 
 DECISION_CLASS = "A"
 REPORT_CLASS = "B"
-DECORATIVE_CLASS = "C"
-VALUE_CLASSES = (DECISION_CLASS, REPORT_CLASS, DECORATIVE_CLASS)
+VALUE_CLASSES = (DECISION_CLASS, REPORT_CLASS)
 REPORT_CLASSES = (DECISION_CLASS, REPORT_CLASS)
 
 
@@ -69,7 +65,6 @@ SLOT_SCHEMAS: dict[str, list[Slot]] = {
     "危房": [
         Slot("structure", "房屋有没有裂缝、倾斜或沉降？"),
         Slot("occupancy", "现在有人在里面居住或使用吗？"),
-        Slot("risk", "有没有明显的即时坍塌风险？", DECORATIVE_CLASS),
     ],
     "消防通道": [
         Slot("blocker", "被什么东西占用了？"),
@@ -93,7 +88,6 @@ SLOT_SCHEMAS: dict[str, list[Slot]] = {
     "电气": [
         Slot("source", "是漏电、裸露电线还是设备故障？"),
         Slot("contact", "是否可能被人或车辆接触到？"),
-        Slot("risk", "有没有冒烟或火花等迹象？", DECORATIVE_CLASS),
     ],
     "施工": [
         Slot("site", "施工区域是否做了围挡？"),

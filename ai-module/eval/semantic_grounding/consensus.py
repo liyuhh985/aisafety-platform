@@ -117,7 +117,7 @@ def build_consensus(deterministic_rows, labels_a, labels_b) -> dict:
                 row["label_a"] == row["label_b"] == label for row in relevant
             ) / len(relevant)
     class_agreement = {}
-    for slot_class in ("A", "B", "C"):
+    for slot_class in ("A", "B"):
         relevant = [row for row in agreement_rows + disagreement_rows
                     if row["slot_class"] == slot_class]
         if relevant:

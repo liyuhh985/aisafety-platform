@@ -154,11 +154,11 @@ def calibrate_from_consensus(consensus_result, output_dir) -> dict:
         rows, "A", PRECISION_TARGETS["A"],
         higher_than=scan_b["threshold"],
     )
-    scan_c = scan_rejection_threshold(rows, PRECISION_TARGETS["C"])
+    scan_reject = scan_rejection_threshold(rows, PRECISION_TARGETS["reject"])
     thresholds = {
         "threshold_a": scan_a["threshold"],
         "threshold_b": scan_b["threshold"],
-        "threshold_c": scan_c["threshold"],
+        "threshold_reject": scan_reject["threshold"],
         "dataset": BASE_DATASET,
         "notice": ICD_CALIBRATION_NOTICE,
     }
@@ -167,7 +167,7 @@ def calibrate_from_consensus(consensus_result, output_dir) -> dict:
     for name, payload in (
         ("threshold_scan_a.json", scan_a),
         ("threshold_scan_b.json", scan_b),
-        ("threshold_scan_c.json", scan_c),
+        ("threshold_scan_reject.json", scan_reject),
         ("thresholds.json", thresholds),
     ):
         (output / name).write_text(

@@ -16,7 +16,7 @@ def test_freeze_captures_hashes(tmp_path):
         thresholds={
             "threshold_a": 0.91,
             "threshold_b": 0.84,
-            "threshold_c": 0.90,
+            "threshold_reject": 0.90,
         },
     )
     assert manifest["test_sha256"]
@@ -43,7 +43,7 @@ def test_report_labels_metrics_as_pseudo_label_agreement():
         "overall_agreement": 0.82,
         "cohen_kappa": 0.71,
         "thresholds": {"threshold_a": 0.91, "threshold_b": 0.84,
-                       "threshold_c": 0.90},
+                       "threshold_reject": 0.90},
         "auto_accept": {"A": {"precision": 0.99, "coverage": 0.40},
                         "B": {"precision": 0.96, "coverage": 0.35}},
     })
