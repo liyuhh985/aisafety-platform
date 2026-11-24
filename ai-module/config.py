@@ -174,6 +174,18 @@ if SLOT_EVIDENCE_MODE not in {"off", "shadow", "enforce"}:
         "expected 'off', 'shadow', or 'enforce'"
     )
 
+# Dual-model semantic pseudo-labelers. Keys stay in the deployment environment.
+SEMANTIC_LABELER_A_BASE_URL = os.getenv("SEMANTIC_LABELER_A_BASE_URL", "")
+SEMANTIC_LABELER_A_API_KEY = os.getenv("SEMANTIC_LABELER_A_API_KEY", "")
+SEMANTIC_LABELER_A_MODEL = os.getenv(
+    "SEMANTIC_LABELER_A_MODEL", "minimax-m3.1-flash"
+)
+SEMANTIC_LABELER_B_BASE_URL = os.getenv("SEMANTIC_LABELER_B_BASE_URL", "")
+SEMANTIC_LABELER_B_API_KEY = os.getenv("SEMANTIC_LABELER_B_API_KEY", "")
+SEMANTIC_LABELER_B_MODEL = os.getenv(
+    "SEMANTIC_LABELER_B_MODEL", "glm-5.3-flash"
+)
+
 
 @dataclass(frozen=True)
 class ModelSlot:
