@@ -127,6 +127,15 @@ Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 P
 - `SLOT_EVIDENCE_MODE` 支持 `off | shadow | enforce`，默认 `shadow`。`shadow` 只计算并记录内部审计，不改变线上判定；影子日志稳定后再切 `enforce`。
 - 旧 checkpoint 没有证据字段时继续使用旧 `slot_status()` 词面回退，不做一次性重写。
 - 证据只用于内部状态、日志和测试；不进入 SSE taxonomy、报告 Prompt、报告正文、Java DTO 或前端。`task_gate` interrupt 也通过 `_public_issues()` 脱敏。
+- `enforce` 下，确定性校验后的灰区 `weak` 槽位最多取 5 个，A 类优先，交给两个独立零温度模型复核；每轮最多调用 A、B 模型各一次。
+- A 类接受或拒绝必须双模型同向且达到校准阈值；B 类可由 Model A 单模型高阈值接受，但冲突拒绝必须由 Model B 确认；分歧、低置信度、超时、非法输出一律 `unavailable`。
+- `unavailable / rejected` 槽位会在 `understand` 内被删除并重算：A 类回到 `missing` 继续追问，B 类进入 `report_missing`，只写条件分支，不能当成确定事实。
+- Thresholds are calibrated from dual-model consensus pseudo-labels.
+- No human gold labels exist for this calibration.
+- Runtime A-class decisions require dual-model agreement.
+- Runtime B-class acceptance may use one model above the calibrated threshold.
+- All disagreement, low confidence, timeout, and invalid output become unavailable.
+- `off` / `shadow` 不调用运行时语义复核，保持既有判定路径；只有在 `enforce` 才启用双模型复核。
 
 ## 七、Skill Harness（按大类按需加载）
 

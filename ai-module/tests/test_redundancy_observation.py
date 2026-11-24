@@ -330,7 +330,7 @@ def test_understand_defers_the_audit_to_the_node(monkeypatch, caplog):
     with caplog.at_level(logging.WARNING, logger="core.assistant_graph"):
         out = ag.understand({"messages": [HumanMessage(content="消防通道被私家车占了")]})
     assert out["missing"] == ["fire_lane_blocked_persistence"]
-    assert out["clarification_question"] == "这个占用大概在哪个路段？"
+    assert out["clarification_question"] == "是长期还是临时？"
     # understand 侧静默：交付那一句由节点审
     assert not [r for r in caplog.records if "question_target_" in r.getMessage()]
 

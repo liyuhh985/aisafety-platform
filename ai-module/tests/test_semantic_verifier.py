@@ -358,3 +358,70 @@ def test_grounded_by_model_keeps_slot_and_clears_caution(monkeypatch):
     assert out["issues"][0]["slot_evidence"]["structure"]["status"] == (
         "grounded_by_model"
     )
+
+
+def _weak_plan_for_mode():
+    return {
+        "ok": True, "intent": "report_hazard", "risk_level": "high",
+        "issues": [{
+            "major_code": "building", "subcategory_code": "dangerous_building",
+            "slots": {"structure": "墙体倾斜"},
+            "evidence": [{
+                "slot": "structure",
+                "quote": "房子明显往一边斜",
+                "source_ref": "u1",
+            }],
+        }],
+        "categories": ["dangerous_building"],
+        "category_slots": {"dangerous_building": {"structure": "墙体倾斜"}},
+        "question": "", "answer": "", "needs_search": True,
+        "perceived_subcategory": "dangerous_building",
+    }
+
+
+def test_shadow_does_not_call_labelers(monkeypatch):
+    import core.assistant_graph as ag
+
+    calls = []
+    monkeypatch.setattr(ag, "SLOT_EVIDENCE_MODE", "shadow")
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: _weak_plan_for_mode())
+    monkeypatch.setattr(
+        ag, "verify_weak_slots",
+        lambda *a, **k: calls.append(1) or {},
+    )
+    ag.understand({"messages": [ag.HumanMessage(content="房子明显往一边斜")]})
+    assert calls == []
+
+
+def test_off_does_not_call_labelers(monkeypatch):
+    import core.assistant_graph as ag
+
+    calls = []
+    monkeypatch.setattr(ag, "SLOT_EVIDENCE_MODE", "off")
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: _weak_plan_for_mode())
+    monkeypatch.setattr(
+        ag, "verify_weak_slots",
+        lambda *a, **k: calls.append(1) or {},
+    )
+    ag.understand({"messages": [ag.HumanMessage(content="房子明显往一边斜")]})
+    assert calls == []
+
+
+def test_public_issue_strips_semantic_audit():
+    from core.assistant_graph import _public_issues
+
+    issue = {
+        "subcategory_code": "dangerous_building",
+        "evidence": [{
+            "slot": "structure", "quote": "往一边斜", "source_ref": "u1",
+        }],
+        "slot_evidence": {
+            "structure": {
+                "status": "grounded_by_model",
+                "business_status": "grounded_by_model",
+            },
+        },
+    }
+    public = _public_issues([issue])[0]
+    assert "evidence" not in public
+    assert "slot_evidence" not in public
