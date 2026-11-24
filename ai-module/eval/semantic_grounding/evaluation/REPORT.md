@@ -8,8 +8,8 @@ No human review was performed.
 
 ## Quality Metrics
 
-- Overall agreement: 0.9348
-- Cohen's kappa: 0.8996
+- Overall agreement: 0.9783
+- Cohen's kappa: 0.9660
 
 ## Frozen Thresholds
 
