@@ -139,7 +139,7 @@ def test_numeric_mismatch_is_unverified():
 
 def test_negated_quote_is_contradicted():
     result = verify_slot_evidence(
-        "risk", "冒烟",
+        "source", "配电箱冒烟",
         {"quote": "没有冒烟", "source_ref": "u4"},
         {**SOURCE_MAP, "u4": "配电箱没有冒烟"},
         "exposed_wire",
@@ -323,8 +323,16 @@ def test_understand_shadow_mode_keeps_legacy_uncertainty(monkeypatch):
 
 def test_understand_enforce_mode_removes_unavailable_runtime_evidence(monkeypatch):
     import core.assistant_graph as ag
+
+    def unavailable(issues, audit, cancellation=None):
+        result = audit["dangerous_building"]["structure"]
+        result["status"] = "unavailable"
+        result["business_status"] = "unavailable"
+        return audit
+
     monkeypatch.setattr(ag, "SLOT_EVIDENCE_MODE", "enforce")
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: _weak_evidence_plan())
+    monkeypatch.setattr(ag, "verify_weak_slots", unavailable)
     out = ag.understand({"messages": [ag.HumanMessage(content="房子明显往一边斜")]})
     assert out["uncertainty_level"] == "ok"
     assert out["ungrounded_slots"] == []
