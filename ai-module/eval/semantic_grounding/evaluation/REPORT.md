@@ -1,5 +1,7 @@
 # Semantic Grounding Pseudo-Label Report
 
+**VALIDATION STATUS: FAILED QUALITY GATE**
+
 Thresholds and evaluation use dual-model consensus pseudo-labels.
 No human gold labels were available.
 Test metrics are pseudo-label agreement metrics, not production accuracy.

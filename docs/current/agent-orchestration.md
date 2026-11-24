@@ -127,18 +127,15 @@ Skill 状态只保存 code / route 元数据 / version。Skill 正文、完整 P
 - `SLOT_EVIDENCE_MODE` 支持 `off | shadow | enforce`，默认 `shadow`。`shadow` 只计算并记录内部审计，不改变线上判定；影子日志稳定后再切 `enforce`。
 - 旧 checkpoint 没有证据字段时继续使用旧 `slot_status()` 词面回退，不做一次性重写。
 - 证据只用于内部状态、日志和测试；不进入 SSE taxonomy、报告 Prompt、报告正文、Java DTO 或前端。`task_gate` interrupt 也通过 `_public_issues()` 脱敏。
-- `enforce` 下，确定性校验后的灰区 `weak` 槽位最多取 5 个，A 类优先，交给两个独立零温度模型复核；每轮最多调用 A、B 模型各一次。
-- A 类接受或拒绝必须双模型同向且达到校准阈值；B 类可由 Model A 单模型高阈值接受，但冲突拒绝必须由 Model B 确认；分歧、低置信度、超时、非法输出一律 `unavailable`。
-- 阈值校准强制 `threshold_a > threshold_b`；若无法在扫描区间内找到更严格且满足精度目标的 A 类阈值，校准直接失败，不允许 A、B 相等。
+- `enforce` 下，确定性校验后的灰区 `weak` 槽位最多取 5 个，A 类优先；随后用一次批量调用交给项目 `LLM_SMALL` 零温度复核。
+- 运行时语义标签只有 `entailed / contradicted`：`entailed` 表示 quote 足以支持槽位值，包含直接陈述、同义改写和明确语义蕴含；`contradicted` 表示 quote 不支持该值，包括信息不足、仅同主题、无关、明确否定和数字冲突。
+- A/B 槽位共用同一个 `SEMANTIC_VERIFIER_MIN_CONFIDENCE`；A/B 只决定追问和报告门禁，不改变语义复核阈值。
+- `entailed` 达到阈值 -> `grounded_by_model`；`contradicted` 达到阈值 -> `rejected`；低置信度、超时、非法 JSON 或不合法标签 -> `unavailable`。
 - `unavailable / rejected` 槽位会在 `understand` 内被删除并重算：A 类回到 `missing` 继续追问，B 类进入 `report_missing`，只写条件分支，不能当成确定事实。
-- Thresholds are calibrated from dual-model consensus pseudo-labels.
-- No human gold labels exist for this calibration.
-- Runtime A-class decisions require dual-model agreement.
-- Runtime B-class acceptance may use one model above the calibrated threshold.
-- All disagreement, low confidence, timeout, and invalid output become unavailable.
-- `off` / `shadow` 不调用运行时语义复核，保持既有判定路径；只有在 `enforce` 才启用双模型复核。
-- 离线标注与运行时复核共用同一冻结 Prompt：输入为候选 JSON 数组，输出必须为 `{"labels":[{id,label,confidence}, ...]}`，每个输入 id 恰好返回一次。
-- 校准数据按归一化 `quote/value/source_text` 内容指纹检查 split 内唯一性和 dev/test 跨 split 泄漏；boundary 集包含真实的同义、否定、数字、多轮、视觉和 assistant-source 案例。
+- `off` / `shadow` 不调用运行时语义复核；当前默认 `shadow`，禁止在本计划中切换 `enforce`。
+- MiniMax/GLM 只用于离线伪标签实验，运行时不得导入或调用 `SEMANTIC_LABELER_A_*` / `SEMANTIC_LABELER_B_*`。
+- 当前 `qv-pseudo-v1` 三分类实验未通过质量门禁，其 agreement/kappa 不是运行时准确率，也不能作为生产验证证据。
+- C 类装饰槽位已删除；槽位 schema 只保留 A/B。A 类缺失继续追问并阻止报告，B 类缺失不追问但进入报告条件分支。
 
 ## 七、Skill Harness（按大类按需加载）
 
@@ -189,7 +186,7 @@ core/dialogue_policy.py      确定性 next-action 策略
 core/scope_policy.py         范围护栏
 core/uncertainty.py          不确定性与危险否决 + 证据校验
 core/hazard_taxonomy.py      两级分类
-core/slot_schemas.py         槽位 A/B/C
+core/slot_schemas.py         槽位 A/B
 core/skill_registry.py       Skill metadata 扫描与正文按需加载
 core/skill_router.py         大类 Skill 路由
 skills/                      8 个 canonical Skill 上下文包

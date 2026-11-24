@@ -8,7 +8,12 @@ from eval.semantic_grounding.calibrate_thresholds import calibration_rows
 from eval.semantic_grounding.consensus import build_consensus
 from eval.semantic_grounding.freeze_test import load_frozen_manifest
 from eval.semantic_grounding.labeler_config import build_labeler
-from eval.semantic_grounding.protocol import sha256_file, sha256_text
+from eval.semantic_grounding.protocol import (
+    COHEN_KAPPA_GATE,
+    OVERALL_AGREEMENT_GATE,
+    sha256_file,
+    sha256_text,
+)
 from eval.semantic_grounding.report import render_report
 from eval.semantic_grounding.run_labelers import run_labeling
 
@@ -81,7 +86,15 @@ def evaluate_frozen_test(*, dataset_path, frozen_path, prompt,
         })
     calibration = calibration_rows(calibration_input)
     thresholds = dict(manifest.get("thresholds") or {})
+    quality_gate_passed = (
+        float(consensus["summary"]["overall_agreement"]) >= OVERALL_AGREEMENT_GATE
+        and float(consensus["summary"]["cohen_kappa"]) >= COHEN_KAPPA_GATE
+    )
     metrics = {
+        "quality_gate_passed": quality_gate_passed,
+        "validation_status": (
+            "passed" if quality_gate_passed else "failed_quality_gate"
+        ),
         "overall_agreement": consensus["summary"]["overall_agreement"],
         "cohen_kappa": consensus["summary"]["cohen_kappa"],
         "invalid_count": consensus["summary"]["invalid_count"],

@@ -50,3 +50,13 @@ def test_report_labels_metrics_as_pseudo_label_agreement():
     assert "dual-model consensus pseudo-labels" in text
     assert "No human gold labels were available" in text
     assert "not production accuracy" in text
+
+
+def test_report_marks_failed_quality_gate_explicitly():
+    text = render_report({
+        "overall_agreement": 0.70,
+        "cohen_kappa": 0.50,
+        "thresholds": {},
+        "auto_accept": {},
+    })
+    assert "VALIDATION STATUS: FAILED QUALITY GATE" in text
