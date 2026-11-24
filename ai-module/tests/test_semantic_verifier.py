@@ -232,3 +232,129 @@ def test_candidate_cap_prioritizes_a_class_and_sends_five(monkeypatch):
     assert len(seen[0][1]) == 5
     assert all(row["value_class"] in {"A", "B"} for row in seen[0][1])
     assert seen[0][0] == "A"
+
+
+def _mark(audit, code, slot, business_status):
+    result = audit[code][slot]
+    result["status"] = business_status
+    result["business_status"] = business_status
+    if business_status == "unavailable":
+        result["reason"] = "model_indeterminate_or_failed"
+    elif business_status == "rejected":
+        result["reason"] = "model_consensus_contradicted"
+    else:
+        result["reason"] = "model_consensus_entailed"
+    return audit
+
+
+def test_a_unavailable_returns_to_missing(monkeypatch):
+    import core.assistant_graph as ag
+
+    monkeypatch.setattr(ag, "SLOT_EVIDENCE_MODE", "enforce")
+    monkeypatch.setattr(
+        ag, "verify_weak_slots",
+        lambda issues, audit, cancellation=None: _mark(
+            audit, "fire_lane_blocked", "blocker", "unavailable"
+        ),
+    )
+    plan = {
+        "ok": True, "intent": "report_hazard", "risk_level": "high",
+        "issues": [{
+            "major_code": "fire", "subcategory_code": "fire_lane_blocked",
+            "slots": {"blocker": "杂物"},
+            "evidence": [{
+                "slot": "blocker", "quote": "有东西", "source_ref": "u1",
+            }],
+        }],
+        "categories": ["fire_lane_blocked"],
+        "category_slots": {"fire_lane_blocked": {"blocker": "杂物"}},
+        "question": "", "answer": "", "needs_search": False,
+    }
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: plan)
+    out = ag.understand({
+        "messages": [ag.HumanMessage(content="消防通道有东西堵着")],
+        "category_slots": {"fire_lane_blocked": {"blocker": "杂物"}},
+        "active_skills": ["fire"],
+    })
+    assert "fire_lane_blocked_blocker" in out["missing"]
+    assert out["issues"][0]["slots"] == {}
+    assert out["next_action"] == "ask_critical_question"
+    assert "请确认" not in (out.get("clarification_question") or "")
+
+
+def test_b_unavailable_becomes_report_missing(monkeypatch):
+    import core.assistant_graph as ag
+
+    monkeypatch.setattr(ag, "SLOT_EVIDENCE_MODE", "enforce")
+    monkeypatch.setattr(
+        ag, "verify_weak_slots",
+        lambda issues, audit, cancellation=None: _mark(
+            audit, "fire_lane_blocked", "impact", "unavailable"
+        ),
+    )
+    plan = {
+        "ok": True, "intent": "report_hazard", "risk_level": "high",
+        "issues": [{
+            "major_code": "fire", "subcategory_code": "fire_lane_blocked",
+            "slots": {
+                "blocker": "杂物", "persistence": "长期", "impact": "影响通行",
+            },
+            "evidence": [{
+                "slot": "impact", "quote": "影响通行", "source_ref": "u1",
+            }],
+        }],
+        "categories": ["fire_lane_blocked"],
+        "category_slots": {"fire_lane_blocked": {
+            "blocker": "杂物", "persistence": "长期", "impact": "影响通行",
+        }},
+        "question": "", "answer": "", "needs_search": True,
+    }
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: plan)
+    out = ag.understand({
+        "messages": [ag.HumanMessage(content="消防通道长期被杂物堵住，影响通行")],
+        "active_skills": ["fire"],
+    })
+    assert "fire_lane_blocked_blocker" not in out["missing"]
+    assert "impact" in out["issues"][0]["report_missing"]
+    assert "impact" not in out["issues"][0]["slots"]
+    assert out["issues"][0]["unverified"] == []
+
+
+def test_grounded_by_model_keeps_slot_and_clears_caution(monkeypatch):
+    import core.assistant_graph as ag
+
+    monkeypatch.setattr(ag, "SLOT_EVIDENCE_MODE", "enforce")
+    monkeypatch.setattr(
+        ag, "verify_weak_slots",
+        lambda issues, audit, cancellation=None: _mark(
+            audit, "dangerous_building", "structure", "grounded_by_model"
+        ),
+    )
+    plan = {
+        "ok": True, "intent": "report_hazard", "risk_level": "high",
+        "issues": [{
+            "major_code": "building",
+            "subcategory_code": "dangerous_building",
+            "slots": {"structure": "墙体倾斜", "occupancy": "有人居住"},
+            "evidence": [{
+                "slot": "structure", "quote": "房子明显往一边斜", "source_ref": "u1",
+            }],
+        }],
+        "categories": ["dangerous_building"],
+        "category_slots": {"dangerous_building": {
+            "structure": "墙体倾斜", "occupancy": "有人居住",
+        }},
+        "question": "", "answer": "", "needs_search": True,
+    }
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: plan)
+    out = ag.understand({
+        "messages": [ag.HumanMessage(
+            content="房子明显往一边斜，而且现在有人居住"
+        )],
+        "active_skills": ["building"],
+    })
+    assert out["issues"][0]["slots"]["structure"] == "墙体倾斜"
+    assert out["issues"][0]["unverified"] == []
+    assert out["issues"][0]["slot_evidence"]["structure"]["status"] == (
+        "grounded_by_model"
+    )

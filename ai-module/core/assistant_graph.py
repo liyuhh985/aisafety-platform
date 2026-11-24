@@ -73,6 +73,7 @@ from core.slot_schemas import (
 )
 from core.stream_guard import QUESTION_DROP, guard_stream, question_limiter
 from core.uncertainty import active_danger_term, assess, echo_slots
+from core.semantic_verifier import verify_weak_slots
 from tools.assistant_tools import ASSISTANT_TOOLS
 from tools.hazard_create_queue import new_request_id
 from tools.hazard_submit import build_task_draft
@@ -841,25 +842,6 @@ def understand(state: AssistantState, config=None) -> dict:
             SUBCATEGORY_LABELS.get(locked_subcategory, _major_label(locked_major)),
         ))
 
-    categories = [issue["subcategory_code"] for issue in issues]
-    category_slots = dict(state.get("category_slots") or {})
-    for issue in issues:
-        category_slots[issue["subcategory_code"]] = dict(issue.get("slots") or {})
-    missing = rebuild_missing(categories, category_slots)
-    missing_keys = set(missing)
-    report_missing_keys = set(rebuild_report_missing(categories, category_slots))
-    for issue in issues:
-        code = issue["subcategory_code"]
-        issue["missing"] = [
-            slot.key for slot in get_slot_schema(code)
-            if f"{code}_{slot.key}" in missing_keys
-        ]
-        # A+B 类缺失：B 类不追问，但报告的条件分支要用（阶段 4）。
-        issue["report_missing"] = [
-            slot.key for slot in get_slot_schema(code)
-            if f"{code}_{slot.key}" in report_missing_keys
-        ]
-
     plan = dict(plan)
     plan["issues"] = issues
     # 二、模型判定的危险（词表漏了）：不在这里发话，只把结果记进状态 ——
@@ -869,15 +851,68 @@ def understand(state: AssistantState, config=None) -> dict:
         verdict["uncertainty_signals"] = list(verdict["uncertainty_signals"]) + [
             "echo_slot:%s" % item for items in echoes.values() for item in items
         ]
+
+    # Runtime semantic review happens before missing/report-missing is rebuilt.
+    # Only the enforce mode may spend labeler calls; off/shadow keep legacy behavior.
+    if SLOT_EVIDENCE_MODE == "enforce":
+        verdict["slot_evidence_audit"] = verify_weak_slots(
+            issues,
+            verdict.get("slot_evidence_audit") or {},
+            _cancel_token(config),
+        )
+
     announced = announced or bool(verdict["danger_veto"])
     # 户内/公共边界：只影响一句说明，不影响分类、不挡流程
     premises_scope = (plan.get("premises_scope") or "public").strip() or "public"
     if premises_scope in PREMISES_NOTES and state.get("premises_scope") != premises_scope:
         _emit_chunk(PREMISES_NOTES[premises_scope] + "\n\n")
-    unverified = _unverified_by_issue(verdict["ungrounded_slots"])
-    audit_by_issue = verdict.get("slot_evidence_audit") or {}
+
+    categories = [issue["subcategory_code"] for issue in issues]
+    category_slots = dict(state.get("category_slots") or {})
     for issue in issues:
-        issue["unverified"] = unverified.get(issue["subcategory_code"], [])
+        category_slots[issue["subcategory_code"]] = dict(issue.get("slots") or {})
+
+    audit_by_issue = verdict.get("slot_evidence_audit") or {}
+    if SLOT_EVIDENCE_MODE == "enforce":
+        _drop_unusable_slots(issues, category_slots, audit_by_issue)
+        missing = _rebuild_issue_missing(issues, category_slots)
+        # Unusable slots were removed above and now live in missing/report_missing.
+        # They must not keep the legacy "cautious" veto alive and suppress a
+        # decision-critical follow-up.
+        kept = sum(len((issue.get("slots") or {})) for issue in issues)
+        grounded = sum(
+            1 for issue in issues
+            for slot, result in ((audit_by_issue.get(issue["subcategory_code"]) or {}).items())
+            if slot in (issue.get("slots") or {})
+            and result.get("business_status") in {"grounded", "grounded_by_model"}
+        )
+        verdict["grounding_ratio"] = grounded / kept if kept else 1.0
+        verdict["ungrounded_slots"] = []
+        verdict["uncertainty_level"] = (
+            "cautious" if plan.get("major_mismatch") else "ok"
+        )
+        unverified = {}
+    else:
+        missing = rebuild_missing(categories, category_slots)
+        missing_keys = set(missing)
+        report_missing_keys = set(rebuild_report_missing(categories, category_slots))
+        for issue in issues:
+            code = issue["subcategory_code"]
+            issue["missing"] = [
+                slot.key for slot in get_slot_schema(code)
+                if f"{code}_{slot.key}" in missing_keys
+            ]
+            issue["report_missing"] = [
+                slot.key for slot in get_slot_schema(code)
+                if f"{code}_{slot.key}" in report_missing_keys
+            ]
+        unverified = _unverified_by_issue(verdict["ungrounded_slots"])
+
+    for issue in issues:
+        issue["unverified"] = (
+            [] if SLOT_EVIDENCE_MODE == "enforce"
+            else unverified.get(issue["subcategory_code"], [])
+        )
         issue["slot_evidence"] = dict(audit_by_issue.get(issue["subcategory_code"]) or {})
     no_questions = verdict["danger_veto"] or verdict["uncertainty_level"] == "cautious"
     policy = decide_next_action(plan, {
@@ -1879,6 +1914,45 @@ def _apply_evidence_mode(verdict: dict) -> dict:
         ]
         logger.info("slot_evidence_audit mode=shadow entries=%s", summary)
     return verdict
+
+
+def _drop_unusable_slots(issues, category_slots, audit) -> list[str]:
+    """Remove rejected/unavailable values before missing is rebuilt."""
+    removed = []
+    for issue in issues or []:
+        code = str((issue or {}).get("subcategory_code") or "")
+        for slot in list((issue.get("slots") or {}).keys()):
+            result = ((audit.get(code) or {}).get(slot) or {})
+            if result.get("business_status") not in {"rejected", "unavailable"}:
+                continue
+            issue["slots"].pop(slot, None)
+            (category_slots.setdefault(code, {}) or {}).pop(slot, None)
+            removed.append(f"{code}.{slot}")
+            logger.info("slot_evidence_removed code=%s slot=%s status=%s",
+                        code, slot, result.get("business_status"))
+    return removed
+
+
+def _rebuild_issue_missing(issues, category_slots) -> list[str]:
+    categories = [
+        str(issue["subcategory_code"]) for issue in issues or []
+        if issue.get("subcategory_code")
+    ]
+    missing = rebuild_missing(categories, category_slots)
+    report_missing = rebuild_report_missing(categories, category_slots)
+    missing_keys = set(missing)
+    report_keys = set(report_missing)
+    for issue in issues:
+        code = issue["subcategory_code"]
+        issue["missing"] = [
+            slot.key for slot in get_slot_schema(code)
+            if f"{code}_{slot.key}" in missing_keys
+        ]
+        issue["report_missing"] = [
+            slot.key for slot in get_slot_schema(code)
+            if f"{code}_{slot.key}" in report_keys
+        ]
+    return missing
 
 
 def _public_issues(issues) -> list[dict]:

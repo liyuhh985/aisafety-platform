@@ -321,14 +321,17 @@ def test_understand_shadow_mode_keeps_legacy_uncertainty(monkeypatch):
     assert out["ungrounded_slots"] == ["dangerous_building.structure=墙体倾斜"]
 
 
-def test_understand_enforce_mode_uses_evidence_status(monkeypatch):
+def test_understand_enforce_mode_removes_unavailable_runtime_evidence(monkeypatch):
     import core.assistant_graph as ag
     monkeypatch.setattr(ag, "SLOT_EVIDENCE_MODE", "enforce")
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: _weak_evidence_plan())
     out = ag.understand({"messages": [ag.HumanMessage(content="房子明显往一边斜")]})
     assert out["uncertainty_level"] == "ok"
     assert out["ungrounded_slots"] == []
-    assert out["issues"][0]["slot_evidence"]["structure"]["status"] == "weak"
+    result = out["issues"][0]["slot_evidence"]["structure"]
+    assert result["status"] == "unavailable"
+    assert result["business_status"] == "unavailable"
+    assert "dangerous_building_structure" in out["missing"]
 def test_planner_prompt_requires_quote_and_source_ref():
     built = build_planner_messages([HumanMessage(content="房子往一边斜")])
     system_prompt = built[0]["content"]
