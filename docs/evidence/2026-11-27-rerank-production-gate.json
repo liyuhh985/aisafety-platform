@@ -1,0 +1,166 @@
+{
+  "schema_version": "rerank-production-gate/v1",
+  "date": "2026-11-27",
+  "status": "failed",
+  "gate_passed": false,
+  "merge_eligible": false,
+  "default_rerank_changed": false,
+  "experiment": {
+    "branch": "codex/rerank-production-integration",
+    "code_commit": "dd8736d",
+    "base": "origin/main@7d98f67",
+    "cloud_host": "ubuntu@106.53.219.214",
+    "cloud_isolated_directory": "/home/ubuntu/rag-lab/rerank-main-2026-11-27-20261127T143924",
+    "production_source_modified": false,
+    "gold_oracle_major_used": false,
+    "prediction_mode": "production_planner",
+    "skill_router_used": true,
+    "real_http_reranker": true,
+    "model": "BAAI/bge-reranker-v2-m3",
+    "candidate_k": 5,
+    "final_k": 5
+  },
+  "gate_policy": {
+    "hit_at_5_min": 1.0,
+    "mrr_absolute_improvement_min": 0.025,
+    "top1_hits_min_delta": 5,
+    "top1_regressions_max": 0,
+    "rerank_p95_ms_max": 350.0,
+    "end_to_end_added_p95_ms_max": 500.0,
+    "negative_empty_rate_min": 1.0,
+    "rerank_fallbacks_max": 0
+  },
+  "gate_failures": [
+    "Hit@5 fell below 1.000",
+    "Top-1 hits below baseline + 5",
+    "Top-1 regression detected",
+    "reranker successful responses below attempts",
+    "reranker fallback count must be 0",
+    "rerank P95 exceeds 350ms",
+    "end-to-end added P95 exceeds 500ms"
+  ],
+  "counts": {
+    "case_count": 231,
+    "query_count": 64,
+    "negative_count": 10
+  },
+  "prediction_summary": {
+    "attempts": 74,
+    "successes": 74,
+    "missing_major": 0,
+    "missing_subcategory": 0,
+    "major_mismatch": 0,
+    "subcategory_mismatch": 1,
+    "ok": true
+  },
+  "prediction_mismatches": [
+    {
+      "query": "那栋老楼早就不行了，墙都是歪的，里头还住着人",
+      "gold_major": "building",
+      "gold_subcategory": "dangerous_building",
+      "predicted_major": "building",
+      "predicted_subcategory": "wall_crack_lean",
+      "keyword": "墙体开裂/倾斜 墙体明显倾斜、歪斜 楼内仍有人居"
+    }
+  ],
+  "metrics": {
+    "baseline": {
+      "hit_at_5": 0.96875,
+      "mrr": 0.8763020833333334,
+      "top1_hits": 52,
+      "p_at_5": 0.728125,
+      "recall_at_5": 0.5376716382575758,
+      "empty_rate": 1.0,
+      "avg_candidate_count": 4.5625,
+      "gold_in_candidates_rate": 0.96875,
+      "p50_ms": 404.4565223157406,
+      "p95_ms": 515.1873119175434,
+      "retrieval_p50_ms": 404.4565223157406,
+      "retrieval_p95_ms": 515.1873119175434,
+      "rerank_p50_ms": 0.0,
+      "rerank_p95_ms": 0.0,
+      "rerank_attempts": 0,
+      "rerank_successes": 0,
+      "rerank_fallbacks": 0,
+      "rerank_fallback_reasons": {}
+    },
+    "candidates": {
+      "hit_at_5": 0.984375,
+      "mrr": 0.925,
+      "top1_hits": 56,
+      "p_at_5": 0.834375,
+      "recall_at_5": 0.6165195481601732,
+      "empty_rate": 1.0,
+      "avg_candidate_count": 6.765625,
+      "gold_in_candidates_rate": 0.984375,
+      "p50_ms": 268.4427686035633,
+      "p95_ms": 376.3834089040756,
+      "retrieval_p50_ms": 268.4427686035633,
+      "retrieval_p95_ms": 376.3834089040756,
+      "rerank_p50_ms": 0.0,
+      "rerank_p95_ms": 0.0,
+      "rerank_attempts": 0,
+      "rerank_successes": 0,
+      "rerank_fallbacks": 0,
+      "rerank_fallback_reasons": {},
+      "added_p95_ms": 51.459088921546936
+    },
+    "rerank": {
+      "hit_at_5": 0.984375,
+      "mrr": 0.9145833333333333,
+      "top1_hits": 56,
+      "p_at_5": 0.803125,
+      "recall_at_5": 0.5931496888528138,
+      "empty_rate": 1.0,
+      "avg_candidate_count": 6.765625,
+      "gold_in_candidates_rate": 0.984375,
+      "p50_ms": 563.6499188840389,
+      "p95_ms": 891.4261721074581,
+      "retrieval_p50_ms": 268.4427686035633,
+      "retrieval_p95_ms": 376.3834089040756,
+      "rerank_p50_ms": 279.21007201075554,
+      "rerank_p95_ms": 567.6459595561028,
+      "rerank_attempts": 64,
+      "rerank_successes": 63,
+      "rerank_fallbacks": 1,
+      "rerank_fallback_reasons": {
+        "exception:ReadTimeout": 1
+      },
+      "top1_moves": 5,
+      "top1_regressions": 1,
+      "added_p95_ms": 570.4295225441456,
+      "expected_rerank_attempts": 64,
+      "production_prediction_ok": true
+    }
+  },
+  "failure_sample_counts": {
+    "baseline": 12,
+    "candidates": 8,
+    "rerank": 8
+  },
+  "artifacts": {
+    "raw_output": {
+      "path": "docs/evidence/2026-11-27-rerank-production-gate.raw.json",
+      "sha256": "ed65d0851b5e7f87bf4fc19dfd00673f871416558aef93cf940a2c56a85ecde9",
+      "bytes": 63373
+    },
+    "run_log": {
+      "path": "docs/evidence/2026-11-27-rerank-production-gate.run.log",
+      "sha256": "1197719afa9d2ae48bceaa1ea8566c7c5d54f6c966338e17db0a0f2dba3965dc",
+      "bytes": 63374
+    }
+  },
+  "code_hashes": {
+    "ai-module/eval/eval_rerank.py": "46783a134563d0f62edd798f4af34af5bd0be399b0e041382b60722418ab8d6a",
+    "ai-module/core/reranker.py": "f304744396952d1b4a0e19b9ebfb9030b300b7d976310dd4fbd8725695f5d18f",
+    "ai-module/core/reranker_http.py": "249b51fb080a73a666fe98fa2385710244f4f1e671a3fd839f073caf1f3842d4",
+    "ai-module/tools/hybrid_search.py": "d0dd9982aab458c9afc8d63267f6a38a80e4985095fc4f7819596bad6b2a2976",
+    "ai-module/config.py": "9d677e2352df4beebdea3d2184a74b88f9ef90277a869edcb4f2758e2e1ba69e"
+  },
+  "decision": {
+    "merge": false,
+    "enable_default": false,
+    "reason": "pre-registered gate not satisfied",
+    "preserve_branch_as_rag_lab": true
+  }
+}

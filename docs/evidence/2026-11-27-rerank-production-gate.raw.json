@@ -1,0 +1,2143 @@
+{
+  "date": "2026-11-27",
+  "rerank_enabled": true,
+  "model_mode": "http",
+  "effective_model_mode": "fallback",
+  "oracle_major_filter": false,
+  "prediction_mode": "production_planner",
+  "gate_policy": {
+    "hit_at_5_min": 1.0,
+    "mrr_absolute_improvement_min": 0.025,
+    "top1_hits_min_delta": 5,
+    "top1_regressions_max": 0,
+    "rerank_p95_ms_max": 350.0,
+    "end_to_end_added_p95_ms_max": 500.0,
+    "negative_empty_rate_min": 1.0,
+    "rerank_fallbacks_max": 0
+  },
+  "prediction_summary": {
+    "attempts": 74,
+    "successes": 74,
+    "missing_major": 0,
+    "missing_subcategory": 0,
+    "major_mismatch": 0,
+    "subcategory_mismatch": 1,
+    "ok": true
+  },
+  "candidate_policy": {
+    "baseline": "vector_k=3, keyword_k=3, existing merge",
+    "candidates": "vector_k=5, keyword_k=5, predicted major filter, id dedupe, no source-priority truncation",
+    "final_k": 5
+  },
+  "predictions": [
+    {
+      "query": "沿街商铺把货架和纸箱堆到人行道上，行人只能走机动车道",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "road_occupancy",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "road_occupancy"
+      ],
+      "predicted_slots": {
+        "behavior": "沿街商铺把货架和纸箱堆放到人行道上",
+        "blocked": "人行道被占，行人只能走机动车道"
+      },
+      "premises_scope": "public",
+      "keyword": "占道经营/乱堆乱放 沿街商铺把货架和纸箱堆放到人",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "整条街的店门口都摆满了东西，走路的人只能绕到马路中间去",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "road_occupancy",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "road_occupancy"
+      ],
+      "predicted_slots": {
+        "behavior": "店门口摆满了东西",
+        "blocked": "行人只能绕到马路中间"
+      },
+      "premises_scope": "public",
+      "keyword": "占道经营/乱堆乱放 店门口摆满了东西 行人只能绕",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "小区门口机动车道被违停车辆占了一排，通行困难",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "vehicle_occupancy",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "vehicle_occupancy"
+      ],
+      "predicted_slots": {
+        "behavior": "违停车辆在机动车道占了一排",
+        "blocked": "通行困难"
+      },
+      "premises_scope": "public",
+      "keyword": "车辆占道 违停车辆在机动车道占了一排 通行困难",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "车横七竖八停了一长溜，把路堵得只剩一条缝",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "vehicle_occupancy",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "vehicle_occupancy"
+      ],
+      "predicted_slots": {
+        "behavior": "机动车横七竖八停放",
+        "blocked": "道路被堵得只剩一条窄缝"
+      },
+      "premises_scope": "public",
+      "keyword": "车辆占道 机动车横七竖八停放 道路被堵得只剩一条",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "人行道盲道被共享单车和摊位完全堵死",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "blind_path_occupied",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "blind_path_occupied"
+      ],
+      "predicted_slots": {
+        "behavior": "共享单车和摊位占用盲道",
+        "blocked": "完全堵死"
+      },
+      "premises_scope": "public",
+      "keyword": "盲道占用 共享单车和摊位占用盲道 完全堵死",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "导盲的那条砖上面全是电动车，看不见路的人根本过不去",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "blind_path_occupied",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "blind_path_occupied"
+      ],
+      "predicted_slots": {
+        "behavior": "盲道砖上停满电动车",
+        "blocked": "视障行人无法通行"
+      },
+      "premises_scope": "public",
+      "keyword": "盲道占用 盲道砖上停满电动车 视障行人无法通行",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "路口信号灯损坏半个月，一直闪黄灯不切换",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "traffic_facility_damage",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "traffic_facility_damage"
+      ],
+      "predicted_slots": {
+        "describe": "路口信号灯损坏，持续半个月，一直闪黄灯不切换"
+      },
+      "premises_scope": "public",
+      "keyword": "交通设施损坏 路口信号灯损坏，持续半个月，一直闪",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "那个路口的灯早就不亮了，车和人都不知道什么时候能走",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "traffic"
+      ],
+      "predicted_major": "traffic",
+      "predicted_subcategory": "traffic_facility_damage",
+      "predicted_majors": [
+        "traffic"
+      ],
+      "predicted_subcategories": [
+        "traffic_facility_damage"
+      ],
+      "predicted_slots": {
+        "describe": "路口的信号灯长期不亮，行人和车辆无法判断通行时机"
+      },
+      "premises_scope": "public",
+      "keyword": "交通设施损坏 路口的信号灯长期不亮，行人和车辆无",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "暴雨夜雨水井盖缺失移位，行人涉水坠井",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "manhole_damage",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "manhole_damage"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "井盖缺失/破损",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "马路上一个铁盖子没了，就留个黑洞，晚上看不见掉下去就完了",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "manhole_damage",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "manhole_damage"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "井盖缺失/破损",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "主干道路面塌陷出现深坑，下方路基已空洞",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "road_surface_collapse",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "road_surface_collapse"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "路面塌陷",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "路中间塌下去一大块，底下都是空的，看着就悬",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "road_surface_collapse",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "road_surface_collapse"
+      ],
+      "predicted_slots": {
+        "defect": "路面塌陷，底部空洞"
+      },
+      "premises_scope": "public",
+      "keyword": "路面塌陷 路面塌陷，底部空洞",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "下穿隧道暴雨严重积水，轿车被淹熄火",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "drainage_flood",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "drainage_flood"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "排水/积水",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "一下雨那个桥洞就积起半人深的水，车开进去就趴窝",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "drainage_flood",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "drainage_flood"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "排水/积水",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "小区外路灯连片不亮，线杆底座倾斜开裂",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "street_light_pole",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "street_light_pole"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "路灯/线杆损坏",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "那条路晚上黑得看不见人，旁边的杆子还歪着",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "municipal"
+      ],
+      "predicted_major": "municipal",
+      "predicted_subcategory": "street_light_pole",
+      "predicted_majors": [
+        "municipal"
+      ],
+      "predicted_subcategories": [
+        "street_light_pole"
+      ],
+      "predicted_slots": {
+        "describe": "夜间路面照明缺失，看不清行人；旁边线杆倾斜"
+      },
+      "premises_scope": "public",
+      "keyword": "路灯/线杆损坏 夜间路面照明缺失，看不清行人；旁",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "高层住宅消防车通道被私家车和杂物长期占用",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "fire",
+        "traffic"
+      ],
+      "predicted_major": "fire",
+      "predicted_subcategory": "fire_lane_blocked",
+      "predicted_majors": [
+        "fire"
+      ],
+      "predicted_subcategories": [
+        "fire_lane_blocked"
+      ],
+      "predicted_slots": {
+        "blocker": "私家车和杂物",
+        "persistence": "长期"
+      },
+      "premises_scope": "public",
+      "keyword": "消防通道占用 私家车和杂物 长期",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼下通道全停了车，真着火消防车根本进不来",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "fire",
+        "traffic"
+      ],
+      "predicted_major": "fire",
+      "predicted_subcategory": "fire_lane_blocked",
+      "predicted_majors": [
+        "fire"
+      ],
+      "predicted_subcategories": [
+        "fire_lane_blocked"
+      ],
+      "predicted_slots": {
+        "blocker": "车辆停放占满通道",
+        "impact": "消防车无法进入"
+      },
+      "premises_scope": "public",
+      "keyword": "消防通道占用 车辆停放占满通道 消防车无法进入",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼道消火栓箱被上锁，灭火器压力表指针已在红区过期",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "fire"
+      ],
+      "predicted_major": "fire",
+      "predicted_subcategory": "fire_equipment_fault",
+      "predicted_majors": [
+        "fire"
+      ],
+      "predicted_subcategories": [
+        "fire_equipment_fault"
+      ],
+      "predicted_slots": {
+        "facility_type": "消火栓箱",
+        "condition": "被上锁"
+      },
+      "premises_scope": "public",
+      "keyword": "消防设施故障 消火栓箱 被上锁",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼里的灭火器早就没压力了，那个水管的箱子也锁死了打不开",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "fire"
+      ],
+      "predicted_major": "fire",
+      "predicted_subcategory": "fire_equipment_fault",
+      "predicted_majors": [
+        "fire"
+      ],
+      "predicted_subcategories": [
+        "fire_equipment_fault"
+      ],
+      "predicted_slots": {
+        "facility_type": "灭火器",
+        "condition": "没压力"
+      },
+      "premises_scope": "public",
+      "keyword": "消防设施故障 灭火器 没压力",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "厂区消防水池水位不足，室外消火栓放不出水",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "fire"
+      ],
+      "predicted_major": "fire",
+      "predicted_subcategory": "fire_water_abnormal",
+      "predicted_majors": [
+        "fire"
+      ],
+      "predicted_subcategories": [
+        "fire_water_abnormal"
+      ],
+      "predicted_slots": {
+        "describe": "厂区消防水池水位不足，室外消火栓放不出水"
+      },
+      "premises_scope": "public",
+      "keyword": "消防水源异常 厂区消防水池水位不足，室外消火栓放",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "拧开那个消防用的水龙头，一滴水都出不来",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "fire"
+      ],
+      "predicted_major": "fire",
+      "predicted_subcategory": "fire_water_abnormal",
+      "predicted_majors": [
+        "fire"
+      ],
+      "predicted_subcategories": [
+        "fire_water_abnormal"
+      ],
+      "predicted_slots": {
+        "describe": "消防用水龙头拧开后一滴水也出不来"
+      },
+      "premises_scope": "public",
+      "keyword": "消防水源异常 消防用水龙头拧开后一滴水也出不来",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "城中村危房承重墙开裂、房屋整体倾斜，仍有人居住",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "dangerous_building",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "dangerous_building"
+      ],
+      "predicted_slots": {
+        "structure": "承重墙开裂、房屋整体倾斜",
+        "occupancy": "仍有人居住"
+      },
+      "premises_scope": "public",
+      "keyword": "危房 承重墙开裂、房屋整体倾斜 仍有人居住",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "那栋老楼早就不行了，墙都是歪的，里头还住着人",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "wall_crack_lean",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "wall_crack_lean"
+      ],
+      "predicted_slots": {
+        "structure": "墙体明显倾斜、歪斜",
+        "occupancy": "楼内仍有人居住"
+      },
+      "premises_scope": "public",
+      "keyword": "墙体开裂/倾斜 墙体明显倾斜、歪斜 楼内仍有人居",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "住宅楼外墙出现贯穿性裂缝，墙体明显倾斜",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "wall_crack_lean",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "wall_crack_lean"
+      ],
+      "predicted_slots": {
+        "structure": "贯穿性裂缝；墙体明显倾斜"
+      },
+      "premises_scope": "public",
+      "keyword": "墙体开裂/倾斜 贯穿性裂缝；墙体明显倾斜",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "我家楼上的墙裂了一条大缝，从上到下，看着要倒",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "wall_crack_lean",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "wall_crack_lean"
+      ],
+      "predicted_slots": {
+        "structure": "墙体从上到下出现大裂缝，外观有倾倒风险"
+      },
+      "premises_scope": "public",
+      "keyword": "墙体开裂/倾斜 墙体从上到下出现大裂缝，外观有倾",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "高层大厦外立面大理石瓷砖脱落砸坏车辆",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "facade_fall",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "facade_fall"
+      ],
+      "predicted_slots": {
+        "source": "外立面大理石瓷砖",
+        "target": "车辆"
+      },
+      "premises_scope": "public",
+      "keyword": "外立面脱落 外立面大理石瓷砖 车辆",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼上掉下来一大块外墙的砖，把车都砸穿了",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "facade_fall",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "facade_fall"
+      ],
+      "predicted_slots": {
+        "source": "外墙的砖",
+        "target": "车",
+        "exposure": "车被砸穿"
+      },
+      "premises_scope": "public",
+      "keyword": "外立面脱落 外墙的砖 车 车被砸穿",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "住户从高层抛掷红酒瓶，砸碎汽车挡风玻璃",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "falling_object",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "falling_object"
+      ],
+      "predicted_slots": {
+        "source": "高层住户抛掷红酒瓶",
+        "target": "汽车挡风玻璃"
+      },
+      "premises_scope": "public",
+      "keyword": "高空坠物 高层住户抛掷红酒瓶 汽车挡风玻璃",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼上有人往下扔东西，瓶子掉下来把车玻璃砸碎了",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "falling_object",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "falling_object"
+      ],
+      "predicted_slots": {
+        "source": "楼上有人往下扔东西，瓶子",
+        "target": "车玻璃",
+        "exposure": "瓶子掉下来把车玻璃砸碎了"
+      },
+      "premises_scope": "public",
+      "keyword": "高空坠物 楼上有人往下扔东西，瓶子 车玻璃 瓶子",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "顶楼住户违规搭建阳光房，并私改承重结构",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "illegal_structure",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "illegal_structure",
+        "dangerous_building"
+      ],
+      "predicted_slots": {
+        "describe": "顶楼住户违规搭建阳光房，并私改承重结构"
+      },
+      "premises_scope": "public",
+      "keyword": "违规搭建 顶楼住户违规搭建阳光房，并私改承重结构",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "顶楼自己在楼顶又盖了个房子出来，还拆了墙",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "building"
+      ],
+      "predicted_major": "building",
+      "predicted_subcategory": "illegal_structure",
+      "predicted_majors": [
+        "building"
+      ],
+      "predicted_subcategories": [
+        "illegal_structure"
+      ],
+      "predicted_slots": {
+        "describe": "顶楼住户在楼顶加盖房屋，并拆除了墙体"
+      },
+      "premises_scope": "public",
+      "keyword": "违规搭建 顶楼住户在楼顶加盖房屋，并拆除了墙体",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "小区架空电线绝缘层老化破损，铜芯外露垂落",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "exposed_wire",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "exposed_wire"
+      ],
+      "predicted_slots": {
+        "source": "架空电线"
+      },
+      "premises_scope": "public",
+      "keyword": "裸露/老化电线 架空电线",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "那根电线皮都磨没了，里面的铜丝露在外面晃",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "exposed_wire",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "exposed_wire"
+      ],
+      "predicted_slots": {
+        "source": "电线绝缘层磨破，内层铜丝外露"
+      },
+      "premises_scope": "public",
+      "keyword": "裸露/老化电线 电线绝缘层磨破，内层铜丝外露",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "小区配电箱箱门缺失、接线端子烧蚀冒烟",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "distribution_box_fault",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "distribution_box_fault"
+      ],
+      "predicted_slots": {
+        "source": "小区配电箱箱门缺失、接线端子烧蚀冒烟"
+      },
+      "premises_scope": "public",
+      "keyword": "配电设施故障 小区配电箱箱门缺失、接线端子烧蚀冒",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼下的电表箱子门掉了，里面还冒烟有糊味",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "distribution_box_fault",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "distribution_box_fault"
+      ],
+      "predicted_slots": {
+        "source": "楼下电表箱"
+      },
+      "premises_scope": "public",
+      "keyword": "配电设施故障 楼下电表箱",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "沿街商铺私拉乱接电线给电动车充电，线缆横跨人行道",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "illegal_wiring",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "illegal_wiring"
+      ],
+      "predicted_slots": {
+        "source": "沿街商铺私拉乱接电线给电动车充电",
+        "contact": "线缆横跨人行道"
+      },
+      "premises_scope": "public",
+      "keyword": "私拉乱接 沿街商铺私拉乱接电线给电动车充电 线缆",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "店老板从店里扯了根线出来充电动车，线就搭在地上",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "illegal_wiring",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "illegal_wiring"
+      ],
+      "predicted_slots": {
+        "source": "店老板从店里扯线出来给电动车充电",
+        "contact": "电线搭在地上"
+      },
+      "premises_scope": "public",
+      "keyword": "私拉乱接 店老板从店里扯线出来给电动车充电 电线",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "居民楼燃气管道泄漏，楼道里有明显煤气味",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "gas_leak",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "gas_leak"
+      ],
+      "predicted_slots": {
+        "describe": "居民楼燃气管道泄漏，楼道里有明显煤气味"
+      },
+      "premises_scope": "public",
+      "keyword": "燃气泄漏 居民楼燃气管道泄漏，楼道里有明显煤气味",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "一进楼道就闻到很大的味儿，像是气漏了",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "gas_leak",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "gas_leak"
+      ],
+      "predicted_slots": {
+        "describe": "楼道内闻到很浓的异味，怀疑燃气泄漏"
+      },
+      "premises_scope": "public",
+      "keyword": "燃气泄漏 楼道内闻到很浓的异味，怀疑燃气泄漏",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "老旧小区户外燃气立管锈蚀老化，接口渗漏",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "gas_pipe_aging",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "gas_pipe_aging",
+        "gas_leak"
+      ],
+      "predicted_slots": {
+        "describe": "户外燃气立管锈蚀老化"
+      },
+      "premises_scope": "public",
+      "keyword": "燃气管道老化 户外燃气立管锈蚀老化",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "小区外面那根气管子锈得不成样了，接头地方还渗",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "utility"
+      ],
+      "predicted_major": "utility",
+      "predicted_subcategory": "gas_pipe_aging",
+      "predicted_majors": [
+        "utility"
+      ],
+      "predicted_subcategories": [
+        "gas_pipe_aging",
+        "gas_leak"
+      ],
+      "predicted_slots": {
+        "describe": "小区外面那根公共燃气管道锈蚀严重，接头处有渗漏迹象"
+      },
+      "premises_scope": "public",
+      "keyword": "燃气管道老化 小区外面那根公共燃气管道锈蚀严重，",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "市政施工开挖路面未设置围挡，基坑敞口",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "no_barrier",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "no_barrier",
+        "deep_pit"
+      ],
+      "predicted_slots": {
+        "site": "市政施工开挖路面",
+        "safety": "未设置围挡"
+      },
+      "premises_scope": "public",
+      "keyword": "未设置围挡 市政施工开挖路面 未设置围挡",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "路上挖了个大坑，周围什么也没围，谁都能掉进去",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "no_barrier",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "no_barrier",
+        "deep_pit"
+      ],
+      "predicted_slots": {
+        "site": "道路上（路面开挖处）",
+        "impact": "行人和车辆都可能坠落"
+      },
+      "premises_scope": "public",
+      "keyword": "未设置围挡 道路上（路面开挖处） 行人和车辆都可",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "道路施工无安全警示标志，夜间无警示灯",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "no_warning",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "no_warning"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "无安全警示",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "修路的地方连个牌子都没有，晚上黑灯瞎火的",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "no_warning",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "no_warning"
+      ],
+      "predicted_slots": {
+        "site": "修路的地方",
+        "safety": "没有设置警示牌",
+        "impact": "夜间光线暗，通行不易发现"
+      },
+      "premises_scope": "public",
+      "keyword": "无安全警示 修路的地方 没有设置警示牌 夜间光线",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "建筑工地脚手架搭设不规范，临边防护栏杆缺失",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "scaffold_guard",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "scaffold_guard"
+      ],
+      "predicted_slots": {
+        "site": "建筑工地",
+        "safety": "脚手架搭设不规范，临边防护栏杆缺失"
+      },
+      "premises_scope": "public",
+      "keyword": "脚手架/临边防护 建筑工地 脚手架搭设不规范，临",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "工地上那个架子感觉随时会塌，边上也没护栏",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "scaffold_guard",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "scaffold_guard"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "脚手架/临边防护",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "深基坑支护桩严重位移开裂，边坡滑移",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "deep_pit",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "deep_pit"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "深基坑风险",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼下挖的坑太深了，边上的土都在往下滑",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "construction"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "deep_pit",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "deep_pit"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "深基坑风险",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "施工现场临时用电线路乱拉，配电箱无漏电保护",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "construction",
+        "utility"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "temporary_power",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "temporary_power"
+      ],
+      "predicted_slots": {
+        "source": "施工现场临时用电线路乱拉，配电箱无漏电保护"
+      },
+      "premises_scope": "public",
+      "keyword": "施工临时用电 施工现场临时用电线路乱拉，配电箱无",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "工地上的电是随便接的，箱子也没盖子",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "construction",
+        "utility"
+      ],
+      "predicted_major": "construction",
+      "predicted_subcategory": "temporary_power",
+      "predicted_majors": [
+        "construction"
+      ],
+      "predicted_subcategories": [
+        "temporary_power"
+      ],
+      "predicted_slots": {
+        "source": "电是随便接的",
+        "contact": "箱子也没盖子"
+      },
+      "premises_scope": "public",
+      "keyword": "施工临时用电 电是随便接的 箱子也没盖子",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "客运电梯故障急停困人超过半小时，救援超时",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "elevator_special"
+      ],
+      "predicted_major": "elevator_special",
+      "predicted_subcategory": "elevator_trapped",
+      "predicted_majors": [
+        "elevator_special"
+      ],
+      "predicted_subcategories": [
+        "elevator_trapped"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "电梯困人",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "有人被关在电梯里出不来，都半个多小时了",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "elevator_special"
+      ],
+      "predicted_major": "elevator_special",
+      "predicted_subcategory": "elevator_trapped",
+      "predicted_majors": [
+        "elevator_special"
+      ],
+      "predicted_subcategories": [
+        "elevator_trapped"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "电梯困人",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "小区电梯频繁停运并伴随剧烈异响、抖动",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "elevator_special"
+      ],
+      "predicted_major": "elevator_special",
+      "predicted_subcategory": "elevator_stopped",
+      "predicted_majors": [
+        "elevator_special"
+      ],
+      "predicted_subcategories": [
+        "elevator_stopped"
+      ],
+      "predicted_slots": {
+        "describe": "小区电梯频繁停运并伴随剧烈异响、抖动"
+      },
+      "premises_scope": "public",
+      "keyword": "停运/异响 小区电梯频繁停运并伴随剧烈异响、抖动",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "我们那栋楼的电梯老是坏，一动就哐当响",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "elevator_special"
+      ],
+      "predicted_major": "elevator_special",
+      "predicted_subcategory": "elevator_stopped",
+      "predicted_majors": [
+        "elevator_special"
+      ],
+      "predicted_subcategories": [
+        "elevator_stopped"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "停运/异响",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "商场自动扶梯超期未检，检验合格标志已过期一年",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "elevator_special"
+      ],
+      "predicted_major": "elevator_special",
+      "predicted_subcategory": "elevator_inspection",
+      "predicted_majors": [
+        "elevator_special"
+      ],
+      "predicted_subcategories": [
+        "elevator_inspection"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "超期未检",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "那个扶梯上面贴的检验牌子早就过期了",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "elevator_special"
+      ],
+      "predicted_major": "elevator_special",
+      "predicted_subcategory": "elevator_inspection",
+      "predicted_majors": [
+        "elevator_special"
+      ],
+      "predicted_subcategories": [
+        "elevator_inspection"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "超期未检",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "小区角落建筑垃圾和生活垃圾长期堆积无人清运",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "environment_other"
+      ],
+      "predicted_major": "environment_other",
+      "predicted_subcategory": "garbage_pile",
+      "predicted_majors": [
+        "environment_other"
+      ],
+      "predicted_subcategories": [
+        "garbage_pile"
+      ],
+      "predicted_slots": {
+        "describe": "小区角落建筑垃圾和生活垃圾长期堆积无人清运"
+      },
+      "premises_scope": "public",
+      "keyword": "垃圾堆积 小区角落建筑垃圾和生活垃圾长期堆积无人",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "楼下垃圾堆成山了，一直没人拉走",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "environment_other"
+      ],
+      "predicted_major": "environment_other",
+      "predicted_subcategory": "garbage_pile",
+      "predicted_majors": [
+        "environment_other"
+      ],
+      "predicted_subcategories": [
+        "garbage_pile"
+      ],
+      "predicted_slots": {
+        "describe": "楼下垃圾堆成山，一直没人拉走"
+      },
+      "premises_scope": "public",
+      "keyword": "垃圾堆积 楼下垃圾堆成山，一直没人拉走",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "市政管网污水外溢，路面返臭气味刺鼻",
+      "planner_ok": true,
+      "skill_route_source": "keyword",
+      "active_skills": [
+        "environment_other"
+      ],
+      "predicted_major": "environment_other",
+      "predicted_subcategory": "sewage_odor",
+      "predicted_majors": [
+        "environment_other"
+      ],
+      "predicted_subcategories": [
+        "sewage_odor"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "污水/异味",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "路上的井往外冒臭水，味儿特别大",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "municipal",
+        "environment_other"
+      ],
+      "predicted_major": "environment_other",
+      "predicted_subcategory": "sewage_odor",
+      "predicted_majors": [
+        "environment_other"
+      ],
+      "predicted_subcategories": [
+        "sewage_odor"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "污水/异味",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "公共区域出现来源不明的危化品桶，气味刺鼻无人认领",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "environment_other"
+      ],
+      "predicted_major": "environment_other",
+      "predicted_subcategory": "other",
+      "predicted_majors": [
+        "environment_other"
+      ],
+      "predicted_subcategories": [
+        "other"
+      ],
+      "predicted_slots": {
+        "describe": "公共区域出现来源不明的危化品桶，气味刺鼻无人认领"
+      },
+      "premises_scope": "public",
+      "keyword": "其他 公共区域出现来源不明的危化品桶，气味刺鼻无",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "路边放着几个大桶，也不知道装的什么，有股味儿",
+      "planner_ok": true,
+      "skill_route_source": "llm",
+      "active_skills": [
+        "environment_other"
+      ],
+      "predicted_major": "environment_other",
+      "predicted_subcategory": "other",
+      "predicted_majors": [
+        "environment_other"
+      ],
+      "predicted_subcategories": [
+        "other"
+      ],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "其他",
+      "keyword_source": "production_pick_keyword"
+    },
+    {
+      "query": "今天上海天气怎么样",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "今天上海天气怎么样",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "红烧肉怎么做好吃",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "红烧肉怎么做好吃",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "帮我写一首关于秋天的诗",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "帮我写一首关于秋天的诗",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "推荐一部适合周末看的电影",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "推荐一部适合周末看的电影",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "Python 列表如何去重",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "Python 列表如何去重",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "今天股市收盘涨了多少",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "今天股市收盘涨了多少",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "减脂期一天该吃多少蛋白质",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "减脂期一天该吃多少蛋白质",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "把这句话翻译成英语",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "把这句话翻译成英语",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "最近有什么明星八卦新闻",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "最近有什么明星八卦新闻",
+      "keyword_source": "raw_query"
+    },
+    {
+      "query": "国庆去三亚玩几天合适",
+      "planner_ok": true,
+      "skill_route_source": "fallback",
+      "active_skills": [],
+      "predicted_major": "",
+      "predicted_subcategory": "",
+      "predicted_majors": [],
+      "predicted_subcategories": [],
+      "predicted_slots": {},
+      "premises_scope": "public",
+      "keyword": "国庆去三亚玩几天合适",
+      "keyword_source": "raw_query"
+    }
+  ],
+  "candidate_k": 5,
+  "final_k": 5,
+  "model": "BAAI/bge-reranker-v2-m3",
+  "counts": {
+    "case_count": 231,
+    "query_count": 64,
+    "negative_count": 10
+  },
+  "summaries": {
+    "baseline": {
+      "hit_at_5": 0.96875,
+      "mrr": 0.8763020833333334,
+      "top1_hits": 52,
+      "p_at_5": 0.728125,
+      "recall_at_5": 0.5376716382575758,
+      "empty_rate": 1.0,
+      "avg_candidate_count": 4.5625,
+      "gold_in_candidates_rate": 0.96875,
+      "p50_ms": 404.4565223157406,
+      "p95_ms": 515.1873119175434,
+      "retrieval_p50_ms": 404.4565223157406,
+      "retrieval_p95_ms": 515.1873119175434,
+      "rerank_p50_ms": 0.0,
+      "rerank_p95_ms": 0.0,
+      "rerank_attempts": 0,
+      "rerank_successes": 0,
+      "rerank_fallbacks": 0,
+      "rerank_fallback_reasons": {}
+    },
+    "candidates": {
+      "hit_at_5": 0.984375,
+      "mrr": 0.925,
+      "top1_hits": 56,
+      "p_at_5": 0.834375,
+      "recall_at_5": 0.6165195481601732,
+      "empty_rate": 1.0,
+      "avg_candidate_count": 6.765625,
+      "gold_in_candidates_rate": 0.984375,
+      "p50_ms": 268.4427686035633,
+      "p95_ms": 376.3834089040756,
+      "retrieval_p50_ms": 268.4427686035633,
+      "retrieval_p95_ms": 376.3834089040756,
+      "rerank_p50_ms": 0.0,
+      "rerank_p95_ms": 0.0,
+      "rerank_attempts": 0,
+      "rerank_successes": 0,
+      "rerank_fallbacks": 0,
+      "rerank_fallback_reasons": {},
+      "added_p95_ms": 51.459088921546936
+    },
+    "rerank": {
+      "hit_at_5": 0.984375,
+      "mrr": 0.9145833333333333,
+      "top1_hits": 56,
+      "p_at_5": 0.803125,
+      "recall_at_5": 0.5931496888528138,
+      "empty_rate": 1.0,
+      "avg_candidate_count": 6.765625,
+      "gold_in_candidates_rate": 0.984375,
+      "p50_ms": 563.6499188840389,
+      "p95_ms": 891.4261721074581,
+      "retrieval_p50_ms": 268.4427686035633,
+      "retrieval_p95_ms": 376.3834089040756,
+      "rerank_p50_ms": 279.21007201075554,
+      "rerank_p95_ms": 567.6459595561028,
+      "rerank_attempts": 64,
+      "rerank_successes": 63,
+      "rerank_fallbacks": 1,
+      "rerank_fallback_reasons": {
+        "exception:ReadTimeout": 1
+      },
+      "top1_moves": 5,
+      "top1_regressions": 1,
+      "added_p95_ms": 570.4295225441456,
+      "expected_rerank_attempts": 64,
+      "production_prediction_ok": true
+    }
+  },
+  "failure_samples": {
+    "baseline": [
+      {
+        "query": "小区门口机动车道被违停车辆占了一排，通行困难",
+        "label": "交通与通行/车辆占道",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 5,
+        "gold_in_candidates": true,
+        "top": [
+          73,
+          187,
+          55,
+          32,
+          86
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "路口信号灯损坏半个月，一直闪黄灯不切换",
+        "label": "交通与通行/交通设施损坏",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 5,
+        "gold_in_candidates": true,
+        "top": [
+          163,
+          186,
+          126,
+          115,
+          116
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "那个路口的灯早就不亮了，车和人都不知道什么时候能走",
+        "label": "交通与通行/交通设施损坏",
+        "style": "colloquial",
+        "first_rank": 4,
+        "hit": true,
+        "candidate_count": 5,
+        "gold_in_candidates": true,
+        "top": [
+          144,
+          126,
+          163,
+          115,
+          116
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "楼里的灭火器早就没压力了，那个水管的箱子也锁死了打不开",
+        "label": "消防安全/消防设施故障",
+        "style": "colloquial",
+        "first_rank": null,
+        "hit": false,
+        "candidate_count": 5,
+        "gold_in_candidates": false,
+        "top": [
+          230,
+          127,
+          128,
+          93,
+          108
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "城中村危房承重墙开裂、房屋整体倾斜，仍有人居住",
+        "label": "建筑安全/危房",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 4,
+        "gold_in_candidates": true,
+        "top": [
+          191,
+          129,
+          207,
+          8
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "那栋老楼早就不行了，墙都是歪的，里头还住着人",
+        "label": "建筑安全/危房",
+        "style": "colloquial",
+        "first_rank": null,
+        "hit": false,
+        "candidate_count": 4,
+        "gold_in_candidates": false,
+        "top": [
+          132,
+          190,
+          191,
+          131
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "居民楼燃气管道泄漏，楼道里有明显煤气味",
+        "label": "电气与燃气/燃气泄漏",
+        "style": "explicit",
+        "first_rank": 4,
+        "hit": true,
+        "candidate_count": 5,
+        "gold_in_candidates": true,
+        "top": [
+          202,
+          143,
+          197,
+          90,
+          102
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "一进楼道就闻到很大的味儿，像是气漏了",
+        "label": "电气与燃气/燃气泄漏",
+        "style": "colloquial",
+        "first_rank": 4,
+        "hit": true,
+        "candidate_count": 5,
+        "gold_in_candidates": true,
+        "top": [
+          202,
+          197,
+          143,
+          90,
+          102
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "施工现场临时用电线路乱拉，配电箱无漏电保护",
+        "label": "施工安全/施工临时用电",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 5,
+        "gold_in_candidates": true,
+        "top": [
+          64,
+          89,
+          196,
+          147,
+          184
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "工地上的电是随便接的，箱子也没盖子",
+        "label": "施工安全/施工临时用电",
+        "style": "colloquial",
+        "first_rank": 3,
+        "hit": true,
+        "candidate_count": 5,
+        "gold_in_candidates": true,
+        "top": [
+          64,
+          255,
+          89,
+          147,
+          184
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "小区角落建筑垃圾和生活垃圾长期堆积无人清运",
+        "label": "环境与其他/垃圾堆积",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 4,
+        "gold_in_candidates": true,
+        "top": [
+          187,
+          121,
+          157,
+          188
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "路边放着几个大桶，也不知道装的什么，有股味儿",
+        "label": "环境与其他/其他",
+        "style": "colloquial",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 3,
+        "gold_in_candidates": true,
+        "top": [
+          112,
+          119,
+          121
+        ],
+        "rerank_fallback_reason": null
+      }
+    ],
+    "candidates": [
+      {
+        "query": "小区门口机动车道被违停车辆占了一排，通行困难",
+        "label": "交通与通行/车辆占道",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 7,
+        "gold_in_candidates": true,
+        "top": [
+          73,
+          32,
+          187,
+          55,
+          86
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "楼里的灭火器早就没压力了，那个水管的箱子也锁死了打不开",
+        "label": "消防安全/消防设施故障",
+        "style": "colloquial",
+        "first_rank": 5,
+        "hit": true,
+        "candidate_count": 7,
+        "gold_in_candidates": true,
+        "top": [
+          230,
+          93,
+          127,
+          128,
+          123
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "城中村危房承重墙开裂、房屋整体倾斜，仍有人居住",
+        "label": "建筑安全/危房",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 8,
+        "gold_in_candidates": true,
+        "top": [
+          191,
+          129,
+          8,
+          207,
+          190
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "那栋老楼早就不行了，墙都是歪的，里头还住着人",
+        "label": "建筑安全/危房",
+        "style": "colloquial",
+        "first_rank": null,
+        "hit": false,
+        "candidate_count": 6,
+        "gold_in_candidates": false,
+        "top": [
+          132,
+          131,
+          190,
+          191,
+          170
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "居民楼燃气管道泄漏，楼道里有明显煤气味",
+        "label": "电气与燃气/燃气泄漏",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 9,
+        "gold_in_candidates": true,
+        "top": [
+          202,
+          90,
+          143,
+          102,
+          197
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "一进楼道就闻到很大的味儿，像是气漏了",
+        "label": "电气与燃气/燃气泄漏",
+        "style": "colloquial",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 9,
+        "gold_in_candidates": true,
+        "top": [
+          202,
+          90,
+          197,
+          102,
+          143
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "施工现场临时用电线路乱拉，配电箱无漏电保护",
+        "label": "施工安全/施工临时用电",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 6,
+        "gold_in_candidates": true,
+        "top": [
+          64,
+          147,
+          89,
+          184,
+          214
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "工地上的电是随便接的，箱子也没盖子",
+        "label": "施工安全/施工临时用电",
+        "style": "colloquial",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 6,
+        "gold_in_candidates": true,
+        "top": [
+          64,
+          89,
+          147,
+          184,
+          214
+        ],
+        "rerank_fallback_reason": null
+      }
+    ],
+    "rerank": [
+      {
+        "query": "楼里的灭火器早就没压力了，那个水管的箱子也锁死了打不开",
+        "label": "消防安全/消防设施故障",
+        "style": "colloquial",
+        "first_rank": 3,
+        "hit": true,
+        "candidate_count": 7,
+        "gold_in_candidates": true,
+        "top": [
+          230,
+          127,
+          124,
+          128,
+          125
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "城中村危房承重墙开裂、房屋整体倾斜，仍有人居住",
+        "label": "建筑安全/危房",
+        "style": "explicit",
+        "first_rank": 4,
+        "hit": true,
+        "candidate_count": 8,
+        "gold_in_candidates": true,
+        "top": [
+          191,
+          190,
+          132,
+          194,
+          129
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "那栋老楼早就不行了，墙都是歪的，里头还住着人",
+        "label": "建筑安全/危房",
+        "style": "colloquial",
+        "first_rank": null,
+        "hit": false,
+        "candidate_count": 6,
+        "gold_in_candidates": false,
+        "top": [
+          190,
+          170,
+          132,
+          131,
+          191
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "居民楼燃气管道泄漏，楼道里有明显煤气味",
+        "label": "电气与燃气/燃气泄漏",
+        "style": "explicit",
+        "first_rank": 4,
+        "hit": true,
+        "candidate_count": 9,
+        "gold_in_candidates": true,
+        "top": [
+          202,
+          143,
+          197,
+          90,
+          102
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "一进楼道就闻到很大的味儿，像是气漏了",
+        "label": "电气与燃气/燃气泄漏",
+        "style": "colloquial",
+        "first_rank": 5,
+        "hit": true,
+        "candidate_count": 9,
+        "gold_in_candidates": true,
+        "top": [
+          202,
+          143,
+          197,
+          257,
+          90
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "施工现场临时用电线路乱拉，配电箱无漏电保护",
+        "label": "施工安全/施工临时用电",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 6,
+        "gold_in_candidates": true,
+        "top": [
+          64,
+          147,
+          89,
+          214,
+          242
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "工地上的电是随便接的，箱子也没盖子",
+        "label": "施工安全/施工临时用电",
+        "style": "colloquial",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 6,
+        "gold_in_candidates": true,
+        "top": [
+          64,
+          89,
+          147,
+          214,
+          242
+        ],
+        "rerank_fallback_reason": null
+      },
+      {
+        "query": "公共区域出现来源不明的危化品桶，气味刺鼻无人认领",
+        "label": "环境与其他/其他",
+        "style": "explicit",
+        "first_rank": 2,
+        "hit": true,
+        "candidate_count": 8,
+        "gold_in_candidates": true,
+        "top": [
+          245,
+          234,
+          260,
+          122,
+          157
+        ],
+        "rerank_fallback_reason": null
+      }
+    ]
+  },
+  "gate": {
+    "passed": false,
+    "reason": "Hit@5 fell below 1.000; Top-1 hits below baseline + 5; Top-1 regression detected; reranker successful responses below attempts; reranker fallback count must be 0; rerank P95 exceeds 350ms; end-to-end added P95 exceeds 500ms"
+  }
+}
