@@ -53,6 +53,7 @@ ai-module/db/case_embeddings.json
 ai-module/test_images/
 uploads/
 demo.png
+ai-module/eval/vision/_*.json
 ai-module/eval/vision/_archive/
 ai-module/eval/vision/images_merged/
 ai-module/eval/vision/negatives/
@@ -117,3 +118,8 @@ ai-module/db/question_source.txt
 # 前端改动工作副本（仅本地同步用）
 .frontend-work/
 
+# 个人简历/面试材料
+/output/
+
+# Rerank evaluation raw output; sanitized evidence is committed under docs/evidence/
+ai-module/db/eval_rerank_output.json

@@ -72,6 +72,16 @@ def _env_bool(name: str, default: str) -> bool:
     raise ValueError(f"Invalid boolean value for {name}: {value!r}")
 
 
+# Rerank experiment. Disabled until the read-only evaluation gate passes.
+RERANK_ENABLED = _env_bool("RERANK_ENABLED", "false")
+RERANK_CANDIDATE_K = int(os.getenv("RERANK_CANDIDATE_K", "5"))
+RERANK_FINAL_K = int(os.getenv("RERANK_FINAL_K", "5"))
+RERANK_TIMEOUT_SECONDS = float(os.getenv("RERANK_TIMEOUT_SECONDS", "1.0"))
+RERANK_BASE_URL = os.getenv("RERANK_BASE_URL", SF_BASE_URL)
+RERANK_API_KEY = os.getenv("RERANK_API_KEY", SF_API_KEY)
+RERANK_MODEL = os.getenv("RERANK_MODEL", "BAAI/bge-reranker-v2-m3")
+
+
 VECTOR_BACKEND = os.getenv("VECTOR_BACKEND", "mysql").strip().lower()
 if VECTOR_BACKEND not in {"mysql", "milvus"}:
     raise ValueError(

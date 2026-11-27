@@ -26,11 +26,19 @@ from config import (
     SF_BASE_URL,
     SF_API_KEY,
     SF_EMBED_MODEL,
+    RERANK_ENABLED,
+    RERANK_CANDIDATE_K,
+    RERANK_FINAL_K,
+    RERANK_TIMEOUT_SECONDS,
+    RERANK_BASE_URL,
+    RERANK_API_KEY,
+    RERANK_MODEL,
     RETRIEVAL_MIN_SCORE,
     RETRIEVAL_TIMEOUT_SECONDS,
     VECTOR_BACKEND,
 )
 from core.cancellation import CancellationToken, StreamCancelled
+from core.hazard_taxonomy import MAJOR_LABELS, major_code_for_category
 from db_config import DB_CONFIG
 from tools import db_pool
 
@@ -75,6 +83,31 @@ def _call_with_optional_kwargs(func, *args, **kwargs):
         return func(*args, **kwargs)
     accepted = {key: value for key, value in kwargs.items() if key in parameters}
     return func(*args, **accepted)
+
+
+def _build_runtime_reranker():
+    """Construct the configured reranker only when the runtime flag is on."""
+    from core.reranker_http import HTTPReranker
+
+    return HTTPReranker(
+        base_url=RERANK_BASE_URL,
+        api_key=RERANK_API_KEY,
+        model=RERANK_MODEL,
+    )
+
+
+def _runtime_rerank_outcome(query, candidates, final_k, cancellation, timeout_seconds):
+    """Apply the safe rerank wrapper after a lazy import."""
+    from core.reranker import safe_rerank_outcome
+
+    return safe_rerank_outcome(
+        _build_runtime_reranker(),
+        query,
+        candidates,
+        final_k,
+        cancellation=cancellation,
+        timeout_seconds=timeout_seconds,
+    )
 
 
 def _mysql_connection(timeout_seconds: float, cancellation: CancellationToken | None):
@@ -600,28 +633,153 @@ class HybridSearcher:
 
     # ====== 混合检索 ======
 
+    def retrieve_candidates(self, query: str, table: str = "tb_hazard_case",
+                            vector_k: int = 3, keyword_k: int = 3,
+                            cancellation: CancellationToken | None = None,
+                            timeout_seconds: float = RETRIEVAL_TIMEOUT_SECONDS) -> list[dict]:
+        """Return merged structured candidates for evaluation or reranking."""
+        if table not in TABLE_TO_COLLECTION:
+            raise ValueError(f"Unsupported retrieval table: {table}")
+
+        deadline = time.monotonic() + max(0.001, float(timeout_seconds))
+        _check_cancelled(cancellation)
+        vector_results = _call_with_optional_kwargs(
+            self.vector_search,
+            query,
+            table,
+            top_k=vector_k,
+            cancellation=cancellation,
+            deadline=deadline,
+        )
+        _check_cancelled(cancellation)
+        keyword_results = _call_with_optional_kwargs(
+            self.keyword_search,
+            query,
+            table,
+            limit=keyword_k,
+            cancellation=cancellation,
+            timeout_seconds=_remaining(deadline),
+        )
+        _check_cancelled(cancellation)
+        return self._merge_results(keyword_results, vector_results, vector_k, keyword_k)
+
+    def retrieve_rerank_candidates(self, query: str, table: str = "tb_hazard_case", *,
+                                   major_code: str,
+                                   vector_k: int = 5, keyword_k: int = 5,
+                                   cancellation: CancellationToken | None = None,
+                                   timeout_seconds: float = RETRIEVAL_TIMEOUT_SECONDS) -> list[dict]:
+        """Collect all major-filtered, id-deduplicated candidates for reranking."""
+        if table not in TABLE_TO_COLLECTION:
+            raise ValueError(f"Unsupported retrieval table: {table}")
+        if major_code not in MAJOR_LABELS:
+            raise ValueError(f"Unsupported major code: {major_code}")
+
+        deadline = time.monotonic() + max(0.001, float(timeout_seconds))
+        _check_cancelled(cancellation)
+        vector_results = _call_with_optional_kwargs(
+            self.vector_search,
+            query,
+            table,
+            top_k=vector_k,
+            cancellation=cancellation,
+            deadline=deadline,
+        )
+        _check_cancelled(cancellation)
+        keyword_results = _call_with_optional_kwargs(
+            self.keyword_search,
+            query,
+            table,
+            limit=keyword_k,
+            cancellation=cancellation,
+            timeout_seconds=_remaining(deadline),
+        )
+        _check_cancelled(cancellation)
+
+        merged = []
+        seen = set()
+        max_length = max(len(vector_results), len(keyword_results))
+        for index in range(max_length):
+            for source, results in (("语义", vector_results), ("关键词", keyword_results)):
+                if index >= len(results):
+                    continue
+                item = results[index]
+                if not isinstance(item, dict):
+                    continue
+                if major_code_for_category(item.get("category")) != major_code:
+                    continue
+                try:
+                    item_id = int(item.get("id"))
+                except (TypeError, ValueError):
+                    continue
+                if isinstance(item.get("id"), bool) or item_id <= 0 or item_id in seen:
+                    continue
+                candidate = dict(item)
+                candidate["id"] = item_id
+                candidate["match_type"] = candidate.get("match_type") or source
+                merged.append(candidate)
+                seen.add(item_id)
+        return merged
+
     def hybrid_search(self, query: str, table: str = "tb_hazard_case",
                       vector_k: int = 3, keyword_k: int = 3,
                       cancellation: CancellationToken | None = None,
                       timeout_seconds: float = RETRIEVAL_TIMEOUT_SECONDS) -> str:
         """
         混合检索入口：向量 + 关键词 → 合并去重 → 格式化输出。
-        """
-        if table not in TABLE_TO_COLLECTION:
-            raise ValueError(f"Unsupported retrieval table: {table}")
 
-        deadline = time.monotonic() + max(0.001, float(timeout_seconds))
-        _check_cancelled(cancellation)
+        RERANK_ENABLED=false 时完全沿用原有 3+3 路径；开启后才扩大候选并调用
+        配置好的 reranker。reranker 不可用或输出不完整时保留原候选顺序。
+        """
+        result_limit = max(vector_k, keyword_k) + 2
         try:
-            vector_results = _call_with_optional_kwargs(
-                self.vector_search,
-                query,
-                table,
-                top_k=vector_k,
-                cancellation=cancellation,
-                deadline=deadline,
-            )
-            _check_cancelled(cancellation)
+            if RERANK_ENABLED:
+                candidate_k = max(1, int(RERANK_CANDIDATE_K))
+                final_k = max(0, int(RERANK_FINAL_K))
+                candidates = self.retrieve_candidates(
+                    query,
+                    table,
+                    vector_k=candidate_k,
+                    keyword_k=candidate_k,
+                    cancellation=cancellation,
+                    timeout_seconds=timeout_seconds,
+                )
+                _check_cancelled(cancellation)
+                try:
+                    outcome = _runtime_rerank_outcome(
+                        query,
+                        candidates,
+                        final_k,
+                        cancellation,
+                        RERANK_TIMEOUT_SECONDS,
+                    )
+                except StreamCancelled:
+                    raise
+                except Exception as exc:
+                    LOGGER.warning(
+                        "runtime rerank unavailable; using original candidates: %s",
+                        type(exc).__name__,
+                    )
+                    outcome = {
+                        "items": candidates[:final_k],
+                        "used_reranker": False,
+                        "fallback_reason": f"exception:{type(exc).__name__}",
+                    }
+                if not outcome["used_reranker"]:
+                    LOGGER.warning(
+                        "runtime rerank fallback: %s",
+                        outcome.get("fallback_reason"),
+                    )
+                merged = outcome["items"]
+                result_limit = final_k
+            else:
+                merged = self.retrieve_candidates(
+                    query,
+                    table,
+                    vector_k=vector_k,
+                    keyword_k=keyword_k,
+                    cancellation=cancellation,
+                    timeout_seconds=timeout_seconds,
+                )
         except StreamCancelled:
             raise
         except RetrievalTimeout:
@@ -630,30 +788,13 @@ class HybridSearcher:
         except MilvusRetrievalError as exc:
             _check_cancelled(cancellation)
             return f"Milvus 向量检索不可用：{exc}。请暂时使用 MySQL 检索或稍后重试。"
-        try:
-            keyword_results = _call_with_optional_kwargs(
-                self.keyword_search,
-                query,
-                table,
-                limit=keyword_k,
-                cancellation=cancellation,
-                timeout_seconds=_remaining(deadline),
-            )
-            _check_cancelled(cancellation)
-        except StreamCancelled:
-            raise
-        except RetrievalTimeout:
-            _check_cancelled(cancellation)
-            return self._degraded_result(query, table)
-
-        merged = self._merge_results(keyword_results, vector_results, vector_k, keyword_k)
 
         # 格式化输出
         if not merged:
             return f"未找到与「{query}」相关的结果。"
 
         lines = [f"=== 混合检索结果: 「{query}」(语义{vector_k}+关键词{keyword_k}) ==="]
-        for i, r in enumerate(merged[:max(vector_k, keyword_k) + 2], 1):
+        for i, r in enumerate(merged[:result_limit], 1):
             if table == "tb_regulation":
                 lines.append(
                     f"\n【法规{i}】[{r['match_type']}匹配] {r.get('title', '')}\n"

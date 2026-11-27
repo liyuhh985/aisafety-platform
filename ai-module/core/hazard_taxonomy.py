@@ -142,6 +142,17 @@ def normalize_taxonomy(value: str):
     return None
 
 
+def major_code_for_category(value: str | None) -> str | None:
+    """Resolve a candidate category string to a canonical major code."""
+    pair = normalize_taxonomy(value or "")
+    if pair:
+        return pair[0]
+    head = (value or "").strip().split("/", 1)[0].strip()
+    if head in MAJOR_LABELS:
+        return head
+    return MAJOR_LABEL_TO_CODE.get(head)
+
+
 def format_hazard_type(major_code: str, subcategory_code: str) -> str:
     pair = normalize_taxonomy(f"{major_code}/{subcategory_code}")
     if not pair:
