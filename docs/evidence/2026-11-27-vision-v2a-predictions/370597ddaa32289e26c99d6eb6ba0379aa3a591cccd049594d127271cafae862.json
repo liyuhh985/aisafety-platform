@@ -1,0 +1,27 @@
+{
+  "sha256": "370597ddaa32289e26c99d6eb6ba0379aa3a591cccd049594d127271cafae862",
+  "file": "VEH0001.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"道路两侧及路面停放多辆机动车，蓝色车辆停在道路中间，导致剩余通行空间狭窄，影响正常会车和行人通行，易造成剐蹭或延误应急车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商铺门前道路，白色起亚与蓝色本田停放处\",\n  \"rectification\": [\n    \"劝离违停车辆，恢复道路正常通行空间\",\n    \"设置禁停标志或隔离设施，规范车辆停放\",\n    \"加强该路段巡查和违停执法\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "道路两侧及路面停放多辆机动车，蓝色车辆停在道路中间，导致剩余通行空间狭窄，影响正常会车和行人通行，易造成剐蹭或延误应急车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商铺门前道路，白色起亚与蓝色本田停放处",
+    "rectification": [
+      "劝离违停车辆，恢复道路正常通行空间",
+      "设置禁停标志或隔离设施，规范车辆停放",
+      "加强该路段巡查和违停执法"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

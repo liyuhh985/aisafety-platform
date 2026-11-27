@@ -6,7 +6,7 @@
 两者第 2 轮都问：那人行道旁边摇摇欲坠的广告牌呢
 
 量三样，分别对应三条不同的轴：
-  ① 焦点：perceived_subcategory 有没有给出 facade_fall（"广告牌"自带物件词，属自足型）
+  ① 焦点：perceived_subcategory 有没有给出 falling_object（"广告牌"自带物件词，属自足型）
   ② 污染：issues 里还有没有 manhole_damage（旧的那条），排第几
   ③ 产物：intent 稳不稳（决定进哪个节点）
 另有 ④ 候选数：同一大类里有几条候选 —— 决定「候选唯一才兜底」这条规则生不生效
@@ -53,13 +53,13 @@ def main():
             maj = p.get("perceived_major") or ""
             in_major = [c for c in codes if SUBCATEGORY_TO_MAJOR.get(c) == maj] if maj else []
             old_at = codes.index(OLD) if OLD in codes else -1
-            ok = sub == "facade_fall"
+            ok = sub == "falling_object"
             focus_hit += 1 if ok else 0
             print("  run%d ok=%-5s intent=%-16s focus=%-18s major=%-10s issues=%-40s 旧类别@%s 同大类候选=%d"
                   % (i, bool(p.get("ok")), p.get("intent") or "-", sub or "-", maj or "-",
                      ",".join(codes) or "-", old_at, len(in_major)))
             sys.stdout.flush()
-        print("    -> 焦点命中 facade_fall：%d/%d" % (focus_hit, reps))
+        print("    -> 焦点命中 falling_object：%d/%d" % (focus_hit, reps))
 
 
 if __name__ == "__main__":

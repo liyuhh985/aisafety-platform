@@ -1,0 +1,23 @@
+{
+  "sha256": "08e01514390b21e92888c3e05ca20a41107646a1079aa8fe89208d60c1469ea4",
+  "file": "NEGROA02.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中道路路面平整，右侧护栏及电杆警示标识未见明显损坏或缺失，未发现明确安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中道路路面平整，右侧护栏及电杆警示标识未见明显损坏或缺失，未发现明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

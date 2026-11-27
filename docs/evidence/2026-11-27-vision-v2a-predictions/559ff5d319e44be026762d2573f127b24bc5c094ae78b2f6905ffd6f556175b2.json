@@ -1,0 +1,30 @@
+{
+  "sha256": "559ff5d319e44be026762d2573f127b24bc5c094ae78b2f6905ffd6f556175b2",
+  "file": "ILL0054.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_barrier\",\"severity\":\"高\",\"description\":\"夜间门店前人行道搭建金属架并有人登梯作业，作业区未见连续围挡和警戒隔离，地面堆放编织袋、工具等，行人从旁穿行，存在高处坠物、绊倒及作业人员坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"武汉市国金天地“肥肥虾庄”门前人行道\",\"rectification\":[\"立即在作业区域设置连续围挡和警戒线，禁止行人进入\",\"安排专人疏导行人，夜间增设警示灯\",\"高处作业人员佩戴安全带，工具材料做好防坠固定\",\"及时清理地面编织袋和工具，保持人行道畅通\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "夜间门店前人行道搭建金属架并有人登梯作业，作业区未见连续围挡和警戒隔离，地面堆放编织袋、工具等，行人从旁穿行，存在高处坠物、绊倒及作业人员坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "武汉市国金天地“肥肥虾庄”门前人行道",
+    "rectification": [
+      "立即在作业区域设置连续围挡和警戒线，禁止行人进入",
+      "安排专人疏导行人，夜间增设警示灯",
+      "高处作业人员佩戴安全带，工具材料做好防坠固定",
+      "及时清理地面编织袋和工具，保持人行道畅通"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

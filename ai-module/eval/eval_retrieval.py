@@ -75,7 +75,7 @@ SCENARIO_LEGACY = "槽位有值"
 SCENARIO_SCHEMA = "槽位有值(schema键)"
 SCENARIOS = (SCENARIO_EMPTY, SCENARIO_LEGACY, SCENARIO_SCHEMA)
 
-# 32 个小类的代表性槽位值（与基线那次完全相同，不要动，否则基线不可比）。
+# 29 个小类的代表性槽位值（v2a 合并后独立基线）。
 SLOT_VALUES = {
     "road_occupancy": "货架",
     "vehicle_occupancy": "违停",
@@ -86,12 +86,9 @@ SLOT_VALUES = {
     "drainage_flood": "积水",
     "street_light_pole": "不亮",
     "fire_lane_blocked": "私家车",
-    "fire_equipment_fault": "消火栓",
-    "fire_water_abnormal": "水压",
-    "dangerous_building": "裂缝",
-    "wall_crack_lean": "倾斜",
-    "facade_fall": "外墙",
-    "falling_object": "阳台",
+    "fire_equipment_fault": "消火栓无水",
+    "dangerous_building": "裂缝倾斜",
+    "falling_object": "外墙脱落",
     "illegal_structure": "搭建",
     "exposed_wire": "裸露",
     "distribution_box_fault": "配电箱",
@@ -123,10 +120,7 @@ SLOT_FIXTURE_KEYS = {
     "street_light_pole": "defect",
     "fire_lane_blocked": "blocker",
     "fire_equipment_fault": "facility_type",
-    "fire_water_abnormal": "defect",
     "dangerous_building": "structure",
-    "wall_crack_lean": "structure",
-    "facade_fall": "source",
     "falling_object": "source",
     "illegal_structure": "defect",
     "exposed_wire": "source",
@@ -426,7 +420,9 @@ def main() -> int:
     emit("窗口 top-" + str(WINDOW) + "（语义" + str(VECTOR_K) + " + 关键词" + str(KEYWORD_K)
          + " 合并去重后截断；顺序＝向量在前、关键词补尾，调 HybridSearcher._merge_results）")
     emit("库内案例 " + str(sum(len(v) for v in GOLD.values())) + " 条；查询 "
-         + str(len(QUERY_SET)) + " 条；自查 32/32 覆盖 ✅")
+         + str(len(QUERY_SET)) + " 条；自查 "
+         + str(len(all_subcategories())) + "/"
+         + str(len(all_subcategories())) + " 覆盖 ✅")
     emit("=" * 78)
 
     started = time.time()

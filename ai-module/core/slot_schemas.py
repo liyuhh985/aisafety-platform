@@ -63,7 +63,7 @@ SLOT_SCHEMAS: dict[str, list[Slot]] = {
         Slot("blocked", "是完全堵死还是部分占用？"),
     ],
     "危房": [
-        Slot("structure", "房屋有没有裂缝、倾斜或沉降？"),
+        Slot("structure", "房屋有没有墙体开裂、整体倾斜、地基沉降或承重构件变形？"),
         Slot("occupancy", "现在有人在里面居住或使用吗？"),
     ],
     "消防通道": [
@@ -72,12 +72,12 @@ SLOT_SCHEMAS: dict[str, list[Slot]] = {
         Slot("impact", "是否影响消防车或人员通行？", REPORT_CLASS),
     ],
     "消防设施": [
-        Slot("facility_type", "具体是哪一类消防设施，例如消火栓、喷淋、报警器还是灭火器？"),
-        Slot("condition", "目前是老旧、损坏还是完全无法使用？"),
-        Slot("function_impact", "是否影响整栋建筑的消防报警或灭火功能？", REPORT_CLASS),
+        Slot("facility_type", "具体是哪一类消防设施，例如消火栓、喷淋、报警器、灭火器，还是消防水池/管网/室外消火栓？"),
+        Slot("condition", "目前是老旧、损坏、无水无压、被埋压，还是完全无法使用？"),
+        Slot("function_impact", "是否影响整栋建筑的消防报警或灭火供水功能？", REPORT_CLASS),
     ],
     "高空坠物": [
-        Slot("source", "是从哪掉落的（外墙/阳台/广告牌）？"),
+        Slot("source", "坠落来源是什么：外墙瓷砖/抹灰/幕墙、外挂空调/广告牌/花盆，还是人为高空抛物？"),
         Slot("target", "下面是人行道还是车行道？", REPORT_CLASS),
         Slot("exposure", "有没有围挡或警告标志？", REPORT_CLASS),
     ],
@@ -102,14 +102,8 @@ SLOT_SCHEMAS: dict[str, list[Slot]] = {
 
 SUBCATEGORY_SLOT_SCHEMAS: dict[str, list[Slot]] = {
     "fire_lane_blocked": SLOT_SCHEMAS["消防通道"],
-    "fire_equipment_fault": [
-        Slot("facility_type", "具体是哪一类消防设施，例如消火栓、喷淋、报警器还是灭火器？"),
-        Slot("condition", "目前是老旧、损坏还是完全无法使用？"),
-        Slot("function_impact", "是否影响整栋建筑的消防报警或灭火功能？", REPORT_CLASS),
-    ],
+    "fire_equipment_fault": SLOT_SCHEMAS["消防设施"],
     "dangerous_building": SLOT_SCHEMAS["危房"],
-    "wall_crack_lean": SLOT_SCHEMAS["危房"],
-    "facade_fall": SLOT_SCHEMAS["高空坠物"],
     "falling_object": SLOT_SCHEMAS["高空坠物"],
     "illegal_structure": SLOT_SCHEMAS["其他"],
     "manhole_damage": SLOT_SCHEMAS["井盖/道路"],

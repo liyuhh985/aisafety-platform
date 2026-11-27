@@ -1,0 +1,30 @@
+{
+  "sha256": "11726a3c3da619f9279689d0ea2e58995e763e590be2181c8aeba61eae1bc9ef",
+  "file": "GAS0050.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"画面显示一处较深的长条形开挖沟槽，坑口边缘未见连续防护栏杆或硬质围挡，人员站在坑边并下坑作业，存在人员坠落、边坡坍塌及物料坠入风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"开挖沟槽及坑口周边\",\n  \"rectification\": [\n    \"在坑口周边设置连续、牢固的临边防护栏杆或硬质围挡\",\n    \"设置明显的安全警示标志，并落实专人监护\",\n    \"作业人员正确佩戴安全帽等个人防护用品，严禁无关人员靠近坑边\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\",\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "画面显示一处较深的长条形开挖沟槽，坑口边缘未见连续防护栏杆或硬质围挡，人员站在坑边并下坑作业，存在人员坠落、边坡坍塌及物料坠入风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "开挖沟槽及坑口周边",
+    "rectification": [
+      "在坑口周边设置连续、牢固的临边防护栏杆或硬质围挡",
+      "设置明显的安全警示标志，并落实专人监护",
+      "作业人员正确佩戴安全帽等个人防护用品，严禁无关人员靠近坑边"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

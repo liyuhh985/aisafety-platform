@@ -33,6 +33,26 @@ def test_task_storage_format_round_trips():
     assert parse_hazard_type("消防设施") == ("fire", "fire_equipment_fault")
 
 
+def test_retired_subcategories_are_not_silent_aliases():
+    retired = (
+        "building/wall_crack_lean",
+        "建筑安全/墙体开裂/倾斜",
+        "墙体开裂/倾斜",
+        "building/facade_fall",
+        "建筑安全/外立面脱落",
+        "外立面脱落",
+        "fire/fire_water_abnormal",
+        "消防安全/消防水源异常",
+        "消防水源异常",
+    )
+    for value in retired:
+        assert normalize_taxonomy(value) is None, value
+    assert len(ALL_SUBCATEGORY_CODES) == 29
+    assert "wall_crack_lean" not in ALL_SUBCATEGORY_CODES
+    assert "facade_fall" not in ALL_SUBCATEGORY_CODES
+    assert "fire_water_abnormal" not in ALL_SUBCATEGORY_CODES
+
+
 def test_every_subcategory_code_is_unique():
     assert len(ALL_SUBCATEGORY_CODES) == sum(
         len(item["subcategories"]) for item in HAZARD_TAXONOMY

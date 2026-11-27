@@ -1,0 +1,29 @@
+{
+  "sha256": "41ea7950c15db3140db304b107df3d61a0a683310d1ed078e7c6691726f3b7c3",
+  "file": "FAC0073.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"建筑安全\",\"major_category\":\"building\",\"subcategory\":\"dangerous_building\",\"severity\":\"高\",\"description\":\"一栋多层建筑整体明显倾斜，底部疑似沉降或结构破坏，消防车辆和人员正在处置。存在建筑倒塌及外挂防盗窗、空调机坠落风险，可能造成人员伤亡和次生灾害。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"红色多层建筑整体及底部\",\"rectification\":[\"立即划定警戒区并疏散周边人员，禁止无关人员进入\",\"组织结构专家评估，采取临时支撑加固或安全拆除\",\"排查并清除易坠落外挂物，救援人员做好防倒塌防护\"],\"secondary_subcategories\":[\"falling_object\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "一栋多层建筑整体明显倾斜，底部疑似沉降或结构破坏，消防车辆和人员正在处置。存在建筑倒塌及外挂防盗窗、空调机坠落风险，可能造成人员伤亡和次生灾害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "红色多层建筑整体及底部",
+    "rectification": [
+      "立即划定警戒区并疏散周边人员，禁止无关人员进入",
+      "组织结构专家评估，采取临时支撑加固或安全拆除",
+      "排查并清除易坠落外挂物，救援人员做好防倒塌防护"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

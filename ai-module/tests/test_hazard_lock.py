@@ -143,12 +143,12 @@ def test_two_in_major_hazards_are_both_recorded(monkeypatch):
 def test_active_hazards_are_capped(monkeypatch):
     "上界是 MAX_ACTIVE_HAZARDS：并列追问一句最多几条，多出来的丢在这里。"
     plan = _plan(issues=[
-        {"major_code": "building", "subcategory_code": "dangerous_building", "slots": {}},
-        {"major_code": "building", "subcategory_code": "wall_crack_lean", "slots": {}},
-        {"major_code": "building", "subcategory_code": "facade_fall", "slots": {}},
-        {"major_code": "building", "subcategory_code": "falling_object", "slots": {}},
-    ], categories=["dangerous_building", "wall_crack_lean", "facade_fall", "falling_object"])
-    out = _run(monkeypatch, "危房、墙体开裂、外立面脱落、还有东西往下掉", plan=plan)
+        {"major_code": "municipal", "subcategory_code": "manhole_damage", "slots": {}},
+        {"major_code": "municipal", "subcategory_code": "road_surface_collapse", "slots": {}},
+        {"major_code": "municipal", "subcategory_code": "drainage_flood", "slots": {}},
+        {"major_code": "municipal", "subcategory_code": "street_light_pole", "slots": {}},
+    ], categories=["manhole_damage", "road_surface_collapse", "drainage_flood", "street_light_pole"])
+    out = _run(monkeypatch, "井盖破了、路面塌陷、排水积水、路灯也不亮", plan=plan)
     assert len(out["issues"]) == ag.MAX_ACTIVE_HAZARDS == 3
 
 

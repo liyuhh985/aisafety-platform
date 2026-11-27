@@ -437,7 +437,7 @@ from core.scope_policy import (CATCH_ALL_SUBCATEGORIES, OBJECT_CLASS_EVIDENCE,
 
 OBJECT_CLASS_CODES = (
     "traffic_facility_damage", "manhole_damage", "street_light_pole",
-    "distribution_box_fault", "facade_fall",
+    "distribution_box_fault", "falling_object",
 )
 
 
@@ -479,8 +479,9 @@ OBJECT_CLASS_PHRASES = (
     ("street_light_pole", "小区外路灯连片不亮，线杆底座倾斜开裂"),                        # 物件词
     ("distribution_box_fault", "楼下的电表箱子门掉了，里面还冒烟有糊味"),                 # 物件词
     ("distribution_box_fault", "小区配电箱箱门缺失、接线端子烧蚀冒烟"),                   # 物件词
-    ("facade_fall", "楼上掉下来一大块外墙的砖，把车都砸穿了"),                            # 物件词
-    ("facade_fall", "高层大厦外立面大理石瓷砖脱落砸坏车辆"),                              # 物件词
+    ("falling_object", "楼上掉下来一大块外墙的砖，把车都砸穿了"),                            # 物件词
+    ("falling_object", "高层大厦外立面大理石瓷砖脱落砸坏车辆"),                              # 物件词
+    ("falling_object", "楼上有人往下扔东西，瓶子掉下来把车玻璃砸碎了"),                      # 抛物词
 )
 
 

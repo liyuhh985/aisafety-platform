@@ -1,6 +1,6 @@
 """评测查询集：检索评测与分类评测共用同一份，避免两条线的查询漂移。
 
-- QUERY_SET：32 个小类 × 2 种问法
+- QUERY_SET：29 个小类 × 2 种问法
     style="explicit"  直白描述，含类别特征词
     style="colloquial" 口语/同义改写，尽量不含标准类别词（测语义检索）
 - NEGATIVE_SET：真无关查询（用于范围护栏与检索空结果率）
@@ -122,27 +122,15 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "楼道消火栓箱被上锁，灭火器压力表指针已在红区过期",
+        "query": "楼道消火栓箱被上锁、灭火器过期，厂区消防水池水位不足且室外消火栓无水",
         "major": "fire",
         "subcategory": "fire_equipment_fault",
         "style": "explicit",
     },
     {
-        "query": "楼里的灭火器早就没压力了，那个水管的箱子也锁死了打不开",
+        "query": "楼里的灭火器没压力，水管箱也锁死了，拧开室外消防龙头一滴水都没有",
         "major": "fire",
         "subcategory": "fire_equipment_fault",
-        "style": "colloquial",
-    },
-    {
-        "query": "厂区消防水池水位不足，室外消火栓放不出水",
-        "major": "fire",
-        "subcategory": "fire_water_abnormal",
-        "style": "explicit",
-    },
-    {
-        "query": "拧开那个消防用的水龙头，一滴水都出不来",
-        "major": "fire",
-        "subcategory": "fire_water_abnormal",
         "style": "colloquial",
     },
     # ---------- 建筑安全 ----------
@@ -159,37 +147,13 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "住宅楼外墙出现贯穿性裂缝，墙体明显倾斜",
-        "major": "building",
-        "subcategory": "wall_crack_lean",
-        "style": "explicit",
-    },
-    {
-        "query": "我家楼上的墙裂了一条大缝，从上到下，看着要倒",
-        "major": "building",
-        "subcategory": "wall_crack_lean",
-        "style": "colloquial",
-    },
-    {
-        "query": "高层大厦外立面大理石瓷砖脱落砸坏车辆",
-        "major": "building",
-        "subcategory": "facade_fall",
-        "style": "explicit",
-    },
-    {
-        "query": "楼上掉下来一大块外墙的砖，把车都砸穿了",
-        "major": "building",
-        "subcategory": "facade_fall",
-        "style": "colloquial",
-    },
-    {
-        "query": "住户从高层抛掷红酒瓶，砸碎汽车挡风玻璃",
+        "query": "高层大厦外立面瓷砖脱落砸车，住户还从楼上抛掷红酒瓶砸碎车窗",
         "major": "building",
         "subcategory": "falling_object",
         "style": "explicit",
     },
     {
-        "query": "楼上有人往下扔东西，瓶子掉下来把车玻璃砸碎了",
+        "query": "楼上掉下一大块外墙砖，还有人往下扔瓶子，车都被砸了",
         "major": "building",
         "subcategory": "falling_object",
         "style": "colloquial",

@@ -74,7 +74,7 @@ EVAL_SET = [
     },
     {
         "query": "高层大厦外立面大理石瓷砖脱落砸坏车辆",
-        "expected_category": "建筑安全/外立面脱落",
+        "expected_category": "建筑安全/高空坠物",
         "required_keywords": ["外立面", "脱落"],
     },
     {

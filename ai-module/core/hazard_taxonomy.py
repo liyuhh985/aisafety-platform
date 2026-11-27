@@ -27,7 +27,6 @@ HAZARD_TAXONOMY = (
         "subcategories": (
             ("fire_lane_blocked", "消防通道占用"),
             ("fire_equipment_fault", "消防设施故障"),
-            ("fire_water_abnormal", "消防水源异常"),
         ),
     },
     {
@@ -35,8 +34,6 @@ HAZARD_TAXONOMY = (
         "label": "建筑安全",
         "subcategories": (
             ("dangerous_building", "危房"),
-            ("wall_crack_lean", "墙体开裂/倾斜"),
-            ("facade_fall", "外立面脱落"),
             ("falling_object", "高空坠物"),
             ("illegal_structure", "违规搭建"),
         ),

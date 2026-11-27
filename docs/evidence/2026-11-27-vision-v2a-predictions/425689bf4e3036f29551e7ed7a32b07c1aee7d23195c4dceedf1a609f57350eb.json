@@ -1,0 +1,27 @@
+{
+  "sha256": "425689bf4e3036f29551e7ed7a32b07c1aee7d23195c4dceedf1a609f57350eb",
+  "file": "MAN0103.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"人行道路面石板大面积碎裂塌陷，形成深坑且边缘锋利，紧邻盲道，严重影响行人通行安全，极易导致绊倒、崴脚或划伤。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"步行街人行道中央，靠近盲道\",\n  \"rectification\": [\n    \"立即在破损处设置警示锥桶或围挡，提醒路人绕行\",\n    \"清理碎裂石板，查明下方塌陷原因并回填夯实\",\n    \"重新铺设平整的路面，确保与周边及盲道无缝衔接\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "人行道路面石板大面积碎裂塌陷，形成深坑且边缘锋利，紧邻盲道，严重影响行人通行安全，极易导致绊倒、崴脚或划伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "步行街人行道中央，靠近盲道",
+    "rectification": [
+      "立即在破损处设置警示锥桶或围挡，提醒路人绕行",
+      "清理碎裂石板，查明下方塌陷原因并回填夯实",
+      "重新铺设平整的路面，确保与周边及盲道无缝衔接"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

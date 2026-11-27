@@ -1,0 +1,23 @@
+{
+  "sha256": "c583c5fa9ccb1d2fbdaabf41634733ca6930b10c411f50051cd11bae693943e8",
+  "file": "SEW0100.png",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片为纯文字宣传图，内容为“污水治理，守护绿水清流”，未显示任何市政、消防、建筑、电气、施工等安全隐患场景。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为纯文字宣传图，内容为“污水治理，守护绿水清流”，未显示任何市政、消防、建筑、电气、施工等安全隐患场景。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "d12fe4c41769f293e53de68cda7526b646d4cd5dc2b70e877e393073d47cd4b0",
+  "file": "NEGGAS08.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片显示燃气管道及放散管标识清晰、支架固定、法兰螺栓齐全，未见明显破损、泄漏、锈蚀或缺失，未发现明确安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示燃气管道及放散管标识清晰、支架固定、法兰螺栓齐全，未见明显破损、泄漏、锈蚀或缺失，未发现明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

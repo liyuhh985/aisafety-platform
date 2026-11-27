@@ -105,21 +105,25 @@ def test_only_the_first_missing_slot_of_each_hazard_is_asked(monkeypatch):
 
 def test_three_hazards_use_three_clause_numbers(monkeypatch):
     _no_model(monkeypatch)
-    codes = ["dangerous_building", "wall_crack_lean", "facade_fall"]
+    codes = ["dangerous_building", "falling_object", "illegal_structure"]
     state = {
-        "messages": [HumanMessage(content="危房、墙体开裂、外立面脱落")],
+        "messages": [HumanMessage(content="危房、高空坠物、违规搭建")],
         "locked_major": "building",
         "locked_subcategory": codes[0],
         "category_slots": {code: {} for code in codes},
-        "missing": [code + "_structure" if code != "facade_fall" else code + "_source"
-                    for code in codes],
+        "missing": [
+            "structure" if code == "dangerous_building"
+            else "source" if code == "falling_object"
+            else "describe"
+            for code in codes
+        ],
         "issues": [
             {"major_code": "building", "subcategory_code": "dangerous_building",
              "slots": {}, "missing": ["structure"]},
-            {"major_code": "building", "subcategory_code": "wall_crack_lean",
-             "slots": {}, "missing": ["structure"]},
-            {"major_code": "building", "subcategory_code": "facade_fall",
+            {"major_code": "building", "subcategory_code": "falling_object",
              "slots": {}, "missing": ["source"]},
+            {"major_code": "building", "subcategory_code": "illegal_structure",
+             "slots": {}, "missing": ["describe"]},
         ],
         "next_action": "ask_critical_question",
         "clarification_question": "",
@@ -128,7 +132,7 @@ def test_three_hazards_use_three_clause_numbers(monkeypatch):
     assert question.startswith("还想确认三件事：")
     assert question.count("①") == 1 and question.count("②") == 1 and question.count("③") == 1
     assert "①『危房』" in question
-    assert "③『外立面脱落』" in question
+    assert "③『违规搭建』" in question
 
 
 def test_the_question_is_still_asked_when_the_focus_needs_nothing(monkeypatch):

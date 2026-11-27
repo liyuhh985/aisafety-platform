@@ -1,0 +1,23 @@
+{
+  "sha256": "801349403c4e2b98d4294c1c7c20152c73058ea1d67a39fd593c4e9b9751a024",
+  "file": "NO0100.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片显示施工围挡整体完整，彩钢板连续设置，斜撑支撑固定，未见明显破损、缺失或倾倒风险；现场未见明确安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示施工围挡整体完整，彩钢板连续设置，斜撑支撑固定，未见明显破损、缺失或倾倒风险；现场未见明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -96,7 +96,7 @@ def test_incomplete_explicit_report_still_asks_critical_question():
     assert out["action"] == "ask_critical_question"
     assert out["needs_search"] is False
     assert out["report_mode"] == "none"
-    assert "裂缝、倾斜或沉降" in out["question"]
+    assert "墙体开裂、整体倾斜、地基沉降" in out["question"]
 
 
 def test_complete_issue_waits_when_another_issue_is_missing():

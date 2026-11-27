@@ -8,6 +8,7 @@ from core.hazard_taxonomy import ALL_SUBCATEGORY_CODES
 from core.slot_schemas import (
     DECISION_CLASS,
     REPORT_CLASS,
+    SLOT_SCHEMAS,
     Slot,
     get_slot_schema,
     missing_decision_slots,
@@ -48,8 +49,8 @@ def test_value_class_distribution_snapshot():
         a = len([s for s in get_slot_schema(code) if s.value_class == DECISION_CLASS])
         counts[a] = counts.get(a, 0) + 1
         max_a = max(max_a, a)
-    # 重划前是 14x1 / 9x2 / 9x3（追问上界 3）；现在 A 类最多 2 → 追问上界 2
-    assert counts == {1: 21, 2: 11}
+    # v2a 合并 3 个冗余小类后：19 个小类 1 个 A 槽、10 个小类 2 个 A 槽。
+    assert counts == {1: 19, 2: 10}
     assert max_a == 2
 
 
@@ -63,6 +64,14 @@ def test_critical_is_derived_from_the_decision_class():
 def test_only_a_and_b_value_classes_exist():
     from core.slot_schemas import VALUE_CLASSES
     assert VALUE_CLASSES == ("A", "B")
+
+
+def test_fire_equipment_fault_reuses_shared_fire_facility_schema():
+    schema = get_slot_schema("fire_equipment_fault")
+    assert schema is SLOT_SCHEMAS["消防设施"]
+    questions = " ".join(slot.question for slot in schema)
+    assert "消防水池" in questions
+    assert "无水无压" in questions
 
 
 def test_decorative_c_slots_are_removed():

@@ -2,6 +2,7 @@ from tests.reply_helpers import render_reply, render_update
 import asyncio
 import json
 import re
+import uuid
 
 import core.assistant_graph as assistant_graph
 import pytest
@@ -116,7 +117,7 @@ def test_vision_prompt_defines_false_and_ambiguous_fallbacks():
     assert "confidence 为 低" in ambiguous_rule
 
 
-def test_vision_prompt_has_ten_confusion_guidelines():
+def test_vision_prompt_has_eight_confusion_guidelines():
     from prompts import VISION_PROMPT
 
     guidelines = VISION_PROMPT.split("- 判别要点（易混淆项）:", 1)[1].split(
@@ -127,19 +128,17 @@ def test_vision_prompt_has_ten_confusion_guidelines():
         guidelines,
         flags=re.MULTILINE,
     )
-    assert [int(number) for number, _ in numbered_lines] == list(range(1, 11))
+    assert [int(number) for number, _ in numbered_lines] == list(range(1, 9))
 
     expected_keywords = {
         1: ("井盖破损", "manhole_damage", "路面整体塌陷", "road_surface_collapse"),
         2: ("施工无警示", "no_warning", "路面塌陷", "road_surface_collapse"),
         3: ("未设置围挡", "no_barrier", "无安全警示", "no_warning"),
-        4: ("墙体开裂", "wall_crack_lean", "危房", "dangerous_building"),
-        5: ("外立面脱落", "facade_fall", "高空坠物", "falling_object"),
-        6: ("燃气泄漏", "gas_leak", "管道老化", "gas_pipe_aging"),
-        7: ("裸露电线", "exposed_wire", "私拉乱接", "illegal_wiring"),
-        8: ("施工临时用电", "temporary_power", "裸露电线", "exposed_wire"),
-        9: ("电梯停运", "elevator_stopped", "电梯困人", "elevator_trapped"),
-        10: ("车辆占道", "vehicle_occupancy", "消防通道占用", "fire_lane_blocked"),
+        4: ("燃气泄漏", "gas_leak", "管道老化", "gas_pipe_aging"),
+        5: ("裸露电线", "exposed_wire", "私拉乱接", "illegal_wiring"),
+        6: ("施工临时用电", "temporary_power", "裸露电线", "exposed_wire"),
+        7: ("电梯停运", "elevator_stopped", "电梯困人", "elevator_trapped"),
+        8: ("车辆占道", "vehicle_occupancy", "消防通道占用", "fire_lane_blocked"),
     }
     for number, line in numbered_lines:
         missing = [
@@ -557,7 +556,7 @@ def test_complete_hazard_report_searches_and_offers_task(monkeypatch):
     async def collect():
         return [event async for event in assistant_graph.run_stream_events(
             message="消防栓和灭火器都老旧了，不能正常使用", history=[], slots={}, vision_summary="",
-            session_id="complete-report-test", user_id=None,
+            session_id=f"complete-report-test-{uuid.uuid4().hex}", user_id=None,
             selected_major_code="fire",
         )]
 

@@ -1,0 +1,27 @@
+{
+  "sha256": "a20dda79f34bb5fb0d5cfb72c2951c81d8401dc89e30bf75b372baa6e9ecbd03",
+  "file": "VEH0027.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"道路右侧一整排电动自行车、摩托车密集停放，占用路侧通行空间，导致行人及非机动车通行区域变窄，存在剐蹭、拥堵和应急通行受阻风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"物业服务中心前道路右侧（树木旁）\",\"rectification\":[\"划定并标明非机动车停放区域，引导车辆入位停放\",\"清理占用道路的车辆，保障行人和非机动车通行\",\"加强巡查，及时劝阻乱停乱放\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "道路右侧一整排电动自行车、摩托车密集停放，占用路侧通行空间，导致行人及非机动车通行区域变窄，存在剐蹭、拥堵和应急通行受阻风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "物业服务中心前道路右侧（树木旁）",
+    "rectification": [
+      "划定并标明非机动车停放区域，引导车辆入位停放",
+      "清理占用道路的车辆，保障行人和非机动车通行",
+      "加强巡查，及时劝阻乱停乱放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

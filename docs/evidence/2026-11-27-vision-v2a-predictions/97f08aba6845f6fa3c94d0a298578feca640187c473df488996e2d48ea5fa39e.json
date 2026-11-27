@@ -1,0 +1,27 @@
+{
+  "sha256": "97f08aba6845f6fa3c94d0a298578feca640187c473df488996e2d48ea5fa39e",
+  "file": "ROA0022.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"道路发生大面积塌陷，形成巨大不规则坑洞，路面断裂，地下管道裸露并有水流冲刷，周边行人车辆密集，存在人员坠落、车辆陷入及管线破坏等严重风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路与商铺、人行道交界处\",\n  \"rectification\": [\n    \"立即封闭塌陷区域，设置围挡和醒目警示，疏散周边行人和车辆\",\n    \"联系市政抢修部门排查地下管线、路基及周边结构安全\",\n    \"回填加固塌陷坑洞并修复路面，确认安全后恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路发生大面积塌陷，形成巨大不规则坑洞，路面断裂，地下管道裸露并有水流冲刷，周边行人车辆密集，存在人员坠落、车辆陷入及管线破坏等严重风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路与商铺、人行道交界处",
+    "rectification": [
+      "立即封闭塌陷区域，设置围挡和醒目警示，疏散周边行人和车辆",
+      "联系市政抢修部门排查地下管线、路基及周边结构安全",
+      "回填加固塌陷坑洞并修复路面，确认安全后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

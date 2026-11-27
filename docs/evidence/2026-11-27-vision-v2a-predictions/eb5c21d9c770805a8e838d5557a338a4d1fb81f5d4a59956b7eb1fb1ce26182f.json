@@ -1,0 +1,23 @@
+{
+  "sha256": "eb5c21d9c770805a8e838d5557a338a4d1fb81f5d4a59956b7eb1fb1ce26182f",
+  "file": "NEGFIR01.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"消防通道标识清晰，通道内无车辆、杂物占用，未见堵塞或设施损坏，符合消防安全要求。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "消防通道标识清晰，通道内无车辆、杂物占用，未见堵塞或设施损坏，符合消防安全要求。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}
