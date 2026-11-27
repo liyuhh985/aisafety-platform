@@ -1,6 +1,6 @@
 """评测查询集：检索评测与分类评测共用同一份，避免两条线的查询漂移。
 
-- QUERY_SET：29 个小类 × 2 种问法
+- QUERY_SET：33 个小类 × 2 种问法
     style="explicit"  直白描述，含类别特征词
     style="colloquial" 口语/同义改写，尽量不含标准类别词（测语义检索）
 - NEGATIVE_SET：真无关查询（用于范围护栏与检索空结果率）
@@ -108,6 +108,18 @@ QUERY_SET = (
         "subcategory": "street_light_pole",
         "style": "colloquial",
     },
+    {
+        "query": "台风过后行道树严重倾斜，大枯枝悬垂在人行道上",
+        "major": "municipal",
+        "subcategory": "tree_fall_hazard",
+        "style": "explicit",
+    },
+    {
+        "query": "路边那棵树歪得很厉害，一根大树枝快掉下来，下面天天有人走",
+        "major": "municipal",
+        "subcategory": "tree_fall_hazard",
+        "style": "colloquial",
+    },
     # ---------- 消防安全 ----------
     {
         "query": "高层住宅消防车通道被私家车和杂物长期占用",
@@ -131,6 +143,18 @@ QUERY_SET = (
         "query": "楼里的灭火器没压力，水管箱也锁死了，拧开室外消防龙头一滴水都没有",
         "major": "fire",
         "subcategory": "fire_equipment_fault",
+        "style": "colloquial",
+    },
+    {
+        "query": "高层住宅架空层违规停放电动自行车并飞线充电，电池还被带入室内",
+        "major": "fire",
+        "subcategory": "ebike_hazard",
+        "style": "explicit",
+    },
+    {
+        "query": "有人把电动车推进楼道充电，还从楼上拉线下来，电池也拿回家",
+        "major": "fire",
+        "subcategory": "ebike_hazard",
         "style": "colloquial",
     },
     # ---------- 建筑安全 ----------
@@ -292,6 +316,18 @@ QUERY_SET = (
         "subcategory": "temporary_power",
         "style": "colloquial",
     },
+    {
+        "query": "工人未通风检测就进入污水井作业，发生硫化氢中毒",
+        "major": "construction",
+        "subcategory": "confined_space",
+        "style": "explicit",
+    },
+    {
+        "query": "有人下化粪池清掏，没先通风也没人看着，下去就晕了",
+        "major": "construction",
+        "subcategory": "confined_space",
+        "style": "colloquial",
+    },
     # ---------- 电梯与特种设备 ----------
     {
         "query": "客运电梯故障急停困人超过半小时，救援超时",
@@ -355,13 +391,25 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "公共区域出现来源不明的危化品桶，气味刺鼻无人认领",
+        "query": "居民区车库存放不明化工桶和易燃溶剂，气味刺鼻且无消防设施",
+        "major": "environment_other",
+        "subcategory": "hazmat_storage",
+        "style": "explicit",
+    },
+    {
+        "query": "小区车库堆着好多没标签的桶，味道很大，旁边就是住户",
+        "major": "environment_other",
+        "subcategory": "hazmat_storage",
+        "style": "colloquial",
+    },
+    {
+        "query": "公园健身器材的连接处断裂，尖锐金属头裸露划伤儿童",
         "major": "environment_other",
         "subcategory": "other",
         "style": "explicit",
     },
     {
-        "query": "路边放着几个大桶，也不知道装的什么，有股味儿",
+        "query": "小区游乐设施坏了个口子，边角特别尖，小孩容易划伤",
         "major": "environment_other",
         "subcategory": "other",
         "style": "colloquial",

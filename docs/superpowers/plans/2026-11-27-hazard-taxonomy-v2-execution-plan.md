@@ -1,6 +1,6 @@
 # 城市安全隐患两级分类体系（Taxonomy v2）三阶段执行计划
 
-> 状态：Phase 1 已完成并验收；Phase 2/3 尚未执行
+> 状态：Phase 1/2/3 均已执行；v2c FPR 改善未达标，已保留实测结论待复测
 > 日期：2026-11-27
 > 上游设计参考：`docs/superpowers/specs/2026-11-27-hazard-taxonomy-v2-isolation-design.md`
 > 硬隔离边界：本计划**绝不碰任何 `rerank` 改造或评估归因**（`docs/superpowers/plans/2026-11-27-rerank-experiment.md` 中的 `ReadTimeout`、`P95` 与 `fallback=1` 属于独立问题，禁止混入同一次变更或报告）。
@@ -242,6 +242,26 @@ GROUP BY status;
 ### 3.3 修复模糊图强制报 `other` 与双口径视觉报告（`prompts.py` + `eval/vision/`）
 1. 修改 `prompts.py` 第 92 行：删除“图片模棱两可、信息不完整时必须置 `has_hazard: true` 并归 `environment_other/other`”的强制报警条款，改为无清晰客观异常依据时返回 `has_hazard: false` 并在 `reason_if_no_hazard` 注明 `"图像证据不足，无法确认安全隐患"`。
 2. 清视觉缓存并在独立 `test_set` 上重跑 `v2c` 评测，单独对比 **FPR 改善幅度**与 **Critical Miss Rate 安全门槛**，输出双口径统计表（区分**视觉外观可判别类**与**非视觉强依赖类：`elevator_inspection`、`gas_leak`、`confined_space`**）。
+
+
+### 2.3 Phase 2 执行结果（2026-11-27）
+
+- 29 → 33 类全栈切换完成；4 个新增类均有独立槽位。
+- 数据库备份 stamp `20261127_202824`，迁移后案例 233 条、法规 143 条；33 类均 ≥2。
+- Milvus 增量同步 2 案例 / 4 法规；降级向量缓存更新为 264 条。
+- v2b 分类基线：小类 0.944、大类 0.965、负样本拦截 1.000。
+- v2b 检索基线：Hit@5 三种情形均 1.000，EmptyRate 1.00。
+- v2b 视觉基线：Recall 0.925、FPR 0.100、Critical Miss 0.050；新增类独立图片不足已在证据中标注。
+
+### 3.4 Phase 3 执行结果（2026-11-27）
+
+- 18 个退化/错配小类完成独立槽位治理，A 槽全部 ≤2。
+- 33 类默认风险映射完成；危化品/有限空间为 high，垃圾堆积为 low。
+- 模糊图“强制归 other”规则删除；无清晰客观依据时返回 has_hazard=false。
+- v2c 分类基线：小类 0.965、大类 0.980、负样本拦截 1.000。
+- v2c 检索基线：Hit@5 三种情形均 1.000，EmptyRate 1.00。
+- v2c 视觉：Critical Miss 0.050（与 v2b 持平）；FPR 0.150（v2b 0.100），本次未达到 FPR 改善目标，保留为待复测结论。
+- 汇总证据：`docs/evidence/2026-11-27-taxonomy-v2bc-summary.md`
 
 ---
 

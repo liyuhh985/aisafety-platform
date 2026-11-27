@@ -1,0 +1,27 @@
+{
+  "sha256": "0402d98c102df2d34122cdd8360ea564adbbd35008c3ee7ebdaf3ba625ccc358",
+  "file": "FIR0003.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"标有“消防通道 严禁占用”的狭窄巷道内，两侧连续停放大量电动自行车、摩托车，通道被明显挤占，火灾时可能阻碍消防车辆通行和人员疏散，延误救援。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"消防通道标牌下方及巷道整段通道\",\n  \"rectification\": [\n    \"立即清理消防通道内违规停放的车辆，恢复通道净宽和通行能力\",\n    \"在通道两侧施划禁停标线、设置隔离设施，并加强日常巡查\",\n    \"对周边居民和商户开展消防通道禁停宣传，明确违规停放责任\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "标有“消防通道 严禁占用”的狭窄巷道内，两侧连续停放大量电动自行车、摩托车，通道被明显挤占，火灾时可能阻碍消防车辆通行和人员疏散，延误救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "消防通道标牌下方及巷道整段通道",
+    "rectification": [
+      "立即清理消防通道内违规停放的车辆，恢复通道净宽和通行能力",
+      "在通道两侧施划禁停标线、设置隔离设施，并加强日常巡查",
+      "对周边居民和商户开展消防通道禁停宣传，明确违规停放责任"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

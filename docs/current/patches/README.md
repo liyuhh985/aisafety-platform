@@ -6,6 +6,7 @@
 前端源码不在当前仓库。以下文档描述需要与后端契约配套应用的前端改动：
 
 - [taxonomy-v2a-frontend-patch.md](./taxonomy-v2a-frontend-patch.md)
+- [taxonomy-v2b-frontend-patch.md](./taxonomy-v2b-frontend-patch.md)
 - [hazard-multi-category-frontend-patch.md](./hazard-multi-category-frontend-patch.md)
 - [ai-multi-hazard-frontend-patch.md](./ai-multi-hazard-frontend-patch.md)
 - [ai-hazard-create-mq-frontend-patch.md](./ai-hazard-create-mq-frontend-patch.md)

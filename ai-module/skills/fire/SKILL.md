@@ -1,7 +1,7 @@
 ---
 name: fire
 category: fire
-description: 消防安全隐患，包括消防通道占用和消防设施/消防水源故障。
+description: 消防安全隐患，包括消防通道占用、消防设施/水源故障和电动自行车违规停放/充电。
 allowed_tools:
   - search_regulation
   - search_cases
@@ -12,6 +12,9 @@ routing_keywords:
   - 灭火器
   - 防火门
   - 消防水源
+  - 电动自行车
+  - 飞线充电
+  - 电池入户
 version: "1"
 ---
 
@@ -19,12 +22,13 @@ version: "1"
 
 ## 适用范围
 
-覆盖 fire_lane_blocked、fire_equipment_fault（含消防水源异常）。
+覆盖 fire_lane_blocked、fire_equipment_fault（含消防水源异常）、ebike_hazard。
 
 ## 追问 SOP
 
 - 消防通道占用优先确认 blocker 和 persistence。
 - 消防设施/水源故障优先确认 facility_type 和 condition（含无水、无压、被埋压等状态）。
+- 电动自行车隐患优先确认 hazard_mode 和 charging_state；飞线充电可并发 illegal_wiring。
 - 每次只问一个 A 类槽位；多隐患时由代码统一组织并列追问。
 
 ## 法规引用约束

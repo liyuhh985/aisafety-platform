@@ -33,10 +33,12 @@ public final class HazardTypeNormalizer {
                 "manhole_damage", "井盖缺失/破损",
                 "road_surface_collapse", "路面塌陷",
                 "drainage_flood", "排水/积水",
-                "street_light_pole", "路灯/线杆损坏");
+                "street_light_pole", "路灯/线杆损坏",
+                "tree_fall_hazard", "树木倒伏/断枝风险");
         add("fire", "消防安全",
                 "fire_lane_blocked", "消防通道占用",
-                "fire_equipment_fault", "消防设施故障");
+                "fire_equipment_fault", "消防设施故障",
+                "ebike_hazard", "电动自行车违规停放/充电");
         add("building", "建筑安全",
                 "dangerous_building", "危房",
                 "falling_object", "高空坠物",
@@ -52,7 +54,8 @@ public final class HazardTypeNormalizer {
                 "no_warning", "无安全警示",
                 "scaffold_guard", "脚手架/临边防护",
                 "deep_pit", "深基坑风险",
-                "temporary_power", "施工临时用电");
+                "temporary_power", "施工临时用电",
+                "confined_space", "有限空间作业风险");
         add("elevator_special", "电梯与特种设备",
                 "elevator_trapped", "电梯困人",
                 "elevator_stopped", "停运/异响",
@@ -60,6 +63,7 @@ public final class HazardTypeNormalizer {
         add("environment_other", "环境与其他",
                 "garbage_pile", "垃圾堆积",
                 "sewage_odor", "污水/异味",
+                "hazmat_storage", "危化品/易燃易爆违规存运",
                 "other", "其他");
 
         alias("消防通道", "fire/fire_lane_blocked");

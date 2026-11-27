@@ -1,0 +1,27 @@
+{
+  "sha256": "b65be725596701609d16ec71a33e888b08e1c550196528132e160da1a08bf9b7",
+  "file": "ROA0072.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"道路中央发生大面积路面塌陷，形成深坑并伴随涌水涌砂，路基掏空、周边路面开裂，威胁行人和车辆安全，可能损坏地下管线并扩大塌陷范围。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路施工围挡旁的塌陷坑区域\",\n  \"rectification\": [\n    \"立即封闭塌陷区域并疏散人员，增设围挡、警示标志和夜间警示灯\",\n    \"联系市政道路、排水及管线单位抢修，排查涌水涌砂原因和地下管线受损情况\",\n    \"对塌陷坑进行回填加固，并检测周边路基、管线安全后再恢复交通\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路中央发生大面积路面塌陷，形成深坑并伴随涌水涌砂，路基掏空、周边路面开裂，威胁行人和车辆安全，可能损坏地下管线并扩大塌陷范围。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路施工围挡旁的塌陷坑区域",
+    "rectification": [
+      "立即封闭塌陷区域并疏散人员，增设围挡、警示标志和夜间警示灯",
+      "联系市政道路、排水及管线单位抢修，排查涌水涌砂原因和地下管线受损情况",
+      "对塌陷坑进行回填加固，并检测周边路基、管线安全后再恢复交通"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

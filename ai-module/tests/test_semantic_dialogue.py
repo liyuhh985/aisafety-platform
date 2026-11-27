@@ -108,13 +108,11 @@ def test_vision_prompt_defines_false_and_ambiguous_fallbacks():
     ambiguous_rule = next(
         line
         for line in VISION_PROMPT.splitlines()
-        if "图片模棱两可" in line
+        if "无清晰客观异常依据" in line
     )
-    assert "has_hazard 为 true" in ambiguous_rule
-    assert "major_category 为 environment_other" in ambiguous_rule
-    assert "subcategory 为 other" in ambiguous_rule
-    assert "hazard_category 为 环境与其他" in ambiguous_rule
-    assert "confidence 为 低" in ambiguous_rule
+    assert "has_hazard 为 false" in ambiguous_rule
+    assert "图像证据不足，无法确认安全隐患" in ambiguous_rule
+    assert "不得为了报出隐患而强行归入" in ambiguous_rule
 
 
 def test_vision_prompt_has_eight_confusion_guidelines():
@@ -147,6 +145,24 @@ def test_vision_prompt_has_eight_confusion_guidelines():
             if keyword not in line
         ]
         assert missing == [], f"判别要点 {number} 缺少关键词: {missing}"
+
+
+def test_subcategory_default_risk_overrides_model_low_risk():
+    raw = (
+        '{"intent":"report_hazard","risk_level":"low",'
+        '"issues":[{"major_code":"environment_other","subcategory_code":"hazmat_storage",'
+        '"slots":{"material_info":"不明化工桶","environment":"居民楼旁"},'
+        '"confidence":0.9}],"question":"","answer":"","needs_search":true}'
+    )
+    plan = dialogue_understanding.parse_plan(raw)
+    assert plan["risk_level"] == "high"
+    assert plan["issues"][0]["risk_level"] == "high"
+
+
+def test_planner_prompt_uses_subcategory_default_risk_not_environment_low_rule():
+    prompt = dialogue_understanding._planner_system_prompt()
+    assert "环境和其他为 low" not in prompt
+    assert "按小类默认风险" in prompt
 
 
 def test_planner_prompt_requires_one_information_point_and_no_default_location_question():

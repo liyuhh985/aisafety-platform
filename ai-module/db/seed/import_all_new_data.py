@@ -22,14 +22,16 @@ from db_config import DB_CONFIG
 from core.hazard_taxonomy import HAZARD_TAXONOMY
 from db.seed.data_cases_batch2 import CASES_BATCH_2
 from db.seed.data_cases_batch3 import CASES_BATCH_3
+from db.seed.data_cases_v2b import CASES_V2B
 from db.seed.data_regulations_batch2 import NEW_REGULATIONS_BATCH_2
 from db.seed.data_regulations_batch2026 import NEW_REGULATIONS_2026
+from db.seed.data_regulations_v2b import REGULATIONS_V2B
 
 # 合并后的法规导入清单。去重逻辑不变：仍按 (law_name, article, category) 跳过已存在。
 # 2026-09-29 并入 batch2026：在那之前它是一个"孤立的数据文件"（全仓没有任何脚本引用它），
 # 重建库时会得到不完整的法规数据 —— 而"来源可复现"正是当初把它纳入版本控制的理由。
 # 幂等性：并入后在现有库上跑必须得到 0 inserted / 10 skipped（见 db/seed/verify_import_idempotent.py）。
-ALL_NEW_REGULATIONS = NEW_REGULATIONS_BATCH_2 + NEW_REGULATIONS_2026
+ALL_NEW_REGULATIONS = NEW_REGULATIONS_BATCH_2 + NEW_REGULATIONS_2026 + REGULATIONS_V2B
 
 BACKUP_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "backup")
 
@@ -58,7 +60,7 @@ def backup_current_db(conn):
 
 
 def import_cases(cur):
-    all_new_cases = CASES_BATCH_2 + CASES_BATCH_3
+    all_new_cases = CASES_BATCH_2 + CASES_BATCH_3 + CASES_V2B
     print(f"\n[案例导入] 准备导入第二批与第三批案例，共 {len(all_new_cases)} 条...")
     inserted = 0
     skipped = 0
@@ -131,7 +133,7 @@ def import_regulations(cur):
 
 def print_taxonomy_summary(cur):
     print("\n" + "=" * 80)
-    print("安全隐患案例库与法规库全量两级规范分类分布看板 (8大领域 / 26个细分类)")
+    print("安全隐患案例库与法规库全量两级规范分类分布看板 (8大领域 / 33个细分类)")
     print("=" * 80)
 
     cur.execute("SELECT category, count(*) FROM tb_hazard_case GROUP BY category")

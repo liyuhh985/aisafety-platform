@@ -108,7 +108,7 @@ STATUS_TEXT = {
     "scope_guard": "正在判断问题范围...",
     "route": "正在分析您的咨询...",
     "search": "正在准备检索...",
-    "retrieve": "正在检索「{category}」的法规与案例...",
+    "retrieve": "正在检索「{category}」...",
     "evaluate_retrieval": "正在核对检索结果...",
     "rewrite_query": "正在换个检索词再试一次...",
     "report": "正在生成结论...",

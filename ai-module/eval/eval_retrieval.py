@@ -75,7 +75,7 @@ SCENARIO_LEGACY = "槽位有值"
 SCENARIO_SCHEMA = "槽位有值(schema键)"
 SCENARIOS = (SCENARIO_EMPTY, SCENARIO_LEGACY, SCENARIO_SCHEMA)
 
-# 29 个小类的代表性槽位值（v2a 合并后独立基线）。
+# 33 个小类的代表性槽位值（v2b 独立基线）。
 SLOT_VALUES = {
     "road_occupancy": "货架",
     "vehicle_occupancy": "违停",
@@ -85,8 +85,10 @@ SLOT_VALUES = {
     "road_surface_collapse": "塌陷",
     "drainage_flood": "积水",
     "street_light_pole": "不亮",
+    "tree_fall_hazard": "严重倾斜",
     "fire_lane_blocked": "私家车",
     "fire_equipment_fault": "消火栓无水",
+    "ebike_hazard": "飞线充电",
     "dangerous_building": "裂缝倾斜",
     "falling_object": "外墙脱落",
     "illegal_structure": "搭建",
@@ -100,45 +102,19 @@ SLOT_VALUES = {
     "scaffold_guard": "临边防护",
     "deep_pit": "基坑",
     "temporary_power": "临时用电",
+    "confined_space": "污水井",
     "elevator_trapped": "困人",
     "elevator_stopped": "异响",
     "elevator_inspection": "检验过期",
     "garbage_pile": "长期堆积",
     "sewage_odor": "异味",
-    "other": "来源不明",
+    "hazmat_storage": "不明化工桶",
+    "other": "游乐设施",
 }
 
 # 基线那次用的键（来自 _pick_keyword 老实现硬编码的 9 个 slug）。
 SLOT_FIXTURE_KEYS = {
-    "road_occupancy": "behavior",
-    "vehicle_occupancy": "behavior",
-    "blind_path_occupied": "behavior",
-    "traffic_facility_damage": "defect",
-    "manhole_damage": "defect",
-    "road_surface_collapse": "defect",
-    "drainage_flood": "defect",
-    "street_light_pole": "defect",
-    "fire_lane_blocked": "blocker",
-    "fire_equipment_fault": "facility_type",
-    "dangerous_building": "structure",
-    "falling_object": "source",
-    "illegal_structure": "defect",
-    "exposed_wire": "source",
-    "distribution_box_fault": "source",
-    "illegal_wiring": "defect",
-    "gas_leak": "source",
-    "gas_pipe_aging": "source",
-    "no_barrier": "defect",
-    "no_warning": "defect",
-    "scaffold_guard": "defect",
-    "deep_pit": "defect",
-    "temporary_power": "source",
-    "elevator_trapped": "condition",
-    "elevator_stopped": "condition",
-    "elevator_inspection": "condition",
-    "garbage_pile": "condition",
-    "sewage_odor": "defect",
-    "other": "defect",
+    code: get_slot_schema(code)[0].key for code in SLOT_VALUES
 }
 
 OUTPUT_FILE = os.path.join(_AI_ROOT, "db",

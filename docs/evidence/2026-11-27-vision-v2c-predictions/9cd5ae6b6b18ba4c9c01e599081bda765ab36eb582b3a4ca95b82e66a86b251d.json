@@ -1,0 +1,27 @@
+{
+  "sha256": "9cd5ae6b6b18ba4c9c01e599081bda765ab36eb582b3a4ca95b82e66a86b251d",
+  "file": "NEGSEW08.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"中\",\"description\":\"道路边缘长条形排水沟金属格栅局部条端翘起、断裂，并有尖锐金属丝外露；紧邻人行与车行区域，行人或自行车经过可能被绊倒、扎伤，雨天盖板稳定性也可能受影响。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"近景道路边缘的长条形排水沟格栅处\",\"rectification\":[\"立即清除外露尖锐金属丝，并在破损处设置警示围挡\",\"更换或修复破损、翘起的排水沟格栅，确保盖板平整稳固、缝隙合规\",\"排查沿线同类排水沟盖板，发现松动、破损及时维护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "道路边缘长条形排水沟金属格栅局部条端翘起、断裂，并有尖锐金属丝外露；紧邻人行与车行区域，行人或自行车经过可能被绊倒、扎伤，雨天盖板稳定性也可能受影响。",
+    "reason_if_no_hazard": "",
+    "location_hint": "近景道路边缘的长条形排水沟格栅处",
+    "rectification": [
+      "立即清除外露尖锐金属丝，并在破损处设置警示围挡",
+      "更换或修复破损、翘起的排水沟格栅，确保盖板平整稳固、缝隙合规",
+      "排查沿线同类排水沟盖板，发现松动、破损及时维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

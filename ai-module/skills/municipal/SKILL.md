@@ -18,7 +18,7 @@ version: "1"
 
 ## 适用范围
 
-覆盖 manhole_damage、road_surface_collapse、drainage_flood、street_light_pole。
+覆盖 manhole_damage、road_surface_collapse、drainage_flood、street_light_pole、tree_fall_hazard。
 
 ## 追问 SOP
 

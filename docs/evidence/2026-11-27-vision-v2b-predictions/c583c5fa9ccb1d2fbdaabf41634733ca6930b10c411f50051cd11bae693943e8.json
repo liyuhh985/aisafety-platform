@@ -1,0 +1,23 @@
+{
+  "sha256": "c583c5fa9ccb1d2fbdaabf41634733ca6930b10c411f50051cd11bae693943e8",
+  "file": "SEW0100.png",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片为纯文字宣传海报，内容为污水治理宣传语，未显示实际城市设施或安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为纯文字宣传海报，内容为污水治理宣传语，未显示实际城市设施或安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

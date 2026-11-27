@@ -1,0 +1,28 @@
+{
+  "sha256": "97f08aba6845f6fa3c94d0a298578feca640187c473df488996e2d48ea5fa39e",
+  "file": "ROA0022.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"道路及人行道发生大面积塌陷，形成深大坑洞，地下管道裸露并有水流冲刷，坑缘路面悬空。可能造成行人车辆坠落、地下管线进一步破坏及周边道路继续坍塌。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路与临街人行道交界处塌陷区域\",\"rectification\":[\"立即封闭塌陷区域并设置硬质围挡和夜间警示，禁止车辆行人通行\",\"迅速实施交通管制和人员疏散，排查是否有人车坠落\",\"组织专业单位抢修受损管线，回填加固塌陷坑并监测周边沉降\",\"对周边地下管线和道路结构开展全面排查，防止二次坍塌\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路及人行道发生大面积塌陷，形成深大坑洞，地下管道裸露并有水流冲刷，坑缘路面悬空。可能造成行人车辆坠落、地下管线进一步破坏及周边道路继续坍塌。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路与临街人行道交界处塌陷区域",
+    "rectification": [
+      "立即封闭塌陷区域并设置硬质围挡和夜间警示，禁止车辆行人通行",
+      "迅速实施交通管制和人员疏散，排查是否有人车坠落",
+      "组织专业单位抢修受损管线，回填加固塌陷坑并监测周边沉降",
+      "对周边地下管线和道路结构开展全面排查，防止二次坍塌"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

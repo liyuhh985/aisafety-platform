@@ -1,0 +1,27 @@
+{
+  "sha256": "370597ddaa32289e26c99d6eb6ba0379aa3a591cccd049594d127271cafae862",
+  "file": "VEH0001.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": true, \"confidence\": \"中\", \"hazard_category\": \"交通与通行\", \"major_category\": \"traffic\", \"subcategory\": \"vehicle_occupancy\", \"severity\": \"中\", \"description\": \"左侧白色轿车停放在未划停车位的狭窄道路边缘，占用通行空间，导致道路变窄，影响车辆会车及消防、救援车辆通行。\", \"reason_if_no_hazard\": \"\", \"location_hint\": \"左侧路边靠近树木和电线杆处\", \"rectification\": [\"劝离或依法处理违停车辆，恢复道路通行空间\", \"设置禁停标志或在符合条件处合理施划停车位\", \"加强该路段巡查和交通疏导\"], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "左侧白色轿车停放在未划停车位的狭窄道路边缘，占用通行空间，导致道路变窄，影响车辆会车及消防、救援车辆通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "左侧路边靠近树木和电线杆处",
+    "rectification": [
+      "劝离或依法处理违停车辆，恢复道路通行空间",
+      "设置禁停标志或在符合条件处合理施划停车位",
+      "加强该路段巡查和交通疏导"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

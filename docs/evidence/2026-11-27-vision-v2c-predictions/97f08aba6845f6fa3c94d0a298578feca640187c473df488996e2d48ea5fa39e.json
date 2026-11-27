@@ -1,0 +1,27 @@
+{
+  "sha256": "97f08aba6845f6fa3c94d0a298578feca640187c473df488996e2d48ea5fa39e",
+  "file": "ROA0022.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"道路及人行道边缘发生大面积塌陷，形成深坑，坑内泥土流失、地下管道裸露并持续出水，周边路面结构失稳。可能造成行人车辆坠落、管线进一步断裂及次生坍塌，风险很高。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路与临街人行道交会处\",\n  \"rectification\": [\n    \"立即设置硬质围挡和警戒线，实施交通管制并疏散周边人员车辆\",\n    \"组织市政、管线单位抢修破裂管道，排查地下空洞并回填加固\",\n    \"对周边路面和地下管线开展结构安全检测，确认稳定后恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路及人行道边缘发生大面积塌陷，形成深坑，坑内泥土流失、地下管道裸露并持续出水，周边路面结构失稳。可能造成行人车辆坠落、管线进一步断裂及次生坍塌，风险很高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路与临街人行道交会处",
+    "rectification": [
+      "立即设置硬质围挡和警戒线，实施交通管制并疏散周边人员车辆",
+      "组织市政、管线单位抢修破裂管道，排查地下空洞并回填加固",
+      "对周边路面和地下管线开展结构安全检测，确认稳定后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

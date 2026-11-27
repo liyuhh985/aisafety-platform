@@ -1,0 +1,23 @@
+{
+  "sha256": "c7bb0bb9d16c41409a7ac467aea13a42c7d4a5c3f356676ae120032e22e763fc",
+  "file": "NEGSTR04.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中路灯杆外观完整、无明显倾斜或破损，道路及周边未见塌陷、积水、树木倒伏等可见安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中路灯杆外观完整、无明显倾斜或破损，道路及周边未见塌陷、积水、树木倒伏等可见安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

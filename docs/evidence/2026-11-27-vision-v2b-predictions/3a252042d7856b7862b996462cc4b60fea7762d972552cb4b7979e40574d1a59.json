@@ -1,0 +1,27 @@
+{
+  "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+  "file": "FIR0008.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"中\",\n  \"description\": \"近处道路路面出现大面积网状开裂、龟裂及局部破损，车辆通行易颠簸打滑，行人和非机动车经过有绊倒风险，裂缝可能继续扩展形成坑洞。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"图片近处道路及停车区域路面\",\n  \"rectification\": [\n    \"对破损区域设置警示围挡，提醒车辆和行人避让\",\n    \"切割修补龟裂及坑洼区域，必要时重做基层和面层\",\n    \"排查路基和排水情况，防止破损进一步扩大\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "近处道路路面出现大面积网状开裂、龟裂及局部破损，车辆通行易颠簸打滑，行人和非机动车经过有绊倒风险，裂缝可能继续扩展形成坑洞。",
+    "reason_if_no_hazard": "",
+    "location_hint": "图片近处道路及停车区域路面",
+    "rectification": [
+      "对破损区域设置警示围挡，提醒车辆和行人避让",
+      "切割修补龟裂及坑洼区域，必要时重做基层和面层",
+      "排查路基和排水情况，防止破损进一步扩大"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

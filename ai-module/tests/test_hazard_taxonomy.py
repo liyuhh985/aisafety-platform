@@ -1,5 +1,6 @@
 from core.hazard_taxonomy import (
     ALL_SUBCATEGORY_CODES,
+    SUBCATEGORY_DEFAULT_RISK,
     HAZARD_TYPE_MAX_LENGTH,
     HAZARD_TAXONOMY,
     format_hazard_type,
@@ -47,10 +48,31 @@ def test_retired_subcategories_are_not_silent_aliases():
     )
     for value in retired:
         assert normalize_taxonomy(value) is None, value
-    assert len(ALL_SUBCATEGORY_CODES) == 29
+    assert len(ALL_SUBCATEGORY_CODES) == 33
     assert "wall_crack_lean" not in ALL_SUBCATEGORY_CODES
     assert "facade_fall" not in ALL_SUBCATEGORY_CODES
     assert "fire_water_abnormal" not in ALL_SUBCATEGORY_CODES
+
+
+def test_v2b_adds_four_high_value_subcategories():
+    expected = {
+        "ebike_hazard": "fire",
+        "tree_fall_hazard": "municipal",
+        "confined_space": "construction",
+        "hazmat_storage": "environment_other",
+    }
+    for code, major in expected.items():
+        assert code in ALL_SUBCATEGORY_CODES
+        assert normalize_taxonomy(f"{major}/{code}") == (major, code)
+    assert len(ALL_SUBCATEGORY_CODES) == 33
+
+
+def test_every_subcategory_has_a_default_risk_and_no_phantom_entries():
+    assert set(SUBCATEGORY_DEFAULT_RISK) == set(ALL_SUBCATEGORY_CODES)
+    assert set(SUBCATEGORY_DEFAULT_RISK.values()) <= {"high", "medium", "low"}
+    assert SUBCATEGORY_DEFAULT_RISK["hazmat_storage"] == "high"
+    assert SUBCATEGORY_DEFAULT_RISK["confined_space"] == "high"
+    assert SUBCATEGORY_DEFAULT_RISK["garbage_pile"] == "low"
 
 
 def test_every_subcategory_code_is_unique():

@@ -1,0 +1,23 @@
+{
+  "sha256": "c583c5fa9ccb1d2fbdaabf41634733ca6930b10c411f50051cd11bae693943e8",
+  "file": "SEW0100.png",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片为纯文字宣传图，无实际场景或设施，未显示安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为纯文字宣传图，无实际场景或设施，未显示安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

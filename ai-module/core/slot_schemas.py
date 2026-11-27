@@ -104,31 +104,101 @@ SUBCATEGORY_SLOT_SCHEMAS: dict[str, list[Slot]] = {
     "fire_lane_blocked": SLOT_SCHEMAS["消防通道"],
     "fire_equipment_fault": SLOT_SCHEMAS["消防设施"],
     "dangerous_building": SLOT_SCHEMAS["危房"],
+    "ebike_hazard": [
+        Slot("hazard_mode", "电动自行车是停在楼道/电梯/架空层并充电、电池带入室内，还是飞线充电？"),
+        Slot("charging_state", "现场是否正在通电充电，或有电池发热、冒烟、鼓包、改装迹象？"),
+    ],
+    "tree_fall_hazard": [
+        Slot("tree_state", "树木是已倒伏阻断道路/压线，还是严重倾斜、大枯枝悬垂？"),
+        Slot("impact_target", "下方或周边是人行道、车位还是架空线缆？", REPORT_CLASS),
+    ],
+    "confined_space": [
+        Slot("space_type", "具体是化粪池、污水井、地下管廊、泵站还是储罐？"),
+        Slot("protection", "作业前是否已强制通风、气体检测并配备监护防护装备？"),
+    ],
+    "hazmat_storage": [
+        Slot("material_info", "现场是不明化工桶、易燃溶剂、液化气瓶还是烟花爆竹，是否密封？"),
+        Slot("environment", "存放点通风如何，周边有无居民楼、火源或人员接触风险？"),
+    ],
     "falling_object": SLOT_SCHEMAS["高空坠物"],
-    "illegal_structure": SLOT_SCHEMAS["其他"],
+    "illegal_structure": [
+        Slot("structure_detail", "具体搭建了什么、占用在哪个公共部位？"),
+        Slot("structural_impact", "是否拆改承重结构、造成超载或影响消防疏散？"),
+    ],
     "manhole_damage": SLOT_SCHEMAS["井盖/道路"],
-    "road_surface_collapse": SLOT_SCHEMAS["井盖/道路"],
-    "drainage_flood": SLOT_SCHEMAS["井盖/道路"],
-    "street_light_pole": SLOT_SCHEMAS["其他"],
+    "road_surface_collapse": [
+        Slot("collapse_scale", "塌陷范围多大、深浅如何，下方是否可见空洞？"),
+        Slot("isolation", "现场是否已设置警戒线和围挡？"),
+    ],
+    "drainage_flood": [
+        Slot("flood_depth", "积水大概有多深，是否已经阻断通行？"),
+        Slot("location_type", "积水点在隧道、普通道路还是地下车库？", REPORT_CLASS),
+    ],
+    "street_light_pole": [
+        Slot("pole_status", "是灯杆倾斜折断，还是路灯不亮？"),
+        Slot("electric_risk", "周边是否有积水、漏电或线缆外露风险？"),
+    ],
     "road_occupancy": SLOT_SCHEMAS["占道"],
-    "vehicle_occupancy": SLOT_SCHEMAS["占道"],
-    "blind_path_occupied": SLOT_SCHEMAS["占道"],
-    "traffic_facility_damage": SLOT_SCHEMAS["其他"],
+    "vehicle_occupancy": [
+        Slot("persistence", "是长期占用还是临时停放？"),
+        Slot("blocked", "是完全堵死还是仍可通行？"),
+    ],
+    "blind_path_occupied": [
+        Slot("blocker", "盲道被什么占用，是车辆、摊位还是其他物品？"),
+        Slot("blocked", "是完全阻断还是部分占用？"),
+    ],
+    "traffic_facility_damage": [
+        Slot("facility_type", "损坏的是信号灯、护栏、交通标志还是标线？"),
+        Slot("condition", "目前是缺失、破损、歪斜还是完全失效？"),
+    ],
     "exposed_wire": SLOT_SCHEMAS["电气"],
     "distribution_box_fault": SLOT_SCHEMAS["电气"],
     "illegal_wiring": SLOT_SCHEMAS["电气"],
-    "gas_leak": SLOT_SCHEMAS["其他"],
-    "gas_pipe_aging": SLOT_SCHEMAS["其他"],
-    "no_barrier": SLOT_SCHEMAS["施工"],
-    "no_warning": SLOT_SCHEMAS["施工"],
-    "scaffold_guard": SLOT_SCHEMAS["施工"],
-    "deep_pit": SLOT_SCHEMAS["施工"],
+    "gas_leak": [
+        Slot("leak_sign", "是闻到煤气味、听到漏气声，还是看到气泡或结霜？"),
+        Slot("ventilation", "现场是否通风，周边有无火源或电气设备？"),
+    ],
+    "gas_pipe_aging": [
+        Slot("pipe_condition", "管道是锈蚀、漆面剥落、接口变形还是已经渗漏？"),
+        Slot("leak_suspect", "周边是否有持续气味、气泡或其他疑似漏气迹象？"),
+    ],
+    "no_barrier": [
+        Slot("site", "是完全缺少硬质围挡，还是围挡有破损缺口？"),
+        Slot("impact", "施工点紧邻人行道、机动车道还是学校出入口？", REPORT_CLASS),
+    ],
+    "no_warning": [
+        Slot("warning_status", "是完全没有任何警示，还是缺夜间反光灯或围挡标志？"),
+        Slot("impact", "路段车速和夜间行人暴露情况如何？", REPORT_CLASS),
+    ],
+    "scaffold_guard": [
+        Slot("defect", "是脚手架连墙件失稳，还是临边护栏/安全网缺失？"),
+        Slot("exposure", "现场是否仍有高处作业或下方有行人通行？"),
+    ],
+    "deep_pit": [
+        Slot("pit_status", "是否出现支护位移、渗水或坑边超载堆料？"),
+        Slot("isolation", "周边是否已设置防护栏杆和警戒区？"),
+    ],
     "temporary_power": SLOT_SCHEMAS["电气"],
-    "elevator_trapped": SLOT_SCHEMAS["其他"],
-    "elevator_stopped": SLOT_SCHEMAS["其他"],
-    "elevator_inspection": SLOT_SCHEMAS["其他"],
-    "garbage_pile": SLOT_SCHEMAS["其他"],
-    "sewage_odor": SLOT_SCHEMAS["其他"],
+    "elevator_trapped": [
+        Slot("trapped_state", "轿厢里是否有人被困，是否有受伤、缺氧或恐慌？"),
+        Slot("duration", "已经被困多长时间？", REPORT_CLASS),
+    ],
+    "elevator_stopped": [
+        Slot("fault_symptom", "是停运、异响、冲顶蹲底还是停层不准？"),
+        Slot("occupancy", "轿厢内是否有人，门是否能正常打开？"),
+    ],
+    "elevator_inspection": [
+        Slot("equipment_status", "检验标志是否过期、缺失，或最近是否长期未维保？"),
+        Slot("equipment_type", "是乘客电梯、载货电梯还是自动扶梯？", REPORT_CLASS),
+    ],
+    "garbage_pile": [
+        Slot("waste_type", "堆积的是生活垃圾、建筑垃圾还是可燃杂物？"),
+        Slot("impact", "是否堵塞通道、影响消防或产生异味和病媒风险？"),
+    ],
+    "sewage_odor": [
+        Slot("sewage_source", "异味/污水来自下水道、污水井还是经营场所？"),
+        Slot("impact", "是否流入公共区域、污染水源或影响行人商户？", REPORT_CLASS),
+    ],
     "other": SLOT_SCHEMAS["其他"],
 }
 

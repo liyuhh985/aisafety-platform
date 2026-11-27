@@ -1,0 +1,23 @@
+{
+  "sha256": "5967c274102ffbb184d39fc604acc75304b2473041178ea63c6a830cef333b93",
+  "file": "NEGFIR08.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片显示的室外消火栓外观完好，配件齐全，周围环境整洁，未发现明显的损坏、遮挡或消防安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示的室外消火栓外观完好，配件齐全，周围环境整洁，未发现明显的损坏、遮挡或消防安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

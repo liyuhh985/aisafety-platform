@@ -1,0 +1,26 @@
+{
+  "sha256": "38b2eb5d19e6e4e9125fb0ec201b323c4364baad34a715cd6a9f2b79e74bcc46",
+  "file": "WAL0020.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"中\",\n  \"description\": \"人行道旁彩绘围墙墙端及墙脚可见裂缝，旁侧大树紧贴墙体，根系可能挤压墙基，存在墙体局部开裂失稳、倒塌伤人的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道旁彩绘围墙与大树相邻处\",\n  \"rectification\": [\n    \"对围墙裂缝和倾斜情况开展专业检测，必要时加固或拆除重建\",\n    \"评估旁侧大树根系影响，采取迁移、修剪或设置根障等措施，并设置临时警示围挡\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "中",
+    "description": "人行道旁彩绘围墙墙端及墙脚可见裂缝，旁侧大树紧贴墙体，根系可能挤压墙基，存在墙体局部开裂失稳、倒塌伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道旁彩绘围墙与大树相邻处",
+    "rectification": [
+      "对围墙裂缝和倾斜情况开展专业检测，必要时加固或拆除重建",
+      "评估旁侧大树根系影响，采取迁移、修剪或设置根障等措施，并设置临时警示围挡"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

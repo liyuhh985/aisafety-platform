@@ -43,6 +43,15 @@ def test_has_active_danger_hits_colloquial_phrasing():
         assert has_active_danger(text) is True, text
 
 
+def test_has_active_danger_hits_v2b_acute_exposure_terms():
+    for text in (
+        "污水井里硫化氢浓度超标，工人已经中毒",
+        "有人下化粪池后晕厥，叫不醒",
+        "车库里的易燃溶剂泄漏，随时可能闪燃",
+    ):
+        assert has_active_danger(text) is True, text
+
+
 def test_has_active_danger_does_not_fire_on_routine_hazards():
     for text in ("紧急出口被堵住了", "马上就要下雨了", "这事很紧急，帮我看下这个井盖",
                  "紧急疏散通道被杂物堵住，需要尽快清理", "小区外墙广告牌锈蚀"):

@@ -1,0 +1,23 @@
+{
+  "sha256": "cadf7f622229df025b7c62df0b5663ef709ab9b01bc7fee17f6ffbda1b7d8b84",
+  "file": "NEGSTR07.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片为室内装修或待入住房间，可见纸箱、地面保护膜和少量杂物，但未发现井盖破损、消防通道堵塞、电线裸露、施工临边防护缺失等明确城市安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为室内装修或待入住房间，可见纸箱、地面保护膜和少量杂物，但未发现井盖破损、消防通道堵塞、电线裸露、施工临边防护缺失等明确城市安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

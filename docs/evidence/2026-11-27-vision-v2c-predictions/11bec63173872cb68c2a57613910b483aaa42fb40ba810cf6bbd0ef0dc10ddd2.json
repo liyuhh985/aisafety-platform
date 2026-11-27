@@ -1,0 +1,26 @@
+{
+  "sha256": "11bec63173872cb68c2a57613910b483aaa42fb40ba810cf6bbd0ef0dc10ddd2",
+  "file": "FAC0001.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"室内天花板出现大面积抹灰层脱落，露出粗糙基层，周边伴随裂纹。存在进一步脱落砸伤下方人员的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内天花板上方\",\n  \"rectification\": [\n    \"立即隔离该区域，设置警示标志，防止人员靠近，并清理已松动的灰块\",\n    \"尽快安排专业维修人员排查天花板空鼓情况，铲除隐患部分并重新进行抹灰修补\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "室内天花板出现大面积抹灰层脱落，露出粗糙基层，周边伴随裂纹。存在进一步脱落砸伤下方人员的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内天花板上方",
+    "rectification": [
+      "立即隔离该区域，设置警示标志，防止人员靠近，并清理已松动的灰块",
+      "尽快安排专业维修人员排查天花板空鼓情况，铲除隐患部分并重新进行抹灰修补"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

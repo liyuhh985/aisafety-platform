@@ -1,0 +1,27 @@
+{
+  "sha256": "a20dda79f34bb5fb0d5cfb72c2951c81d8401dc89e30bf75b372baa6e9ecbd03",
+  "file": "VEH0027.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"建筑前道路边缘密集停放大量电动车、摩托车及三轮车，未见规范停车区域，部分车辆占用道路通行空间，影响行人和车辆通行，易引发刮擦、碰撞等风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"沿街建筑前道路边缘及人行道交界处\",\n  \"rectification\": [\n    \"施划非机动车停放区域，引导车辆规范停放\",\n    \"清理占用通行空间的车辆，保障道路通畅\",\n    \"加强日常巡查和违停劝导，落实商铺门前秩序管理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "建筑前道路边缘密集停放大量电动车、摩托车及三轮车，未见规范停车区域，部分车辆占用道路通行空间，影响行人和车辆通行，易引发刮擦、碰撞等风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街建筑前道路边缘及人行道交界处",
+    "rectification": [
+      "施划非机动车停放区域，引导车辆规范停放",
+      "清理占用通行空间的车辆，保障道路通畅",
+      "加强日常巡查和违停劝导，落实商铺门前秩序管理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,26 @@
+{
+  "sha256": "a77a257507e7679b89755c578ee39513f7407ebedd0b72371ea0c70ec2bf5b70",
+  "file": "SEW0008.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"低\",\n  \"description\": \"沟渠/河道水面发绿，漂浮藻类及少量杂物，岸边有枯枝，可能造成水体富营养化、滋生蚊虫并影响环境卫生；未见直接人身伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"河道/沟渠水面及近岸\",\n  \"rectification\": [\n    \"清理水面藻类、漂浮物和岸边枯枝杂物\",\n    \"排查上游污染源与排水口，定期巡查水质，必要时增设拦截打捞设施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "沟渠/河道水面发绿，漂浮藻类及少量杂物，岸边有枯枝，可能造成水体富营养化、滋生蚊虫并影响环境卫生；未见直接人身伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "河道/沟渠水面及近岸",
+    "rectification": [
+      "清理水面藻类、漂浮物和岸边枯枝杂物",
+      "排查上游污染源与排水口，定期巡查水质，必要时增设拦截打捞设施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -504,6 +504,15 @@ def test_every_object_evidence_word_is_effective(code):
     assert unbacked_hazard_claim([{"subcategory_code": code}], "一切正常") == code
 
 
+def test_v2b_scope_keywords_are_present():
+    required = (
+        "电动自行车", "飞线充电", "危化品", "危险化学品", "烟花爆竹",
+        "有限空间", "化粪池", "树木倒伏", "行道树",
+    )
+    for word in required:
+        assert word in DOMAIN_KEYWORDS, word
+
+
 def test_public_space_words_are_a_whitelist_not_a_veto():
     """场所词只用于放行：原文提到公共空间时，即使没说物件也不否决。"""
     for word in PUBLIC_SPACE_WORDS:

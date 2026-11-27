@@ -1,0 +1,26 @@
+{
+  "sha256": "d6b6880125893f80b2a7055d887d906becc4cf13b54ad819637a71487b4d2e49",
+  "file": "ELE0057.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯门口可见一人位于轿厢内，另一名戴安全帽人员正将其拉出；层门上方机械部件外露，门系统处于异常开启状态，存在人员被困、夹伤或坠落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑电梯层门处\",\n  \"rectification\": [\n    \"立即停梯并设置警戒，联系电梯维保单位排查门锁、平层及机械故障\",\n    \"按困人救援规程安全施救，防止夹伤、坠落等二次伤害，修复检验合格后方可启用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯门口可见一人位于轿厢内，另一名戴安全帽人员正将其拉出；层门上方机械部件外露，门系统处于异常开启状态，存在人员被困、夹伤或坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑电梯层门处",
+    "rectification": [
+      "立即停梯并设置警戒，联系电梯维保单位排查门锁、平层及机械故障",
+      "按困人救援规程安全施救，防止夹伤、坠落等二次伤害，修复检验合格后方可启用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

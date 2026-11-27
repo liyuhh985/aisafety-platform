@@ -1,0 +1,23 @@
+{
+  "sha256": "d592b3f95d2eaf8a2e08a808b8ca8047aa0b7f1c517e769748979d028e1d7137",
+  "file": "NEGELE07.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"仅见电梯楼层按钮及载重显示屏，按钮未见明显破损、缺失，未见电梯困人、停运、异响、停层异常或超期未检验标识等可见隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "仅见电梯楼层按钮及载重显示屏，按钮未见明显破损、缺失，未见电梯困人、停运、异响、停层异常或超期未检验标识等可见隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "ac85e91439e99d85f1f6c775b2bf6ab74aa9f9f11840dd5f2d7e4f72b4d2b6eb",
+  "file": "ELE0054.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"中\",\n  \"description\": \"两名消防员正在电梯厅手动开启关闭的电梯门，显示电梯门无法正常开启，存在电梯故障或困人风险；轿厢内部不可见，若有人被困可能发生缺氧、恐慌及夹伤等次生伤害。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯厅电梯门口，楼层显示3\",\n  \"rectification\": [\n    \"立即设置警戒并联系电梯维保单位到场处置\",\n    \"按电梯应急救援规程安全开门，确认轿厢内是否有人并安抚\",\n    \"排查门锁、控制系统等故障，修复并检验合格后恢复运行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "两名消防员正在电梯厅手动开启关闭的电梯门，显示电梯门无法正常开启，存在电梯故障或困人风险；轿厢内部不可见，若有人被困可能发生缺氧、恐慌及夹伤等次生伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯厅电梯门口，楼层显示3",
+    "rectification": [
+      "立即设置警戒并联系电梯维保单位到场处置",
+      "按电梯应急救援规程安全开门，确认轿厢内是否有人并安抚",
+      "排查门锁、控制系统等故障，修复并检验合格后恢复运行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

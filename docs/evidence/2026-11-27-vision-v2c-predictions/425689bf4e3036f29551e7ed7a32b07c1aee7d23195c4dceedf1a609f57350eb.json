@@ -1,0 +1,27 @@
+{
+  "sha256": "425689bf4e3036f29551e7ed7a32b07c1aee7d23195c4dceedf1a609f57350eb",
+  "file": "MAN0103.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"中\",\n  \"description\": \"人行道铺装石板碎裂缺失，形成不规则坑洞，边缘尖锐并散落碎石，且紧邻盲道，行人易绊倒、崴脚，存在通行安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商业街人行道盲道旁\",\n  \"rectification\": [\n    \"立即设置警示标志和临时围挡，提醒行人避让\",\n    \"尽快清理碎裂石板及散落碎石，修复或更换破损铺装\",\n    \"修复后检查盲道连续性及周边路面平整度\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "人行道铺装石板碎裂缺失，形成不规则坑洞，边缘尖锐并散落碎石，且紧邻盲道，行人易绊倒、崴脚，存在通行安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商业街人行道盲道旁",
+    "rectification": [
+      "立即设置警示标志和临时围挡，提醒行人避让",
+      "尽快清理碎裂石板及散落碎石，修复或更换破损铺装",
+      "修复后检查盲道连续性及周边路面平整度"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

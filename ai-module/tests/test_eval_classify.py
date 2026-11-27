@@ -21,14 +21,14 @@ from core.hazard_taxonomy import HAZARD_TAXONOMY
 
 
 # ---------- 查询集自洽性 ----------
-def test_query_set_is_29_subcategories_times_two_styles():
-    assert len(QUERY_SET) == 58
+def test_query_set_is_33_subcategories_times_two_styles():
+    assert len(QUERY_SET) == 66
     pairs = {(q["major"], q["subcategory"]) for q in QUERY_SET}
-    assert len(pairs) == 29
+    assert len(pairs) == 33
     per_pair = Counter((q["major"], q["subcategory"]) for q in QUERY_SET)
     assert all(count == 2 for count in per_pair.values())
     styles = Counter(q["style"] for q in QUERY_SET)
-    assert styles == {"explicit": 29, "colloquial": 29}
+    assert styles == {"explicit": 33, "colloquial": 33}
     retired = {"wall_crack_lean", "facade_fall", "fire_water_abnormal"}
     assert retired.isdisjoint({q["subcategory"] for q in QUERY_SET})
 
@@ -41,7 +41,7 @@ def test_query_set_covers_every_taxonomy_subcategory():
         for sub_code, _ in item["subcategories"]
     }
     assert covered == taxonomy
-    assert len(taxonomy) == 29
+    assert len(taxonomy) == 33
 
 
 def test_negative_set_has_ten_unrelated_queries():

@@ -1,0 +1,23 @@
+{
+  "sha256": "801349403c4e2b98d4294c1c7c20152c73058ea1d67a39fd593c4e9b9751a024",
+  "file": "NO0100.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"画面中施工围挡连续完整，斜撑和横杆支撑固定，未见围挡缺失、破损或明显失稳等安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中施工围挡连续完整，斜撑和横杆支撑固定，未见围挡缺失、破损或明显失稳等安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

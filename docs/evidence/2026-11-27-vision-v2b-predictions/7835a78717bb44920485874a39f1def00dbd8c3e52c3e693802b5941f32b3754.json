@@ -1,0 +1,26 @@
+{
+  "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+  "file": "NEGELE03.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"电梯楼层按钮面板左侧一按钮位置破损缺失，内部结构外露，存在夹手、按钮失灵或电梯故障风险，影响乘梯安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内楼层按钮面板左侧列，约5层按钮位置\",\n  \"rectification\": [\n    \"立即设置警示并联系电梯维保单位检修，必要时暂停使用该电梯\",\n    \"更换破损按钮面板及内部线路，修复后测试确认运行正常\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "电梯楼层按钮面板左侧一按钮位置破损缺失，内部结构外露，存在夹手、按钮失灵或电梯故障风险，影响乘梯安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内楼层按钮面板左侧列，约5层按钮位置",
+    "rectification": [
+      "立即设置警示并联系电梯维保单位检修，必要时暂停使用该电梯",
+      "更换破损按钮面板及内部线路，修复后测试确认运行正常"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

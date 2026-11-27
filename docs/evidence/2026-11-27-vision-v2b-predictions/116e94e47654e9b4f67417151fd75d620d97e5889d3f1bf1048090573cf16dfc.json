@@ -1,0 +1,27 @@
+{
+  "sha256": "116e94e47654e9b4f67417151fd75d620d97e5889d3f1bf1048090573cf16dfc",
+  "file": "NEGMAN01.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_warning\",\n  \"severity\": \"中\",\n  \"description\": \"画面显示人员正在使用长杆工具撬动道路上的圆形井盖，井盖周边未见锥桶、围挡或警示标志。若井盖被打开，行人和车辆可能误入或碰撞，存在坠落、交通事故风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路上的圆形井盖处，人员脚旁\",\n  \"rectification\": [\n    \"立即在井盖周围设置反光警示锥桶或连续围挡\",\n    \"安排专人监护作业，提醒行人和车辆避让\",\n    \"作业完成后及时复位井盖并确认井圈稳固\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "中",
+    "description": "画面显示人员正在使用长杆工具撬动道路上的圆形井盖，井盖周边未见锥桶、围挡或警示标志。若井盖被打开，行人和车辆可能误入或碰撞，存在坠落、交通事故风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路上的圆形井盖处，人员脚旁",
+    "rectification": [
+      "立即在井盖周围设置反光警示锥桶或连续围挡",
+      "安排专人监护作业，提醒行人和车辆避让",
+      "作业完成后及时复位井盖并确认井圈稳固"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

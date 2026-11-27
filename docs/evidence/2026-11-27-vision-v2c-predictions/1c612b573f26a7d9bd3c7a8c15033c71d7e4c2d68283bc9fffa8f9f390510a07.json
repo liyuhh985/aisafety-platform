@@ -1,0 +1,27 @@
+{
+  "sha256": "1c612b573f26a7d9bd3c7a8c15033c71d7e4c2d68283bc9fffa8f9f390510a07",
+  "file": "GAR0003.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"低\",\n  \"description\": \"夜间车行道及人行道上散落塑料袋、纸片、塑料瓶等垃圾，影响行人通行和市容环境，存在行人滑倒及垃圾被车辆碾压飞散的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中的车行道及人行道区域\",\n  \"rectification\": [\n    \"及时清扫路面和人行道散落垃圾\",\n    \"加强该路段夜间保洁和巡查频次\",\n    \"合理设置或维护垃圾收集设施，减少随意丢弃\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "低",
+    "description": "夜间车行道及人行道上散落塑料袋、纸片、塑料瓶等垃圾，影响行人通行和市容环境，存在行人滑倒及垃圾被车辆碾压飞散的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中的车行道及人行道区域",
+    "rectification": [
+      "及时清扫路面和人行道散落垃圾",
+      "加强该路段夜间保洁和巡查频次",
+      "合理设置或维护垃圾收集设施，减少随意丢弃"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

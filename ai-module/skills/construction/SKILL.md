@@ -10,6 +10,9 @@ routing_keywords:
   - 安全警示
   - 脚手架
   - 深基坑
+  - 有限空间
+  - 化粪池
+  - 硫化氢
   - 临时用电
 version: "1"
 ---
@@ -18,7 +21,7 @@ version: "1"
 
 ## 适用范围
 
-覆盖 no_barrier、no_warning、scaffold_guard、deep_pit、temporary_power。
+覆盖 no_barrier、no_warning、scaffold_guard、deep_pit、temporary_power、confined_space。
 
 ## 追问 SOP
 

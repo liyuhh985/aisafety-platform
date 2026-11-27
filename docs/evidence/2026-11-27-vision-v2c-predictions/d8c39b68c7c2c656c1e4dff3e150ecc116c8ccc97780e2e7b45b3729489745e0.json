@@ -1,0 +1,30 @@
+{
+  "sha256": "d8c39b68c7c2c656c1e4dff3e150ecc116c8ccc97780e2e7b45b3729489745e0",
+  "file": "DIS0003.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"配电箱内多股电线杂乱挤在一起，接头仅用胶布缠绕，部分线芯或绝缘破损处裸露，易发生短路、漏电、触电及电气火灾。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"配电箱/电表箱内部接线处\",\n  \"rectification\": [\n    \"立即断电并联系持证电工排查，禁止非专业人员触碰。\",\n    \"重新规范接线，使用接线端子、绝缘套管和合格配电箱，避免接头裸露。\",\n    \"更换老化、破损线缆，整理线路并加装或检查漏电保护装置。\"\n  ],\n  \"secondary_subcategories\": [\n    \"illegal_wiring\",\n    \"distribution_box_fault\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "配电箱内多股电线杂乱挤在一起，接头仅用胶布缠绕，部分线芯或绝缘破损处裸露，易发生短路、漏电、触电及电气火灾。",
+    "reason_if_no_hazard": "",
+    "location_hint": "配电箱/电表箱内部接线处",
+    "rectification": [
+      "立即断电并联系持证电工排查，禁止非专业人员触碰。",
+      "重新规范接线，使用接线端子、绝缘套管和合格配电箱，避免接头裸露。",
+      "更换老化、破损线缆，整理线路并加装或检查漏电保护装置。"
+    ],
+    "secondary_subcategories": [
+      "illegal_wiring",
+      "distribution_box_fault"
+    ]
+  },
+  "error": ""
+}
