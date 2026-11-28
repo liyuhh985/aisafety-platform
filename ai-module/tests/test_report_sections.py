@@ -41,6 +41,43 @@ def _capture_prompt(monkeypatch, state):
     return captured["prompt"]
 
 
+def test_missing_issue_section_is_appended_to_the_report_body():
+    state = _state(
+        issues=[
+            {"major_code": "fire", "subcategory_code": "ebike_hazard",
+             "slots": {"hazard_mode": "楼梯间飞线充电", "charging_state": "正在充电"},
+             "missing": []},
+            {"major_code": "fire", "subcategory_code": "fire_lane_blocked",
+             "slots": {"blocker": "飞线横跨楼梯口", "persistence": "长期"},
+             "missing": []},
+        ],
+        categories=["ebike_hazard", "fire_lane_blocked"],
+        category_results={
+            "ebike_hazard": {"regulation": "高层民用建筑消防安全管理规定第37条", "case": "南京案例"},
+            "fire_lane_blocked": {"regulation": "消防法第28条", "case": "萍乡案例"},
+        },
+    )
+    body = "### 隐患2：消防通道占用\n\n### 相关法规与责任归属\n消防法第28条。"
+    covered = ag._ensure_report_issue_coverage(state, body)
+    assert "### 隐患1：电动自行车违规停放/充电" in covered
+    assert "楼梯间飞线充电" in covered
+    assert "高层民用建筑消防安全管理规定第37条" in covered
+    assert "南京案例" in covered
+
+
+def test_issue_coverage_does_not_duplicate_an_existing_section():
+    state = _state(
+        issues=[
+            {"major_code": "fire", "subcategory_code": "ebike_hazard",
+             "slots": {"hazard_mode": "楼梯间飞线充电", "charging_state": "正在充电"},
+             "missing": []},
+        ],
+        categories=["ebike_hazard"],
+        category_results={"ebike_hazard": {"regulation": "法规A", "case": "案例A"}},
+    )
+    body = "### 隐患1：电动自行车违规停放/充电\n现场事实完整。"
+    assert ag._ensure_report_issue_coverage(state, body) == body
+
 def _block(prompt):
     return prompt.split("\n请逐个")[0].split("本次对话只跟踪这一个隐患")[0]
 
