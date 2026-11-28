@@ -60,6 +60,28 @@ def test_understand_downgrades_to_preliminary_when_cautious(monkeypatch):
     assert out["report_mode"] == "preliminary"
 
 
+def test_cautious_a_class_gap_asks_before_retrieval(monkeypatch):
+    gap_plan = _plan(
+        issues=[{
+            "major_code": "fire",
+            "subcategory_code": "fire_lane_blocked",
+            "slots": {"blocker": "杂物"},
+        }],
+        categories=["fire_lane_blocked"],
+        category_slots={"fire_lane_blocked": {"blocker": "杂物"}},
+        question="",
+        answer="",
+        needs_search=True,
+    )
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: gap_plan)
+    out = ag.understand({
+        "messages": [HumanMessage(content="我们小区的消防通道被占用了，不知道该怎么办")],
+    })
+    assert out["uncertainty_level"] == "cautious"
+    assert out["next_action"] == "ask_critical_question"
+    assert out["clarification_question"] == "是长期还是临时？"
+    assert out["report_mode"] == "none"
+
 def test_routine_hazard_is_neither_vetoed_nor_cautious(monkeypatch):
     monkeypatch.setattr(
         ag, "_understand_plan",
