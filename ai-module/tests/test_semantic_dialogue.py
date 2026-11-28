@@ -171,6 +171,13 @@ def test_planner_prompt_requires_one_information_point_and_no_default_location_q
     assert "不要追问具体位置" in prompt
 
 
+def test_planner_prompt_excludes_routine_ebike_charging_from_immediate_danger():
+    prompt = dialogue_understanding._planner_system_prompt()
+    assert "电动自行车违规停放/充电" in prompt
+    assert "没有起火、冒烟、爆燃、人员被困" in prompt
+    assert "immediate_danger 必须为 false" in prompt
+
+
 def test_planner_prompt_lists_subcategory_slots():
     prompt = dialogue_understanding._planner_system_prompt()
     assert "fire_equipment_fault" in prompt

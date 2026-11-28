@@ -329,6 +329,8 @@ def _planner_system_prompt(active_skill_codes=None) -> str:
         "  「另外」「还有」「旁边那个」是新增信息，不是 correction。\n"
         "- immediate_danger：如果对话描述的是正在发生的危险（已经起火、有人被困、正在漏气、\n"
         "  有人受伤或昏迷、结构正在塌落），返回 true；只是描述一个已经存在的隐患则返回 false。\n"
+        "- 电动自行车违规停放/充电、飞线或占用疏散通道属于高风险隐患，但如果**没有起火、冒烟、爆燃、人员被困**等正在发生的事故，\n"
+        "  immediate_danger 必须为 false，并进入正常追问/报告流程。\n"
         "- 正常咨询最多问一个问题；已经回答过的信息不要再问。\n"
         "- question_target：给出 question 时，这里写它针对的那一个槽 key\n"
         "  （原样照抄上面给出的槽 key）；没有 question、或确实无从归属时留空。\n"

@@ -149,7 +149,7 @@ def has_active_danger(text) -> bool:
     value = normalize_text(text)
     if not value:
         return False
-    return any(normalize_text(term) in value for term in DANGER_TERMS)
+    return bool(_first_danger_term(text))
 
 
 def _latest_user_text(messages) -> str:
@@ -181,12 +181,45 @@ def _source_text(messages, vision_summary: str) -> str:
     return " ".join(parts)
 
 
-def _first_danger_term(text: str) -> str:
+_NEGATION_RE = re.compile(
+    r"(?:没有|并没有|没|无(?!法)|未(?:见|发现|出现|发生)?|不是|并非|暂无|并无|已排除|排除)"
+)
+_CONTRAST_RE = re.compile(r"(?:但|可是|不过|然而|却|已经|仍然|还是|反而|随后|后来)")
+
+
+def _is_negated_term(normalized: str, start: int) -> bool:
+    """Return True only when this occurrence is clearly negated nearby."""
+    prefix = normalized[max(0, start - 16):start]
+    matches = list(_NEGATION_RE.finditer(prefix))
+    if not matches:
+        return False
+    tail = prefix[matches[-1].end():]
+    if len(tail) > 10 or _CONTRAST_RE.search(tail):
+        return False
+    return True
+
+
+def _first_active_term(text: str, terms) -> str:
     normalized = normalize_text(text)
-    for term in DANGER_TERMS:
-        if normalize_text(term) in normalized:
-            return term
+    if not normalized:
+        return ""
+    for term in terms:
+        term_norm = normalize_text(term)
+        if not term_norm:
+            continue
+        start = 0
+        while True:
+            index = normalized.find(term_norm, start)
+            if index < 0:
+                break
+            if not _is_negated_term(normalized, index):
+                return term
+            start = index + len(term_norm)
     return ""
+
+
+def _first_danger_term(text: str) -> str:
+    return _first_active_term(text, DANGER_TERMS)
 
 
 def has_active_situation(text) -> bool:
@@ -194,15 +227,11 @@ def has_active_situation(text) -> bool:
     value = normalize_text(text)
     if not value:
         return False
-    return any(normalize_text(term) in value for term in EMERGENCY_SITUATION_TERMS)
+    return bool(active_situation_term(text))
 
 
 def active_situation_term(text) -> str:
-    normalized = normalize_text(text)
-    for term in EMERGENCY_SITUATION_TERMS:
-        if normalize_text(term) in normalized:
-            return term
-    return ""
+    return _first_active_term(text, EMERGENCY_SITUATION_TERMS)
 
 
 def _numeric_text(value: str) -> str:

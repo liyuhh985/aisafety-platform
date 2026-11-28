@@ -58,6 +58,38 @@ def test_has_active_danger_does_not_fire_on_routine_hazards():
         assert has_active_danger(text) is False, text
 
 
+def test_negated_danger_symptoms_do_not_trigger_the_veto():
+    text = (
+        "测试用高层住宅小区3号楼2单元1楼楼梯间，有一辆电动自行车正在充电，"
+        "电池没有发热、冒烟或鼓包；充电线是从4楼窗户私拉下来的飞线，"
+        "横跨楼梯口，已经影响人员疏散。"
+    )
+    assert has_active_danger(text) is False
+
+
+def test_assess_does_not_veto_a_high_risk_hazard_with_explicit_negative_symptoms():
+    text = (
+        "测试用高层住宅小区3号楼2单元1楼楼梯间，有一辆电动自行车正在充电，"
+        "电池没有发热、冒烟或鼓包；充电线是从4楼窗户私拉下来的飞线，"
+        "横跨楼梯口，已经影响人员疏散。"
+    )
+    plan = {
+        "ok": True,
+        "immediate_danger": False,
+        "issues": [{
+            "major_code": "fire",
+            "subcategory_code": "ebike_hazard",
+            "slots": {"hazard_mode": "楼梯间飞线充电", "charging_state": "正在充电，无发热冒烟"},
+        }],
+    }
+    result = assess(plan, [{"role": "user", "content": text}])
+    assert result["danger_veto"] is False
+    assert not any(sig.startswith("danger_term:") for sig in result["uncertainty_signals"])
+
+
+def test_mixed_negative_and_positive_danger_evidence_still_vetoes():
+    assert has_active_danger("电池没有冒烟，但楼梯间已经起火") is True
+
 def test_assess_flags_cautious_on_an_invented_slot():
     plan = {
         "ok": True,
