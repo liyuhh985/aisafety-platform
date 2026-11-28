@@ -182,7 +182,7 @@ def _source_text(messages, vision_summary: str) -> str:
 
 
 _NEGATION_RE = re.compile(
-    r"(?:没有|并没有|没|无(?!法)|未(?:见|发现|出现|发生)?|不是|并非|暂无|并无|已排除|排除)"
+    r"(?:没有|并没有|没|无(?!法)|未(?:见|发现|出现|发生)?|不是|并非|暂无|并无|已排除|排除|已清理|已恢复|已修复|已整改)"
 )
 _CONTRAST_RE = re.compile(r"(?:但|可是|不过|然而|却|已经|仍然|还是|反而|随后|后来)")
 
@@ -257,7 +257,7 @@ def _value_supported_by_quote(value: str, quote: str) -> bool:
 
 
 def _negated_near_quote(source: str, quote: str, value: str) -> bool:
-    """Minimal contradiction guard for the common "没有X" / "已清理X" pattern."""
+    """Detect negation that scopes to this quote/value, not a later clause."""
     source_norm = normalize_text(source)
     quote_norm = normalize_text(quote)
     value_norm = normalize_text(value)
@@ -266,13 +266,12 @@ def _negated_near_quote(source: str, quote: str, value: str) -> bool:
     start = source_norm.find(quote_norm)
     if start < 0:
         return False
-    window = source_norm[max(0, start - 8): start + len(quote_norm) + 8]
-    # Do not treat a bare "无" as negation: lexical words such as "无法进入"
-    # describe a supported fact, not a negated one.
-    negative_tokens = (
-        "没有", "没", "未", "不是", "并非", "已清理", "已恢复",
-    )
-    return any(token in window for token in negative_tokens)
+    leading_negation = _NEGATION_RE.match(quote_norm)
+    if leading_negation:
+        # A quote/value that itself states the absence ("无围挡", "未设置围挡")
+        # is a positive fact for that slot, not a contradiction.
+        return not value_norm.startswith(leading_negation.group(0))
+    return _is_negated_term(source_norm, start)
 
 
 def business_status_for(result) -> str:

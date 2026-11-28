@@ -137,6 +137,16 @@ def test_numeric_mismatch_is_unverified():
     assert result["reason"] == "numeric_mismatch"
 
 
+def test_negation_after_quote_does_not_contradict_a_different_fact():
+    result = verify_slot_evidence(
+        "charging_state", "正在充电",
+        {"quote": "正在充电", "source_ref": "u5"},
+        {**SOURCE_MAP, "u5": "电动自行车正在充电，电池没有发热、冒烟或鼓包"},
+        "ebike_hazard",
+    )
+    assert result["status"] == "grounded"
+    assert result["reason"] == ""
+
 def test_negated_quote_is_contradicted():
     result = verify_slot_evidence(
         "source", "配电箱冒烟",
