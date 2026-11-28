@@ -1,0 +1,28 @@
+{
+  "sha256": "16ed707065eefa2a1314198407274d44b94481e99462534a5cbac4eaf43a7c0e",
+  "file": "exposed_wire_2_16ed707065ee.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"地砖旁泥土中有多段电线外露，绝缘层破损、线芯裸露，部分接头仅用胶带缠绕并散落在地面，存在触电、短路起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道地砖与泥土交界处\",\n  \"rectification\": [\n    \"立即断电并隔离现场，防止行人触碰\",\n    \"由专业电工排查线路，修复或更换破损电缆\",\n    \"外露线路应穿管保护并规范固定，接头须防水绝缘处理\",\n    \"整改完成前设置围挡和警示标志\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "地砖旁泥土中有多段电线外露，绝缘层破损、线芯裸露，部分接头仅用胶带缠绕并散落在地面，存在触电、短路起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道地砖与泥土交界处",
+    "rectification": [
+      "立即断电并隔离现场，防止行人触碰",
+      "由专业电工排查线路，修复或更换破损电缆",
+      "外露线路应穿管保护并规范固定，接头须防水绝缘处理",
+      "整改完成前设置围挡和警示标志"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

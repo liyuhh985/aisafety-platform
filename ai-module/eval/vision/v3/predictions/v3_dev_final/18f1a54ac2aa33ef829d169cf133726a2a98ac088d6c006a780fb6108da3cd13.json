@@ -1,0 +1,23 @@
+{
+  "sha256": "18f1a54ac2aa33ef829d169cf133726a2a98ac088d6c006a780fb6108da3cd13",
+  "file": "neg_52_18f1a54ac2aa.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为铺设完成且标线清晰的道路，未见井盖破损、路面塌陷、积水、占道、消防或施工等明显安全隐患；行道树正常生长，停车区域车辆停放规范。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为铺设完成且标线清晰的道路，未见井盖破损、路面塌陷、积水、占道、消防或施工等明显安全隐患；行道树正常生长，停车区域车辆停放规范。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

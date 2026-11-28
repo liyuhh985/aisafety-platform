@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_lane_blocked\", \"evidence\": \"楼道内两辆电动车停放，旁有消防栓标识牌，通道被占\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "evidence": "楼道内两辆电动车停放，旁有消防栓标识牌，通道被占"
+  }
+}

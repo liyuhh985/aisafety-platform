@@ -1,0 +1,27 @@
+{
+  "sha256": "a20dda79f34bb5fb0d5cfb72c2951c81d8401dc89e30bf75b372baa6e9ecbd03",
+  "file": "VEH0027.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"商铺门前道路一侧成排停放大量电动车、摩托车，未见规范停车标线，占用路侧通行空间，影响行人和非机动车通行，存在刮擦碰撞风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"沿街商铺门前道路及路侧\",\"rectification\":[\"规范设置非机动车停放区域，施划停车标线\",\"清理占用通行空间的车辆，加强日常巡查和劝导\",\"在高峰时段安排人员引导有序停放\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "商铺门前道路一侧成排停放大量电动车、摩托车，未见规范停车标线，占用路侧通行空间，影响行人和非机动车通行，存在刮擦碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街商铺门前道路及路侧",
+    "rectification": [
+      "规范设置非机动车停放区域，施划停车标线",
+      "清理占用通行空间的车辆，加强日常巡查和劝导",
+      "在高峰时段安排人员引导有序停放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

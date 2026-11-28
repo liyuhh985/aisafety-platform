@@ -1,0 +1,27 @@
+{
+  "sha256": "3d9209e7d4266c4c2e0d93d3a603d8603eb64a48898040c34a48595b0f4891ff",
+  "file": "blind_path_occupied_4_3d9209e7d426.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"blind_path_occupied\",\"severity\":\"中\",\"description\":\"公交候车亭的座椅和玻璃围挡直接压占盲道，盲道被阻断且通向座椅下方。视障人士沿盲道行走易碰撞玻璃、座椅或被迫绕行，存在绊倒和碰撞风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"公交候车亭内人行道盲道处\",\"rectification\":[\"迁移或调整候车亭座椅、玻璃围挡位置，确保盲道连续、无遮挡并保留足够通行宽度\",\"在盲道被占用区域设置临时警示和引导，尽快按无障碍规范整改\",\"排查并修复盲道及周边松动、破损地砖，保证路面平整\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "公交候车亭的座椅和玻璃围挡直接压占盲道，盲道被阻断且通向座椅下方。视障人士沿盲道行走易碰撞玻璃、座椅或被迫绕行，存在绊倒和碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "公交候车亭内人行道盲道处",
+    "rectification": [
+      "迁移或调整候车亭座椅、玻璃围挡位置，确保盲道连续、无遮挡并保留足够通行宽度",
+      "在盲道被占用区域设置临时警示和引导，尽快按无障碍规范整改",
+      "排查并修复盲道及周边松动、破损地砖，保证路面平整"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

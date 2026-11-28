@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_facility\", \"evidence\": \"灭火器锈蚀掉漆，一个倒地废弃\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "灭火器锈蚀掉漆，一个倒地废弃"
+  }
+}

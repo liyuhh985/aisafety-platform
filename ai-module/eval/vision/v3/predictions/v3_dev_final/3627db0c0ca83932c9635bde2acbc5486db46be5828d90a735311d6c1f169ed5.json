@@ -1,0 +1,27 @@
+{
+  "sha256": "3627db0c0ca83932c9635bde2acbc5486db46be5828d90a735311d6c1f169ed5",
+  "file": "distribution_box_fault_3_3627db0c0ca8.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"temporary_power\",\"severity\":\"高\",\"description\":\"施工临时配电箱多个倾倒、柜门敞开，内部断路器和导电部件裸露在泥地土坡旁，缺少固定、防护和警示，易发生漏电触电、短路起火事故。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"施工工地土坡前、蓝色活动板房下方\",\"rectification\":[\"立即断电并停用倾倒、敞开的临时配电箱，由持证电工检查合格后方可恢复\",\"将配电箱规范固定安装，落实防雨、防砸、防潮和上锁管理，进出线穿管保护\",\"在配电设施周边设置围挡和警示标志，清理周边土堆及杂物，确保安全距离\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "temporary_power",
+    "severity": "高",
+    "description": "施工临时配电箱多个倾倒、柜门敞开，内部断路器和导电部件裸露在泥地土坡旁，缺少固定、防护和警示，易发生漏电触电、短路起火事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工工地土坡前、蓝色活动板房下方",
+    "rectification": [
+      "立即断电并停用倾倒、敞开的临时配电箱，由持证电工检查合格后方可恢复",
+      "将配电箱规范固定安装，落实防雨、防砸、防潮和上锁管理，进出线穿管保护",
+      "在配电设施周边设置围挡和警示标志，清理周边土堆及杂物，确保安全距离"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

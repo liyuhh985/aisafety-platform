@@ -1,0 +1,26 @@
+{
+  "sha256": "52a2d687dde992bd18291a8a7af26c8537994b9f7bb469268595b319719a2ff6",
+  "file": "DAN0051.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"wall_crack_lean\",\n  \"severity\": \"中\",\n  \"description\": \"白色墙面或顶面可见多条不规则裂缝，局部交汇分叉，存在抹灰层开裂、渗水或局部脱落风险；若为结构裂缝可能影响使用安全，需进一步检测确认。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内白色墙面或顶棚\",\n  \"rectification\": [\n    \"委托专业人员检查裂缝深度、走向及成因，判断是否涉及结构安全\",\n    \"及时修补裂缝并持续观察是否扩展，必要时采取加固和防水措施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "wall_crack_lean",
+    "severity": "中",
+    "description": "白色墙面或顶面可见多条不规则裂缝，局部交汇分叉，存在抹灰层开裂、渗水或局部脱落风险；若为结构裂缝可能影响使用安全，需进一步检测确认。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内白色墙面或顶棚",
+    "rectification": [
+      "委托专业人员检查裂缝深度、走向及成因，判断是否涉及结构安全",
+      "及时修补裂缝并持续观察是否扩展，必要时采取加固和防水措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

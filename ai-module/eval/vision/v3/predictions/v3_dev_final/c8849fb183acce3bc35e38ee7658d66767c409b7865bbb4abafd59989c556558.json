@@ -1,0 +1,27 @@
+{
+  "sha256": "c8849fb183acce3bc35e38ee7658d66767c409b7865bbb4abafd59989c556558",
+  "file": "elevator_trapped_1_c8849fb183ac.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"画面显示消防人员正在从电梯轿厢内搀扶被困人员撤离，表明该电梯发生困人故障。电梯困人可能导致人员恐慌、缺氧、跌倒或挤压伤害，老人、儿童及病患风险更高。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢及电梯门口\",\n  \"rectification\": [\n    \"立即停用故障电梯并通知电梯维保单位排查修复\",\n    \"检查电梯应急报警、对讲、照明、门锁保护及平层装置是否正常\",\n    \"完善电梯日常维保和困人应急救援演练，张贴安全提示\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "画面显示消防人员正在从电梯轿厢内搀扶被困人员撤离，表明该电梯发生困人故障。电梯困人可能导致人员恐慌、缺氧、跌倒或挤压伤害，老人、儿童及病患风险更高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢及电梯门口",
+    "rectification": [
+      "立即停用故障电梯并通知电梯维保单位排查修复",
+      "检查电梯应急报警、对讲、照明、门锁保护及平层装置是否正常",
+      "完善电梯日常维保和困人应急救援演练，张贴安全提示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

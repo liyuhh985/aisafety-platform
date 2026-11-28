@@ -1,0 +1,27 @@
+{
+  "sha256": "a09fcae8437e1be7389802231e75538d6a7234805733e0909cfa166fad427d00",
+  "file": "NEGWIR07.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"货架上层红色盘管堆码较高，部分靠近货架边缘，未见防坠落挡护，塑料膜垂落；存在货物滑落砸伤下方人员风险。图片无法确认货架承重及固定状况。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内仓储货架上层\",\n  \"rectification\": [\n    \"降低上层货物堆码高度并重新码放稳固\",\n    \"货架边缘加装挡杆或护栏等防坠落措施\",\n    \"核查货架承重、固定情况及下方通行安全\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "货架上层红色盘管堆码较高，部分靠近货架边缘，未见防坠落挡护，塑料膜垂落；存在货物滑落砸伤下方人员风险。图片无法确认货架承重及固定状况。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内仓储货架上层",
+    "rectification": [
+      "降低上层货物堆码高度并重新码放稳固",
+      "货架边缘加装挡杆或护栏等防坠落措施",
+      "核查货架承重、固定情况及下方通行安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

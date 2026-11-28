@@ -1,0 +1,30 @@
+{
+  "sha256": "0484709e13eb2176a261724ea97705dc8426b3785da070d1e0a018da0f478c5b",
+  "file": "NEGDEE04.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"画面为深基坑/沟槽作业，坑壁高陡，坑底有积水，作业人员位于坑内，坑边未见连续防护栏杆和明显警示；电缆拖地，存在人员坠落、边坡失稳及触电风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"基坑/沟槽底部及临边作业区\",\"rectification\":[\"沿基坑边缘设置连续、牢固的防护栏杆并悬挂警示标志，禁止无关人员进入。\",\"设置合规上下通道，及时排除坑底积水并监测边坡及支护结构稳定。\",\"规范施工临时用电，电缆应架空或采取防水保护，不得拖地泡水。\"],\"secondary_subcategories\":[\"no_warning\",\"temporary_power\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "画面为深基坑/沟槽作业，坑壁高陡，坑底有积水，作业人员位于坑内，坑边未见连续防护栏杆和明显警示；电缆拖地，存在人员坠落、边坡失稳及触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "基坑/沟槽底部及临边作业区",
+    "rectification": [
+      "沿基坑边缘设置连续、牢固的防护栏杆并悬挂警示标志，禁止无关人员进入。",
+      "设置合规上下通道，及时排除坑底积水并监测边坡及支护结构稳定。",
+      "规范施工临时用电，电缆应架空或采取防水保护，不得拖地泡水。"
+    ],
+    "secondary_subcategories": [
+      "no_warning",
+      "temporary_power"
+    ]
+  },
+  "error": ""
+}

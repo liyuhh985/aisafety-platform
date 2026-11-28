@@ -1,0 +1,27 @@
+{
+  "sha256": "2691e24ae5eab5488d61acc06557edd59f43264e4b10811e8bc8081056fda57d",
+  "file": "GAR0001.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"建筑旁空地上大量生活垃圾、塑料袋、木箱及杂物成堆裸露堆放，占用公共区域并影响通行，易滋生蚊虫、产生异味，且存在可燃物聚集引发火灾的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑物旁空地及蓝色围挡前方区域\",\"rectification\":[\"立即组织清运堆积垃圾，做到日产日清\",\"规范设置垃圾收集容器或临时堆放点并加盖围挡\",\"加强日常巡查和卫生管理，防止随意倾倒\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "建筑旁空地上大量生活垃圾、塑料袋、木箱及杂物成堆裸露堆放，占用公共区域并影响通行，易滋生蚊虫、产生异味，且存在可燃物聚集引发火灾的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑物旁空地及蓝色围挡前方区域",
+    "rectification": [
+      "立即组织清运堆积垃圾，做到日产日清",
+      "规范设置垃圾收集容器或临时堆放点并加盖围挡",
+      "加强日常巡查和卫生管理，防止随意倾倒"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

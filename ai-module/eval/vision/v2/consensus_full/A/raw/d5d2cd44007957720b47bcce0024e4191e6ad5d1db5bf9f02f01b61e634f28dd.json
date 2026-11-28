@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"illegal_structure\", \"evidence\": \"多层阳台外立面密集加装金属防盗笼，属外立面违规扩建\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "illegal_structure",
+    "evidence": "多层阳台外立面密集加装金属防盗笼，属外立面违规扩建"
+  }
+}

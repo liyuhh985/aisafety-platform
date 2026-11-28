@@ -1,0 +1,27 @@
+{
+  "sha256": "711816f2cdabb183db567a9a4dedfd5d065c3e302ecce5f4a0ba584718f52e54",
+  "file": "NEGDIS08.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"橙色配电箱门锁扣处未见挂锁，箱门存在可被打开的风险；箱体虽有“当心触电”警示，但防护锁闭不到位，无关人员误开可能引发触电事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"橙色配电箱门锁扣处\",\n  \"rectification\": [\n    \"立即加装挂锁或更换门锁，确保配电箱门常闭锁闭\",\n    \"落实专人管理并定期巡检，防止无关人员开启\",\n    \"在箱门周边设置隔离防护或警示，降低误触风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "橙色配电箱门锁扣处未见挂锁，箱门存在可被打开的风险；箱体虽有“当心触电”警示，但防护锁闭不到位，无关人员误开可能引发触电事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "橙色配电箱门锁扣处",
+    "rectification": [
+      "立即加装挂锁或更换门锁，确保配电箱门常闭锁闭",
+      "落实专人管理并定期巡检，防止无关人员开启",
+      "在箱门周边设置隔离防护或警示，降低误触风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

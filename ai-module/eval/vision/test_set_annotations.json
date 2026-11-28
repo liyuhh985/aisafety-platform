@@ -1,0 +1,3782 @@
+{
+ "blind_path_occupied/BLI0005.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0006.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面未见明显安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0013.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0014.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "护栏内停满自行车电动车，旁有禁停牌",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0019.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可见，无隐患证据",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0020.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "夜间路面潮湿，盲道完整，未见明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0023.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "盲道完好畅通，无占用无破损",
+  "text_in_image": false,
+  "label_source": "B(单模型)",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0033.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多辆汽车停靠路边，占用车道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0034.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0041.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "墙面有明显竖向裂缝及涂层剥落",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0045.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "盲道上停放多辆共享单车，老人持盲杖绕行",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "blind_path_occupied",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0049.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "黑色SUV停放在自行车道内",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0054.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0056.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图像不可用，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0057.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "blind_path_occupied/BLI0058.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "路面平整，井盖完整，设施完好",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0001.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "黄色配电箱，有电危险标识，未见破损",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0002.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "配电柜门敞开，内部电气部件裸露",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "distribution_box_fault",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0004.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "配电箱及警示牌完好，未见异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0006.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为警示贴纸商品展示",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0008.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无画面可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0010.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "稻田草地铁轨，无可见隐患",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0011.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "设备箱体外观完好，未见明显隐患",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0014.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "配电箱敞开，内部接线裸露杂乱",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "distribution_box_fault",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0020.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无有效图像信息",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0024.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "黄色配电箱完好，箱门关闭，警示标识清晰",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0027.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "水槽柜体散架，底板破损塌陷",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0031.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可用，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0032.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0036.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "配电箱顶堆放手套和设备，旁有触电警示",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "distribution_box_fault",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0037.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "配电柜门敞开，内部带电线路及端子裸露",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "distribution_box_fault",
+  "major_category": null
+ },
+ "distribution_box_fault/DIS0041.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "drainage_flood/DRA0003.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "道路大面积积水，工人涉水作业",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0009.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "drainage_flood/DRA0014.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "drainage_flood/DRA0016.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面大面积积水，车辆涉水行驶",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0037.png": {
+  "has_hazard": true,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "地面积水泡沫，地漏头发堵塞",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0044.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "交警设牌封路，警示山体滑坡",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "drainage_flood/DRA0045.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "道路大面积积水，行人涉水通行",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0057.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "道路大面积积水，车辆涉水行驶",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0059.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "道路被深水淹没，行人和车辆涉水受困",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0068.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路面大面积积水，车辆涉水行驶",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0075.png": {
+  "has_hazard": true,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "水槽堵塞，积水漂浮食物残渣",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0077.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "洗手盆下水管连接处渗漏并有黑色水渍",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "sewage_overflow",
+  "major_category": null
+ },
+ "drainage_flood/DRA0099.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "drainage_flood/DRA0100.png": {
+  "has_hazard": true,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "水槽内积水，有食物残渣漂浮",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "drainage_flood/DRA0101.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "drainage_flood/DRA0102.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "排水管破损开裂，接口未密封",
+  "text_in_image": false,
+  "label_source": "A(仲裁缺失)",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0001.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见画面",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0002.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "工人正在电梯门贴换装停用警示牌",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_stopped",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0003.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无有效画面可供判断",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0004.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯标识牌广告图，无实际场景隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0006.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯安全宣传图，无实际隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0007.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯安全标识科普海报，无实际隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0008.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为安全提示牌，无实际设施隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0009.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯内张贴禁烟标志与维保公示，未见异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0013.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "人员检修电梯控制柜，未见明显异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0014.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0016.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0020.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0021.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "检验标志下次检验2025年11月已过期",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_inspection",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0023.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0024.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯检测合格标志式样图，无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_inspection/ELE0026.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为证件照片，未见现场安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0004.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯楼层显示屏正常，无异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0006.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用，无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0007.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为电梯安全科普图文，无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0009.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯楼层显示正常，无异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0014.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "电梯故障停运，设有黄色围挡及告示牌",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_stopped",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0018.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "未见明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0020.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0025.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯门闭合正常，楼层显示面板亮起",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0026.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "科普海报，无实际电梯隐患画面",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0027.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "宣传海报，无现场隐患画面",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0028.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0029.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "科普海报，无实际隐患画面",
+  "text_in_image": true,
+  "label_source": "B(单模型)",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0030.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "medium",
+  "evidence": "电梯异响科普海报，无实际隐患画面",
+  "text_in_image": true,
+  "label_source": "B(单模型)",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0033.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯门关闭无破损，仅警示标识",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0036.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可用无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_stopped/ELE0040.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯门及按钮面板未见明显异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0001.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯机房内维保人员正常作业，未见明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0002.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面未见明显隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0004.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "电梯内有人被困，附紧急呼叫救援指引",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_trapped",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0006.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯应急演练现场，无明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0007.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "多人被困电梯内表情恐慌",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_trapped",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0008.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "一人被困电梯内，施救人员门外处置",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_trapped",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0013.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "安全教育海报，无实际隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0014.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "消防员用工具撬电梯门，旁边有人等待",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_trapped",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0016.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0019.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电梯困人应急演练合影，无可见隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0022.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0025.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为电梯自救宣传海报，无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0030.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "消防员在电梯内仰头检查，疑似困人救援",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_trapped",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0031.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "电梯门半开人员被困，救援人员施救",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_trapped",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0032.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "未发现明显隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "elevator_trapped/ELE0033.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "多人围货梯，工人操作门缝救援",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "elevator_trapped",
+  "major_category": null
+ },
+ "facade_risk/FAC0001.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "天花板大面积涂层脱落伴裂纹",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "facade_risk/FAC0006.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路面积水明显,设置警示围栏",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "facade_risk/FAC0008.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "墙面瓷砖大面积脱落裸露",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "facade_risk/FAC0017.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "外墙大面积剥落，工人正高处修补",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "facade_risk/FAC0023.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "墙体混凝土开裂，局部剥落",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "facade_risk/FAC0031.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "墙脚路面散落大量破碎板材，疑似外立面脱落",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "facade_risk/FAC0032.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "外墙装饰板缺失破损,存坠落风险",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "facade_risk/FAC0034.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "室内墙面大面积霉斑、墙皮起皮脱落",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "facade_risk/FAC0040.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "高层外墙空调外机支架疑似倾斜松动",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "facade_risk/FAC0050.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "外墙空鼓，工人乘升降平台检测",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "facade_risk/FAC0054.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "室内墙皮大面积返潮起皮脱落，地面有碎屑",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "facade_risk/FAC0056.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "高空作业车下方无围挡，行人穿行",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "facade_risk/FAC0062.png": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "画面不可见，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "facade_risk/FAC0067.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "室内墙面渗水致墙皮大面积脱落霉变",
+  "text_in_image": true,
+  "label_source": "B(单模型)",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "facade_risk/FAC0068.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "未发现明显隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "facade_risk/FAC0069.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "门套顶部瓷砖缺失、基层裸露空鼓",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "fire_facility/FIR0002.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "人员正常检查灭火器，无明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0025.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "消防栓完好无破损",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0026.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "灭火器瓶体及合格证可见，未见明显异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0030.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "车斗内大量灭火器密集堆叠暴晒",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_facility",
+  "major_category": null
+ },
+ "fire_facility/FIR0035.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "灭火器压力表指针指向红区",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_facility",
+  "major_category": null
+ },
+ "fire_facility/FIR0042.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "灭火器检查指南宣传海报，无实际隐患场景",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0043.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0044.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可用图像证据",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0046.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "科普图文，无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0047.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为灭火器检查知识图文，无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0052.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "规范文本，无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0054.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "灭火器外观完好，未见明显破损或异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0061.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "消防水带卷放松散，接口未连接",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_facility",
+  "major_category": null
+ },
+ "fire_facility/FIR0063.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "空白灭火器检查记录表，无设施异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_facility/FIR0068.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "灭火器维修证日期模糊，瓶体积尘蛛网",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_facility",
+  "major_category": null
+ },
+ "fire_facility/FIR0071.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无画面可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0002.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "消防车道畅通，无车辆杂物占用",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0030.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0039.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多辆共享电单车停人行道，占压盲道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0043.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多车停于黄色网格线且有人下车",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0048.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "海报显示安全通道畅通，无堆积物",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0057.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "楼梯间整洁，无杂物占道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0060.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "消防通道禁停牌，报道称车辆占用",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_lane_blocked",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0068.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "工程机械展示，无明显城市安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0072.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "车辆占用高速应急车道，有依法严惩字样",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0078.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "安全出口被纸箱杂物堵塞",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_lane_blocked",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0082.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "楼道停放电动车，阻碍消防通道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_lane_blocked",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0084.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "白车停在画有黄色网格的消防通道上，并被打红叉标示违停",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_lane_blocked",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0089.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面无明显安全隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0100.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "工人正在涂刷消防通道标线，未见隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0104.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "生命通道标线清晰且无车辆占用",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "fire_lane_blocked/FIR0107.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "garbage_pile/GAR0004.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "建筑垃圾投放点，垃圾在箱内，无异常",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "garbage_pile/GAR0037.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "门口堆积大量垃圾袋和纸箱",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0042.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "墙角大量水泥袋及杂物堆积",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0052.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "垃圾桶旁大量垃圾散落堆积",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0072.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "街道大量垃圾散落，垃圾桶满溢",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0087.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "墙边堆放大量木板竹竿等杂物",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_occupancy",
+  "major_category": null
+ },
+ "garbage_pile/GAR0088.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "垃圾桶整齐摆放，地面整洁无堆积",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "garbage_pile/GAR0089.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "环卫工清理大量泡沫垃圾，地面有散落垃圾",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0093.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "garbage_pile/GAR0099.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "纸箱堆叠过高且倾斜，易倒塌",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_occupancy",
+  "major_category": null
+ },
+ "garbage_pile/GAR0106.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可见，无法判断",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "garbage_pile/GAR0114.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "街道大量垃圾袋堆积散落，占压路面",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0130.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "大量垃圾堆积成山，垃圾车在场",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0133.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "大量垃圾袋杂物堆积路面",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0136.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "人行道上大量垃圾袋杂物堆积成堆",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "garbage_pile/GAR0138.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路面大量垃圾袋杂物堆积成堆",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "gas_leak/GAS0001.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "房屋起火，浓烟密布，屋顶猛烈燃烧",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "gas_leak/GAS0002.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "急救车与担架转运，未见隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0004.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可见，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0007.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "消防燃气车辆集结演练，无可见隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0009.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "无可见画面证据",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0010.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "高处人员作业，无护栏/脚手架防护",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "gas_leak/GAS0011.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "深坑开挖无围挡警示，人员坑内作业",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "gas_leak/GAS0013.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "未发现可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0014.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "燃气管道及设施完好，标志清晰",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0015.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0017.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可辨识隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0019.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无法查看图像",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0021.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "法兰连接处有深色液体泄漏,周围白色结晶",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "gas_leak",
+  "major_category": null
+ },
+ "gas_leak/GAS0022.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0024.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "应急演练现场，未见安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_leak/GAS0026.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "井盖打开，周边无警示围挡",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0002.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "存放整齐的管道，未见城市安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0009.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "管道包裹装饰，未见明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0010.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "管道涂层破损、腐蚀穿孔并渗漏",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0011.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "燃气管道直接外露，缺乏防护",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0014.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "燃气管道被麻绳包裹遮挡",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0015.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可见，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0017.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "金属管道表面密集锈蚀、漆面剥落",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0021.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "热水器下方电线裸露，管线杂乱",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "wire_fault",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0022.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0024.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "管道严重锈蚀剥落，存在泄漏风险",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0025.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0026.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "铜管接头严重锈蚀发绿，有漏点风险",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0027.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "手持黄色燃气管，表面有使用痕迹",
+  "text_in_image": true,
+  "label_source": "B(单模型)",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0028.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "锈蚀管道严重开裂，漏点多",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0029.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "黄色套管包裹遮蔽燃气管道及阀门",
+  "text_in_image": true,
+  "label_source": "B(单模型)",
+  "subcategory": "gas_pipe_aging",
+  "major_category": null
+ },
+ "gas_pipe_aging/GAS0030.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图文宣传海报，无实景隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "illegal_structure/ILL0026.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可辨识隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "illegal_structure/ILL0035.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "illegal_structure/ILL0036.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "挖掘机拆除建筑，无围挡防护且扬尘严重",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "illegal_structure/ILL0052.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "黑色电线裸露悬空，私拉乱接",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "wire_fault",
+  "major_category": null
+ },
+ "illegal_structure/ILL0055.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "illegal_structure/ILL0059.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "楼顶施工人员临边作业，无防护围挡",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "illegal_structure/ILL0063.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "楼前蓝色围挡及杂物占道堆放",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_occupancy",
+  "major_category": null
+ },
+ "illegal_structure/ILL0064.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "挖掘机拆除危房，废墟扬尘，无围挡警示",
+  "text_in_image": true,
+  "label_source": "B(单模型)",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "illegal_structure/ILL0066.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路边堆积大量生活垃圾建筑垃圾，挖掘机卡车清理中",
+  "text_in_image": false,
+  "label_source": "B(单模型)",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "illegal_structure/ILL0067.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "脚手架无安全网，临边防护缺失",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "illegal_structure/ILL0070.png": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "illegal_structure/ILL0071.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "建筑拆除中墙体坍塌钢筋裸露",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "illegal_structure/ILL0073.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "工人屋顶临边作业无防护围挡",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "illegal_structure/ILL0074.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "挖掘机拆除建筑，未见围挡警示",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "illegal_structure/ILL0075.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "illegal_structure/ILL0079.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "manhole_damage/MAN0001.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "manhole_damage/MAN0004.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "井盖开启露出井口，旁有锥桶",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "manhole_damage/MAN0005.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "井盖打开，井口裸露，旁有碎石",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "manhole_damage/MAN0008.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "路面平整，井盖完好，未见明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "manhole_damage/MAN0013.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "堆放的崭新井盖，未见破损或缺失",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "manhole_damage/MAN0017.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "井盖完好平整，无缺失破损",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "manhole_damage/MAN0018.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路面井盖破损缺失，工人正在维修",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "manhole_damage/MAN0021.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "井盖边缘破损，表面横放白色长杆异物",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "manhole_damage/MAN0023.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "井盖破损有破洞",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "manhole_damage/MAN0023.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路面开挖施工，无围挡警示，材料占道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "manhole_damage/MAN0024.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "道路开挖施工，周边无围挡和警示标志",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "manhole_damage/MAN0029.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无法获取图像",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "manhole_damage/MAN0034.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "汽车前轮陷入路面塌陷坑洞",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "manhole_damage/MAN0038.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "井盖周边沥青凸起破损，影响通行",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "manhole_damage/MAN0039.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "两井盖周边路面破损，锥桶围挡警示",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "manhole_damage/MAN0048.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "井盖完整无破损，周边路面平整",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0005.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "仅展示完好基坑护栏，未见隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0006.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "护栏和基坑支护完好，未见缺失",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0007.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "未获取到有效画面证据",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0025.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可辨识隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0026.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "宣传海报展示基坑防护栏，无实际隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0033.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "深基坑紧邻板房、无防护栏",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "deep_pit",
+  "major_category": null
+ },
+ "pit_protection/DEE0037.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "产品宣传图，无真实现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0039.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "基坑护栏产品及规范使用展示",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0040.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "混凝土结构坍塌，钢筋线缆外露，人员被困",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "pit_protection/DEE0041.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0042.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "巨大深坑，人员坑底救援",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "deep_pit",
+  "major_category": null
+ },
+ "pit_protection/DEE0043.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "未获取到有效画面",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0048.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅见深坑警示标志牌",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0050.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0051.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无画面可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "pit_protection/DEE0052.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "大型深基坑内支撑施工，坑深作业面多",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "deep_pit",
+  "major_category": null
+ },
+ "road_occupancy/ROA0039.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "人行道砖块缺失形成坑洞，碎砖堆积",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_occupancy/ROA0042.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "白色轿车停放人行道旁，挤压步行空间",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "road_occupancy/ROA0047.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "摊贩占道摆摊，果篮杂物堆放路面",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_occupancy",
+  "major_category": null
+ },
+ "road_occupancy/ROA0101.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "角落堆放纸箱泡沫等可燃杂物",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "garbage_pile",
+  "major_category": null
+ },
+ "road_occupancy/ROA0102.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "三轮车停在路面上摆摊售卖水果",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_occupancy",
+  "major_category": null
+ },
+ "road_occupancy/ROA0103.jpg": {
+  "has_hazard": true,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "电动车停在路缘及人行道，挤占通行空间",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "road_occupancy/ROA0104.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "图片不可用，无可见证据",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "road_occupancy/ROA0105.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多辆共享电单车随意停在道路上",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "road_occupancy/ROA0106.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "店外衣架纸箱货品占用人行道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_occupancy",
+  "major_category": null
+ },
+ "road_occupancy/ROA0107.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0047.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面大坑积水，边缘破损严重",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0083.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面现巨大坑洞，内堆碎石，挖掘机作业，周边无防护",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0101.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "道路大面积塌陷成深坑，护栏悬空",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0102.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面大面积塌陷，多辆车辆坠入深坑",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0103.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面大面积塌陷，混凝土板断裂翘起",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0104.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图像不可用，无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0105.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "hard",
+  "evidence": "路面大面积塌陷，形成深坑",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0106.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路面多处坑洼破损、碎石裸露积水",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0107.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "斑马线路面大面积塌陷成深坑",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0108.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路面坑洞碎石散落，仅简单覆盖",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0109.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路肩沥青层塌陷形成黑洞，周边有警示锥",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0110.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面明显塌陷成大坑，周边有围挡锥筒",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0111.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "斑马线处路面大面积塌陷成坑",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0112.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面大面积塌陷，形成深坑",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0113.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面大面积塌陷成深坑,周围裂缝",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "road_surface_collapse/ROA0114.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "路面上出现巨大深坑",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "road_surface_collapse",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0001.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面为完好黄色施工防护围挡，未见破损",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0002.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图像不可用，无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0007.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "示意图示脚手架连墙件缺失及错误连接",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0008.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "脚手架防护栏杆缺失、高度不足、挡脚板缺失、安全网破损",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0010.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "外立面施工电梯与防护网未见异常",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0011.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "黄色临边防护栏完好，有警示标语",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0012.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "脚手板未满铺、松动、伸出过长",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0013.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "安全宣传海报，无实际隐患场景",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0014.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "蓝色防护棚完好，通道通畅",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0015.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可用，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0016.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "安全宣传海报，无实际隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0017.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可见，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0019.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "剪刀撑宽度不足或未到顶",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0020.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "左侧图示未验收挂牌就上人使用",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0021.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "左侧脚手架作业层无防护栏杆挡脚板",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "scaffold_guard/SCA0022.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "示意图显示脚手架连墙件缺失",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0004.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "方形雨水箅子周边路面破损开裂",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "manhole_damage",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0007.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅见工程告示牌，无可见隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0009.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为文字科普，无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0020.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "大型黑色设备置于路面，占用通行区域",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "road_occupancy",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0022.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "纯文字说明下水道返味，无实景隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0028.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "纯文字科普说明，无实际隐患场景",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0031.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "未见明显隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0035.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "广告图，无实际安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0037.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "AI演示图，水壶倒水入槽，无市政隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0041.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用，无法确认隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0051.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可见，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0052.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0055.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "仅为科普图文，无实景隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0056.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "环保宣传图，无城市设施隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0062.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "sewage_overflow/SEW0065.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "科普海报，无现场隐患画面",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0001.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0002.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0007.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多辆汽车沿路侧连续停放占用车道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "street_light_pole/STR0011.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可识别画面特征",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0012.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "作业现场无围挡警示，线缆工具散落",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "street_light_pole/STR0013.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "路灯和道路正常，未见明显隐患",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0015.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "道路通行正常，未见明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0022.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "夜晚路灯照亮路面和树木，无明显异常",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0032.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0035.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用，无法识别隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0038.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "夜间路面黑暗，路灯不亮，行人手电照明",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "street_light_pole",
+  "major_category": null
+ },
+ "street_light_pole/STR0039.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "画面不可用",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0040.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0047.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "street_light_pole/STR0050.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路灯杆明显弯曲倾斜，灯头下垂",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "street_light_pole",
+  "major_category": null
+ },
+ "street_light_pole/STR0052.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "电线杆顶部线缆杂乱缠绕且有下垂",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "wire_fault",
+  "major_category": null
+ },
+ "structural_damage/DAN0002.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0005.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "挖掘机拆房，无围挡警示，粉尘弥漫",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "structural_damage/DAN0006.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "工人站在待拆砖墙上施工，无临边防护",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "structural_damage/DAN0008.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "空宿舍床架完好，墙面仅零星污迹",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0010.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0011.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0012.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0014.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面不可见，无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0017.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "墙上挂有“危房危险请勿靠近”警示牌",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "structural_damage/DAN0021.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "挖掘机拆除墙体，现场无围挡和警示",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "structural_damage/DAN0024.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "危房警示牌，请勿靠近，危房危险",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "structural_damage",
+  "major_category": null
+ },
+ "structural_damage/DAN0025.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "拆除现场无围挡警示，碎石散落",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "structural_damage/DAN0026.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0027.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "medium",
+  "evidence": "挖掘机拆房，粉尘弥漫，现场无围挡警示",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "construction_prot",
+  "major_category": null
+ },
+ "structural_damage/DAN0029.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "structural_damage/DAN0032.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "工人站在高处拆墙，无临边防护",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "scaffold_guard",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0001.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "白色轿车车头破损停在路面，保险杠脱落",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0005.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "交通信号灯遮光罩破损缺失",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0013.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "交通标志被涂鸦遮挡、破损",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0014.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "电动车倒在路中，有警示牌",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0016.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多块交通标志污损涂鸦遮挡",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0029.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "室内堆放标志牌和纸箱，未见道路隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0033.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "交通信号灯示意说明图，无实际隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0034.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "红灯与直行绿灯同时亮起冲突",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0035.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "路边金属护栏网明显破损变形",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0039.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "汽车仪表盘故障灯图解，无城市设施隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0044.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0045.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "道路隔离护栏倾斜移位，人员正在扶正",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0050.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0051.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "行人穿越绿色隔离护栏，栏体有缺口",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0052.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "汽车故障灯科普图，无城市安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "traffic_facility_damage/TRA0053.png": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "信号灯横臂末端未见灯头",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "traffic_facility_damage",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0020.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "临时疏导点，未见明显安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0049.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "黑色轿车停在建筑旁通道，车尾压占井盖",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0051.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0056.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "公交站台秩序正常，未见明显隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0059.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "图片不可用",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0064.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "步道大面积积水，地面湿滑",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "drainage_flood",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0065.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "车辆违停占道，图文显示已处置",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0070.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "文字显示违停车辆霸占盲道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "blind_path_occupied",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0073.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多辆大型环卫车占用机动车道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0087.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "文字提示盲道违停，交警正在执法",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "blind_path_occupied",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0088.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "盲道被黄黑隔离护栏和石柱阻挡",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "blind_path_occupied",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0090.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患画面",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0093.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "红色三轮车停在路面，交警现场处置",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0101.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "白色轿车停在黄色消防通道标线上",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "fire_lane_blocked",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0102.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "汽车停在人行道上，交警在旁取证",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "vehicle_occupancy/VEH0103.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "银色轿车停放在路缘，占用行人空间",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "wire_fault/EXP0004.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "成卷电缆堆放整齐，未见破损或占道",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0007.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无画面信息",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0009.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "道路、绿化、路灯正常，无可见隐患",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0010.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "画面为车辆与闪电合成图，无具体设施隐患",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0012.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "木质电杆及绝缘子完好，线路正常",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0014.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0015.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "高压输电塔架结构完整，无可见破损",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0016.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "机柜内线缆整齐，无安全隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0018.jpg": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "电线绝缘层破损裸露，接线不规范",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "wire_fault",
+  "major_category": null
+ },
+ "wire_fault/EXP0024.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "无可见隐患",
+  "text_in_image": false,
+  "label_source": "C仲裁",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0026.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "多人骑自行车聚集占道",
+  "text_in_image": false,
+  "label_source": "A=B",
+  "subcategory": "vehicle_occupancy",
+  "major_category": null
+ },
+ "wire_fault/EXP0029.jpg": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "新闻报道画面，无城市设施类隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0032.jpg": {
+  "has_hazard": true,
+  "severity": "中",
+  "difficulty": "easy",
+  "evidence": "墙面瓷砖多红色标记，疑似空鼓脱落风险",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "facade_risk",
+  "major_category": null
+ },
+ "wire_fault/EXP0034.png": {
+  "has_hazard": false,
+  "severity": "低",
+  "difficulty": "easy",
+  "evidence": "科普海报无现场隐患",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0036.jpg": {
+  "has_hazard": false,
+  "severity": "中",
+  "difficulty": "medium",
+  "evidence": "画面为新闻截图，无城市设施类隐患特征",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "",
+  "major_category": null
+ },
+ "wire_fault/EXP0037.png": {
+  "has_hazard": true,
+  "severity": "高",
+  "difficulty": "easy",
+  "evidence": "电线绝缘皮剥开铜线裸露",
+  "text_in_image": true,
+  "label_source": "A=B",
+  "subcategory": "wire_fault",
+  "major_category": null
+ }
+}

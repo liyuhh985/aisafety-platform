@@ -1,0 +1,27 @@
+{
+  "sha256": "3fdba6a3e9681959e395b1d21edde3e827e89dc2b12588b0c51a163019e6c113",
+  "file": "street_light_pole_3_3fdba6a3e968.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"street_light_pole\",\n  \"severity\": \"中\",\n  \"description\": \"人行道线杆底部保护管及基座处线缆松散盘绕并外露，未规范固定入管；行人易被绊倒，线缆被踩踏拉拽后可能破损，若带电存在触电风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道线杆基座及周边\",\n  \"rectification\": [\n    \"将外露线缆整理入管或入地并可靠固定，封堵孔洞、修复基座\",\n    \"排查线缆是否带电及绝缘状况，发现破损立即处理\",\n    \"整改前设置临时警示并隔离绊倒风险区域\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "中",
+    "description": "人行道线杆底部保护管及基座处线缆松散盘绕并外露，未规范固定入管；行人易被绊倒，线缆被踩踏拉拽后可能破损，若带电存在触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道线杆基座及周边",
+    "rectification": [
+      "将外露线缆整理入管或入地并可靠固定，封堵孔洞、修复基座",
+      "排查线缆是否带电及绝缘状况，发现破损立即处理",
+      "整改前设置临时警示并隔离绊倒风险区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

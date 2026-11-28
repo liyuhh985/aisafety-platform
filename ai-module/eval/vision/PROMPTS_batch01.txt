@@ -1,0 +1,183 @@
+================================================================
+Batch 01 — 生成提示词（16 条）
+用途：补齐零覆盖类别 + 负样本
+================================================================
+
+【使用方法】
+1. 在 Antigravity 里逐条发送下面的英文提示词
+2. 图片存到 E:\java\newProject\ai-module\eval\vision\images\
+3. 文件名就用编号：p01.jpg ~ p16.jpg
+4. 重要：生成时不要看这张表里的"类别"列，标注阶段要盲标
+
+【通用后缀】（每条已经内置，无需再加）
+realistic documentary photograph, natural colors, no watermarks,
+no captions, no arrows, no bounding boxes, no UI overlays,
+no text of any kind, 16:9 aspect ratio
+
+----------------------------------------------------------------
+p01  （零覆盖 · 燃气类）
+----------------------------------------------------------------
+A close-up documentary photo of an outdoor residential gas riser pipe
+connection. The pipe fitting is being leak-tested with soapy water,
+showing a visible accumulation of soap bubbles around the joint.
+The pipe surface has slight water stains. Overcast daylight, urban
+residential building exterior, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p02  （零覆盖 · 燃气类）
+----------------------------------------------------------------
+A documentary photo of aging gas pipes mounted on the exterior wall of
+an old residential building. The pipe surface shows extensive rust and
+peeling paint, and several mounting clamps have come loose. No visible
+gas leak. Soft afternoon light, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p03  （零覆盖 · 电梯类 · 困难）
+----------------------------------------------------------------
+A photo of an old residential elevator lobby. On the wall beside the
+elevator door there is an empty, dusty rectangular frame where an
+inspection certificate used to be posted; only torn paper corners
+remain inside the frame. Dim indoor lighting, slight underexposure,
+realistic documentary photograph, natural colors, no watermarks, no
+captions, no arrows, no bounding boxes, no UI overlays, no legible
+text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p04  （零覆盖 · 电梯类）
+----------------------------------------------------------------
+A photo of an elevator lobby where the elevator door is half open and
+the car has stopped about half a floor below the floor level, leaving a
+clear vertical step gap at the doorway. A traffic cone stands in front
+of the opening. Artificial indoor lighting, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows, no
+bounding boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p05  （零覆盖 · 环境卫生 · 简单）
+----------------------------------------------------------------
+A photo of a corner in a residential compound where the trash bins are
+overflowing. Large amounts of household garbage bags and renovation
+debris are scattered on the ground around the bins. Late afternoon
+side light, realistic documentary photograph, natural colors, no
+watermarks, no captions, no arrows, no bounding boxes, no UI overlays,
+no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p06  （零覆盖 · 环境卫生 · 困难）
+----------------------------------------------------------------
+A photo of a street-side sewage manhole where dark wastewater is slowly
+seeping out and pooling on the pavement, leaving a large dark brown
+stain. Water marks run along the base of the adjacent wall. Overcast
+light, realistic documentary photograph, natural colors, no watermarks,
+no captions, no arrows, no bounding boxes, no UI overlays, no text of
+any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p07  （零覆盖 · 施工类 · 简单）
+----------------------------------------------------------------
+A photo of an approximately three-meter-deep excavation pit inside an
+urban construction site. The pit walls are vertical bare soil. There is
+absolutely no guardrail or edge protection around the pit opening, and
+the soil at the edge looks loose. Midday daylight, realistic
+documentary photograph, natural colors, no watermarks, no captions, no
+arrows, no bounding boxes, no UI overlays, no text of any kind, 16:9
+aspect ratio.
+
+----------------------------------------------------------------
+p08  （零覆盖 · 施工类 · 简单）
+----------------------------------------------------------------
+A photo of a road repair work zone on a pedestrian sidewalk. An open
+trench has been excavated and there is no warning sign, no traffic
+cone, and no barrier of any kind around it. A pedestrian is walking
+very close to the edge of the trench. Daylight, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows, no
+bounding boxes, no UI overlays, no legible text of any kind, 16:9
+aspect ratio.
+
+----------------------------------------------------------------
+p09  （零覆盖 · 施工类）
+----------------------------------------------------------------
+A photo of a temporary electrical distribution box at a construction
+site. Multiple cables run out of the box and are dragged carelessly
+across a wet, water-covered ground. At one splice point the insulating
+tape is exposed and loosely wrapped, with no protective enclosure.
+Daylight, realistic documentary photograph, natural colors, no
+watermarks, no captions, no arrows, no bounding boxes, no UI overlays,
+no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p10  （交通类 · 盲道占用 · 简单）
+----------------------------------------------------------------
+A photo of an urban sidewalk where the yellow tactile paving strip for
+visually impaired pedestrians is directly blocked by parked electric
+scooters and a stack of cardboard boxes. Pedestrians are forced to
+detour onto the roadway. Bright daylight, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows, no
+bounding boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p11  （市政类 · 井盖破损）
+----------------------------------------------------------------
+A photo of a circular manhole cover on a city road that has broken into
+several pieces, exposing the open shaft below. Broken fragments are
+scattered around the opening. Bright daylight, realistic documentary
+photograph, natural colors, no watermarks, no captions, no arrows, no
+bounding boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p12  （建筑类 · 墙体开裂）
+----------------------------------------------------------------
+A photo of the exterior wall of an old brick-and-concrete residential
+building. A long diagonal crack runs downward from the corner of a
+window; the crack is wide enough to see inside, and the plaster has
+fallen away locally. Daylight, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p13  （建筑类 · 危房 · 简单）
+----------------------------------------------------------------
+A photo of a two-story old building whose exterior wall is visibly
+leaning inward. Bricks are crumbling and corners have broken away. A
+wooden pole has been placed in front as makeshift support, and part of
+the roof has collapsed. Daylight, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+================================================================
+以下 3 张是【负样本】——正常场景，必须生成
+================================================================
+
+----------------------------------------------------------------
+p14  （负样本 · 规范停车）
+----------------------------------------------------------------
+A photo of a well-managed residential parking area. Vehicles are
+parked neatly within white parking space lines. Next to them, a yellow
+crosshatched fire access lane is completely clear with no vehicles on
+it. The ground is clean. Daylight, realistic documentary photograph,
+natural colors, no watermarks, no captions, no arrows, no bounding
+boxes, no UI overlays, no text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p15  （负样本 · 完好消防设施）
+----------------------------------------------------------------
+A photo of a fully intact, closed red fire equipment cabinet mounted on
+a corridor wall. Inside, the fire hose is coiled neatly and all
+couplings are present. The cabinet door is closed. The floor is tidy.
+Indoor lighting, realistic documentary photograph, natural colors, no
+watermarks, no captions, no arrows, no bounding boxes, no UI overlays,
+no legible text of any kind, 16:9 aspect ratio.
+
+----------------------------------------------------------------
+p16  （负样本 · 规范施工）
+----------------------------------------------------------------
+A photo of a properly managed construction site. The perimeter is a
+complete, continuous green rigid hoarding. At the entrance there are
+warning signs and traffic cones. Workers are wearing safety helmets and
+reflective vests. Daylight, realistic documentary photograph, natural
+colors, no watermarks, no captions, no arrows, no bounding boxes, no UI
+overlays, no legible text of any kind, 16:9 aspect ratio.

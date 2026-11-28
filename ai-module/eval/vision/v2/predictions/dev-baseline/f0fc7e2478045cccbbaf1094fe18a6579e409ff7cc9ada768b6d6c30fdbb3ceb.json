@@ -1,0 +1,27 @@
+{
+  "sha256": "f0fc7e2478045cccbbaf1094fe18a6579e409ff7cc9ada768b6d6c30fdbb3ceb",
+  "file": "ELE0063.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"高\",\"description\":\"电梯机房内维修人员直接骑站在曳引机/设备基座上操作，未见合格登高平台或防坠落措施；设备若误启动还存在卷入、挤压风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯机房内，救援工具/说明标识旁\",\"rectification\":[\"使用合格登高平台或梯具，并佩戴防坠落防护用品\",\"作业前断电挂牌，确认设备停稳并设专人监护\",\"在作业区域设置警示标志并清理周边障碍\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "高",
+    "description": "电梯机房内维修人员直接骑站在曳引机/设备基座上操作，未见合格登高平台或防坠落措施；设备若误启动还存在卷入、挤压风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯机房内，救援工具/说明标识旁",
+    "rectification": [
+      "使用合格登高平台或梯具，并佩戴防坠落防护用品",
+      "作业前断电挂牌，确认设备停稳并设专人监护",
+      "在作业区域设置警示标志并清理周边障碍"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

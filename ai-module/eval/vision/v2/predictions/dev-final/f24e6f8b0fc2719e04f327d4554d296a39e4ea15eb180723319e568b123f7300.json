@@ -1,0 +1,27 @@
+{
+  "sha256": "f24e6f8b0fc2719e04f327d4554d296a39e4ea15eb180723319e568b123f7300",
+  "file": "BLI0032.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"中\",\n  \"description\": \"前景圆形井盖边缘明显破损、局部不连续，且位于黄色盲道及通行区域附近，行人踩踏时存在绊倒、卡脚或踏空风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"前景黄色盲道旁的圆形井盖处\",\n  \"rectification\": [\n    \"及时更换或修复破损井盖，确保井盖与路面平齐、稳固无晃动\",\n    \"维修前在井盖周边设置警示锥或围挡，提示行人绕行\",\n    \"排查该路段其他井盖是否存在类似破损或松动问题\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "前景圆形井盖边缘明显破损、局部不连续，且位于黄色盲道及通行区域附近，行人踩踏时存在绊倒、卡脚或踏空风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "前景黄色盲道旁的圆形井盖处",
+    "rectification": [
+      "及时更换或修复破损井盖，确保井盖与路面平齐、稳固无晃动",
+      "维修前在井盖周边设置警示锥或围挡，提示行人绕行",
+      "排查该路段其他井盖是否存在类似破损或松动问题"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

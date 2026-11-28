@@ -1,0 +1,27 @@
+{
+  "sha256": "02ff92706e713ce116b74799e66144f72b695f0bcb067ff415c958849e2acbc8",
+  "file": "TRA0057.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"traffic_facility_damage\",\"severity\":\"中\",\"description\":\"图片显示多段白色交通隔离护栏损坏倒伏在道路上，部分栏杆横跨路面且未设置警示，可能绊倒行人、影响车辆通行或引发碰撞。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路路面，黄色标线附近的隔离护栏处\",\"rectification\":[\"立即设置警示标志并清理倒伏护栏\",\"尽快修复或更换损坏的交通隔离护栏\",\"排查相邻护栏底座和连接件固定情况\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "中",
+    "description": "图片显示多段白色交通隔离护栏损坏倒伏在道路上，部分栏杆横跨路面且未设置警示，可能绊倒行人、影响车辆通行或引发碰撞。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路路面，黄色标线附近的隔离护栏处",
+    "rectification": [
+      "立即设置警示标志并清理倒伏护栏",
+      "尽快修复或更换损坏的交通隔离护栏",
+      "排查相邻护栏底座和连接件固定情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

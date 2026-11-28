@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"露台地面散落少量碎石碎屑，未见明显堆积垃圾或结构损伤\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "露台地面散落少量碎石碎屑，未见明显堆积垃圾或结构损伤"
+  }
+}

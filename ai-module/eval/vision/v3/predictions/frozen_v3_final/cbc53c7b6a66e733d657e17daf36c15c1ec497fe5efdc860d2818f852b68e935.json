@@ -1,0 +1,27 @@
+{
+  "sha256": "cbc53c7b6a66e733d657e17daf36c15c1ec497fe5efdc860d2818f852b68e935",
+  "file": "elevator_inspection_1_cbc53c7b6a66.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_inspection\",\"severity\":\"高\",\"description\":\"证书显示该2号乘客电梯为临时检验证书，有效期至2013/9/1，而检验日期为2013/9/2，已超期；应急联系电话栏空白。电梯超期未检验且应急联络缺失，存在故障困人时无法及时救援的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"VCU General Class Room 2号乘客电梯证书张贴处\",\"rectification\":[\"立即停用该电梯并联系有资质检验机构复检\",\"复检合格后更换并张贴有效电梯检验合格标志\",\"补齐24小时应急联系电话并建立检验到期预警机制\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_inspection",
+    "severity": "高",
+    "description": "证书显示该2号乘客电梯为临时检验证书，有效期至2013/9/1，而检验日期为2013/9/2，已超期；应急联系电话栏空白。电梯超期未检验且应急联络缺失，存在故障困人时无法及时救援的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "VCU General Class Room 2号乘客电梯证书张贴处",
+    "rectification": [
+      "立即停用该电梯并联系有资质检验机构复检",
+      "复检合格后更换并张贴有效电梯检验合格标志",
+      "补齐24小时应急联系电话并建立检验到期预警机制"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

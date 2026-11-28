@@ -8,6 +8,7 @@ from core.hazard_taxonomy import (
     ALL_SUBCATEGORY_CODES,
     HAZARD_TAXONOMY,
     MAJOR_LABELS,
+    SUBCATEGORY_DEFAULT_RISK,
     SUBCATEGORY_LABELS,
     format_hazard_type,
     normalize_taxonomy,
@@ -95,6 +96,7 @@ def _issue_from_values(major_code, subcategory_code, slots, evidence=None) -> di
         "major_code": major_code,
         "major_label": MAJOR_LABELS.get(major_code, ""),
         "subcategory_code": subcategory_code,
+        "risk_level": SUBCATEGORY_DEFAULT_RISK.get(subcategory_code, "medium"),
         "subcategory_label": SUBCATEGORY_LABELS.get(subcategory_code, ""),
         "slots": clean_slots,
         "missing": missing,
@@ -190,6 +192,12 @@ def parse_plan(raw: str) -> dict:
     risk_level = str(data.get("risk_level") or "medium").strip().lower()
     if risk_level not in {"high", "medium", "low"}:
         risk_level = "medium"
+    if issues:
+        rank = {"low": 0, "medium": 1, "high": 2}
+        risk_level = max(
+            (issue.get("risk_level", "medium") for issue in issues),
+            key=lambda value: rank.get(value, 1),
+        )
     scope = str(data.get("scope") or "").strip()
     if scope not in {"hazard", "emergency", "smalltalk", "ambiguous", "out_of_scope"}:
         scope = ""
@@ -283,11 +291,14 @@ def _planner_system_prompt(active_skill_codes=None) -> str:
         "- major_code 和 subcategory_code 必须来自上面给出的编码，不能自造。\n"
         "- 用户明确说“消防设施”时，必须归为 fire/fire_equipment_fault，不能归为 fire/fire_lane_blocked。\n"
         "- “消防设施故障”和“消防通道占用”是两个不同小类。\n"
+        "- 电动自行车进楼道/电梯/架空层停放充电、电池入户或飞线充电，主类归 fire/ebike_hazard；普通住户/商铺非电动车飞线的私拉乱接电线仍归 utility/illegal_wiring。\n"
+        "- 危化品、易燃溶剂、液化气瓶或烟花爆竹违规存运归 environment_other/hazmat_storage，不得归入 environment_other/other；树木倒伏、断枝或大枯枝悬垂归 municipal/tree_fall_hazard。\n"
         "- 前端预选大类只是提示；如果与用户表达不一致，返回真实 major_code 并令 major_mismatch=true。\n"
-        "- risk_level 取 high/medium/low：消防、建筑结构、电气燃气为 high；交通、市政、施工、电梯为 medium；环境和其他为 low。\n"
+        "- risk_level 按小类默认风险：以 SUBCATEGORY_DEFAULT_RISK 为准；多隐患时取最高风险，不再按大类粗暴定级。\n"
+        "- 环境与其他中的危化品违规存运为 high，有限空间作业风险为 high，垃圾堆积为 low。\n"
         "- scope 判定问题是否属于城市安全隐患助手范围：hazard=隐患描述/判断/法规/整改/上报；emergency=正在起火、有人被困、燃气泄漏、触电或坍塌；smalltalk=寒暄；ambiguous=无法判断；out_of_scope=明确无关话题。\n"
         "- 不要因为出现“消防”两个字就把“消防员招聘条件”之类问题判成 hazard；只有涉及现场安全隐患才是 hazard。\n"
-        "- 设施类小类（交通设施损坏、路灯/线杆损坏、井盖缺失、配电设施故障、外立面脱落）的判据是\n"
+        "- 设施类小类（交通设施损坏、路灯/线杆损坏、井盖缺失、配电设施故障、高空坠物（含外立面脱落））的判据是\n"
         "  那个物件在**公共空间**。只有道路上、路口、人行道、街边的交通设施（信号灯、护栏、交通标志、\n"
         "  交通标线）才算；商场、办公楼、小区门口、店内的指示牌、导视牌、宣传牌即使长得像交通标志，\n"
         "  也不算 —— 这种输入 scope 判 out_of_scope、issues 留空。\n"

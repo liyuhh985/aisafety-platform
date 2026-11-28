@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"road_occupancy\", \"evidence\": \"路边大量泥土堆占道，部分掩压人行道与车旁区域\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "路边大量泥土堆占道，部分掩压人行道与车旁区域"
+  }
+}

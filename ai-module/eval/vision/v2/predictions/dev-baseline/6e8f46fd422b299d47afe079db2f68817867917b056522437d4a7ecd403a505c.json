@@ -1,0 +1,27 @@
+{
+  "sha256": "6e8f46fd422b299d47afe079db2f68817867917b056522437d4a7ecd403a505c",
+  "file": "MAN0095.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"道路上一处圆形井盖缺失或破损，井口完全敞开，旁边堆放碎石和废弃井盖。虽摆放锥桶，但未形成连续硬质围挡，行人或车辆尤其是电动车夜间易坠入，可能造成重伤。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路非机动车道旁、商铺门前路面井口处\",\n  \"rectification\": [\n    \"立即在井口周边设置连续硬质围挡和夜间反光警示灯\",\n    \"尽快更换或修复井盖并加固井圈，清理周边碎石废料\",\n    \"修复前安排专人巡查值守，防止行人和车辆靠近\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "道路上一处圆形井盖缺失或破损，井口完全敞开，旁边堆放碎石和废弃井盖。虽摆放锥桶，但未形成连续硬质围挡，行人或车辆尤其是电动车夜间易坠入，可能造成重伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路非机动车道旁、商铺门前路面井口处",
+    "rectification": [
+      "立即在井口周边设置连续硬质围挡和夜间反光警示灯",
+      "尽快更换或修复井盖并加固井圈，清理周边碎石废料",
+      "修复前安排专人巡查值守，防止行人和车辆靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "d55af9e73abc9a80a4625c6ada17b90e6a7b210c2bfe20b85c83b5a02b6ccb58",
+  "file": "neg_27_d55af9e73abc.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"室内消火栓阀体及出水接口严重锈蚀，接口内部可见锈垢和堵塞迹象，可能造成接口无法连接水带、阀门锈死或出水不畅，影响火灾初期扑救。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内消火栓箱内消火栓阀体及出水接口\",\"rectification\":[\"更换或除锈维修锈蚀消火栓及接口，确保阀门启闭灵活、接口完好\",\"放水试压检测消火栓出水压力并清理管内锈垢\",\"将该消火栓纳入消防设施定期巡检和维护保养记录\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室内消火栓阀体及出水接口严重锈蚀，接口内部可见锈垢和堵塞迹象，可能造成接口无法连接水带、阀门锈死或出水不畅，影响火灾初期扑救。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内消火栓箱内消火栓阀体及出水接口",
+    "rectification": [
+      "更换或除锈维修锈蚀消火栓及接口，确保阀门启闭灵活、接口完好",
+      "放水试压检测消火栓出水压力并清理管内锈垢",
+      "将该消火栓纳入消防设施定期巡检和维护保养记录"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

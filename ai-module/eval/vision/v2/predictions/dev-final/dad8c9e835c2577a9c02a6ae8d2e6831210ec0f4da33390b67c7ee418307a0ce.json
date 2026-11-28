@@ -1,0 +1,27 @@
+{
+  "sha256": "dad8c9e835c2577a9c02a6ae8d2e6831210ec0f4da33390b67c7ee418307a0ce",
+  "file": "WAL0060.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"砖砌围墙整体明显倾斜，仅用木杆临时支撑，存在结构失稳和倒塌风险，可能造成人员伤亡或财产损失；采用灌水纠偏不专业，可能加剧墙体开裂或倒塌。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中的砖砌围墙及木杆支撑处\",\n  \"rectification\": [\n    \"立即设置警戒隔离，禁止人员靠近倾斜围墙\",\n    \"委托专业机构进行结构安全评估，采取规范加固或拆除重建措施\",\n    \"停止灌水纠偏等非专业处置方式，防止墙体进一步失稳\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "砖砌围墙整体明显倾斜，仅用木杆临时支撑，存在结构失稳和倒塌风险，可能造成人员伤亡或财产损失；采用灌水纠偏不专业，可能加剧墙体开裂或倒塌。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中的砖砌围墙及木杆支撑处",
+    "rectification": [
+      "立即设置警戒隔离，禁止人员靠近倾斜围墙",
+      "委托专业机构进行结构安全评估，采取规范加固或拆除重建措施",
+      "停止灌水纠偏等非专业处置方式，防止墙体进一步失稳"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

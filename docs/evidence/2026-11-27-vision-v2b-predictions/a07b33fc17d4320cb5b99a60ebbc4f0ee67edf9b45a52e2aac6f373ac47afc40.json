@@ -1,0 +1,23 @@
+{
+  "sha256": "a07b33fc17d4320cb5b99a60ebbc4f0ee67edf9b45a52e2aac6f373ac47afc40",
+  "file": "NEGELE02.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片为电梯轿厢或框架的3D产品渲染/示意图，并非真实安装使用场景，未见井道、层门、使用标识或故障状态，无法识别明确安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为电梯轿厢或框架的3D产品渲染/示意图，并非真实安装使用场景，未见井道、层门、使用标识或故障状态，无法识别明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

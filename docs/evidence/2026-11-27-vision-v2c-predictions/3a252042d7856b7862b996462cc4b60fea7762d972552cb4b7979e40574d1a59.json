@@ -1,0 +1,27 @@
+{
+  "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+  "file": "FIR0008.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"中\",\n  \"description\": \"停车区域旁水泥路面出现大面积网状开裂和长裂缝，局部边缘破损，存在继续碎裂、形成坑洞的风险。车辆和行人经过时易颠簸、绊倒，雨水渗入会加速路基损坏。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中部停车区域旁的道路路面\",\n  \"rectification\": [\n    \"对裂缝和破损区域进行清理、灌缝及局部破除重铺\",\n    \"修复前设置警示标志并加强巡查，避免车辆和行人靠近破损处\",\n    \"排查路基沉降和排水情况，防止裂缝继续扩展\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "停车区域旁水泥路面出现大面积网状开裂和长裂缝，局部边缘破损，存在继续碎裂、形成坑洞的风险。车辆和行人经过时易颠簸、绊倒，雨水渗入会加速路基损坏。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中部停车区域旁的道路路面",
+    "rectification": [
+      "对裂缝和破损区域进行清理、灌缝及局部破除重铺",
+      "修复前设置警示标志并加强巡查，避免车辆和行人靠近破损处",
+      "排查路基沉降和排水情况，防止裂缝继续扩展"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

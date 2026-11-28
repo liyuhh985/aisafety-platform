@@ -1,0 +1,23 @@
+{
+  "sha256": "3e60f3c0b1cc9555e05098e905361a035fe8dead624ab8d01ac533614354c63e",
+  "file": "neg_06_3e60f3c0b1cc.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"施工现场设置了连续黄色围栏、锥桶及“Road closed”警示牌，道路封闭和警示措施规范齐全，未见明显安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "施工现场设置了连续黄色围栏、锥桶及“Road closed”警示牌，道路封闭和警示措施规范齐全，未见明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

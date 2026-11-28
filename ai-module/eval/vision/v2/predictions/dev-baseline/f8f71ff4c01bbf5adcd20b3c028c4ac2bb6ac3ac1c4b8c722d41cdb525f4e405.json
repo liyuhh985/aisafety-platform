@@ -1,0 +1,26 @@
+{
+  "sha256": "f8f71ff4c01bbf5adcd20b3c028c4ac2bb6ac3ac1c4b8c722d41cdb525f4e405",
+  "file": "BLI0099.png",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"商业楼前人行道边缘成排停放电动自行车、摩托车，挤占行人通行空间，部分车辆靠近自行车道边缘，易导致行人绕行、与非机动车混行，存在碰撞和通行不畅风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商业楼前人行道及自行车道左侧\",\n  \"rectification\": [\n    \"规范非机动车停放区域并施划停车线，清退占道车辆\",\n    \"在人行道与自行车道间设置隔离设施或加强巡查引导\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "商业楼前人行道边缘成排停放电动自行车、摩托车，挤占行人通行空间，部分车辆靠近自行车道边缘，易导致行人绕行、与非机动车混行，存在碰撞和通行不畅风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商业楼前人行道及自行车道左侧",
+    "rectification": [
+      "规范非机动车停放区域并施划停车线，清退占道车辆",
+      "在人行道与自行车道间设置隔离设施或加强巡查引导"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "c0ec8c4291dbb8e882f1bbd6aafbce0522cc230a6269bc92d89e2ab992ff237a",
+  "file": "confined_space_2_c0ec8c4291db.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"高\",\"description\":\"混凝土检查井井盖缺失、井口敞开，井内有积水，一名儿童身处井中，存在坠落、溺水及有限空间窒息等严重风险，周边未见有效防护和警示。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路或地面混凝土检查井处，井口敞开\",\"rectification\":[\"立即设置围挡和醒目警示，禁止人员靠近\",\"尽快安装或修复井盖并锁定，排查井内积水与有限空间风险\",\"将儿童带离并加强周边巡查与安全教育\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "混凝土检查井井盖缺失、井口敞开，井内有积水，一名儿童身处井中，存在坠落、溺水及有限空间窒息等严重风险，周边未见有效防护和警示。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路或地面混凝土检查井处，井口敞开",
+    "rectification": [
+      "立即设置围挡和醒目警示，禁止人员靠近",
+      "尽快安装或修复井盖并锁定，排查井内积水与有限空间风险",
+      "将儿童带离并加强周边巡查与安全教育"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

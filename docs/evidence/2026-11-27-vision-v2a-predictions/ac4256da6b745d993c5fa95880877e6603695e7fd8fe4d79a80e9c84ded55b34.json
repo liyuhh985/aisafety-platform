@@ -1,0 +1,27 @@
+{
+  "sha256": "ac4256da6b745d993c5fa95880877e6603695e7fd8fe4d79a80e9c84ded55b34",
+  "file": "DIS0079.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"高\",\n  \"description\": \"灰色设备旁地面随意放置多孔插排，多个插头及线缆凌乱拖地并相互缠绕，紧邻金属设备外壳，存在触电、短路、过载发热甚至引发火灾的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"灰色设备左侧地面的插排及线缆处\",\n  \"rectification\": [\n    \"清理地面插排和凌乱线缆，线缆应固定敷设并远离地面和通道\",\n    \"使用符合容量要求的固定式配电箱或专用插座，避免多个大功率设备共用同一插排\",\n    \"加装漏电保护装置，并检查线路绝缘、插头及接地情况\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "灰色设备旁地面随意放置多孔插排，多个插头及线缆凌乱拖地并相互缠绕，紧邻金属设备外壳，存在触电、短路、过载发热甚至引发火灾的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "灰色设备左侧地面的插排及线缆处",
+    "rectification": [
+      "清理地面插排和凌乱线缆，线缆应固定敷设并远离地面和通道",
+      "使用符合容量要求的固定式配电箱或专用插座，避免多个大功率设备共用同一插排",
+      "加装漏电保护装置，并检查线路绝缘、插头及接地情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

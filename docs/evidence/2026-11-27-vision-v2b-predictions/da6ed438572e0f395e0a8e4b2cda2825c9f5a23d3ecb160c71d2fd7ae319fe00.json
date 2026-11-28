@@ -1,0 +1,27 @@
+{
+  "sha256": "da6ed438572e0f395e0a8e4b2cda2825c9f5a23d3ecb160c71d2fd7ae319fe00",
+  "file": "FIR0006.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"室外消火栓侧接口缺少闷盖，接口内部锈蚀且可见杂物，可能影响密封和出水，火灾时无法正常取水，延误灭火救援。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室外路边消火栓\",\"rectification\":[\"立即维修或更换损坏的消火栓接口并补齐闷盖\",\"对消火栓进行出水试压和全面功能检测\",\"设置临时警示并纳入消防设施定期巡检\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室外消火栓侧接口缺少闷盖，接口内部锈蚀且可见杂物，可能影响密封和出水，火灾时无法正常取水，延误灭火救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室外路边消火栓",
+    "rectification": [
+      "立即维修或更换损坏的消火栓接口并补齐闷盖",
+      "对消火栓进行出水试压和全面功能检测",
+      "设置临时警示并纳入消防设施定期巡检"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

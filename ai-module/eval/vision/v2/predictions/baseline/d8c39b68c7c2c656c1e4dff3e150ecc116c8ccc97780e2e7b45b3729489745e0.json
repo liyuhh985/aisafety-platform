@@ -1,0 +1,27 @@
+{
+  "sha256": "d8c39b68c7c2c656c1e4dff3e150ecc116c8ccc97780e2e7b45b3729489745e0",
+  "file": "DIS0003.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"exposed_wire\",\"severity\":\"高\",\"description\":\"线缆井或配电设施内多根电线杂乱裸露，部分绝缘层破损，接头仅用胶布缠绕，存在漏电、短路及起火风险，易引发触电事故。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"配电箱或线缆井内\",\"rectification\":[\"立即断电并安排专业电工整理、更换破损线缆\",\"规范接头处理，使用合格接线端子或绝缘套管\",\"清理线缆井内杂物并恢复规范敷设与防护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "线缆井或配电设施内多根电线杂乱裸露，部分绝缘层破损，接头仅用胶布缠绕，存在漏电、短路及起火风险，易引发触电事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "配电箱或线缆井内",
+    "rectification": [
+      "立即断电并安排专业电工整理、更换破损线缆",
+      "规范接头处理，使用合格接线端子或绝缘套管",
+      "清理线缆井内杂物并恢复规范敷设与防护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

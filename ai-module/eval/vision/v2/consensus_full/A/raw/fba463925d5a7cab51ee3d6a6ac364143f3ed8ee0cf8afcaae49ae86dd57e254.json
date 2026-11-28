@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"street_light_pole\", \"evidence\": \"路灯杆上标识布大面积破损撕裂\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "evidence": "路灯杆上标识布大面积破损撕裂"
+  }
+}

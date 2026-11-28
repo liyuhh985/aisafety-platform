@@ -1,0 +1,27 @@
+{
+  "sha256": "d12fe4c41769f293e53de68cda7526b646d4cd5dc2b70e877e393073d47cd4b0",
+  "file": "NEGGAS08.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"gas_pipe_aging\",\"severity\":\"中\",\"description\":\"厂房内燃气管道及红色放散管、法兰连接处可见明显锈蚀和漆面剥落，长期腐蚀可能削弱管道及法兰密封性，存在燃气泄漏风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"厂房内燃气管道及放散管法兰连接处\",\"rectification\":[\"对锈蚀管道和法兰除锈并重新防腐处理\",\"检查法兰、螺栓及密封垫片，必要时更换\",\"定期开展燃气管道防腐检查和泄漏检测\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "厂房内燃气管道及红色放散管、法兰连接处可见明显锈蚀和漆面剥落，长期腐蚀可能削弱管道及法兰密封性，存在燃气泄漏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厂房内燃气管道及放散管法兰连接处",
+    "rectification": [
+      "对锈蚀管道和法兰除锈并重新防腐处理",
+      "检查法兰、螺栓及密封垫片，必要时更换",
+      "定期开展燃气管道防腐检查和泄漏检测"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

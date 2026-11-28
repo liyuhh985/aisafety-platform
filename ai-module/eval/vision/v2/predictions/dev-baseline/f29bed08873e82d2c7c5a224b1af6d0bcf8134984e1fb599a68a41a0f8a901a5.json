@@ -1,0 +1,26 @@
+{
+  "sha256": "f29bed08873e82d2c7c5a224b1af6d0bcf8134984e1fb599a68a41a0f8a901a5",
+  "file": "FAC0082.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"图中显示高层住宅楼体外悬金属晾衣架上挂有大块布料，顶部边缘也有外伸结构。遇大风等恶劣天气，外挂物极易松动或被刮落，存在严重的高空坠物风险，可能砸伤下方行人或车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高层住宅楼体外侧及楼顶边缘\",\n  \"rectification\": [\n    \"及时将悬挂在外部晾衣架上的物品收回室内，避免坠落。\",\n    \"对楼体外伸晾衣架及附属设施进行全面排查和加固，消除安全隐患。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "图中显示高层住宅楼体外悬金属晾衣架上挂有大块布料，顶部边缘也有外伸结构。遇大风等恶劣天气，外挂物极易松动或被刮落，存在严重的高空坠物风险，可能砸伤下方行人或车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高层住宅楼体外侧及楼顶边缘",
+    "rectification": [
+      "及时将悬挂在外部晾衣架上的物品收回室内，避免坠落。",
+      "对楼体外伸晾衣架及附属设施进行全面排查和加固，消除安全隐患。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "2cc8e2c80095ec75d12b0bd737fbe895e82fe36b118f6f9d7204e663fa1417a1",
+  "file": "GAR0005.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"居民楼单元入口旁及绿化带内大量装修垃圾、编织袋和杂物堆积，占用公共区域，可能阻碍通行和应急疏散，并存在扬尘、火灾及滋生蚊虫风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼单元入口旁及楼前绿化带\",\n  \"rectification\": [\n    \"立即清运建筑垃圾和杂物，恢复公共区域整洁与通行\",\n    \"规范设置临时垃圾堆放点，采取围挡覆盖并及时清运\",\n    \"清理后检查通道、井盖及周边设施，确保无遗留安全隐患\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "居民楼单元入口旁及绿化带内大量装修垃圾、编织袋和杂物堆积，占用公共区域，可能阻碍通行和应急疏散，并存在扬尘、火灾及滋生蚊虫风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼单元入口旁及楼前绿化带",
+    "rectification": [
+      "立即清运建筑垃圾和杂物，恢复公共区域整洁与通行",
+      "规范设置临时垃圾堆放点，采取围挡覆盖并及时清运",
+      "清理后检查通道、井盖及周边设施，确保无遗留安全隐患"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

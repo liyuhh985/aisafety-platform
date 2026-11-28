@@ -1,0 +1,27 @@
+{
+  "sha256": "38b2eb5d19e6e4e9125fb0ec201b323c4364baad34a715cd6a9f2b79e74bcc46",
+  "file": "WAL0020.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"彩绘围墙左侧有一棵大树紧贴墙体，树根可能挤压墙基，树冠伸向人行道；墙体端部与铁栅栏交接处可见局部破损和污渍，但裂缝及结构失稳程度不明确，存在树枝坠落或墙体局部损坏风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"彩绘围墙左侧靠近大树与铁栅栏的人行道旁\",\n  \"rectification\": [\n    \"安排园林和结构专业人员现场评估树木与围墙的相互影响\",\n    \"修剪靠近墙体和人行道的枝干，清除枯枝，必要时设置支撑或迁移树木\",\n    \"对墙体裂缝和墙基进行监测修复，并在评估前设置警示或临时隔离\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "彩绘围墙左侧有一棵大树紧贴墙体，树根可能挤压墙基，树冠伸向人行道；墙体端部与铁栅栏交接处可见局部破损和污渍，但裂缝及结构失稳程度不明确，存在树枝坠落或墙体局部损坏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "彩绘围墙左侧靠近大树与铁栅栏的人行道旁",
+    "rectification": [
+      "安排园林和结构专业人员现场评估树木与围墙的相互影响",
+      "修剪靠近墙体和人行道的枝干，清除枯枝，必要时设置支撑或迁移树木",
+      "对墙体裂缝和墙基进行监测修复，并在评估前设置警示或临时隔离"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

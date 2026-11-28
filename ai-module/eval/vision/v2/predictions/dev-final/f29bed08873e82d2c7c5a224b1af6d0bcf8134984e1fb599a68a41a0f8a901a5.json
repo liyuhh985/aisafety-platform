@@ -1,0 +1,27 @@
+{
+  "sha256": "f29bed08873e82d2c7c5a224b1af6d0bcf8134984e1fb599a68a41a0f8a901a5",
+  "file": "FAC0082.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"中\",\n  \"description\": \"高层窗外晾衣架上悬挂大块布料，固定不牢，且遇风鼓起，存在脱落坠下风险，可能砸伤行人或车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼栋中上层窗外晾衣架处\",\n  \"rectification\": [\n    \"立即收回或拆除窗外悬挂物，避免高空坠物\",\n    \"加固晾衣架并定期检查，防止外挂物松动\",\n    \"物业加强巡查宣传，发现高空悬挂隐患及时处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "中",
+    "description": "高层窗外晾衣架上悬挂大块布料，固定不牢，且遇风鼓起，存在脱落坠下风险，可能砸伤行人或车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼栋中上层窗外晾衣架处",
+    "rectification": [
+      "立即收回或拆除窗外悬挂物，避免高空坠物",
+      "加固晾衣架并定期检查，防止外挂物松动",
+      "物业加强巡查宣传，发现高空悬挂隐患及时处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

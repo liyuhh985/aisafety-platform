@@ -1,0 +1,80 @@
+diff --git a/.frontend-work/src/constants/hazardTaxonomy.js b/.frontend-work/src/constants/hazardTaxonomy.js
+--- a/.frontend-work/src/constants/hazardTaxonomy.js
++++ b/.frontend-work/src/constants/hazardTaxonomy.js
+@@ -4,7 +4,7 @@
+  * 前端统一维护与解析核心模块
+  */
+ 
+-// 1. 标准两级分类定义 (8 大一级类别 + 29 个标准二级子类，v2a 已合并 3 组冗余类)
++// 1. 标准两级分类定义 (8 大一级类别 + 33 个标准二级子类，v2b 新增 4 个独立小类)
+ export const HAZARD_TAXONOMY = [
+   {
+     code: "traffic",
+@@ -24,6 +24,7 @@
+       { code: "road_surface_collapse", label: "路面塌陷" },
+       { code: "drainage_flood", label: "排水/积水" },
+       { code: "street_light_pole", label: "路灯/线杆损坏" },
++      { code: "tree_fall_hazard", label: "树木倒伏/断枝风险" },
+     ],
+   },
+   {
+@@ -32,6 +33,7 @@
+     subcategories: [
+       { code: "fire_lane_blocked", label: "消防通道占用" },
+       { code: "fire_equipment_fault", label: "消防设施故障" },
++      { code: "ebike_hazard", label: "电动自行车违规停放/充电" },
+     ],
+   },
+   {
+@@ -63,6 +65,7 @@
+       { code: "scaffold_guard", label: "脚手架/临边防护" },
+       { code: "deep_pit", label: "深基坑风险" },
+       { code: "temporary_power", label: "施工临时用电" },
++      { code: "confined_space", label: "有限空间作业风险" },
+     ],
+   },
+   {
+@@ -80,6 +83,7 @@
+     subcategories: [
+       { code: "garbage_pile", label: "垃圾堆积" },
+       { code: "sewage_odor", label: "污水/异味" },
++      { code: "hazmat_storage", label: "危化品/易燃易爆违规存运" },
+       { code: "other", label: "其他" },
+     ],
+   },
+diff --git a/.frontend-work/test/hazardTaxonomy.test.mjs b/.frontend-work/test/hazardTaxonomy.test.mjs
+--- a/.frontend-work/test/hazardTaxonomy.test.mjs
++++ b/.frontend-work/test/hazardTaxonomy.test.mjs
+@@ -19,8 +19,8 @@
+   'fire_water_abnormal',
+ ]
+ 
+-test('taxonomy contains exactly 29 canonical subcategories', () => {
+-  assert.equal(TOTAL, 29)
++test('taxonomy contains exactly 33 canonical subcategories', () => {
++  assert.equal(TOTAL, 33)
+   for (const code of RETIRED_CODES) {
+     assert.equal(
+       HAZARD_TAXONOMY.some((major) =>
+@@ -29,6 +29,13 @@
+       code,
+     )
+   }
++})
++
++test('v2b adds four high-value subcategories', () => {
++  assert.equal(resolveHazard('fire/ebike_hazard').subcategoryLabel, '电动自行车违规停放/充电')
++  assert.equal(resolveHazard('municipal/tree_fall_hazard').subcategoryLabel, '树木倒伏/断枝风险')
++  assert.equal(resolveHazard('construction/confined_space').subcategoryLabel, '有限空间作业风险')
++  assert.equal(resolveHazard('environment_other/hazmat_storage').subcategoryLabel, '危化品/易燃易爆违规存运')
+ })
+ 
+ test('retired subcategories are not kept as write-path aliases', () => {
+@@ -67,6 +74,6 @@
+   )
+   assert.deepEqual(
+     getSubcategoriesByMajor('fire').map((sub) => sub.code),
+-    ['fire_lane_blocked', 'fire_equipment_fault'],
++    ['fire_lane_blocked', 'fire_equipment_fault', 'ebike_hazard'],
+   )
+ })

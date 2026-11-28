@@ -1,0 +1,27 @@
+{
+  "sha256": "d8c39b68c7c2c656c1e4dff3e150ecc116c8ccc97780e2e7b45b3729489745e0",
+  "file": "DIS0003.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"配电设施内电线杂乱缠绕，多处绝缘层破损、老化，部分线芯裸露。极易引发短路、漏电甚至电气火灾，对周边人员及设备安全构成严重威胁。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"配电箱或线缆井内部\",\n  \"rectification\": [\n    \"断电后安排专业电工全面清理并规范重新布线\",\n    \"更换绝缘破损、老化的线缆，使用专业端子规范处理接头\",\n    \"将线缆整理并固定在线槽或保护管内，避免裸露和受力\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "配电设施内电线杂乱缠绕，多处绝缘层破损、老化，部分线芯裸露。极易引发短路、漏电甚至电气火灾，对周边人员及设备安全构成严重威胁。",
+    "reason_if_no_hazard": "",
+    "location_hint": "配电箱或线缆井内部",
+    "rectification": [
+      "断电后安排专业电工全面清理并规范重新布线",
+      "更换绝缘破损、老化的线缆，使用专业端子规范处理接头",
+      "将线缆整理并固定在线槽或保护管内，避免裸露和受力"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

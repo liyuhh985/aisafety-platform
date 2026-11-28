@@ -1,0 +1,23 @@
+{
+  "sha256": "1f024487fc7b67cb9be845552e5fb2cdcb49ba603c7969c5a3de814a1a4332b7",
+  "file": "neg_03_1f024487fc7b.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中电动车快速充电站及废旧电池回收箱外观完好，未见设备破损、线缆裸露、电池堆积、违规充电或其他明确异常，未发现可确认的安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中电动车快速充电站及废旧电池回收箱外观完好，未见设备破损、线缆裸露、电池堆积、违规充电或其他明确异常，未发现可确认的安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

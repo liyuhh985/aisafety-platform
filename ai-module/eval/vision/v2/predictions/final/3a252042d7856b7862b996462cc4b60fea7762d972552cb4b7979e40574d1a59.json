@@ -1,0 +1,27 @@
+{
+  "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+  "file": "FIR0008.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"中\",\"description\":\"画面中央及右侧路面出现大面积网状裂缝和表层破损，局部碎裂明显，可能造成车辆颠簸、行人绊倒，并存在继续沉陷的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"小区/院内道路中央及右侧路面\",\"rectification\":[\"对开裂破损区域进行围挡警示并尽快修补\",\"检查路面基层，必要时重做面层或加固基层\",\"修补完成前设置临时警示标志，提醒车辆行人避让\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "画面中央及右侧路面出现大面积网状裂缝和表层破损，局部碎裂明显，可能造成车辆颠簸、行人绊倒，并存在继续沉陷的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区/院内道路中央及右侧路面",
+    "rectification": [
+      "对开裂破损区域进行围挡警示并尽快修补",
+      "检查路面基层，必要时重做面层或加固基层",
+      "修补完成前设置临时警示标志，提醒车辆行人避让"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

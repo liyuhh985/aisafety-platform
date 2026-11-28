@@ -1,0 +1,27 @@
+{
+  "sha256": "1ba9b4b3d6d51efd31e3c9ecd85f39b2b3131772b61c6de1a8f7abf9103de29f",
+  "file": "ROA0005.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"两辆流动摊贩三轮车停放在商业楼前人行道及车行道边缘，并有多人聚集排队购买，占用了行人通行空间，易造成行人绕行、拥挤和与车辆混行，增加碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商业楼前人行道及车行道边缘\",\n  \"rectification\": [\n    \"劝离或规范流动摊贩，禁止占用人行道和车行道经营\",\n    \"在不影响通行的区域划定临时经营区并加强现场秩序管理\",\n    \"安排人员巡查，及时清理占道车辆和聚集人群，保障行人通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "两辆流动摊贩三轮车停放在商业楼前人行道及车行道边缘，并有多人聚集排队购买，占用了行人通行空间，易造成行人绕行、拥挤和与车辆混行，增加碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商业楼前人行道及车行道边缘",
+    "rectification": [
+      "劝离或规范流动摊贩，禁止占用人行道和车行道经营",
+      "在不影响通行的区域划定临时经营区并加强现场秩序管理",
+      "安排人员巡查，及时清理占道车辆和聚集人群，保障行人通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

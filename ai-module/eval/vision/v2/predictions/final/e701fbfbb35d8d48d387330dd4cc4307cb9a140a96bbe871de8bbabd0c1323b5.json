@@ -1,0 +1,27 @@
+{
+  "sha256": "e701fbfbb35d8d48d387330dd4cc4307cb9a140a96bbe871de8bbabd0c1323b5",
+  "file": "ROA0002.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"高\",\n  \"description\": \"夜间机动车道上摆放大量长条桌、竹板等经营物品，明显占用通行空间，且未设置有效警示和隔离，影响车辆正常通行，易引发碰撞、拥堵，并可能阻碍应急车辆通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"图片下方及右侧机动车道\",\n  \"rectification\": [\n    \"立即清理占道摆放的桌板等物品，恢复道路通行空间\",\n    \"划定合规经营区域，禁止占用机动车道经营或堆放物品\",\n    \"加强夜间巡查执法，发现占道经营及时劝离处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "高",
+    "description": "夜间机动车道上摆放大量长条桌、竹板等经营物品，明显占用通行空间，且未设置有效警示和隔离，影响车辆正常通行，易引发碰撞、拥堵，并可能阻碍应急车辆通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "图片下方及右侧机动车道",
+    "rectification": [
+      "立即清理占道摆放的桌板等物品，恢复道路通行空间",
+      "划定合规经营区域，禁止占用机动车道经营或堆放物品",
+      "加强夜间巡查执法，发现占道经营及时劝离处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

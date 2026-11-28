@@ -43,7 +43,7 @@ def test_non_focus_missing_a_slot_is_selected(monkeypatch):
     def fake_question(**kwargs):
         seen.update(kwargs)
         return {
-            "question": "房屋有没有裂缝、倾斜或沉降？",
+            "question": "房屋有没有墙体开裂、整体倾斜、地基沉降或承重构件变形？",
             "target_slot": "structure",
         }
 
@@ -52,7 +52,7 @@ def test_non_focus_missing_a_slot_is_selected(monkeypatch):
 
     assert seen["subcategory_code"] == "dangerous_building"
     assert seen["missing"] == ["structure"]
-    assert "裂缝、倾斜或沉降" in cmd.update["clarification_question"]
+    assert "墙体开裂、整体倾斜、地基沉降" in cmd.update["clarification_question"]
     assert cmd.update["question_source"] == "ask_slot_question"
 
 
@@ -72,7 +72,7 @@ def test_two_issues_missing_a_slots_are_asked_in_one_parallel_question():
     assert "消防通道" in question
     assert "长期还是临时" in question
     assert "危房" in question
-    assert "裂缝、倾斜或沉降" in question
+    assert "墙体开裂、整体倾斜、地基沉降" in question
     assert "请确认我理解得对不对" not in question
     assert question.count("还想确认") == 1
 
@@ -86,7 +86,7 @@ def test_focus_complete_non_focus_missing_is_not_sent_to_search():
             {"major_code": "fire", "subcategory_code": "fire_lane_blocked", "missing": []},
             {"major_code": "building", "subcategory_code": "dangerous_building", "missing": ["structure"]},
         ],
-        "question": "房屋有没有裂缝、倾斜或沉降？",
+        "question": "房屋有没有墙体开裂、整体倾斜、地基沉降或承重构件变形？",
         "answer": "",
         "needs_search": True,
     }
@@ -94,7 +94,7 @@ def test_focus_complete_non_focus_missing_is_not_sent_to_search():
 
     assert out["action"] == "ask_critical_question"
     assert out["needs_search"] is False
-    assert out["question"] == "房屋有没有裂缝、倾斜或沉降？"
+    assert out["question"] == "房屋有没有墙体开裂、整体倾斜、地基沉降或承重构件变形？"
     assert "请确认" not in out["question"]
 
 

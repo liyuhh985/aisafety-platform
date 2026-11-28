@@ -1,0 +1,27 @@
+{
+  "sha256": "9d63598946cb16f89ceecabeeb4b142e9a89130c05620446d037e9135e3c0efb",
+  "file": "SEW0003.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"高\",\n  \"description\": \"浏阳河路大面积路面积水，水面覆盖多条车道并淹没标线，车辆通行易打滑、熄火，行人及非机动车通行受阻，存在交通事故和人员涉水风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"浏阳河路路段，近路边指示牌处\",\n  \"rectification\": [\n    \"立即抽排积水并设置警示标志，引导车辆减速或绕行\",\n    \"排查雨水口、排水管网堵塞或排水能力不足问题并清淤疏通\",\n    \"雨后复查路面及排水设施，必要时改造提升该路段排水能力\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "高",
+    "description": "浏阳河路大面积路面积水，水面覆盖多条车道并淹没标线，车辆通行易打滑、熄火，行人及非机动车通行受阻，存在交通事故和人员涉水风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "浏阳河路路段，近路边指示牌处",
+    "rectification": [
+      "立即抽排积水并设置警示标志，引导车辆减速或绕行",
+      "排查雨水口、排水管网堵塞或排水能力不足问题并清淤疏通",
+      "雨后复查路面及排水设施，必要时改造提升该路段排水能力"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

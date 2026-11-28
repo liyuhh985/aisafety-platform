@@ -1,0 +1,27 @@
+{
+  "sha256": "9cd5ae6b6b18ba4c9c01e599081bda765ab36eb582b3a4ca95b82e66a86b251d",
+  "file": "NEGSEW08.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"中\",\n  \"description\": \"路边线性排水沟金属格栅间隙较宽，盖板与周边路面存在高差和边缘缝隙，行人脚部、自行车轮易卡入或绊倒，存在摔伤风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道与车行道之间的线性排水沟盖板处\",\n  \"rectification\": [\n    \"更换为缝隙符合规范、与路面齐平的排水沟盖板，并调平固定。\",\n    \"修复盖板边缘破损和高差，清理沟内杂物。\",\n    \"整改前在明显位置设置临时警示标志，防止行人及非机动车误入。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "路边线性排水沟金属格栅间隙较宽，盖板与周边路面存在高差和边缘缝隙，行人脚部、自行车轮易卡入或绊倒，存在摔伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道与车行道之间的线性排水沟盖板处",
+    "rectification": [
+      "更换为缝隙符合规范、与路面齐平的排水沟盖板，并调平固定。",
+      "修复盖板边缘破损和高差，清理沟内杂物。",
+      "整改前在明显位置设置临时警示标志，防止行人及非机动车误入。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

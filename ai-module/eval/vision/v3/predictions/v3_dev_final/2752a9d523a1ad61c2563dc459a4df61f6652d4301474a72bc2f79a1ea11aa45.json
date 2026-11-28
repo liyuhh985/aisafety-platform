@@ -1,0 +1,27 @@
+{
+  "sha256": "2752a9d523a1ad61c2563dc459a4df61f6652d4301474a72bc2f79a1ea11aa45",
+  "file": "gas_leak_1_2752a9d523a1.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"高\",\n  \"description\": \"室内燃气软管与金属接头连接处用透明胶带/塑料膜缠绕，软管下端可见裂口，旁侧燃气表及管道锈蚀并有黄色渗漏痕迹，存在燃气泄漏、中毒或爆燃风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内燃气表旁软管与金属接头连接处\",\n  \"rectification\": [\n    \"立即关闭燃气阀门，联系燃气公司上门检漏处置。\",\n    \"更换老化破损软管及锈蚀管件，接头使用专用卡箍紧固，严禁胶带或塑料膜缠绕。\",\n    \"整改后使用肥皂水或检漏仪复检，保持通风，禁止明火和开关电器。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "高",
+    "description": "室内燃气软管与金属接头连接处用透明胶带/塑料膜缠绕，软管下端可见裂口，旁侧燃气表及管道锈蚀并有黄色渗漏痕迹，存在燃气泄漏、中毒或爆燃风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内燃气表旁软管与金属接头连接处",
+    "rectification": [
+      "立即关闭燃气阀门，联系燃气公司上门检漏处置。",
+      "更换老化破损软管及锈蚀管件，接头使用专用卡箍紧固，严禁胶带或塑料膜缠绕。",
+      "整改后使用肥皂水或检漏仪复检，保持通风，禁止明火和开关电器。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

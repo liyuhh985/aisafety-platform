@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"vehicle_occupancy\", \"evidence\": \"围栏内贴有禁止停放车辆标识，栏外仍停放有灰色轿车\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "围栏内贴有禁止停放车辆标识，栏外仍停放有灰色轿车"
+  }
+}

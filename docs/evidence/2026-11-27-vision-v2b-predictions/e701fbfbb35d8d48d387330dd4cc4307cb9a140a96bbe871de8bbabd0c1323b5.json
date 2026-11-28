@@ -1,0 +1,27 @@
+{
+  "sha256": "e701fbfbb35d8d48d387330dd4cc4307cb9a140a96bbe871de8bbabd0c1323b5",
+  "file": "ROA0002.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"road_occupancy\",\"severity\":\"高\",\"description\":\"夜间机动车道及路边被大量折叠桌、竹板桌占用，形成连续占道经营/乱堆乱放，压缩车辆和行人通行空间，夜间视线较差，易引发碰撞、绊倒及交通拥堵。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路车行道及路侧，车辆通行区域\",\"rectification\":[\"立即清理占道桌椅及堆放物，恢复道路通行功能\",\"对占道经营行为进行劝导和执法，划定合规经营区域\",\"夜间加强巡查并设置临时警示，防止车辆行人碰撞\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "高",
+    "description": "夜间机动车道及路边被大量折叠桌、竹板桌占用，形成连续占道经营/乱堆乱放，压缩车辆和行人通行空间，夜间视线较差，易引发碰撞、绊倒及交通拥堵。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路车行道及路侧，车辆通行区域",
+    "rectification": [
+      "立即清理占道桌椅及堆放物，恢复道路通行功能",
+      "对占道经营行为进行劝导和执法，划定合规经营区域",
+      "夜间加强巡查并设置临时警示，防止车辆行人碰撞"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "d4e2e8fdcc235dd0091b18cacb0e97949a34d0c32f421afac8ddb64297df20bc",
+  "file": "EXP0003.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"exposed_wire\",\"severity\":\"高\",\"description\":\"铺砖地面上有一根黄色线缆横穿，表皮破损并露出多根内芯，线缆直接落地且无防护，存在漏电、触电及行人绊倒风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"铺砖地面中央，黄色线缆破损裸露处\",\"rectification\":[\"立即断电并确认线缆是否带电，由专业人员修复或更换破损线缆\",\"将线缆穿管保护或架空固定，避免横穿人行地面\",\"修复前在破损处周边设置警示隔离，防止行人踩踏或触碰\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "铺砖地面上有一根黄色线缆横穿，表皮破损并露出多根内芯，线缆直接落地且无防护，存在漏电、触电及行人绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "铺砖地面中央，黄色线缆破损裸露处",
+    "rectification": [
+      "立即断电并确认线缆是否带电，由专业人员修复或更换破损线缆",
+      "将线缆穿管保护或架空固定，避免横穿人行地面",
+      "修复前在破损处周边设置警示隔离，防止行人踩踏或触碰"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

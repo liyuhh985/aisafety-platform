@@ -1,0 +1,27 @@
+{
+  "sha256": "1c612b573f26a7d9bd3c7a8c15033c71d7e4c2d68283bc9fffa8f9f390510a07",
+  "file": "GAR0003.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"低\",\n  \"description\": \"人行道及车行道边缘散落较多塑料袋、纸片、塑料瓶等垃圾，路面潮湿时易造成行人滑倒或影响通行，也存在环境卫生和市容问题。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道及车行道边缘\",\n  \"rectification\": [\n    \"及时清扫散落垃圾并保持路面整洁\",\n    \"在人流密集区域增设垃圾桶并加强保洁巡查\",\n    \"对夜间占道经营或随手丢弃行为加强劝导管理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "低",
+    "description": "人行道及车行道边缘散落较多塑料袋、纸片、塑料瓶等垃圾，路面潮湿时易造成行人滑倒或影响通行，也存在环境卫生和市容问题。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道及车行道边缘",
+    "rectification": [
+      "及时清扫散落垃圾并保持路面整洁",
+      "在人流密集区域增设垃圾桶并加强保洁巡查",
+      "对夜间占道经营或随手丢弃行为加强劝导管理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

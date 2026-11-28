@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"facade_risk\", \"evidence\": \"围墙端部抹灰破损开裂、墙皮脱落\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "facade_risk",
+    "evidence": "围墙端部抹灰破损开裂、墙皮脱落"
+  }
+}

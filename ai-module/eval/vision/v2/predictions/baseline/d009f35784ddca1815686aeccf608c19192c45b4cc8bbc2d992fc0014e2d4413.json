@@ -1,0 +1,27 @@
+{
+  "sha256": "d009f35784ddca1815686aeccf608c19192c45b4cc8bbc2d992fc0014e2d4413",
+  "file": "FIR0002.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"图片显示消防通道黄色网格线及通道内停放多辆汽车，且现场设有“消防通道 严禁停车”标牌，消防车道被占用，可能影响消防车辆通行，延误灭火救援。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"小区院内消防通道黄色网格线及通道两侧\",\n  \"rectification\": [\n    \"立即清理消防通道内违停车辆，恢复通道畅通\",\n    \"在消防通道边界设置硬隔离、禁停桩等物理防护设施\",\n    \"加强日常巡查和违停执法，完善禁停标识与宣传提示\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "图片显示消防通道黄色网格线及通道内停放多辆汽车，且现场设有“消防通道 严禁停车”标牌，消防车道被占用，可能影响消防车辆通行，延误灭火救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区院内消防通道黄色网格线及通道两侧",
+    "rectification": [
+      "立即清理消防通道内违停车辆，恢复通道畅通",
+      "在消防通道边界设置硬隔离、禁停桩等物理防护设施",
+      "加强日常巡查和违停执法，完善禁停标识与宣传提示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

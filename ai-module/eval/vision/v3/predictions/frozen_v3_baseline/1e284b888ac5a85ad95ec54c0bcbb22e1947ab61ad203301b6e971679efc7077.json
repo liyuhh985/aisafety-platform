@@ -1,0 +1,29 @@
+{
+  "sha256": "1e284b888ac5a85ad95ec54c0bcbb22e1947ab61ad203301b6e971679efc7077",
+  "file": "distribution_box_fault_1_1e284b888ac5.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"户外配电箱门敞开，内部开关、接线及母排裸露，箱顶和地面线缆杂乱，部分线缆外露，且位于人行道旁无围挡警示。存在触电、漏电、短路起火风险，威胁行人和维护人员安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"绿化带旁、人行道边的户外配电柜\",\n  \"rectification\": [\n    \"立即在配电箱周围设置临时围挡和警示标志，禁止行人靠近\",\n    \"由持证电工断电检修，修复或更换损坏箱门并上锁\",\n    \"整理、穿管保护外露线缆，排查绝缘、接地和漏电保护装置\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "户外配电箱门敞开，内部开关、接线及母排裸露，箱顶和地面线缆杂乱，部分线缆外露，且位于人行道旁无围挡警示。存在触电、漏电、短路起火风险，威胁行人和维护人员安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "绿化带旁、人行道边的户外配电柜",
+    "rectification": [
+      "立即在配电箱周围设置临时围挡和警示标志，禁止行人靠近",
+      "由持证电工断电检修，修复或更换损坏箱门并上锁",
+      "整理、穿管保护外露线缆，排查绝缘、接地和漏电保护装置"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

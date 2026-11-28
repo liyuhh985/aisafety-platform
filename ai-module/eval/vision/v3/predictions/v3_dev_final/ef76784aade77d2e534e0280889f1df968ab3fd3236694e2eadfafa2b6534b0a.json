@@ -1,0 +1,27 @@
+{
+  "sha256": "ef76784aade77d2e534e0280889f1df968ab3fd3236694e2eadfafa2b6534b0a",
+  "file": "street_light_pole_2_ef76784aade7.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"street_light_pole\",\n  \"severity\": \"高\",\n  \"description\": \"线杆疑似断裂/严重倾斜，顶部线缆密集缠绕并大量下垂，部分线缆低垂，存在线杆倒伏、线缆坠落、触电及阻碍通行的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"架空线杆及顶部线缆交汇处\",\n  \"rectification\": [\"立即设置警戒围挡，禁止人员靠近\", \"联系电力/通信产权单位停用并更换或加固受损线杆\", \"梳理、固定下垂和废弃线缆，检查绝缘与受力情况\"],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "线杆疑似断裂/严重倾斜，顶部线缆密集缠绕并大量下垂，部分线缆低垂，存在线杆倒伏、线缆坠落、触电及阻碍通行的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "架空线杆及顶部线缆交汇处",
+    "rectification": [
+      "立即设置警戒围挡，禁止人员靠近",
+      "联系电力/通信产权单位停用并更换或加固受损线杆",
+      "梳理、固定下垂和废弃线缆，检查绝缘与受力情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

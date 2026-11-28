@@ -1,0 +1,27 @@
+{
+  "sha256": "d6b6880125893f80b2a7055d887d906becc4cf13b54ad819637a71487b4d2e49",
+  "file": "ELE0057.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯门异常开启且门机机械结构外露，轿厢内有人员正被救援人员协助跨出，存在人员被困、夹伤及跌落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯门口及轿厢处\",\n  \"rectification\": [\n    \"立即停梯断电并设置警戒，防止无关人员靠近\",\n    \"由持证电梯维保人员检修门锁、门机及平层装置\",\n    \"确认轿厢平层和安全后再组织人员撤离\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯门异常开启且门机机械结构外露，轿厢内有人员正被救援人员协助跨出，存在人员被困、夹伤及跌落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯门口及轿厢处",
+    "rectification": [
+      "立即停梯断电并设置警戒，防止无关人员靠近",
+      "由持证电梯维保人员检修门锁、门机及平层装置",
+      "确认轿厢平层和安全后再组织人员撤离"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

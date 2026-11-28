@@ -1,0 +1,27 @@
+{
+  "sha256": "a4515b5b770cb482a73eb280f4becf8bdd795575390197d589f4681d55de141c",
+  "file": "FIR0004.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"中\",\n  \"description\": \"多具手提式干粉灭火器被随意置于室外地面，左侧瓶体锈蚀污损、右侧灭火器倒地，喷管和瓶体疑似损坏，紧急情况下可能无法正常使用，延误初期火灾扑救。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室外地面，金属构件旁\",\n  \"rectification\": [\n    \"立即检查灭火器压力、瓶体、喷管和有效期，损坏或失效的及时更换\",\n    \"将灭火器规范存放于灭火器箱或指定点位，保持标识清晰、取用方便\",\n    \"建立定期巡检和维护记录，确保消防器材完好有效\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "中",
+    "description": "多具手提式干粉灭火器被随意置于室外地面，左侧瓶体锈蚀污损、右侧灭火器倒地，喷管和瓶体疑似损坏，紧急情况下可能无法正常使用，延误初期火灾扑救。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室外地面，金属构件旁",
+    "rectification": [
+      "立即检查灭火器压力、瓶体、喷管和有效期，损坏或失效的及时更换",
+      "将灭火器规范存放于灭火器箱或指定点位，保持标识清晰、取用方便",
+      "建立定期巡检和维护记录，确保消防器材完好有效"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

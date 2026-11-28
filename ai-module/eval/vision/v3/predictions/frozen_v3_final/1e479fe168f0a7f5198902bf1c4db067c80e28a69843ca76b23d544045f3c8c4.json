@@ -1,0 +1,28 @@
+{
+  "sha256": "1e479fe168f0a7f5198902bf1c4db067c80e28a69843ca76b23d544045f3c8c4",
+  "file": "no_barrier_2_1e479fe168f0.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_barrier\",\"severity\":\"高\",\"description\":\"高架桥下大量裸土堆高陡且紧邻人行铺装区域，正面仅用低矮移动护栏隔离，围挡不连续、不封闭，堆土未覆盖防尘网，存在土体滑落、行人误入和扬尘风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"高架桥下与人行铺装广场相邻的施工堆土区\",\"rectification\":[\"沿堆土边界设置连续、稳固的硬质围挡并封闭管理\",\"对高陡土堆进行放坡或支护，并覆盖防尘网\",\"清理散落至铺装路面的泥土碎石，增设明显安全警示\",\"加强日常巡查，禁止行人进入堆土区域\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "高架桥下大量裸土堆高陡且紧邻人行铺装区域，正面仅用低矮移动护栏隔离，围挡不连续、不封闭，堆土未覆盖防尘网，存在土体滑落、行人误入和扬尘风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高架桥下与人行铺装广场相邻的施工堆土区",
+    "rectification": [
+      "沿堆土边界设置连续、稳固的硬质围挡并封闭管理",
+      "对高陡土堆进行放坡或支护，并覆盖防尘网",
+      "清理散落至铺装路面的泥土碎石，增设明显安全警示",
+      "加强日常巡查，禁止行人进入堆土区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

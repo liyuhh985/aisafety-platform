@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 /**
  * 对象（MinIO）清理 outbox。
  * 与 tb_vector_sync_outbox 同一套 claim/退避/重试语义，见
- * 私有历史设计文档 §3.3
+ * docs/superpowers/specs/2026-09-29-retract-and-image-hard-delete-design.md §3.3
  */
 @Data
 @TableName("tb_resource_cleanup_outbox")

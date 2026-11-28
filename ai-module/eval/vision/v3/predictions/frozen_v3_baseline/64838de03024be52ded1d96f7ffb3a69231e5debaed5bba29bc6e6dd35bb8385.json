@@ -1,0 +1,26 @@
+{
+  "sha256": "64838de03024be52ded1d96f7ffb3a69231e5debaed5bba29bc6e6dd35bb8385",
+  "file": "scaffold_guard_2_64838de03024.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"scaffold_guard\",\"severity\":\"高\",\"description\":\"建筑外墙脚手架顶部作业平台临边未设置防护栏杆和挡脚板，踏板边缘缺少围护，作业人员存在高处坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙脚手架顶部作业平台\",\"rectification\":[\"立即在脚手架作业平台周边设置符合规范的防护栏杆、挡脚板和安全网\",\"检查脚手架连墙件、剪刀撑及脚手板铺设情况，验收合格后方可使用\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "建筑外墙脚手架顶部作业平台临边未设置防护栏杆和挡脚板，踏板边缘缺少围护，作业人员存在高处坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙脚手架顶部作业平台",
+    "rectification": [
+      "立即在脚手架作业平台周边设置符合规范的防护栏杆、挡脚板和安全网",
+      "检查脚手架连墙件、剪刀撑及脚手板铺设情况，验收合格后方可使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "01e8581cd05de8fd666ed4e88b51e017bead69e4d59e75e1065e7e6978f4874e",
+  "file": "exposed_wire_4_01e8581cd05d.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"exposed_wire\",\"severity\":\"高\",\"description\":\"电缆外护套严重破损，多股铜芯裸露，且位于岩石缝隙和潮湿泥土环境中。若带电，极易发生漏电、短路或触电事故，雨天风险更高。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"岩石缝隙间的潮湿地面处\",\"rectification\":[\"立即断电并设置警示，禁止人员靠近\",\"由专业电工检查线路带电情况，更换破损电缆或加装绝缘套管修复\",\"排查该线路来源及敷设规范性，做好防水、防机械损伤保护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "电缆外护套严重破损，多股铜芯裸露，且位于岩石缝隙和潮湿泥土环境中。若带电，极易发生漏电、短路或触电事故，雨天风险更高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "岩石缝隙间的潮湿地面处",
+    "rectification": [
+      "立即断电并设置警示，禁止人员靠近",
+      "由专业电工检查线路带电情况，更换破损电缆或加装绝缘套管修复",
+      "排查该线路来源及敷设规范性，做好防水、防机械损伤保护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

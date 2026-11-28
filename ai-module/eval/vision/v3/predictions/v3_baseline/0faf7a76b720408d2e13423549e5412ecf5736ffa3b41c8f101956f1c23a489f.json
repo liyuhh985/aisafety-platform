@@ -1,0 +1,26 @@
+{
+  "sha256": "0faf7a76b720408d2e13423549e5412ecf5736ffa3b41c8f101956f1c23a489f",
+  "file": "neg_04_0faf7a76b720.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"中\",\n  \"description\": \"人行道旁大树枝干明显倾斜，分叉处疑似腐朽，根部铺装开裂拱起；遇大风或树体失稳可能倒伏、断枝，危及行人和车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道旁大树及根部铺装\",\n  \"rectification\": [\n    \"请园林专业机构检测树体稳定性，修剪偏冠和危险枝并视情加固支撑\",\n    \"修复树根周边开裂、拱起的人行道铺装并设置临时警示\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "中",
+    "description": "人行道旁大树枝干明显倾斜，分叉处疑似腐朽，根部铺装开裂拱起；遇大风或树体失稳可能倒伏、断枝，危及行人和车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道旁大树及根部铺装",
+    "rectification": [
+      "请园林专业机构检测树体稳定性，修剪偏冠和危险枝并视情加固支撑",
+      "修复树根周边开裂、拱起的人行道铺装并设置临时警示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

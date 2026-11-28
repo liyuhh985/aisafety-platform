@@ -1,0 +1,26 @@
+{
+  "sha256": "b1904f7e436cd314ef919d5b8df2036494a543e1c83ecdd410b3f1600009ee3e",
+  "file": "SCA0083.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"脚手架外侧绿色安全网出现明显破口/掀起，未形成连续封闭防护，工人从开口处探身，存在高处坠落及物体打击风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑施工脚手架外侧安全网开口处\",\n  \"rectification\": [\n    \"立即修复或更换破损安全网，封闭脚手架临边开口，确保防护连续可靠。\",\n    \"加强高处作业人员安全防护，规范佩戴安全带并设置可靠挂点，必要时设置定型化防护门和监护措施。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "脚手架外侧绿色安全网出现明显破口/掀起，未形成连续封闭防护，工人从开口处探身，存在高处坠落及物体打击风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑施工脚手架外侧安全网开口处",
+    "rectification": [
+      "立即修复或更换破损安全网，封闭脚手架临边开口，确保防护连续可靠。",
+      "加强高处作业人员安全防护，规范佩戴安全带并设置可靠挂点，必要时设置定型化防护门和监护措施。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

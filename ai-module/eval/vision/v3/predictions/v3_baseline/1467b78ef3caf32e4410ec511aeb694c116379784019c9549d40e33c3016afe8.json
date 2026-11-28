@@ -1,0 +1,27 @@
+{
+  "sha256": "1467b78ef3caf32e4410ec511aeb694c116379784019c9549d40e33c3016afe8",
+  "file": "elevator_stopped_1_1467b78ef3ca.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"画面中线缆外皮严重开裂、剥落，内部金属线股裸露且断口尖锐；若带电，可能引发触电、短路起火或线路断裂坠落伤人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中央斜向线缆中段\",\n  \"rectification\": [\n    \"立即断电并设置警戒，避免人员触碰裸露部位\",\n    \"由专业电工更换受损线缆或加装绝缘护套，并排查同线路其他区段\",\n    \"若为架空线路，应复核固定与弧垂，防止断线坠落\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "画面中线缆外皮严重开裂、剥落，内部金属线股裸露且断口尖锐；若带电，可能引发触电、短路起火或线路断裂坠落伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中央斜向线缆中段",
+    "rectification": [
+      "立即断电并设置警戒，避免人员触碰裸露部位",
+      "由专业电工更换受损线缆或加装绝缘护套，并排查同线路其他区段",
+      "若为架空线路，应复核固定与弧垂，防止断线坠落"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

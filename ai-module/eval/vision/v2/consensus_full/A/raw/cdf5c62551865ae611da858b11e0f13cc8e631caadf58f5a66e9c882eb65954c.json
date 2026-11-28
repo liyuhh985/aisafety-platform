@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"distribution_box_fault\", \"evidence\": \"电表箱门敞开，箱内接线端子与电线裸露可见\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "evidence": "电表箱门敞开，箱内接线端子与电线裸露可见"
+  }
+}

@@ -2,6 +2,7 @@ from tests.reply_helpers import render_reply, render_update
 import asyncio
 import json
 import re
+import uuid
 
 import core.assistant_graph as assistant_graph
 import pytest
@@ -95,9 +96,9 @@ def test_vision_prompt_defines_false_and_ambiguous_fallbacks():
     false_rule = next(
         line
         for line in VISION_PROMPT.splitlines()
-        if "has_hazard 为 false 时" in line
+        if "设置 has_hazard 为 false" in line
     )
-    assert "必须填写 reason_if_no_hazard" in false_rule
+    assert "填写 reason_if_no_hazard" in false_rule
     assert (
         "hazard_category、major_category、subcategory、severity、description、"
         "location_hint 填空字符串"
@@ -107,16 +108,14 @@ def test_vision_prompt_defines_false_and_ambiguous_fallbacks():
     ambiguous_rule = next(
         line
         for line in VISION_PROMPT.splitlines()
-        if "图片模棱两可" in line
+        if "无清晰客观异常依据" in line
     )
-    assert "has_hazard 为 true" in ambiguous_rule
-    assert "major_category 为 environment_other" in ambiguous_rule
-    assert "subcategory 为 other" in ambiguous_rule
-    assert "hazard_category 为 环境与其他" in ambiguous_rule
-    assert "confidence 为 低" in ambiguous_rule
+    assert "has_hazard 为 false" in ambiguous_rule
+    assert "图像证据不足，无法确认安全隐患" in ambiguous_rule
+    assert "不得为了报出隐患而强行归入" in ambiguous_rule
 
 
-def test_vision_prompt_has_ten_confusion_guidelines():
+def test_vision_prompt_has_eight_confusion_guidelines():
     from prompts import VISION_PROMPT
 
     guidelines = VISION_PROMPT.split("- 判别要点（易混淆项）:", 1)[1].split(
@@ -127,19 +126,17 @@ def test_vision_prompt_has_ten_confusion_guidelines():
         guidelines,
         flags=re.MULTILINE,
     )
-    assert [int(number) for number, _ in numbered_lines] == list(range(1, 11))
+    assert [int(number) for number, _ in numbered_lines] == list(range(1, 9))
 
     expected_keywords = {
         1: ("井盖破损", "manhole_damage", "路面整体塌陷", "road_surface_collapse"),
         2: ("施工无警示", "no_warning", "路面塌陷", "road_surface_collapse"),
         3: ("未设置围挡", "no_barrier", "无安全警示", "no_warning"),
-        4: ("墙体开裂", "wall_crack_lean", "危房", "dangerous_building"),
-        5: ("外立面脱落", "facade_fall", "高空坠物", "falling_object"),
-        6: ("燃气泄漏", "gas_leak", "管道老化", "gas_pipe_aging"),
-        7: ("裸露电线", "exposed_wire", "私拉乱接", "illegal_wiring"),
-        8: ("施工临时用电", "temporary_power", "裸露电线", "exposed_wire"),
-        9: ("电梯停运", "elevator_stopped", "电梯困人", "elevator_trapped"),
-        10: ("车辆占道", "vehicle_occupancy", "消防通道占用", "fire_lane_blocked"),
+        4: ("燃气泄漏", "gas_leak", "管道老化", "gas_pipe_aging"),
+        5: ("裸露电线", "exposed_wire", "私拉乱接", "illegal_wiring"),
+        6: ("施工临时用电", "temporary_power", "裸露电线", "exposed_wire"),
+        7: ("电梯停运", "elevator_stopped", "电梯困人", "elevator_trapped"),
+        8: ("车辆占道", "vehicle_occupancy", "消防通道占用", "fire_lane_blocked"),
     }
     for number, line in numbered_lines:
         missing = [
@@ -148,6 +145,24 @@ def test_vision_prompt_has_ten_confusion_guidelines():
             if keyword not in line
         ]
         assert missing == [], f"判别要点 {number} 缺少关键词: {missing}"
+
+
+def test_subcategory_default_risk_overrides_model_low_risk():
+    raw = (
+        '{"intent":"report_hazard","risk_level":"low",'
+        '"issues":[{"major_code":"environment_other","subcategory_code":"hazmat_storage",'
+        '"slots":{"material_info":"不明化工桶","environment":"居民楼旁"},'
+        '"confidence":0.9}],"question":"","answer":"","needs_search":true}'
+    )
+    plan = dialogue_understanding.parse_plan(raw)
+    assert plan["risk_level"] == "high"
+    assert plan["issues"][0]["risk_level"] == "high"
+
+
+def test_planner_prompt_uses_subcategory_default_risk_not_environment_low_rule():
+    prompt = dialogue_understanding._planner_system_prompt()
+    assert "环境和其他为 low" not in prompt
+    assert "按小类默认风险" in prompt
 
 
 def test_planner_prompt_requires_one_information_point_and_no_default_location_question():
@@ -557,7 +572,7 @@ def test_complete_hazard_report_searches_and_offers_task(monkeypatch):
     async def collect():
         return [event async for event in assistant_graph.run_stream_events(
             message="消防栓和灭火器都老旧了，不能正常使用", history=[], slots={}, vision_summary="",
-            session_id="complete-report-test", user_id=None,
+            session_id=f"complete-report-test-{uuid.uuid4().hex}", user_id=None,
             selected_major_code="fire",
         )]
 

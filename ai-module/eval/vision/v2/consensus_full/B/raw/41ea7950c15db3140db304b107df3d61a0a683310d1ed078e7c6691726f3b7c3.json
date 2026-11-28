@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"structural_damage\", \"evidence\": \"楼房明显倾斜，底部结构受损，有救援人员在场\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "楼房明显倾斜，底部结构受损，有救援人员在场"
+  }
+}

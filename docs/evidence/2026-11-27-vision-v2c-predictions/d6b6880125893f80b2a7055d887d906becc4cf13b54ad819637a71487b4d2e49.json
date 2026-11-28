@@ -1,0 +1,27 @@
+{
+  "sha256": "d6b6880125893f80b2a7055d887d906becc4cf13b54ad819637a71487b4d2e49",
+  "file": "ELE0057.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯门开启后，轿厢内人员需由戴安全帽的工作人员拉扶跨出，疑似电梯故障停层导致人员被困或无法正常离开，存在夹伤、跌落等风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯门口及轿厢处\",\n  \"rectification\": [\n    \"立即联系电梯维保单位排查故障并确认平层、门锁及门机系统状态\",\n    \"困人救援应由持证专业人员操作，现场设置警示并防止无关人员靠近\",\n    \"修复后经检验合格方可恢复使用，并完善日常巡检记录\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯门开启后，轿厢内人员需由戴安全帽的工作人员拉扶跨出，疑似电梯故障停层导致人员被困或无法正常离开，存在夹伤、跌落等风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯门口及轿厢处",
+    "rectification": [
+      "立即联系电梯维保单位排查故障并确认平层、门锁及门机系统状态",
+      "困人救援应由持证专业人员操作，现场设置警示并防止无关人员靠近",
+      "修复后经检验合格方可恢复使用，并完善日常巡检记录"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

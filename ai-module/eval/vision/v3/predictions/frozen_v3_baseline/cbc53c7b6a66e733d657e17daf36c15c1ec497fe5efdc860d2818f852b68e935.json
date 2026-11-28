@@ -1,0 +1,26 @@
+{
+  "sha256": "cbc53c7b6a66e733d657e17daf36c15c1ec497fe5efdc860d2818f852b68e935",
+  "file": "elevator_inspection_1_cbc53c7b6a66.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_inspection\",\n  \"severity\": \"高\",\n  \"description\": \"电梯临时检验合格证已过有效期（标注至2013年9月1日），且标注仅限施工使用，底部紧急联系电话为空白，存在电梯超期未检及应急救援联络缺失风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内\",\n  \"rectification\": [\n    \"立即停用电梯，重新申报检验并取得有效合格证\",\n    \"在电梯内显著位置补充清晰的紧急救援联系电话\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_inspection",
+    "severity": "高",
+    "description": "电梯临时检验合格证已过有效期（标注至2013年9月1日），且标注仅限施工使用，底部紧急联系电话为空白，存在电梯超期未检及应急救援联络缺失风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内",
+    "rectification": [
+      "立即停用电梯，重新申报检验并取得有效合格证",
+      "在电梯内显著位置补充清晰的紧急救援联系电话"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

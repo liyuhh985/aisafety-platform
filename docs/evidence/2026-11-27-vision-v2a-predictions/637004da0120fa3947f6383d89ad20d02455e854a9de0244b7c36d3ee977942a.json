@@ -1,0 +1,26 @@
+{
+  "sha256": "637004da0120fa3947f6383d89ad20d02455e854a9de0244b7c36d3ee977942a",
+  "file": "ILL0095.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"两名工人站在叠放的模板、木方上搬运长木杆，作业面边缘未见临边防护，工人未系安全带，存在高处坠落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"在建建筑楼层作业面\",\n  \"rectification\": [\n    \"立即停止无防护高处作业，在楼层边缘设置防护栏杆和安全网\",\n    \"为作业人员配备并正确系挂安全带，清理作业面并规范材料堆放\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "两名工人站在叠放的模板、木方上搬运长木杆，作业面边缘未见临边防护，工人未系安全带，存在高处坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "在建建筑楼层作业面",
+    "rectification": [
+      "立即停止无防护高处作业，在楼层边缘设置防护栏杆和安全网",
+      "为作业人员配备并正确系挂安全带，清理作业面并规范材料堆放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "dfee8245aa6d12358c5c83ded822d5cb9a02e3999a8bd009a1ffe6f35671b115",
+  "file": "FIR0005.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"路边消火栓严重锈蚀，出水口盖缺失且持续漏水，设施已明显损坏，影响消防应急使用，并造成水资源浪费及周边积水结冰风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁绿地内的消火栓\",\n  \"rectification\": [\n    \"立即关阀止漏并更换缺失的出水口盖\",\n    \"对锈蚀消火栓进行检修、除锈防腐或整体更换\",\n    \"将该消火栓纳入消防设施定期巡检维护\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "路边消火栓严重锈蚀，出水口盖缺失且持续漏水，设施已明显损坏，影响消防应急使用，并造成水资源浪费及周边积水结冰风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁绿地内的消火栓",
+    "rectification": [
+      "立即关阀止漏并更换缺失的出水口盖",
+      "对锈蚀消火栓进行检修、除锈防腐或整体更换",
+      "将该消火栓纳入消防设施定期巡检维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"manhole_damage\", \"evidence\": \"井盖掀开敞露井口，周边堆放碎砖块\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "evidence": "井盖掀开敞露井口，周边堆放碎砖块"
+  }
+}

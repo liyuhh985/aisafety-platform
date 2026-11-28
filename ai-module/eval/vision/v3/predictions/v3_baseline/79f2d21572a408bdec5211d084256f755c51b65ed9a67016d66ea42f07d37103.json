@@ -1,0 +1,30 @@
+{
+  "sha256": "79f2d21572a408bdec5211d084256f755c51b65ed9a67016d66ea42f07d37103",
+  "file": "neg_08_79f2d21572a4.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"confined_space\",\n  \"severity\": \"高\",\n  \"description\": \"井口敞开进行有限空间作业，周边未见连续围挡、警示标志和监护人员，通风管及三脚架已架设；存在人员坠落、中毒窒息及行人误入风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"铁路旁打开的检查井/污水井作业点\",\n  \"rectification\": [\n    \"立即在井口周边设置连续硬质围挡、反光警示和夜间警示灯\",\n    \"严格执行有限空间作业审批，持续通风并检测氧气及有毒有害气体，安排专人监护\",\n    \"将发电机移至井口上风向，做好电缆架空、防漏电和防绊倒措施\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\",\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "confined_space",
+    "severity": "高",
+    "description": "井口敞开进行有限空间作业，周边未见连续围挡、警示标志和监护人员，通风管及三脚架已架设；存在人员坠落、中毒窒息及行人误入风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "铁路旁打开的检查井/污水井作业点",
+    "rectification": [
+      "立即在井口周边设置连续硬质围挡、反光警示和夜间警示灯",
+      "严格执行有限空间作业审批，持续通风并检测氧气及有毒有害气体，安排专人监护",
+      "将发电机移至井口上风向，做好电缆架空、防漏电和防绊倒措施"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

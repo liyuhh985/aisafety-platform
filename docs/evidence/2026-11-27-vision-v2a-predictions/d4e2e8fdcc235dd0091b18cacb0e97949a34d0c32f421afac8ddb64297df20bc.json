@@ -1,0 +1,27 @@
+{
+  "sha256": "d4e2e8fdcc235dd0091b18cacb0e97949a34d0c32f421afac8ddb64297df20bc",
+  "file": "EXP0003.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"铺装路面上有一根黄色线缆外皮破损，内部多根线芯外露，且线路直接横跨行人通行区域，存在触电、漏电及行人绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"地砖铺装路面中部，线缆横跨通行区域\",\n  \"rectification\": [\n    \"立即设置警戒并断电排查，确认线缆是否带电及产权单位\",\n    \"对破损线缆进行修复、更换或穿管保护，并固定于安全位置\",\n    \"清理地面废弃线缆，恢复路面平整，防止行人绊倒\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "铺装路面上有一根黄色线缆外皮破损，内部多根线芯外露，且线路直接横跨行人通行区域，存在触电、漏电及行人绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "地砖铺装路面中部，线缆横跨通行区域",
+    "rectification": [
+      "立即设置警戒并断电排查，确认线缆是否带电及产权单位",
+      "对破损线缆进行修复、更换或穿管保护，并固定于安全位置",
+      "清理地面废弃线缆，恢复路面平整，防止行人绊倒"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"distribution_box_fault\", \"evidence\": \"配电箱柜门未闭，内部带电部件暴露\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "evidence": "配电箱柜门未闭，内部带电部件暴露"
+  }
+}

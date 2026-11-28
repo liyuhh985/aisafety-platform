@@ -1,0 +1,29 @@
+{
+  "sha256": "a627ac2a34ed766fe4d204bcb4f59b44c434b4de6427670a7324da71f755bfe3",
+  "file": "no_barrier_3_a627ac2a34ed.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_barrier\",\"severity\":\"高\",\"description\":\"道路旁绿色施工围挡大面积倾斜、塌陷并侵入车行道，支撑斜杆已失效，围挡未形成有效连续屏障，可能倒塌砸伤行人车辆或导致避让事故。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路旁施工围挡中段，临近机动车道\",\"rectification\":[\"立即拆除或修复倾斜倒塌的围挡，恢复连续有效的硬质隔离屏障\",\"在围挡外侧设置锥桶、警示牌及临时防护，禁止人员车辆靠近\",\"全面检查围挡基础、支撑和连接件，加固后方可继续使用\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "道路旁绿色施工围挡大面积倾斜、塌陷并侵入车行道，支撑斜杆已失效，围挡未形成有效连续屏障，可能倒塌砸伤行人车辆或导致避让事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁施工围挡中段，临近机动车道",
+    "rectification": [
+      "立即拆除或修复倾斜倒塌的围挡，恢复连续有效的硬质隔离屏障",
+      "在围挡外侧设置锥桶、警示牌及临时防护，禁止人员车辆靠近",
+      "全面检查围挡基础、支撑和连接件，加固后方可继续使用"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

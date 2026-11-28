@@ -76,7 +76,7 @@ def test_indoor_scope_does_not_change_classification_or_block_the_flow(monkeypat
     所以这里补全槽位（describe 也填上），让"不挡流程"这条断言断言的是它本身，
     而不是靠危险否决兜出来的。
     """
-    slots = {"source": "管道", "describe": "老化"}
+    slots = {"leak_sign": "管道老化但暂未见泄漏", "ventilation": "户内通风一般"}
     plan = _plan(
         premises_scope="indoor",
         issues=[{"major_code": "utility", "subcategory_code": "gas_leak", "slots": slots}],

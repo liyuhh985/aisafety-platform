@@ -1,0 +1,27 @@
+{
+  "sha256": "50b5fb465df68219b489ea2cc21dec43d2f21b132b265029786da21e5f6197a4",
+  "file": "hazmat_storage_1_50b5fb465df6.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"蓝色化工桶横倒，桶周及地面有液体痕迹，现场两名穿黄色防化服人员正在处置，疑似危化品泄漏。可能造成中毒、腐蚀、燃爆或环境污染，需立即隔离并专业处置。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑物卷帘门旁地面，白色车辆前方\",\n  \"rectification\": [\n    \"立即设置警戒区并疏散无关人员，禁止烟火和接触泄漏物\",\n    \"由专业应急人员着防护装备开展堵漏、吸附和收集，防止液体流入排水口\",\n    \"核查桶内化学品性质及存储运输合规性，妥善转运处置并清洗污染地面\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "蓝色化工桶横倒，桶周及地面有液体痕迹，现场两名穿黄色防化服人员正在处置，疑似危化品泄漏。可能造成中毒、腐蚀、燃爆或环境污染，需立即隔离并专业处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑物卷帘门旁地面，白色车辆前方",
+    "rectification": [
+      "立即设置警戒区并疏散无关人员，禁止烟火和接触泄漏物",
+      "由专业应急人员着防护装备开展堵漏、吸附和收集，防止液体流入排水口",
+      "核查桶内化学品性质及存储运输合规性，妥善转运处置并清洗污染地面"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

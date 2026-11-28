@@ -1,0 +1,27 @@
+{
+  "sha256": "c252a3d45b0f3e36adbcea2f68eb72ba3b2a4847b16f63921990fdbb142dac90",
+  "file": "blind_path_occupied_2_c252a3d45b0f.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"中\",\n  \"description\": \"夜间一辆白色轿车停放在人行道上，车身及后轮明显占用黄色盲道，导致视障人士通行受阻，存在绊倒、碰撞风险，同时也影响行人正常通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道盲道处，白色轿车后方及右侧\",\n  \"rectification\": [\n    \"劝离违停车辆，恢复盲道畅通\",\n    \"在人行道出入口增设隔离桩或禁停设施，防止车辆驶入\",\n    \"加强夜间巡查与违停执法，设置禁停标识\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "夜间一辆白色轿车停放在人行道上，车身及后轮明显占用黄色盲道，导致视障人士通行受阻，存在绊倒、碰撞风险，同时也影响行人正常通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道盲道处，白色轿车后方及右侧",
+    "rectification": [
+      "劝离违停车辆，恢复盲道畅通",
+      "在人行道出入口增设隔离桩或禁停设施，防止车辆驶入",
+      "加强夜间巡查与违停执法，设置禁停标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

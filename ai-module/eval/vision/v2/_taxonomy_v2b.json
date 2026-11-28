@@ -1,0 +1,182 @@
+[
+  {
+    "code": "traffic",
+    "label": "交通与通行",
+    "subcategories": [
+      {
+        "code": "road_occupancy",
+        "label": "占道经营/乱堆乱放"
+      },
+      {
+        "code": "vehicle_occupancy",
+        "label": "车辆占道"
+      },
+      {
+        "code": "blind_path_occupied",
+        "label": "盲道占用"
+      },
+      {
+        "code": "traffic_facility_damage",
+        "label": "交通设施损坏"
+      }
+    ]
+  },
+  {
+    "code": "municipal",
+    "label": "市政设施",
+    "subcategories": [
+      {
+        "code": "manhole_damage",
+        "label": "井盖缺失/破损"
+      },
+      {
+        "code": "road_surface_collapse",
+        "label": "路面塌陷"
+      },
+      {
+        "code": "drainage_flood",
+        "label": "排水/积水"
+      },
+      {
+        "code": "street_light_pole",
+        "label": "路灯/线杆损坏"
+      },
+      {
+        "code": "tree_fall_hazard",
+        "label": "树木倒伏/断枝风险"
+      }
+    ]
+  },
+  {
+    "code": "fire",
+    "label": "消防安全",
+    "subcategories": [
+      {
+        "code": "fire_lane_blocked",
+        "label": "消防通道占用"
+      },
+      {
+        "code": "fire_equipment_fault",
+        "label": "消防设施故障"
+      },
+      {
+        "code": "ebike_hazard",
+        "label": "电动自行车违规停放/充电"
+      }
+    ]
+  },
+  {
+    "code": "building",
+    "label": "建筑安全",
+    "subcategories": [
+      {
+        "code": "dangerous_building",
+        "label": "危房"
+      },
+      {
+        "code": "falling_object",
+        "label": "高空坠物"
+      },
+      {
+        "code": "illegal_structure",
+        "label": "违规搭建"
+      }
+    ]
+  },
+  {
+    "code": "utility",
+    "label": "电气与燃气",
+    "subcategories": [
+      {
+        "code": "exposed_wire",
+        "label": "裸露/老化电线"
+      },
+      {
+        "code": "distribution_box_fault",
+        "label": "配电设施故障"
+      },
+      {
+        "code": "illegal_wiring",
+        "label": "私拉乱接"
+      },
+      {
+        "code": "gas_leak",
+        "label": "燃气泄漏"
+      },
+      {
+        "code": "gas_pipe_aging",
+        "label": "燃气管道老化"
+      }
+    ]
+  },
+  {
+    "code": "construction",
+    "label": "施工安全",
+    "subcategories": [
+      {
+        "code": "no_barrier",
+        "label": "未设置围挡"
+      },
+      {
+        "code": "no_warning",
+        "label": "无安全警示"
+      },
+      {
+        "code": "scaffold_guard",
+        "label": "脚手架/临边防护"
+      },
+      {
+        "code": "deep_pit",
+        "label": "深基坑风险"
+      },
+      {
+        "code": "temporary_power",
+        "label": "施工临时用电"
+      },
+      {
+        "code": "confined_space",
+        "label": "有限空间作业风险"
+      }
+    ]
+  },
+  {
+    "code": "elevator_special",
+    "label": "电梯与特种设备",
+    "subcategories": [
+      {
+        "code": "elevator_trapped",
+        "label": "电梯困人"
+      },
+      {
+        "code": "elevator_stopped",
+        "label": "停运/异响"
+      },
+      {
+        "code": "elevator_inspection",
+        "label": "超期未检"
+      }
+    ]
+  },
+  {
+    "code": "environment_other",
+    "label": "环境与其他",
+    "subcategories": [
+      {
+        "code": "garbage_pile",
+        "label": "垃圾堆积"
+      },
+      {
+        "code": "sewage_odor",
+        "label": "污水/异味"
+      },
+      {
+        "code": "hazmat_storage",
+        "label": "危化品/易燃易爆违规存运"
+      },
+      {
+        "code": "other",
+        "label": "其他"
+      }
+    ]
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "sha256": "0484709e13eb2176a261724ea97705dc8426b3785da070d1e0a018da0f478c5b",
+  "file": "neg_15_0484709e13eb.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"temporary_power\",\n  \"severity\": \"高\",\n  \"description\": \"施工现场基坑底部，临时电缆/电线拖地并靠近积水沟槽，未架空或穿管保护；作业面积水未排除，存在漏电、触电风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"基坑底部工人作业区及右侧积水沟槽附近\",\n  \"rectification\": [\"将临时用电线路架空或穿管保护，严禁拖地浸水\", \"检查并确保漏电保护装置有效，落实一机一闸一漏保\", \"清理作业面积水，保持地面和通道干燥\"],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "temporary_power",
+    "severity": "高",
+    "description": "施工现场基坑底部，临时电缆/电线拖地并靠近积水沟槽，未架空或穿管保护；作业面积水未排除，存在漏电、触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "基坑底部工人作业区及右侧积水沟槽附近",
+    "rectification": [
+      "将临时用电线路架空或穿管保护，严禁拖地浸水",
+      "检查并确保漏电保护装置有效，落实一机一闸一漏保",
+      "清理作业面积水，保持地面和通道干燥"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

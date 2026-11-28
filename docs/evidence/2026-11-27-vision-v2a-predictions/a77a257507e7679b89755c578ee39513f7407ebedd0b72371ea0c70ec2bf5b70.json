@@ -1,0 +1,27 @@
+{
+  "sha256": "a77a257507e7679b89755c578ee39513f7407ebedd0b72371ea0c70ec2bf5b70",
+  "file": "SEW0008.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"河道水面漂浮大量绿藻、杂物和垃圾，水体浑浊发绿，岸线有枯枝和白色管线；可能造成水体富营养化、异味和蚊蝇滋生，并影响河道过流与周边环境卫生。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"河道/水渠水面及近岸区域\",\n  \"rectification\": [\n    \"组织清理水面漂浮物、岸线垃圾和枯枝\",\n    \"排查上游排污口及雨污混接，落实截污\",\n    \"加强河道日常保洁、水质监测和防蚊蝇消杀\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "河道水面漂浮大量绿藻、杂物和垃圾，水体浑浊发绿，岸线有枯枝和白色管线；可能造成水体富营养化、异味和蚊蝇滋生，并影响河道过流与周边环境卫生。",
+    "reason_if_no_hazard": "",
+    "location_hint": "河道/水渠水面及近岸区域",
+    "rectification": [
+      "组织清理水面漂浮物、岸线垃圾和枯枝",
+      "排查上游排污口及雨污混接，落实截污",
+      "加强河道日常保洁、水质监测和防蚊蝇消杀"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

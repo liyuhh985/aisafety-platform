@@ -1,0 +1,27 @@
+{
+  "sha256": "a46873c76508bd70e65bf10b7e8508eaa9444dc4eff214f513d9d4e99b1e70d0",
+  "file": "ILL0053.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"高\",\n  \"description\": \"宿舍墙面插座处私拉乱接多条电线，多个插线板串联并悬垂使用，线路杂乱且负荷集中，存在触电、短路及电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"宿舍墙面插座及周边床铺区域\",\n  \"rectification\": [\n    \"拆除私拉乱接线路和串联插线板，由专业人员规范布线\",\n    \"增设固定插座并合理分配用电负荷，禁止使用大功率违规电器\",\n    \"检查线路及漏电保护装置，定期开展宿舍用电安全排查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "宿舍墙面插座处私拉乱接多条电线，多个插线板串联并悬垂使用，线路杂乱且负荷集中，存在触电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "宿舍墙面插座及周边床铺区域",
+    "rectification": [
+      "拆除私拉乱接线路和串联插线板，由专业人员规范布线",
+      "增设固定插座并合理分配用电负荷，禁止使用大功率违规电器",
+      "检查线路及漏电保护装置，定期开展宿舍用电安全排查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

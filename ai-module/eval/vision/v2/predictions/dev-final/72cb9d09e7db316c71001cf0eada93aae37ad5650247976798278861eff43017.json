@@ -1,0 +1,27 @@
+{
+  "sha256": "72cb9d09e7db316c71001cf0eada93aae37ad5650247976798278861eff43017",
+  "file": "STR0080.png",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"人行道及绿篱边堆放大量垃圾袋、废弃木椅和杂物，占用部分通行空间，破损木料存在绊倒、划伤风险，并可能滋生蚊虫、影响环境卫生。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑入口旁人行道与绿篱交界处\",\n  \"rectification\": [\n    \"及时清运垃圾和废弃家具，恢复人行道通畅\",\n    \"在该区域设置规范垃圾收集点或禁倒垃圾提示\",\n    \"加强日常巡查，发现乱堆乱放及时清理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "人行道及绿篱边堆放大量垃圾袋、废弃木椅和杂物，占用部分通行空间，破损木料存在绊倒、划伤风险，并可能滋生蚊虫、影响环境卫生。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑入口旁人行道与绿篱交界处",
+    "rectification": [
+      "及时清运垃圾和废弃家具，恢复人行道通畅",
+      "在该区域设置规范垃圾收集点或禁倒垃圾提示",
+      "加强日常巡查，发现乱堆乱放及时清理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

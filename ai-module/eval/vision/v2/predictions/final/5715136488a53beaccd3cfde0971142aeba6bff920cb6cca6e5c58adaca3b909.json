@@ -1,0 +1,26 @@
+{
+  "sha256": "5715136488a53beaccd3cfde0971142aeba6bff920cb6cca6e5c58adaca3b909",
+  "file": "VEH0004.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"多辆机动车停放在临街商铺前人行道及路缘区域，挤占行人通行空间，行人可能被迫绕行至车行道，存在碰撞和通行安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街商铺前人行道及路缘\",\n  \"rectification\": [\n    \"清理违规停放车辆，恢复人行道正常通行功能\",\n    \"完善禁停标志和停车泊位，加强日常巡查与执法\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "多辆机动车停放在临街商铺前人行道及路缘区域，挤占行人通行空间，行人可能被迫绕行至车行道，存在碰撞和通行安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街商铺前人行道及路缘",
+    "rectification": [
+      "清理违规停放车辆，恢复人行道正常通行功能",
+      "完善禁停标志和停车泊位，加强日常巡查与执法"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

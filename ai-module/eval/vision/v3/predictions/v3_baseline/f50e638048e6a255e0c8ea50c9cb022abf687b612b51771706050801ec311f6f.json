@@ -1,0 +1,30 @@
+{
+  "sha256": "f50e638048e6a255e0c8ea50c9cb022abf687b612b51771706050801ec311f6f",
+  "file": "ebike_hazard_3_f50e638048e6.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"ebike_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"电动车停靠建筑外墙，黄色电线从高处窗户垂落至车踏板充电器，属飞线充电；线路长期暴露、易磨损短路，可能引发火灾或触电，且靠近灭火器放置点。上方外窗台铁架及花盆杂物悬空，存在坠落伤人风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙窗下、灭火器放置点旁的电动车停放处及上方外窗台\",\n  \"rectification\": [\n    \"立即拔除飞线并停止充电，将电动车移至集中充电棚或规范充电桩充电。\",\n    \"清理并固定上方外窗台花盆、杂物，检修锈蚀支架，防止高空坠物。\",\n    \"由物业或社区排查私拉电线，增设规范充电设施并加强巡查宣传。\"\n  ],\n  \"secondary_subcategories\": [\n    \"illegal_wiring\",\n    \"falling_object\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "ebike_hazard",
+    "severity": "高",
+    "description": "电动车停靠建筑外墙，黄色电线从高处窗户垂落至车踏板充电器，属飞线充电；线路长期暴露、易磨损短路，可能引发火灾或触电，且靠近灭火器放置点。上方外窗台铁架及花盆杂物悬空，存在坠落伤人风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙窗下、灭火器放置点旁的电动车停放处及上方外窗台",
+    "rectification": [
+      "立即拔除飞线并停止充电，将电动车移至集中充电棚或规范充电桩充电。",
+      "清理并固定上方外窗台花盆、杂物，检修锈蚀支架，防止高空坠物。",
+      "由物业或社区排查私拉电线，增设规范充电设施并加强巡查宣传。"
+    ],
+    "secondary_subcategories": [
+      "illegal_wiring",
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

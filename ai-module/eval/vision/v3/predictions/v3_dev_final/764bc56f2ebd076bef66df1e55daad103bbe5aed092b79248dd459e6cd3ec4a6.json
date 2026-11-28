@@ -1,0 +1,30 @@
+{
+  "sha256": "764bc56f2ebd076bef66df1e55daad103bbe5aed092b79248dd459e6cd3ec4a6",
+  "file": "no_warning_3_764bc56f2ebd.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"道路被开挖成长条深沟，沟壁近乎垂直且土体松散，沟底有积水，临边未见护栏、围挡和警示标志，附近有人员活动，存在人员坠落、溺水及边坡坍塌风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路开挖沟槽施工处（挖掘机旁）\",\"rectification\":[\"立即沿沟槽设置连续硬质围挡和警示标志，夜间加设警示灯\",\"对沟槽边坡进行支护或放坡，及时排除沟底积水\",\"安排专人巡查看护，禁止行人靠近\"],\"secondary_subcategories\":[\"no_barrier\",\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路被开挖成长条深沟，沟壁近乎垂直且土体松散，沟底有积水，临边未见护栏、围挡和警示标志，附近有人员活动，存在人员坠落、溺水及边坡坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路开挖沟槽施工处（挖掘机旁）",
+    "rectification": [
+      "立即沿沟槽设置连续硬质围挡和警示标志，夜间加设警示灯",
+      "对沟槽边坡进行支护或放坡，及时排除沟底积水",
+      "安排专人巡查看护，禁止行人靠近"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "b298a5505ad00713e87158b3304fdc4a715239953dbd48a765c00cfddaf79f36",
+  "file": "gas_pipe_aging_4_b298a5505ad0.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"gas_pipe_aging\",\"severity\":\"中\",\"description\":\"管道及卡箍、螺栓严重锈蚀，漆层剥落、局部起皮，可能导致管壁减薄、连接失效或介质渗漏，存在安全风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"图片中心管道连接处及抱箍部位\",\"rectification\":[\"对锈蚀管道及卡箍进行除锈、防腐处理\",\"检测管壁厚度和密封性能，必要时更换锈蚀部件\",\"设置管道标识并纳入定期巡检维护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "管道及卡箍、螺栓严重锈蚀，漆层剥落、局部起皮，可能导致管壁减薄、连接失效或介质渗漏，存在安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "图片中心管道连接处及抱箍部位",
+    "rectification": [
+      "对锈蚀管道及卡箍进行除锈、防腐处理",
+      "检测管壁厚度和密封性能，必要时更换锈蚀部件",
+      "设置管道标识并纳入定期巡检维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,28 @@
+{
+  "sha256": "d4e2e8fdcc235dd0091b18cacb0e97949a34d0c32f421afac8ddb64297df20bc",
+  "file": "EXP0003.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"人行道地砖上横跨一根黄色线缆，线缆中部外皮破损并分叉，内部导线裸露，且地面有积雪水迹，行人踩踏或接触可能引发触电、绊倒事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道地砖上，线缆破损处\",\n  \"rectification\": [\n    \"立即对破损线缆断电排查，确认是否带电并修复或更换\",\n    \"若为废弃线缆应彻底拆除，不得横跨人行通道\",\n    \"在修复前设置警示围挡，防止行人触碰或踩踏\",\n    \"排查是否存在私拉乱接，规范线缆敷设路径\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "人行道地砖上横跨一根黄色线缆，线缆中部外皮破损并分叉，内部导线裸露，且地面有积雪水迹，行人踩踏或接触可能引发触电、绊倒事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道地砖上，线缆破损处",
+    "rectification": [
+      "立即对破损线缆断电排查，确认是否带电并修复或更换",
+      "若为废弃线缆应彻底拆除，不得横跨人行通道",
+      "在修复前设置警示围挡，防止行人触碰或踩踏",
+      "排查是否存在私拉乱接，规范线缆敷设路径"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

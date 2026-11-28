@@ -1,0 +1,27 @@
+{
+  "sha256": "d993a5c66fff3f1d34a266ad5269c803bd16bb43c857415df8d2c83f7f019fe2",
+  "file": "fire_lane_blocked_1_d993a5c66fff.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"小区楼间通道两侧及路面随意停放多辆汽车，左侧银色轿车占用通行路面，导致剩余通行宽度不足，行人及应急车辆通行受阻，易发生剐蹭并延误救援。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"小区楼间通道两侧及路面\",\"rectification\":[\"清理占用通行路面的违停车辆，恢复通道宽度\",\"施划禁停线和停车泊位，引导车辆规范停放\",\"加强日常巡查和违停劝导，保障行人与应急通行\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "小区楼间通道两侧及路面随意停放多辆汽车，左侧银色轿车占用通行路面，导致剩余通行宽度不足，行人及应急车辆通行受阻，易发生剐蹭并延误救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区楼间通道两侧及路面",
+    "rectification": [
+      "清理占用通行路面的违停车辆，恢复通道宽度",
+      "施划禁停线和停车泊位，引导车辆规范停放",
+      "加强日常巡查和违停劝导，保障行人与应急通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

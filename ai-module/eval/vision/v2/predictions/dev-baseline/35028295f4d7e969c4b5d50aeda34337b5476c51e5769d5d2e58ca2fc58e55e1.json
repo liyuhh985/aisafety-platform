@@ -1,0 +1,29 @@
+{
+  "sha256": "35028295f4d7e969c4b5d50aeda34337b5476c51e5769d5d2e58ca2fc58e55e1",
+  "file": "SEW0006.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"中\",\"description\":\"沟渠内水体发黑浑浊、流动性差，水面及岸坡散落塑料、泡沫等垃圾，存在黑臭水体与垃圾污染，易滋生蚊虫并影响周边环境；临水岸坡无警示防护，存在人员滑落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"郊外排水沟渠，靠近电线杆和农田一侧\",\"rectification\":[\"清理水面漂浮物及岸坡散落垃圾，清淤疏浚，保持沟渠通畅。\",\"排查沿线排污口并实施截污纳管，防止污水直排。\",\"加强日常巡查与水质监测，必要时设置安全警示标识和防护设施。\"],\"secondary_subcategories\":[\"garbage_pile\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "沟渠内水体发黑浑浊、流动性差，水面及岸坡散落塑料、泡沫等垃圾，存在黑臭水体与垃圾污染，易滋生蚊虫并影响周边环境；临水岸坡无警示防护，存在人员滑落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "郊外排水沟渠，靠近电线杆和农田一侧",
+    "rectification": [
+      "清理水面漂浮物及岸坡散落垃圾，清淤疏浚，保持沟渠通畅。",
+      "排查沿线排污口并实施截污纳管，防止污水直排。",
+      "加强日常巡查与水质监测，必要时设置安全警示标识和防护设施。"
+    ],
+    "secondary_subcategories": [
+      "garbage_pile"
+    ]
+  },
+  "error": ""
+}

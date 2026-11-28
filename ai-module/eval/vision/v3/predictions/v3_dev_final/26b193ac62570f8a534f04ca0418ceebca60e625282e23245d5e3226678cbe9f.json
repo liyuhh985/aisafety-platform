@@ -1,0 +1,29 @@
+{
+  "sha256": "26b193ac62570f8a534f04ca0418ceebca60e625282e23245d5e3226678cbe9f",
+  "file": "tree_fall_hazard_3_26b193ac6257.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"道路被倒伏大树横跨阻断，粗大枝干及散落树枝占据车道，且疑似有杆线倒伏，车辆行人通行受阻，存在碰撞、绊倒及次生事故风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"林区道路下坡路段，倒伏树木横跨路面处\",\n  \"rectification\": [\n    \"立即设置警戒线、反光锥桶和警示牌，禁止车辆行人通行\",\n    \"安排园林、电力等专业人员清理倒树并检查受损线杆线路\",\n    \"清理完成前发布绕行提示，恢复通行前确认路面及上方设施安全\"\n  ],\n  \"secondary_subcategories\": [\n    \"street_light_pole\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "道路被倒伏大树横跨阻断，粗大枝干及散落树枝占据车道，且疑似有杆线倒伏，车辆行人通行受阻，存在碰撞、绊倒及次生事故风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "林区道路下坡路段，倒伏树木横跨路面处",
+    "rectification": [
+      "立即设置警戒线、反光锥桶和警示牌，禁止车辆行人通行",
+      "安排园林、电力等专业人员清理倒树并检查受损线杆线路",
+      "清理完成前发布绕行提示，恢复通行前确认路面及上方设施安全"
+    ],
+    "secondary_subcategories": [
+      "street_light_pole"
+    ]
+  },
+  "error": ""
+}

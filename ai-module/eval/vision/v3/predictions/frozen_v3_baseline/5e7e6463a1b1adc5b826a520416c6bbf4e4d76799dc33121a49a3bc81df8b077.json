@@ -1,0 +1,27 @@
+{
+  "sha256": "5e7e6463a1b1adc5b826a520416c6bbf4e4d76799dc33121a49a3bc81df8b077",
+  "file": "illegal_structure_1_5e7e6463a1b1.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"中\",\"description\":\"巷道上方及建筑外墙存在大量杂乱、低垂的黑色线缆，部分成圈盘绕，疑似私拉乱接且缺乏规范固定，易发生短路、漏电、火灾或线缆坠落伤人。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"老旧居民楼外墙及巷道上方\",\"rectification\":[\"清理废弃线缆，梳理并规范固定在用线路\",\"由供电或通信运营单位核查线路权属及绝缘状况，杜绝私拉乱接\",\"对低垂线缆加装保护套管并抬高至安全高度，设置警示\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "巷道上方及建筑外墙存在大量杂乱、低垂的黑色线缆，部分成圈盘绕，疑似私拉乱接且缺乏规范固定，易发生短路、漏电、火灾或线缆坠落伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "老旧居民楼外墙及巷道上方",
+    "rectification": [
+      "清理废弃线缆，梳理并规范固定在用线路",
+      "由供电或通信运营单位核查线路权属及绝缘状况，杜绝私拉乱接",
+      "对低垂线缆加装保护套管并抬高至安全高度，设置警示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

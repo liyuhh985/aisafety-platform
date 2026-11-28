@@ -1,0 +1,27 @@
+{
+  "sha256": "544f3ccf54dd2aa84d7fa06619867b6a8d9f2b5aecc32800fee1703012915cc0",
+  "file": "road_surface_collapse_2_544f3ccf54dd.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"城市道路中央出现大面积不规则塌陷坑洞，深度较大，边缘破损严重，坑内有机械/设施坠落，周边未见围挡警示，行人在附近通行，存在人员车辆坠落、二次坍塌及地下管线受损风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路中央车道塌陷坑洞处\",\"rectification\":[\"立即封闭塌陷区域，设置连续围挡和醒目警示标志，疏散周边行人车辆\",\"联系市政、应急、管线等单位勘查塌陷原因及地下管线受损情况\",\"制定回填加固和路面修复方案，修复后检测周边路基并验收\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "城市道路中央出现大面积不规则塌陷坑洞，深度较大，边缘破损严重，坑内有机械/设施坠落，周边未见围挡警示，行人在附近通行，存在人员车辆坠落、二次坍塌及地下管线受损风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路中央车道塌陷坑洞处",
+    "rectification": [
+      "立即封闭塌陷区域，设置连续围挡和醒目警示标志，疏散周边行人车辆",
+      "联系市政、应急、管线等单位勘查塌陷原因及地下管线受损情况",
+      "制定回填加固和路面修复方案，修复后检测周边路基并验收"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

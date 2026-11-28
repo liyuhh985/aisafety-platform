@@ -1,0 +1,27 @@
+{
+  "sha256": "d55af9e73abc9a80a4625c6ada17b90e6a7b210c2bfe20b85c83b5a02b6ccb58",
+  "file": "neg_27_d55af9e73abc.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"消火栓接口及阀门严重锈蚀、污损，接口中心疑似破损或密封失效，且水带接头未处于正常连接备用状态，火灾时可能无法正常出水，影响初期灭火。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"消火栓箱内消火栓接口处\",\n  \"rectification\": [\n    \"更换锈蚀、损坏的消火栓接口和阀门，确保密封完好、启闭正常。\",\n    \"将消防水带与接口规范连接或按规定放置，确保紧急时可直接使用。\",\n    \"开展消防设施定期巡检、试水放水测试并做好维保记录。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "消火栓接口及阀门严重锈蚀、污损，接口中心疑似破损或密封失效，且水带接头未处于正常连接备用状态，火灾时可能无法正常出水，影响初期灭火。",
+    "reason_if_no_hazard": "",
+    "location_hint": "消火栓箱内消火栓接口处",
+    "rectification": [
+      "更换锈蚀、损坏的消火栓接口和阀门，确保密封完好、启闭正常。",
+      "将消防水带与接口规范连接或按规定放置，确保紧急时可直接使用。",
+      "开展消防设施定期巡检、试水放水测试并做好维保记录。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

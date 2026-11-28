@@ -1,0 +1,27 @@
+{
+  "sha256": "1ba9b4b3d6d51efd31e3c9ecd85f39b2b3131772b61c6de1a8f7abf9103de29f",
+  "file": "ROA0005.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"两辆流动餐车停放在建筑前道路及人行区域，占用通行空间，摊前人员聚集，易造成人车混行、拥堵和碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商业楼前人行道与道路交界处\",\n  \"rectification\": [\n    \"清理占道经营，恢复人行道和道路通行空间\",\n    \"引导摊贩进入划定区域规范经营\",\n    \"加强高峰时段巡查与秩序维护\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "两辆流动餐车停放在建筑前道路及人行区域，占用通行空间，摊前人员聚集，易造成人车混行、拥堵和碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商业楼前人行道与道路交界处",
+    "rectification": [
+      "清理占道经营，恢复人行道和道路通行空间",
+      "引导摊贩进入划定区域规范经营",
+      "加强高峰时段巡查与秩序维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

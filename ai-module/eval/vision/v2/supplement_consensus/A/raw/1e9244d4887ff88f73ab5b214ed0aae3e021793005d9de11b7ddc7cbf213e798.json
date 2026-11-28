@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"elevator_special\", \"subcategory\": \"elevator_stopped\", \"evidence\": \"电梯门被围栏挡住，标注例行保养中、禁止进入\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "evidence": "电梯门被围栏挡住，标注例行保养中、禁止进入"
+  }
+}

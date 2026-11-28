@@ -1,0 +1,29 @@
+{
+  "sha256": "41ea7950c15db3140db304b107df3d61a0a683310d1ed078e7c6691726f3b7c3",
+  "file": "FAC0073.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"画面中央红色多层建筑整体明显倾斜，结构失稳，存在倒塌风险；外挂空调、窗户等也可能坠落，现场有消防车和消防员处置。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中央红色多层建筑整体倾斜处\",\n  \"rectification\": [\n    \"立即疏散周边人员并设置警戒隔离区，禁止靠近倾斜建筑\",\n    \"组织专业机构进行结构安全评估，采取支撑加固或拆除措施\",\n    \"排查并清除外挂空调、窗户、阳台构件等高空坠物隐患\"\n  ],\n  \"secondary_subcategories\": [\n    \"falling_object\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "画面中央红色多层建筑整体明显倾斜，结构失稳，存在倒塌风险；外挂空调、窗户等也可能坠落，现场有消防车和消防员处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中央红色多层建筑整体倾斜处",
+    "rectification": [
+      "立即疏散周边人员并设置警戒隔离区，禁止靠近倾斜建筑",
+      "组织专业机构进行结构安全评估，采取支撑加固或拆除措施",
+      "排查并清除外挂空调、窗户、阳台构件等高空坠物隐患"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"environment_other\", \"subcategory\": \"garbage_pile\", \"evidence\": \"地面大面积生活垃圾堆积，散落各处\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "地面大面积生活垃圾堆积，散落各处"
+  }
+}

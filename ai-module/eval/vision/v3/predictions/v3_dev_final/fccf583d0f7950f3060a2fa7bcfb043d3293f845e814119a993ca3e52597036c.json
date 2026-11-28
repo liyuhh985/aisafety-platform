@@ -1,0 +1,27 @@
+{
+  "sha256": "fccf583d0f7950f3060a2fa7bcfb043d3293f845e814119a993ca3e52597036c",
+  "file": "neg_28_fccf583d0f79.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"消防栓箱内消火栓阀门顶部未见开启手轮，疑似缺失，导致消火栓无法正常开启使用；水带放置也不够规范。一旦发生火情将影响初期灭火，存在严重消防安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"消防栓箱内消火栓阀门处\",\n  \"rectification\": [\n    \"立即补齐匹配的消火栓手轮，并测试阀门启闭是否灵活有效\",\n    \"检查水带、水枪及接口是否齐全，按规范盘放水带\",\n    \"建立消防设施巡检维护制度，定期检查并记录，确保完好可用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "消防栓箱内消火栓阀门顶部未见开启手轮，疑似缺失，导致消火栓无法正常开启使用；水带放置也不够规范。一旦发生火情将影响初期灭火，存在严重消防安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "消防栓箱内消火栓阀门处",
+    "rectification": [
+      "立即补齐匹配的消火栓手轮，并测试阀门启闭是否灵活有效",
+      "检查水带、水枪及接口是否齐全，按规范盘放水带",
+      "建立消防设施巡检维护制度，定期检查并记录，确保完好可用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

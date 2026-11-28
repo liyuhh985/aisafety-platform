@@ -1,0 +1,27 @@
+{
+  "sha256": "26800524ddc3e0e8e6c7f2d54a2642ca71da1b22975cd86659fac2c246b9e3ae",
+  "file": "tree_fall_hazard_1_26800524ddc3.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"tree_fall_hazard\",\"severity\":\"高\",\"description\":\"步道前方有树木倒伏，粗大枝干横跨并阻断路面，行人通行受阻，存在绊倒、刮伤或被断枝砸伤风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"步道前方倒伏树木横跨处\",\"rectification\":[\"立即在倒伏树木两端设置警示标志并临时封闭该段步道\",\"组织园林或市政专业人员尽快切割、清运倒伏枝干，恢复通行\",\"对周边树木进行倾斜、枯枝和根系稳定性排查，消除同类风险\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "步道前方有树木倒伏，粗大枝干横跨并阻断路面，行人通行受阻，存在绊倒、刮伤或被断枝砸伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "步道前方倒伏树木横跨处",
+    "rectification": [
+      "立即在倒伏树木两端设置警示标志并临时封闭该段步道",
+      "组织园林或市政专业人员尽快切割、清运倒伏枝干，恢复通行",
+      "对周边树木进行倾斜、枯枝和根系稳定性排查，消除同类风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

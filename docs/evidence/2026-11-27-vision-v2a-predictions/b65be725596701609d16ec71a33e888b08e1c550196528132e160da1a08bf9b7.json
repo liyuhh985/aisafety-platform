@@ -1,0 +1,27 @@
+{
+  "sha256": "b65be725596701609d16ec71a33e888b08e1c550196528132e160da1a08bf9b7",
+  "file": "ROA0072.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"城市道路发生大面积塌陷，形成深坑，坑内有水流冲刷涌出，路面结构严重破坏。虽已设置警戒线，仍存在人员车辆坠落、次生坍塌及地下管线损坏风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中央城市道路塌陷区域\",\n  \"rectification\": [\n    \"立即扩大警戒范围并封闭现场，疏散周边人员车辆\",\n    \"组织市政、管线单位排查抢修，控制涌水并加固塌陷坑\",\n    \"查明塌陷原因，回填加固后恢复路面并开展周边监测\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "城市道路发生大面积塌陷，形成深坑，坑内有水流冲刷涌出，路面结构严重破坏。虽已设置警戒线，仍存在人员车辆坠落、次生坍塌及地下管线损坏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中央城市道路塌陷区域",
+    "rectification": [
+      "立即扩大警戒范围并封闭现场，疏散周边人员车辆",
+      "组织市政、管线单位排查抢修，控制涌水并加固塌陷坑",
+      "查明塌陷原因，回填加固后恢复路面并开展周边监测"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

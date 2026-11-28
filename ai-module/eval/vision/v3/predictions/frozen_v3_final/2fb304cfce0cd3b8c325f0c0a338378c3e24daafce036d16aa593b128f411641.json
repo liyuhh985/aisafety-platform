@@ -1,0 +1,27 @@
+{
+  "sha256": "2fb304cfce0cd3b8c325f0c0a338378c3e24daafce036d16aa593b128f411641",
+  "file": "elevator_stopped_2_2fb304cfce0c.png",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"中\",\n  \"description\": \"客梯1门前放置白色手推车，车上堆满黄色布料，遮挡电梯门并占用电梯厅通道，影响人员正常进出和电梯门正常关闭，紧急情况下可能妨碍疏散。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"客梯1门前/电梯厅\",\n  \"rectification\": [\n    \"立即移走手推车及黄色布料堆物，保持电梯门前和疏散通道畅通\",\n    \"加强日常巡查，禁止在电梯厅、通道内堆放物品\",\n    \"对保洁、运货等相关人员开展安全交底，明确不得遮挡电梯门\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "中",
+    "description": "客梯1门前放置白色手推车，车上堆满黄色布料，遮挡电梯门并占用电梯厅通道，影响人员正常进出和电梯门正常关闭，紧急情况下可能妨碍疏散。",
+    "reason_if_no_hazard": "",
+    "location_hint": "客梯1门前/电梯厅",
+    "rectification": [
+      "立即移走手推车及黄色布料堆物，保持电梯门前和疏散通道畅通",
+      "加强日常巡查，禁止在电梯厅、通道内堆放物品",
+      "对保洁、运货等相关人员开展安全交底，明确不得遮挡电梯门"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "199b4966604c28ca52ed5662780db4a44155e5753be2002ef761279baeaeb904",
+  "file": "neg_05_199b4966604c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"人行步道中央有一只疑似郊狼的野生犬科动物，可能对散步居民、儿童及宠物造成惊吓或攻击风险，尤其在人少时段风险更高。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行步道中央、绿化带之间\",\n  \"rectification\": [\n    \"在步道入口及周边设置野生动物出没警示牌，必要时临时封闭该路段\",\n    \"联系林业或野生动物管理部门进行诱捕、转移和处置\",\n    \"提醒居民勿投喂野生动物，牵好宠物并看护儿童\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "人行步道中央有一只疑似郊狼的野生犬科动物，可能对散步居民、儿童及宠物造成惊吓或攻击风险，尤其在人少时段风险更高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行步道中央、绿化带之间",
+    "rectification": [
+      "在步道入口及周边设置野生动物出没警示牌，必要时临时封闭该路段",
+      "联系林业或野生动物管理部门进行诱捕、转移和处置",
+      "提醒居民勿投喂野生动物，牵好宠物并看护儿童"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

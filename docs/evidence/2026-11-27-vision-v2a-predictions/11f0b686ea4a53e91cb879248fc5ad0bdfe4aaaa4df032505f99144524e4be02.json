@@ -1,0 +1,26 @@
+{
+  "sha256": "11f0b686ea4a53e91cb879248fc5ad0bdfe4aaaa4df032505f99144524e4be02",
+  "file": "TEM0036.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"exposed_wire\",\"severity\":\"高\",\"description\":\"室内墙面开槽处大量彩色导线裸露、缠绕、散乱，未见穿管保护，底部有碎屑。线路密集且线头外露，易发生短路、漏电、触电及火灾。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内墙面开槽处（红圈标注区域）\",\"rectification\":[\"立即断电，由持证电工按规范整理线路并穿管敷设、封闭线槽。\",\"清理现场碎屑，检查线路绝缘并加装漏电保护装置，验收合格后恢复使用。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "室内墙面开槽处大量彩色导线裸露、缠绕、散乱，未见穿管保护，底部有碎屑。线路密集且线头外露，易发生短路、漏电、触电及火灾。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙面开槽处（红圈标注区域）",
+    "rectification": [
+      "立即断电，由持证电工按规范整理线路并穿管敷设、封闭线槽。",
+      "清理现场碎屑，检查线路绝缘并加装漏电保护装置，验收合格后恢复使用。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

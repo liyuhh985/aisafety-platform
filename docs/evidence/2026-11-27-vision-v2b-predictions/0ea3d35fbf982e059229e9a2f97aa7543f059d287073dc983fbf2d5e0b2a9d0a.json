@@ -1,0 +1,27 @@
+{
+  "sha256": "0ea3d35fbf982e059229e9a2f97aa7543f059d287073dc983fbf2d5e0b2a9d0a",
+  "file": "DIS0002.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内多台配电柜柜门、面板缺失，内部母排、导线及电气元件外露，且贴有“小心有电”警示标识；若设备带电，易发生触电、短路或电弧伤害，周边也未见有效隔离防护。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内厂房或仓库的配电柜存放区域，画面中央\",\n  \"rectification\": [\n    \"立即断电并悬挂“禁止合闸”等警示牌，设置临时围挡隔离\",\n    \"由持证电工检查柜体及线路，修复或更换缺失的柜门、面板和绝缘防护\",\n    \"若为废弃设备，应明确标识并及时拆除或移至安全区域\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "室内多台配电柜柜门、面板缺失，内部母排、导线及电气元件外露，且贴有“小心有电”警示标识；若设备带电，易发生触电、短路或电弧伤害，周边也未见有效隔离防护。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内厂房或仓库的配电柜存放区域，画面中央",
+    "rectification": [
+      "立即断电并悬挂“禁止合闸”等警示牌，设置临时围挡隔离",
+      "由持证电工检查柜体及线路，修复或更换缺失的柜门、面板和绝缘防护",
+      "若为废弃设备，应明确标识并及时拆除或移至安全区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

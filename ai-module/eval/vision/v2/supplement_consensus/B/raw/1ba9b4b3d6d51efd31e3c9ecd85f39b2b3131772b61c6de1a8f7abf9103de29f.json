@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"road_occupancy\", \"evidence\": \"三轮车摊位占道经营售卖饮品\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "三轮车摊位占道经营售卖饮品"
+  }
+}

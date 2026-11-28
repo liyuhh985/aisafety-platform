@@ -1,0 +1,27 @@
+{
+  "sha256": "f51ed0bf7b34c9d4e177720d5a48584f8d1c6fe77814299067d9bb85368bf85a",
+  "file": "vehicle_occupancy_4_f51ed0bf7b34.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"白色轿车、红色轿车及电动车停放在建筑前人行道和店铺通道上，挤占行人通行空间，行人可能被迫绕行至机动车道，存在碰撞和通行受阻风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑前人行道及店铺通道\",\"rectification\":[\"清理违停车辆，恢复人行道通行空间\",\"在人行道入口设置隔离桩和禁停标识\",\"加强日常巡查，及时劝离占道车辆\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "白色轿车、红色轿车及电动车停放在建筑前人行道和店铺通道上，挤占行人通行空间，行人可能被迫绕行至机动车道，存在碰撞和通行受阻风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑前人行道及店铺通道",
+    "rectification": [
+      "清理违停车辆，恢复人行道通行空间",
+      "在人行道入口设置隔离桩和禁停标识",
+      "加强日常巡查，及时劝离占道车辆"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

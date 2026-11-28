@@ -1,0 +1,27 @@
+{
+  "sha256": "d8c39b68c7c2c656c1e4dff3e150ecc116c8ccc97780e2e7b45b3729489745e0",
+  "file": "DIS0003.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"高\",\"description\":\"画面中多根电线杂乱缠绕，多个接头仅用绝缘胶带包扎，部分线路绝缘层疑似破损，存在漏电、短路及电气火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"墙面或设备旁的线缆汇集处\",\"rectification\":[\"由持证电工整理规范线路，拆除私拉乱接部分\",\"更换破损、老化电线并对接头进行规范绝缘处理\",\"线路穿管保护，避免潮湿、积尘环境中裸露敷设\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "画面中多根电线杂乱缠绕，多个接头仅用绝缘胶带包扎，部分线路绝缘层疑似破损，存在漏电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "墙面或设备旁的线缆汇集处",
+    "rectification": [
+      "由持证电工整理规范线路，拆除私拉乱接部分",
+      "更换破损、老化电线并对接头进行规范绝缘处理",
+      "线路穿管保护，避免潮湿、积尘环境中裸露敷设"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

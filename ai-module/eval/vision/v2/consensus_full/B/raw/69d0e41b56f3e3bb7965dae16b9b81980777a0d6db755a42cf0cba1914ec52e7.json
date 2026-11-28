@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_facility\", \"evidence\": \"消防水带表面脏污老化，箱门敞开\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "消防水带表面脏污老化，箱门敞开"
+  }
+}

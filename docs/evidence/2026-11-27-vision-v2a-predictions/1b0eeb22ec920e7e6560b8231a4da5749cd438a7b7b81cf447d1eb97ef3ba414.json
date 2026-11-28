@@ -1,0 +1,23 @@
+{
+  "sha256": "1b0eeb22ec920e7e6560b8231a4da5749cd438a7b7b81cf447d1eb97ef3ba414",
+  "file": "NEGSCA01.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"图片为作业脚手架纵向水平杆搭设规范示意图，展示接头错开距离和主节点距离要求，并配有安全警示牌，未见明显实际安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为作业脚手架纵向水平杆搭设规范示意图，展示接头错开距离和主节点距离要求，并配有安全警示牌，未见明显实际安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

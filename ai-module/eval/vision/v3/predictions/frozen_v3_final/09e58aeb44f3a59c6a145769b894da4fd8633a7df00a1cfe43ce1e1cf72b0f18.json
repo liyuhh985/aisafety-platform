@@ -1,0 +1,23 @@
+{
+  "sha256": "09e58aeb44f3a59c6a145769b894da4fd8633a7df00a1cfe43ce1e1cf72b0f18",
+  "file": "neg_29_09e58aeb44f3.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中消防水带箱门开启，但箱内水带、水枪等器材齐全，未见明显破损、缺失、堵塞或无法使用等客观异常，不能仅凭箱门开启认定为安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中消防水带箱门开启，但箱内水带、水枪等器材齐全，未见明显破损、缺失、堵塞或无法使用等客观异常，不能仅凭箱门开启认定为安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

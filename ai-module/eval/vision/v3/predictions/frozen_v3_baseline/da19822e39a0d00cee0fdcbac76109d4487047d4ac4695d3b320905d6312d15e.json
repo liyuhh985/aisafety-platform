@@ -1,0 +1,27 @@
+{
+  "sha256": "da19822e39a0d00cee0fdcbac76109d4487047d4ac4695d3b320905d6312d15e",
+  "file": "neg_33_da19822e39a0.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"中\",\n  \"description\": \"人行道靠车道一侧的行道树树干明显倾斜，树冠较大，未见支撑加固措施。遇大风、暴雨或根系松动时存在倒伏风险，可能威胁行人和车辆安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道靠车道一侧的行道树\",\n  \"rectification\": [\n    \"对该行道树进行专业检测，评估根系和树体稳定性\",\n    \"视情况设置支撑加固、修剪树冠或扶正处理\",\n    \"在隐患排除前设置警示，并加强日常巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "中",
+    "description": "人行道靠车道一侧的行道树树干明显倾斜，树冠较大，未见支撑加固措施。遇大风、暴雨或根系松动时存在倒伏风险，可能威胁行人和车辆安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道靠车道一侧的行道树",
+    "rectification": [
+      "对该行道树进行专业检测，评估根系和树体稳定性",
+      "视情况设置支撑加固、修剪树冠或扶正处理",
+      "在隐患排除前设置警示，并加强日常巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

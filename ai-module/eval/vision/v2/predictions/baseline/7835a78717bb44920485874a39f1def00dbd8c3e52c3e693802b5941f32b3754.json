@@ -1,0 +1,26 @@
+{
+  "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+  "file": "NEGELE03.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"低\",\"description\":\"电梯楼层按钮面板中6层按钮明显破损、凹陷，表面材料缺失，可能造成按键失灵、卡阻或内部元件暴露，影响正常使用并存在轻微安全风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯轿厢内楼层按钮面板\",\"rectification\":[\"及时更换或维修6层按钮面板\",\"维修前设置停用提示并加强巡检\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "电梯楼层按钮面板中6层按钮明显破损、凹陷，表面材料缺失，可能造成按键失灵、卡阻或内部元件暴露，影响正常使用并存在轻微安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内楼层按钮面板",
+    "rectification": [
+      "及时更换或维修6层按钮面板",
+      "维修前设置停用提示并加强巡检"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

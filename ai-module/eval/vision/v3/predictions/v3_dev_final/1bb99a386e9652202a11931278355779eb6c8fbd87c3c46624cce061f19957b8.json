@@ -1,0 +1,27 @@
+{
+  "sha256": "1bb99a386e9652202a11931278355779eb6c8fbd87c3c46624cce061f19957b8",
+  "file": "manhole_damage_1_1bb99a386e96.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"高\",\"description\":\"高架桥下红色铺装人行道上有一处长方形井盖缺失/破损，形成开口，周边铺装开裂。雨天视线差、地面湿滑，行人尤其是夜间易绊倒或跌落受伤。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"高架桥下红色铺装人行道前景右侧，靠近路缘与绿化带处\",\"rectification\":[\"立即在开口周边设置围挡、反光锥和警示标志，防止行人靠近\",\"尽快更换或修复井盖及周边破损铺装，确保盖板稳固与路面平整\",\"排查该路段其他井盖和铺装破损情况，纳入日常巡查维护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "高架桥下红色铺装人行道上有一处长方形井盖缺失/破损，形成开口，周边铺装开裂。雨天视线差、地面湿滑，行人尤其是夜间易绊倒或跌落受伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高架桥下红色铺装人行道前景右侧，靠近路缘与绿化带处",
+    "rectification": [
+      "立即在开口周边设置围挡、反光锥和警示标志，防止行人靠近",
+      "尽快更换或修复井盖及周边破损铺装，确保盖板稳固与路面平整",
+      "排查该路段其他井盖和铺装破损情况，纳入日常巡查维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

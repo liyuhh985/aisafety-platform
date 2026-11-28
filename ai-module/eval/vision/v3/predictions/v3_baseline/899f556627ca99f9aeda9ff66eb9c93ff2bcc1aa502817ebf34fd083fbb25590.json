@@ -1,0 +1,27 @@
+{
+  "sha256": "899f556627ca99f9aeda9ff66eb9c93ff2bcc1aa502817ebf34fd083fbb25590",
+  "file": "vehicle_occupancy_1_899f556627ca.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"右侧多辆汽车停放在人行道砖铺路面上，未见停车泊位线，挤占行人通行空间，可能迫使行人绕行至机动车道，存在人车混行碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"右侧人行道，近公交站及斑马线区域\",\n  \"rectification\": [\n    \"清理违停车辆，恢复人行道正常通行功能\",\n    \"在人行道边缘增设隔离桩或护栏，防止车辆驶入停放\",\n    \"加强该路段巡查执法，并完善违停抓拍或禁停标识\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "右侧多辆汽车停放在人行道砖铺路面上，未见停车泊位线，挤占行人通行空间，可能迫使行人绕行至机动车道，存在人车混行碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "右侧人行道，近公交站及斑马线区域",
+    "rectification": [
+      "清理违停车辆，恢复人行道正常通行功能",
+      "在人行道边缘增设隔离桩或护栏，防止车辆驶入停放",
+      "加强该路段巡查执法，并完善违停抓拍或禁停标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

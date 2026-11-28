@@ -1,0 +1,28 @@
+{
+  "sha256": "0ea3d35fbf982e059229e9a2f97aa7543f059d287073dc983fbf2d5e0b2a9d0a",
+  "file": "DIS0002.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内多台配电柜外壳或柜门缺失、顶部敞开，内部电气元件及线路裸露，周边未见隔离防护，存在误触触电、短路起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内靠墙配电柜堆放/拆解区域\",\n  \"rectification\": [\n    \"立即断电并挂牌上锁，由持证电工检查确认无电\",\n    \"修复或更换柜门、外壳及防护板，封闭裸露电气部件\",\n    \"设置临时围挡和“高压危险/禁止靠近”警示，清理周边杂物\",\n    \"检测绝缘、接地和线路完好性，合格后方可恢复使用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "室内多台配电柜外壳或柜门缺失、顶部敞开，内部电气元件及线路裸露，周边未见隔离防护，存在误触触电、短路起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内靠墙配电柜堆放/拆解区域",
+    "rectification": [
+      "立即断电并挂牌上锁，由持证电工检查确认无电",
+      "修复或更换柜门、外壳及防护板，封闭裸露电气部件",
+      "设置临时围挡和“高压危险/禁止靠近”警示，清理周边杂物",
+      "检测绝缘、接地和线路完好性，合格后方可恢复使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

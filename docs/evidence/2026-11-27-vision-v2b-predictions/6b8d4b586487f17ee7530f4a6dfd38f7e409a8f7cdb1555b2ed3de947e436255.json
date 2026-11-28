@@ -1,0 +1,30 @@
+{
+  "sha256": "6b8d4b586487f17ee7530f4a6dfd38f7e409a8f7cdb1555b2ed3de947e436255",
+  "file": "SEW0002.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"路边绿色垃圾桶旁及配电设施附近大量生活垃圾散落堆积，垃圾桶满溢未及时清运，占用通行空间并影响环境卫生，存在滋生蚊虫、异味及靠近电力设施引发火灾的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"商铺前人行道及路边，绿色垃圾桶和配电箱附近\",\"rectification\":[\"立即清运堆积垃圾并清扫地面散落物\",\"增加垃圾桶清运频次，防止满溢\",\"保持配电设施周边净空，禁止垃圾杂物堆放\",\"加强日常巡查和商户环境卫生管理\"],\"secondary_subcategories\":[\"road_occupancy\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "路边绿色垃圾桶旁及配电设施附近大量生活垃圾散落堆积，垃圾桶满溢未及时清运，占用通行空间并影响环境卫生，存在滋生蚊虫、异味及靠近电力设施引发火灾的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商铺前人行道及路边，绿色垃圾桶和配电箱附近",
+    "rectification": [
+      "立即清运堆积垃圾并清扫地面散落物",
+      "增加垃圾桶清运频次，防止满溢",
+      "保持配电设施周边净空，禁止垃圾杂物堆放",
+      "加强日常巡查和商户环境卫生管理"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

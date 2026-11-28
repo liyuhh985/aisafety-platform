@@ -1,0 +1,23 @@
+{
+  "sha256": "37cc2ebc91b984c70e378f74b63bd1090715af55ef0ac90e6b42c04fa28760c8",
+  "file": "illegal_structure_1_37cc2ebc91b9.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"低\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图像显示在建建筑内堆放砖块和管材，属于常见施工材料临时存放；未见明显围挡、临边防护、人员作业等可确认的违规或直接危险，图像证据不足，无法确认安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "低",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图像显示在建建筑内堆放砖块和管材，属于常见施工材料临时存放；未见明显围挡、临边防护、人员作业等可确认的违规或直接危险，图像证据不足，无法确认安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

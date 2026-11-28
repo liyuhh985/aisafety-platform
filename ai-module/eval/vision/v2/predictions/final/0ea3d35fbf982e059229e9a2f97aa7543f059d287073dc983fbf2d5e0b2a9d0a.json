@@ -1,0 +1,27 @@
+{
+  "sha256": "0ea3d35fbf982e059229e9a2f97aa7543f059d287073dc983fbf2d5e0b2a9d0a",
+  "file": "DIS0002.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"多个配电柜柜门敞开或缺失，内部元件及接线裸露，柜体张贴有电危险警示标志，人员误触可能引发触电、短路或电弧伤害，存在严重电气安全隐患。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内配电柜区域\",\"rectification\":[\"立即关闭并锁闭柜门，设置临时围挡及当心触电警示\",\"由持证电工检查柜体是否带电、绝缘及接地情况，停用废弃柜体并挂牌\",\"清理柜体周边杂物，保持安全操作距离，严禁无关人员靠近\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "多个配电柜柜门敞开或缺失，内部元件及接线裸露，柜体张贴有电危险警示标志，人员误触可能引发触电、短路或电弧伤害，存在严重电气安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内配电柜区域",
+    "rectification": [
+      "立即关闭并锁闭柜门，设置临时围挡及当心触电警示",
+      "由持证电工检查柜体是否带电、绝缘及接地情况，停用废弃柜体并挂牌",
+      "清理柜体周边杂物，保持安全操作距离，严禁无关人员靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

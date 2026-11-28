@@ -1,0 +1,27 @@
+{
+  "sha256": "96412dd48b62152cbe788af49c940275b6d5d6c07ac1d836dd008ed2d476806e",
+  "file": "gas_pipe_aging_1_96412dd48b62.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"管道根部与地面交接处严重锈蚀、漆层剥落，周边地砖开裂并堆积污物，疑为金属管道防腐失效。若为燃气管道，长期腐蚀可能穿孔泄漏，遇明火有爆燃风险；若为水管则易渗漏。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内地面与管道交接根部\",\n  \"rectification\": [\n    \"检查管道介质并做泄漏检测，确认无漏气/漏水\",\n    \"对锈蚀部位除锈、防腐处理，必要时更换受损管段\",\n    \"修复地砖及穿地部位防水，清除污物并保持干燥\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "管道根部与地面交接处严重锈蚀、漆层剥落，周边地砖开裂并堆积污物，疑为金属管道防腐失效。若为燃气管道，长期腐蚀可能穿孔泄漏，遇明火有爆燃风险；若为水管则易渗漏。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内地面与管道交接根部",
+    "rectification": [
+      "检查管道介质并做泄漏检测，确认无漏气/漏水",
+      "对锈蚀部位除锈、防腐处理，必要时更换受损管段",
+      "修复地砖及穿地部位防水，清除污物并保持干燥"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

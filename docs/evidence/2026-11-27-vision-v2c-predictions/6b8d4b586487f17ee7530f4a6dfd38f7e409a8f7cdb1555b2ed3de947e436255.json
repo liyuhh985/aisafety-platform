@@ -1,0 +1,28 @@
+{
+  "sha256": "6b8d4b586487f17ee7530f4a6dfd38f7e409a8f7cdb1555b2ed3de947e436255",
+  "file": "SEW0002.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"两个绿色垃圾桶旁及路面大量生活垃圾散落堆积，部分垃圾已占压人行道并紧邻配电设施，影响通行和环境卫生，且存在可燃物被引燃的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"街边商铺前人行道边缘，绿色垃圾桶及配电箱附近\",\n  \"rectification\": [\n    \"立即清运散落垃圾并对垃圾桶及周边进行清洁消杀\",\n    \"增设或维护垃圾收集容器，防止垃圾桶满溢和外溢\",\n    \"清理配电设施周边可燃物，保持安全距离\",\n    \"加强该区域日常巡查和商户、居民垃圾规范投放宣传\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "两个绿色垃圾桶旁及路面大量生活垃圾散落堆积，部分垃圾已占压人行道并紧邻配电设施，影响通行和环境卫生，且存在可燃物被引燃的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "街边商铺前人行道边缘，绿色垃圾桶及配电箱附近",
+    "rectification": [
+      "立即清运散落垃圾并对垃圾桶及周边进行清洁消杀",
+      "增设或维护垃圾收集容器，防止垃圾桶满溢和外溢",
+      "清理配电设施周边可燃物，保持安全距离",
+      "加强该区域日常巡查和商户、居民垃圾规范投放宣传"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

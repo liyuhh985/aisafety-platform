@@ -1,0 +1,27 @@
+{
+  "sha256": "8915b5f4cea01ac778377c16ebf53f5d6224eeba2362dea915fabd9e70b5c46d",
+  "file": "manhole_damage_4_8915b5f4cea0.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"中\",\"description\":\"圆形井盖周边沥青路面开裂、破碎并局部下沉，形成不规则破损坑洼，可能造成车辆颠簸、轮胎受损或行人绊倒。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路上的圆形井盖周边\",\"rectification\":[\"在破损区域设置警示锥桶或围挡，提醒车辆行人避让\",\"尽快清除破损沥青，修复井圈周边基层并重新摊铺路面\",\"检查井盖及井圈是否松动下沉，必要时更换或加固\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "圆形井盖周边沥青路面开裂、破碎并局部下沉，形成不规则破损坑洼，可能造成车辆颠簸、轮胎受损或行人绊倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路上的圆形井盖周边",
+    "rectification": [
+      "在破损区域设置警示锥桶或围挡，提醒车辆行人避让",
+      "尽快清除破损沥青，修复井圈周边基层并重新摊铺路面",
+      "检查井盖及井圈是否松动下沉，必要时更换或加固"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "b42c6a00573e02d927b3190a616fd8808d289a4f2d54e7517c57579d443112e3",
+  "file": "gas_leak_3_b42c6a00573e.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_leak\",\n  \"severity\": \"高\",\n  \"description\": \"路边红白围挡处有大量白色雾汽状气体从地下持续喷涌，紧邻人行道、三轮车和停放车辆，疑似地下燃气管道泄漏或施工破坏管道，存在燃爆、中毒窒息、烫伤及遮挡视线风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道与机动车道交界处、红白围挡旁、三轮车附近\",\n  \"rectification\": [\n    \"立即扩大警戒范围，疏散周边人员车辆，严禁烟火和电气操作\",\n    \"关闭相关管道阀门，通知燃气或热力抢修单位到场检测处置\",\n    \"完善围挡和醒目警示标志，待确认无泄漏和结构风险后恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_leak",
+    "severity": "高",
+    "description": "路边红白围挡处有大量白色雾汽状气体从地下持续喷涌，紧邻人行道、三轮车和停放车辆，疑似地下燃气管道泄漏或施工破坏管道，存在燃爆、中毒窒息、烫伤及遮挡视线风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道与机动车道交界处、红白围挡旁、三轮车附近",
+    "rectification": [
+      "立即扩大警戒范围，疏散周边人员车辆，严禁烟火和电气操作",
+      "关闭相关管道阀门，通知燃气或热力抢修单位到场检测处置",
+      "完善围挡和醒目警示标志，待确认无泄漏和结构风险后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

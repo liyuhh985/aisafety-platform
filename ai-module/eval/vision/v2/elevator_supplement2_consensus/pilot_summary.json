@@ -1,0 +1,78 @@
+{
+  "total": 5,
+  "valid_pairs": 3,
+  "binary_agreement": 1.0,
+  "major_agreement": 1.0,
+  "sub_agreement": 1.0,
+  "kappa_major": 1.0,
+  "kappa_sub": 1.0,
+  "consensus": {
+    "binary_major": 3,
+    "exact": 3,
+    "yield": 0.6
+  },
+  "rejected": {
+    "uncertain": 2
+  },
+  "consensus_items": [
+    {
+      "sha256": "084d4869b923b7b1485085617df096b56158a9f0d010a4082378a32e3ab85b04",
+      "file": "ELE0009.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯显示正常，仅墙面掉漆无隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "cb53a12fd3f8852a6bc635caa706ba796eb5ff30fc567a0442d2d33fdff4e882",
+      "file": "ELE0009.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "elevator_special",
+        "subcategory": "elevator_trapped",
+        "evidence": "众人合力从敞开的电梯内拉出一名被困人员",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "71aa18c7ced75565e6406a3c599489440a82544334d42f7ece3e0db098d3fd1f",
+      "file": "ELE0006.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅为电梯安全警示标识图示，无实际隐患画面",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    }
+  ],
+  "annotators": {
+    "A": "mimo-v2.6-flash",
+    "B": "glm-5.3-flash",
+    "provider": "opendesign",
+    "temperature": 0.0,
+    "prompt_sha256": "6ee868659b4075174913e8ed6688cbd211379241c13916bd97757dfba6f44482",
+    "created_at": "2026-11-06T14:50:16.635860+00:00"
+  }
+}

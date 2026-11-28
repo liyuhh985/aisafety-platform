@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"地面散落多块碎砖块，疑似高空坠物，来源不可见\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "地面散落多块碎砖块，疑似高空坠物，来源不可见"
+  }
+}

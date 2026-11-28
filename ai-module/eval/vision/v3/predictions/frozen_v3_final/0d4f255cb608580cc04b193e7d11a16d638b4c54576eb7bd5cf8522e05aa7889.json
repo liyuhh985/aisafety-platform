@@ -1,0 +1,26 @@
+{
+  "sha256": "0d4f255cb608580cc04b193e7d11a16d638b4c54576eb7bd5cf8522e05aa7889",
+  "file": "road_surface_collapse_1_0d4f255cb608.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"水泥路面大面积碎裂、开裂、错台，形成深沟和不规则坑洞，边缘尖锐且有碎石，车辆通行易爆胎、颠簸失控，行人易绊倒受伤。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路路面中央及靠近车辆一侧\",\"rectification\":[\"立即在破损区域周边设置锥桶、警示牌和临时围挡，限制车辆和行人靠近\",\"尽快破除破损路面并重新浇筑或铺设，恢复平整道路，并加强日常巡查维护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "水泥路面大面积碎裂、开裂、错台，形成深沟和不规则坑洞，边缘尖锐且有碎石，车辆通行易爆胎、颠簸失控，行人易绊倒受伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路路面中央及靠近车辆一侧",
+    "rectification": [
+      "立即在破损区域周边设置锥桶、警示牌和临时围挡，限制车辆和行人靠近",
+      "尽快破除破损路面并重新浇筑或铺设，恢复平整道路，并加强日常巡查维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

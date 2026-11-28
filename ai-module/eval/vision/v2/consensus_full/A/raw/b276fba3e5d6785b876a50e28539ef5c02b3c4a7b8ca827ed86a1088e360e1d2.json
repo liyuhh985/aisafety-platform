@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"墙内管道阀门外露，管道类型不明，仅凭文字无法确认隐患类别\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "墙内管道阀门外露，管道类型不明，仅凭文字无法确认隐患类别"
+  }
+}

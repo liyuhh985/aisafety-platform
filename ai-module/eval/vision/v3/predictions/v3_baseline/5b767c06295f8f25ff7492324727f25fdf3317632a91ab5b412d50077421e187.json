@@ -1,0 +1,29 @@
+{
+  "sha256": "5b767c06295f8f25ff7492324727f25fdf3317632a91ab5b412d50077421e187",
+  "file": "garbage_pile_1_5b767c06295f.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"建筑工地围挡外道路边堆放大量生活垃圾与建筑废弃物，覆盖路面并向外蔓延，影响通行和环境卫生，存在扬尘、蚊蝇滋生及可燃物起火风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"在建工地围挡外侧道路旁\",\"rectification\":[\"立即组织清运垃圾并分类处置\",\"设置规范垃圾收集设施，落实日产日清\",\"清理后冲洗路面并加强巡查，防止再次倾倒\"],\"secondary_subcategories\":[\"road_occupancy\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "建筑工地围挡外道路边堆放大量生活垃圾与建筑废弃物，覆盖路面并向外蔓延，影响通行和环境卫生，存在扬尘、蚊蝇滋生及可燃物起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "在建工地围挡外侧道路旁",
+    "rectification": [
+      "立即组织清运垃圾并分类处置",
+      "设置规范垃圾收集设施，落实日产日清",
+      "清理后冲洗路面并加强巡查，防止再次倾倒"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

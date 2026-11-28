@@ -1,0 +1,27 @@
+{
+  "sha256": "fc2861c4cd112320641fe372ea99b212deb1c432f47f430690512ad17732ff74",
+  "file": "neg_16_fc2861c4cd11.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"厂房内多台配电柜柜门敞开，柜内断路器、铜排及接线端子外露，未见隔离围挡或警示标识，人员误触可能发生触电事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厂房内配电柜区域\",\n  \"rectification\": [\n    \"运行中的配电柜应及时关闭柜门并上锁，防止人员误触带电部位。\",\n    \"检修或开门作业时设置临时围栏和“止步，高压危险”等警示标识，并安排专人监护。\",\n    \"检查柜门锁具、联锁装置及接地保护是否完好，由持证电工定期维护。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "厂房内多台配电柜柜门敞开，柜内断路器、铜排及接线端子外露，未见隔离围挡或警示标识，人员误触可能发生触电事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厂房内配电柜区域",
+    "rectification": [
+      "运行中的配电柜应及时关闭柜门并上锁，防止人员误触带电部位。",
+      "检修或开门作业时设置临时围栏和“止步，高压危险”等警示标识，并安排专人监护。",
+      "检查柜门锁具、联锁装置及接地保护是否完好，由持证电工定期维护。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

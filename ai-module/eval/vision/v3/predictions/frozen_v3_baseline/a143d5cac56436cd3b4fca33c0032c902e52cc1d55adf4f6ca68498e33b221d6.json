@@ -1,0 +1,26 @@
+{
+  "sha256": "a143d5cac56436cd3b4fca33c0032c902e52cc1d55adf4f6ca68498e33b221d6",
+  "file": "garbage_pile_2_a143d5cac564.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"坡地绿化带内大量废旧衣物及生活垃圾随意堆积，体量大且含可燃物，可能滋生蚊虫、污染环境，并存在火灾隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"绿化带坡地边缘\",\n  \"rectification\": [\n    \"立即组织清运堆积垃圾，按类别规范处置\",\n    \"设置禁止倾倒标识和围挡，加强巡查与长效保洁\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "坡地绿化带内大量废旧衣物及生活垃圾随意堆积，体量大且含可燃物，可能滋生蚊虫、污染环境，并存在火灾隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "绿化带坡地边缘",
+    "rectification": [
+      "立即组织清运堆积垃圾，按类别规范处置",
+      "设置禁止倾倒标识和围挡，加强巡查与长效保洁"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

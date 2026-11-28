@@ -1,0 +1,27 @@
+{
+  "sha256": "5c8046d4283ec6150d58a48a1ef5e0d676dfc5cd06d8f163d3304de30af5fb5d",
+  "file": "gas_leak_2_5c8046d4283e.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"道路上一辆标有“爆”警示标志的罐车尾部冒出白色气体，疑似易燃易爆介质泄漏，消防人员铺设水带处置；可能引发燃爆、中毒、环境污染及交通阻断，风险高。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央偏右罐车尾部及应急处置区域\",\n  \"rectification\": [\n    \"立即设置警戒区并疏散无关人员，实施交通管制\",\n    \"由专业人员佩戴防护装备开展堵漏、稀释和气体监测\",\n    \"核查罐车运输资质、介质信息及应急处置方案，防止二次事故\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "道路上一辆标有“爆”警示标志的罐车尾部冒出白色气体，疑似易燃易爆介质泄漏，消防人员铺设水带处置；可能引发燃爆、中毒、环境污染及交通阻断，风险高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央偏右罐车尾部及应急处置区域",
+    "rectification": [
+      "立即设置警戒区并疏散无关人员，实施交通管制",
+      "由专业人员佩戴防护装备开展堵漏、稀释和气体监测",
+      "核查罐车运输资质、介质信息及应急处置方案，防止二次事故"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

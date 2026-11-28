@@ -1,0 +1,29 @@
+{
+  "sha256": "2cc8e2c80095ec75d12b0bd737fbe895e82fe36b118f6f9d7204e663fa1417a1",
+  "file": "GAR0005.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"楼栋单元门前及绿化带内大量堆积袋装建筑垃圾和散落装修废料，占用公共区域及通行步道，易造成行人绊倒，且存在扬尘和火灾隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼单元门前绿化带及步道\",\n  \"rectification\": [\n    \"立即组织人员清运堆积的装修垃圾\",\n    \"规范设置小区建筑垃圾临时堆放点并加盖围挡\",\n    \"加强日常巡查，制止随意倾倒装修垃圾行为\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "楼栋单元门前及绿化带内大量堆积袋装建筑垃圾和散落装修废料，占用公共区域及通行步道，易造成行人绊倒，且存在扬尘和火灾隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼单元门前绿化带及步道",
+    "rectification": [
+      "立即组织人员清运堆积的装修垃圾",
+      "规范设置小区建筑垃圾临时堆放点并加盖围挡",
+      "加强日常巡查，制止随意倾倒装修垃圾行为"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

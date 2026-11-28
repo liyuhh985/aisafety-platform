@@ -1,0 +1,26 @@
+{
+  "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+  "file": "NEGELE03.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"低\",\n  \"description\": \"电梯楼层按钮面板有一处按钮明显破损、凹陷，表面盖板缺失，可能影响正常按键操作，存在夹手或内部线路受潮、故障的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内楼层按钮面板\",\n  \"rectification\": [\n    \"及时更换破损的电梯楼层按钮及面板，修复前确认按键功能正常并避免裸露。\",\n    \"加强电梯日常巡检，发现按钮损坏、卡阻或线路异常时立即报修并设置提示。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "电梯楼层按钮面板有一处按钮明显破损、凹陷，表面盖板缺失，可能影响正常按键操作，存在夹手或内部线路受潮、故障的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内楼层按钮面板",
+    "rectification": [
+      "及时更换破损的电梯楼层按钮及面板，修复前确认按键功能正常并避免裸露。",
+      "加强电梯日常巡检，发现按钮损坏、卡阻或线路异常时立即报修并设置提示。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

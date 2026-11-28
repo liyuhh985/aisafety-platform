@@ -1,0 +1,27 @@
+{
+  "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+  "file": "FIR0008.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"中\",\n  \"description\": \"道路水泥路面出现大面积龟裂、碎裂和不平整，局部可能形成坑槽，车辆通行易颠簸，行人和非机动车经过时存在绊倒、滑倒及轮胎受损风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"小区或园区内部道路，靠近路缘及停放车辆一侧\",\n  \"rectification\": [\n    \"对开裂、碎裂路面进行切割清理并用沥青或水泥砂浆修补\",\n    \"排查基层沉降和排水情况，必要时整体重铺\",\n    \"整改前设置警示标志或临时围挡，提醒车辆行人绕行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "道路水泥路面出现大面积龟裂、碎裂和不平整，局部可能形成坑槽，车辆通行易颠簸，行人和非机动车经过时存在绊倒、滑倒及轮胎受损风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区或园区内部道路，靠近路缘及停放车辆一侧",
+    "rectification": [
+      "对开裂、碎裂路面进行切割清理并用沥青或水泥砂浆修补",
+      "排查基层沉降和排水情况，必要时整体重铺",
+      "整改前设置警示标志或临时围挡，提醒车辆行人绕行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

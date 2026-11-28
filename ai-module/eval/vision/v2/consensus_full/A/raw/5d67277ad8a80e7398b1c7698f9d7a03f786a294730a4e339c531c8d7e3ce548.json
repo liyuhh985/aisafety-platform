@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"traffic_facility_damage\", \"evidence\": \"图中信号灯红绿同时亮起并带故障警示标志\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "evidence": "图中信号灯红绿同时亮起并带故障警示标志"
+  }
+}

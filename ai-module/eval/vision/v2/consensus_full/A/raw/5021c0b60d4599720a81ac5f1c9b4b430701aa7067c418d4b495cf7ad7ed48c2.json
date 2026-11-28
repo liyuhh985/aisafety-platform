@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"作业人员佩戴安全帽，设有三脚架、安全绳及通风管防护\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "作业人员佩戴安全帽，设有三脚架、安全绳及通风管防护"
+  }
+}

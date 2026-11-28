@@ -1,0 +1,411 @@
+{
+ "_meta": {
+  "name": "fire_water_abnormal 真实图评测集",
+  "category": "fire/fire_water_abnormal",
+  "category_label": "消防安全/消防水源异常",
+  "source": "百度图片 → 原站直链下载 → 自动筛选 → 粗筛 → 标注 → 严格复检",
+  "rebuild": "2026-10-31",
+  "positive": 19,
+  "negative": 0,
+  "audit_removed": 7
+ },
+ "rejected": [
+  {
+   "file": "FIR0011.jpg",
+   "reason": "非该类别",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0019.jpg",
+   "reason": "正面案例",
+   "detail": "消防箱内水带整齐盘卷、阀门接口完好，未见异常"
+  },
+  {
+   "file": "FIR0021.jpg",
+   "reason": "非该类别",
+   "detail": "干涸开裂的河床湖底，泥土龟裂长草"
+  },
+  {
+   "file": "FIR0001.jpg",
+   "reason": "正面案例",
+   "detail": "消防栓箱内部，卷盘、水带、阀门齐全完好，无明显异常"
+  },
+  {
+   "file": "FIR0006.jpg",
+   "reason": "非该类别",
+   "detail": "龟裂干涸的库底与远山，无任何消防取水设施"
+  },
+  {
+   "file": "FIR0022.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0025.jpg",
+   "reason": "非该类别",
+   "detail": "混凝土地下管沟施工基坑，周围为开挖土方"
+  },
+  {
+   "file": "FIR0048.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0049.jpg",
+   "reason": "正面案例",
+   "detail": "墙面嵌入式消防栓门关闭完好，无明显异常"
+  },
+  {
+   "file": "FIR0043.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0047.png",
+   "reason": "正面案例",
+   "detail": "消防泵房内消防泵、管道、阀门、压力表安装完好规范"
+  },
+  {
+   "file": "FIR0038.jpg",
+   "reason": "非该类别",
+   "detail": "林地内塑料膜衬砌的蓄水坑，内有存水，无明显破损干涸等异常"
+  },
+  {
+   "file": "FIR0060.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "消防栓柜门打开，人员接接口，无水状态无法从画面直接看出"
+  },
+  {
+   "file": "FIR0066.png",
+   "reason": "非该类别",
+   "detail": "干涸龟裂的库塘湖床，与消防设施无关"
+  },
+  {
+   "file": "FIR0071.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "画面仅为住宅窗口起火远景，无消防栓实体可见"
+  },
+  {
+   "file": "FIR0073.png",
+   "reason": "文字是唯一信息源",
+   "detail": "红色管道旁一只手掌，叠加醒目大字说明"
+  },
+  {
+   "file": "FIR0100.jpg",
+   "reason": "拼接对比",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0051.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0062.jpg",
+   "reason": "整改中",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0077.png",
+   "reason": "非该类别",
+   "detail": "水库水位低露库底大坝，压有大字标题"
+  },
+  {
+   "file": "FIR0059.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "FIR0090.jpg",
+   "reason": "正面案例",
+   "detail": "消火栓箱门敞开，箱内水带、水枪、双阀、报警按钮齐全完好，无缺失损坏"
+  }
+ ],
+ "items": {
+  "FIR0014.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "夜间路边红色消防栓漏水，大量水流喷涌漫至路面",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0005.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "人行道上消防栓锈蚀，出水口持续漏水，地面大面积积水",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "群众呼声",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0013.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色消防立管根部渗漏，地面大片积水",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "19:23 2024-06-27 星期四 长沙市·宁乡美的国宾府 水印相机",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0003.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "夜间拍摄的红色室外消火栓，出水口闷盖缺失、接口敞开锈蚀，另一接口无盖，栓体锈迹明显",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0020.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "蓝色消火栓箱门敞开，箱内仅有阀门和水枪头，消防水带缺失未连接",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "灭火器使用法、灭火器箱、FIRE EXTINGUISHER BOX",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0010.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "消防箱内水带接头未接在消火栓接口上，接口悬空断开",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "18:39 2023-04-2... 星期五 芙蓉盛景 水印相机",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0016.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色消火栓箱门缺失破损，内部阀件管道锈蚀暴露",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "driptr（水表品牌）",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0024.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色室外消火栓锈蚀严重，底部法兰处渗水，地面有水渍锈迹，接口盖锈死",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "SSKA 912/100",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0029.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色消防栓侧口大量喷水到人行道，水流横喷",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0040.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "沟槽内两根管道，上方管道接口处向泥水坑喷水，旁有橙色水泵",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "vivo X70 | ZEISS 2024/11/07 08:17",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0046.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "锈蚀消防栓底部渗漏，地面形成水渍和积水坑",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "消火栓（井盖及栓体铸字）",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0028.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色地上式消火栓出水口闷盖缺失，栓体底部地面有明显积水渗漏痕迹",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "消火栓本体铸字「SJ100/65-16」及消防浮雕字样",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0032.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "消火栓阀门接口内部明显锈蚀腐蚀，消防水带未连接在阀门上而是单独卷放，连接卡扣锈蚀可能影响正常使用",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "检查表月份、红色标识牌文字模糊不可读",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0055.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色消防栓根部持续漏水，地砖上形成大片积水",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "乡卫生室（背景招牌，局部）",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0052.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色消防栓底部周围地面明显积水渗漏，地砖缝隙有持续水流和水渍扩散",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0065.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "消防栓阀门锈蚀严重，人员尝试拧动阀门，接口处明显氧化发白",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "12345都是挺物业的，你投诉… 4条回复",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0050.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "红色消防阀门及管道裸露在土坑中，坑底积满泥水，管道接口处被水浸泡",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0053.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "室内消火栓阀门锈蚀严重，出水口内部锈迹斑斑，有人旋拧手轮放不出水",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "36万平商贸城消防栓没水 当地消防：得查一下检查记录 声音来源：高女士 平度市同和街道办事处工作人员 消防大队是主管部门 生活帮 Video",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "FIR0057.jpg": {
+   "has_hazard": true,
+   "major_category": "fire",
+   "subcategory": "fire_water_abnormal",
+   "severity": "中",
+   "key_evidence": "消防箱下方两处红色消防水阀接口无盖敞开，接口裸露",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  }
+ }
+}

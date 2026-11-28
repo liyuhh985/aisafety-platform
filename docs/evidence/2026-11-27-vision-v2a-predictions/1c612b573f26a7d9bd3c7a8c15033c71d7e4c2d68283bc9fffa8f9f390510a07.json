@@ -1,0 +1,27 @@
+{
+  "sha256": "1c612b573f26a7d9bd3c7a8c15033c71d7e4c2d68283bc9fffa8f9f390510a07",
+  "file": "GAR0003.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"低\",\n  \"description\": \"路面和人行道上散落塑料袋、纸片、饮料瓶等垃圾，局部有堆积迹象，可能影响通行并造成滑倒风险，同时影响环境卫生。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路及人行道地面，靠近路缘石和铺装砖区域\",\n  \"rectification\": [\n    \"及时清扫并清运散落垃圾\",\n    \"加强该路段保洁频次和巡查\",\n    \"合理设置垃圾桶并引导规范投放\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "低",
+    "description": "路面和人行道上散落塑料袋、纸片、饮料瓶等垃圾，局部有堆积迹象，可能影响通行并造成滑倒风险，同时影响环境卫生。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路及人行道地面，靠近路缘石和铺装砖区域",
+    "rectification": [
+      "及时清扫并清运散落垃圾",
+      "加强该路段保洁频次和巡查",
+      "合理设置垃圾桶并引导规范投放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

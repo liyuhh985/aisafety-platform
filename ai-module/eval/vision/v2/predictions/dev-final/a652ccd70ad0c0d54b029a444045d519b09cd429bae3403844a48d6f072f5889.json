@@ -1,0 +1,27 @@
+{
+  "sha256": "a652ccd70ad0c0d54b029a444045d519b09cd429bae3403844a48d6f072f5889",
+  "file": "ILL0057.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"中\",\n  \"description\": \"建筑外墙大量线缆杂乱缠绕、成团下垂，并连接多个设备箱，存在私拉乱接和线路固定不规范问题；易造成线路短路、火灾、触电及通信中断风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙设备箱及线缆集中缠绕处\",\n  \"rectification\": [\n    \"由专业单位梳理、规整线缆，拆除废弃线路\",\n    \"将线缆穿管或入桥架固定，避免杂乱下垂\",\n    \"检查设备箱及线路绝缘、接地和标识，消除私接风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "建筑外墙大量线缆杂乱缠绕、成团下垂，并连接多个设备箱，存在私拉乱接和线路固定不规范问题；易造成线路短路、火灾、触电及通信中断风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙设备箱及线缆集中缠绕处",
+    "rectification": [
+      "由专业单位梳理、规整线缆，拆除废弃线路",
+      "将线缆穿管或入桥架固定，避免杂乱下垂",
+      "检查设备箱及线路绝缘、接地和标识，消除私接风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

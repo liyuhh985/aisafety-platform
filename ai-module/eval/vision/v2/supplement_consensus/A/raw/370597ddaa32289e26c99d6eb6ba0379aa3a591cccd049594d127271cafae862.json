@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"vehicle_occupancy\", \"evidence\": \"蓝色轿车停于路中间，白色轿车停靠路边占用车道\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "蓝色轿车停于路中间，白色轿车停靠路边占用车道"
+  }
+}

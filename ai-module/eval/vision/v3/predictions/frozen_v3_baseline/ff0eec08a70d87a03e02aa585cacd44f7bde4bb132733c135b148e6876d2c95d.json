@@ -1,0 +1,23 @@
+{
+  "sha256": "ff0eec08a70d87a03e02aa585cacd44f7bde4bb132733c135b148e6876d2c95d",
+  "file": "neg_37_ff0eec08a70d.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"燃气表及管道外观完好、固定牢固，黄色警示标识清晰，未发现破损、锈蚀、泄漏或私接乱接等异常，属正常合规安装。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "燃气表及管道外观完好、固定牢固，黄色警示标识清晰，未发现破损、锈蚀、泄漏或私接乱接等异常，属正常合规安装。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

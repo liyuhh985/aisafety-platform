@@ -1,0 +1,27 @@
+{
+  "sha256": "11f0b686ea4a53e91cb879248fc5ad0bdfe4aaaa4df032505f99144524e4be02",
+  "file": "TEM0036.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"墙体内开槽处密集堆放大量彩色电线，未穿管保护，部分线头裸露散落，电线绝缘层易破损。存在短路、漏电及引发火灾的严重隐患，同时破坏墙体结构。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内墙面开槽处\",\n  \"rectification\": [\n    \"立即断电，由专业电工重新整理并规范布线\",\n    \"所有电线必须穿阻燃管保护并固定，严禁直接裸露填埋\",\n    \"清理散落线头和建筑垃圾，修复受损墙体\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "墙体内开槽处密集堆放大量彩色电线，未穿管保护，部分线头裸露散落，电线绝缘层易破损。存在短路、漏电及引发火灾的严重隐患，同时破坏墙体结构。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙面开槽处",
+    "rectification": [
+      "立即断电，由专业电工重新整理并规范布线",
+      "所有电线必须穿阻燃管保护并固定，严禁直接裸露填埋",
+      "清理散落线头和建筑垃圾，修复受损墙体"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

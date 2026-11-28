@@ -1,0 +1,26 @@
+{
+  "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+  "file": "neg_22_7835a78717bb.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"电梯楼层按钮面板中6层按钮外盖明显破损、碎裂，内部按键及缝隙暴露，可能导致按键失灵、卡阻、划伤或电路故障，影响电梯正常安全使用。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯楼层按钮面板6层按钮处\",\n  \"rectification\": [\n    \"立即停用并检修该按钮，设置警示，防止乘客继续按压破损处。\",\n    \"更换破损按钮及面板，检查内部线路绝缘和接地，修复后试运行并加强日常巡检。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "电梯楼层按钮面板中6层按钮外盖明显破损、碎裂，内部按键及缝隙暴露，可能导致按键失灵、卡阻、划伤或电路故障，影响电梯正常安全使用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯楼层按钮面板6层按钮处",
+    "rectification": [
+      "立即停用并检修该按钮，设置警示，防止乘客继续按压破损处。",
+      "更换破损按钮及面板，检查内部线路绝缘和接地，修复后试运行并加强日常巡检。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

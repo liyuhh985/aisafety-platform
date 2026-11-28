@@ -1,0 +1,29 @@
+{
+  "sha256": "5b767c06295f8f25ff7492324727f25fdf3317632a91ab5b412d50077421e187",
+  "file": "GAR0008.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"施工围挡外侧道路旁堆放大量生活垃圾和建筑废弃物，形成较大垃圾堆，挤占路面且混杂可燃物，易滋生蚊蝇、扬尘，存在火灾和通行受阻风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"工地围挡外侧的土路旁\",\n  \"rectification\": [\n    \"立即清运分类垃圾，消除占道和可燃物堆积\",\n    \"设置规范垃圾收集容器或围挡，禁止随意倾倒\",\n    \"加强日常巡查和视频监管，落实责任单位清理\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "施工围挡外侧道路旁堆放大量生活垃圾和建筑废弃物，形成较大垃圾堆，挤占路面且混杂可燃物，易滋生蚊蝇、扬尘，存在火灾和通行受阻风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "工地围挡外侧的土路旁",
+    "rectification": [
+      "立即清运分类垃圾，消除占道和可燃物堆积",
+      "设置规范垃圾收集容器或围挡，禁止随意倾倒",
+      "加强日常巡查和视频监管，落实责任单位清理"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

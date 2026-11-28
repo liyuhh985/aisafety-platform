@@ -1,0 +1,27 @@
+{
+  "sha256": "f380dbe2ef3507209a2e2dc1d38df3d4410418129d1f0d9aec2e643ddcf68a66",
+  "file": "SCA0047.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙脚手架外侧未满挂密目式安全网，架体底部未完全封闭，部分立杆直接落地，周边材料及杂物堆放，存在人员坠落和物体打击风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙正面脚手架及底部作业区\",\n  \"rectification\": [\n    \"立即补齐脚手架外侧密目式安全网，封闭架体底部临边和开口部位\",\n    \"检查并完善连墙件、剪刀撑及立杆底座垫板，确保架体稳定\",\n    \"清理脚手架周边材料杂物，设置警戒隔离并加强现场安全巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "建筑外墙脚手架外侧未满挂密目式安全网，架体底部未完全封闭，部分立杆直接落地，周边材料及杂物堆放，存在人员坠落和物体打击风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙正面脚手架及底部作业区",
+    "rectification": [
+      "立即补齐脚手架外侧密目式安全网，封闭架体底部临边和开口部位",
+      "检查并完善连墙件、剪刀撑及立杆底座垫板，确保架体稳定",
+      "清理脚手架周边材料杂物，设置警戒隔离并加强现场安全巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

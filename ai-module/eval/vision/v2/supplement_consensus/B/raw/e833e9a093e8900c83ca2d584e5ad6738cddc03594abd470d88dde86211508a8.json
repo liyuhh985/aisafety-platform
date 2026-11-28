@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"drainage_flood\", \"evidence\": \"路面开挖坑内管道喷水，坑内积水\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "evidence": "路面开挖坑内管道喷水，坑内积水"
+  }
+}

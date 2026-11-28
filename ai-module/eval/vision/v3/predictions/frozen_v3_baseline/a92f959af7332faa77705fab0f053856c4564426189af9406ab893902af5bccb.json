@@ -1,0 +1,28 @@
+{
+  "sha256": "a92f959af7332faa77705fab0f053856c4564426189af9406ab893902af5bccb",
+  "file": "neg_54_a92f959af733.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_barrier\",\"severity\":\"中\",\"description\":\"人行道改造施工现场仅见零散白色围挡，施工区域与车行道、行人通道之间未设连续封闭围挡，且缺少锥桶、警示牌等安全警示，行人或车辆误入可能发生碰撞、坠落。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"药店门前沿街人行道地砖铺设施工区\",\"rectification\":[\"沿施工边界设置连续、稳固的硬质围挡，并封闭作业区域。\",\"在来车和行人方向增设锥桶、警示牌及夜间警示灯，安排人员疏导。\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "人行道改造施工现场仅见零散白色围挡，施工区域与车行道、行人通道之间未设连续封闭围挡，且缺少锥桶、警示牌等安全警示，行人或车辆误入可能发生碰撞、坠落。",
+    "reason_if_no_hazard": "",
+    "location_hint": "药店门前沿街人行道地砖铺设施工区",
+    "rectification": [
+      "沿施工边界设置连续、稳固的硬质围挡，并封闭作业区域。",
+      "在来车和行人方向增设锥桶、警示牌及夜间警示灯，安排人员疏导。"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

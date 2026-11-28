@@ -1,0 +1,27 @@
+{
+  "sha256": "5b767c06295f8f25ff7492324727f25fdf3317632a91ab5b412d50077421e187",
+  "file": "garbage_pile_1_5b767c06295f.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"施工围挡外侧、土路旁堆积大量生活垃圾与建筑废料，体量大且混杂，可能滋生蚊虫、产生异味，并存在可燃物堆积引发火灾的风险，影响周边环境卫生与通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工围挡外侧、土路旁\",\n  \"rectification\": [\n    \"尽快组织清运垃圾，按生活垃圾与建筑垃圾规范分类处置\",\n    \"在易倾倒区域设置禁止倾倒垃圾警示牌并加强巡查\",\n    \"完善围挡周边环境卫生管理，避免垃圾长期露天堆放\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "施工围挡外侧、土路旁堆积大量生活垃圾与建筑废料，体量大且混杂，可能滋生蚊虫、产生异味，并存在可燃物堆积引发火灾的风险，影响周边环境卫生与通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工围挡外侧、土路旁",
+    "rectification": [
+      "尽快组织清运垃圾，按生活垃圾与建筑垃圾规范分类处置",
+      "在易倾倒区域设置禁止倾倒垃圾警示牌并加强巡查",
+      "完善围挡周边环境卫生管理，避免垃圾长期露天堆放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

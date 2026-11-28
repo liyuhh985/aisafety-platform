@@ -1,0 +1,27 @@
+{
+  "sha256": "3d9209e7d4266c4c2e0d93d3a603d8603eb64a48898040c34a48595b0f4891ff",
+  "file": "blind_path_occupied_4_3d9209e7d426.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"blind_path_occupied\",\"severity\":\"中\",\"description\":\"公交站候车亭座椅及立柱直接占压、阻断人行道盲道，盲道连续性被破坏，视障人士通行时易碰撞候车亭构件或偏离路线，存在碰撞、绊倒风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"公交站候车亭内盲道与座椅交叠处\",\"rectification\":[\"调整候车亭座椅或围挡位置，恢复盲道连续、畅通\",\"整改前设置警示标识和临时引导，避免视障人士误入\",\"排查该站台盲道设置是否符合无障碍通行规范\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "公交站候车亭座椅及立柱直接占压、阻断人行道盲道，盲道连续性被破坏，视障人士通行时易碰撞候车亭构件或偏离路线，存在碰撞、绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "公交站候车亭内盲道与座椅交叠处",
+    "rectification": [
+      "调整候车亭座椅或围挡位置，恢复盲道连续、畅通",
+      "整改前设置警示标识和临时引导，避免视障人士误入",
+      "排查该站台盲道设置是否符合无障碍通行规范"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

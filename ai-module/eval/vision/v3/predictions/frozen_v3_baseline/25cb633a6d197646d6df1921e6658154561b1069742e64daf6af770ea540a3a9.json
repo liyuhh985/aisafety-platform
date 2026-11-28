@@ -1,0 +1,29 @@
+{
+  "sha256": "25cb633a6d197646d6df1921e6658154561b1069742e64daf6af770ea540a3a9",
+  "file": "dangerous_building_1_25cb633a6d19.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"白色围墙旁有构筑物或顶板坍塌，砖石散落，墙体存在倾斜、开裂和受潮污损迹象，墙边仍可通行；警示牌提示危险但未见有效隔离，存在墙体继续倒塌、构件坠落伤人风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"白色围墙右侧及墙脚区域（警示牌旁）\",\n  \"rectification\": [\n    \"立即设置硬质围挡、警戒线和醒目警示标志，禁止人员靠近和通行\",\n    \"委托专业机构对墙体及坍塌构筑物进行检测鉴定，视情况拆除或加固\",\n    \"清理散落砖石和坍塌构件，并做好排水、防潮处理，防止墙体继续劣化\"\n  ],\n  \"secondary_subcategories\": [\n    \"falling_object\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "白色围墙旁有构筑物或顶板坍塌，砖石散落，墙体存在倾斜、开裂和受潮污损迹象，墙边仍可通行；警示牌提示危险但未见有效隔离，存在墙体继续倒塌、构件坠落伤人风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "白色围墙右侧及墙脚区域（警示牌旁）",
+    "rectification": [
+      "立即设置硬质围挡、警戒线和醒目警示标志，禁止人员靠近和通行",
+      "委托专业机构对墙体及坍塌构筑物进行检测鉴定，视情况拆除或加固",
+      "清理散落砖石和坍塌构件，并做好排水、防潮处理，防止墙体继续劣化"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

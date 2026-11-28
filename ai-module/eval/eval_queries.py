@@ -1,6 +1,6 @@
 """评测查询集：检索评测与分类评测共用同一份，避免两条线的查询漂移。
 
-- QUERY_SET：32 个小类 × 2 种问法
+- QUERY_SET：33 个小类 × 2 种问法
     style="explicit"  直白描述，含类别特征词
     style="colloquial" 口语/同义改写，尽量不含标准类别词（测语义检索）
 - NEGATIVE_SET：真无关查询（用于范围护栏与检索空结果率）
@@ -108,6 +108,18 @@ QUERY_SET = (
         "subcategory": "street_light_pole",
         "style": "colloquial",
     },
+    {
+        "query": "台风过后行道树严重倾斜，大枯枝悬垂在人行道上",
+        "major": "municipal",
+        "subcategory": "tree_fall_hazard",
+        "style": "explicit",
+    },
+    {
+        "query": "路边那棵树歪得很厉害，一根大树枝快掉下来，下面天天有人走",
+        "major": "municipal",
+        "subcategory": "tree_fall_hazard",
+        "style": "colloquial",
+    },
     # ---------- 消防安全 ----------
     {
         "query": "高层住宅消防车通道被私家车和杂物长期占用",
@@ -122,27 +134,27 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "楼道消火栓箱被上锁，灭火器压力表指针已在红区过期",
+        "query": "楼道消火栓箱被上锁、灭火器过期，厂区消防水池水位不足且室外消火栓无水",
         "major": "fire",
         "subcategory": "fire_equipment_fault",
         "style": "explicit",
     },
     {
-        "query": "楼里的灭火器早就没压力了，那个水管的箱子也锁死了打不开",
+        "query": "楼里的灭火器没压力，水管箱也锁死了，拧开室外消防龙头一滴水都没有",
         "major": "fire",
         "subcategory": "fire_equipment_fault",
         "style": "colloquial",
     },
     {
-        "query": "厂区消防水池水位不足，室外消火栓放不出水",
+        "query": "高层住宅架空层违规停放电动自行车并飞线充电，电池还被带入室内",
         "major": "fire",
-        "subcategory": "fire_water_abnormal",
+        "subcategory": "ebike_hazard",
         "style": "explicit",
     },
     {
-        "query": "拧开那个消防用的水龙头，一滴水都出不来",
+        "query": "有人把电动车推进楼道充电，还从楼上拉线下来，电池也拿回家",
         "major": "fire",
-        "subcategory": "fire_water_abnormal",
+        "subcategory": "ebike_hazard",
         "style": "colloquial",
     },
     # ---------- 建筑安全 ----------
@@ -159,37 +171,13 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "住宅楼外墙出现贯穿性裂缝，墙体明显倾斜",
-        "major": "building",
-        "subcategory": "wall_crack_lean",
-        "style": "explicit",
-    },
-    {
-        "query": "我家楼上的墙裂了一条大缝，从上到下，看着要倒",
-        "major": "building",
-        "subcategory": "wall_crack_lean",
-        "style": "colloquial",
-    },
-    {
-        "query": "高层大厦外立面大理石瓷砖脱落砸坏车辆",
-        "major": "building",
-        "subcategory": "facade_fall",
-        "style": "explicit",
-    },
-    {
-        "query": "楼上掉下来一大块外墙的砖，把车都砸穿了",
-        "major": "building",
-        "subcategory": "facade_fall",
-        "style": "colloquial",
-    },
-    {
-        "query": "住户从高层抛掷红酒瓶，砸碎汽车挡风玻璃",
+        "query": "高层大厦外立面瓷砖脱落砸车，住户还从楼上抛掷红酒瓶砸碎车窗",
         "major": "building",
         "subcategory": "falling_object",
         "style": "explicit",
     },
     {
-        "query": "楼上有人往下扔东西，瓶子掉下来把车玻璃砸碎了",
+        "query": "楼上掉下一大块外墙砖，还有人往下扔瓶子，车都被砸了",
         "major": "building",
         "subcategory": "falling_object",
         "style": "colloquial",
@@ -232,13 +220,13 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "沿街商铺私拉乱接电线给电动车充电，线缆横跨人行道",
+        "query": "沿街商铺私拉乱接电线给门头灯箱供电，接线凌乱垂挂外墙",
         "major": "utility",
         "subcategory": "illegal_wiring",
         "style": "explicit",
     },
     {
-        "query": "店老板从店里扯了根线出来充电动车，线就搭在地上",
+        "query": "店老板从店里扯了根接线板挂到户外广告牌下面供电，电线缠了一大团",
         "major": "utility",
         "subcategory": "illegal_wiring",
         "style": "colloquial",
@@ -328,6 +316,18 @@ QUERY_SET = (
         "subcategory": "temporary_power",
         "style": "colloquial",
     },
+    {
+        "query": "工人未通风检测就进入污水井作业，发生硫化氢中毒",
+        "major": "construction",
+        "subcategory": "confined_space",
+        "style": "explicit",
+    },
+    {
+        "query": "有人下化粪池清掏，没先通风也没人看着，下去就晕了",
+        "major": "construction",
+        "subcategory": "confined_space",
+        "style": "colloquial",
+    },
     # ---------- 电梯与特种设备 ----------
     {
         "query": "客运电梯故障急停困人超过半小时，救援超时",
@@ -391,13 +391,25 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "公共区域出现来源不明的危化品桶，气味刺鼻无人认领",
+        "query": "居民区车库存放不明化工桶和易燃溶剂，气味刺鼻且无消防设施",
+        "major": "environment_other",
+        "subcategory": "hazmat_storage",
+        "style": "explicit",
+    },
+    {
+        "query": "小区车库堆着好多没标签的桶，味道很大，旁边就是住户",
+        "major": "environment_other",
+        "subcategory": "hazmat_storage",
+        "style": "colloquial",
+    },
+    {
+        "query": "公园健身器材的连接处断裂，尖锐金属头裸露划伤儿童",
         "major": "environment_other",
         "subcategory": "other",
         "style": "explicit",
     },
     {
-        "query": "路边放着几个大桶，也不知道装的什么，有股味儿",
+        "query": "小区游乐设施坏了个口子，边角特别尖，小孩容易划伤",
         "major": "environment_other",
         "subcategory": "other",
         "style": "colloquial",

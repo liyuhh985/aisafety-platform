@@ -1,0 +1,27 @@
+{
+  "sha256": "425689bf4e3036f29551e7ed7a32b07c1aee7d23195c4dceedf1a609f57350eb",
+  "file": "MAN0103.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"人行道上一处方形井盖/盖板严重破损缺失，周边地砖碎裂形成坑洞，紧邻盲道且人流密集，行人易绊倒或踩空坠落受伤。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"步行街人行道，盲道旁红色圈出处\",\n  \"rectification\": [\n    \"立即设置围挡和警示标志，防止行人靠近\",\n    \"尽快更换或修复破损井盖，并加固周边松动地砖\",\n    \"排查该路段同类井盖和路面破损情况，及时消除隐患\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "人行道上一处方形井盖/盖板严重破损缺失，周边地砖碎裂形成坑洞，紧邻盲道且人流密集，行人易绊倒或踩空坠落受伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "步行街人行道，盲道旁红色圈出处",
+    "rectification": [
+      "立即设置围挡和警示标志，防止行人靠近",
+      "尽快更换或修复破损井盖，并加固周边松动地砖",
+      "排查该路段同类井盖和路面破损情况，及时消除隐患"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

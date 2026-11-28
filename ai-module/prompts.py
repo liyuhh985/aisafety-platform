@@ -37,17 +37,16 @@ VISION_PROMPT = """你是一个城市安全隐患排查专家。请仔细分析�
     road_surface_collapse     路面塌陷、坑洞
     drainage_flood            排水不畅、积水内涝
     street_light_pole         路灯或线杆损坏
+    tree_fall_hazard          树木倒伏/断枝风险（已倒伏阻断道路/压线，或严重倾斜、大枯枝悬垂）
 
   【fire 消防安全】
     fire_lane_blocked         消防通道被占用、堵塞
-    fire_equipment_fault      消防设施故障（消火栓、灭火器、喷淋、报警器）
-    fire_water_abnormal       消防水源异常
+    fire_equipment_fault      消防设施故障（消火栓、灭火器、喷淋、报警器、防火门/卷帘、应急照明/疏散指示，以及消防水池缺水、管网/室外消火栓无水无压或被埋压）
+    ebike_hazard              电动自行车违规停放/充电（进楼道/电梯/架空层、电池入户、飞线充电、改装或发热冒烟）
 
   【building 建筑安全】
-    dangerous_building        危房、结构失稳
-    wall_crack_lean           墙体开裂或倾斜
-    facade_fall               外立面脱落（瓷砖、抹灰、幕墙）
-    falling_object            高空坠物风险
+    dangerous_building        危房、结构失稳（墙体开裂、整体倾斜、地基沉降、承重构件变形）
+    falling_object            高空坠物风险（外立面瓷砖/抹灰/幕墙脱落、空调支架/广告牌/花盆等外挂物、人为高空抛物）
     illegal_structure         违规搭建、私搭乱建
 
   【utility 电气与燃气】
@@ -63,6 +62,7 @@ VISION_PROMPT = """你是一个城市安全隐患排查专家。请仔细分析�
     scaffold_guard            脚手架或临边防护缺陷
     deep_pit                  深基坑、开挖无防护
     temporary_power           施工临时用电违规
+    confined_space            有限空间作业风险（化粪池、污水井、地下管廊、泵站、储罐，未通风检测或无人监护）
 
   【elevator_special 电梯与特种设备】
     elevator_trapped          电梯困人
@@ -72,24 +72,26 @@ VISION_PROMPT = """你是一个城市安全隐患排查专家。请仔细分析�
   【environment_other 环境与其他】
     garbage_pile              垃圾堆积
     sewage_odor               污水外溢、异味
-    other                     其他不适用上述类别的隐患
+    hazmat_storage            危化品/易燃易爆违规存运（不明化工桶、易燃溶剂、液化气瓶、烟花爆竹）
+    other                     其他不适用上述类别的真实长尾隐患
 
 - 判别要点（易混淆项）:
   1. 井盖破损 → municipal/manhole_damage；路面整体塌陷、形成不规则坑洞 → municipal/road_surface_collapse。井盖破损通常可见圆形井盖或残片，塌陷通常是自然漏斗状、边缘不规则。
   2. 施工无警示 vs 路面塌陷 → construction/no_warning vs municipal/road_surface_collapse。人工开挖的规整沟槽且无警示归 construction/no_warning；自然形成的不规则坑洞归 municipal/road_surface_collapse。
   3. 未设置围挡 vs 无安全警示 → construction/no_barrier vs construction/no_warning。缺少沿边界连续实体屏障归 construction/no_barrier；缺少锥桶、标牌等警示归 construction/no_warning。
-  4. 墙体开裂 vs 危房 → building/wall_crack_lean vs building/dangerous_building。仅有裂缝或倾斜迹象归 building/wall_crack_lean；出现整体倾斜、坍塌或临时支撑等结构失稳证据归 building/dangerous_building。
-  5. 外立面脱落 vs 高空坠物 → building/facade_fall vs building/falling_object。墙面瓷砖、抹灰或幕墙层脱落归 building/facade_fall；空调机、花盆等外挂物松动有坠落风险归 building/falling_object。
-  6. 燃气泄漏 vs 管道老化 → utility/gas_leak vs utility/gas_pipe_aging。可见气泡、水渍或其他泄漏迹象归 utility/gas_leak；仅有锈蚀、漆面剥落等老化迹象归 utility/gas_pipe_aging。
-  7. 裸露电线 vs 私拉乱接 → utility/exposed_wire vs utility/illegal_wiring。原有线路绝缘破损归 utility/exposed_wire；存在从窗口、电表等位置拉出的明确私接路径归 utility/illegal_wiring。
-  8. 施工临时用电 vs 裸露电线 → 工地场景优先 construction/temporary_power；非工地场景归 utility/exposed_wire。
-  9. 电梯停运 vs 电梯困人 → elevator_stopped vs elevator_trapped。没有人员被困证据的停运、异响或停层异常归 elevator_stopped；轿厢内可见人员被困才归 elevator_trapped。
-  10. 车辆占道 vs 消防通道占用 → traffic/vehicle_occupancy vs fire/fire_lane_blocked。一般道路违停归 traffic/vehicle_occupancy；有黄黑斜纹、消防通道文字或明确标识的区域被占用归 fire/fire_lane_blocked。
+  4. 燃气泄漏 vs 管道老化 → utility/gas_leak vs utility/gas_pipe_aging。可见气泡、水渍或其他泄漏迹象归 utility/gas_leak；仅有锈蚀、漆面剥落等老化迹象归 utility/gas_pipe_aging。
+  5. 裸露电线 vs 私拉乱接 → utility/exposed_wire vs utility/illegal_wiring。原有线路绝缘破损归 utility/exposed_wire；存在从窗口、电表等位置拉出的明确私接路径归 utility/illegal_wiring。
+  6. 施工临时用电 vs 裸露电线 → 工地场景优先 construction/temporary_power；非工地场景归 utility/exposed_wire。
+  7. 电梯停运 vs 电梯困人 → elevator_stopped vs elevator_trapped。没有人员被困证据的停运、异响或停层异常归 elevator_stopped；轿厢内可见人员被困才归 elevator_trapped。
+  8. 车辆占道 vs 消防通道占用 → traffic/vehicle_occupancy vs fire/fire_lane_blocked。一般道路违停归 traffic/vehicle_occupancy；有黄黑斜纹、消防通道文字或明确标识的区域被占用归 fire/fire_lane_blocked。
 - 消防通道占用（通道、出口被堵塞）和消防设施故障（消火栓、灭火器、喷淋、报警器等设备老旧、损坏或无法使用）必须分开判断，分别使用 fire_lane_blocked 和 fire_equipment_fault。
+- 电动自行车进楼道/电梯/架空层停放充电、电池入户或飞线充电，主类归 fire/ebike_hazard；若同时存在私接线路，可把 utility/illegal_wiring 写入 secondary_subcategories，但不要把主类留在 illegal_wiring。
+- 危化品、易燃溶剂、液化气瓶或烟花爆竹的违规存放运输归 environment_other/hazmat_storage，不得继续归 environment_other/other。
+- 树木倒伏、断枝或大枯枝悬垂归 municipal/tree_fall_hazard；路灯/线杆本体损坏仍归 municipal/street_light_pole，外挂物从高处坠落归 building/falling_object。
 - severity 必须是 高 / 中 / 低 之一；confidence 必须是 高 / 中 / 低 之一。
 - 若同时存在多个独立隐患，把次要隐患的小类码写入 secondary_subcategories 数组，否则填空数组。
-- 只有在图片明显与安全隐患无关时才可设置 has_hazard 为 false，例如人物肖像、风景、动物、纯文字图片或合规场景（车辆规范停放、消防设施完好、工地围挡齐全）。has_hazard 为 false 时必须填写 reason_if_no_hazard；hazard_category、major_category、subcategory、severity、description、location_hint 填空字符串，rectification 和 secondary_subcategories 填空数组。
-- 图片模棱两可、信息不完整或无法确认时，必须设置 has_hazard 为 true、major_category 为 environment_other、subcategory 为 other、hazard_category 为 环境与其他、confidence 为 低，并基于可见信息说明不确定性。
+- 只有在图片明显与安全隐患无关或属于规范合规场景（如人物肖像、风景、动物、纯文字图片、车辆规范停放、消防设施完好、工地围挡齐全）时，设置 has_hazard 为 false 并填写 reason_if_no_hazard；hazard_category、major_category、subcategory、severity、description、location_hint 填空字符串，rectification 和 secondary_subcategories 填空数组。
+- 若因画面遮挡、模糊、信息不完整或无清晰客观异常依据而无法确认安全隐患，同样设置 has_hazard 为 false、confidence 为 低，并在 reason_if_no_hazard 填写“图像证据不足，无法确认安全隐患”；不得为了报出隐患而强行归入 environment_other/other。
 - 只输出 JSON。"""
 
 

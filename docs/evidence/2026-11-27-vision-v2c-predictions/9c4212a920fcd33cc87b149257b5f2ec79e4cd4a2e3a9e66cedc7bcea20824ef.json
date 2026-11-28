@@ -1,0 +1,27 @@
+{
+  "sha256": "9c4212a920fcd33cc87b149257b5f2ec79e4cd4a2e3a9e66cedc7bcea20824ef",
+  "file": "GAR0007.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"垃圾分类台旁及人行通道上大量垃圾、落叶和塑料袋堆积，未及时清运，占用通行空间并影响环境卫生，存在滋生蚊虫、异味及可燃物聚集引发火情的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑旁垃圾分类台前及人行通道地面\",\n  \"rectification\": [\n    \"立即清运堆积垃圾和落叶，恢复通道整洁畅通\",\n    \"增加垃圾清运频次，避免垃圾分类台周边再次满溢\",\n    \"设置规范垃圾收集容器并加强日常巡查管理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "垃圾分类台旁及人行通道上大量垃圾、落叶和塑料袋堆积，未及时清运，占用通行空间并影响环境卫生，存在滋生蚊虫、异味及可燃物聚集引发火情的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑旁垃圾分类台前及人行通道地面",
+    "rectification": [
+      "立即清运堆积垃圾和落叶，恢复通道整洁畅通",
+      "增加垃圾清运频次，避免垃圾分类台周边再次满溢",
+      "设置规范垃圾收集容器并加强日常巡查管理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

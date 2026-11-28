@@ -1,0 +1,28 @@
+{
+  "sha256": "aa00f5968bee268c045d07d0f172faf983a33e50b2a31494d222f97438b81938",
+  "file": "GAR0009.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"垃圾桶外及车旁大量生活垃圾袋随意堆放，占用通行空间，易滋生蚊蝇、产生异味，并存在可燃物起火风险；近景人行道铺装大面积碎裂缺失，形成坑洼，行人易绊倒。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"垃圾桶旁及近景人行道\",\n  \"rectification\": [\n    \"及时清运垃圾桶外堆积垃圾，增加清运频次并规范垃圾投放\",\n    \"修复碎裂缺失的人行道铺装，设置临时警示并尽快找平\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_surface_collapse\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "垃圾桶外及车旁大量生活垃圾袋随意堆放，占用通行空间，易滋生蚊蝇、产生异味，并存在可燃物起火风险；近景人行道铺装大面积碎裂缺失，形成坑洼，行人易绊倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "垃圾桶旁及近景人行道",
+    "rectification": [
+      "及时清运垃圾桶外堆积垃圾，增加清运频次并规范垃圾投放",
+      "修复碎裂缺失的人行道铺装，设置临时警示并尽快找平"
+    ],
+    "secondary_subcategories": [
+      "road_surface_collapse"
+    ]
+  },
+  "error": ""
+}

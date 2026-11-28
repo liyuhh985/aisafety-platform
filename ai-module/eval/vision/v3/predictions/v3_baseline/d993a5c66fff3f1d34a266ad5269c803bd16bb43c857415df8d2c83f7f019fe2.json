@@ -1,0 +1,27 @@
+{
+  "sha256": "d993a5c66fff3f1d34a266ad5269c803bd16bb43c857415df8d2c83f7f019fe2",
+  "file": "fire_lane_blocked_1_d993a5c66fff.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"小区内部道路两侧密集停放机动车，通行空间被明显压缩，会车和行人通行不便，紧急情况下可能影响消防车、救护车等应急车辆通行。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"小区内部道路两侧停车密集区域\",\"rectification\":[\"清理违规占道车辆，保障道路基本通行宽度\",\"合理施划停车位并设置禁停、消防通道标识\",\"加强日常巡查，禁止在通道两侧随意停车\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "小区内部道路两侧密集停放机动车，通行空间被明显压缩，会车和行人通行不便，紧急情况下可能影响消防车、救护车等应急车辆通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区内部道路两侧停车密集区域",
+    "rectification": [
+      "清理违规占道车辆，保障道路基本通行宽度",
+      "合理施划停车位并设置禁停、消防通道标识",
+      "加强日常巡查，禁止在通道两侧随意停车"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

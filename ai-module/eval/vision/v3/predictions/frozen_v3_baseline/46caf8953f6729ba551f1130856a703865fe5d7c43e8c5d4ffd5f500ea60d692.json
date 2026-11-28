@@ -1,0 +1,27 @@
+{
+  "sha256": "46caf8953f6729ba551f1130856a703865fe5d7c43e8c5d4ffd5f500ea60d692",
+  "file": "tree_fall_hazard_2_46caf8953f67.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"大树倒伏、断枝压覆灰色SUV，枝干占据道路，可能造成车辆损坏、人员受伤，并影响通行及后续断枝坠落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁树木倒伏处，灰色SUV上方及周边路面\",\n  \"rectification\": [\n    \"立即设置警戒线并疏散周边人员，防止二次断枝坠落伤人\",\n    \"联系园林、应急等部门清理倒伏树木，检查车辆及人员受损情况\",\n    \"排查周边树木倾斜、枯枝悬垂等同类风险并处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "大树倒伏、断枝压覆灰色SUV，枝干占据道路，可能造成车辆损坏、人员受伤，并影响通行及后续断枝坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁树木倒伏处，灰色SUV上方及周边路面",
+    "rectification": [
+      "立即设置警戒线并疏散周边人员，防止二次断枝坠落伤人",
+      "联系园林、应急等部门清理倒伏树木，检查车辆及人员受损情况",
+      "排查周边树木倾斜、枯枝悬垂等同类风险并处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

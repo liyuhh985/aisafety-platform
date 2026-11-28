@@ -53,6 +53,7 @@ ai-module/db/case_embeddings.json
 ai-module/test_images/
 uploads/
 demo.png
+ai-module/eval/vision/_*.json
 ai-module/eval/vision/_archive/
 ai-module/eval/vision/images_merged/
 ai-module/eval/vision/negatives/
@@ -117,3 +118,11 @@ ai-module/db/question_source.txt
 # 前端改动工作副本（仅本地同步用）
 .frontend-work/
 
+# 个人简历/面试材料
+/output/
+
+# v3 视觉评测原始图片与本地审核产物（体积 >500MB，不入库）
+ai-module/eval/vision/v3/candidates_raw/
+ai-module/eval/vision/v3/frozen_images/
+ai-module/eval/vision/v3/images/
+ai-module/eval/vision/v3/previews/

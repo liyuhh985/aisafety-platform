@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"environment_other\", \"subcategory\": \"sewage_overflow\", \"evidence\": \"河道水体发黑，水面漂浮垃圾杂物\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "sewage_overflow",
+    "evidence": "河道水体发黑，水面漂浮垃圾杂物"
+  }
+}

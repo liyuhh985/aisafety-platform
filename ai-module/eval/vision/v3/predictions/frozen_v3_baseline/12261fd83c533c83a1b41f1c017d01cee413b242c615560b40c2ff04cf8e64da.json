@@ -1,0 +1,23 @@
+{
+  "sha256": "12261fd83c533c83a1b41f1c017d01cee413b242c615560b40c2ff04cf8e64da",
+  "file": "neg_48_12261fd83c53.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面中路面平整、建筑外立面及附属设施未见明显异常，电动车/摩托车停放在划定区域，未见进楼道充电、占道堵塞或设施损坏等安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中路面平整、建筑外立面及附属设施未见明显异常，电动车/摩托车停放在划定区域，未见进楼道充电、占道堵塞或设施损坏等安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

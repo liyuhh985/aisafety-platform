@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"scaffold_guard\", \"evidence\": \"楼面临边无防护栏杆，临边堆放砂料杂物\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "evidence": "楼面临边无防护栏杆，临边堆放砂料杂物"
+  }
+}

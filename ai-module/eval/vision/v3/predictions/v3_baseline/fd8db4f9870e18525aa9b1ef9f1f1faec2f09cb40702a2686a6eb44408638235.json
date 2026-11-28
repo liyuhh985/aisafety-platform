@@ -1,0 +1,28 @@
+{
+  "sha256": "fd8db4f9870e18525aa9b1ef9f1f1faec2f09cb40702a2686a6eb44408638235",
+  "file": "vehicle_occupancy_3_fd8db4f9870e.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"中\",\n  \"description\": \"一辆银色轿车停放在人行道上，车身压覆黄色盲道并逼近人行横道标志杆，导致盲道通行空间被阻断，行人及视障人士需绕行，存在碰撞和通行安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行横道标志牌旁的人行道及盲道区域\",\n  \"rectification\": [\n    \"立即劝离或依法处罚违停车辆，恢复盲道和人行道畅通。\",\n    \"在人行道边缘增设隔离桩或护栏，并加强该路段巡查管理。\"\n  ],\n  \"secondary_subcategories\": [\n    \"vehicle_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "一辆银色轿车停放在人行道上，车身压覆黄色盲道并逼近人行横道标志杆，导致盲道通行空间被阻断，行人及视障人士需绕行，存在碰撞和通行安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行横道标志牌旁的人行道及盲道区域",
+    "rectification": [
+      "立即劝离或依法处罚违停车辆，恢复盲道和人行道畅通。",
+      "在人行道边缘增设隔离桩或护栏，并加强该路段巡查管理。"
+    ],
+    "secondary_subcategories": [
+      "vehicle_occupancy"
+    ]
+  },
+  "error": ""
+}

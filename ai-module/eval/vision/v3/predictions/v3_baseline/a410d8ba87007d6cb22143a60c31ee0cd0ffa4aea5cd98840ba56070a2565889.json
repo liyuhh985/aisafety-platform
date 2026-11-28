@@ -1,0 +1,27 @@
+{
+  "sha256": "a410d8ba87007d6cb22143a60c31ee0cd0ffa4aea5cd98840ba56070a2565889",
+  "file": "neg_36_a410d8ba8700.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"画面右侧幼儿园外墙旁、禁停标志下方有一辆红色SUV违规停放，占用道路边缘空间，可能影响通行视线，尤其幼儿园周边人车混行时存在安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面右侧幼儿园外墙旁禁停标志下\",\n  \"rectification\": [\n    \"劝离或依法处罚违停车辆，恢复道路通行空间\",\n    \"加强幼儿园周边巡查与违停管控\",\n    \"完善并保持禁停标志清晰可见，必要时增设隔离设施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "画面右侧幼儿园外墙旁、禁停标志下方有一辆红色SUV违规停放，占用道路边缘空间，可能影响通行视线，尤其幼儿园周边人车混行时存在安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面右侧幼儿园外墙旁禁停标志下",
+    "rectification": [
+      "劝离或依法处罚违停车辆，恢复道路通行空间",
+      "加强幼儿园周边巡查与违停管控",
+      "完善并保持禁停标志清晰可见，必要时增设隔离设施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

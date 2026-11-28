@@ -1,0 +1,27 @@
+{
+  "sha256": "231c24ad13703c64e9e11412dadea728ad2c8b76c791973dc4ebe215de6adfb8",
+  "file": "deep_pit_2_231c24ad1370.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"草地边缘发生大面积不规则塌陷，形成深坑，坑壁土体松散，周边仅设简易绳索围挡，行人或车辆靠近时有坠落、边坡二次坍塌风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"草地边坡处，塌陷坑口及周边\",\"rectification\":[\"立即设置硬质围挡和醒目警示，禁止人员车辆靠近\",\"组织地质或市政部门排查塌陷原因并评估边坡稳定性\",\"尽快回填、注浆加固或采取支护措施，消除二次坍塌风险\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "草地边缘发生大面积不规则塌陷，形成深坑，坑壁土体松散，周边仅设简易绳索围挡，行人或车辆靠近时有坠落、边坡二次坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "草地边坡处，塌陷坑口及周边",
+    "rectification": [
+      "立即设置硬质围挡和醒目警示，禁止人员车辆靠近",
+      "组织地质或市政部门排查塌陷原因并评估边坡稳定性",
+      "尽快回填、注浆加固或采取支护措施，消除二次坍塌风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

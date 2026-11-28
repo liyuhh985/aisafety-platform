@@ -1,0 +1,27 @@
+{
+  "sha256": "2c882f5221bae2627b7d79c77068f310a6faa3a34d2d7d5f16b5ff0d3c4a2663",
+  "file": "ELE0037.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯门处于开启状态，轿厢内有人员被困，消防人员正在使用梯子实施救援，存在被困人员受伤及救援过程中二次伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯口及电梯轿厢处\",\n  \"rectification\": [\n    \"立即组织专业救援，确保被困人员安全撤离并做好安抚\",\n    \"联系电梯维保单位排查停层异常及门系统故障，修复前停用电梯\",\n    \"救援现场设置警戒，防止无关人员靠近电梯井口\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯门处于开启状态，轿厢内有人员被困，消防人员正在使用梯子实施救援，存在被困人员受伤及救援过程中二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯口及电梯轿厢处",
+    "rectification": [
+      "立即组织专业救援，确保被困人员安全撤离并做好安抚",
+      "联系电梯维保单位排查停层异常及门系统故障，修复前停用电梯",
+      "救援现场设置警戒，防止无关人员靠近电梯井口"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

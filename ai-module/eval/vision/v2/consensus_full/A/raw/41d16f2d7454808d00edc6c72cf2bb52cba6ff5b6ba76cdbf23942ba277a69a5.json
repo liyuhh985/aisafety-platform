@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"柜内黄色燃气软管带阀门，连接状态无明显破损或泄漏可见证据\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "柜内黄色燃气软管带阀门，连接状态无明显破损或泄漏可见证据"
+  }
+}

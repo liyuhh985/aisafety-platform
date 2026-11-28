@@ -1,0 +1,23 @@
+{
+  "sha256": "e9a1088038ceedc8f3850b09524bb979f58e9eccb5ed47d46a9b75a575b36352",
+  "file": "NO0017.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为新闻视频截图，显示人员在荒地挖坑测试，未见明确城市公共区域、市政设施损坏或施工安全隐患信息，需人工复核。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "低",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为新闻视频截图，显示人员在荒地挖坑测试，未见明确城市公共区域、市政设施损坏或施工安全隐患信息，需人工复核。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

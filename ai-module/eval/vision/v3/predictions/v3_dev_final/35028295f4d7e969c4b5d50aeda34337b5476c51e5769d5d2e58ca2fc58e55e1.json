@@ -1,0 +1,29 @@
+{
+  "sha256": "35028295f4d7e969c4b5d50aeda34337b5476c51e5769d5d2e58ca2fc58e55e1",
+  "file": "sewage_odor_1_35028295f4d7.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"sewage_odor\",\"severity\":\"中\",\"description\":\"沟渠内水体浑浊发灰，水面及边坡有塑料、泡沫箱等漂浮垃圾，局部有淤积和疑似黑臭水体迹象，可能为沿线污水直排或排水不畅，易滋生蚊虫、产生异味并污染周边环境。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"沟渠水面及两侧边坡\",\"rectification\":[\"清理水面漂浮垃圾和沟渠淤积物\",\"排查沿线排污口并实施截污纳管\",\"定期清淤、监测水质并建立长效保洁机制\"],\"secondary_subcategories\":[\"garbage_pile\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "sewage_odor",
+    "severity": "中",
+    "description": "沟渠内水体浑浊发灰，水面及边坡有塑料、泡沫箱等漂浮垃圾，局部有淤积和疑似黑臭水体迹象，可能为沿线污水直排或排水不畅，易滋生蚊虫、产生异味并污染周边环境。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沟渠水面及两侧边坡",
+    "rectification": [
+      "清理水面漂浮垃圾和沟渠淤积物",
+      "排查沿线排污口并实施截污纳管",
+      "定期清淤、监测水质并建立长效保洁机制"
+    ],
+    "secondary_subcategories": [
+      "garbage_pile"
+    ]
+  },
+  "error": ""
+}

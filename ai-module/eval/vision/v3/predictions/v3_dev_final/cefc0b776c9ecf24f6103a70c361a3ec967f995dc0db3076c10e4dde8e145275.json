@@ -1,0 +1,30 @@
+{
+  "sha256": "cefc0b776c9ecf24f6103a70c361a3ec967f995dc0db3076c10e4dde8e145275",
+  "file": "distribution_box_fault_1_cefc0b776c9e.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"配电箱/控制箱敞开，内部导线绝缘破损、接线端子裸露，线缆杂乱无防护，存在触电、短路及电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内配电箱/控制柜内部\",\n  \"rectification\": [\n    \"立即断电并设置警示，由持证电工检修\",\n    \"更换损坏箱体或补齐防护盖板，封堵裸露接线端子\",\n    \"整理绑扎线缆，恢复绝缘并清理箱内杂物\",\n    \"检修后测量绝缘和接地，确认合格再送电\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "配电箱/控制箱敞开，内部导线绝缘破损、接线端子裸露，线缆杂乱无防护，存在触电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内配电箱/控制柜内部",
+    "rectification": [
+      "立即断电并设置警示，由持证电工检修",
+      "更换损坏箱体或补齐防护盖板，封堵裸露接线端子",
+      "整理绑扎线缆，恢复绝缘并清理箱内杂物",
+      "检修后测量绝缘和接地，确认合格再送电"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

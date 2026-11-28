@@ -1,0 +1,27 @@
+{
+  "sha256": "aacb1bc0feb8bb52b57bd0014c1e96d075b3b44b35c5ddc95ddca58a6525ae0b",
+  "file": "street_light_pole_1_aacb1bc0feb8.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"street_light_pole\",\"severity\":\"高\",\"description\":\"路边混凝土电线杆存在明显纵向裂缝，裂缝较长且较宽，杆体结构完整性受损，遇风雨或外力可能倒伏、断杆，危及行人和架空线路安全。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"路边绿化带旁的电线杆中下部\",\"rectification\":[\"立即设置警示围挡并加强巡查，防止人员靠近\",\"联系电力或市政产权单位进行结构检测，视情况加固或更换电线杆\",\"对杆上线路采取临时支撑或迁改措施，避免倒杆扯断线路\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "路边混凝土电线杆存在明显纵向裂缝，裂缝较长且较宽，杆体结构完整性受损，遇风雨或外力可能倒伏、断杆，危及行人和架空线路安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "路边绿化带旁的电线杆中下部",
+    "rectification": [
+      "立即设置警示围挡并加强巡查，防止人员靠近",
+      "联系电力或市政产权单位进行结构检测，视情况加固或更换电线杆",
+      "对杆上线路采取临时支撑或迁改措施，避免倒杆扯断线路"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

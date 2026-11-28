@@ -1,0 +1,30 @@
+{
+  "sha256": "fd4111daa0f7f5ebcbf748cad4b85920dadf7b5a29e796e3f7332ff5d05192fb",
+  "file": "traffic_facility_damage_3_fd4111daa0f7.png",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"street_light_pole\",\n  \"severity\": \"高\",\n  \"description\": \"路缘旁白色线杆倒伏横跨路面，旁边交通警示柱顶部破损、结构开口，存在车辆碰撞、行人绊倒风险；若杆件带电还可能引发漏电危险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路边缘箭头标线旁路缘处\",\n  \"rectification\": [\n    \"立即在倒伏杆件和破损警示柱周边设置围挡与警示标志\",\n    \"尽快移除或修复倒伏线杆，恢复道路通行安全\",\n    \"更换破损的交通警示柱，并排查其内部线路是否带电\",\n    \"清理地面疑似油污或水迹，防止湿滑引发事故\"\n  ],\n  \"secondary_subcategories\": [\n    \"traffic_facility_damage\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "路缘旁白色线杆倒伏横跨路面，旁边交通警示柱顶部破损、结构开口，存在车辆碰撞、行人绊倒风险；若杆件带电还可能引发漏电危险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘箭头标线旁路缘处",
+    "rectification": [
+      "立即在倒伏杆件和破损警示柱周边设置围挡与警示标志",
+      "尽快移除或修复倒伏线杆，恢复道路通行安全",
+      "更换破损的交通警示柱，并排查其内部线路是否带电",
+      "清理地面疑似油污或水迹，防止湿滑引发事故"
+    ],
+    "secondary_subcategories": [
+      "traffic_facility_damage"
+    ]
+  },
+  "error": ""
+}

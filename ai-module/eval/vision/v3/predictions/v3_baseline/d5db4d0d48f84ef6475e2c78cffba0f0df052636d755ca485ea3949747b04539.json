@@ -1,0 +1,29 @@
+{
+  "sha256": "d5db4d0d48f84ef6475e2c78cffba0f0df052636d755ca485ea3949747b04539",
+  "file": "ebike_hazard_2_d5db4d0d48f8.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"ebike_hazard\",\"severity\":\"高\",\"description\":\"电动自行车停放在住宅外墙窗下，从楼上窗户垂下白色电线连接车辆充电，属飞线充电，存在线路过载、短路、触电及火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙窗户下方电动自行车停放处\",\"rectification\":[\"立即拔除飞线并停止违规充电\",\"引导车辆停放至集中充电棚或合规充电设施\",\"加强日常巡查和消防安全宣传\"],\"secondary_subcategories\":[\"illegal_wiring\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "ebike_hazard",
+    "severity": "高",
+    "description": "电动自行车停放在住宅外墙窗下，从楼上窗户垂下白色电线连接车辆充电，属飞线充电，存在线路过载、短路、触电及火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙窗户下方电动自行车停放处",
+    "rectification": [
+      "立即拔除飞线并停止违规充电",
+      "引导车辆停放至集中充电棚或合规充电设施",
+      "加强日常巡查和消防安全宣传"
+    ],
+    "secondary_subcategories": [
+      "illegal_wiring"
+    ]
+  },
+  "error": ""
+}

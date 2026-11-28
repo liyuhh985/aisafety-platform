@@ -1,0 +1,27 @@
+{
+  "sha256": "d664638fcce82a98259e7a58b86e8876ef89af178f1ba93ba3c97a5c19c49afd",
+  "file": "ELE0003.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"图片显示消防人员正在电梯口救援、疏散人员，存在电梯困人险情。电梯困人可能导致人员恐慌、缺氧或二次伤害，需及时救援并排查故障。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼电梯口\",\n  \"rectification\": [\n    \"立即停用故障电梯并设置警示，联系维保单位检修\",\n    \"检查电梯应急报警、通讯和困人救援装置是否有效\",\n    \"按规定定期检验维保，完善应急救援预案和值守响应\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "图片显示消防人员正在电梯口救援、疏散人员，存在电梯困人险情。电梯困人可能导致人员恐慌、缺氧或二次伤害，需及时救援并排查故障。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼电梯口",
+    "rectification": [
+      "立即停用故障电梯并设置警示，联系维保单位检修",
+      "检查电梯应急报警、通讯和困人救援装置是否有效",
+      "按规定定期检验维保，完善应急救援预案和值守响应"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

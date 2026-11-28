@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"traffic_facility_damage\", \"evidence\": \"道路护栏断裂倾斜倒伏\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "evidence": "道路护栏断裂倾斜倒伏"
+  }
+}

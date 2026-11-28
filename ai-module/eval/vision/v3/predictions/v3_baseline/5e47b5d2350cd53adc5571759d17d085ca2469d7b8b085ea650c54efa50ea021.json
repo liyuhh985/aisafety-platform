@@ -1,0 +1,23 @@
+{
+  "sha256": "5e47b5d2350cd53adc5571759d17d085ca2469d7b8b085ea650c54efa50ea021",
+  "file": "neg_15_5e47b5d2350c.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"配电箱内接线较整齐，断路器、端子排及门接地线外观完好，未见明显烧蚀、破损、裸露、私拉乱接等异常，未见可确认的安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "配电箱内接线较整齐，断路器、端子排及门接地线外观完好，未见明显烧蚀、破损、裸露、私拉乱接等异常，未见可确认的安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

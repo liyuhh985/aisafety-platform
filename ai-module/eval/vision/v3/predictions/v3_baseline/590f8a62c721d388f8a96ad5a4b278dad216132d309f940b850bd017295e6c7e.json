@@ -1,0 +1,27 @@
+{
+  "sha256": "590f8a62c721d388f8a96ad5a4b278dad216132d309f940b850bd017295e6c7e",
+  "file": "fire_lane_blocked_4_590f8a62c721.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"红色轿车停放在地面标有“消防车道”黄色字样的区域内，占用消防通道，影响消防车辆紧急通行和救援。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"夜间住宅楼旁地面消防车道黄色标线处\",\n  \"rectification\": [\n    \"立即联系车主驶离消防通道\",\n    \"在消防通道显眼位置设置禁停警示和隔离设施\",\n    \"加强日常巡查，对违停车辆及时劝离或依法拖移\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "红色轿车停放在地面标有“消防车道”黄色字样的区域内，占用消防通道，影响消防车辆紧急通行和救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "夜间住宅楼旁地面消防车道黄色标线处",
+    "rectification": [
+      "立即联系车主驶离消防通道",
+      "在消防通道显眼位置设置禁停警示和隔离设施",
+      "加强日常巡查，对违停车辆及时劝离或依法拖移"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

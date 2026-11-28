@@ -1,0 +1,23 @@
+{
+  "sha256": "0d271b37d726b67adc563bc73741bdca483788e7ba3582d78b5387cc507cbb6e",
+  "file": "NEGFIR03.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面显示人员正在对消防栓箱进行检查，箱内水带、阀门等设备可见，下方灭火器箱内灭火器齐全；未见消防设施损坏、缺失、被遮挡或消防通道堵塞等明显隐患，属于正常检查场景。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示人员正在对消防栓箱进行检查，箱内水带、阀门等设备可见，下方灭火器箱内灭火器齐全；未见消防设施损坏、缺失、被遮挡或消防通道堵塞等明显隐患，属于正常检查场景。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "16ed707065eefa2a1314198407274d44b94481e99462534a5cbac4eaf43a7c0e",
+  "file": "exposed_wire_2_16ed707065ee.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"地砖旁泥土中电缆外护套破损，绿、红、黑等导线裸露并有接头包扎，周边无防护，存在漏电、触电及短路起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道地砖旁的泥土/绿化带边缘\",\n  \"rectification\": [\n    \"立即设置警戒并断电，由专业电工检查修复或更换受损电缆\",\n    \"对裸露线路穿管保护并恢复盖板或覆土，消除裸露\",\n    \"排查线路来源和供电状态，确认无漏电后再恢复使用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "地砖旁泥土中电缆外护套破损，绿、红、黑等导线裸露并有接头包扎，周边无防护，存在漏电、触电及短路起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道地砖旁的泥土/绿化带边缘",
+    "rectification": [
+      "立即设置警戒并断电，由专业电工检查修复或更换受损电缆",
+      "对裸露线路穿管保护并恢复盖板或覆土，消除裸露",
+      "排查线路来源和供电状态，确认无漏电后再恢复使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

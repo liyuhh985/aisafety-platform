@@ -1,0 +1,23 @@
+{
+  "sha256": "ba2d464554bbc9def59e17aab00c87ddab6ae7e1c0891bbd450b97ec95d1da4d",
+  "file": "neg_10_ba2d464554bb.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"化学试剂瓶均密闭并贴有规范的危险品标签，整齐存放于通风橱内，未见泄漏、破损或违规堆放等明显安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "化学试剂瓶均密闭并贴有规范的危险品标签，整齐存放于通风橱内，未见泄漏、破损或违规堆放等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

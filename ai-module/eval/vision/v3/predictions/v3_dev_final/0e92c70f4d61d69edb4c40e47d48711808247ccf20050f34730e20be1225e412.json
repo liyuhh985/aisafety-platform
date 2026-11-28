@@ -1,0 +1,27 @@
+{
+  "sha256": "0e92c70f4d61d69edb4c40e47d48711808247ccf20050f34730e20be1225e412",
+  "file": "other_2_0e92c70f4d61.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"公园长椅椅面木板严重断裂、翘起，金属支架变形，形成尖锐断口和不稳定结构，行人尤其是儿童靠近可能绊倒或割伤，坐下可能坍塌致伤。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"积雪地面旁的公共休闲区长椅\",\n  \"rectification\": [\n    \"立即设置警示标志并隔离损坏长椅，防止人员使用\",\n    \"尽快更换或修复长椅，确保结构稳固、无尖锐突出物\",\n    \"对周边同类公共设施开展安全检查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "公园长椅椅面木板严重断裂、翘起，金属支架变形，形成尖锐断口和不稳定结构，行人尤其是儿童靠近可能绊倒或割伤，坐下可能坍塌致伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "积雪地面旁的公共休闲区长椅",
+    "rectification": [
+      "立即设置警示标志并隔离损坏长椅，防止人员使用",
+      "尽快更换或修复长椅，确保结构稳固、无尖锐突出物",
+      "对周边同类公共设施开展安全检查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

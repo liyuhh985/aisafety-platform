@@ -1,0 +1,27 @@
+{
+  "sha256": "488b7bb36237b9bdc40a339feaca8acb6696aa6c650afa28b3f53a74d6ca7b8d",
+  "file": "neg_40_488b7bb36237.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"gas_leak\",\"severity\":\"高\",\"description\":\"燃气表前管道设置三通阀门并连接黄色软管，疑似形成表前旁通，且软管使用打孔卡子固定；接头多、固定受力，易松动或磨损导致燃气泄漏，属违规改动燃气管道。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内燃气表上方及表前管道三通阀门处\",\"rectification\":[\"立即联系燃气公司停气检查，拆除表前私接三通/旁通及不规范软管，恢复原设计管道。\",\"燃气软管应使用专用管卡固定，避免穿越吊顶或受挤压，接头用肥皂水或检漏仪检漏。\",\"整改完成前保持通风，禁止明火和开关电器，必要时加装燃气报警器。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_leak",
+    "severity": "高",
+    "description": "燃气表前管道设置三通阀门并连接黄色软管，疑似形成表前旁通，且软管使用打孔卡子固定；接头多、固定受力，易松动或磨损导致燃气泄漏，属违规改动燃气管道。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内燃气表上方及表前管道三通阀门处",
+    "rectification": [
+      "立即联系燃气公司停气检查，拆除表前私接三通/旁通及不规范软管，恢复原设计管道。",
+      "燃气软管应使用专用管卡固定，避免穿越吊顶或受挤压，接头用肥皂水或检漏仪检漏。",
+      "整改完成前保持通风，禁止明火和开关电器，必要时加装燃气报警器。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

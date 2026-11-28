@@ -1,0 +1,26 @@
+{
+  "sha256": "482a1528da14f64b999b5f7ac931b055416a5885fd5357aa1fbf6a50a91f5443",
+  "file": "elevator_inspection_3_482a1528da14.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_inspection\",\n  \"severity\": \"高\",\n  \"description\": \"电梯使用证书显示有效期至2013年6月14日，已严重超期未检验。电梯超期未检可能导致机械或电气部件故障，存在困人、甚至坠落等严重安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内\",\n  \"rectification\": [\n    \"立即停用并联系特种设备检验机构进行定期检验\",\n    \"检验合格并更新有效证书后方可恢复使用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_inspection",
+    "severity": "高",
+    "description": "电梯使用证书显示有效期至2013年6月14日，已严重超期未检验。电梯超期未检可能导致机械或电气部件故障，存在困人、甚至坠落等严重安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内",
+    "rectification": [
+      "立即停用并联系特种设备检验机构进行定期检验",
+      "检验合格并更新有效证书后方可恢复使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"structural_damage\", \"evidence\": \"砖围墙明显倾斜，用多根木杆斜撑加固\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "砖围墙明显倾斜，用多根木杆斜撑加固"
+  }
+}

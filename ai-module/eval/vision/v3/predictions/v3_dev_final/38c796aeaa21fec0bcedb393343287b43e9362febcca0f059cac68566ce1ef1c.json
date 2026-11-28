@@ -1,0 +1,26 @@
+{
+  "sha256": "38c796aeaa21fec0bcedb393343287b43e9362febcca0f059cac68566ce1ef1c",
+  "file": "other_3_38c796aeaa21.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"中\",\"description\":\"草地上的绿色长椅座面/支撑明显断裂、板条倾斜脱落，结构不稳定，存在人员乘坐时跌落、夹伤或划伤风险，儿童使用风险更高。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"围墙前草地上的绿色长椅处\",\"rectification\":[\"立即设置停用警示或临时围挡，防止人员继续使用\",\"尽快维修加固或更换损坏的长椅，并检查同类公共座椅结构安全\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "草地上的绿色长椅座面/支撑明显断裂、板条倾斜脱落，结构不稳定，存在人员乘坐时跌落、夹伤或划伤风险，儿童使用风险更高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "围墙前草地上的绿色长椅处",
+    "rectification": [
+      "立即设置停用警示或临时围挡，防止人员继续使用",
+      "尽快维修加固或更换损坏的长椅，并检查同类公共座椅结构安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,29 @@
+{
+  "sha256": "61ed143191049037e427bc1ce630a3c9d09766800f2981abcd8912372d4cf3fe",
+  "file": "ROA0073.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"主干道路面被车辆碾压形成较大坑洞，边缘破损明显，车辆经过易颠簸、爆胎或紧急避让引发事故；现场有人直接在路上填补，未设置反光锥等警示，存在交通风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"主干道路面近处，男子正在填补的坑洞位置\",\n  \"rectification\": [\n    \"立即在坑洞周边设置反光锥、警示牌并疏导交通，防止车辆和行人误入\",\n    \"由市政道路养护部门按规范切割、清理并分层回填沥青，确保修补质量\",\n    \"对周边路面开展排查，发现同类破损一并修复，并加强重载车辆通行管理\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "主干道路面被车辆碾压形成较大坑洞，边缘破损明显，车辆经过易颠簸、爆胎或紧急避让引发事故；现场有人直接在路上填补，未设置反光锥等警示，存在交通风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "主干道路面近处，男子正在填补的坑洞位置",
+    "rectification": [
+      "立即在坑洞周边设置反光锥、警示牌并疏导交通，防止车辆和行人误入",
+      "由市政道路养护部门按规范切割、清理并分层回填沥青，确保修补质量",
+      "对周边路面开展排查，发现同类破损一并修复，并加强重载车辆通行管理"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

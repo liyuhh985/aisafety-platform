@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"两根线杆倾斜，上方电线私拉乱接\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "两根线杆倾斜，上方电线私拉乱接"
+  }
+}

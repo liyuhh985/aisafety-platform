@@ -1,0 +1,27 @@
+{
+  "sha256": "338835e5d9cca7457ff9050dd4e9035ff56b1edce608b9039be63ae1d46a2c40",
+  "file": "street_light_pole_2_338835e5d9cc.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"street_light_pole\",\"severity\":\"高\",\"description\":\"路灯杆严重倾斜倒伏，灯头灯罩破碎，灯泡仍通电发亮，玻璃碎片散落人行道。存在触电、割伤和灯杆继续倾倒砸伤行人的风险，夜间尤为危险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道旁、自行车停放区附近的步道边\",\"rectification\":[\"立即断电并设置围挡和警示标志，防止人员靠近\",\"联系市政路灯管理部门抢修或更换损坏灯杆及灯具\",\"清理地面玻璃碎片并检查基座、线路及周边设施安全\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "路灯杆严重倾斜倒伏，灯头灯罩破碎，灯泡仍通电发亮，玻璃碎片散落人行道。存在触电、割伤和灯杆继续倾倒砸伤行人的风险，夜间尤为危险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道旁、自行车停放区附近的步道边",
+    "rectification": [
+      "立即断电并设置围挡和警示标志，防止人员靠近",
+      "联系市政路灯管理部门抢修或更换损坏灯杆及灯具",
+      "清理地面玻璃碎片并检查基座、线路及周边设施安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

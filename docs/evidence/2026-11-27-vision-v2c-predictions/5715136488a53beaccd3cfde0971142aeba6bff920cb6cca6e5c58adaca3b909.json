@@ -1,0 +1,27 @@
+{
+  "sha256": "5715136488a53beaccd3cfde0971142aeba6bff920cb6cca6e5c58adaca3b909",
+  "file": "VEH0004.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"多辆机动车违规停放在临街商铺前的人行铺装区域，白色车辆几乎完全占压人行通道，妨碍行人正常通行，行人可能被迫绕行至机动车道，存在碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街商铺前人行道及铺装区域\",\n  \"rectification\": [\n    \"清理该区域违停车辆，恢复人行道通行功能\",\n    \"在人行道入口增设隔离桩或护栏，防止车辆驶入\",\n    \"加强巡查和违停抓拍，设置禁停标识\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "多辆机动车违规停放在临街商铺前的人行铺装区域，白色车辆几乎完全占压人行通道，妨碍行人正常通行，行人可能被迫绕行至机动车道，存在碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街商铺前人行道及铺装区域",
+    "rectification": [
+      "清理该区域违停车辆，恢复人行道通行功能",
+      "在人行道入口增设隔离桩或护栏，防止车辆驶入",
+      "加强巡查和违停抓拍，设置禁停标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

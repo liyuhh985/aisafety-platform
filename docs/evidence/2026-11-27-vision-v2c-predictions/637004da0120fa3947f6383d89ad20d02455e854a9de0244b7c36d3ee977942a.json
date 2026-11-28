@@ -1,0 +1,27 @@
+{
+  "sha256": "637004da0120fa3947f6383d89ad20d02455e854a9de0244b7c36d3ee977942a",
+  "file": "ILL0095.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"scaffold_guard\",\"severity\":\"高\",\"description\":\"现场工人在施工楼层临边高处站在堆叠模板上搬运长木杆，未见可靠临边护栏和稳固操作平台，且未佩戴安全帽/安全带，存在高处坠落和物体打击风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"在建建筑楼层临边作业区\",\"rectification\":[\"规范搭设脚手架、临边护栏和安全网，提供稳固操作平台\",\"高处作业人员必须佩戴安全帽并系挂安全带\",\"清理现场材料，禁止站在堆叠模板或木料上作业\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "现场工人在施工楼层临边高处站在堆叠模板上搬运长木杆，未见可靠临边护栏和稳固操作平台，且未佩戴安全帽/安全带，存在高处坠落和物体打击风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "在建建筑楼层临边作业区",
+    "rectification": [
+      "规范搭设脚手架、临边护栏和安全网，提供稳固操作平台",
+      "高处作业人员必须佩戴安全帽并系挂安全带",
+      "清理现场材料，禁止站在堆叠模板或木料上作业"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

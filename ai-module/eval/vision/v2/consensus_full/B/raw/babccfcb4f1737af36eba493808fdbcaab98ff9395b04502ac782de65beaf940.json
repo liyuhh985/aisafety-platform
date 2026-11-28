@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"illegal_structure\", \"evidence\": \"挖掘机正在拆除彩钢板简易搭建房\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "illegal_structure",
+    "evidence": "挖掘机正在拆除彩钢板简易搭建房"
+  }
+}

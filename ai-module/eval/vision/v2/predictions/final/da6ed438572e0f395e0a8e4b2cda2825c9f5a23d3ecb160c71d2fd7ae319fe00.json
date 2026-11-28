@@ -1,0 +1,27 @@
+{
+  "sha256": "da6ed438572e0f395e0a8e4b2cda2825c9f5a23d3ecb160c71d2fd7ae319fe00",
+  "file": "FIR0006.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"红色室外消火栓侧向接口缺失、损坏，内部阀件外露，无法正常连接消防水带，火灾时会影响取水灭火，存在消防设施失效风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中的红色室外消火栓处\",\n  \"rectification\": [\n    \"立即设置警示并报修，停止使用损坏消火栓\",\n    \"更换或修复损坏的接口及阀门组件，恢复消防供水功能\",\n    \"修复后进行水压和密封测试，并加强消防设施日常巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "红色室外消火栓侧向接口缺失、损坏，内部阀件外露，无法正常连接消防水带，火灾时会影响取水灭火，存在消防设施失效风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中的红色室外消火栓处",
+    "rectification": [
+      "立即设置警示并报修，停止使用损坏消火栓",
+      "更换或修复损坏的接口及阀门组件，恢复消防供水功能",
+      "修复后进行水压和密封测试，并加强消防设施日常巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

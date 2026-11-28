@@ -1,0 +1,586 @@
+{
+  "5e2b59f5d65713267e628b00437bd175e8cb56b460295b55d431118620c36a72": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "人行道上摆摊售卖蔬菜，筐袋占道"
+  },
+  "370597ddaa32289e26c99d6eb6ba0379aa3a591cccd049594d127271cafae862": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "多辆私家车停放在道路两侧，占用车道"
+  },
+  "48e72187b32923ffcf201f1e53a6bf0cb25c068316e144e6a63f0febd79b52b0": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "多辆摊车和摊位占用人行道及道路经营"
+  },
+  "5715136488a53beaccd3cfde0971142aeba6bff920cb6cca6e5c58adaca3b909": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "多辆汽车停放在人行道砖面上，占用行人通行区域"
+  },
+  "7fddd788cc45050196b689b9cc479449903d51ffcc3b5db3d35dd4c6a4a524f7": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "轿车停放在人行道上，占用人行通道"
+  },
+  "e701fbfbb35d8d48d387330dd4cc4307cb9a140a96bbe871de8bbabd0c1323b5": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "道路被竹床木板摊位占用堆放"
+  },
+  "192f78ea7d42fe4cd970198ae73a9554a5790f9023ffb556d6daed09afa4dbb7": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "白色轿车停放在人行道砖面上，占用行人通行区域"
+  },
+  "1ba9b4b3d6d51efd31e3c9ecd85f39b2b3131772b61c6de1a8f7abf9103de29f": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "三轮车摊位占道经营售卖饮品"
+  },
+  "2c8aa48870197d63d2072229ccca1233067be73ab1e808e2a5671a1d295ca871": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "消防车道标线清晰，无车辆或物品占用"
+  },
+  "263cbdfc9b815b03106626c10f30afdf55f01aff9a3690c5d8e79e817a0817e2": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "消防箱体锈蚀掉漆，设施老化破损"
+  },
+  "7987dba9f7730893822c984a3cfd0be053d4a6e1e7e537cdc924a4a12f368044": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "灭火器外观完整，贴有维修合格证，无可见异常"
+  },
+  "9fa72a4c68d052a638d57da792762913c36ffba595278241fa2bcf6d025fbd8f": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "evidence": "人行道地砖大面积破损塌陷碎裂"
+  },
+  "0402d98c102df2d34122cdd8360ea564adbbd35008c3ee7ebdaf3ba625ccc358": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "evidence": "消防通道标志下多辆电动车停放占用通道"
+  },
+  "1f63fb630f1528854b6ee34dbfe559677307baa60efbaacfa759477fd7830869": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "人员检查灭火器，外观完好无异常"
+  },
+  "1c14c8327ff29ed2d722cdde9e06feac48064544f3875c60b61caf27d08a7821": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "消防人员检查灭火器，箱内设施完好无异常"
+  },
+  "d009f35784ddca1815686aeccf608c19192c45b4cc8bbc2d992fc0014e2d4413": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "evidence": "黄色网状线上停放多辆汽车，旁有消防通道禁停标识"
+  },
+  "da6ed438572e0f395e0a8e4b2cda2825c9f5a23d3ecb160c71d2fd7ae319fe00": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "消防栓接口盖缺失破损，内部锈蚀"
+  },
+  "99fd6f27b4cc53c590634d51f978ea0df2b34c0a2518fefc534d4a4bc939a8f3": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "围挡内堆积废旧家具杂物垃圾"
+  },
+  "4c128a4da80ed67b1dc199335e2816223de266479e77957d49b4037ca36acfdd": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "消防栓外观完好，路面整洁无异常"
+  },
+  "a4515b5b770cb482a73eb280f4becf8bdd795575390197d589f4681d55de141c": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "灭火器锈蚀掉漆，一个倒地废弃"
+  },
+  "dfee8245aa6d12358c5c83ded822d5cb9a02e3999a8bd009a1ffe6f35671b115": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "消防栓锈蚀严重，出水口持续漏水"
+  },
+  "e833e9a093e8900c83ca2d584e5ad6738cddc03594abd470d88dde86211508a8": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "evidence": "路面开挖坑内管道喷水，坑内积水"
+  },
+  "4d8d1c10f0238aa119530c5260ae95902987509e1d9b7412f1bf704cff3c1193": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "干裂河床空地，无目标隐患"
+  },
+  "249e87baa3b194210d9f93dff58ca1c4d15ee7b6c9f074f53da248d9f329cd0c": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "消防栓锈蚀且侧口持续漏水，地面大面积积水"
+  },
+  "a3a806d934c422167494b1d544d076a9bbf9c7fc052a2dcc73d68e59b3de1bbd": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "facade_risk",
+    "evidence": "高层外墙多处墙皮脱落，露出浅色基底，有坠落风险"
+  },
+  "11bec63173872cb68c2a57613910b483aaa42fb40ba810cf6bbd0ef0dc10ddd2": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "天花板墙皮大面积脱落并伴裂缝"
+  },
+  "8f0c4a02d031774dd8cef0a9ccb5b3cd565410cae11fc9b3438a1c56117ca64b": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "facade_risk",
+    "evidence": "高层外立面大面积脱落，露出深色基层"
+  },
+  "9345f49f540e521f899b967c8c4f6bd64a29f28c82ffa1446361801c6a0283b5": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "房屋墙体开裂坍塌，院内散落大量建筑残骸"
+  },
+  "7f0f93a5e9d822f58ac024eb57b11b7273d7608b7d3e50aa42fe7132d9a04de7": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "楼梯安装座椅电梯，无可见隐患"
+  },
+  "af17a7dbc3a3b0097926a9d51b6205f4247a623e448fb94a65fe6092e1161b19": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "墙脚水平裂缝贯穿，墙皮剥落，地面开裂下沉"
+  },
+  "388b11e000ec82166bbadffef10843af20a17d394a58e7f4e861fabb2cf0fc8d": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "树枝与线缆交缠，但线缆无破损裸露，隐患不明确"
+  },
+  "7ff3495f01bb6face195b17ae6955a0c1dbe1687bdc804849f0e26cc7bbbc2cd": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "空地大量垃圾废品堆积，周边搭建彩钢棚"
+  },
+  "fac69d1cce055c92b11d73948cb4c04178eb3ffac2ca65fc9f21c3568ed4f281": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "电表线路杂乱裸露，私拉乱接缠绕"
+  },
+  "60be3b621a87e9f2f5b89819c26677a73dc09c29eb207cc5f061c875d0ab54b1": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "construction_prot",
+    "evidence": "绿地内裸露施工，砖块建材散乱堆放，无有效防护围挡"
+  },
+  "6b30aa3372c5fa1ad08f57b7608618ca9f2339001874d873e0df33d4c2a57507": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面为商店内成卷电缆线，无可见隐患"
+  },
+  "d4e2e8fdcc235dd0091b18cacb0e97949a34d0c32f421afac8ddb64297df20bc": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "地面线缆外皮破损，内部线芯裸露"
+  },
+  "1e70b9a4c26165d1eab3b1f236a3a5033760f1aee18a508c9bbe69356c672ad5": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "配电箱外观完好，无破损裸露"
+  },
+  "f1a36fcb3507b10da3bc9de67236250623d858da5cd033c87b7662aa9fcf5b2b": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "路面堆积建筑垃圾渣土杂物，占道影响通行"
+  },
+  "d8c39b68c7c2c656c1e4dff3e150ecc116c8ccc97780e2e7b45b3729489745e0": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "多根电线杂乱缠绕，接头仅用胶布简单包扎"
+  },
+  "0ea3d35fbf982e059229e9a2f97aa7543f059d287073dc983fbf2d5e0b2a9d0a": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "evidence": "配电柜柜门敞开，内部电气元件裸露"
+  },
+  "53040f902be3a2fc471ed838e06a99cbc4cd0a7a4a0e3f4e55fcfa07952e1b2d": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "配电箱外观完好，仅贴警示标识，无可见故障"
+  },
+  "af1aeab60e0cd5bba4d8f05cdc58abd95f40c0d9661d7a603d830b87f41c97cf": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯呼叫面板正常，无可见异常"
+  },
+  "7b7b42f03eed41c8c37462741ddfc17de36415312bfb64b271dc6b6e6240915a": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面为新闻截图，扶梯外观正常，无可见隐患"
+  },
+  "2860cb031a9fba6d2060fe4a230de4610fc0cd0d6faf69745a19a5ff70beb0ec": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "仅凭告示文字称电梯故障，画面电梯面板显示正常"
+  },
+  "45a2f36ab8ae464f309ab9ee03521cd31430b1fe8423d05a58e821f01f5fc019": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯显示10层下行箭头，运行正常无异常"
+  },
+  "61d28ec0c1bbea8d7d7f95dd5a104897870548c67748fd2fe5422423434d45aa": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "evidence": "电梯门锈蚀剥落严重，贴有暂停运行提示"
+  },
+  "595aa59b50cb5caa4254143388f2df653e4f72fd91fb5d5dff3b73cc7ee1035c": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯机房设备正常，人员正在巡检，无可见隐患"
+  },
+  "ec7e7d8f0e9fed7517dd2a0c0415a127be30bb6d7d1124f91f4ea1d6e3721e94": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯正常开启，人员正常进出，无可见故障"
+  },
+  "b3bcf31853c0271eaca343d0a024e9c60b05c4e460d885712b148d289b02031e": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "仅见电梯门与铭牌，无被困画面，隐患仅来自字幕"
+  },
+  "d664638fcce82a98259e7a58b86e8876ef89af178f1ba93ba3c97a5c19c49afd": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "evidence": "消防员携绳索在电梯门口救援被困人员"
+  },
+  "a8069821e27ca4f4692c781fa4f5fa1427b7f281b2471a1085b9b75d04980deb": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面为电梯应急演练活动，无可见隐患"
+  },
+  "1e9244d4887ff88f73ab5b214ed0aae3e021793005d9de11b7ddc7cbf213e798": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "evidence": "电梯门被危险围挡封闭，标注电梯例行保养中禁止进入"
+  },
+  "e9b88dda26beb788edaa7808d784e14485b1c706f8d60838f7e28ccb39893b9b": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯门贴警示标识，隐患仅靠文字提示无法确认"
+  },
+  "4b34251ac77ffaa1dfa3c15c188c2c0d0652afd2dfa3774a9a72c4816e43b260": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "图片为标识牌商品广告，无实际隐患场景"
+  },
+  "f339410860b74aa63c13b244107b15b6b82e7751dbb5c2de794125ae6063bd30": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "空白电梯维保记录签，无填写内容，无可见隐患"
+  },
+  "6887f466bb2b6246a438e16ac8731743df779335c0fa4d4202bfecf250a865f9": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "人员正常操作设备，画面无可见隐患"
+  },
+  "9fafbf766d9b1fdca1e4c4d0f9d44972be1ede36aeec4006ce6e38523984df3f": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "正规建筑垃圾投放点，箱内垃圾属正常投放"
+  },
+  "60c7e554341ba6f19b96a18f5e5c499669de8f50c37c80763ea829305e1632c8": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "卡通示意图配文字说明，非真实隐患现场"
+  },
+  "2691e24ae5eab5488d61acc06557edd59f43264e4b10811e8bc8081056fda57d": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "地面大面积生活垃圾堆积，散落各处"
+  },
+  "43a3c51bf2094932f27a028622e0a55037c8afffae3c6fdaf5c550dfd44db91a": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "路边荒坡堆积大量垃圾杂物"
+  },
+  "2cc8e2c80095ec75d12b0bd737fbe895e82fe36b118f6f9d7204e663fa1417a1": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "楼前绿地堆积大量编织袋装垃圾及建筑废料"
+  },
+  "9c4212a920fcd33cc87b149257b5f2ec79e4cd4a2e3a9e66cedc7bcea20824ef": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "垃圾分类台旁大量垃圾袋与落叶堆积路面"
+  },
+  "5b767c06295f8f25ff7492324727f25fdf3317632a91ab5b412d50077421e187": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "围墙边堆积大量生活垃圾和建筑垃圾"
+  },
+  "aa00f5968bee268c045d07d0f172faf983a33e50b2a31494d222f97438b81938": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "垃圾桶旁地面堆放多袋垃圾杂物"
+  },
+  "6b8d4b586487f17ee7530f4a6dfd38f7e409a8f7cdb1555b2ed3de947e436255": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "路边垃圾桶旁大量垃圾散落堆积"
+  },
+  "86a01c9fb4a04857387adad9aad139ed1e1e6ba44b3ad2e8a40976f564d67a00": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "红色编织袋垃圾丢弃路面，黑色污水外溢"
+  },
+  "9d63598946cb16f89ceecabeeb4b142e9a89130c05620446d037e9135e3c0efb": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "evidence": "路面大面积积水，覆盖整条车道"
+  },
+  "a2412a31a584524863c60368dec8238a41ed75b6fe2187f37044640d8e4171b1": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "evidence": "人行道井盖被打开，井口敞开无遮盖"
+  },
+  "35028295f4d7e969c4b5d50aeda34337b5476c51e5769d5d2e58ca2fc58e55e1": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "sewage_overflow",
+    "evidence": "沟渠水体发黑浑浊，漂浮杂物，疑似污水外溢"
+  },
+  "6905810a2cd3d39d820861ab2e4cdb2a49632ca0d4ae661ce01ebe62ca940c46": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "sewage_overflow",
+    "evidence": "河道水体发黑，水面漂浮垃圾杂物"
+  },
+  "69768f1313b88b1b42386c5bfc2662666e72654f6069290990b921abc85ea85a": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面仅为工程告示牌，无可见隐患"
+  },
+  "f16e074adbd1321da3d314f82158146cfd02d35ec1df94d982ab6f005782ef0d": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "路面完好，雨水篦及井盖均在位，无积水占道"
+  },
+  "a77a257507e7679b89755c578ee39513f7407ebedd0b72371ea0c70ec2bf5b70": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "sewage_overflow",
+    "evidence": "沟渠水体发黑浑浊，漂浮杂物污物"
+  }
+}

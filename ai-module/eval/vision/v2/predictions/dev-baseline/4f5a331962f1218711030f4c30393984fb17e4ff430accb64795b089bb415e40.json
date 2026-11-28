@@ -1,0 +1,23 @@
+{
+  "sha256": "4f5a331962f1218711030f4c30393984fb17e4ff430accb64795b089bb415e40",
+  "file": "SCA0050.png",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片为高空作业安全带的宣传海报，画面包含模特佩戴安全带的展示及安全防护说明文字，属于合规安全防护装备展示，未见设施损坏、违规作业或其他实际安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为高空作业安全带的宣传海报，画面包含模特佩戴安全带的展示及安全防护说明文字，属于合规安全防护装备展示，未见设施损坏、违规作业或其他实际安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

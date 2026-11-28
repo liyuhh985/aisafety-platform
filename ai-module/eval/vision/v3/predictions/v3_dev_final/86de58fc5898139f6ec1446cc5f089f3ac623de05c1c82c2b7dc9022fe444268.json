@@ -1,0 +1,27 @@
+{
+  "sha256": "86de58fc5898139f6ec1446cc5f089f3ac623de05c1c82c2b7dc9022fe444268",
+  "file": "drainage_flood_1_86de58fc5898.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"高\",\n  \"description\": \"高架桥下道路出现大面积积水，水面覆盖多条车道并漫至人行道边缘，排水明显不畅。车辆涉水通行存在熄火、打滑风险，行人和非机动车通行也易发生滑倒、触电等次生危险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高架桥下机动车道及人行道边缘积水路段\",\n  \"rectification\": [\n    \"立即设置积水警示标志和临时交通引导，必要时封闭严重积水车道\",\n    \"排查并清理雨水口、排水管网堵塞点，安排抽排设备尽快排除积水\",\n    \"雨后复查排水系统，完善低洼路段排水能力并制定防汛应急预案\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "高",
+    "description": "高架桥下道路出现大面积积水，水面覆盖多条车道并漫至人行道边缘，排水明显不畅。车辆涉水通行存在熄火、打滑风险，行人和非机动车通行也易发生滑倒、触电等次生危险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高架桥下机动车道及人行道边缘积水路段",
+    "rectification": [
+      "立即设置积水警示标志和临时交通引导，必要时封闭严重积水车道",
+      "排查并清理雨水口、排水管网堵塞点，安排抽排设备尽快排除积水",
+      "雨后复查排水系统，完善低洼路段排水能力并制定防汛应急预案"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

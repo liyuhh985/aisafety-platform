@@ -1,0 +1,30 @@
+{
+  "sha256": "fac69d1cce055c92b11d73948cb4c04178eb3ffac2ca65fc9f21c3568ed4f281",
+  "file": "EXP0002.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"墙面上电表及配电设施安装不规范：木质背板破损老化，箱体/盖板缺失，电表下端接线端子及多处线缆接头裸露，线路缠绕杂乱且未穿管保护，存在触电、短路及电气火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"墙面电表/配电箱安装处及裸露接线区域\",\"rectification\":[\"立即断电并联系供电公司或持证电工处置，禁止非专业人员触碰\",\"更换破损木质背板及不规范配电箱，恢复箱体盖板并封闭带电端子\",\"整理并穿管敷设线路，消除裸露接头，加装漏电保护并检测绝缘接地\",\"整改完成前设置警示隔离，避免人员靠近\"],\"secondary_subcategories\":[\"exposed_wire\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "墙面上电表及配电设施安装不规范：木质背板破损老化，箱体/盖板缺失，电表下端接线端子及多处线缆接头裸露，线路缠绕杂乱且未穿管保护，存在触电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "墙面电表/配电箱安装处及裸露接线区域",
+    "rectification": [
+      "立即断电并联系供电公司或持证电工处置，禁止非专业人员触碰",
+      "更换破损木质背板及不规范配电箱，恢复箱体盖板并封闭带电端子",
+      "整理并穿管敷设线路，消除裸露接头，加装漏电保护并检测绝缘接地",
+      "整改完成前设置警示隔离，避免人员靠近"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

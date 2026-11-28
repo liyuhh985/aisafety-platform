@@ -1,0 +1,27 @@
+{
+  "sha256": "1dbe5fd995734c3b7f7cb1be444a1c2dcd6d02b62812d2278868f87813722a53",
+  "file": "tree_fall_hazard_1_1dbe5fd99573.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"tree_fall_hazard\",\"severity\":\"高\",\"description\":\"道路旁大树倒伏/断枝，枝干横跨路面阻断通行，并压在架空线缆上，存在交通阻断、线缆受损及触电/停电风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"图片中道路处，倒伏树木横跨路面并接触架空线缆区域\",\"rectification\":[\"立即设置警戒线和交通疏导，禁止车辆行人靠近\",\"联系园林部门切割清运倒伏树木\",\"通知电力/通信部门检查并修复受损线缆，确认安全后恢复通行\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "道路旁大树倒伏/断枝，枝干横跨路面阻断通行，并压在架空线缆上，存在交通阻断、线缆受损及触电/停电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "图片中道路处，倒伏树木横跨路面并接触架空线缆区域",
+    "rectification": [
+      "立即设置警戒线和交通疏导，禁止车辆行人靠近",
+      "联系园林部门切割清运倒伏树木",
+      "通知电力/通信部门检查并修复受损线缆，确认安全后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

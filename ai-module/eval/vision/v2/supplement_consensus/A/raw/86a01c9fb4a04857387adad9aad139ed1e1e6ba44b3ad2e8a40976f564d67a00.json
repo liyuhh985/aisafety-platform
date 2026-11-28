@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"路面有红色遮盖物和黑色污渍，具体性质及是否构成隐患无法确认\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "路面有红色遮盖物和黑色污渍，具体性质及是否构成隐患无法确认"
+  }
+}

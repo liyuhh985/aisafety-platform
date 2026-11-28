@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"environment_other\", \"subcategory\": \"garbage_pile\", \"evidence\": \"路面和人行道散落塑料袋、瓶子、纸屑等大量垃圾\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "evidence": "路面和人行道散落塑料袋、瓶子、纸屑等大量垃圾"
+  }
+}

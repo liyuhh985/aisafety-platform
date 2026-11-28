@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"深沟开挖，临边防护部分可见，是否缺失不明确\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "深沟开挖，临边防护部分可见，是否缺失不明确"
+  }
+}

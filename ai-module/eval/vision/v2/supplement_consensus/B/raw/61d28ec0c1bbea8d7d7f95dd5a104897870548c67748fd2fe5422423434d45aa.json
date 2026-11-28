@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"elevator_special\", \"subcategory\": \"elevator_stopped\", \"evidence\": \"电梯门锈蚀剥落严重，贴有暂停运行提示\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "evidence": "电梯门锈蚀剥落严重，贴有暂停运行提示"
+  }
+}

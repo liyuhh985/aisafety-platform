@@ -1,0 +1,27 @@
+{
+  "sha256": "c536197a6560a4b08b73d52d9f43a7f5cc6f40394c1e569077c1b9387c99dd76",
+  "file": "temporary_power_1_c536197a6560.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"中\",\n  \"description\": \"大量线缆散落、缠绕并堆放在地面，未按规范敷设固定，端头和连接器外露。易造成人员绊倒，线缆受挤压磨损后可能短路、积热，存在触电和火灾风险，并影响检修。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内线缆通道或弱电间地面\",\n  \"rectification\": [\n    \"将线缆分类整理、捆扎并敷设于桥架或线槽内，消除地面散落\",\n    \"清理通道，设置必要的防护和警示，禁止线缆堆占通行区域\",\n    \"排查线缆绝缘、端头和连接器，修复破损并封堵裸露端头\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "中",
+    "description": "大量线缆散落、缠绕并堆放在地面，未按规范敷设固定，端头和连接器外露。易造成人员绊倒，线缆受挤压磨损后可能短路、积热，存在触电和火灾风险，并影响检修。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内线缆通道或弱电间地面",
+    "rectification": [
+      "将线缆分类整理、捆扎并敷设于桥架或线槽内，消除地面散落",
+      "清理通道，设置必要的防护和警示，禁止线缆堆占通行区域",
+      "排查线缆绝缘、端头和连接器，修复破损并封堵裸露端头"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

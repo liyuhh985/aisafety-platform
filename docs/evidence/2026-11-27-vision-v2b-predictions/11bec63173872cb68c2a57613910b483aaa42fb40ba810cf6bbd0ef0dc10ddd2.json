@@ -1,0 +1,26 @@
+{
+  "sha256": "11bec63173872cb68c2a57613910b483aaa42fb40ba810cf6bbd0ef0dc10ddd2",
+  "file": "FAC0001.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"室内天花板存在大面积抹灰/腻子层脱落，边缘开裂，仍有继续坠落伤人的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内天花板\",\n  \"rectification\": [\n    \"立即设置警戒区域并清除松动层\",\n    \"请专业人员检查基层空鼓和裂缝，重新修补加固\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "室内天花板存在大面积抹灰/腻子层脱落，边缘开裂，仍有继续坠落伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内天花板",
+    "rectification": [
+      "立即设置警戒区域并清除松动层",
+      "请专业人员检查基层空鼓和裂缝，重新修补加固"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

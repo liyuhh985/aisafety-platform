@@ -1,0 +1,30 @@
+{
+  "sha256": "e3c413ecb7ecda6487e3859b19eb7588e023985edef23b946ea09d046c665a69",
+  "file": "DAN0044.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"高\",\n  \"description\": \"临街拆除作业区域未设置连续围挡，建筑碎渣和残墙紧邻道路，挖掘机在路边作业，现场缺少有效隔离和警示，存在碎石飞溅、残墙坍塌及机械伤人风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街拆除作业区域及道路边缘\",\n  \"rectification\": [\n    \"立即沿拆除区域边界设置连续硬质围挡和警戒线，隔离作业区与道路。\",\n    \"在临路一侧设置醒目的安全警示标志和锥桶，并安排专人疏导行人和车辆。\",\n    \"及时清运堆放在路面的建筑垃圾，拆除残留墙体前评估稳定性。\",\n    \"作业人员应佩戴安全帽，并与挖掘机等机械保持安全距离。\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "临街拆除作业区域未设置连续围挡，建筑碎渣和残墙紧邻道路，挖掘机在路边作业，现场缺少有效隔离和警示，存在碎石飞溅、残墙坍塌及机械伤人风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街拆除作业区域及道路边缘",
+    "rectification": [
+      "立即沿拆除区域边界设置连续硬质围挡和警戒线，隔离作业区与道路。",
+      "在临路一侧设置醒目的安全警示标志和锥桶，并安排专人疏导行人和车辆。",
+      "及时清运堆放在路面的建筑垃圾，拆除残留墙体前评估稳定性。",
+      "作业人员应佩戴安全帽，并与挖掘机等机械保持安全距离。"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "60cd62e12618dac1ff10042f2d3e9a988cb46b4b1d606021aea42a50c758c337",
+  "file": "manhole_damage_1_60cd62e12618.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"草地内的圆形井盖缺失或破损，井口被杂草、泥土和残破网片覆盖，未形成有效封闭，行人或车辆误入可能坠落受伤。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"草地绿化带内的圆形井口处\",\n  \"rectification\": [\n    \"立即在井口周边设置围挡和醒目警示标志\",\n    \"尽快更换安装稳固、匹配的井盖并清理井内杂物\",\n    \"排查周边同类井盖，发现缺失破损及时整改\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "草地内的圆形井盖缺失或破损，井口被杂草、泥土和残破网片覆盖，未形成有效封闭，行人或车辆误入可能坠落受伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "草地绿化带内的圆形井口处",
+    "rectification": [
+      "立即在井口周边设置围挡和醒目警示标志",
+      "尽快更换安装稳固、匹配的井盖并清理井内杂物",
+      "排查周边同类井盖，发现缺失破损及时整改"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

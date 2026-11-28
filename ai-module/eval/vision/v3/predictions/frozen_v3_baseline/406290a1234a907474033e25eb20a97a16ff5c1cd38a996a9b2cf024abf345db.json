@@ -1,0 +1,27 @@
+{
+  "sha256": "406290a1234a907474033e25eb20a97a16ff5c1cd38a996a9b2cf024abf345db",
+  "file": "no_warning_2_406290a1234a.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"路边一处矩形井口/排水沟盖板缺失，形成较深开口，边缘破损且无围挡和警示，紧邻行人站立及电动车停放区域，存在行人坠落、车辆卡陷风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁人行道/非机动车道边缘，停放电动车附近\",\n  \"rectification\": [\n    \"立即在洞口周边设置硬质围挡和醒目的安全警示标志\",\n    \"尽快安装或修复井盖/盖板，临时用坚固盖板覆盖并固定\",\n    \"排查该路段其他井盖、排水沟盖板缺失或破损情况\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "路边一处矩形井口/排水沟盖板缺失，形成较深开口，边缘破损且无围挡和警示，紧邻行人站立及电动车停放区域，存在行人坠落、车辆卡陷风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁人行道/非机动车道边缘，停放电动车附近",
+    "rectification": [
+      "立即在洞口周边设置硬质围挡和醒目的安全警示标志",
+      "尽快安装或修复井盖/盖板，临时用坚固盖板覆盖并固定",
+      "排查该路段其他井盖、排水沟盖板缺失或破损情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

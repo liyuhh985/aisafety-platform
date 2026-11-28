@@ -1,0 +1,27 @@
+{
+  "sha256": "7ad709851b67040bd82bce29fc47c264d5283ec738238d9ebcaee221ef134fd6",
+  "file": "NEGFIR05.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"画面右侧有电动自行车停放在贴有“电瓶车充电区域”的楼道墙边，墙面设有充电插座，存在占用疏散通道及室内充电火灾风险；一旦起火可能阻碍逃生。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼道墙面电瓶车充电区域旁\",\n  \"rectification\": [\n    \"立即将电动自行车移出楼道，保持疏散通道畅通\",\n    \"禁止在建筑楼道内停放、充电，设置室外集中充电棚\",\n    \"完善充电区域消防设施和电气保护，加强日常巡查宣传\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "画面右侧有电动自行车停放在贴有“电瓶车充电区域”的楼道墙边，墙面设有充电插座，存在占用疏散通道及室内充电火灾风险；一旦起火可能阻碍逃生。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼道墙面电瓶车充电区域旁",
+    "rectification": [
+      "立即将电动自行车移出楼道，保持疏散通道畅通",
+      "禁止在建筑楼道内停放、充电，设置室外集中充电棚",
+      "完善充电区域消防设施和电气保护，加强日常巡查宣传"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

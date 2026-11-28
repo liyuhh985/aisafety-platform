@@ -1,0 +1,27 @@
+{
+  "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+  "file": "fire_equipment_fault_4_3a252042d785.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"中\",\n  \"description\": \"道路硬化路面存在大面积网状裂缝、局部龟裂破损，可能造成行人绊倒、非机动车颠簸，雨雪后易积水并加速路基损坏。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央至右侧硬化路面\",\n  \"rectification\": [\n    \"对裂缝和破损区域进行清理、灌缝及局部挖补修复\",\n    \"修复前设置警示锥或围挡，防止行人和车辆误入\",\n    \"排查基层与排水，防止积水加剧路面损坏\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "道路硬化路面存在大面积网状裂缝、局部龟裂破损，可能造成行人绊倒、非机动车颠簸，雨雪后易积水并加速路基损坏。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央至右侧硬化路面",
+    "rectification": [
+      "对裂缝和破损区域进行清理、灌缝及局部挖补修复",
+      "修复前设置警示锥或围挡，防止行人和车辆误入",
+      "排查基层与排水，防止积水加剧路面损坏"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

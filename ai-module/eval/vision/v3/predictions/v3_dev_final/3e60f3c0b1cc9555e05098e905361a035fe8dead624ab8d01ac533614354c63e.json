@@ -1,0 +1,23 @@
+{
+  "sha256": "3e60f3c0b1cc9555e05098e905361a035fe8dead624ab8d01ac533614354c63e",
+  "file": "neg_06_3e60f3c0b1cc.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面为道路封闭施工/活动区域，黄色围栏、锥桶及“Road closed”指示牌齐全，未见井盖缺失破损、路面明显塌陷或其他可确认安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为道路封闭施工/活动区域，黄色围栏、锥桶及“Road closed”指示牌齐全，未见井盖缺失破损、路面明显塌陷或其他可确认安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

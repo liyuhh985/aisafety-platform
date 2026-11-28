@@ -1,0 +1,23 @@
+{
+  "sha256": "c6306997e6417552896891b1597b152bee0748718424c169c904907012fd358b",
+  "file": "neg_26_c6306997e641.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"外立面及外窗外观基本完好，未见明显开裂、松动、脱落、渗水或高空坠物等异常；外开窗属于常见通风状态，没有发现可确认的客观安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "外立面及外窗外观基本完好，未见明显开裂、松动、脱落、渗水或高空坠物等异常；外开窗属于常见通风状态，没有发现可确认的客观安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

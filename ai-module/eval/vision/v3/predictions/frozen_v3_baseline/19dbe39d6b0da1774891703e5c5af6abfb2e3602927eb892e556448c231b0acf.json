@@ -1,0 +1,29 @@
+{
+  "sha256": "19dbe39d6b0da1774891703e5c5af6abfb2e3602927eb892e556448c231b0acf",
+  "file": "elevator_trapped_1_19dbe39d6b0d.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯轿厢停位异常，人员被困于轿厢与楼层门之间，消防人员正在施救，存在挤压、坠落等二次伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯楼层门处及轿厢与楼层间隙\",\n  \"rectification\": [\n    \"立即停用故障电梯并设置警戒，禁止人员靠近\",\n    \"联系电梯维保单位排查停层异常、门锁及控制系统故障\",\n    \"救援后开展全面检验，合格后方可恢复使用\"\n  ],\n  \"secondary_subcategories\": [\n    \"elevator_stopped\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯轿厢停位异常，人员被困于轿厢与楼层门之间，消防人员正在施救，存在挤压、坠落等二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯楼层门处及轿厢与楼层间隙",
+    "rectification": [
+      "立即停用故障电梯并设置警戒，禁止人员靠近",
+      "联系电梯维保单位排查停层异常、门锁及控制系统故障",
+      "救援后开展全面检验，合格后方可恢复使用"
+    ],
+    "secondary_subcategories": [
+      "elevator_stopped"
+    ]
+  },
+  "error": ""
+}

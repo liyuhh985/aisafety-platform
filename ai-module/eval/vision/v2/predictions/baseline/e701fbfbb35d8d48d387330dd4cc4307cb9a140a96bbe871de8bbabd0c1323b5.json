@@ -1,0 +1,27 @@
+{
+  "sha256": "e701fbfbb35d8d48d387330dd4cc4307cb9a140a96bbe871de8bbabd0c1323b5",
+  "file": "ROA0002.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"高\",\n  \"description\": \"夜间城市道路机动车道上摆放大量竹制桌面/摊架，形成占道经营或乱堆乱放，挤占通行空间，影响车辆和行人通行，易引发碰撞、绊倒等事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路机动车道，路边停放车辆旁\",\n  \"rectification\": [\n    \"立即清理占道的桌椅、摊架等物品，恢复道路正常通行\",\n    \"划定合规经营区域，禁止占用机动车道和人行道经营\",\n    \"加强夜间巡查执法，发现占道经营及时劝阻清理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "高",
+    "description": "夜间城市道路机动车道上摆放大量竹制桌面/摊架，形成占道经营或乱堆乱放，挤占通行空间，影响车辆和行人通行，易引发碰撞、绊倒等事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路机动车道，路边停放车辆旁",
+    "rectification": [
+      "立即清理占道的桌椅、摊架等物品，恢复道路正常通行",
+      "划定合规经营区域，禁止占用机动车道和人行道经营",
+      "加强夜间巡查执法，发现占道经营及时劝阻清理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

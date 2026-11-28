@@ -1,0 +1,27 @@
+{
+  "sha256": "33cdecaf90f8504ab57782cfc06132228b1f74398b5abac8e9c37a630f8f060b",
+  "file": "blind_path_occupied_3_33cdecaf90f8.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"中\",\"description\":\"人行道铺装砖块明显破损、碎裂并局部凹陷，形成坑洞和边缘错台，存在行人绊倒、崴脚及车辆轮胎卡陷风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"白色汽车左前轮附近的人行道铺装区域\",\"rectification\":[\"立即在破损坑洞周边设置警示锥或临时围挡，提醒行人绕行\",\"尽快更换破损砖块、夯实基层并修复平整，恢复人行道通行安全\",\"排查周边铺装是否存在空鼓、松动或继续塌陷风险\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "人行道铺装砖块明显破损、碎裂并局部凹陷，形成坑洞和边缘错台，存在行人绊倒、崴脚及车辆轮胎卡陷风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "白色汽车左前轮附近的人行道铺装区域",
+    "rectification": [
+      "立即在破损坑洞周边设置警示锥或临时围挡，提醒行人绕行",
+      "尽快更换破损砖块、夯实基层并修复平整，恢复人行道通行安全",
+      "排查周边铺装是否存在空鼓、松动或继续塌陷风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

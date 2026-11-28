@@ -1,0 +1,27 @@
+{
+  "sha256": "02ff92706e713ce116b74799e66144f72b695f0bcb067ff415c958849e2acbc8",
+  "file": "TRA0057.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"traffic_facility_damage\",\"severity\":\"中\",\"description\":\"道路隔离护栏多段横杆明显弯折、倾斜，连接部位变形，基座附近护栏失去正常隔离防护功能，易导致行人或车辆误入、碰撞或绊倒。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路边缘隔离栏处\",\"rectification\":[\"立即设置警示标志并临时围护损坏区域\",\"校正或更换变形护栏，紧固基座和连接件\",\"排查同路段护栏固定及变形情况\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "中",
+    "description": "道路隔离护栏多段横杆明显弯折、倾斜，连接部位变形，基座附近护栏失去正常隔离防护功能，易导致行人或车辆误入、碰撞或绊倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘隔离栏处",
+    "rectification": [
+      "立即设置警示标志并临时围护损坏区域",
+      "校正或更换变形护栏，紧固基座和连接件",
+      "排查同路段护栏固定及变形情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

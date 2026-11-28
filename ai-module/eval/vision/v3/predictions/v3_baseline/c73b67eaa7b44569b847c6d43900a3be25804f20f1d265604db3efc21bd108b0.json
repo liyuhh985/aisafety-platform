@@ -1,0 +1,28 @@
+{
+  "sha256": "c73b67eaa7b44569b847c6d43900a3be25804f20f1d265604db3efc21bd108b0",
+  "file": "drainage_flood_3_c73b67eaa7b4.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"高\",\n  \"description\": \"街道被浑浊积水严重淹没，水深已接近或超过成年人小腿，临街建筑底层进水，行人涉水通行。深积水易导致人员溺水、车辆熄火，并可能掩盖井盖缺失、漏电等次生风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"被淹街道及临街建筑底层区域\",\n  \"rectification\": [\n    \"立即封闭积水路段并设置警示，疏散涉水人员\",\n    \"排查排水管网、泵站和雨水口，尽快抽排积水\",\n    \"检查水下井盖、电线及配电设施，防止触电和坠井\",\n    \"水退后开展清淤、消杀和设施受损评估\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "高",
+    "description": "街道被浑浊积水严重淹没，水深已接近或超过成年人小腿，临街建筑底层进水，行人涉水通行。深积水易导致人员溺水、车辆熄火，并可能掩盖井盖缺失、漏电等次生风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "被淹街道及临街建筑底层区域",
+    "rectification": [
+      "立即封闭积水路段并设置警示，疏散涉水人员",
+      "排查排水管网、泵站和雨水口，尽快抽排积水",
+      "检查水下井盖、电线及配电设施，防止触电和坠井",
+      "水退后开展清淤、消杀和设施受损评估"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

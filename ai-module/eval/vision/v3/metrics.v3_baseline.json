@@ -1,0 +1,710 @@
+{
+  "binary": {
+    "n": 200,
+    "tp": 126,
+    "tn": 53,
+    "fp": 15,
+    "fn": 6,
+    "recall": 0.9545454545454546,
+    "precision": 0.8936170212765957,
+    "fpr": 0.22058823529411764,
+    "f1": 0.9230769230769231,
+    "accuracy": 0.895
+  },
+  "binary_recall_ci": {
+    "estimate": 0.9545454545454546,
+    "low": 0.9043778572359823,
+    "high": 0.9790039639439801
+  },
+  "binary_fpr_ci": {
+    "estimate": 0.22058823529411764,
+    "low": 0.1384889157967965,
+    "high": 0.3325696352377016
+  },
+  "review_aware": {
+    "review_rate": 0.035,
+    "auto_coverage": 0.965,
+    "auto_recall": 0.9545454545454546,
+    "critical_miss_rate": 0.022727272727272728,
+    "auto_fpr": 0.22058823529411764,
+    "review_positive": 3,
+    "review_negative": 4,
+    "auto_tp": 126,
+    "auto_tn": 49,
+    "auto_fp": 15,
+    "auto_fn": 3
+  },
+  "major": {
+    "macro_recall": 0.8223958333333333,
+    "by_major": {
+      "traffic": {
+        "n": 16,
+        "correct": 13,
+        "recall": 0.8125
+      },
+      "municipal": {
+        "n": 20,
+        "correct": 19,
+        "recall": 0.95
+      },
+      "fire": {
+        "n": 12,
+        "correct": 9,
+        "recall": 0.75
+      },
+      "building": {
+        "n": 12,
+        "correct": 11,
+        "recall": 0.9166666666666666
+      },
+      "utility": {
+        "n": 20,
+        "correct": 15,
+        "recall": 0.75
+      },
+      "construction": {
+        "n": 24,
+        "correct": 16,
+        "recall": 0.6666666666666666
+      },
+      "elevator_special": {
+        "n": 10,
+        "correct": 8,
+        "recall": 0.8
+      },
+      "environment_other": {
+        "n": 15,
+        "correct": 14,
+        "recall": 0.9333333333333333
+      }
+    },
+    "confusion": {
+      "building -> building": 11,
+      "building -> construction": 1,
+      "construction -> construction": 16,
+      "construction -> municipal": 4,
+      "construction -> utility": 4,
+      "elevator_special -> FN": 1,
+      "elevator_special -> elevator_special": 8,
+      "elevator_special -> utility": 1,
+      "environment_other -> environment_other": 14,
+      "environment_other -> municipal": 1,
+      "fire -> FN": 1,
+      "fire -> fire": 9,
+      "fire -> municipal": 1,
+      "fire -> traffic": 1,
+      "municipal -> municipal": 19,
+      "municipal -> utility": 1,
+      "traffic -> municipal": 3,
+      "traffic -> traffic": 13,
+      "utility -> FN": 1,
+      "utility -> building": 1,
+      "utility -> construction": 1,
+      "utility -> environment_other": 2,
+      "utility -> utility": 15
+    }
+  },
+  "invalid": {
+    "parse_failed": 0,
+    "invalid_has_hazard": 0,
+    "invalid_confidence": 7,
+    "invalid_category": 0
+  },
+  "limitations": [
+    "public-scene diagnostic set, not production-traffic distribution",
+    "small balanced test set; confidence intervals are wide",
+    "single reviewer; labels are not expert consensus",
+    "subcategory accuracy is not reported"
+  ],
+  "v3_positive_summary": {
+    "n": 132,
+    "major_acc": 0.7954545454545454,
+    "subcategory_acc": 0.6742424242424242,
+    "by_visual_tier": {
+      "pure_visual": {
+        "n": 120,
+        "recall": 0.9666666666666667,
+        "major_acc": 0.8333333333333334,
+        "sub_acc": 0.7166666666666667
+      },
+      "weak_visual_evidence": {
+        "n": 12,
+        "recall": 0.8333333333333334,
+        "major_acc": 0.4166666666666667,
+        "sub_acc": 0.25
+      }
+    },
+    "by_subcategory": {
+      "road_occupancy": {
+        "label": "占道经营/乱堆乱放",
+        "major": "traffic",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "road_occupancy": 4
+        }
+      },
+      "manhole_damage": {
+        "label": "井盖缺失/破损",
+        "major": "municipal",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "manhole_damage": 4
+        }
+      },
+      "fire_lane_blocked": {
+        "label": "消防通道占用",
+        "major": "fire",
+        "n": 4,
+        "recall": 0.75,
+        "major_acc": 0.5,
+        "sub_acc": 0.5,
+        "preds": {
+          "vehicle_occupancy": 1,
+          "FN": 1,
+          "fire_lane_blocked": 2
+        }
+      },
+      "distribution_box_fault": {
+        "label": "配电设施故障",
+        "major": "utility",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "distribution_box_fault": 3,
+          "temporary_power": 1
+        }
+      },
+      "ebike_hazard": {
+        "label": "电动自行车违规停放/充电",
+        "major": "fire",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "ebike_hazard": 4
+        }
+      },
+      "fire_equipment_fault": {
+        "label": "消防设施故障",
+        "major": "fire",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "fire_equipment_fault": 3,
+          "road_surface_collapse": 1
+        }
+      },
+      "road_surface_collapse": {
+        "label": "路面塌陷",
+        "major": "municipal",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "road_surface_collapse": 4
+        }
+      },
+      "elevator_stopped": {
+        "label": "停运/异响",
+        "major": "elevator_special",
+        "n": 4,
+        "recall": 0.75,
+        "major_acc": 0.5,
+        "sub_acc": 0.5,
+        "preds": {
+          "exposed_wire": 1,
+          "elevator_stopped": 2,
+          "FN": 1
+        }
+      },
+      "sewage_odor": {
+        "label": "污水/异味",
+        "major": "environment_other",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.25,
+        "preds": {
+          "garbage_pile": 2,
+          "sewage_odor": 1,
+          "drainage_flood": 1
+        }
+      },
+      "illegal_wiring": {
+        "label": "私拉乱接",
+        "major": "utility",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "illegal_wiring": 4
+        }
+      },
+      "temporary_power": {
+        "label": "施工临时用电",
+        "major": "construction",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.0,
+        "sub_acc": 0.0,
+        "preds": {
+          "exposed_wire": 1,
+          "distribution_box_fault": 3
+        }
+      },
+      "deep_pit": {
+        "label": "深基坑风险",
+        "major": "construction",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "deep_pit": 4
+        }
+      },
+      "falling_object": {
+        "label": "高空坠物",
+        "major": "building",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 0.75,
+        "preds": {
+          "falling_object": 3,
+          "dangerous_building": 1
+        }
+      },
+      "confined_space": {
+        "label": "有限空间作业风险",
+        "major": "construction",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.25,
+        "sub_acc": 0.0,
+        "preds": {
+          "manhole_damage": 3,
+          "no_warning": 1
+        }
+      },
+      "no_barrier": {
+        "label": "未设置围挡",
+        "major": "construction",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 0.5,
+        "preds": {
+          "no_barrier": 2,
+          "deep_pit": 1,
+          "no_warning": 1
+        }
+      },
+      "drainage_flood": {
+        "label": "排水/积水",
+        "major": "municipal",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "drainage_flood": 4
+        }
+      },
+      "elevator_inspection": {
+        "label": "超期未检",
+        "major": "elevator_special",
+        "n": 4,
+        "recall": 0.75,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "FN": 1,
+          "elevator_inspection": 3
+        }
+      },
+      "scaffold_guard": {
+        "label": "脚手架/临边防护",
+        "major": "construction",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "scaffold_guard": 4
+        }
+      },
+      "exposed_wire": {
+        "label": "裸露/老化电线",
+        "major": "utility",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 0.5,
+        "preds": {
+          "exposed_wire": 2,
+          "illegal_wiring": 2
+        }
+      },
+      "other": {
+        "label": "其他",
+        "major": "environment_other",
+        "n": 4,
+        "recall": 0.75,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "other": 3,
+          "FN": 1
+        }
+      },
+      "dangerous_building": {
+        "label": "危房",
+        "major": "building",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 0.75,
+        "preds": {
+          "dangerous_building": 3,
+          "falling_object": 1
+        }
+      },
+      "gas_pipe_aging": {
+        "label": "燃气管道老化",
+        "major": "utility",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "gas_pipe_aging": 3,
+          "falling_object": 1
+        }
+      },
+      "street_light_pole": {
+        "label": "路灯/线杆损坏",
+        "major": "municipal",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "street_light_pole": 3,
+          "exposed_wire": 1
+        }
+      },
+      "hazmat_storage": {
+        "label": "危化品/易燃易爆违规存运",
+        "major": "environment_other",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "hazmat_storage": 4
+        }
+      },
+      "garbage_pile": {
+        "label": "垃圾堆积",
+        "major": "environment_other",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "garbage_pile": 4
+        }
+      },
+      "no_warning": {
+        "label": "无安全警示",
+        "major": "construction",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.0,
+        "preds": {
+          "deep_pit": 2,
+          "manhole_damage": 1,
+          "no_barrier": 1
+        }
+      },
+      "gas_leak": {
+        "label": "燃气泄漏",
+        "major": "utility",
+        "n": 4,
+        "recall": 0.75,
+        "major_acc": 0.25,
+        "sub_acc": 0.0,
+        "preds": {
+          "gas_pipe_aging": 1,
+          "hazmat_storage": 1,
+          "other": 1,
+          "FN": 1
+        }
+      },
+      "blind_path_occupied": {
+        "label": "盲道占用",
+        "major": "traffic",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "blind_path_occupied": 3,
+          "road_surface_collapse": 1
+        }
+      },
+      "illegal_structure": {
+        "label": "违规搭建",
+        "major": "building",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.75,
+        "sub_acc": 0.5,
+        "preds": {
+          "scaffold_guard": 1,
+          "falling_object": 1,
+          "illegal_structure": 2
+        }
+      },
+      "tree_fall_hazard": {
+        "label": "树木倒伏/断枝风险",
+        "major": "municipal",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 1.0,
+        "preds": {
+          "tree_fall_hazard": 4
+        }
+      },
+      "vehicle_occupancy": {
+        "label": "车辆占道",
+        "major": "traffic",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 1.0,
+        "sub_acc": 0.5,
+        "preds": {
+          "vehicle_occupancy": 2,
+          "blind_path_occupied": 2
+        }
+      },
+      "elevator_trapped": {
+        "label": "电梯困人",
+        "major": "elevator_special",
+        "n": 4,
+        "recall": 0.75,
+        "major_acc": 0.75,
+        "sub_acc": 0.75,
+        "preds": {
+          "elevator_trapped": 3,
+          "FN": 1
+        }
+      },
+      "traffic_facility_damage": {
+        "label": "交通设施损坏",
+        "major": "traffic",
+        "n": 4,
+        "recall": 1.0,
+        "major_acc": 0.5,
+        "sub_acc": 0.5,
+        "preds": {
+          "road_surface_collapse": 1,
+          "traffic_facility_damage": 2,
+          "street_light_pole": 1
+        }
+      }
+    },
+    "top_sub_confusions": {
+      "temporary_power -> distribution_box_fault": 3,
+      "confined_space -> manhole_damage": 3,
+      "exposed_wire -> illegal_wiring": 2,
+      "sewage_odor -> garbage_pile": 2,
+      "no_warning -> deep_pit": 2,
+      "vehicle_occupancy -> blind_path_occupied": 2,
+      "illegal_structure -> scaffold_guard": 1,
+      "illegal_structure -> falling_object": 1,
+      "other -> FN": 1,
+      "blind_path_occupied -> road_surface_collapse": 1,
+      "temporary_power -> exposed_wire": 1,
+      "gas_leak -> gas_pipe_aging": 1,
+      "gas_leak -> hazmat_storage": 1,
+      "gas_leak -> other": 1,
+      "gas_leak -> FN": 1,
+      "dangerous_building -> falling_object": 1,
+      "traffic_facility_damage -> road_surface_collapse": 1,
+      "traffic_facility_damage -> street_light_pole": 1,
+      "elevator_stopped -> exposed_wire": 1,
+      "elevator_stopped -> FN": 1
+    }
+  },
+  "fp_cases": [
+    {
+      "file": "neg_04_0faf7a76b720.jpg",
+      "hard_negative_for": "tree_fall_hazard",
+      "pred_major": "municipal",
+      "pred_sub": "tree_fall_hazard",
+      "confidence": "中",
+      "reason": "人行道旁大树枝干明显倾斜，分叉处疑似腐朽，根部铺装开裂拱起；遇大风或树体失稳可能倒伏、断枝，危及行人和车辆。"
+    },
+    {
+      "file": "neg_08_79f2d21572a4.jpg",
+      "hard_negative_for": "confined_space",
+      "pred_major": "construction",
+      "pred_sub": "confined_space",
+      "confidence": "高",
+      "reason": "井口敞开进行有限空间作业，周边未见连续围挡、警示标志和监护人员，通风管及三脚架已架设；存在人员坠落、中毒窒息及行人误入风险。"
+    },
+    {
+      "file": "neg_09_ab0df63f6e35.jpg",
+      "hard_negative_for": "hazmat_storage",
+      "pred_major": "environment_other",
+      "pred_sub": "hazmat_storage",
+      "confidence": "高",
+      "reason": "室内水处理加药间内多只贴有危险化学品标识的蓝色塑料桶集中放在木托盘上，未见防泄漏托盘或围堰，桶体直接置于地面/木托；周围有管道和电气设施。若发生泄漏、倾倒或混存"
+    },
+    {
+      "file": "neg_13_c8cf83741231.jpg",
+      "hard_negative_for": "blind_path_occupied",
+      "pred_major": "municipal",
+      "pred_sub": "tree_fall_hazard",
+      "confidence": "高",
+      "reason": "人行道右侧近景行道树树干明显向人行道和车道一侧倾斜，树池狭小，未见支撑加固措施，存在倒伏、断枝风险，可能砸伤行人或车辆。"
+    },
+    {
+      "file": "neg_16_fc2861c4cd11.jpg",
+      "hard_negative_for": "distribution_box_fault",
+      "pred_major": "utility",
+      "pred_sub": "distribution_box_fault",
+      "confidence": "高",
+      "reason": "厂房内多台配电柜柜门敞开，柜内断路器、铜排及接线端子外露，未见隔离围挡或警示标识，人员误触可能发生触电事故。"
+    },
+    {
+      "file": "neg_17_711816f2cdab.jpg",
+      "hard_negative_for": "distribution_box_fault",
+      "pred_major": "utility",
+      "pred_sub": "distribution_box_fault",
+      "confidence": "中",
+      "reason": "橙色配电箱箱体多处掉漆、锈蚀，中部锁扣未见挂锁，箱门存在未可靠锁闭风险；下部责任信息被遮挡或空白。非专业人员或儿童可能开启接触带电部件，存在触电危险。"
+    },
+    {
+      "file": "neg_18_8ad3abc92a2e.jpg",
+      "hard_negative_for": "drainage_flood",
+      "pred_major": "municipal",
+      "pred_sub": "drainage_flood",
+      "confidence": "高",
+      "reason": "雨后道路大面积积水，排水不畅，影响车辆和行人通行，易造成滑倒、车辆溅水，严重时形成短时内涝。"
+    },
+    {
+      "file": "neg_19_034e32f1bed0.jpg",
+      "hard_negative_for": "drainage_flood",
+      "pred_major": "municipal",
+      "pred_sub": "drainage_flood",
+      "confidence": "高",
+      "reason": "道路侧雨水篦子被大量落叶堵塞，排水通道受阻，雨天易造成路面积水、湿滑，影响行人和车辆通行；工作人员在车行道边缘清理，未见锥桶等警示，存在被过往车辆碰撞风险。"
+    },
+    {
+      "file": "neg_22_7835a78717bb.jpg",
+      "hard_negative_for": "elevator_stopped",
+      "pred_major": "environment_other",
+      "pred_sub": "other",
+      "confidence": "高",
+      "reason": "电梯楼层按钮面板中6层按钮外盖明显破损、碎裂，内部按键及缝隙暴露，可能导致按键失灵、卡阻、划伤或电路故障，影响电梯正常安全使用。"
+    },
+    {
+      "file": "neg_36_a410d8ba8700.jpg",
+      "hard_negative_for": "garbage_pile",
+      "pred_major": "traffic",
+      "pred_sub": "vehicle_occupancy",
+      "confidence": "高",
+      "reason": "画面右侧幼儿园外墙旁、禁停标志下方有一辆红色SUV违规停放，占用道路边缘空间，可能影响通行视线，尤其幼儿园周边人车混行时存在安全风险。"
+    },
+    {
+      "file": "neg_38_4f5bace4f63d.jpg",
+      "hard_negative_for": "gas_pipe_aging",
+      "pred_major": "construction",
+      "pred_sub": "scaffold_guard",
+      "confidence": "中",
+      "reason": "一名工人站在人字梯上探入吊顶内作业，未见安全带、防坠器或可靠挂点，梯脚固定和专人扶梯情况不明确，存在高处坠落、梯子失稳风险。"
+    },
+    {
+      "file": "neg_39_d12fe4c41769.jpg",
+      "hard_negative_for": "gas_pipe_aging",
+      "pred_major": "utility",
+      "pred_sub": "gas_pipe_aging",
+      "confidence": "中",
+      "reason": "室内燃气管道及放散管法兰、阀门和螺栓存在明显锈蚀、油漆剥落；法兰防静电跨接线采用细铁丝，不符合规范，存在密封失效、燃气泄漏和静电积聚风险。"
+    },
+    {
+      "file": "neg_45_116e94e47654.jpg",
+      "hard_negative_for": "manhole_damage",
+      "pred_major": "construction",
+      "pred_sub": "no_warning",
+      "confidence": "中",
+      "reason": "画面中人员正用工具撬动道路井盖，井盖周边未见围挡、锥桶或警示标志。井盖一旦被打开，行人和车辆可能误入，存在坠落、绊倒或碾压风险。"
+    },
+    {
+      "file": "neg_56_9cd5ae6b6b18.jpg",
+      "hard_negative_for": "sewage_odor",
+      "pred_major": "municipal",
+      "pred_sub": "manhole_damage",
+      "confidence": "高",
+      "reason": "道路旁长条排水沟的黑色格栅盖板多处横条缺失、断裂、边缘翘起，形成较大缝隙；行人、自行车或轮椅经过时可能绊倒、卡入，存在人身伤害风险。"
+    },
+    {
+      "file": "neg_63_eaa3a2cfc974.jpg",
+      "hard_negative_for": "no_warning",
+      "pred_major": "construction",
+      "pred_sub": "no_barrier",
+      "confidence": "高",
+      "reason": "施工重地仅以一条红白警戒线和警示牌隔离，未设置连续硬质围挡，重型机械作业期间行人可轻易跨入，存在碰撞、碾压等风险。"
+    }
+  ],
+  "fn_cases": [
+    {
+      "file": "other_4_7206666dbcd7.jpg",
+      "subcategory": "other",
+      "notes": "户外裸露架空金属管线旁未设隔离下作业隐患"
+    },
+    {
+      "file": "gas_leak_4_aab6972e68f0.jpg",
+      "subcategory": "gas_leak",
+      "notes": "防护人员手持便携式气体检测仪检测气瓶阀门泄漏"
+    },
+    {
+      "file": "elevator_stopped_4_6134b80c8206.jpg",
+      "subcategory": "elevator_stopped",
+      "notes": "直梯门口设立围挡与暂停使用提示牌"
+    },
+    {
+      "file": "elevator_inspection_1_08346a788062.jpg",
+      "subcategory": "elevator_inspection",
+      "notes": "电梯轿厢内检验标志框缺失特种设备检验合格证"
+    },
+    {
+      "file": "elevator_trapped_3_329232b7c483.jpg",
+      "subcategory": "elevator_trapped",
+      "notes": "消防员在故障紧闭电梯门外准备破拆解困"
+    },
+    {
+      "file": "fire_lane_blocked_2_c49b54603bdd.jpg",
+      "subcategory": "fire_lane_blocked",
+      "notes": "小区消防车道两侧停满车辆仅余狭缝"
+    }
+  ]
+}

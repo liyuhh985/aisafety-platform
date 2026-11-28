@@ -1,0 +1,27 @@
+{
+  "sha256": "6cf8dd14e38a703345f48ab9501728898e8e3d26cb01eef2621317f1f00ece63",
+  "file": "illegal_wiring_2_6cf8dd14e38a.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"窗户上方及门框旁有多股电线、电缆杂乱悬垂，部分线路无套管保护，线管破损，存在绝缘破损、漏电、短路及触电起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"窗户上方及门框旁墙角处\",\n  \"rectification\": [\n    \"由持证电工停电后整理线路，拆除废弃线缆，规范穿管敷设。\",\n    \"更换破损线管和老化线路，固定悬垂线缆，避免靠近门窗可触及区域。\",\n    \"加装或检查漏电保护装置，并测试线路绝缘和接地情况。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "窗户上方及门框旁有多股电线、电缆杂乱悬垂，部分线路无套管保护，线管破损，存在绝缘破损、漏电、短路及触电起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "窗户上方及门框旁墙角处",
+    "rectification": [
+      "由持证电工停电后整理线路，拆除废弃线缆，规范穿管敷设。",
+      "更换破损线管和老化线路，固定悬垂线缆，避免靠近门窗可触及区域。",
+      "加装或检查漏电保护装置，并测试线路绝缘和接地情况。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

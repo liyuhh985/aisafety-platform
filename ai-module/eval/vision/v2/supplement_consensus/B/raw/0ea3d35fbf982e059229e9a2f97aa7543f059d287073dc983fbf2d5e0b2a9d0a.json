@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"distribution_box_fault\", \"evidence\": \"配电柜柜门敞开，内部电气元件裸露\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "evidence": "配电柜柜门敞开，内部电气元件裸露"
+  }
+}

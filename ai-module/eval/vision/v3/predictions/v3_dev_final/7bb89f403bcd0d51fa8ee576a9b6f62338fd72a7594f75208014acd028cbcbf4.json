@@ -1,0 +1,29 @@
+{
+  "sha256": "7bb89f403bcd0d51fa8ee576a9b6f62338fd72a7594f75208014acd028cbcbf4",
+  "file": "no_barrier_4_7bb89f403bcd.png",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"施工区域沿边界仅安装一排立柱，未见连续硬质围挡封闭，地面碎石、坑洼裸露且无警示，人员可随意进入，存在绊倒、跌落及无关人员受伤风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工现场沿线的立柱安装区及右侧碎石开挖区域\",\n  \"rectification\": [\n    \"立即沿施工边界设置连续、稳固的硬质围挡，封闭作业区域\",\n    \"在出入口和临边设置安全警示标志、锥桶及夜间警示灯\",\n    \"清理平整碎石和施工材料，保持作业及通行区域安全\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "施工区域沿边界仅安装一排立柱，未见连续硬质围挡封闭，地面碎石、坑洼裸露且无警示，人员可随意进入，存在绊倒、跌落及无关人员受伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工现场沿线的立柱安装区及右侧碎石开挖区域",
+    "rectification": [
+      "立即沿施工边界设置连续、稳固的硬质围挡，封闭作业区域",
+      "在出入口和临边设置安全警示标志、锥桶及夜间警示灯",
+      "清理平整碎石和施工材料，保持作业及通行区域安全"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

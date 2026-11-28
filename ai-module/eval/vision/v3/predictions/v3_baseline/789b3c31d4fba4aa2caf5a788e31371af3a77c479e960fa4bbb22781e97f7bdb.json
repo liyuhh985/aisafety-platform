@@ -1,0 +1,27 @@
+{
+  "sha256": "789b3c31d4fba4aa2caf5a788e31371af3a77c479e960fa4bbb22781e97f7bdb",
+  "file": "scaffold_guard_1_789b3c31d4fb.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"图片显示高层建筑外脚手架顶部作业层及两塔楼间凹槽处安全网未完全封闭，临边防护不足，且有钢筋、构件外露，存在人员高处坠落和物体打击风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙脚手架顶部及中部凹槽处\",\n  \"rectification\": [\n    \"加高外脚手架并设置符合要求的临边防护栏杆、挡脚板和安全网\",\n    \"封闭两塔楼间凹槽处的外架缺口，完善水平及竖向防护\",\n    \"清理或覆盖外露钢筋和构件，设置警示标志并加强高处作业监护\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "图片显示高层建筑外脚手架顶部作业层及两塔楼间凹槽处安全网未完全封闭，临边防护不足，且有钢筋、构件外露，存在人员高处坠落和物体打击风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙脚手架顶部及中部凹槽处",
+    "rectification": [
+      "加高外脚手架并设置符合要求的临边防护栏杆、挡脚板和安全网",
+      "封闭两塔楼间凹槽处的外架缺口，完善水平及竖向防护",
+      "清理或覆盖外露钢筋和构件，设置警示标志并加强高处作业监护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

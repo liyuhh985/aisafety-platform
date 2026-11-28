@@ -1,0 +1,27 @@
+{
+  "sha256": "6905810a2cd3d39d820861ab2e4cdb2a49632ca0d4ae661ce01ebe62ca940c46",
+  "file": "sewage_odor_2_6905810a2cd3.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"sewage_odor\",\"severity\":\"中\",\"description\":\"河道水体呈黑色，水面漂浮大量泡沫、油污及杂物，岸边有垃圾和破损结构，疑为生活污水直排或长期滞流，易产生异味、滋生蚊虫并污染环境。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"左侧建筑与右侧民居之间的村内河道\",\"rectification\":[\"排查沿线排污口，实施截污纳管，禁止污水直排\",\"打捞水面漂浮物并清淤疏浚，保持水体流动\",\"加强水质监测和日常保洁，设置警示标识\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "sewage_odor",
+    "severity": "中",
+    "description": "河道水体呈黑色，水面漂浮大量泡沫、油污及杂物，岸边有垃圾和破损结构，疑为生活污水直排或长期滞流，易产生异味、滋生蚊虫并污染环境。",
+    "reason_if_no_hazard": "",
+    "location_hint": "左侧建筑与右侧民居之间的村内河道",
+    "rectification": [
+      "排查沿线排污口，实施截污纳管，禁止污水直排",
+      "打捞水面漂浮物并清淤疏浚，保持水体流动",
+      "加强水质监测和日常保洁，设置警示标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

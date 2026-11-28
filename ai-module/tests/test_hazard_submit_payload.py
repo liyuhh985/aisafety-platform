@@ -178,7 +178,7 @@ def test_category_list_truncates_to_three(monkeypatch):
     hs = _patch_llm_pipeline(
         monkeypatch,
         _llm_info(["municipal/manhole_damage", "fire/fire_equipment_fault",
-                   "utility/gas_leak", "building/wall_crack_lean",
+                   "utility/gas_leak", "building/dangerous_building",
                    "elevator_special/elevator_stopped"]),
         captured,
     )
@@ -250,3 +250,22 @@ def test_submit_payload_carries_uploaded_image_file_id(monkeypatch):
         1, [], "占道了", image_url="http://minio/safety-images/a.png", image_file_id=99)
     assert captured["imageUrl"] == "http://minio/safety-images/a.png"
     assert captured["imageFileId"] == 99
+
+
+
+def test_retired_subcategory_tokens_are_rejected_without_alias():
+    from tools import hazard_submit
+
+    retired = (
+        "building/wall_crack_lean",
+        "建筑安全/墙体开裂/倾斜",
+        "墙体开裂/倾斜",
+        "building/facade_fall",
+        "建筑安全/外立面脱落",
+        "外立面脱落",
+        "fire/fire_water_abnormal",
+        "消防安全/消防水源异常",
+        "消防水源异常",
+    )
+    for value in retired:
+        assert hazard_submit._normalize_category_list([value]) == [], value

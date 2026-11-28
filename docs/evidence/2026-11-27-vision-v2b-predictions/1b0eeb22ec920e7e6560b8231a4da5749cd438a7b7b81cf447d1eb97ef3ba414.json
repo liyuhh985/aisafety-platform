@@ -1,0 +1,23 @@
+{
+  "sha256": "1b0eeb22ec920e7e6560b8231a4da5749cd438a7b7b81cf447d1eb97ef3ba414",
+  "file": "NEGSCA01.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片为作业脚手架纵向水平杆搭设构造要求教学示意图，配有尺寸标注和“高空作业注意安全”警示牌，未显示现场实际安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为作业脚手架纵向水平杆搭设构造要求教学示意图，配有尺寸标注和“高空作业注意安全”警示牌，未显示现场实际安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

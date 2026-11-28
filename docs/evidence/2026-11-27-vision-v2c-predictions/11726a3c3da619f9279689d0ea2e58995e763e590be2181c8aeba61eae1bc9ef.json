@@ -1,0 +1,30 @@
+{
+  "sha256": "11726a3c3da619f9279689d0ea2e58995e763e590be2181c8aeba61eae1bc9ef",
+  "file": "GAS0050.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"现场沟槽开挖较深，土壁近垂直且未见支护或放坡，周边无连续围挡和明显警示，多人靠近坑边并有人下坑作业，右侧人员未戴安全帽，存在坍塌、坠落和物体打击风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"施工开挖沟槽及坑边作业区域\",\"rectification\":[\"立即停止坑内作业，按规范对沟槽放坡或设置可靠支护\",\"沿沟槽周边设置连续围挡和醒目安全警示，限制人员靠近\",\"作业人员必须正确佩戴安全帽等个人防护用品\"],\"secondary_subcategories\":[\"no_barrier\",\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "现场沟槽开挖较深，土壁近垂直且未见支护或放坡，周边无连续围挡和明显警示，多人靠近坑边并有人下坑作业，右侧人员未戴安全帽，存在坍塌、坠落和物体打击风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工开挖沟槽及坑边作业区域",
+    "rectification": [
+      "立即停止坑内作业，按规范对沟槽放坡或设置可靠支护",
+      "沿沟槽周边设置连续围挡和醒目安全警示，限制人员靠近",
+      "作业人员必须正确佩戴安全帽等个人防护用品"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

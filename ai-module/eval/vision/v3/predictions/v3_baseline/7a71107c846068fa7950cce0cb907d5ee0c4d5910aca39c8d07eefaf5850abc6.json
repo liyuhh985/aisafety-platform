@@ -1,0 +1,26 @@
+{
+  "sha256": "7a71107c846068fa7950cce0cb907d5ee0c4d5910aca39c8d07eefaf5850abc6",
+  "file": "elevator_inspection_4_7a71107c8460.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_inspection\",\n  \"severity\": \"高\",\n  \"description\": \"电梯轿厢内张贴的操作许可证显示最近检验日期为2005年、2007年，未见近期有效检验合格标志，疑似电梯超期未检验，存在困人、停运或部件失效等安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内\",\n  \"rectification\": [\n    \"联系电梯维保单位核查检验有效期并安排定期检验\",\n    \"及时更新并张贴有效期内的电梯使用标志/检验合格证\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_inspection",
+    "severity": "高",
+    "description": "电梯轿厢内张贴的操作许可证显示最近检验日期为2005年、2007年，未见近期有效检验合格标志，疑似电梯超期未检验，存在困人、停运或部件失效等安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内",
+    "rectification": [
+      "联系电梯维保单位核查检验有效期并安排定期检验",
+      "及时更新并张贴有效期内的电梯使用标志/检验合格证"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

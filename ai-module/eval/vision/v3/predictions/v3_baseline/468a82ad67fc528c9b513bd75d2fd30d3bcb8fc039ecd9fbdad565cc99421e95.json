@@ -1,0 +1,28 @@
+{
+  "sha256": "468a82ad67fc528c9b513bd75d2fd30d3bcb8fc039ecd9fbdad565cc99421e95",
+  "file": "elevator_trapped_4_468a82ad67fc.png",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_trapped\",\"severity\":\"高\",\"description\":\"电梯轿厢内有人员被困，消防人员正在现场救援，电梯门非正常开启，存在人员受困、挤压、坠落及救援次生伤害风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯轿厢及电梯门口\",\"rectification\":[\"立即联系电梯维保单位并配合专业救援，严禁盲目扒门\",\"在电梯口设置警戒和警示标志，疏散无关人员\",\"救援后全面排查电梯故障原因，检验合格后方可恢复使用\",\"加强电梯日常巡检、定期维保和应急演练\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯轿厢内有人员被困，消防人员正在现场救援，电梯门非正常开启，存在人员受困、挤压、坠落及救援次生伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢及电梯门口",
+    "rectification": [
+      "立即联系电梯维保单位并配合专业救援，严禁盲目扒门",
+      "在电梯口设置警戒和警示标志，疏散无关人员",
+      "救援后全面排查电梯故障原因，检验合格后方可恢复使用",
+      "加强电梯日常巡检、定期维保和应急演练"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

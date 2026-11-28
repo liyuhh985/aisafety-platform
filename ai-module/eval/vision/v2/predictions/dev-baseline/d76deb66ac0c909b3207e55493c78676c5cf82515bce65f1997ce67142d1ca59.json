@@ -1,0 +1,28 @@
+{
+  "sha256": "d76deb66ac0c909b3207e55493c78676c5cf82515bce65f1997ce67142d1ca59",
+  "file": "NEGDEE08.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"现场开挖形成深长沟槽/基坑，两侧土壁陡直且未见有效支护，沟槽边缘缺少连续临边防护，沟底有积水。人员、车辆误入或边坡失稳可能造成坠落、坍塌伤亡。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁施工开挖沟槽及基坑边缘\",\n  \"rectification\": [\n    \"沿基坑周边设置连续硬质围挡、防护栏杆和夜间警示\",\n    \"按施工方案对深基坑进行放坡或支护，严禁无支护深挖\",\n    \"及时抽排沟底积水并设置排水措施，监测边坡稳定\",\n    \"加强现场封闭管理，禁止无关人员和车辆靠近\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "现场开挖形成深长沟槽/基坑，两侧土壁陡直且未见有效支护，沟槽边缘缺少连续临边防护，沟底有积水。人员、车辆误入或边坡失稳可能造成坠落、坍塌伤亡。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁施工开挖沟槽及基坑边缘",
+    "rectification": [
+      "沿基坑周边设置连续硬质围挡、防护栏杆和夜间警示",
+      "按施工方案对深基坑进行放坡或支护，严禁无支护深挖",
+      "及时抽排沟底积水并设置排水措施，监测边坡稳定",
+      "加强现场封闭管理，禁止无关人员和车辆靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

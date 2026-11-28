@@ -1,0 +1,27 @@
+{
+  "sha256": "7c894497331cd10b360163edace724a9288d8c4f4bf7fbf7ae0eb3f7a6a5aa3a",
+  "file": "confined_space_4_7c894497331c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_warning\",\n  \"severity\": \"中\",\n  \"description\": \"数名人员在道路中央用工具撬动、检修井盖，周边未设置锥桶、围挡或警示标志，也无专人疏导交通；井盖开启后行人和车辆可能误入，存在坠落、碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央井盖处\",\n  \"rectification\": [\n    \"立即在作业区域周边设置锥桶、警示牌和围挡，夜间加设反光警示\",\n    \"安排专人疏导交通并监护井口，作业结束后及时复位井盖\",\n    \"如需下井作业，应按有限空间作业规程通风检测，并配备三脚架、安全带和监护人\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "中",
+    "description": "数名人员在道路中央用工具撬动、检修井盖，周边未设置锥桶、围挡或警示标志，也无专人疏导交通；井盖开启后行人和车辆可能误入，存在坠落、碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央井盖处",
+    "rectification": [
+      "立即在作业区域周边设置锥桶、警示牌和围挡，夜间加设反光警示",
+      "安排专人疏导交通并监护井口，作业结束后及时复位井盖",
+      "如需下井作业，应按有限空间作业规程通风检测，并配备三脚架、安全带和监护人"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

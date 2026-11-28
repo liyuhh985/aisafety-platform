@@ -1,0 +1,27 @@
+{
+  "sha256": "f22af713e27c135df52371e1208b470d822e28364b839eed2d34f624ca638386",
+  "file": "illegal_wiring_3_f22af713e27c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"中\",\"description\":\"墙脚处电线未穿管保护，直接从墙缝引出并沿地面拖曳至临时接线盒/插排，接头裸露且无防水、固定措施，存在绊倒、受潮漏电、短路触电及起火风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑墙角与绿色地坪交界处\",\"rectification\":[\"立即断电并拆除临时私接线路\",\"由持证电工按规范穿管敷设、固定并做防水处理\",\"封堵穿墙孔洞，清理地面拖曳线缆，设置必要防护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "墙脚处电线未穿管保护，直接从墙缝引出并沿地面拖曳至临时接线盒/插排，接头裸露且无防水、固定措施，存在绊倒、受潮漏电、短路触电及起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑墙角与绿色地坪交界处",
+    "rectification": [
+      "立即断电并拆除临时私接线路",
+      "由持证电工按规范穿管敷设、固定并做防水处理",
+      "封堵穿墙孔洞，清理地面拖曳线缆，设置必要防护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

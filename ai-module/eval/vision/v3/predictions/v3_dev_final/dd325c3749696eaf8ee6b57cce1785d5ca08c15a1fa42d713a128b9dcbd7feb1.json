@@ -1,0 +1,27 @@
+{
+  "sha256": "dd325c3749696eaf8ee6b57cce1785d5ca08c15a1fa42d713a128b9dcbd7feb1",
+  "file": "fire_equipment_fault_1_dd325c374969.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室外消火栓顶部大量喷水，疑似阀门或栓体损坏，导致持续漏水、地面积水，并影响火灾时正常取水使用。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁人行道与绿化带附近的室外消火栓处\",\n  \"rectification\": [\n    \"立即关闭消火栓阀门或上游控制阀，止水并设置临时警示。\",\n    \"安排专业人员检修或更换损坏的消火栓，恢复完好有效状态。\",\n    \"清理现场积水，排查是否影响周边通行及设施安全。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室外消火栓顶部大量喷水，疑似阀门或栓体损坏，导致持续漏水、地面积水，并影响火灾时正常取水使用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁人行道与绿化带附近的室外消火栓处",
+    "rectification": [
+      "立即关闭消火栓阀门或上游控制阀，止水并设置临时警示。",
+      "安排专业人员检修或更换损坏的消火栓，恢复完好有效状态。",
+      "清理现场积水，排查是否影响周边通行及设施安全。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

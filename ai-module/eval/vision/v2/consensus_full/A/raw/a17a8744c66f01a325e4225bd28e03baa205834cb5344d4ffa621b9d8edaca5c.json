@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"画面主要为防水施工现场，底部圆形开口边缘遮挡模糊，无法确认是否有防护缺失\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面主要为防水施工现场，底部圆形开口边缘遮挡模糊，无法确认是否有防护缺失"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "183162cf4a7950590df812ddd6851e70d0a1c85c889f40e1ea893cf944e64929",
+  "file": "other_1_183162cf4a79.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"混凝土挡土墙出现明显水平开裂、错位和外倾，局部混凝土块分离，上方钢栈桥支撑区域存在结构失稳风险；若继续发展可能发生挡墙垮塌或混凝土坠落，危及下方通行及上方设施安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"混凝土挡土墙及上方钢栈桥支撑区域\",\n  \"rectification\": [\n    \"立即设置警戒围挡和警示标志，禁止人员在挡墙下方及附近停留通行\",\n    \"组织专业机构进行结构安全鉴定，制定挡墙加固或拆除方案\",\n    \"对开裂、错位部位和上方钢支撑进行临时支护与持续监测，防止突然坍塌\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "混凝土挡土墙出现明显水平开裂、错位和外倾，局部混凝土块分离，上方钢栈桥支撑区域存在结构失稳风险；若继续发展可能发生挡墙垮塌或混凝土坠落，危及下方通行及上方设施安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "混凝土挡土墙及上方钢栈桥支撑区域",
+    "rectification": [
+      "立即设置警戒围挡和警示标志，禁止人员在挡墙下方及附近停留通行",
+      "组织专业机构进行结构安全鉴定，制定挡墙加固或拆除方案",
+      "对开裂、错位部位和上方钢支撑进行临时支护与持续监测，防止突然坍塌"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

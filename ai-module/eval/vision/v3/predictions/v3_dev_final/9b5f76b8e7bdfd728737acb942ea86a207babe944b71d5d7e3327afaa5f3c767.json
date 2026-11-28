@@ -1,0 +1,27 @@
+{
+  "sha256": "9b5f76b8e7bdfd728737acb942ea86a207babe944b71d5d7e3327afaa5f3c767",
+  "file": "garbage_pile_2_9b5f76b8e7bd.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"建筑外墙角落堆放大量碎砖、木板、编织袋和塑料筐等建筑及生活垃圾，占用场地，存在绊倒、尖锐物伤人、扬尘和火灾风险，且易滋生虫鼠。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙角落及地面\",\"rectification\":[\"立即清运建筑垃圾和生活垃圾，分类处置\",\"设置规范垃圾堆放点或围挡并张贴警示\",\"加强日常巡查，防止再次随意倾倒\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "建筑外墙角落堆放大量碎砖、木板、编织袋和塑料筐等建筑及生活垃圾，占用场地，存在绊倒、尖锐物伤人、扬尘和火灾风险，且易滋生虫鼠。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙角落及地面",
+    "rectification": [
+      "立即清运建筑垃圾和生活垃圾，分类处置",
+      "设置规范垃圾堆放点或围挡并张贴警示",
+      "加强日常巡查，防止再次随意倾倒"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,167 @@
+diff --git a/.frontend-work/src/constants/hazardTaxonomy.js b/.frontend-work/src/constants/hazardTaxonomy.js
+--- a/.frontend-work/src/constants/hazardTaxonomy.js
++++ b/.frontend-work/src/constants/hazardTaxonomy.js
+@@ -4,7 +4,7 @@
+  * 前端统一维护与解析核心模块
+  */
+ 
+-// 1. 标准两级分类定义 (8 大一级类别 + 29 个标准二级子类)
++// 1. 标准两级分类定义 (8 大一级类别 + 29 个标准二级子类，v2a 已合并 3 组冗余类)
+ export const HAZARD_TAXONOMY = [
+   {
+     code: "traffic",
+@@ -32,7 +32,6 @@
+     subcategories: [
+       { code: "fire_lane_blocked", label: "消防通道占用" },
+       { code: "fire_equipment_fault", label: "消防设施故障" },
+-      { code: "fire_water_abnormal", label: "消防水源异常" },
+     ],
+   },
+   {
+@@ -40,8 +39,6 @@
+     label: "建筑安全",
+     subcategories: [
+       { code: "dangerous_building", label: "危房" },
+-      { code: "wall_crack_lean", label: "墙体开裂/倾斜" },
+-      { code: "facade_fall", label: "外立面脱落" },
+       { code: "falling_object", label: "高空坠物" },
+       { code: "illegal_structure", label: "违规搭建" },
+     ],
+diff --git a/.frontend-work/test/hazardTaxonomy.test.mjs b/.frontend-work/test/hazardTaxonomy.test.mjs
+new file mode 100644
+--- /dev/null
++++ b/.frontend-work/test/hazardTaxonomy.test.mjs
+@@ -0,0 +1,72 @@
++import test from 'node:test'
++import assert from 'node:assert/strict'
++
++import {
++  HAZARD_TAXONOMY,
++  LEGACY_HAZARD_MAP,
++  getSubcategoriesByMajor,
++  resolveHazard,
++} from '../src/constants/hazardTaxonomy.js'
++
++const TOTAL = HAZARD_TAXONOMY.reduce(
++  (sum, major) => sum + major.subcategories.length,
++  0,
++)
++
++const RETIRED_CODES = [
++  'wall_crack_lean',
++  'facade_fall',
++  'fire_water_abnormal',
++]
++
++test('taxonomy contains exactly 29 canonical subcategories', () => {
++  assert.equal(TOTAL, 29)
++  for (const code of RETIRED_CODES) {
++    assert.equal(
++      HAZARD_TAXONOMY.some((major) =>
++        major.subcategories.some((sub) => sub.code === code)),
++      false,
++      code,
++    )
++  }
++})
++
++test('retired subcategories are not kept as write-path aliases', () => {
++  for (const code of RETIRED_CODES) {
++    assert.equal(Object.hasOwn(LEGACY_HAZARD_MAP, code), false, code)
++  }
++})
++
++test('merged targets keep canonical storage paths and slot profiles', () => {
++  assert.deepEqual(
++    resolveHazard('building/dangerous_building'),
++    {
++      majorCode: 'building',
++      majorLabel: '建筑安全',
++      subcategoryCode: 'dangerous_building',
++      subcategoryLabel: '危房',
++      displayText: '建筑安全 · 危房',
++      isLegacy: false,
++      isUnknown: false,
++    },
++  )
++  assert.equal(
++    resolveHazard('建筑安全/高空坠物').subcategoryCode,
++    'falling_object',
++  )
++  assert.equal(
++    resolveHazard('消防安全/消防设施故障').subcategoryCode,
++    'fire_equipment_fault',
++  )
++})
++
++test('major filters expose only the remaining canonical children', () => {
++  assert.deepEqual(
++    getSubcategoriesByMajor('building').map((sub) => sub.code),
++    ['dangerous_building', 'falling_object', 'illegal_structure'],
++  )
++  assert.deepEqual(
++    getSubcategoriesByMajor('fire').map((sub) => sub.code),
++    ['fire_lane_blocked', 'fire_equipment_fault'],
++  )
++})
+diff --git a/.frontend-work/test/compileHazardTaxonomyConsumers.mjs b/.frontend-work/test/compileHazardTaxonomyConsumers.mjs
+new file mode 100644
+--- /dev/null
++++ b/.frontend-work/test/compileHazardTaxonomyConsumers.mjs
+@@ -0,0 +1,56 @@
++import fs from 'node:fs'
++import path from 'node:path'
++import { fileURLToPath } from 'node:url'
++import { parse, compileScript, compileTemplate } from '@vue/compiler-sfc'
++
++const testDir = path.dirname(fileURLToPath(import.meta.url))
++const srcDir = path.resolve(testDir, '../src')
++
++function walk(dir) {
++  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
++    const full = path.join(dir, entry.name)
++    return entry.isDirectory() ? walk(full) : [full]
++  })
++}
++
++const vueFiles = walk(srcDir)
++  .filter((file) => file.endsWith('.vue'))
++  .filter((file) => fs.readFileSync(file, 'utf8').includes('hazardTaxonomy'))
++
++if (vueFiles.length === 0) {
++  throw new Error('no Vue consumers of hazardTaxonomy.js found')
++}
++
++for (const file of vueFiles) {
++  const source = fs.readFileSync(file, 'utf8')
++  const { descriptor, errors } = parse(source, { filename: file })
++  if (errors.length) {
++    throw new Error(`${file}: SFC parse failed: ${errors.map(String).join('; ')}`)
++  }
++
++  let bindings = {}
++  if (descriptor.script || descriptor.scriptSetup) {
++    const script = compileScript(descriptor, {
++      id: `taxonomy-v2a-${path.basename(file)}`,
++      inlineTemplate: false,
++    })
++    bindings = script.bindings
++  }
++
++  if (descriptor.template) {
++    const result = compileTemplate({
++      source: descriptor.template.content,
++      filename: file,
++      id: `taxonomy-v2a-${path.basename(file)}`,
++      compilerOptions: {
++        bindingMetadata: bindings,
++      },
++    })
++    if (result.errors.length) {
++      throw new Error(`${file}: template compile failed: ${result.errors.map(String).join('; ')}`)
++    }
++  }
++  console.log(`compiled ${path.relative(srcDir, file)}`)
++}
++
++console.log(`hazardTaxonomy Vue consumers compiled: ${vueFiles.length}`)

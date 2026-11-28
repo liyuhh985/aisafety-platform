@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"structural_damage\", \"evidence\": \"天花板墙皮大面积脱落并伴裂缝\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "天花板墙皮大面积脱落并伴裂缝"
+  }
+}

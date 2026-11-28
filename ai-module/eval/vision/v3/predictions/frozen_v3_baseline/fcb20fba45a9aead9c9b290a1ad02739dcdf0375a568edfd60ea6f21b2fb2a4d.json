@@ -1,0 +1,27 @@
+{
+  "sha256": "fcb20fba45a9aead9c9b290a1ad02739dcdf0375a568edfd60ea6f21b2fb2a4d",
+  "file": "traffic_facility_damage_1_fcb20fba45a9.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"traffic_facility_damage\",\"severity\":\"中\",\"description\":\"人行道护栏顶部套管破损，金属端部裸露且边缘较锋利，可能划伤行人；护栏底座周边地砖碎裂形成坑洞，栏杆存在松动、倾斜风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道护栏连接处及底部地砖破损处\",\"rectification\":[\"修复或更换破损的护栏套管，消除金属裸露锐边\",\"修补护栏底座周边碎裂地砖并加固栏杆，确保稳固\",\"设置临时警示标识，排查沿线同类护栏隐患\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "中",
+    "description": "人行道护栏顶部套管破损，金属端部裸露且边缘较锋利，可能划伤行人；护栏底座周边地砖碎裂形成坑洞，栏杆存在松动、倾斜风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道护栏连接处及底部地砖破损处",
+    "rectification": [
+      "修复或更换破损的护栏套管，消除金属裸露锐边",
+      "修补护栏底座周边碎裂地砖并加固栏杆，确保稳固",
+      "设置临时警示标识，排查沿线同类护栏隐患"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

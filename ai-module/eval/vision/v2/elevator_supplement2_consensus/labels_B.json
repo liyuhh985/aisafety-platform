@@ -1,0 +1,42 @@
+{
+  "71aa18c7ced75565e6406a3c599489440a82544334d42f7ece3e0db098d3fd1f": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "仅为电梯安全注意事项宣传图，无实际隐患"
+  },
+  "084d4869b923b7b1485085617df096b56158a9f0d010a4082378a32e3ab85b04": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯显示屏正常显示1层上行箭头，无异常"
+  },
+  "fae74161698833dccfe0bdb97d2c54ac9436d970e4d99fccb28393905a0039ad": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "evidence": "电梯门前放置不准靠近围挡，电梯停用"
+  },
+  "1df8a0dbc11ce99da2a35b584abbbadd8c740dab095ddb6be81e97002535523a": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "消防员在狭窄井道内救援被困人员，具体隐患类型无法确认"
+  },
+  "cb53a12fd3f8852a6bc635caa706ba796eb5ff30fc567a0442d2d33fdff4e882": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "evidence": "人员被困电梯门缝，工作人员正扒门施救"
+  }
+}

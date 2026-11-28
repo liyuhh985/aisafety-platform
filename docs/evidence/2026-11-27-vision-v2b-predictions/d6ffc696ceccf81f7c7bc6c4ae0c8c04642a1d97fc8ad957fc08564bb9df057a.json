@@ -1,0 +1,23 @@
+{
+  "sha256": "d6ffc696ceccf81f7c7bc6c4ae0c8c04642a1d97fc8ad957fc08564bb9df057a",
+  "file": "NEGFIR04.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面显示消防车道标识清晰，通道内无车辆、杂物占用，路面及井盖未见明显破损，属于合规场景。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示消防车道标识清晰，通道内无车辆、杂物占用，路面及井盖未见明显破损，属于合规场景。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

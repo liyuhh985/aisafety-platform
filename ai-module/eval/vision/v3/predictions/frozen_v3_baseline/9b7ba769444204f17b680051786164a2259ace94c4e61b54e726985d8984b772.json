@@ -1,0 +1,27 @@
+{
+  "sha256": "9b7ba769444204f17b680051786164a2259ace94c4e61b54e726985d8984b772",
+  "file": "neg_20_9b7ba7694442.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"动力柜柜门敞开，内部母排、接线端子等带电部位裸露，缺少隔离防护，人员误触易发生触电事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"动力柜/配电箱处\",\n  \"rectification\": [\n    \"立即关闭并锁闭动力柜柜门，防止无关人员接触\",\n    \"对裸露母排和接线端子加装绝缘防护罩或隔离挡板\",\n    \"由持证电工检查维护，并设置明显的当心触电警示标识\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "动力柜柜门敞开，内部母排、接线端子等带电部位裸露，缺少隔离防护，人员误触易发生触电事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "动力柜/配电箱处",
+    "rectification": [
+      "立即关闭并锁闭动力柜柜门，防止无关人员接触",
+      "对裸露母排和接线端子加装绝缘防护罩或隔离挡板",
+      "由持证电工检查维护，并设置明显的当心触电警示标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

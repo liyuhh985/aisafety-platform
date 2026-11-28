@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"facade_risk\", \"evidence\": \"高层外墙多处墙皮脱落，露出浅色基底，有坠落风险\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "facade_risk",
+    "evidence": "高层外墙多处墙皮脱落，露出浅色基底，有坠落风险"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "37e8cb0d18f5552a5a04ba27ddbff34850818e98dff2c57cee52505e34a87370",
+  "file": "traffic_facility_damage_2_37e8cb0d18f5.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"traffic_facility_damage\",\n  \"severity\": \"高\",\n  \"description\": \"道路隔离护栏大面积断裂倒塌，基座水泥碎裂、钢筋裸露，护栏横亘在车道上，严重影响车辆正常通行，存在剐蹭及引发交通事故的风险；碎裂的砖块散落路沿，也易绊倒行人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道与车道交界处，隔离护栏倒塌占据部分车道\",\n  \"rectification\": [\n    \"立即清理倒伏的护栏残骸和散落的碎石，恢复道路正常通行\",\n    \"重新浇筑基座并修复或更换受损护栏，确保其稳固性\",\n    \"修复完成前，在现场设置警示锥桶或警戒线，引导行人和车辆绕行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "高",
+    "description": "道路隔离护栏大面积断裂倒塌，基座水泥碎裂、钢筋裸露，护栏横亘在车道上，严重影响车辆正常通行，存在剐蹭及引发交通事故的风险；碎裂的砖块散落路沿，也易绊倒行人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道与车道交界处，隔离护栏倒塌占据部分车道",
+    "rectification": [
+      "立即清理倒伏的护栏残骸和散落的碎石，恢复道路正常通行",
+      "重新浇筑基座并修复或更换受损护栏，确保其稳固性",
+      "修复完成前，在现场设置警示锥桶或警戒线，引导行人和车辆绕行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

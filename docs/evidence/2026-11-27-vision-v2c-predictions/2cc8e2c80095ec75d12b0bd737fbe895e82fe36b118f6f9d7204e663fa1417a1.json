@@ -1,0 +1,27 @@
+{
+  "sha256": "2cc8e2c80095ec75d12b0bd737fbe895e82fe36b118f6f9d7204e663fa1417a1",
+  "file": "GAR0005.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"单元门外及绿化带旁大量装修垃圾和废弃物袋装堆积，体量大且含可燃包装，影响通行和环境卫生，可能阻塞疏散并引发火灾、绊倒等风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼单元入口右侧绿化带及步道旁\",\n  \"rectification\": [\n    \"及时清运装修垃圾和废弃物，不得在楼栋出入口及绿化带长期堆放\",\n    \"清理期间设置围挡或警示，保持疏散通道畅通\",\n    \"加强物业巡查和装修垃圾定点投放管理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "单元门外及绿化带旁大量装修垃圾和废弃物袋装堆积，体量大且含可燃包装，影响通行和环境卫生，可能阻塞疏散并引发火灾、绊倒等风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼单元入口右侧绿化带及步道旁",
+    "rectification": [
+      "及时清运装修垃圾和废弃物，不得在楼栋出入口及绿化带长期堆放",
+      "清理期间设置围挡或警示，保持疏散通道畅通",
+      "加强物业巡查和装修垃圾定点投放管理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

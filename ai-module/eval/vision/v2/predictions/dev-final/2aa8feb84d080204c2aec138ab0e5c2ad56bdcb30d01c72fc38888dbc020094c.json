@@ -1,0 +1,30 @@
+{
+  "sha256": "2aa8feb84d080204c2aec138ab0e5c2ad56bdcb30d01c72fc38888dbc020094c",
+  "file": "NEGCON07.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"管沟开挖较深，两侧土壁陡直，木挡板支护不连续，沟槽边缘未见连续围挡和明显警示，沟内有多名工人作业，存在土方坍塌、人员坠落等风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路旁管沟开挖施工现场\",\n  \"rectification\": [\n    \"按规范放坡或设置连续、可靠的沟槽支护，防止土方坍塌\",\n    \"沟槽边缘设置连续硬质围挡和临边防护栏杆，并增设安全警示标志\",\n    \"安排专人监测沟槽边坡稳定，禁止无关人员进入作业区域\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\",\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "管沟开挖较深，两侧土壁陡直，木挡板支护不连续，沟槽边缘未见连续围挡和明显警示，沟内有多名工人作业，存在土方坍塌、人员坠落等风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路旁管沟开挖施工现场",
+    "rectification": [
+      "按规范放坡或设置连续、可靠的沟槽支护，防止土方坍塌",
+      "沟槽边缘设置连续硬质围挡和临边防护栏杆，并增设安全警示标志",
+      "安排专人监测沟槽边坡稳定，禁止无关人员进入作业区域"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

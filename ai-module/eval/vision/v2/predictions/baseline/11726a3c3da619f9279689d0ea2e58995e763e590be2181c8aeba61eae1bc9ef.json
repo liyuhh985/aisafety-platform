@@ -1,0 +1,29 @@
+{
+  "sha256": "11726a3c3da619f9279689d0ea2e58995e763e590be2181c8aeba61eae1bc9ef",
+  "file": "GAS0050.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"夜间开挖沟槽较深，坑边未见连续临边防护和警示设施，人员靠近坑边且有人下坑作业，土壁裸露未支护，存在坠落和土方坍塌风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"夜间道路开挖沟槽及坑边\",\n  \"rectification\": [\n    \"立即沿沟槽设置连续硬质围挡和临边防护栏\",\n    \"增设夜间警示灯、反光标志并安排专人监护\",\n    \"对沟槽放坡或支护，规范人员上下和坑内作业\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "夜间开挖沟槽较深，坑边未见连续临边防护和警示设施，人员靠近坑边且有人下坑作业，土壁裸露未支护，存在坠落和土方坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "夜间道路开挖沟槽及坑边",
+    "rectification": [
+      "立即沿沟槽设置连续硬质围挡和临边防护栏",
+      "增设夜间警示灯、反光标志并安排专人监护",
+      "对沟槽放坡或支护，规范人员上下和坑内作业"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

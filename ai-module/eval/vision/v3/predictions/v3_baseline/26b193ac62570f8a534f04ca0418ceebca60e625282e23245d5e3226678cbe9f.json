@@ -1,0 +1,27 @@
+{
+  "sha256": "26b193ac62570f8a534f04ca0418ceebca60e625282e23245d5e3226678cbe9f",
+  "file": "tree_fall_hazard_3_26b193ac6257.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"大风导致大树倒伏，树干和大量断枝横跨并阻断道路，部分枝干靠近电线杆及线缆，存在车辆行人碰撞、触电及二次断枝伤人的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"林区下坡道路，倒木横跨车道并延伸至路边矮墙附近\",\n  \"rectification\": [\n    \"立即在倒木两端设置警戒线和警示标志，临时封闭道路\",\n    \"联系园林、电力等部门清理倒伏树木并检查线杆线缆受损情况\",\n    \"清理断枝并排查周边树木倒伏、断枝风险后再恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "大风导致大树倒伏，树干和大量断枝横跨并阻断道路，部分枝干靠近电线杆及线缆，存在车辆行人碰撞、触电及二次断枝伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "林区下坡道路，倒木横跨车道并延伸至路边矮墙附近",
+    "rectification": [
+      "立即在倒木两端设置警戒线和警示标志，临时封闭道路",
+      "联系园林、电力等部门清理倒伏树木并检查线杆线缆受损情况",
+      "清理断枝并排查周边树木倒伏、断枝风险后再恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,30 @@
+{
+  "sha256": "ba49f7dca71b0ae35357db6e856f676d010858bc53f77817903de61585c3b176",
+  "file": "confined_space_1_ba49f7dca71b.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"confined_space\",\n  \"severity\": \"高\",\n  \"description\": \"道路上的井盖被移开，人员从井口出入，周边未见连续围挡、锥桶或警示标志；存在行人车辆坠落碰撞风险，且有限空间作业有中毒窒息等危险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路黄线附近的打开井口处\",\n  \"rectification\": [\n    \"立即在井口周边设置连续围挡、反光警示和锥桶，并安排专人监护\",\n    \"按有限空间作业规程进行通风、气体检测，佩戴合格防护装备并落实应急救援措施\",\n    \"作业完成后及时复位井盖，恢复道路通行条件\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\",\n    \"no_barrier\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "confined_space",
+    "severity": "高",
+    "description": "道路上的井盖被移开，人员从井口出入，周边未见连续围挡、锥桶或警示标志；存在行人车辆坠落碰撞风险，且有限空间作业有中毒窒息等危险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路黄线附近的打开井口处",
+    "rectification": [
+      "立即在井口周边设置连续围挡、反光警示和锥桶，并安排专人监护",
+      "按有限空间作业规程进行通风、气体检测，佩戴合格防护装备并落实应急救援措施",
+      "作业完成后及时复位井盖，恢复道路通行条件"
+    ],
+    "secondary_subcategories": [
+      "no_warning",
+      "no_barrier"
+    ]
+  },
+  "error": ""
+}

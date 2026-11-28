@@ -1,0 +1,11 @@
+{
+  "raw": "```json\n{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"scaffold_guard\", \"evidence\": \"工人在斜屋顶作业，未见临边防护栏或安全网\"}\n```",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "evidence": "工人在斜屋顶作业，未见临边防护栏或安全网"
+  }
+}

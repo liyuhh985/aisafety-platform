@@ -1,0 +1,27 @@
+{
+  "sha256": "7162b8d83b569b517e61eebc35b74c1494ef8f3065306566cacf20935421080d",
+  "file": "illegal_structure_2_7162b8d83b56.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"楼顶大型金属框架明显锈蚀、外挑倾斜，固定状态不明，遇大风等外力可能松动坠落，危及下方行人、车辆及建筑安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼顶外立面边缘上方\",\n  \"rectification\": [\n    \"立即在建筑下方对应区域设置警戒线和警示标志，防止人员车辆靠近\",\n    \"组织专业机构对金属框架进行结构安全检测，及时加固或拆除\",\n    \"整改完成前加强巡查，遇大风等恶劣天气采取临时封闭措施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "楼顶大型金属框架明显锈蚀、外挑倾斜，固定状态不明，遇大风等外力可能松动坠落，危及下方行人、车辆及建筑安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼顶外立面边缘上方",
+    "rectification": [
+      "立即在建筑下方对应区域设置警戒线和警示标志，防止人员车辆靠近",
+      "组织专业机构对金属框架进行结构安全检测，及时加固或拆除",
+      "整改完成前加强巡查，遇大风等恶劣天气采取临时封闭措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

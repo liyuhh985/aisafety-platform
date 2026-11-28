@@ -1,0 +1,27 @@
+{
+  "sha256": "8eca45455188e5dd3552e6ab225ee39ca36c597389656e761327030f0b1fa162",
+  "file": "ILL0035.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"中\",\n  \"description\": \"建筑外墙插座处私拉白色临时电线并悬挂插排，插排悬空靠近电动自行车，疑似用于飞线充电；线路易受拉扯、雨淋，存在触电、短路及电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙边电动自行车停放处\",\n  \"rectification\": [\n    \"立即拆除临时飞线和悬挂插排，停止违规充电。\",\n    \"引导电动自行车到集中充电棚或合规充电设施充电。\",\n    \"对墙面插座和线路进行规范整理，必要时加装漏电保护装置。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "建筑外墙插座处私拉白色临时电线并悬挂插排，插排悬空靠近电动自行车，疑似用于飞线充电；线路易受拉扯、雨淋，存在触电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙边电动自行车停放处",
+    "rectification": [
+      "立即拆除临时飞线和悬挂插排，停止违规充电。",
+      "引导电动自行车到集中充电棚或合规充电设施充电。",
+      "对墙面插座和线路进行规范整理，必要时加装漏电保护装置。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

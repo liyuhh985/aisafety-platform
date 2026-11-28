@@ -1,0 +1,26 @@
+{
+  "sha256": "72cb9d09e7db316c71001cf0eada93aae37ad5650247976798278861eff43017",
+  "file": "STR0080.png",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"建筑入口旁人行道和绿篱边堆放大量垃圾袋、编织袋及废弃木板等杂物，占用部分通行空间，易绊倒行人、影响通行，并可能滋生虫害和产生异味。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑入口旁人行道与绿篱交界处\",\n  \"rectification\": [\n    \"及时清理并分类清运现场垃圾和废弃杂物\",\n    \"在该区域设置禁止乱倒垃圾提示并加强日常巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "建筑入口旁人行道和绿篱边堆放大量垃圾袋、编织袋及废弃木板等杂物，占用部分通行空间，易绊倒行人、影响通行，并可能滋生虫害和产生异味。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑入口旁人行道与绿篱交界处",
+    "rectification": [
+      "及时清理并分类清运现场垃圾和废弃杂物",
+      "在该区域设置禁止乱倒垃圾提示并加强日常巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "6f3e592e3204e8364c295dcf25c0ddc9557e8d8bcd312fa9044e6090f9d88e4c",
+  "file": "distribution_box_fault_4_6f3e592e3204.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"户外配电箱门敞开、箱体严重锈蚀，内部断路器裸露，线缆杂乱且底部大量导线未规范绑扎隔离，存在触电、短路及电气火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"户外白色金属配电箱\",\"rectification\":[\"立即停电挂牌，由持证电工整理箱内线路并恢复规范接线\",\"更换锈蚀箱体或门锁，保持箱门关闭并加装绝缘防护挡板\",\"封堵进出线孔洞，清理底部杂乱线缆并张贴触电警示标识\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "户外配电箱门敞开、箱体严重锈蚀，内部断路器裸露，线缆杂乱且底部大量导线未规范绑扎隔离，存在触电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "户外白色金属配电箱",
+    "rectification": [
+      "立即停电挂牌，由持证电工整理箱内线路并恢复规范接线",
+      "更换锈蚀箱体或门锁，保持箱门关闭并加装绝缘防护挡板",
+      "封堵进出线孔洞，清理底部杂乱线缆并张贴触电警示标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

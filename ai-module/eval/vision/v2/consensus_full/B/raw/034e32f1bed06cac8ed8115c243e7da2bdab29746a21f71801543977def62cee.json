@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"drainage_flood\", \"evidence\": \"落叶堵塞雨水篦子，路面湿滑有积水\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "evidence": "落叶堵塞雨水篦子，路面湿滑有积水"
+  }
+}

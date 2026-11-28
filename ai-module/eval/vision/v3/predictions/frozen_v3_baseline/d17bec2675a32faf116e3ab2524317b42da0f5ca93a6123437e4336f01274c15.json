@@ -1,0 +1,27 @@
+{
+  "sha256": "d17bec2675a32faf116e3ab2524317b42da0f5ca93a6123437e4336f01274c15",
+  "file": "illegal_wiring_1_d17bec2675a3.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"高\",\n  \"description\": \"黄色电线从高处窗户垂下至地面，末端插排拖地，属私拉乱接临时用电。电线穿越通道，易被踩踏、受潮破损，存在触电、短路起火和绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙及地面通道\",\n  \"rectification\": [\n    \"立即拆除私拉电线，停止临时用电\",\n    \"由专业电工规范敷设线路，设置固定插座或集中充电设施\",\n    \"确需临时线路时应穿管保护并架空，远离地面和通行区域\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "黄色电线从高处窗户垂下至地面，末端插排拖地，属私拉乱接临时用电。电线穿越通道，易被踩踏、受潮破损，存在触电、短路起火和绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙及地面通道",
+    "rectification": [
+      "立即拆除私拉电线，停止临时用电",
+      "由专业电工规范敷设线路，设置固定插座或集中充电设施",
+      "确需临时线路时应穿管保护并架空，远离地面和通行区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

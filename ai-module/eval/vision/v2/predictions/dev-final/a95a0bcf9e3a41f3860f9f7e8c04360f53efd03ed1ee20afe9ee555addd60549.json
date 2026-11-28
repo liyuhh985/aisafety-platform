@@ -1,0 +1,26 @@
+{
+  "sha256": "a95a0bcf9e3a41f3860f9f7e8c04360f53efd03ed1ee20afe9ee555addd60549",
+  "file": "GAR0101.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"住宅楼道内堆放塑料柜、杂物和婴儿车，堵塞疏散通道；消火栓箱前也被物品遮挡，影响紧急取用，火灾时妨碍逃生和灭火。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼道尽头消火栓箱前及通道\",\n  \"rectification\": [\n    \"立即清理楼道内堆放的塑料柜、杂物和婴儿车，保持疏散通道畅通\",\n    \"移开消火栓箱前遮挡物，设置禁止堆放标识并加强日常巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "住宅楼道内堆放塑料柜、杂物和婴儿车，堵塞疏散通道；消火栓箱前也被物品遮挡，影响紧急取用，火灾时妨碍逃生和灭火。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼道尽头消火栓箱前及通道",
+    "rectification": [
+      "立即清理楼道内堆放的塑料柜、杂物和婴儿车，保持疏散通道畅通",
+      "移开消火栓箱前遮挡物，设置禁止堆放标识并加强日常巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

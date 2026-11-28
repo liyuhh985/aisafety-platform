@@ -1,0 +1,26 @@
+{
+  "sha256": "1ba9b4b3d6d51efd31e3c9ecd85f39b2b3131772b61c6de1a8f7abf9103de29f",
+  "file": "ROA0005.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": true, \"confidence\": \"高\", \"hazard_category\": \"交通与通行\", \"major_category\": \"traffic\", \"subcategory\": \"road_occupancy\", \"severity\": \"中\", \"description\": \"多辆售卖冷饮的三轮车停放在人行道和道路边缘，并搭设遮阳伞、摆放经营器具，顾客聚集，占用通行空间，影响行人正常通行，存在拥堵、绊倒及人车混行风险。\", \"reason_if_no_hazard\": \"\", \"location_hint\": \"商业楼前人行道及道路边缘\", \"rectification\": [\"将流动摊贩引导至指定经营区域，清理占用人行道的车辆和器具。\", \"加强高峰时段巡查与疏导，设置隔离或警示，保障行人通行。\"], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "多辆售卖冷饮的三轮车停放在人行道和道路边缘，并搭设遮阳伞、摆放经营器具，顾客聚集，占用通行空间，影响行人正常通行，存在拥堵、绊倒及人车混行风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商业楼前人行道及道路边缘",
+    "rectification": [
+      "将流动摊贩引导至指定经营区域，清理占用人行道的车辆和器具。",
+      "加强高峰时段巡查与疏导，设置隔离或警示，保障行人通行。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

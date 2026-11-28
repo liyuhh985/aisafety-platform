@@ -1,0 +1,27 @@
+{
+  "sha256": "af17a7dbc3a3b0097926a9d51b6205f4247a623e448fb94a65fe6092e1161b19",
+  "file": "DAN0004.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"建筑悬挑构件根部与墙体交接处存在明显水平贯穿裂缝，混凝土破损剥落，结构连接可能失效，存在断裂坠落风险，危及下方人员安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑物外墙悬挑结构底部与墙体交接处\",\n  \"rectification\": [\n    \"立即设置警戒隔离，禁止人员靠近下方区域\",\n    \"委托专业机构进行结构安全鉴定\",\n    \"根据鉴定结果对悬挑构件加固修复或拆除\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "建筑悬挑构件根部与墙体交接处存在明显水平贯穿裂缝，混凝土破损剥落，结构连接可能失效，存在断裂坠落风险，危及下方人员安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑物外墙悬挑结构底部与墙体交接处",
+    "rectification": [
+      "立即设置警戒隔离，禁止人员靠近下方区域",
+      "委托专业机构进行结构安全鉴定",
+      "根据鉴定结果对悬挑构件加固修复或拆除"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "2fe3e8b3b2a0985f516d05e74b29a6ca33384be2c3a3311aee2ffc334203cf57",
+  "file": "garbage_pile_1_2fe3e8b3b2a0.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"农田旁空地存在大量生活垃圾、塑料废弃物、砖块和枯枝等混合堆积，堆体较大且含可燃物，可能引发火灾、滋生蚊虫、污染土壤和水体，并影响周边环境与通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"农田旁空地/路边\",\n  \"rectification\": [\n    \"及时组织清运垃圾，按生活垃圾、建筑垃圾等分类处置\",\n    \"清理后设置围挡或警示标识，防止继续违规倾倒\",\n    \"加强巡查和宣传，明确垃圾投放和清运责任\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "农田旁空地存在大量生活垃圾、塑料废弃物、砖块和枯枝等混合堆积，堆体较大且含可燃物，可能引发火灾、滋生蚊虫、污染土壤和水体，并影响周边环境与通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "农田旁空地/路边",
+    "rectification": [
+      "及时组织清运垃圾，按生活垃圾、建筑垃圾等分类处置",
+      "清理后设置围挡或警示标识，防止继续违规倾倒",
+      "加强巡查和宣传，明确垃圾投放和清运责任"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

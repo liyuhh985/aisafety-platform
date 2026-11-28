@@ -1,0 +1,27 @@
+{
+  "sha256": "84836e69a27d5166a84c52be78482a5a7b109ee076192b2f0d5deed084e174d5",
+  "file": "hazmat_storage_2_84836e69a27d.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"露天堆放大量锈蚀化工桶，桶身有腐蚀性标识和泄漏污渍，桶顶散放盛装不明液体的玻璃瓶，缺少围挡、防渗和警示，存在泄漏、污染土壤水体、中毒或燃爆风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"露天堆放场/废旧厂区\",\n  \"rectification\": [\n    \"立即鉴别桶内及瓶内物质，分类登记并设置危险品标识和警示\",\n    \"对泄漏或锈蚀严重的容器进行防渗收集、围挡和应急处置，防止污染扩散\",\n    \"由有资质单位合规转运处置，整改前禁止无关人员进入\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "露天堆放大量锈蚀化工桶，桶身有腐蚀性标识和泄漏污渍，桶顶散放盛装不明液体的玻璃瓶，缺少围挡、防渗和警示，存在泄漏、污染土壤水体、中毒或燃爆风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "露天堆放场/废旧厂区",
+    "rectification": [
+      "立即鉴别桶内及瓶内物质，分类登记并设置危险品标识和警示",
+      "对泄漏或锈蚀严重的容器进行防渗收集、围挡和应急处置，防止污染扩散",
+      "由有资质单位合规转运处置，整改前禁止无关人员进入"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

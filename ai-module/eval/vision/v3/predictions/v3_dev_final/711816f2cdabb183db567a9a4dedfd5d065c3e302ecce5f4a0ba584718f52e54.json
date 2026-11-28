@@ -1,0 +1,26 @@
+{
+  "sha256": "711816f2cdabb183db567a9a4dedfd5d065c3e302ecce5f4a0ba584718f52e54",
+  "file": "neg_17_711816f2cdab.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"橙色户外配电箱箱体大面积掉漆、锈蚀，中缝锁扣处未见挂锁，箱门存在可被非专业人员打开的风险；若内部带电，可能引发触电或设备短路。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室外路边橙色配电箱正面\",\n  \"rectification\": [\n    \"补装或修复箱门锁具，确保配电箱保持锁闭状态并加强巡检。\",\n    \"对箱体锈蚀、掉漆部位除锈防腐处理，检查箱门密封和内部绝缘防护。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "橙色户外配电箱箱体大面积掉漆、锈蚀，中缝锁扣处未见挂锁，箱门存在可被非专业人员打开的风险；若内部带电，可能引发触电或设备短路。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室外路边橙色配电箱正面",
+    "rectification": [
+      "补装或修复箱门锁具，确保配电箱保持锁闭状态并加强巡检。",
+      "对箱体锈蚀、掉漆部位除锈防腐处理，检查箱门密封和内部绝缘防护。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

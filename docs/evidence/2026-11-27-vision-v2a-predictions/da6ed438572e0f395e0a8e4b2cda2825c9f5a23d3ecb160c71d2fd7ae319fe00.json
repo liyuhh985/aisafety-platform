@@ -1,0 +1,27 @@
+{
+  "sha256": "da6ed438572e0f395e0a8e4b2cda2825c9f5a23d3ecb160c71d2fd7ae319fe00",
+  "file": "FIR0006.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"画面中央红色室外消火栓的侧出水接口严重锈蚀、部件破损，接口内部可见堵塞或卡箍损坏，可能导致消防车无法连接取水，火灾时影响灭火救援。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"画面中央红色室外消火栓的侧出水接口处\",\"rectification\":[\"立即维修或更换损坏的消火栓接口部件\",\"测试消火栓出水压力并清理接口内锈蚀堵塞物\",\"设置巡检标识并定期维护室外消火栓\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "画面中央红色室外消火栓的侧出水接口严重锈蚀、部件破损，接口内部可见堵塞或卡箍损坏，可能导致消防车无法连接取水，火灾时影响灭火救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中央红色室外消火栓的侧出水接口处",
+    "rectification": [
+      "立即维修或更换损坏的消火栓接口部件",
+      "测试消火栓出水压力并清理接口内锈蚀堵塞物",
+      "设置巡检标识并定期维护室外消火栓"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "d361e38a3574f678691dbfd8e0338499298512920d36e1d2428111ce0493f9f9",
+  "file": "dangerous_building_3_d361e38a3574.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"混凝土墙体存在较宽贯穿性斜向裂缝，裂缝边缘剥落，周边伴有密集细裂纹，提示结构开裂或承载力不足，存在局部坍塌、坠块伤人的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"混凝土墙体/构筑物立面裂缝处\",\n  \"rectification\": [\n    \"立即在裂缝墙体周边设置警戒线和警示标志，禁止人员靠近\",\n    \"委托有资质的机构进行结构安全鉴定，查明裂缝成因和承载能力\",\n    \"依据鉴定结论采取加固、局部拆除或整体修复措施，并持续监测裂缝发展\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "混凝土墙体存在较宽贯穿性斜向裂缝，裂缝边缘剥落，周边伴有密集细裂纹，提示结构开裂或承载力不足，存在局部坍塌、坠块伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "混凝土墙体/构筑物立面裂缝处",
+    "rectification": [
+      "立即在裂缝墙体周边设置警戒线和警示标志，禁止人员靠近",
+      "委托有资质的机构进行结构安全鉴定，查明裂缝成因和承载能力",
+      "依据鉴定结论采取加固、局部拆除或整体修复措施，并持续监测裂缝发展"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}
