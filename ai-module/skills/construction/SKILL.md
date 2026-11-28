@@ -1,7 +1,7 @@
 ---
 name: construction
 category: construction
-description: 施工安全隐患，包括未设围挡、无安全警示、脚手架临边防护、深基坑和临时用电风险。
+description: 施工安全隐患，包括未设围挡、无安全警示、脚手架临边防护、深基坑、临时用电和有限空间作业风险。
 allowed_tools:
   - search_regulation
   - search_cases

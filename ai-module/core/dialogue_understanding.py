@@ -291,6 +291,8 @@ def _planner_system_prompt(active_skill_codes=None) -> str:
         "- major_code 和 subcategory_code 必须来自上面给出的编码，不能自造。\n"
         "- 用户明确说“消防设施”时，必须归为 fire/fire_equipment_fault，不能归为 fire/fire_lane_blocked。\n"
         "- “消防设施故障”和“消防通道占用”是两个不同小类。\n"
+        "- 电动自行车进楼道/电梯/架空层停放充电、电池入户或飞线充电，主类归 fire/ebike_hazard；普通住户/商铺非电动车飞线的私拉乱接电线仍归 utility/illegal_wiring。\n"
+        "- 危化品、易燃溶剂、液化气瓶或烟花爆竹违规存运归 environment_other/hazmat_storage，不得归入 environment_other/other；树木倒伏、断枝或大枯枝悬垂归 municipal/tree_fall_hazard。\n"
         "- 前端预选大类只是提示；如果与用户表达不一致，返回真实 major_code 并令 major_mismatch=true。\n"
         "- risk_level 按小类默认风险：以 SUBCATEGORY_DEFAULT_RISK 为准；多隐患时取最高风险，不再按大类粗暴定级。\n"
         "- 环境与其他中的危化品违规存运为 high，有限空间作业风险为 high，垃圾堆积为 low。\n"

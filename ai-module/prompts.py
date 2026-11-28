@@ -90,8 +90,8 @@ VISION_PROMPT = """你是一个城市安全隐患排查专家。请仔细分析�
 - 树木倒伏、断枝或大枯枝悬垂归 municipal/tree_fall_hazard；路灯/线杆本体损坏仍归 municipal/street_light_pole，外挂物从高处坠落归 building/falling_object。
 - severity 必须是 高 / 中 / 低 之一；confidence 必须是 高 / 中 / 低 之一。
 - 若同时存在多个独立隐患，把次要隐患的小类码写入 secondary_subcategories 数组，否则填空数组。
-- 只有在图片明显与安全隐患无关时才可设置 has_hazard 为 false，例如人物肖像、风景、动物、纯文字图片或合规场景（车辆规范停放、消防设施完好、工地围挡齐全）。has_hazard 为 false 时必须填写 reason_if_no_hazard；hazard_category、major_category、subcategory、severity、description、location_hint 填空字符串，rectification 和 secondary_subcategories 填空数组。
-- 无清晰客观异常依据、图片模棱两可或信息不完整时，设置 has_hazard 为 false、confidence 为 低，并在 reason_if_no_hazard 填写“图像证据不足，无法确认安全隐患”；不得为了报出隐患而强行归入 environment_other/other。
+- 只有在图片明显与安全隐患无关或属于规范合规场景（如人物肖像、风景、动物、纯文字图片、车辆规范停放、消防设施完好、工地围挡齐全）时，设置 has_hazard 为 false 并填写 reason_if_no_hazard；hazard_category、major_category、subcategory、severity、description、location_hint 填空字符串，rectification 和 secondary_subcategories 填空数组。
+- 若因画面遮挡、模糊、信息不完整或无清晰客观异常依据而无法确认安全隐患，同样设置 has_hazard 为 false、confidence 为 低，并在 reason_if_no_hazard 填写“图像证据不足，无法确认安全隐患”；不得为了报出隐患而强行归入 environment_other/other。
 - 只输出 JSON。"""
 
 

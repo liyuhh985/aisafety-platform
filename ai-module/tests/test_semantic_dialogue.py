@@ -96,9 +96,9 @@ def test_vision_prompt_defines_false_and_ambiguous_fallbacks():
     false_rule = next(
         line
         for line in VISION_PROMPT.splitlines()
-        if "has_hazard 为 false 时" in line
+        if "设置 has_hazard 为 false" in line
     )
-    assert "必须填写 reason_if_no_hazard" in false_rule
+    assert "填写 reason_if_no_hazard" in false_rule
     assert (
         "hazard_category、major_category、subcategory、severity、description、"
         "location_hint 填空字符串"

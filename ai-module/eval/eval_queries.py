@@ -220,13 +220,13 @@ QUERY_SET = (
         "style": "colloquial",
     },
     {
-        "query": "沿街商铺私拉乱接电线给电动车充电，线缆横跨人行道",
+        "query": "沿街商铺私拉乱接电线给门头灯箱供电，接线凌乱垂挂外墙",
         "major": "utility",
         "subcategory": "illegal_wiring",
         "style": "explicit",
     },
     {
-        "query": "店老板从店里扯了根线出来充电动车，线就搭在地上",
+        "query": "店老板从店里扯了根接线板挂到户外广告牌下面供电，电线缠了一大团",
         "major": "utility",
         "subcategory": "illegal_wiring",
         "style": "colloquial",
