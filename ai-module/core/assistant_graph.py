@@ -921,7 +921,9 @@ def understand(state: AssistantState, config=None) -> dict:
             else unverified.get(issue["subcategory_code"], [])
         )
         issue["slot_evidence"] = dict(audit_by_issue.get(issue["subcategory_code"]) or {})
-    no_questions = verdict["danger_veto"] or verdict["uncertainty_level"] == "cautious"
+    # Cautious facts may downgrade a full report, but they must not suppress an
+    # A-class follow-up. Only an active danger veto forbids questions.
+    no_questions = verdict["danger_veto"]
     policy = decide_next_action(plan, {
         **state, "user_text": user_text, "missing": missing, **verdict,
     })
