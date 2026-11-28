@@ -1986,6 +1986,46 @@ def _unverified_by_issue(entries) -> dict:
     return grouped
 
 
+def _issue_label(code: str) -> str:
+    pair = normalize_taxonomy(code)
+    return SUBCATEGORY_LABELS.get(pair[1], code) if pair else code
+
+
+def _ensure_report_issue_coverage(state: AssistantState, body: str) -> str:
+    """Append deterministic sections only when the model omitted an active issue."""
+    text = str(body or "")
+    normalized_text = text.replace("/", "").replace(" ", "")
+    issues = _report_issues(state)
+    if len(issues) < 2:
+        return body
+    results = state.get("category_results") or {}
+    additions = []
+    for index, issue in enumerate(issues, 1):
+        code = str((issue or {}).get("subcategory_code") or "")
+        if not code:
+            continue
+        label = _issue_label(code)
+        if f"隐患{index}" in text and label.replace("/", "") in normalized_text:
+            continue
+        slots = [str(value).strip() for value in ((issue or {}).get("slots") or {}).values() if str(value).strip()]
+        facts = "；".join(slots) or "用户未提供更多细节"
+        result = results.get(code) or {}
+        regulation = filter_by_major(result.get("regulation") or "库内暂未检索到",
+                                     (issue or {}).get("major_code") or "")
+        case = filter_by_major(result.get("case") or "库内暂未检索到",
+                               (issue or {}).get("major_code") or "")
+        prefix = "### " if not _is_preliminary(state) else ""
+        additions.append(
+            f"\n\n{prefix}隐患{index}：{label}\n\n"
+            f"**现场事实**：{facts}\n\n"
+            f"**法规依据**：{regulation}\n\n"
+            f"**类似案例**：{case}"
+        )
+    if not additions:
+        return body
+    return text.rstrip() + "".join(additions)
+
+
 def _issue_blocks(state: AssistantState) -> list[str]:
     """每个隐患一段材料，并标出它自己完整不完整、还缺什么。
 
@@ -2485,6 +2525,11 @@ def report(state: AssistantState, config=None) -> dict:
                         decision_missing_keys(state, str(state.get("locked_subcategory") or "")))
             _emit_chunk(tail)
             body += tail
+        covered_body = _ensure_report_issue_coverage(state, body)
+        if covered_body != body:
+            addition = covered_body[len(body):] if covered_body.startswith(body) else covered_body
+            _emit_chunk(addition)
+            body = covered_body
         _warn_empty_talk(state, body)
         _warn_redundancy(state, body)
         coverage = preliminary_coverage(body)
@@ -2507,6 +2552,11 @@ def report(state: AssistantState, config=None) -> dict:
         buf.append(piece)
         _emit_chunk(piece)
     body = "".join(buf)
+    covered_body = _ensure_report_issue_coverage(state, body)
+    if covered_body != body:
+        addition = covered_body[len(body):] if covered_body.startswith(body) else covered_body
+        _emit_chunk(addition)
+        body = covered_body
     _warn_empty_talk(state, body)
     _warn_redundancy(state, body)
     return _finish_task_draft(
