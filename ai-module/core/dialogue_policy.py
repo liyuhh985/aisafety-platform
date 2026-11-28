@@ -51,6 +51,29 @@ _FACT_CONFIRMATION_PHRASES = (
 )
 
 
+def _question_fragment_matches(left: str, right: str, width: int = 4) -> bool:
+    """Cheap semantic guard for planner questions without question_target."""
+    l = "".join(ch for ch in str(left or "") if ch.strip() and ch not in "，。；：！？（）()、,.!?;:")
+    r = "".join(ch for ch in str(right or "") if ch.strip() and ch not in "，。；：！？（）()、,.!?;:")
+    if len(l) < width or len(r) < width:
+        return False
+    return any(l[i:i + width] in r for i in range(len(l) - width + 1))
+
+
+def _planner_question_targets_missing(plan: dict, question: str, target: str) -> bool:
+    q = str(question or "").strip()
+    if not q:
+        return False
+    for issue in _incomplete_issues(plan):
+        missing = set(issue.get("missing") or [])
+        if target:
+            return target in missing
+        for slot in get_slot_schema(issue.get("subcategory_code")):
+            if slot.key in missing and _question_fragment_matches(q, slot.question):
+                return True
+    return False
+
+
 def _question_for_missing(plan: dict) -> str:
     """Choose one A-class schema question; planner wording is secondary.
 
@@ -60,14 +83,14 @@ def _question_for_missing(plan: dict) -> str:
     """
     target = str(plan.get("question_target") or "").strip()
     planner_question = str(plan.get("question") or "").strip()
-    if planner_question and not any(
-        phrase in planner_question for phrase in _FACT_CONFIRMATION_PHRASES
+    if (
+        planner_question
+        and not any(
+            phrase in planner_question for phrase in _FACT_CONFIRMATION_PHRASES
+        )
+        and _planner_question_targets_missing(plan, planner_question, target)
     ):
-        if not target:
-            return planner_question
-        for issue in _incomplete_issues(plan):
-            if target in set(issue.get("missing") or []):
-                return planner_question
+        return planner_question
     for issue in _incomplete_issues(plan):
         missing = set(issue.get("missing") or [])
         for slot in get_slot_schema(issue.get("subcategory_code")):

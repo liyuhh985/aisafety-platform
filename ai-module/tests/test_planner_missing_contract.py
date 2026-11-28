@@ -170,6 +170,6 @@ def test_question_missing_is_empty_when_a_question_was_asked(monkeypatch):
     )
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: dict(plan))
     out = ag.understand({"messages": [HumanMessage(content="消防通道被私家车占了")]})
-    assert out["clarification_question"] == "这种情况持续多久了？"
+    assert out["clarification_question"] == "是长期还是临时？"
     assert out["question_missing"] == []
     assert out["question_missing_reason"] == ""
