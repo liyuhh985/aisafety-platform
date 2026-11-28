@@ -611,6 +611,48 @@ def test_report_hazard_with_answer_does_not_short_answer():
     assert out["action"] == "ask_critical_question"
 
 
+def test_planner_question_with_matching_target_is_kept():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "high",
+        "issues": [{
+            "major_code": "fire",
+            "subcategory_code": "fire_lane_blocked",
+            "missing": ["persistence"],
+        }],
+        "question": "这条飞线是长期固定充电，还是这一次临时拉的？",
+        "question_target": "persistence",
+        "answer": "",
+    }
+    out = decide_next_action(
+        plan, {"user_text": "消防通道被飞线占用了，影响人员疏散"},
+    )
+    assert out["action"] == "ask_critical_question"
+    assert out["question"] == "这条飞线是长期固定充电，还是这一次临时拉的？"
+
+def test_planner_question_without_target_uses_the_missing_schema_question():
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "high",
+        "issues": [{
+            "major_code": "fire",
+            "subcategory_code": "fire_lane_blocked",
+            "missing": ["persistence"],
+        }],
+        "question": "是否方便补充该小区的具体名称或地址，以便生成上报信息？",
+        "question_target": "",
+        "answer": "",
+    }
+    out = decide_next_action(
+        plan, {"user_text": "消防通道被飞线占用了，影响人员疏散"},
+    )
+    assert out["action"] == "ask_critical_question"
+    assert out["needs_search"] is False
+    assert "长期还是临时" in out["question"]
+    assert "地址" not in out["question"]
+
 def test_report_hazard_without_planner_question_uses_schema_question():
     plan = {
         "ok": True,
