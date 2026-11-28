@@ -147,6 +147,17 @@ def test_negation_after_quote_does_not_contradict_a_different_fact():
     assert result["status"] == "grounded"
     assert result["reason"] == ""
 
+def test_negation_before_a_clause_boundary_does_not_contradict_the_next_clause():
+    result = verify_slot_evidence(
+        "hazard_mode", "充电线是从4楼窗户私拉下来的飞线",
+        {"quote": "充电线是从4楼窗户私拉下来的飞线", "source_ref": "u6"},
+        {**SOURCE_MAP, "u6": "电池没有发热、冒烟或鼓包；充电线是从4楼窗户私拉下来的飞线"},
+        "ebike_hazard",
+    )
+    assert result["status"] == "grounded"
+    assert result["reason"] == ""
+
+
 def test_negated_quote_is_contradicted():
     result = verify_slot_evidence(
         "source", "配电箱冒烟",

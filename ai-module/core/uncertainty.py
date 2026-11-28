@@ -271,6 +271,15 @@ def _negated_near_quote(source: str, quote: str, value: str) -> bool:
         # A quote/value that itself states the absence ("无围挡", "未设置围挡")
         # is a positive fact for that slot, not a contradiction.
         return not value_norm.startswith(leading_negation.group(0))
+
+    raw_source = str(source or "")
+    raw_quote = str(quote or "").strip()
+    raw_start = raw_source.find(raw_quote) if raw_quote else -1
+    if raw_start >= 0:
+        prefix = raw_source[max(0, raw_start - 32):raw_start]
+        boundary = max(prefix.rfind(ch) for ch in "，。；;")
+        clause_prefix = normalize_text(prefix[boundary + 1:])
+        return bool(_NEGATION_RE.search(clause_prefix))
     return _is_negated_term(source_norm, start)
 
 
