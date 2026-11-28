@@ -28,9 +28,9 @@ TWO_MUNICIPAL = {
 }
 
 EXPECTED_TWO = (
-    "还想确认两件事："
-    "①『井盖缺失/破损』井盖是缺失、破损还是松动？"
-    "②『路灯/线杆损坏』是灯杆倾斜折断，还是路灯不亮？"
+    "还需要分别确认两点："
+    "一是井盖缺失/破损方面，井盖是缺失、破损还是松动？"
+    "二是路灯/线杆损坏方面，是灯杆倾斜折断，还是路灯不亮？"
 )
 
 
@@ -98,8 +98,8 @@ def test_only_the_first_missing_slot_of_each_hazard_is_asked(monkeypatch):
         "clarification_question": "",
     }
     question = ag.ask_slot_question(state).update["clarification_question"]
-    assert "①『消防通道占用』是长期还是临时？" in question
-    assert "②『消防设施故障』具体是哪一类消防设施" in question
+    assert "一是消防通道占用方面，是长期还是临时？" in question
+    assert "二是消防设施故障方面，具体是哪一类消防设施" in question
     assert "老旧、损坏还是完全无法使用" not in question, "第二条缺失不该挤进来"
 
 
@@ -129,10 +129,10 @@ def test_three_hazards_use_three_clause_numbers(monkeypatch):
         "clarification_question": "",
     }
     question = ag.ask_slot_question(state).update["clarification_question"]
-    assert question.startswith("还想确认三件事：")
-    assert question.count("①") == 1 and question.count("②") == 1 and question.count("③") == 1
-    assert "①『危房』" in question
-    assert "③『违规搭建』" in question
+    assert question.startswith("还需要分别确认三点：")
+    assert question.count("一是") == 1 and question.count("二是") == 1 and question.count("三是") == 1
+    assert "一是危房方面" in question
+    assert "三是违规搭建方面" in question
 
 
 def test_the_question_is_still_asked_when_the_focus_needs_nothing(monkeypatch):
