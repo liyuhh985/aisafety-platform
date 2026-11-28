@@ -38,6 +38,21 @@ test('v2b adds four high-value subcategories', () => {
   assert.equal(resolveHazard('environment_other/hazmat_storage').subcategoryLabel, '危化品/易燃易爆违规存运')
 })
 
+test('bare subcategory codes resolve to their canonical major', () => {
+  assert.deepEqual(
+    resolveHazard('ebike_hazard'),
+    {
+      majorCode: 'fire',
+      majorLabel: '消防安全',
+      subcategoryCode: 'ebike_hazard',
+      subcategoryLabel: '电动自行车违规停放/充电',
+      displayText: '消防安全 · 电动自行车违规停放/充电',
+      isLegacy: false,
+      isUnknown: false,
+    },
+  )
+})
+
 test('retired subcategories are not kept as write-path aliases', () => {
   for (const code of RETIRED_CODES) {
     assert.equal(Object.hasOwn(LEGACY_HAZARD_MAP, code), false, code)

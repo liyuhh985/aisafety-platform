@@ -106,6 +106,7 @@ export const LEGACY_HAZARD_MAP = {
 const majorMap = new Map();
 const majorLabelMap = new Map();
 const subcategoryMap = new Map();
+const subcategoryCodeMap = new Map();
 const subcategoryPathMap = new Map();
 const subcategoryLabelMap = new Map();
 
@@ -120,6 +121,7 @@ for (const major of HAZARD_TAXONOMY) {
       subcategoryLabel: sub.label,
     };
     subcategoryMap.set(`${major.code}/${sub.code}`, resolved);
+    subcategoryCodeMap.set(sub.code, resolved);
     subcategoryPathMap.set(`${major.label}/${sub.label}`, resolved);
     subcategoryLabelMap.set(sub.label, resolved);
   }
@@ -185,6 +187,17 @@ export function resolveHazard(rawType) {
         isUnknown: false,
       };
     }
+  }
+
+  // 步骤 2.5: 兼容 SSE / 历史记录只给裸小类代码的情况
+  const subByCode = subcategoryCodeMap.get(trimmed);
+  if (subByCode) {
+    return {
+      ...subByCode,
+      displayText: `${subByCode.majorLabel} · ${subByCode.subcategoryLabel}`,
+      isLegacy: false,
+      isUnknown: false,
+    };
   }
 
   // 步骤 3: 尝试直接匹配一级类别代码 (如单独传 'fire')
