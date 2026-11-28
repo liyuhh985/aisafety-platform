@@ -82,6 +82,29 @@ def test_cautious_a_class_gap_asks_before_retrieval(monkeypatch):
     assert out["clarification_question"] == "是长期还是临时？"
     assert out["report_mode"] == "none"
 
+def test_unknown_persistence_placeholder_asks_before_report(monkeypatch):
+    plan = _plan(
+        issues=[{
+            "major_code": "fire",
+            "subcategory_code": "fire_lane_blocked",
+            "slots": {"blocker": "杂物", "persistence": "未知"},
+        }],
+        categories=["fire_lane_blocked"],
+        category_slots={"fire_lane_blocked": {"blocker": "杂物", "persistence": "未知"}},
+        question="",
+        answer="",
+        needs_search=True,
+    )
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: plan)
+    out = ag.understand({
+        "messages": [HumanMessage(content="消防通道被占了，我不清楚持续多久")],
+    })
+    assert out["missing"] == ["fire_lane_blocked_persistence"]
+    assert out["next_action"] == "ask_critical_question"
+    assert out["clarification_question"] == "是长期还是临时？"
+    assert out["report_mode"] == "none"
+
+
 def test_routine_hazard_is_neither_vetoed_nor_cautious(monkeypatch):
     monkeypatch.setattr(
         ag, "_understand_plan",

@@ -61,6 +61,17 @@ def test_critical_is_derived_from_the_decision_class():
             assert slot.critical is (slot.value_class == DECISION_CLASS), (code, slot.key)
 
 
+@pytest.mark.parametrize("value", [
+    "未知", "不清楚", "不确定", "待确认", "暂无", "未说明",
+    "unknown", "N/A", "-", "未知（用户未说明）",
+])
+def test_placeholder_values_are_not_treated_as_filled(value):
+    missing = missing_decision_slots(
+        "fire_lane_blocked", {"blocker": "车辆", "persistence": value},
+    )
+    assert [slot.key for slot in missing] == ["persistence"]
+
+
 def test_only_a_and_b_value_classes_exist():
     from core.slot_schemas import VALUE_CLASSES
     assert VALUE_CLASSES == ("A", "B")
