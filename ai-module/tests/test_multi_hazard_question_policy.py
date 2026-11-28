@@ -69,12 +69,11 @@ def test_two_issues_missing_a_slots_are_asked_in_one_parallel_question():
     cmd = ag.ask_slot_question(state)
     question = cmd.update["clarification_question"]
 
-    assert "消防通道" in question
+    assert question.startswith("还需要分别确认两点：一是消防通道占用方面，")
     assert "长期还是临时" in question
-    assert "危房" in question
-    assert "墙体开裂、整体倾斜、地基沉降" in question
+    assert "二是危房方面，房屋有没有墙体开裂、整体倾斜、地基沉降" in question
+    assert question.count("？") == 2
     assert "请确认我理解得对不对" not in question
-    assert question.count("还想确认") == 1
 
 
 def test_focus_complete_non_focus_missing_is_not_sent_to_search():

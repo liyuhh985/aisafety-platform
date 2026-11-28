@@ -584,7 +584,7 @@ def _major_codes(value) -> list:
     return out
 
 # 并列追问里的序号：只做展示，不进任何判据。
-_CLAUSE_NUMBERS = ("①", "②", "③")
+_CLAUSE_NUMBERS = ("一是", "二是", "三是")
 _CLAUSE_COUNTS = {2: "两", 3: "三"}
 
 
@@ -1185,13 +1185,13 @@ def _parallel_slot_question(state: AssistantState) -> str:
         slot = next((s for s in get_slot_schema(code) if s.key == keys[0]), None)
         if slot is None:
             continue
-        clauses.append("%s『%s』%s" % (
+        clauses.append("%s%s方面，%s" % (
             _CLAUSE_NUMBERS[len(clauses)], SUBCATEGORY_LABELS.get(code, code),
             slot.question))
     if len(clauses) < 2:
         return ""
     logger.info("slot_question_multi clauses=%d codes=%s", len(clauses), codes)
-    return "还想确认%s件事：%s" % (
+    return "还需要分别确认%s点：%s" % (
         _CLAUSE_COUNTS.get(len(clauses), len(clauses)), "".join(clauses))
 
 
