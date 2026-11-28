@@ -1,0 +1,23 @@
+{
+  "sha256": "38b2eb5d19e6e4e9125fb0ec201b323c4364baad34a715cd6a9f2b79e74bcc46",
+  "file": "WAL0020.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中人行道铺装平整、盲道清晰，彩绘围墙未见明显开裂、倾斜或结构失稳；树木贴近墙体但无可见破坏迹象，未发现明确安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中人行道铺装平整、盲道清晰，彩绘围墙未见明显开裂、倾斜或结构失稳；树木贴近墙体但无可见破坏迹象，未发现明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

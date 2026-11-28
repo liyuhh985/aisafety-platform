@@ -1,0 +1,26 @@
+{
+  "sha256": "425689bf4e3036f29551e7ed7a32b07c1aee7d23195c4dceedf1a609f57350eb",
+  "file": "MAN0103.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"人行道地砖大面积碎裂、缺失，形成明显坑洞，边缘锋利且有落差。该位置人流量大，极易导致行人特别是老人小孩绊倒、崴脚，存在较高安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"步行街人行道中部，紧邻盲道\",\n  \"rectification\": [\n    \"立即设置警示标志或临时围挡，引导行人绕行\",\n    \"清理破损地砖与碎石，回填夯实基础并重新铺设地砖，恢复路面平整\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "人行道地砖大面积碎裂、缺失，形成明显坑洞，边缘锋利且有落差。该位置人流量大，极易导致行人特别是老人小孩绊倒、崴脚，存在较高安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "步行街人行道中部，紧邻盲道",
+    "rectification": [
+      "立即设置警示标志或临时围挡，引导行人绕行",
+      "清理破损地砖与碎石，回填夯实基础并重新铺设地砖，恢复路面平整"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

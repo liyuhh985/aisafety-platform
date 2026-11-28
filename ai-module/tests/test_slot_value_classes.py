@@ -8,6 +8,7 @@ from core.hazard_taxonomy import ALL_SUBCATEGORY_CODES
 from core.slot_schemas import (
     DECISION_CLASS,
     REPORT_CLASS,
+    SLOT_SCHEMAS,
     Slot,
     get_slot_schema,
     missing_decision_slots,
@@ -48,8 +49,8 @@ def test_value_class_distribution_snapshot():
         a = len([s for s in get_slot_schema(code) if s.value_class == DECISION_CLASS])
         counts[a] = counts.get(a, 0) + 1
         max_a = max(max_a, a)
-    # 重划前是 14x1 / 9x2 / 9x3（追问上界 3）；现在 A 类最多 2 → 追问上界 2
-    assert counts == {1: 21, 2: 11}
+    # v2b 后：20 个小类 1 个 A 槽、13 个小类 2 个 A 槽。
+    assert counts == {1: 10, 2: 23}
     assert max_a == 2
 
 
@@ -63,6 +64,54 @@ def test_critical_is_derived_from_the_decision_class():
 def test_only_a_and_b_value_classes_exist():
     from core.slot_schemas import VALUE_CLASSES
     assert VALUE_CLASSES == ("A", "B")
+
+
+def test_v2b_new_subcategories_have_decision_slots():
+    expected = {
+        "ebike_hazard": ["hazard_mode", "charging_state"],
+        "tree_fall_hazard": ["tree_state"],
+        "confined_space": ["space_type", "protection"],
+        "hazmat_storage": ["material_info", "environment"],
+    }
+    for code, keys in expected.items():
+        slots = get_slot_schema(code)
+        assert [slot.key for slot in slots if slot.value_class == DECISION_CLASS] == keys
+        assert 1 <= len(keys) <= 2
+
+
+def test_v2c_replaces_generic_describe_slots_for_remaining_classes():
+    expected = {
+        "road_surface_collapse": {"collapse_scale": "A", "isolation": "A"},
+        "drainage_flood": {"flood_depth": "A", "location_type": "B"},
+        "street_light_pole": {"pole_status": "A", "electric_risk": "A"},
+        "no_barrier": {"site": "A", "impact": "B"},
+        "no_warning": {"warning_status": "A", "impact": "B"},
+        "scaffold_guard": {"defect": "A", "exposure": "A"},
+        "deep_pit": {"pit_status": "A", "isolation": "A"},
+        "traffic_facility_damage": {"facility_type": "A", "condition": "A"},
+        "vehicle_occupancy": {"persistence": "A", "blocked": "A"},
+        "blind_path_occupied": {"blocker": "A", "blocked": "A"},
+        "illegal_structure": {"structure_detail": "A", "structural_impact": "A"},
+        "gas_leak": {"leak_sign": "A", "ventilation": "A"},
+        "gas_pipe_aging": {"pipe_condition": "A", "leak_suspect": "A"},
+        "elevator_trapped": {"trapped_state": "A", "duration": "B"},
+        "elevator_stopped": {"fault_symptom": "A", "occupancy": "A"},
+        "elevator_inspection": {"equipment_status": "A", "equipment_type": "B"},
+        "garbage_pile": {"waste_type": "A", "impact": "A"},
+        "sewage_odor": {"sewage_source": "A", "impact": "B"},
+    }
+    for code, slots in expected.items():
+        actual = {slot.key: slot.value_class for slot in get_slot_schema(code)}
+        assert actual == slots, code
+        assert sum(value == DECISION_CLASS for value in actual.values()) <= 2
+
+
+def test_fire_equipment_fault_reuses_shared_fire_facility_schema():
+    schema = get_slot_schema("fire_equipment_fault")
+    assert schema is SLOT_SCHEMAS["消防设施"]
+    questions = " ".join(slot.question for slot in schema)
+    assert "消防水池" in questions
+    assert "无水无压" in questions
 
 
 def test_decorative_c_slots_are_removed():

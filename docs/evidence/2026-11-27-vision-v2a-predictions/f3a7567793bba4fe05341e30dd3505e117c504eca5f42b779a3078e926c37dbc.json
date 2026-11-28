@@ -1,0 +1,23 @@
+{
+  "sha256": "f3a7567793bba4fe05341e30dd3505e117c504eca5f42b779a3078e926c37dbc",
+  "file": "NEGILL03.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片为住宅楼外景及绿化树木，画面清晰，未发现井盖破损、路面塌陷、消防通道占用、建筑结构异常、裸露电线或燃气泄漏等可见安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为住宅楼外景及绿化树木，画面清晰，未发现井盖破损、路面塌陷、消防通道占用、建筑结构异常、裸露电线或燃气泄漏等可见安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

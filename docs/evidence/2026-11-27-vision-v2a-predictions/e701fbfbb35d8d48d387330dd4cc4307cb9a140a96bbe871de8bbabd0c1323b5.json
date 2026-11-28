@@ -1,0 +1,26 @@
+{
+  "sha256": "e701fbfbb35d8d48d387330dd4cc4307cb9a140a96bbe871de8bbabd0c1323b5",
+  "file": "ROA0002.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"夜间道路及停车区域被多张折叠桌、木桌大量占用，地面散落竹签等垃圾，影响车辆和行人通行，易造成碰撞、绊倒，并可能阻碍应急通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路/小区周边道路夜间停车与通行区域\",\n  \"rectification\": [\n    \"立即清理占道桌椅和地面垃圾，恢复道路通行空间\",\n    \"划定规范经营区域并加强夜间巡查，确保不占用车道和人行通道\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "夜间道路及停车区域被多张折叠桌、木桌大量占用，地面散落竹签等垃圾，影响车辆和行人通行，易造成碰撞、绊倒，并可能阻碍应急通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路/小区周边道路夜间停车与通行区域",
+    "rectification": [
+      "立即清理占道桌椅和地面垃圾，恢复道路通行空间",
+      "划定规范经营区域并加强夜间巡查，确保不占用车道和人行通道"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

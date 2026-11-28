@@ -180,6 +180,7 @@ def test_stream_stores_user_and_vision_context_once(monkeypatch, tmp_path, visio
         return vision_result
 
     monkeypatch.setattr(mimo_client.MiMoVisionClient, "analyze_json", analyze)
+    monkeypatch.setattr(mimo_client.MiMoVisionClient, "__init__", lambda self, *args, **kwargs: None)
 
     async def fake_stream(**kwargs):
         seen.append(kwargs)

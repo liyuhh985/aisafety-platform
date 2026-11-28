@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"elevator_special\", \"subcategory\": \"elevator_trapped\", \"evidence\": \"人员被困电梯门缝，工作人员正扒门施救\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "evidence": "人员被困电梯门缝，工作人员正扒门施救"
+  }
+}

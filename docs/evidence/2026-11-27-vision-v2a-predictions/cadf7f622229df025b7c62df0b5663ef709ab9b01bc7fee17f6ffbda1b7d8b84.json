@@ -1,0 +1,23 @@
+{
+  "sha256": "cadf7f622229df025b7c62df0b5663ef709ab9b01bc7fee17f6ffbda1b7d8b84",
+  "file": "NEGSTR07.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"中\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"画面为室内装修或空置房间，仅见地面保护膜、纸箱和少量杂物，未发现井盖、消防、电气、结构等明显安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为室内装修或空置房间，仅见地面保护膜、纸箱和少量杂物，未发现井盖、消防、电气、结构等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

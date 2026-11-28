@@ -1,0 +1,27 @@
+{
+  "sha256": "11bec63173872cb68c2a57613910b483aaa42fb40ba810cf6bbd0ef0dc10ddd2",
+  "file": "FAC0001.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"facade_fall\",\n  \"severity\": \"高\",\n  \"description\": \"天花板/顶棚抹灰层大面积脱落，露出基层，边缘不规则，周边可见裂缝，存在继续脱落坠落风险，可能砸伤人员或损坏物品。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内天花板靠墙交界处上方\",\n  \"rectification\": [\n    \"立即设置警戒隔离，清除松动、空鼓的抹灰层，防止继续坠落。\",\n    \"排查周边裂缝和空鼓范围，铲除受损抹灰并按规范重新修复。\",\n    \"若裂缝持续扩展或面积较大，建议请专业机构进行结构安全鉴定。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "facade_fall",
+    "severity": "高",
+    "description": "天花板/顶棚抹灰层大面积脱落，露出基层，边缘不规则，周边可见裂缝，存在继续脱落坠落风险，可能砸伤人员或损坏物品。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内天花板靠墙交界处上方",
+    "rectification": [
+      "立即设置警戒隔离，清除松动、空鼓的抹灰层，防止继续坠落。",
+      "排查周边裂缝和空鼓范围，铲除受损抹灰并按规范重新修复。",
+      "若裂缝持续扩展或面积较大，建议请专业机构进行结构安全鉴定。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

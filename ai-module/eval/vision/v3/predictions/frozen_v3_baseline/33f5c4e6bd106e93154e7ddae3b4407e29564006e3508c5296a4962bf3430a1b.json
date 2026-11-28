@@ -1,0 +1,26 @@
+{
+  "sha256": "33f5c4e6bd106e93154e7ddae3b4407e29564006e3508c5296a4962bf3430a1b",
+  "file": "gas_pipe_aging_1_33f5c4e6bd10.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"高\",\n  \"description\": \"管道内部可见厚重红褐色铁锈及结垢，表明管道已严重腐蚀老化。若为燃气管道，极易因管壁变薄引发泄漏甚至爆炸；若为给水管，则易导致破裂漏水、水质污染或堵塞。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"截断的管道截面内部\",\n  \"rectification\": [\n    \"尽快更换严重锈蚀的老化管道\",\n    \"对同区域隐蔽管线进行全面排查与维护\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "高",
+    "description": "管道内部可见厚重红褐色铁锈及结垢，表明管道已严重腐蚀老化。若为燃气管道，极易因管壁变薄引发泄漏甚至爆炸；若为给水管，则易导致破裂漏水、水质污染或堵塞。",
+    "reason_if_no_hazard": "",
+    "location_hint": "截断的管道截面内部",
+    "rectification": [
+      "尽快更换严重锈蚀的老化管道",
+      "对同区域隐蔽管线进行全面排查与维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

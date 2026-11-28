@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"gas_pipe_aging\", \"evidence\": \"金属管道焊接处严重腐蚀锈蚀，有液体渗漏\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "evidence": "金属管道焊接处严重腐蚀锈蚀，有液体渗漏"
+  }
+}

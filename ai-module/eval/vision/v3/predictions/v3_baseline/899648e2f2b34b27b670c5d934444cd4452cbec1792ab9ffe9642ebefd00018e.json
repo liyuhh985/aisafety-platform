@@ -1,0 +1,30 @@
+{
+  "sha256": "899648e2f2b34b27b670c5d934444cd4452cbec1792ab9ffe9642ebefd00018e",
+  "file": "deep_pit_1_899648e2f2b3.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"现场开挖形成较深基坑，临边未见连续防护栏杆或硬质围挡，挖掘机紧邻坑边作业，存在人员坠落、边坡坍塌及机械倾覆风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"施工场地内深基坑临边及挖掘机作业处\",\"rectification\":[\"沿基坑周边设置连续、稳固的防护栏杆和挡脚板\",\"设置明显的安全警示标志并划定机械作业安全距离\",\"按方案落实放坡、支护或监测措施，禁止挖掘机过度靠近坑边\",\"加强现场巡查，作业人员佩戴安全帽并禁止无关人员进入\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "现场开挖形成较深基坑，临边未见连续防护栏杆或硬质围挡，挖掘机紧邻坑边作业，存在人员坠落、边坡坍塌及机械倾覆风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工场地内深基坑临边及挖掘机作业处",
+    "rectification": [
+      "沿基坑周边设置连续、稳固的防护栏杆和挡脚板",
+      "设置明显的安全警示标志并划定机械作业安全距离",
+      "按方案落实放坡、支护或监测措施，禁止挖掘机过度靠近坑边",
+      "加强现场巡查，作业人员佩戴安全帽并禁止无关人员进入"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

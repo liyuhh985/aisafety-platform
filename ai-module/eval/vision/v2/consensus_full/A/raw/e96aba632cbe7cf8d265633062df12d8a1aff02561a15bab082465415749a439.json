@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"车辆停在划线车位内，无明显占道或隐患\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "车辆停在划线车位内，无明显占道或隐患"
+  }
+}

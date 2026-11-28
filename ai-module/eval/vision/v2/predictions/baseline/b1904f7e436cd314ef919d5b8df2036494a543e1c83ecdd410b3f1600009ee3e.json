@@ -1,0 +1,27 @@
+{
+  "sha256": "b1904f7e436cd314ef919d5b8df2036494a543e1c83ecdd410b3f1600009ee3e",
+  "file": "SCA0083.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙脚手架作业面处，密目安全网被拉开形成缺口，工人探身作业，未见明显临边防护和安全带系挂，存在高处坠落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙脚手架作业面\",\n  \"rectification\": [\n    \"立即停止该处作业，恢复安全网封闭并完善脚手架临边防护\",\n    \"要求作业人员规范系挂安全带，设置可靠生命线\",\n    \"加强现场安全巡查和作业人员安全教育\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "建筑外墙脚手架作业面处，密目安全网被拉开形成缺口，工人探身作业，未见明显临边防护和安全带系挂，存在高处坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙脚手架作业面",
+    "rectification": [
+      "立即停止该处作业，恢复安全网封闭并完善脚手架临边防护",
+      "要求作业人员规范系挂安全带，设置可靠生命线",
+      "加强现场安全巡查和作业人员安全教育"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

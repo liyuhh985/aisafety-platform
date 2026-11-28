@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"仅为科普宣传海报文字，非实际隐患画面\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "仅为科普宣传海报文字，非实际隐患画面"
+  }
+}

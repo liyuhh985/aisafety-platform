@@ -1,0 +1,27 @@
+{
+  "sha256": "b8d0ed208ef02e8218bd114896454028f811923399f639aaac08259270ae2afc",
+  "file": "FIR0016.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"一辆银色面包车停放在道路边缘黄色标线旁，占用部分行车道且未见停车泊位，雨天路面湿滑，可能影响其他车辆通行、会车视线并增加剐蹭风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路边缘、绿化带和石墙旁\",\"rectification\":[\"劝离或依法查处违停车辆，恢复道路通行空间\",\"在禁停路段完善禁停标志标线并加强巡查\",\"雨天加强该路段交通疏导和警示\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "一辆银色面包车停放在道路边缘黄色标线旁，占用部分行车道且未见停车泊位，雨天路面湿滑，可能影响其他车辆通行、会车视线并增加剐蹭风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘、绿化带和石墙旁",
+    "rectification": [
+      "劝离或依法查处违停车辆，恢复道路通行空间",
+      "在禁停路段完善禁停标志标线并加强巡查",
+      "雨天加强该路段交通疏导和警示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

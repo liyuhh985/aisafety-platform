@@ -1,0 +1,28 @@
+{
+  "sha256": "bed68016a24ea6bae48b339afe850e919808cf77c6abdf832ee11e523c8fd1ae",
+  "file": "road_occupancy_2_bed68016a24e.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"road_occupancy\",\"severity\":\"中\",\"description\":\"人行横道及路边存在水果摊货物直接摆放在路面上，并有蓝色三轮车、货车停靠占用通行空间，影响行人和车辆正常通行，易造成拥堵、刮碰等安全风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行横道及右侧路边\",\"rectification\":[\"立即清理占道摆放的水果货物和经营设施，恢复道路通行空间\",\"规范三轮车、货车停放，加强重点时段巡查管控\"],\"secondary_subcategories\":[\"vehicle_occupancy\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "人行横道及路边存在水果摊货物直接摆放在路面上，并有蓝色三轮车、货车停靠占用通行空间，影响行人和车辆正常通行，易造成拥堵、刮碰等安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行横道及右侧路边",
+    "rectification": [
+      "立即清理占道摆放的水果货物和经营设施，恢复道路通行空间",
+      "规范三轮车、货车停放，加强重点时段巡查管控"
+    ],
+    "secondary_subcategories": [
+      "vehicle_occupancy"
+    ]
+  },
+  "error": ""
+}

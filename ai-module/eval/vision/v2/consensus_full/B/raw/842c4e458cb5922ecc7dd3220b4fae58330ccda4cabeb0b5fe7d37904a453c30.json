@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"施工围挡完好并配有警示锥，未见明显隐患\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "施工围挡完好并配有警示锥，未见明显隐患"
+  }
+}

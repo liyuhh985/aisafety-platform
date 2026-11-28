@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"电梯门正常关闭，未见困人或停运迹象\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯门正常关闭，未见困人或停运迹象"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "sha256": "8f0c4a02d031774dd8cef0a9ccb5b3cd565410cae11fc9b3438a1c56117ca64b",
+  "file": "FAC0003.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"facade_fall\",\n  \"severity\": \"高\",\n  \"description\": \"高层建筑外墙大面积脱落，裸露出深色基层。脱落区域边缘参差不齐，且仍有部分材料松动悬挂，随时有继续坠落的风险，极易造成高空坠物伤人及财产损失。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高层建筑中上部外立面\",\n  \"rectification\": [\n    \"立即在楼下危险区域设置警戒线和安全警示标志，防止行人车辆靠近\",\n    \"及时组织专业施工队伍清除边缘松动残留物，并重做外立面保温及涂饰层\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "facade_fall",
+    "severity": "高",
+    "description": "高层建筑外墙大面积脱落，裸露出深色基层。脱落区域边缘参差不齐，且仍有部分材料松动悬挂，随时有继续坠落的风险，极易造成高空坠物伤人及财产损失。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高层建筑中上部外立面",
+    "rectification": [
+      "立即在楼下危险区域设置警戒线和安全警示标志，防止行人车辆靠近",
+      "及时组织专业施工队伍清除边缘松动残留物，并重做外立面保温及涂饰层"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

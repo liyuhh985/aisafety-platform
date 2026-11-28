@@ -1,0 +1,27 @@
+{
+  "sha256": "87363f135ccbeaec09c784e49cf47b096cc9b08576fae81320be6e346b08afb1",
+  "file": "neg_38_87363f135ccb.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"厨房燃气热水器与燃气管道之间采用黄色燃气软管连接，软管明显过长并悬垂在水槽上方，靠近电源插座且缺少固定，易受潮、碰撞或拉扯导致破损漏气，存在燃气泄漏和火灾爆炸风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厨房水槽上方、燃气热水器与燃气表/阀门之间\",\n  \"rectification\": [\n    \"由燃气专业人员更换为长度符合规范（不宜超过2m）的燃气专用金属波纹管并可靠固定\",\n    \"调整软管走向，远离水槽水源和电源插座，避免悬垂受力及穿越潮湿区域\",\n    \"检查各接口密封性，并加装或维护燃气泄漏报警器\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "厨房燃气热水器与燃气管道之间采用黄色燃气软管连接，软管明显过长并悬垂在水槽上方，靠近电源插座且缺少固定，易受潮、碰撞或拉扯导致破损漏气，存在燃气泄漏和火灾爆炸风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厨房水槽上方、燃气热水器与燃气表/阀门之间",
+    "rectification": [
+      "由燃气专业人员更换为长度符合规范（不宜超过2m）的燃气专用金属波纹管并可靠固定",
+      "调整软管走向，远离水槽水源和电源插座，避免悬垂受力及穿越潮湿区域",
+      "检查各接口密封性，并加装或维护燃气泄漏报警器"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

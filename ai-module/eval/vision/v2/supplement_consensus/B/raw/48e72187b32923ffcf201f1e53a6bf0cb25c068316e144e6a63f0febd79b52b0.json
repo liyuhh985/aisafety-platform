@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"road_occupancy\", \"evidence\": \"多辆摊车和摊位占用人行道及道路经营\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "多辆摊车和摊位占用人行道及道路经营"
+  }
+}

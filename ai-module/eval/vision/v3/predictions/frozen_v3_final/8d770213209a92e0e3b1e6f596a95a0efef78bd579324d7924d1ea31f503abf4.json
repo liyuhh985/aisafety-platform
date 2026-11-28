@@ -1,0 +1,27 @@
+{
+  "sha256": "8d770213209a92e0e3b1e6f596a95a0efef78bd579324d7924d1ea31f503abf4",
+  "file": "other_2_8d770213209a.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"低\",\n  \"description\": \"公园绿地碎石步道旁一张木质躺椅倒伏在地，部分靠近通行路面，可能绊倒行人，且影响公共设施正常使用。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"公园碎石步道旁绿地\",\n  \"rectification\": [\n    \"及时扶正并固定倒伏座椅，无法修复则移除\",\n    \"在处置前设置临时警示标志，避免行人绊倒\",\n    \"加强公共区域设施巡查，发现倒伏或损坏及时处理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "公园绿地碎石步道旁一张木质躺椅倒伏在地，部分靠近通行路面，可能绊倒行人，且影响公共设施正常使用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "公园碎石步道旁绿地",
+    "rectification": [
+      "及时扶正并固定倒伏座椅，无法修复则移除",
+      "在处置前设置临时警示标志，避免行人绊倒",
+      "加强公共区域设施巡查，发现倒伏或损坏及时处理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

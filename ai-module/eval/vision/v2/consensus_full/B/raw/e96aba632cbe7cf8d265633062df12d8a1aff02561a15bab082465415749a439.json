@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"停车场内车辆有序停放，未见占道或设施损坏\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "停车场内车辆有序停放，未见占道或设施损坏"
+  }
+}

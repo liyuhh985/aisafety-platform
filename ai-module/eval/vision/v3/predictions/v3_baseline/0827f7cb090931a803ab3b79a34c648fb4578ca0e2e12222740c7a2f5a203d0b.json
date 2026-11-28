@@ -1,0 +1,27 @@
+{
+  "sha256": "0827f7cb090931a803ab3b79a34c648fb4578ca0e2e12222740c7a2f5a203d0b",
+  "file": "dangerous_building_1_0827f7cb0909.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙下部可见明显水平贯穿裂缝并伴有砖缝错位，局部裂缝较宽，可能导致墙体承载力下降、继续开裂甚至局部坍塌，存在结构安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙下部、窗户下方区域\",\n  \"rectification\": [\n    \"立即在裂缝周边设置警戒隔离，防止人员靠近和停留\",\n    \"尽快委托专业机构进行结构安全鉴定，评估墙体裂缝成因及承载能力\",\n    \"根据鉴定结果采取加固、支撑或拆除等处置措施，并持续监测裂缝变化\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "建筑外墙下部可见明显水平贯穿裂缝并伴有砖缝错位，局部裂缝较宽，可能导致墙体承载力下降、继续开裂甚至局部坍塌，存在结构安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙下部、窗户下方区域",
+    "rectification": [
+      "立即在裂缝周边设置警戒隔离，防止人员靠近和停留",
+      "尽快委托专业机构进行结构安全鉴定，评估墙体裂缝成因及承载能力",
+      "根据鉴定结果采取加固、支撑或拆除等处置措施，并持续监测裂缝变化"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

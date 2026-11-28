@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"deep_pit\", \"evidence\": \"多个方形基坑敞开无防护围栏，工人在坑边作业\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "evidence": "多个方形基坑敞开无防护围栏，工人在坑边作业"
+  }
+}

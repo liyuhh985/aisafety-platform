@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"工人正在检修路灯，无法确认存在隐患\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "工人正在检修路灯，无法确认存在隐患"
+  }
+}

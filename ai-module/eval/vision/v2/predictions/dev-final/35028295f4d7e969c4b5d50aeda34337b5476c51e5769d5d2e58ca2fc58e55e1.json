@@ -1,0 +1,27 @@
+{
+  "sha256": "35028295f4d7e969c4b5d50aeda34337b5476c51e5769d5d2e58ca2fc58e55e1",
+  "file": "SEW0006.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"sewage_odor\",\"severity\":\"中\",\"description\":\"水渠内水体灰黑浑浊，水面及岸边有塑料、杂物等垃圾漂浮，沟渠长期淤积可能产生异味、滋生蚊蝇并污染周边农田和人居环境。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"水渠水面及两侧边坡\",\"rectification\":[\"清理水面漂浮垃圾和岸边杂物\",\"排查沿线排污口与污水来源，禁止污水直排\",\"实施清淤疏浚并定期巡查水质\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "sewage_odor",
+    "severity": "中",
+    "description": "水渠内水体灰黑浑浊，水面及岸边有塑料、杂物等垃圾漂浮，沟渠长期淤积可能产生异味、滋生蚊蝇并污染周边农田和人居环境。",
+    "reason_if_no_hazard": "",
+    "location_hint": "水渠水面及两侧边坡",
+    "rectification": [
+      "清理水面漂浮垃圾和岸边杂物",
+      "排查沿线排污口与污水来源，禁止污水直排",
+      "实施清淤疏浚并定期巡查水质"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

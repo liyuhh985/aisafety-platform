@@ -1,0 +1,27 @@
+{
+  "sha256": "5015b347d164fd748e3892a1fed552e5af409905b5859e35d5715def54300cc1",
+  "file": "NEGWIR05.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"仓库内大量电缆盘和木质盘具密集堆放，右侧门/货架前空间被占用，通道宽度及疏散条件不明确；电缆护套和木盘可燃，若发生火情易蔓延，且可能影响取用灭火器材和人员疏散。因无明确标识，难以确认消防通道与设施状态。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"仓库内电缆盘堆放区及右侧门/货架前\",\n  \"rectification\": [\n    \"对电缆盘分区分类存放，留出连续疏散通道和安全出口，不得遮挡\",\n    \"为立放线盘加设防滚楔块并控制堆高，清理周边易燃杂物\",\n    \"配置并检查灭火器、消防标识和应急照明，保持通道畅通\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "仓库内大量电缆盘和木质盘具密集堆放，右侧门/货架前空间被占用，通道宽度及疏散条件不明确；电缆护套和木盘可燃，若发生火情易蔓延，且可能影响取用灭火器材和人员疏散。因无明确标识，难以确认消防通道与设施状态。",
+    "reason_if_no_hazard": "",
+    "location_hint": "仓库内电缆盘堆放区及右侧门/货架前",
+    "rectification": [
+      "对电缆盘分区分类存放，留出连续疏散通道和安全出口，不得遮挡",
+      "为立放线盘加设防滚楔块并控制堆高，清理周边易燃杂物",
+      "配置并检查灭火器、消防标识和应急照明，保持通道畅通"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

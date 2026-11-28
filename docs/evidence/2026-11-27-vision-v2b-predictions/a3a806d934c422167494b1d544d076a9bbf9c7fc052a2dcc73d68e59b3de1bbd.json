@@ -1,0 +1,28 @@
+{
+  "sha256": "a3a806d934c422167494b1d544d076a9bbf9c7fc052a2dcc73d68e59b3de1bbd",
+  "file": "FAC0002.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"高层住宅外立面可见多处大面积浅色修补斑块，部分区域面砖或抹灰层疑似脱落。若存在空鼓、开裂继续扩展，可能发生外墙饰面坠落，砸伤行人或车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高层住宅楼外墙多处外立面\",\n  \"rectification\": [\n    \"委托专业机构全面排查外墙空鼓、开裂和松动部位\",\n    \"清除松动面层并按规范重新修复\",\n    \"维修期间设置警戒围挡和警示标志\",\n    \"加强外墙日常巡查并建立隐患台账\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "高层住宅外立面可见多处大面积浅色修补斑块，部分区域面砖或抹灰层疑似脱落。若存在空鼓、开裂继续扩展，可能发生外墙饰面坠落，砸伤行人或车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高层住宅楼外墙多处外立面",
+    "rectification": [
+      "委托专业机构全面排查外墙空鼓、开裂和松动部位",
+      "清除松动面层并按规范重新修复",
+      "维修期间设置警戒围挡和警示标志",
+      "加强外墙日常巡查并建立隐患台账"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

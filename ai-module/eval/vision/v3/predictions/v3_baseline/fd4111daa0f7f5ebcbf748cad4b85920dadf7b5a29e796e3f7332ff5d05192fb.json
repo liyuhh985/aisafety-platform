@@ -1,0 +1,27 @@
+{
+  "sha256": "fd4111daa0f7f5ebcbf748cad4b85920dadf7b5a29e796e3f7332ff5d05192fb",
+  "file": "traffic_facility_damage_3_fd4111daa0f7.png",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"street_light_pole\",\n  \"severity\": \"高\",\n  \"description\": \"道路边缘一根路灯/线杆断裂倒伏，杆体横跨路面，基座处有破损和泥土，易绊倒行人、影响车辆通行，存在交通事故风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路边缘路缘石旁，靠近车道箭头标线处\",\n  \"rectification\": [\n    \"立即设置安全警示并清理倒伏杆件，恢复道路通行\",\n    \"核查线杆产权单位，修复或更换损坏的基座和杆体\",\n    \"清理路面泥土杂物，恢复路面整洁\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "道路边缘一根路灯/线杆断裂倒伏，杆体横跨路面，基座处有破损和泥土，易绊倒行人、影响车辆通行，存在交通事故风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘路缘石旁，靠近车道箭头标线处",
+    "rectification": [
+      "立即设置安全警示并清理倒伏杆件，恢复道路通行",
+      "核查线杆产权单位，修复或更换损坏的基座和杆体",
+      "清理路面泥土杂物，恢复路面整洁"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

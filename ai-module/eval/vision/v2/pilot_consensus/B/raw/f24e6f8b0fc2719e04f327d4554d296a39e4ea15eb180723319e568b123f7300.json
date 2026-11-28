@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"blind_path_occupied\", \"evidence\": \"井盖横穿黄色盲道，盲道被截断中断\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "evidence": "井盖横穿黄色盲道，盲道被截断中断"
+  }
+}

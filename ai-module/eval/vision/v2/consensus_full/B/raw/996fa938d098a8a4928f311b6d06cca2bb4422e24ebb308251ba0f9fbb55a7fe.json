@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"仅文字海报，无实际画面证据\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "仅文字海报，无实际画面证据"
+  }
+}

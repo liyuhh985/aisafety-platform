@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"空白检查表格，无场景画面\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "空白检查表格，无场景画面"
+  }
+}

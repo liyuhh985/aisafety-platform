@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"现场有围挡和施工车辆，画面无法确认具体隐患\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "现场有围挡和施工车辆，画面无法确认具体隐患"
+  }
+}

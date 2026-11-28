@@ -1,0 +1,30 @@
+{
+  "sha256": "41ea7950c15db3140db304b107df3d61a0a683310d1ed078e7c6691726f3b7c3",
+  "file": "FAC0073.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"一栋多层红色建筑整体严重倾斜，结构明显失稳，存在倒塌风险；外墙窗户、防盗网及外挂空调架等也可能坠落，威胁周边人员与救援车辆安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"花莲县消防车旁的多层红色倾斜建筑\",\n  \"rectification\": [\n    \"立即疏散并设置警戒线，禁止人员车辆进入危险区域\",\n    \"组织专业机构进行结构安全鉴定和变形监测\",\n    \"根据鉴定结果采取加固、支撑或拆除措施\",\n    \"排查并清除外墙窗户、防盗网、空调架等坠落风险物\"\n  ],\n  \"secondary_subcategories\": [\n    \"falling_object\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "一栋多层红色建筑整体严重倾斜，结构明显失稳，存在倒塌风险；外墙窗户、防盗网及外挂空调架等也可能坠落，威胁周边人员与救援车辆安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "花莲县消防车旁的多层红色倾斜建筑",
+    "rectification": [
+      "立即疏散并设置警戒线，禁止人员车辆进入危险区域",
+      "组织专业机构进行结构安全鉴定和变形监测",
+      "根据鉴定结果采取加固、支撑或拆除措施",
+      "排查并清除外墙窗户、防盗网、空调架等坠落风险物"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

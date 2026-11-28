@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"画面模糊，仅字幕提及危房，无可见结构损伤\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面模糊，仅字幕提及危房，无可见结构损伤"
+  }
+}

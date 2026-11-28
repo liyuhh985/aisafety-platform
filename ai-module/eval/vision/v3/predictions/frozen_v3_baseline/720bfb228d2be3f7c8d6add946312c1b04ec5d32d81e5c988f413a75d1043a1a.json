@@ -1,0 +1,29 @@
+{
+  "sha256": "720bfb228d2be3f7c8d6add946312c1b04ec5d32d81e5c988f413a75d1043a1a",
+  "file": "distribution_box_fault_2_720bfb228d2b.png",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内配电柜内部设备严重烧焦、炭化，柜体破损，底部有烧蚀碎屑，侧边线缆外露，存在触电、短路复燃及电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内墙角配电柜\",\n  \"rectification\": [\n    \"立即断电隔离并设置安全警示，禁止无关人员靠近\",\n    \"由专业电工更换或彻底检修烧损配电柜及线路\",\n    \"清理烧蚀物并排查周边线路、防火封堵及灭火器材\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "室内配电柜内部设备严重烧焦、炭化，柜体破损，底部有烧蚀碎屑，侧边线缆外露，存在触电、短路复燃及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙角配电柜",
+    "rectification": [
+      "立即断电隔离并设置安全警示，禁止无关人员靠近",
+      "由专业电工更换或彻底检修烧损配电柜及线路",
+      "清理烧蚀物并排查周边线路、防火封堵及灭火器材"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

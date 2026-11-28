@@ -1,0 +1,27 @@
+{
+  "sha256": "be93d30892af74d3124c23ef37f927543838fbfb6485c9dd164daf8f8efdd21e",
+  "file": "road_surface_collapse_1_be93d30892af.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"混凝土路面/桥面边缘出现长贯通裂缝，板体断裂且边缘悬空，下方为排水沟，存在路面塌落及人员车辆坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路/桥面边缘紧邻排水沟处\",\"rectification\":[\"立即设置围挡和警示标志，封闭隐患区域\",\"组织专业检测评估，对破损路面进行拆除重铺或结构加固\",\"完善道路边缘防护和排水设施，防止裂缝继续扩展\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "混凝土路面/桥面边缘出现长贯通裂缝，板体断裂且边缘悬空，下方为排水沟，存在路面塌落及人员车辆坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路/桥面边缘紧邻排水沟处",
+    "rectification": [
+      "立即设置围挡和警示标志，封闭隐患区域",
+      "组织专业检测评估，对破损路面进行拆除重铺或结构加固",
+      "完善道路边缘防护和排水设施，防止裂缝继续扩展"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

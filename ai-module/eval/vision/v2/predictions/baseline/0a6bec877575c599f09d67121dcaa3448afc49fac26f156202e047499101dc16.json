@@ -1,0 +1,23 @@
+{
+  "sha256": "0a6bec877575c599f09d67121dcaa3448afc49fac26f156202e047499101dc16",
+  "file": "NEGSTR08.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"图片显示建筑外立面、窗户、阳台及路灯外观完好，未见破损、脱落、开裂、违规搭建、线缆裸露等明显安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示建筑外立面、窗户、阳台及路灯外观完好，未见破损、脱落、开裂、违规搭建、线缆裸露等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

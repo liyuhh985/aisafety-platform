@@ -1,0 +1,27 @@
+{
+  "sha256": "b8d0ed208ef02e8218bd114896454028f811923399f639aaac08259270ae2afc",
+  "file": "FIR0016.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"一辆银色面包车停靠在道路边缘并压占黄色禁停标线，车身靠近绿化带且略显倾斜，占用通行空间，可能影响其他车辆通行并增加刮擦、碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路边缘、绿化带旁，车辆停放处\",\n  \"rectification\": [\n    \"及时劝离或依法处理违停车辆，恢复道路通行空间\",\n    \"完善禁停标志和隔离设施，防止车辆越线停放\",\n    \"加强该路段巡查，发现占道违停及时处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "一辆银色面包车停靠在道路边缘并压占黄色禁停标线，车身靠近绿化带且略显倾斜，占用通行空间，可能影响其他车辆通行并增加刮擦、碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘、绿化带旁，车辆停放处",
+    "rectification": [
+      "及时劝离或依法处理违停车辆，恢复道路通行空间",
+      "完善禁停标志和隔离设施，防止车辆越线停放",
+      "加强该路段巡查，发现占道违停及时处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

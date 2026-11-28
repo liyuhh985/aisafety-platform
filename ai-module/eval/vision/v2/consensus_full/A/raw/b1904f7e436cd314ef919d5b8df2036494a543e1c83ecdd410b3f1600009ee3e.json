@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"scaffold_guard\", \"evidence\": \"脚手架安全网破损，工人在破口处\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "evidence": "脚手架安全网破损，工人在破口处"
+  }
+}

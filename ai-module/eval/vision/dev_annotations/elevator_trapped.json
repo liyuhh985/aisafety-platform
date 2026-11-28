@@ -1,0 +1,216 @@
+{
+ "_meta": {
+  "name": "elevator_trapped 真实图评测集",
+  "category": "elevator_special/elevator_trapped",
+  "category_label": "电梯与特种设备/电梯困人",
+  "source": "百度图片 → 原站直链下载 → 自动筛选 → 粗筛 → 标注 → 严格复检",
+  "rebuild": "2026-10-31",
+  "positive": 6,
+  "negative": 0,
+  "audit_removed": 0
+ },
+ "rejected": [
+  {
+   "file": "ELE0021.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯内人群拥挤，画面信息主要靠叠加字幕说明"
+  },
+  {
+   "file": "ELE0005.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "仅见电梯内壁和按键面板，无人员被困画面，大字标题遮挡。"
+  },
+  {
+   "file": "ELE0018.jpg",
+   "reason": "整改中",
+   "detail": "戴安全帽的维修人员在电梯门旁处置，地面立有维护保养中黄牌"
+  },
+  {
+   "file": "ELE0010.jpg",
+   "reason": "整改中",
+   "detail": "消防员身穿救援服在井道内用担架转移被困人员，属于救援处置中状态"
+  },
+  {
+   "file": "ELE0020.jpg",
+   "reason": "整改中",
+   "detail": "电梯门敞开，内有人员，门外放置黄色维修围挡，有救援和安保人员正在处置。"
+  },
+  {
+   "file": "ELE0028.png",
+   "reason": "文字是唯一信息源",
+   "detail": "画面模糊，仅见一人按电梯面板，无困人特征"
+  },
+  {
+   "file": "ELE0009.png",
+   "reason": "整改中",
+   "detail": "多人正扒开电梯门施救，一人困在轿厢内"
+  },
+  {
+   "file": "ELE0024.jpg",
+   "reason": "非该类别",
+   "detail": "消防员打手电照明，画面为黑暗环境，无电梯特征"
+  },
+  {
+   "file": "ELE0003.jpg",
+   "reason": "整改中",
+   "detail": "消防员在电梯口搀扶被困人员，已被救援"
+  },
+  {
+   "file": "ELE0027.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "消防员正在破拆救援，顶部有大字新闻标题覆盖"
+  },
+  {
+   "file": "ELE0026.jpg",
+   "reason": "整改中",
+   "detail": "消防员正在搀扶披毛毯人员，属于救援处置中"
+  },
+  {
+   "file": "ELE0042.png",
+   "reason": "文字是唯一信息源",
+   "detail": "画面是楼梯间，两人正爬楼梯，没有电梯设备画面"
+  },
+  {
+   "file": "ELE0023.png",
+   "reason": "整改中",
+   "detail": "消防员在电梯口搀扶被困人员，处于救援处置过程中"
+  },
+  {
+   "file": "ELE0051.jpg",
+   "reason": "整改中",
+   "detail": "三名穿橙红色救援服、戴消防头盔的人员正在合力撬开电梯门实施救援"
+  },
+  {
+   "file": "ELE0050.jpg",
+   "reason": "整改中",
+   "detail": "两名消防员正在电梯门前进行救援操作"
+  },
+  {
+   "file": "ELE0053.jpg",
+   "reason": "整改中",
+   "detail": "消防员手持长杆工具在电梯门口救援，人员正在处置"
+  },
+  {
+   "file": "ELE0061.jpg",
+   "reason": "整改中",
+   "detail": "数名戴消防头盔人员正徒手撬开电梯门，救援处置中"
+  },
+  {
+   "file": "ELE0056.jpg",
+   "reason": "整改中",
+   "detail": "电梯门敞开，内有黄黑防护栏，戴安全帽穿反光背心人员在场查看处置"
+  },
+  {
+   "file": "ELE0062.png",
+   "reason": "整改中",
+   "detail": "消防员戴头盔正在撬开电梯层门施救，隐患已被处置中"
+  },
+  {
+   "file": "ELE0059.jpg",
+   "reason": "整改中",
+   "detail": "戴安全帽的工人正在扒开电梯门进行处置"
+  },
+  {
+   "file": "ELE0044.png",
+   "reason": "非该类别",
+   "detail": "电梯门前放置黄色围挡和蓝色停用告示，画面中无人被困"
+  },
+  {
+   "file": "ELE0065.png",
+   "reason": "整改中",
+   "detail": "数名消防员围在紧闭的电梯门前徒手扒门救援"
+  }
+ ],
+ "items": {
+  "ELE0011.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_trapped",
+   "severity": "高",
+   "key_evidence": "消防员在电梯口搀扶被困女子离开",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "中国消防救援、消防",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0015.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_trapped",
+   "severity": "高",
+   "key_evidence": "消防员正从非平层电梯缝隙中救援被困人员",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "中国消防、福建泉州、泉州网、www.qzwb.com",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0029.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_trapped",
+   "severity": "中",
+   "key_evidence": "两名消防员站在打开的电梯门前，电梯内有一人被困，门框有禁止吸烟标识",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "北京消防；禁止吸烟",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0017.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_trapped",
+   "severity": "高",
+   "key_evidence": "电梯轿厢内两人，一人伸手按紧急呼叫按钮，疑似被困",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "生命线、LIFELINE、扫一扫",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0034.png": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_trapped",
+   "severity": "高",
+   "key_evidence": "消防员在敞开的电梯轿厢内搀扶被困男子，现场昏暗",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "消防",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "ELE0041.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_trapped",
+   "severity": "高",
+   "key_evidence": "消防员站在紧闭的电梯门前，旁边为电梯呼叫面板，处于待救援状态。",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "防消东北 119 吉林",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  }
+ }
+}

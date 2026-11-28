@@ -1,0 +1,27 @@
+{
+  "sha256": "28273d4f3ae1107c6e11decd7c21a4136ac1f814b3fd086aebb419400e8b35fd",
+  "file": "temporary_power_2_28273d4f3ae1.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"高\",\n  \"description\": \"建筑内线缆井/配电间大量线缆未穿管、未固定，杂乱垂落并盘绕堆积于底部，部分线缆接头和箱体周边凌乱，存在绝缘破损、短路、电气火灾及检修人员触电风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑内狭窄线缆井/配电间底部及墙面线缆集中处\",\n  \"rectification\": [\n    \"由持证电工对线缆进行停电排查，清理废弃线路并规范整理\",\n    \"线缆应穿管或敷设于桥架内并可靠固定，严禁凌乱垂落和地面堆积\",\n    \"检查并修复配电箱及盖板，封堵孔洞，设置警示标识并加强井道门锁管理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "建筑内线缆井/配电间大量线缆未穿管、未固定，杂乱垂落并盘绕堆积于底部，部分线缆接头和箱体周边凌乱，存在绝缘破损、短路、电气火灾及检修人员触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑内狭窄线缆井/配电间底部及墙面线缆集中处",
+    "rectification": [
+      "由持证电工对线缆进行停电排查，清理废弃线路并规范整理",
+      "线缆应穿管或敷设于桥架内并可靠固定，严禁凌乱垂落和地面堆积",
+      "检查并修复配电箱及盖板，封堵孔洞，设置警示标识并加强井道门锁管理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "a3a806d934c422167494b1d544d076a9bbf9c7fc052a2dcc73d68e59b3de1bbd",
+  "file": "FAC0002.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"facade_fall\",\n  \"severity\": \"高\",\n  \"description\": \"高层住宅外立面多处可见大面积灰白色斑块，疑似瓷砖或抹灰层脱落、修补，边缘不规则，存在空鼓脱落及高空坠物风险，可能危及下方行人、车辆和设施。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高层住宅楼外立面，多楼层及阳台外侧\",\n  \"rectification\": [\n    \"对外立面斑块区域进行空鼓、开裂专项排查，确认是否存在继续脱落风险\",\n    \"及时清除松动瓷砖或抹灰层，并按规范修补加固\",\n    \"施工期间在楼下设置警戒线和安全警示，防止坠物伤人\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "facade_fall",
+    "severity": "高",
+    "description": "高层住宅外立面多处可见大面积灰白色斑块，疑似瓷砖或抹灰层脱落、修补，边缘不规则，存在空鼓脱落及高空坠物风险，可能危及下方行人、车辆和设施。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高层住宅楼外立面，多楼层及阳台外侧",
+    "rectification": [
+      "对外立面斑块区域进行空鼓、开裂专项排查，确认是否存在继续脱落风险",
+      "及时清除松动瓷砖或抹灰层，并按规范修补加固",
+      "施工期间在楼下设置警戒线和安全警示，防止坠物伤人"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

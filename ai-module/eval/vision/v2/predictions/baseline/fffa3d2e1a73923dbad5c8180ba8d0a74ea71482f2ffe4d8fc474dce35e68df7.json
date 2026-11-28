@@ -1,0 +1,27 @@
+{
+  "sha256": "fffa3d2e1a73923dbad5c8180ba8d0a74ea71482f2ffe4d8fc474dce35e68df7",
+  "file": "NEGVEH08.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"低\",\n  \"description\": \"这是一张停车场车位布局CAD图纸，并非真实现场照片，因此无法确认实际隐患。图中标注车位宽2.60m、长5.30m，左侧0.25m紧邻墙体，尺寸本身未见明显违规，但缺少现场实况信息，需要实地核查。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"停车场车位布局设计图（左侧为墙体、标注8/7/10号车位）\",\n  \"rectification\": [\n    \"到现场实地核查车位实际尺寸、净空及与墙体间距是否符合规范\",\n    \"核实紧邻墙体的车位是否存在开门空间不足、通行受限等问题\",\n    \"补充现场照片或竣工实测数据后重新判定\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "这是一张停车场车位布局CAD图纸，并非真实现场照片，因此无法确认实际隐患。图中标注车位宽2.60m、长5.30m，左侧0.25m紧邻墙体，尺寸本身未见明显违规，但缺少现场实况信息，需要实地核查。",
+    "reason_if_no_hazard": "",
+    "location_hint": "停车场车位布局设计图（左侧为墙体、标注8/7/10号车位）",
+    "rectification": [
+      "到现场实地核查车位实际尺寸、净空及与墙体间距是否符合规范",
+      "核实紧邻墙体的车位是否存在开门空间不足、通行受限等问题",
+      "补充现场照片或竣工实测数据后重新判定"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,7 +1,7 @@
 ---
 name: environment_other
 category: environment_other
-description: 环境与其他隐患，包括垃圾堆积、污水异味和其他无法归入前七类的公共安全隐患。
+description: 环境与其他隐患，包括垃圾堆积、污水异味、危化品/易燃易爆违规存运和其他公共安全隐患。
 allowed_tools:
   - search_regulation
   - search_cases
@@ -9,6 +9,10 @@ routing_keywords:
   - 垃圾堆积
   - 污水
   - 异味
+  - 危化品
+  - 危险化学品
+  - 烟花爆竹
+  - 易燃溶剂
   - 其他安全隐患
 version: "1"
 ---
@@ -17,7 +21,7 @@ version: "1"
 
 ## 适用范围
 
-覆盖 garbage_pile、sewage_odor、other。
+覆盖 garbage_pile、sewage_odor、hazmat_storage、other。
 
 ## 追问 SOP
 

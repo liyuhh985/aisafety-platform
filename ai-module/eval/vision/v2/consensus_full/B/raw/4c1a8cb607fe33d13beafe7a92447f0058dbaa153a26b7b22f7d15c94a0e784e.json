@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"elevator_special\", \"subcategory\": \"elevator_trapped\", \"evidence\": \"消防员在3楼电梯门处撬门救援\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "evidence": "消防员在3楼电梯门处撬门救援"
+  }
+}

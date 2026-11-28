@@ -1,0 +1,26 @@
+{
+  "sha256": "3fdba6a3e9681959e395b1d21edde3e827e89dc2b12588b0c51a163019e6c113",
+  "file": "street_light_pole_3_3fdba6a3e968.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"人行道立杆底部电缆散乱垂落并接触地面，部分线缆外露、缺乏有效保护，存在漏电触电和行人绊倒风险，雨天风险更大。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道立杆底部及周边地砖处\",\n  \"rectification\": [\n    \"立即由权属单位排查线缆是否带电并做断电或绝缘处理，裸露段穿管保护并规范固定。\",\n    \"清理杆基周边散落线缆和杂物，恢复检修盖板或防护设施，并设置临时警示、加强巡查。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "人行道立杆底部电缆散乱垂落并接触地面，部分线缆外露、缺乏有效保护，存在漏电触电和行人绊倒风险，雨天风险更大。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道立杆底部及周边地砖处",
+    "rectification": [
+      "立即由权属单位排查线缆是否带电并做断电或绝缘处理，裸露段穿管保护并规范固定。",
+      "清理杆基周边散落线缆和杂物，恢复检修盖板或防护设施，并设置临时警示、加强巡查。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

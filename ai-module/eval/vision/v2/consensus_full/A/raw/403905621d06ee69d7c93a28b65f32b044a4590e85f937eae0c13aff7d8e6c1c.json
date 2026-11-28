@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"road_surface_collapse\", \"evidence\": \"路面松散碎石未铺装，井盖周边凹凸不平\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "evidence": "路面松散碎石未铺装，井盖周边凹凸不平"
+  }
+}

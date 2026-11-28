@@ -1,0 +1,26 @@
+{
+  "sha256": "3dc580869f8326de52ab7e461743daeb791a08ecafd3f36d3b7c1e0a8912dd7d",
+  "file": "MAN0118.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"道路路面井盖严重破损碎裂，部分碎块掉入井内，形成危险洞口。虽有锥桶临时警示，但仍极易导致行人跌落受伤或车辆卡陷。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路路面井盖处\",\n  \"rectification\": [\n    \"立即在破损井口周围设置坚固的物理围挡，防止人员车辆靠近\",\n    \"尽快更换符合标准的新井盖，并确保安装稳固与路面平齐\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "道路路面井盖严重破损碎裂，部分碎块掉入井内，形成危险洞口。虽有锥桶临时警示，但仍极易导致行人跌落受伤或车辆卡陷。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路路面井盖处",
+    "rectification": [
+      "立即在破损井口周围设置坚固的物理围挡，防止人员车辆靠近",
+      "尽快更换符合标准的新井盖，并确保安装稳固与路面平齐"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,29 @@
+{
+  "sha256": "eac441b085e93552c2fd5a1f2585c9881646f6e94b29eef7fbc0006b0548d213",
+  "file": "no_warning_1_eac441b085e9.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"道路施工开挖形成长条深沟，沟槽两侧未设置连续防护栏或盖板，周边未见明显警示标志，人员、车辆或非机动车靠近时有跌落风险，夜间风险更高。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"施工道路中央开挖沟槽沿线\",\"rectification\":[\"沿沟槽两侧设置连续、牢固的临边防护栏杆或硬质围挡\",\"增设反光警示标志、夜间警示灯，并禁止无关人员和车辆进入\",\"按规范放坡或支护沟槽边坡，加强日常巡查和现场管理\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路施工开挖形成长条深沟，沟槽两侧未设置连续防护栏或盖板，周边未见明显警示标志，人员、车辆或非机动车靠近时有跌落风险，夜间风险更高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工道路中央开挖沟槽沿线",
+    "rectification": [
+      "沿沟槽两侧设置连续、牢固的临边防护栏杆或硬质围挡",
+      "增设反光警示标志、夜间警示灯，并禁止无关人员和车辆进入",
+      "按规范放坡或支护沟槽边坡，加强日常巡查和现场管理"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

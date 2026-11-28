@@ -1,0 +1,27 @@
+{
+  "sha256": "603072944bf773c57eaea8ac7559eb4ba14c9037d685bb582e5361b0af05cddb",
+  "file": "sewage_odor_3_603072944bf7.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"sewage_odor\",\n  \"severity\": \"中\",\n  \"description\": \"道路边缘露天排水沟内水体发黑浑浊，沟底淤积泥污，沟沿破损并有碎砖杂物堆积，白色排水管口处存在污水流动痕迹，易导致排水不畅、异味及蚊蝇滋生。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路边缘的露天排水沟及白色管道排水口处\",\n  \"rectification\": [\n    \"清理排水沟内淤泥、杂物和周边碎砖，保持排水通畅。\",\n    \"检查并修复破损沟沿及白色排水管接口，防止污水渗漏外溢。\",\n    \"定期疏通和消杀，减少异味及蚊蝇滋生。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "sewage_odor",
+    "severity": "中",
+    "description": "道路边缘露天排水沟内水体发黑浑浊，沟底淤积泥污，沟沿破损并有碎砖杂物堆积，白色排水管口处存在污水流动痕迹，易导致排水不畅、异味及蚊蝇滋生。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘的露天排水沟及白色管道排水口处",
+    "rectification": [
+      "清理排水沟内淤泥、杂物和周边碎砖，保持排水通畅。",
+      "检查并修复破损沟沿及白色排水管接口，防止污水渗漏外溢。",
+      "定期疏通和消杀，减少异味及蚊蝇滋生。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

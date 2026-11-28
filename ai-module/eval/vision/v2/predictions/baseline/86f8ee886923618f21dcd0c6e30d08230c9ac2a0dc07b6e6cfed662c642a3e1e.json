@@ -1,0 +1,30 @@
+{
+  "sha256": "86f8ee886923618f21dcd0c6e30d08230c9ac2a0dc07b6e6cfed662c642a3e1e",
+  "file": "DEE0055.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"施工现场多处矩形基坑/坑槽开挖后裸露，坑边未见连续防护栏杆、盖板或警示标志，人员靠近并在坑内作业，存在人员坠落、坑壁坍塌等伤害风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"画面中部及前景的基坑作业区\",\"rectification\":[\"立即对基坑周边设置连续、稳固的防护栏杆或盖板，并封闭无关人员进入路径\",\"增设醒目的安全警示标志和夜间警示灯，禁止人员随意靠近坑边\",\"人员进入坑内作业前落实放坡、支护和监护措施，并佩戴安全帽等防护用品\",\"加强现场巡查，发现临边防护缺失或警示不足及时整改\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "施工现场多处矩形基坑/坑槽开挖后裸露，坑边未见连续防护栏杆、盖板或警示标志，人员靠近并在坑内作业，存在人员坠落、坑壁坍塌等伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中部及前景的基坑作业区",
+    "rectification": [
+      "立即对基坑周边设置连续、稳固的防护栏杆或盖板，并封闭无关人员进入路径",
+      "增设醒目的安全警示标志和夜间警示灯，禁止人员随意靠近坑边",
+      "人员进入坑内作业前落实放坡、支护和监护措施，并佩戴安全帽等防护用品",
+      "加强现场巡查，发现临边防护缺失或警示不足及时整改"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

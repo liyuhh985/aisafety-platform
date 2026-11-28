@@ -1,0 +1,86 @@
+{
+ "_meta": {
+  "name": "elevator_inspection 真实图评测集",
+  "category": "elevator_special/elevator_inspection",
+  "category_label": "电梯与特种设备/超期未检",
+  "source": "百度图片 → 原站直链下载 → 自动筛选 → 粗筛 → 标注 → 严格复检",
+  "rebuild": "2026-10-31",
+  "positive": 1,
+  "negative": 0,
+  "audit_removed": 0
+ },
+ "rejected": [
+  {
+   "file": "ELE0035.png",
+   "reason": "文字是唯一信息源",
+   "detail": "新闻合成图，大字标题和字幕覆盖画面，背景为模糊的检验标志局部。"
+  },
+  {
+   "file": "ELE0043.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "特种设备使用标志牌特写，需依赖文字判断超期"
+  },
+  {
+   "file": "ELE0022.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "图为空白的特种设备检验合格标志牌，无设备本体及具体日期"
+  },
+  {
+   "file": "ELE0053.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "拍摄特种设备使用标志牌特写，无场景环境，需依赖文字判断日期。"
+  },
+  {
+   "file": "ELE0041.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯使用标志上显示的下次检验日期为2017年07月"
+  },
+  {
+   "file": "ELE0018.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "特种设备使用标志特写，缺乏电梯整体环境"
+  },
+  {
+   "file": "ELE0019.jpg",
+   "reason": "非该类别",
+   "detail": "正常运行电梯内部，贴有检验合格标志，无明显超期隐患"
+  },
+  {
+   "file": "ELE0025.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯内部照片，特种设备使用标志模糊，无法看清检验日期，无明确过期隐患特征。"
+  },
+  {
+   "file": "ELE0032.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "门上交叉贴着纸质封条，无设备本体隐患特征"
+  },
+  {
+   "file": "ELE0055.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "ELE0054.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "电梯内特种设备使用标志牌，下次检验日期为2020年03月，已超期"
+  }
+ ],
+ "items": {
+  "ELE0010.jpg": {
+   "has_hazard": true,
+   "major_category": "elevator_special",
+   "subcategory": "elevator_inspection",
+   "severity": "中",
+   "key_evidence": "电梯特种设备使用标志，下次检验日期为2025年05月",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "特种设备使用标志；设备种类：电梯；设备品种：曳引驱动乘客电梯；使用单位：保利贵州物业管理有限公司（保利溪湖）；单位内编号：BGC8-1-KT；设备代码：3110",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  }
+ }
+}

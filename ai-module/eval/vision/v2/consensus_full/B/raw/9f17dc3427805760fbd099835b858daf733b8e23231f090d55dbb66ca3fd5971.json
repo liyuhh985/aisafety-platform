@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"elevator_special\", \"subcategory\": \"elevator_trapped\", \"evidence\": \"电梯内母女被困，门外维修人员持工具救援\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "evidence": "电梯内母女被困，门外维修人员持工具救援"
+  }
+}

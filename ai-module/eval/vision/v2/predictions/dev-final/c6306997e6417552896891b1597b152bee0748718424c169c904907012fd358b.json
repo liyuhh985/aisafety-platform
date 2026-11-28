@@ -1,0 +1,23 @@
+{
+  "sha256": "c6306997e6417552896891b1597b152bee0748718424c169c904907012fd358b",
+  "file": "NEGFAC08.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片显示建筑外墙及窗户，窗框、玻璃和外墙饰面未见明显破损、脱落、松动或高空坠物迹象，未发现明确安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示建筑外墙及窗户，窗框、玻璃和外墙饰面未见明显破损、脱落、松动或高空坠物迹象，未发现明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

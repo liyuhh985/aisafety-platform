@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"facade_risk\", \"evidence\": \"墙面瓷砖大面积脱落，碎块散落地面\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "facade_risk",
+    "evidence": "墙面瓷砖大面积脱落，碎块散落地面"
+  }
+}

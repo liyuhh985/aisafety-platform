@@ -1,0 +1,27 @@
+{
+  "sha256": "dfee8245aa6d12358c5c83ded822d5cb9a02e3999a8bd009a1ffe6f35671b115",
+  "file": "FIR0005.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"路边消防栓严重锈蚀，出水口缺盖且持续漏水，锈水外流。该设施已无法正常使用，火灾时可能影响消防供水，并造成水资源浪费和周边湿滑。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁绿化带内的消防栓\",\n  \"rectification\": [\n    \"立即关闭阀门并检修漏水点，无法修复时更换消防栓\",\n    \"补装缺失的出水口盖并做好防锈维护\",\n    \"排查该区域消防供水管网，确保消防设施完好可用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "路边消防栓严重锈蚀，出水口缺盖且持续漏水，锈水外流。该设施已无法正常使用，火灾时可能影响消防供水，并造成水资源浪费和周边湿滑。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁绿化带内的消防栓",
+    "rectification": [
+      "立即关闭阀门并检修漏水点，无法修复时更换消防栓",
+      "补装缺失的出水口盖并做好防锈维护",
+      "排查该区域消防供水管网，确保消防设施完好可用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

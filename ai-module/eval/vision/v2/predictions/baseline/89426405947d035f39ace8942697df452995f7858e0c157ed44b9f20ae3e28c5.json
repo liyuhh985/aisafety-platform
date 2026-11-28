@@ -1,0 +1,29 @@
+{
+  "sha256": "89426405947d035f39ace8942697df452995f7858e0c157ed44b9f20ae3e28c5",
+  "file": "FIR0026.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"楼道内违规停放两辆电动自行车，严重占用、堵塞疏散通道；且粉色车筐内餐盒汤汁滴漏至地面。存在电动车自燃引发火灾且阻碍逃生的重大风险，同时液体易致人滑倒。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼楼道/电梯厅\",\n  \"rectification\": [\n    \"立即将电动自行车移出楼道，停放在指定的室外安全区域。\",\n    \"清理地面及车筐内的餐盒汤汁，保持通道清洁与通行安全。\",\n    \"加强居民消防教育，严格落实禁止电动车进楼入户的规定。\"\n  ],\n  \"secondary_subcategories\": [\n    \"other\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "楼道内违规停放两辆电动自行车，严重占用、堵塞疏散通道；且粉色车筐内餐盒汤汁滴漏至地面。存在电动车自燃引发火灾且阻碍逃生的重大风险，同时液体易致人滑倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼楼道/电梯厅",
+    "rectification": [
+      "立即将电动自行车移出楼道，停放在指定的室外安全区域。",
+      "清理地面及车筐内的餐盒汤汁，保持通道清洁与通行安全。",
+      "加强居民消防教育，严格落实禁止电动车进楼入户的规定。"
+    ],
+    "secondary_subcategories": [
+      "other"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "593e5dc49cf6ebd42cb89a01a8ac006bd2e6839e1c5d802f3ce7464fbf00ffac",
+  "file": "road_occupancy_4_593e5dc49cf6.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"沿街餐饮店铺将大量餐桌、座椅、棚架和塑料筐摆放在人行道上，占用公共通行空间，导致行人通行受阻，可能迫使行人绕行至机动车道，存在碰撞和绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"沿街餐饮商铺门前人行道及外摆区域\",\n  \"rectification\": [\n    \"清理超出店铺经营范围的桌椅、棚架和杂物，恢复人行道通行功能\",\n    \"划定合规外摆边界，确保行人通道及盲道连续、畅通\",\n    \"加强日常巡查，对占道经营及时劝导整改\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "沿街餐饮店铺将大量餐桌、座椅、棚架和塑料筐摆放在人行道上，占用公共通行空间，导致行人通行受阻，可能迫使行人绕行至机动车道，存在碰撞和绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街餐饮商铺门前人行道及外摆区域",
+    "rectification": [
+      "清理超出店铺经营范围的桌椅、棚架和杂物，恢复人行道通行功能",
+      "划定合规外摆边界，确保行人通道及盲道连续、畅通",
+      "加强日常巡查，对占道经营及时劝导整改"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

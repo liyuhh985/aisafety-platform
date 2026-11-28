@@ -1,0 +1,30 @@
+{
+  "sha256": "764bc56f2ebd076bef66df1e55daad103bbe5aed092b79248dd459e6cd3ec4a6",
+  "file": "no_warning_3_764bc56f2ebd.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"道路开挖形成较深沟槽，槽内积水、泥泞，两侧堆土，未见连续围挡和安全警示，行人或车辆靠近可能坠落、滑倒或引发边坡坍塌。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路开挖沟槽及挖掘机作业区域\",\n  \"rectification\": [\n    \"沿沟槽两侧设置连续硬质围挡并悬挂安全警示标志，夜间加设警示灯\",\n    \"对沟槽边坡采取支护或放坡措施，及时排除积水，防止坍塌\",\n    \"施工区域与行人车辆有效隔离，安排专人巡查值守，尽快回填或临时加盖钢板\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\",\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路开挖形成较深沟槽，槽内积水、泥泞，两侧堆土，未见连续围挡和安全警示，行人或车辆靠近可能坠落、滑倒或引发边坡坍塌。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路开挖沟槽及挖掘机作业区域",
+    "rectification": [
+      "沿沟槽两侧设置连续硬质围挡并悬挂安全警示标志，夜间加设警示灯",
+      "对沟槽边坡采取支护或放坡措施，及时排除积水，防止坍塌",
+      "施工区域与行人车辆有效隔离，安排专人巡查值守，尽快回填或临时加盖钢板"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

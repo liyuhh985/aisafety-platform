@@ -1,0 +1,27 @@
+{
+  "sha256": "23813d1bb8b4e36fdb0608d1d74758ebeb75cee5d7fb1b01a98886e6093dd9d2",
+  "file": "neg_45_23813d1bb8b4.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"中\",\"description\":\"人行道上长方形井盖/沟盖板边缘破损，与井座之间存在明显缝隙，周边地砖也有破损，行人经过时存在绊倒或踏空风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道井盖处\",\"rectification\":[\"更换破损井盖或沟盖板，确保与井座贴合稳固\",\"修复井座周边破损地砖并填补缝隙\",\"整改前设置临时警示标志，防止行人靠近\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "人行道上长方形井盖/沟盖板边缘破损，与井座之间存在明显缝隙，周边地砖也有破损，行人经过时存在绊倒或踏空风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道井盖处",
+    "rectification": [
+      "更换破损井盖或沟盖板，确保与井座贴合稳固",
+      "修复井座周边破损地砖并填补缝隙",
+      "整改前设置临时警示标志，防止行人靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

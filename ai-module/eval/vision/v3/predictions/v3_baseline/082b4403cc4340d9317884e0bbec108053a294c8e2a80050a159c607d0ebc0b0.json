@@ -1,0 +1,27 @@
+{
+  "sha256": "082b4403cc4340d9317884e0bbec108053a294c8e2a80050a159c607d0ebc0b0",
+  "file": "confined_space_2_082b4403cc43.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"地面井口盖板被移开，形成敞开深坑，周边未见围挡或警示，行人尤其是儿童有坠落受伤风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"红砖房前地面上的井口/坑洞处\",\n  \"rectification\": [\n    \"立即在井口周围设置连续围挡和醒目警示标志\",\n    \"尽快将盖板复位并固定，或更换损坏/不匹配的井盖\",\n    \"修复完成前安排人员看护，防止行人靠近\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "地面井口盖板被移开，形成敞开深坑，周边未见围挡或警示，行人尤其是儿童有坠落受伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "红砖房前地面上的井口/坑洞处",
+    "rectification": [
+      "立即在井口周围设置连续围挡和醒目警示标志",
+      "尽快将盖板复位并固定，或更换损坏/不匹配的井盖",
+      "修复完成前安排人员看护，防止行人靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

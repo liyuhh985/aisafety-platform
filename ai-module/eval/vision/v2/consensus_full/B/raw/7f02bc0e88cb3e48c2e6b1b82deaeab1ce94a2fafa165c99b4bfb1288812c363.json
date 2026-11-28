@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"road_surface_collapse\", \"evidence\": \"山体滑坡碎石土方散落并阻断路面\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "evidence": "山体滑坡碎石土方散落并阻断路面"
+  }
+}

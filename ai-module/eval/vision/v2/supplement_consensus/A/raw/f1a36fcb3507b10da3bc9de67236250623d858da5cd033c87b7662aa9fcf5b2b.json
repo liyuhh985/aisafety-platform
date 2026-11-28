@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"construction_prot\", \"evidence\": \"中央图路面开挖土方裸露，机械作业，未见围挡隔离\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "construction_prot",
+    "evidence": "中央图路面开挖土方裸露，机械作业，未见围挡隔离"
+  }
+}

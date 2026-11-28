@@ -1,0 +1,28 @@
+{
+  "sha256": "87363f135ccbeaec09c784e49cf47b096cc9b08576fae81320be6e346b08afb1",
+  "file": "NEGGAS06.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"高\",\n  \"description\": \"厨房燃气热水器与燃气表之间使用过长黄色燃气软管，呈U形横跨水槽上方并靠近电源插座；右侧燃气管道、阀门有锈蚀迹象。软管易受潮、腐蚀和挂碰，可能导致燃气泄漏，引发中毒或爆燃。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厨房水槽上方、燃气热水器与燃气表之间\",\n  \"rectification\": [\n    \"由燃气专业人员更换长度合规的燃气专用不锈钢波纹管并可靠固定，远离水源、热源和电气设备\",\n    \"对锈蚀燃气管道、阀门进行除锈、检漏或更换处理\",\n    \"电源插座加装防溅盒，并与燃气管道保持安全距离\",\n    \"加装燃气报警器，定期开展燃气设施安全检查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "高",
+    "description": "厨房燃气热水器与燃气表之间使用过长黄色燃气软管，呈U形横跨水槽上方并靠近电源插座；右侧燃气管道、阀门有锈蚀迹象。软管易受潮、腐蚀和挂碰，可能导致燃气泄漏，引发中毒或爆燃。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厨房水槽上方、燃气热水器与燃气表之间",
+    "rectification": [
+      "由燃气专业人员更换长度合规的燃气专用不锈钢波纹管并可靠固定，远离水源、热源和电气设备",
+      "对锈蚀燃气管道、阀门进行除锈、检漏或更换处理",
+      "电源插座加装防溅盒，并与燃气管道保持安全距离",
+      "加装燃气报警器，定期开展燃气设施安全检查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "468a82ad67fc528c9b513bd75d2fd30d3bcb8fc039ecd9fbdad565cc99421e95",
+  "file": "elevator_trapped_4_468a82ad67fc.png",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_trapped\",\"severity\":\"高\",\"description\":\"电梯轿厢内有人员滞留，消防/救援人员正打开层门协助撤离，属于电梯困人事件，存在人员恐慌、挤压、坠落及二次伤害风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑内电梯轿厢及层门口救援现场\",\"rectification\":[\"立即停用该电梯并联系维保单位排查门系统、平层及供电故障\",\"救援时设置警戒并禁止强行扒门，安抚被困人员并确认健康状况\",\"恢复运行前完成全面检验和试运行，完善应急呼叫与演练\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯轿厢内有人员滞留，消防/救援人员正打开层门协助撤离，属于电梯困人事件，存在人员恐慌、挤压、坠落及二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑内电梯轿厢及层门口救援现场",
+    "rectification": [
+      "立即停用该电梯并联系维保单位排查门系统、平层及供电故障",
+      "救援时设置警戒并禁止强行扒门，安抚被困人员并确认健康状况",
+      "恢复运行前完成全面检验和试运行，完善应急呼叫与演练"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

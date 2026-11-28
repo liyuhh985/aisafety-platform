@@ -1,0 +1,27 @@
+{
+  "sha256": "2dbc15accef3d78772c786858431cb60bb5eb9e3c7b4c4b73996539da43a0398",
+  "file": "traffic_facility_damage_1_2dbc15accef3.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"中\",\"description\":\"人行台阶/坡道边缘铺装砖块缺失、混凝土破损，栏杆立柱底部基础掏空悬空，形成坑洞；行人易绊倒崴脚，栏杆存在失稳倒塌风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行台阶与坡道交接处、金属栏杆立柱根部\",\"rectification\":[\"立即设置警示围挡，临时封闭破损区域；\",\"清除松动砖块和破碎混凝土，重新浇筑栏杆基础并修复台阶铺装；\",\"加固栏杆立柱，修复后检查路面平整度与栏杆牢固度。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "人行台阶/坡道边缘铺装砖块缺失、混凝土破损，栏杆立柱底部基础掏空悬空，形成坑洞；行人易绊倒崴脚，栏杆存在失稳倒塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行台阶与坡道交接处、金属栏杆立柱根部",
+    "rectification": [
+      "立即设置警示围挡，临时封闭破损区域；",
+      "清除松动砖块和破碎混凝土，重新浇筑栏杆基础并修复台阶铺装；",
+      "加固栏杆立柱，修复后检查路面平整度与栏杆牢固度。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

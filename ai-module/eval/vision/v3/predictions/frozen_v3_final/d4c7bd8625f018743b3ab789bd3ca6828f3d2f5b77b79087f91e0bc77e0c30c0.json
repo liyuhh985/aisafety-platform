@@ -1,0 +1,26 @@
+{
+  "sha256": "d4c7bd8625f018743b3ab789bd3ca6828f3d2f5b77b79087f91e0bc77e0c30c0",
+  "file": "elevator_stopped_1_d4c7bd8625f0.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"中\",\n  \"description\": \"电梯呼梯面板显示“停用”，周边墙体破损严重，且墙面有手写字迹提示“不能坐、千万别坐”等，表明电梯存在故障已停运，影响居民正常出行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼道电梯呼梯面板处\",\n  \"rectification\": [\n    \"联系专业维保单位检修电梯\",\n    \"修复周边破损墙面并张贴正式停用公告\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯呼梯面板显示“停用”，周边墙体破损严重，且墙面有手写字迹提示“不能坐、千万别坐”等，表明电梯存在故障已停运，影响居民正常出行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼道电梯呼梯面板处",
+    "rectification": [
+      "联系专业维保单位检修电梯",
+      "修复周边破损墙面并张贴正式停用公告"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

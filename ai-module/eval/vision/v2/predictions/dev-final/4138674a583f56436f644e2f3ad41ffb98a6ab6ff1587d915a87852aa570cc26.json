@@ -1,0 +1,27 @@
+{
+  "sha256": "4138674a583f56436f644e2f3ad41ffb98a6ab6ff1587d915a87852aa570cc26",
+  "file": "NEGGAS03.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"高\",\n  \"description\": \"黄色燃气软管外护层大面积破损，金属波纹管外露，弯折处存在燃气泄漏风险，可能引发中毒、火灾或爆炸。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内墙角处的燃气软管弯折段\",\n  \"rectification\": [\n    \"立即关闭燃气阀门并停止使用该软管\",\n    \"联系燃气公司或专业人员更换破损软管\",\n    \"更换后进行气密性检测，确认无泄漏后再使用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "高",
+    "description": "黄色燃气软管外护层大面积破损，金属波纹管外露，弯折处存在燃气泄漏风险，可能引发中毒、火灾或爆炸。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙角处的燃气软管弯折段",
+    "rectification": [
+      "立即关闭燃气阀门并停止使用该软管",
+      "联系燃气公司或专业人员更换破损软管",
+      "更换后进行气密性检测，确认无泄漏后再使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

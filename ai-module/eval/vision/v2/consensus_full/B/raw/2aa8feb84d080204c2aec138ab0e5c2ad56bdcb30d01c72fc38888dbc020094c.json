@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"deep_pit\", \"evidence\": \"深沟槽开挖，工人坑内作业，坑边无防护栏杆\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "evidence": "深沟槽开挖，工人坑内作业，坑边无防护栏杆"
+  }
+}

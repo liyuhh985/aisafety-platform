@@ -1,0 +1,27 @@
+{
+  "sha256": "ac4256da6b745d993c5fa95880877e6603695e7fd8fe4d79a80e9c84ded55b34",
+  "file": "DIS0079.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"temporary_power\",\n  \"severity\": \"高\",\n  \"description\": \"设备旁地面放置多孔插排，多根电线杂乱拖地，插头集中使用且无固定、防潮和防机械损伤措施，存在漏电、过载、短路及人员绊倒风险，施工临时用电不规范。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"灰色设备旁地面及插排处\",\n  \"rectification\": [\n    \"使用符合规范的临时配电箱，避免多孔插排直接置于地面\",\n    \"线缆应架空或穿管保护，不得随意拖地、缠绕\",\n    \"由专业电工检查线路和负荷，防止过载和漏电\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "temporary_power",
+    "severity": "高",
+    "description": "设备旁地面放置多孔插排，多根电线杂乱拖地，插头集中使用且无固定、防潮和防机械损伤措施，存在漏电、过载、短路及人员绊倒风险，施工临时用电不规范。",
+    "reason_if_no_hazard": "",
+    "location_hint": "灰色设备旁地面及插排处",
+    "rectification": [
+      "使用符合规范的临时配电箱，避免多孔插排直接置于地面",
+      "线缆应架空或穿管保护，不得随意拖地、缠绕",
+      "由专业电工检查线路和负荷，防止过载和漏电"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

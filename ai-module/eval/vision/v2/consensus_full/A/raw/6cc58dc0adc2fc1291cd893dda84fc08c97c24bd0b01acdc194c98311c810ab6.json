@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"construction_prot\", \"evidence\": \"工人持电镐破拆地面，作业点周边无警示围挡防护\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "construction_prot",
+    "evidence": "工人持电镐破拆地面，作业点周边无警示围挡防护"
+  }
+}

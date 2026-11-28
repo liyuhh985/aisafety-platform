@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"blind_path_occupied\", \"evidence\": \"多辆电动车停放在人行道盲道上，占用盲道通行空间\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "evidence": "多辆电动车停放在人行道盲道上，占用盲道通行空间"
+  }
+}

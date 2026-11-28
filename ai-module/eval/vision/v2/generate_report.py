@@ -77,13 +77,62 @@ Final prompt 没有通过预注册安全门槛，因此不声称整体优化。F
     return report
 
 
+def generate_interview_notes(baseline: dict, final: dict, comparison: dict) -> str:
+    winner = comparison.get("winner", "baseline")
+    b = baseline
+    f = final
+    delta = comparison.get("delta", {})
+    decision = (
+        "Final prompt 未通过预注册安全门槛，所以我不声称它整体优于 baseline。"
+        if winner != "final"
+        else "Final prompt 通过预注册安全门槛，按同一冻结 test 记录为最终方案。"
+    )
+    return f"""# 评估集面试讲解
+
+## 90 秒主叙事
+
+我做的不是人工 gold benchmark，而是一个 **model-consensus diagnostic set**。旧版双模型流程里，被评测的 DeepSeek 同时也是标注员 A，而且 27.8% 的标签依赖第三方仲裁或单模型兜底。为了去掉这个循环和兜底，我重新做了标注协议：MiMo 和 GLM 通过同一个 OpenDesign 端点独立标注，同一提示词、temperature 0，只保留二分类和 8 大类都一致的样本，分歧和不确定直接剔除。
+
+主候选池 342 张，一致产出 73 个正样本、137 个负样本；大类 Kappa 是 0.808。随后只针对缺口补了 73 张候选和 10 张电梯候选，最终凑出严格的 80 正 / 80 负，test 冻结为 40 正 / 40 负，8 大类各 5 个正样本。
+
+冻结 test 上，baseline recall {_pct(b['binary']['recall'])}、FPR {_pct(b['binary']['fpr'])}、F1 {_pct(b['binary']['f1'])}；final recall {_pct(f['binary']['recall'])}、FPR {_pct(f['binary']['fpr'])}、F1 {_pct(f['binary']['f1'])}。{decision} 这组结果反映的是召回和误报的取舍，不是生产准确率。
+
+## 三个追问
+
+### 1. 为什么这不叫人工标注？
+
+因为标签来源是 MiMo + GLM 两个模型的共识，不是人类逐张确认。Kappa 0.808 表示模型之间的一致性，不代表人工 ground truth。面试里必须说 `model_consensus`，否则就是伪造数据来源。
+
+### 2. 为什么 FPR 只有 {_pct(f['binary']['fpr'])} 还不能说线上误报率？
+
+因为 test 是平衡的 40 正 / 40 负，场景来自公开图片和候选池，不是线上正常图片分布。这里的 FPR 只说明固定 test 里的负样本误报比例。
+
+### 3. 这个评估集最大的局限是什么？
+
+- 小样本：每个大类 test 只有 5 个正样本，置信区间很宽。
+- 伪标签：模型共识不是人工 gold。
+- 公开场景：不代表真实业务分布。
+- 方法价值在于流程、冻结、对比和错误分析，不在于宣称生产准确率。
+
+## 禁止表述
+
+- 不说“人工标注”。
+- 不说“人工专家共识”。
+- 不说“生产准确率”。
+- 不说“线上误报率”。
+- 不说“25 类全部通过统计评估”。
+- 不说“模型可以自动建单”。
+"""
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate v2.1 model-consensus report")
+    parser = argparse.ArgumentParser(description="Generate v2.1 model-consensus report and interview notes")
     parser.add_argument("--baseline-metrics", type=Path, required=True)
     parser.add_argument("--final-metrics", type=Path, required=True)
     parser.add_argument("--comparison", type=Path, required=True)
     parser.add_argument("--error-analysis", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--interview-notes", type=Path, required=True)
     args = parser.parse_args()
     baseline = json.loads(args.baseline_metrics.read_text(encoding="utf-8"))
     final = json.loads(args.final_metrics.read_text(encoding="utf-8"))
@@ -91,7 +140,10 @@ def main() -> int:
     error_markdown = args.error_analysis.read_text(encoding="utf-8")
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(generate_report(baseline, final, comparison, error_markdown), encoding="utf-8")
+    args.interview_notes.parent.mkdir(parents=True, exist_ok=True)
+    args.interview_notes.write_text(generate_interview_notes(baseline, final, comparison), encoding="utf-8")
     print(f"wrote {args.report}")
+    print(f"wrote {args.interview_notes}")
     return 0
 
 

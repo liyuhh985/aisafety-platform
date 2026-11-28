@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"road_surface_collapse\", \"evidence\": \"路面大面积塌陷形成深坑，泥水涌入\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "evidence": "路面大面积塌陷形成深坑，泥水涌入"
+  }
+}

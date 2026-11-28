@@ -1,0 +1,27 @@
+{
+  "sha256": "2cc8e2c80095ec75d12b0bd737fbe895e82fe36b118f6f9d7204e663fa1417a1",
+  "file": "GAR0005.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"住宅楼入口前绿化带及步道堆放大量袋装和散落建筑装修垃圾，并有塑料薄膜、石板等杂物，占用公共空间、影响通行，尖锐物易致人绊倒划伤，且靠近出入口可能影响疏散，存在环境卫生和消防安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼入口前绿化带及步道\",\n  \"rectification\": [\n    \"立即清运堆放的建筑装修垃圾，清理散落板材和塑料薄膜。\",\n    \"设置规范的装修垃圾临时堆放点，落实围挡、覆盖和定时清运。\",\n    \"加强日常巡查和宣传，禁止在楼栋出入口及绿化带随意堆放垃圾。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "住宅楼入口前绿化带及步道堆放大量袋装和散落建筑装修垃圾，并有塑料薄膜、石板等杂物，占用公共空间、影响通行，尖锐物易致人绊倒划伤，且靠近出入口可能影响疏散，存在环境卫生和消防安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼入口前绿化带及步道",
+    "rectification": [
+      "立即清运堆放的建筑装修垃圾，清理散落板材和塑料薄膜。",
+      "设置规范的装修垃圾临时堆放点，落实围挡、覆盖和定时清运。",
+      "加强日常巡查和宣传，禁止在楼栋出入口及绿化带随意堆放垃圾。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

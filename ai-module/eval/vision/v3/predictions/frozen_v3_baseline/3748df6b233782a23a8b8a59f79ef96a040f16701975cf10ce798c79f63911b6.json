@@ -1,0 +1,23 @@
+{
+  "sha256": "3748df6b233782a23a8b8a59f79ef96a040f16701975cf10ce798c79f63911b6",
+  "file": "neg_09_3748df6b2337.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面为人行道、盲道、护栏及绿化带，设施外观完好，盲道连续，未发现破损、占用、塌陷、树木倒伏等明显安全隐患\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为人行道、盲道、护栏及绿化带，设施外观完好，盲道连续，未发现破损、占用、塌陷、树木倒伏等明显安全隐患",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

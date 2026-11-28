@@ -1,0 +1,30 @@
+{
+  "sha256": "cea68e9eed56633f7b6664eee8f78ad5bd51d1e4ce9274d3b6aeeeada55d2d9e",
+  "file": "dangerous_building_2_cea68e9eed56.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"房屋外墙存在多条贯穿性裂缝，墙皮和砖块大面积剥落，门窗洞口无防护，局部结构破损明显，存在墙体倒塌及坠物伤人风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"破旧房屋外墙及门窗洞口周边\",\n  \"rectification\": [\n    \"立即设置围挡和警示标志，禁止人员靠近\",\n    \"委托专业机构进行房屋结构安全鉴定\",\n    \"根据鉴定结果采取加固、局部拆除或整体拆除措施\",\n    \"清理松动墙皮、砖块等易坠落构件\"\n  ],\n  \"secondary_subcategories\": [\n    \"falling_object\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "房屋外墙存在多条贯穿性裂缝，墙皮和砖块大面积剥落，门窗洞口无防护，局部结构破损明显，存在墙体倒塌及坠物伤人风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "破旧房屋外墙及门窗洞口周边",
+    "rectification": [
+      "立即设置围挡和警示标志，禁止人员靠近",
+      "委托专业机构进行房屋结构安全鉴定",
+      "根据鉴定结果采取加固、局部拆除或整体拆除措施",
+      "清理松动墙皮、砖块等易坠落构件"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

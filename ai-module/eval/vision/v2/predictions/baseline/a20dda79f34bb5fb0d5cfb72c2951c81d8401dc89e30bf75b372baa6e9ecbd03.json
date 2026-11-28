@@ -1,0 +1,26 @@
+{
+  "sha256": "a20dda79f34bb5fb0d5cfb72c2951c81d8401dc89e30bf75b372baa6e9ecbd03",
+  "file": "VEH0027.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"大量电动车、摩托车沿路侧密集停放，部分占用车行道或人行通行空间，影响行人和车辆正常通行，易造成剐蹭、拥堵，并可能妨碍应急通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"沿街商铺前道路及路缘区域\",\n  \"rectification\": [\n    \"施划并规范非机动车集中停放区域，引导车辆入位停放\",\n    \"清理占用车行道和人行通道的车辆，加强日常巡查与劝导\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "大量电动车、摩托车沿路侧密集停放，部分占用车行道或人行通行空间，影响行人和车辆正常通行，易造成剐蹭、拥堵，并可能妨碍应急通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街商铺前道路及路缘区域",
+    "rectification": [
+      "施划并规范非机动车集中停放区域，引导车辆入位停放",
+      "清理占用车行道和人行通道的车辆，加强日常巡查与劝导"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

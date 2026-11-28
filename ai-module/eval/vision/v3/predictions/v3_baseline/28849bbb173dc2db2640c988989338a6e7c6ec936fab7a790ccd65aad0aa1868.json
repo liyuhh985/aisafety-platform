@@ -1,0 +1,27 @@
+{
+  "sha256": "28849bbb173dc2db2640c988989338a6e7c6ec936fab7a790ccd65aad0aa1868",
+  "file": "illegal_wiring_2_28849bbb173d.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"高\",\"description\":\"建筑外墙大量电线、线缆凌乱缠绕并连接配电箱，部分线路从窗墙孔洞拉出，敷设无规范保护，存在绝缘破损、短路、漏电及电气火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙中下部、配电箱及架空线缆汇集处\",\"rectification\":[\"清理废弃线缆，梳理并规范固定在用线路，穿管保护\",\"由供电或物业核查私拉乱接，拆除违规线路并加装漏电保护\",\"对配电箱、接头进行防水防漏电检查整改，必要时断电施工\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "建筑外墙大量电线、线缆凌乱缠绕并连接配电箱，部分线路从窗墙孔洞拉出，敷设无规范保护，存在绝缘破损、短路、漏电及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙中下部、配电箱及架空线缆汇集处",
+    "rectification": [
+      "清理废弃线缆，梳理并规范固定在用线路，穿管保护",
+      "由供电或物业核查私拉乱接，拆除违规线路并加装漏电保护",
+      "对配电箱、接头进行防水防漏电检查整改，必要时断电施工"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

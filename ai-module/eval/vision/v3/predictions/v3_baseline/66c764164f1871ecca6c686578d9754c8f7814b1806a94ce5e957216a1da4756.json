@@ -1,0 +1,27 @@
+{
+  "sha256": "66c764164f1871ecca6c686578d9754c8f7814b1806a94ce5e957216a1da4756",
+  "file": "scaffold_guard_2_66c764164f18.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"桥墩旁搭设的钢管脚手架操作平台外侧未见防护栏杆、挡脚板及安全网，平台上散放白色卷材，人员作业或材料滑落可能造成高处坠落、物体打击事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"桥墩/高架桥下脚手架作业平台\",\n  \"rectification\": [\n    \"按规范补设防护栏杆、挡脚板和安全网，并完善水平防护\",\n    \"清理平台边缘散放材料，工具材料固定或置于安全区域\",\n    \"脚手架搭设完成后组织验收，作业区下方设置警戒隔离\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "桥墩旁搭设的钢管脚手架操作平台外侧未见防护栏杆、挡脚板及安全网，平台上散放白色卷材，人员作业或材料滑落可能造成高处坠落、物体打击事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "桥墩/高架桥下脚手架作业平台",
+    "rectification": [
+      "按规范补设防护栏杆、挡脚板和安全网，并完善水平防护",
+      "清理平台边缘散放材料，工具材料固定或置于安全区域",
+      "脚手架搭设完成后组织验收，作业区下方设置警戒隔离"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

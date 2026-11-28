@@ -1,0 +1,27 @@
+{
+  "sha256": "11f0b686ea4a53e91cb879248fc5ad0bdfe4aaaa4df032505f99144524e4be02",
+  "file": "TEM0036.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"exposed_wire\",\"severity\":\"高\",\"description\":\"室内墙体被开凿成长槽，槽内大量彩色电线、线缆杂乱堆叠且裸露，未见穿管保护，部分线头外露，存在短路、漏电、触电及电气火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内墙面竖向开槽处（图中红圈区域）\",\"rectification\":[\"立即断电并隔离现场，由持证电工排查线路\",\"按规范将线缆穿管固定、分色分路整理，消除裸露和私接\",\"修复开槽墙体并检测绝缘、接地和漏电保护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "室内墙体被开凿成长槽，槽内大量彩色电线、线缆杂乱堆叠且裸露，未见穿管保护，部分线头外露，存在短路、漏电、触电及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙面竖向开槽处（图中红圈区域）",
+    "rectification": [
+      "立即断电并隔离现场，由持证电工排查线路",
+      "按规范将线缆穿管固定、分色分路整理，消除裸露和私接",
+      "修复开槽墙体并检测绝缘、接地和漏电保护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

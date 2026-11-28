@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"construction_prot\", \"evidence\": \"挖掘机拆除作业区无围挡警示等防护设施\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "construction_prot",
+    "evidence": "挖掘机拆除作业区无围挡警示等防护设施"
+  }
+}

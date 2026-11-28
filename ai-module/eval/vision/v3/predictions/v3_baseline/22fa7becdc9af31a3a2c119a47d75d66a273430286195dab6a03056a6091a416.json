@@ -1,0 +1,29 @@
+{
+  "sha256": "22fa7becdc9af31a3a2c119a47d75d66a273430286195dab6a03056a6091a416",
+  "file": "ebike_hazard_1_22fa7becdc9a.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"ebike_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"电动车踏板上放置插线板并连接黄色电线，存在飞线充电、违规充电迹象，电线拖地裸露，易引发短路、触电或火灾。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电动车踏板及周边地面\",\n  \"rectification\": [\n    \"立即停止飞线充电，拔除插线板并移除临时电线\",\n    \"将电动车移至集中充电棚，使用具备过载和漏电保护的充电设施\",\n    \"检查充电线路和电池状态，禁止在楼道、室内或安全出口附近充电\"\n  ],\n  \"secondary_subcategories\": [\n    \"utility/illegal_wiring\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "ebike_hazard",
+    "severity": "高",
+    "description": "电动车踏板上放置插线板并连接黄色电线，存在飞线充电、违规充电迹象，电线拖地裸露，易引发短路、触电或火灾。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电动车踏板及周边地面",
+    "rectification": [
+      "立即停止飞线充电，拔除插线板并移除临时电线",
+      "将电动车移至集中充电棚，使用具备过载和漏电保护的充电设施",
+      "检查充电线路和电池状态，禁止在楼道、室内或安全出口附近充电"
+    ],
+    "secondary_subcategories": [
+      "utility/illegal_wiring"
+    ]
+  },
+  "error": ""
+}

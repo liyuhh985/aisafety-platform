@@ -1,0 +1,27 @@
+{
+  "sha256": "d9aba81d95a8297bbccec786afef84cc7c5e48870efb8944d470039bdb746c7c",
+  "file": "vehicle_occupancy_1_d9aba81d95a8.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"红色轿车等车辆停放在路缘内侧人行道铺砖区域，占压人行道，导致行人被迫绕行至机动车道，存在人车混行和碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"近景人行道与路缘石交界处，红色轿车停放位置\",\n  \"rectification\": [\n    \"立即劝离或依法拖移占用人行道的违停车辆\",\n    \"在人行道入口增设隔离桩或护栏，防止车辆驶入\",\n    \"加强该路段巡查执法，保障行人通行空间\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "红色轿车等车辆停放在路缘内侧人行道铺砖区域，占压人行道，导致行人被迫绕行至机动车道，存在人车混行和碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "近景人行道与路缘石交界处，红色轿车停放位置",
+    "rectification": [
+      "立即劝离或依法拖移占用人行道的违停车辆",
+      "在人行道入口增设隔离桩或护栏，防止车辆驶入",
+      "加强该路段巡查执法，保障行人通行空间"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

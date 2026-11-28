@@ -1,0 +1,27 @@
+{
+  "sha256": "2fb304cfce0cd3b8c325f0c0a338378c3e24daafce036d16aa593b128f411641",
+  "file": "elevator_stopped_2_2fb304cfce0c.png",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"客梯1门前放置布草车/推车，黄色布草堆叠高出框架，遮挡电梯门并占用出入空间，乘客进出易绊倒、碰撞，紧急情况下可能影响疏散和电梯正常关闭。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"客梯1门前（电梯厅）\",\n  \"rectification\": [\n    \"立即将布草车及杂物移出电梯门口，保持电梯出入通道畅通\",\n    \"为保洁推车设置专用存放区域，禁止在电梯厅及通道内停放\",\n    \"加强日常巡查并张贴禁止堆放提示，发现占用及时清理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "客梯1门前放置布草车/推车，黄色布草堆叠高出框架，遮挡电梯门并占用出入空间，乘客进出易绊倒、碰撞，紧急情况下可能影响疏散和电梯正常关闭。",
+    "reason_if_no_hazard": "",
+    "location_hint": "客梯1门前（电梯厅）",
+    "rectification": [
+      "立即将布草车及杂物移出电梯门口，保持电梯出入通道畅通",
+      "为保洁推车设置专用存放区域，禁止在电梯厅及通道内停放",
+      "加强日常巡查并张贴禁止堆放提示，发现占用及时清理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

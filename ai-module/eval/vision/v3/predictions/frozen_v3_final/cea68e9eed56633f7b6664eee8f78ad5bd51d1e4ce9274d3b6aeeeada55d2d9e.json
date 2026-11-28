@@ -1,0 +1,29 @@
+{
+  "sha256": "cea68e9eed56633f7b6664eee8f78ad5bd51d1e4ce9274d3b6aeeeada55d2d9e",
+  "file": "dangerous_building_2_cea68e9eed56.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"建筑安全\",\"major_category\":\"building\",\"subcategory\":\"dangerous_building\",\"severity\":\"高\",\"description\":\"废弃房屋墙体存在多处贯穿裂缝，抹灰大面积剥落，门窗洞口砖块松动，檐口及顶部结构破损，存在墙体倒塌、坠物伤人的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"废弃房屋外墙及门窗洞口\",\"rectification\":[\"立即设置围挡和醒目警示，禁止人员靠近\",\"委托专业机构进行房屋安全鉴定，视结果拆除或加固\",\"清除松动抹灰、砖块等坠落物，并做好临时支护\"],\"secondary_subcategories\":[\"falling_object\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "废弃房屋墙体存在多处贯穿裂缝，抹灰大面积剥落，门窗洞口砖块松动，檐口及顶部结构破损，存在墙体倒塌、坠物伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "废弃房屋外墙及门窗洞口",
+    "rectification": [
+      "立即设置围挡和醒目警示，禁止人员靠近",
+      "委托专业机构进行房屋安全鉴定，视结果拆除或加固",
+      "清除松动抹灰、砖块等坠落物，并做好临时支护"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

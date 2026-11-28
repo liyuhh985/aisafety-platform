@@ -1,0 +1,27 @@
+{
+  "sha256": "a77a257507e7679b89755c578ee39513f7407ebedd0b72371ea0c70ec2bf5b70",
+  "file": "SEW0008.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"河道/沟渠水体呈灰绿色，水面有大量漂浮物和疑似油膜，岸边散落杂草杂物，存在水体污染、蚊虫滋生及环境卫生风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"河道/沟渠水面及岸边\",\n  \"rectification\": [\n    \"打捞清理水面漂浮物和岸边垃圾，保持水体流动\",\n    \"排查沿线排污口及雨污混接情况，必要时清淤、曝气或消杀\",\n    \"设置警示或围挡，防止人员靠近和向水体倾倒垃圾\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "河道/沟渠水体呈灰绿色，水面有大量漂浮物和疑似油膜，岸边散落杂草杂物，存在水体污染、蚊虫滋生及环境卫生风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "河道/沟渠水面及岸边",
+    "rectification": [
+      "打捞清理水面漂浮物和岸边垃圾，保持水体流动",
+      "排查沿线排污口及雨污混接情况，必要时清淤、曝气或消杀",
+      "设置警示或围挡，防止人员靠近和向水体倾倒垃圾"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

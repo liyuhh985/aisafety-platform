@@ -1,0 +1,27 @@
+{
+  "sha256": "16ed0fbdbbbf9efc141d07a785590a08a5d330cdbb72bcb6c010ed3fec7f737d",
+  "file": "fire_equipment_fault_2_16ed0fbdbbbf.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内消火栓箱内消火栓接口被水泥/杂物堵塞，箱体积尘、锈蚀，阀门无法正常连接使用；发生火灾时不能取水灭火，影响初期火灾处置。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内消火栓箱内消火栓接口处\",\n  \"rectification\": [\n    \"清理消火栓接口及箱内水泥、杂物，恢复接口完好可用\",\n    \"检修或更换损坏的消火栓阀门、接口及配件，并进行放水试压\",\n    \"建立消防设施定期巡检和维护保养制度，确保消火栓系统完好有效\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室内消火栓箱内消火栓接口被水泥/杂物堵塞，箱体积尘、锈蚀，阀门无法正常连接使用；发生火灾时不能取水灭火，影响初期火灾处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内消火栓箱内消火栓接口处",
+    "rectification": [
+      "清理消火栓接口及箱内水泥、杂物，恢复接口完好可用",
+      "检修或更换损坏的消火栓阀门、接口及配件，并进行放水试压",
+      "建立消防设施定期巡检和维护保养制度，确保消火栓系统完好有效"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

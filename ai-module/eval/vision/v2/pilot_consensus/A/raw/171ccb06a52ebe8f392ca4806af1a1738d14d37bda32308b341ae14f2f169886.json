@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"画面存在巨大塌陷坑、泥水倾泻，似施工现场，难定主类别\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面存在巨大塌陷坑、泥水倾泻，似施工现场，难定主类别"
+  }
+}

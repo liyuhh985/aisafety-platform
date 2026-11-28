@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"工人佩戴安全帽安全带，三脚架通风设备齐全，属规范作业\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "工人佩戴安全帽安全带，三脚架通风设备齐全，属规范作业"
+  }
+}

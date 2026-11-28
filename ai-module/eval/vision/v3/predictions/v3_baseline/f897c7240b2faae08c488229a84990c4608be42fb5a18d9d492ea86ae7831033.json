@@ -1,0 +1,29 @@
+{
+  "sha256": "f897c7240b2faae08c488229a84990c4608be42fb5a18d9d492ea86ae7831033",
+  "file": "temporary_power_3_f897c7240b2f.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"配电箱内断路器下方接线端子及导线接头裸露，线路布置凌乱，底部孔洞有杂物且未封堵，存在触电、短路及火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"配电箱内部断路器下方及底部接线区\",\"rectification\":[\"断电后由持证电工整理并绝缘封闭裸露端子\",\"封堵配电箱底部孔洞，清理杂物，恢复防护罩或隔板\",\"检查线路绝缘及接线牢固性，张贴警示并定期巡检\"],\"secondary_subcategories\":[\"exposed_wire\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "配电箱内断路器下方接线端子及导线接头裸露，线路布置凌乱，底部孔洞有杂物且未封堵，存在触电、短路及火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "配电箱内部断路器下方及底部接线区",
+    "rectification": [
+      "断电后由持证电工整理并绝缘封闭裸露端子",
+      "封堵配电箱底部孔洞，清理杂物，恢复防护罩或隔板",
+      "检查线路绝缘及接线牢固性，张贴警示并定期巡检"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

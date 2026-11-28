@@ -1,0 +1,23 @@
+{
+  "sha256": "73b995379fc31713b06b3ab953322220482ddd988a641933c1873c73df088dab",
+  "file": "NEGGAS07.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"画面为燃气管道设施，管道漆面、法兰连接、压力表及接地线未见明显破损、锈蚀、泄漏或违规迹象，未发现明确安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为燃气管道设施，管道漆面、法兰连接、压力表及接地线未见明显破损、锈蚀、泄漏或违规迹象，未发现明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

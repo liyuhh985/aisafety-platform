@@ -1,0 +1,23 @@
+{
+  "sha256": "d804c250b9552c9d0ab75a97e34912bd4cbd90083d63b281a72bcf824050c01b",
+  "file": "NEGFIR05.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图中室外消火栓外观完整、标识清晰，未见破损、缺失、漏水或被埋压、圈占，周边无明显安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图中室外消火栓外观完整、标识清晰，未见破损、缺失、漏水或被埋压、圈占，周边无明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

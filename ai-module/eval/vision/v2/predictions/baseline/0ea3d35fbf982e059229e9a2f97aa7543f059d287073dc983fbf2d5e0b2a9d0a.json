@@ -1,0 +1,27 @@
+{
+  "sha256": "0ea3d35fbf982e059229e9a2f97aa7543f059d287073dc983fbf2d5e0b2a9d0a",
+  "file": "DIS0002.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"多台配电柜柜门敞开或缺失，内部元器件、母排及线路裸露，顶部带电部位可见，缺少有效防护，存在人员触电、短路及电气火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内配电间或设备机房\",\"rectification\":[\"立即关闭并锁闭配电柜门，修复损坏门锁和柜体\",\"由持证电工检查柜内绝缘、接地及母排防护，消除裸露带电部位\",\"在整改前设置警戒隔离和醒目警示，禁止无关人员靠近\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "多台配电柜柜门敞开或缺失，内部元器件、母排及线路裸露，顶部带电部位可见，缺少有效防护，存在人员触电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内配电间或设备机房",
+    "rectification": [
+      "立即关闭并锁闭配电柜门，修复损坏门锁和柜体",
+      "由持证电工检查柜内绝缘、接地及母排防护，消除裸露带电部位",
+      "在整改前设置警戒隔离和醒目警示，禁止无关人员靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

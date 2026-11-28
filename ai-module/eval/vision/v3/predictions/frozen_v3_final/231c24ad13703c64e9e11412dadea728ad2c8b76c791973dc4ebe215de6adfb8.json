@@ -1,0 +1,27 @@
+{
+  "sha256": "231c24ad13703c64e9e11412dadea728ad2c8b76c791973dc4ebe215de6adfb8",
+  "file": "deep_pit_2_231c24ad1370.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"地面发生大面积不规则塌陷，形成极深坑洞，坑壁土体裸露松动，有二次垮塌风险。周边仅用简易绳索拉设，未设硬质围挡和明显警示，无法有效阻挡人员或动物靠近，存在严重坠落伤亡风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"草地/绿化带区域地面\",\n  \"rectification\": [\n    \"立即在坑洞周边拉起硬质安全围挡，并设置醒目警示标志和夜间警示灯\",\n    \"组织专业人员勘察塌陷原因，评估周边地下管线和地基稳定性\",\n    \"制定方案对坑洞进行回填、加固处理，消除安全隐患\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "地面发生大面积不规则塌陷，形成极深坑洞，坑壁土体裸露松动，有二次垮塌风险。周边仅用简易绳索拉设，未设硬质围挡和明显警示，无法有效阻挡人员或动物靠近，存在严重坠落伤亡风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "草地/绿化带区域地面",
+    "rectification": [
+      "立即在坑洞周边拉起硬质安全围挡，并设置醒目警示标志和夜间警示灯",
+      "组织专业人员勘察塌陷原因，评估周边地下管线和地基稳定性",
+      "制定方案对坑洞进行回填、加固处理，消除安全隐患"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

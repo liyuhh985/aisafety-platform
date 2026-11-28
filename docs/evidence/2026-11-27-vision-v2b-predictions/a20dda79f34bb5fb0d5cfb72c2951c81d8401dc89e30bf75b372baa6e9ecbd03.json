@@ -1,0 +1,27 @@
+{
+  "sha256": "a20dda79f34bb5fb0d5cfb72c2951c81d8401dc89e30bf75b372baa6e9ecbd03",
+  "file": "VEH0027.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"沿街建筑前道路一侧连续停放大量电动车、摩托车，部分车辆占用行车道和通行空间，易造成拥堵、剐蹭及行人绕行风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"沿街商铺前道路一侧\",\"rectification\":[\"划定并公示非机动车停放区域，规范车辆停放\",\"清理超出泊位或占用行车道的车辆，保障道路通行\",\"加强日常巡查和劝导，必要时设置隔离设施或标线\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "沿街建筑前道路一侧连续停放大量电动车、摩托车，部分车辆占用行车道和通行空间，易造成拥堵、剐蹭及行人绕行风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街商铺前道路一侧",
+    "rectification": [
+      "划定并公示非机动车停放区域，规范车辆停放",
+      "清理超出泊位或占用行车道的车辆，保障道路通行",
+      "加强日常巡查和劝导，必要时设置隔离设施或标线"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

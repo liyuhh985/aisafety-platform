@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": false, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"燃气热水器及黄色软管连接完好，阀门齐全，无明显泄漏老化\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "燃气热水器及黄色软管连接完好，阀门齐全，无明显泄漏老化"
+  }
+}

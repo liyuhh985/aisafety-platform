@@ -1,0 +1,23 @@
+{
+  "sha256": "711816f2cdabb183db567a9a4dedfd5d065c3e302ecce5f4a0ba584718f52e54",
+  "file": "NEGDIS08.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中的配电箱门处于闭合状态，设有“当心触电”警示标志及责任信息；未见箱门敞开、线路裸露、明显破损或无法使用等可见故障。表面掉漆属于外观老化，暂不足以认定为配电设施隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中的配电箱门处于闭合状态，设有“当心触电”警示标志及责任信息；未见箱门敞开、线路裸露、明显破损或无法使用等可见故障。表面掉漆属于外观老化，暂不足以认定为配电设施隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

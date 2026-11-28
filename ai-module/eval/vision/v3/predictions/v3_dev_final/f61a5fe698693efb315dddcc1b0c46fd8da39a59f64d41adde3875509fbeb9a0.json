@@ -1,0 +1,29 @@
+{
+  "sha256": "f61a5fe698693efb315dddcc1b0c46fd8da39a59f64d41adde3875509fbeb9a0",
+  "file": "hazmat_storage_4_f61a5fe69869.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"hazmat_storage\",\"severity\":\"高\",\"description\":\"建筑外墙旁铁笼内集中存放大量液化石油气钢瓶，部分置于上层格栅，周边地面堆积枯叶等可燃物，未见明显禁火警示和灭火器材。若气瓶泄漏遇火源，可能引发燃烧爆炸，后果严重。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙旁的气瓶存放铁笼及周边地面\",\"rectification\":[\"清理气瓶笼周边枯叶等可燃物，保持安全距离\",\"设置严禁烟火、易燃易爆等明显安全警示标志\",\"在附近配置适用灭火器材并定期检查有效性\",\"控制气瓶存放数量，保持通风、避免暴晒和倾倒\",\"由专业人员定期检查气瓶、阀门及存放条件\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "建筑外墙旁铁笼内集中存放大量液化石油气钢瓶，部分置于上层格栅，周边地面堆积枯叶等可燃物，未见明显禁火警示和灭火器材。若气瓶泄漏遇火源，可能引发燃烧爆炸，后果严重。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙旁的气瓶存放铁笼及周边地面",
+    "rectification": [
+      "清理气瓶笼周边枯叶等可燃物，保持安全距离",
+      "设置严禁烟火、易燃易爆等明显安全警示标志",
+      "在附近配置适用灭火器材并定期检查有效性",
+      "控制气瓶存放数量，保持通风、避免暴晒和倾倒",
+      "由专业人员定期检查气瓶、阀门及存放条件"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

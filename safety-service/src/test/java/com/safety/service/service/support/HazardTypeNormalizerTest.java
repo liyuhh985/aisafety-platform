@@ -42,7 +42,7 @@ class HazardTypeNormalizerTest {
                 () -> HazardTypeNormalizer.normalizeForStorage(List.of(
                         "消防安全/消防通道占用",
                         "消防安全/消防设施故障",
-                        "消防安全/消防水源异常",
+                        "建筑安全/危房",
                         "市政设施/井盖缺失/破损"
                 ), null)).getCode());
     }
@@ -58,9 +58,32 @@ class HazardTypeNormalizerTest {
     }
 
     @Test
-    void exposesExactlyThirtyTwoCanonicalChinesePaths() {
-        assertEquals(32, HazardTypeNormalizer.canonicalTypes().size());
+    void rejectsNineRetiredSubcategoryTokensWithExplicitUpgradeMessage() {
+        for (String value : List.of(
+                "building/wall_crack_lean", "建筑安全/墙体开裂/倾斜", "墙体开裂/倾斜",
+                "building/facade_fall", "建筑安全/外立面脱落", "外立面脱落",
+                "fire/fire_water_abnormal", "消防安全/消防水源异常", "消防水源异常")) {
+            BusinessException exc = assertThrows(BusinessException.class,
+                    () -> HazardTypeNormalizer.normalizeOne(value), value);
+            assertEquals(400, exc.getCode(), value);
+            assertEquals("隐患类别已升级，请刷新页面", exc.getMessage(), value);
+        }
+    }
+
+    @Test
+    void exposesExactlyThirtyThreeCanonicalChinesePaths() {
+        assertEquals(33, HazardTypeNormalizer.canonicalTypes().size());
         assertTrue(HazardTypeNormalizer.canonicalTypes().contains("市政设施/排水/积水"));
         assertTrue(HazardTypeNormalizer.canonicalTypes().contains("电气与燃气/燃气管道老化"));
+        assertTrue(HazardTypeNormalizer.canonicalTypes().contains("建筑安全/危房"));
+        assertTrue(HazardTypeNormalizer.canonicalTypes().contains("建筑安全/高空坠物"));
+        assertTrue(HazardTypeNormalizer.canonicalTypes().contains("消防安全/消防设施故障"));
+        assertTrue(HazardTypeNormalizer.canonicalTypes().contains("消防安全/电动自行车违规停放/充电"));
+        assertTrue(HazardTypeNormalizer.canonicalTypes().contains("市政设施/树木倒伏/断枝风险"));
+        assertTrue(HazardTypeNormalizer.canonicalTypes().contains("施工安全/有限空间作业风险"));
+        assertTrue(HazardTypeNormalizer.canonicalTypes().contains("环境与其他/危化品/易燃易爆违规存运"));
+        assertTrue(!HazardTypeNormalizer.canonicalTypes().contains("建筑安全/墙体开裂/倾斜"));
+        assertTrue(!HazardTypeNormalizer.canonicalTypes().contains("建筑安全/外立面脱落"));
+        assertTrue(!HazardTypeNormalizer.canonicalTypes().contains("消防安全/消防水源异常"));
     }
 }

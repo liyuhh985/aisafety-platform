@@ -1,0 +1,27 @@
+{
+  "sha256": "b298a5505ad00713e87158b3304fdc4a715239953dbd48a765c00cfddaf79f36",
+  "file": "gas_pipe_aging_4_b298a5505ad0.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"gas_pipe_aging\",\"severity\":\"中\",\"description\":\"画面中金属管道及抱箍、法兰连接处锈蚀严重，表层剥落并伴随明显腐蚀，存在管壁减薄、连接失效风险；若为燃气管道，可能进一步引发介质泄漏等事故。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"画面中央金属管道法兰及抱箍连接处\",\"rectification\":[\"对锈蚀管道和连接件进行专业检测评估，必要时更换\",\"彻底除锈并重新做防腐处理，完善防腐层\",\"若为燃气管道，应进行气密性和泄漏检测，并加强日常巡检\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "画面中金属管道及抱箍、法兰连接处锈蚀严重，表层剥落并伴随明显腐蚀，存在管壁减薄、连接失效风险；若为燃气管道，可能进一步引发介质泄漏等事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中央金属管道法兰及抱箍连接处",
+    "rectification": [
+      "对锈蚀管道和连接件进行专业检测评估，必要时更换",
+      "彻底除锈并重新做防腐处理，完善防腐层",
+      "若为燃气管道，应进行气密性和泄漏检测，并加强日常巡检"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

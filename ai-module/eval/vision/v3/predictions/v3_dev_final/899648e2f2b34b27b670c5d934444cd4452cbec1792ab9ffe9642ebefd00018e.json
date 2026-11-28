@@ -1,0 +1,30 @@
+{
+  "sha256": "899648e2f2b34b27b670c5d934444cd4452cbec1792ab9ffe9642ebefd00018e",
+  "file": "deep_pit_1_899648e2f2b3.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"建筑工地存在较深基坑，坑壁陡直且未见有效支护和临边防护，挖掘机紧邻坑边作业，周边缺少明显警示，存在边坡坍塌、机械倾覆及人员坠落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑工地深基坑边缘及挖掘机作业处\",\n  \"rectification\": [\n    \"立即停止坑边机械冒险作业，机械与坑边保持安全距离\",\n    \"按专项方案落实基坑边坡支护、放坡或加固措施\",\n    \"沿基坑周边设置连续硬质防护栏杆和警戒区域\",\n    \"增设醒目安全警示标志及夜间警示灯，禁止无关人员靠近\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "建筑工地存在较深基坑，坑壁陡直且未见有效支护和临边防护，挖掘机紧邻坑边作业，周边缺少明显警示，存在边坡坍塌、机械倾覆及人员坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑工地深基坑边缘及挖掘机作业处",
+    "rectification": [
+      "立即停止坑边机械冒险作业，机械与坑边保持安全距离",
+      "按专项方案落实基坑边坡支护、放坡或加固措施",
+      "沿基坑周边设置连续硬质防护栏杆和警戒区域",
+      "增设醒目安全警示标志及夜间警示灯，禁止无关人员靠近"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

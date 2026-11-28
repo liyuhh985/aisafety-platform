@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"manhole_damage\", \"evidence\": \"人行道井盖被掀开，井口裸露\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "evidence": "人行道井盖被掀开，井口裸露"
+  }
+}

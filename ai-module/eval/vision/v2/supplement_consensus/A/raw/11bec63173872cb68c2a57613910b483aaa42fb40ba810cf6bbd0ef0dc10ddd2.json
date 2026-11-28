@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"structural_damage\", \"evidence\": \"天花板有大面积破损露基层，周边有裂缝\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "天花板有大面积破损露基层，周边有裂缝"
+  }
+}

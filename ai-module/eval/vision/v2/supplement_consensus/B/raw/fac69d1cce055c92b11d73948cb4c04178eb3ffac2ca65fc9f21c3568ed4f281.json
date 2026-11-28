@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"wire_fault\", \"evidence\": \"电表线路杂乱裸露，私拉乱接缠绕\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "电表线路杂乱裸露，私拉乱接缠绕"
+  }
+}

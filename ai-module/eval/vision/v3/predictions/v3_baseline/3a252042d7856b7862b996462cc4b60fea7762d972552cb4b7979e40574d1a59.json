@@ -1,0 +1,27 @@
+{
+  "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+  "file": "fire_equipment_fault_4_3a252042d785.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"中\",\n  \"description\": \"道路混凝土面层大面积网状开裂并伴局部沉降，缝隙明显，车辆及行人经过易颠簸、绊倒，雨水渗入后可能加剧路基损坏并引发塌陷。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"图片中央至右侧车行道路面\",\n  \"rectification\": [\n    \"立即在破损区域设置警示标志和临时围挡\",\n    \"排查路基及排水情况，切割清除破损面层后重新修复\",\n    \"修复前限制重型车辆通行并加强巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "道路混凝土面层大面积网状开裂并伴局部沉降，缝隙明显，车辆及行人经过易颠簸、绊倒，雨水渗入后可能加剧路基损坏并引发塌陷。",
+    "reason_if_no_hazard": "",
+    "location_hint": "图片中央至右侧车行道路面",
+    "rectification": [
+      "立即在破损区域设置警示标志和临时围挡",
+      "排查路基及排水情况，切割清除破损面层后重新修复",
+      "修复前限制重型车辆通行并加强巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

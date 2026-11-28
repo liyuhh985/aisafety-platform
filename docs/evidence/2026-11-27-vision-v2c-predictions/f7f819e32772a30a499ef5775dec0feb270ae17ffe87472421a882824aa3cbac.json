@@ -1,0 +1,23 @@
+{
+  "sha256": "f7f819e32772a30a499ef5775dec0feb270ae17ffe87472421a882824aa3cbac",
+  "file": "NEGGAS01.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为厨房灶台及抽油烟机正常展示场景，未见线路破损、燃气泄漏、消防通道堵塞等明确安全隐患；油瓶等物品摆放无法仅凭图片判定违规。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为厨房灶台及抽油烟机正常展示场景，未见线路破损、燃气泄漏、消防通道堵塞等明确安全隐患；油瓶等物品摆放无法仅凭图片判定违规。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"vehicle_occupancy\", \"evidence\": \"面包车骑压黄色路缘线，部分车身压上绿化带\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "面包车骑压黄色路缘线，部分车身压上绿化带"
+  }
+}

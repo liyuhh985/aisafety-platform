@@ -1,0 +1,27 @@
+{
+  "sha256": "0db3fae83d02f4cb9fedd4e8a2af80e9573a7ad3813ec0909395a1518430c1c6",
+  "file": "blind_path_occupied_1_0db3fae83d02.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"高\",\n  \"description\": \"人行道盲道上连续设置多组黄黑U型挡车架，部分栏杆直接横跨、压占盲道，造成盲道通行中断；视障人士易碰撞、绊倒，普通行人通行空间也被压缩。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道黄色盲道沿线\",\n  \"rectification\": [\n    \"移除或迁移压占盲道的挡车架，恢复盲道连续净空\",\n    \"按无障碍规范优化隔离设施布局，盲道两侧保留安全间距\",\n    \"增设醒目警示并加强日常巡查，及时纠正设施占道\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "高",
+    "description": "人行道盲道上连续设置多组黄黑U型挡车架，部分栏杆直接横跨、压占盲道，造成盲道通行中断；视障人士易碰撞、绊倒，普通行人通行空间也被压缩。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道黄色盲道沿线",
+    "rectification": [
+      "移除或迁移压占盲道的挡车架，恢复盲道连续净空",
+      "按无障碍规范优化隔离设施布局，盲道两侧保留安全间距",
+      "增设醒目警示并加强日常巡查，及时纠正设施占道"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

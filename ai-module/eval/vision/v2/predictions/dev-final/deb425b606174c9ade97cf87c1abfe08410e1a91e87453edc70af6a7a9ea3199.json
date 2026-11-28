@@ -1,0 +1,27 @@
+{
+  "sha256": "deb425b606174c9ade97cf87c1abfe08410e1a91e87453edc70af6a7a9ea3199",
+  "file": "NEGROA01.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"高\",\n  \"description\": \"道路施工人员在开放路面弯腰作业，作业区未见连续围挡或水马隔离，仅远处有少量锥桶，近端缺少警示与隔离，来车难以及时发现，存在人员被碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路施工区域，近处工人作业点\",\n  \"rectification\": [\n    \"沿作业区边界设置连续围挡或水马，将施工区与通行区隔离\",\n    \"在作业区前后提前布设锥桶、警示牌，并安排交通疏导\",\n    \"加强现场监护，确保人员作业时处于受保护区域\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "道路施工人员在开放路面弯腰作业，作业区未见连续围挡或水马隔离，仅远处有少量锥桶，近端缺少警示与隔离，来车难以及时发现，存在人员被碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路施工区域，近处工人作业点",
+    "rectification": [
+      "沿作业区边界设置连续围挡或水马，将施工区与通行区隔离",
+      "在作业区前后提前布设锥桶、警示牌，并安排交通疏导",
+      "加强现场监护，确保人员作业时处于受保护区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

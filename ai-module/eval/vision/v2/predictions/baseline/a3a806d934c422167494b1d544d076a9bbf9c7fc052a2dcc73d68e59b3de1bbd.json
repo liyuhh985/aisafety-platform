@@ -1,0 +1,27 @@
+{
+  "sha256": "a3a806d934c422167494b1d544d076a9bbf9c7fc052a2dcc73d68e59b3de1bbd",
+  "file": "FAC0002.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"facade_fall\",\n  \"severity\": \"高\",\n  \"description\": \"住宅楼外墙可见多处大面积浅色斑块，疑似瓷砖或抹灰层脱落及修补痕迹，存在继续空鼓、脱落风险，可能造成高空坠物伤人损物。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼外立面多处（中高层区域）\",\n  \"rectification\": [\n    \"立即对脱落、空鼓区域进行排查并设置警戒隔离\",\n    \"委托专业单位修复外墙饰面，消除坠物隐患\",\n    \"加强日常巡查，发现新脱落及时处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "facade_fall",
+    "severity": "高",
+    "description": "住宅楼外墙可见多处大面积浅色斑块，疑似瓷砖或抹灰层脱落及修补痕迹，存在继续空鼓、脱落风险，可能造成高空坠物伤人损物。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼外立面多处（中高层区域）",
+    "rectification": [
+      "立即对脱落、空鼓区域进行排查并设置警戒隔离",
+      "委托专业单位修复外墙饰面，消除坠物隐患",
+      "加强日常巡查，发现新脱落及时处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

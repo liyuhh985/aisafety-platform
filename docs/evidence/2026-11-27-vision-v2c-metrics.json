@@ -1,0 +1,111 @@
+{
+  "binary": {
+    "n": 80,
+    "tp": 38,
+    "tn": 34,
+    "fp": 6,
+    "fn": 2,
+    "recall": 0.95,
+    "precision": 0.8636363636363636,
+    "fpr": 0.15,
+    "f1": 0.9047619047619048,
+    "accuracy": 0.9
+  },
+  "binary_recall_ci": {
+    "estimate": 0.95,
+    "low": 0.834958291820748,
+    "high": 0.9861796228538989
+  },
+  "binary_fpr_ci": {
+    "estimate": 0.15,
+    "low": 0.07061091708507435,
+    "high": 0.2907262603902003
+  },
+  "review_aware": {
+    "review_rate": 0.0375,
+    "auto_coverage": 0.9625,
+    "auto_recall": 0.95,
+    "critical_miss_rate": 0.05,
+    "auto_fpr": 0.15,
+    "review_positive": 0,
+    "review_negative": 3,
+    "auto_tp": 38,
+    "auto_tn": 31,
+    "auto_fp": 6,
+    "auto_fn": 2
+  },
+  "major": {
+    "macro_recall": 0.8267857142857142,
+    "by_major": {
+      "traffic": {
+        "n": 5,
+        "correct": 5,
+        "recall": 1.0
+      },
+      "municipal": {
+        "n": 4,
+        "correct": 4,
+        "recall": 1.0
+      },
+      "fire": {
+        "n": 6,
+        "correct": 5,
+        "recall": 0.8333333333333334
+      },
+      "building": {
+        "n": 7,
+        "correct": 5,
+        "recall": 0.7142857142857143
+      },
+      "utility": {
+        "n": 5,
+        "correct": 4,
+        "recall": 0.8
+      },
+      "construction": {
+        "n": 3,
+        "correct": 2,
+        "recall": 0.6666666666666666
+      },
+      "elevator_special": {
+        "n": 5,
+        "correct": 3,
+        "recall": 0.6
+      },
+      "environment_other": {
+        "n": 5,
+        "correct": 5,
+        "recall": 1.0
+      }
+    },
+    "confusion": {
+      "building -> building": 5,
+      "building -> construction": 2,
+      "construction -> construction": 2,
+      "construction -> utility": 1,
+      "elevator_special -> FN": 2,
+      "elevator_special -> elevator_special": 3,
+      "environment_other -> environment_other": 5,
+      "fire -> fire": 5,
+      "fire -> municipal": 1,
+      "municipal -> municipal": 4,
+      "traffic -> traffic": 5,
+      "utility -> construction": 1,
+      "utility -> utility": 4
+    }
+  },
+  "invalid": {
+    "parse_failed": 0,
+    "invalid_has_hazard": 0,
+    "invalid_confidence": 3,
+    "invalid_category": 0
+  },
+  "limitations": [
+    "public-scene diagnostic set, not production-traffic distribution",
+    "small balanced test set; confidence intervals are wide",
+    "single reviewer; labels are not expert consensus",
+    "subcategory accuracy is not reported"
+  ],
+  "split": "test",
+  "items": 80
+}

@@ -1,0 +1,30 @@
+{
+  "sha256": "a31003f293d992b76b8bd59e951d1aa1844dd3c9f76c33eb09a38b309f9d7063",
+  "file": "neg_16_a31003f293d9.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"画面近景桩柱周边土方已开挖，形成坑槽和临边高差，未见连续防护栏杆、盖板或明显警示，工人紧邻坑边作业，存在人员坠落及土体坍塌伤人风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面近景桩基开挖区域\",\n  \"rectification\": [\n    \"对桩间坑槽和开挖临边设置连续硬质防护栏杆或牢固盖板\",\n    \"增设安全警示标志，夜间设置警示灯\",\n    \"按施工方案落实放坡、支护和监测，禁止人员在无防护坑边作业\",\n    \"加强现场安全巡查，确保作业人员正确佩戴安全帽等防护用品\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "画面近景桩柱周边土方已开挖，形成坑槽和临边高差，未见连续防护栏杆、盖板或明显警示，工人紧邻坑边作业，存在人员坠落及土体坍塌伤人风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面近景桩基开挖区域",
+    "rectification": [
+      "对桩间坑槽和开挖临边设置连续硬质防护栏杆或牢固盖板",
+      "增设安全警示标志，夜间设置警示灯",
+      "按施工方案落实放坡、支护和监测，禁止人员在无防护坑边作业",
+      "加强现场安全巡查，确保作业人员正确佩戴安全帽等防护用品"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "1dbe5fd995734c3b7f7cb1be444a1c2dcd6d02b62812d2278868f87813722a53",
+  "file": "tree_fall_hazard_1_1dbe5fd99573.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"大树倒伏、断枝，树冠压覆电力线，电线明显下垂并横跨道路，可能阻断通行，存在触电、断电及砸伤风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁及车道上方，树冠与电力线交叠处\",\n  \"rectification\": [\n    \"立即设置警戒线并封闭受影响道路，禁止车辆和行人靠近\",\n    \"联系电力部门先断电处置，再由园林部门清理倒伏树木和断枝\",\n    \"检查并修复被压下垂的电力线路，确认安全后恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "大树倒伏、断枝，树冠压覆电力线，电线明显下垂并横跨道路，可能阻断通行，存在触电、断电及砸伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁及车道上方，树冠与电力线交叠处",
+    "rectification": [
+      "立即设置警戒线并封闭受影响道路，禁止车辆和行人靠近",
+      "联系电力部门先断电处置，再由园林部门清理倒伏树木和断枝",
+      "检查并修复被压下垂的电力线路，确认安全后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

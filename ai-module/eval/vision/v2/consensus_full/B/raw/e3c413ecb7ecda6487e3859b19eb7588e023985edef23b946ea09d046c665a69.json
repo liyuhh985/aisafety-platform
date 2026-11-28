@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"construction_prot\", \"evidence\": \"挖掘机拆除房屋，现场无围挡防护，废墟散落路边\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "construction_prot",
+    "evidence": "挖掘机拆除房屋，现场无围挡防护，废墟散落路边"
+  }
+}

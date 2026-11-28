@@ -1,0 +1,27 @@
+{
+  "sha256": "fae74161698833dccfe0bdb97d2c54ac9436d970e4d99fccb28393905a0039ad",
+  "file": "elevator_stopped_2_fae741616988.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"中\",\n  \"description\": \"电梯显示屏异常显示“-- --”，入口放置“不准靠近/NO ACCESS”围挡，疑似电梯故障停运；现场未见人员被困。若围挡被移动，存在乘客误入或使用故障电梯的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯厅入口/电梯门前\",\n  \"rectification\": [\n    \"立即联系电梯维保单位检修，确认故障原因并排除隐患\",\n    \"保持围挡和警示标志完整，防止乘客误入或强行使用\",\n    \"在显著位置张贴停运原因、预计恢复时间及报修联系方式\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯显示屏异常显示“-- --”，入口放置“不准靠近/NO ACCESS”围挡，疑似电梯故障停运；现场未见人员被困。若围挡被移动，存在乘客误入或使用故障电梯的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯厅入口/电梯门前",
+    "rectification": [
+      "立即联系电梯维保单位检修，确认故障原因并排除隐患",
+      "保持围挡和警示标志完整，防止乘客误入或强行使用",
+      "在显著位置张贴停运原因、预计恢复时间及报修联系方式"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

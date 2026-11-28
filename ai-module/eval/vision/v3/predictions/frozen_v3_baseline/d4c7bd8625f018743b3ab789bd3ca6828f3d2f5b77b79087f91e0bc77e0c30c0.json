@@ -1,0 +1,26 @@
+{
+  "sha256": "d4c7bd8625f018743b3ab789bd3ca6828f3d2f5b77b79087f91e0bc77e0c30c0",
+  "file": "elevator_stopped_1_d4c7bd8625f0.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"中\",\n  \"description\": \"电梯外呼面板屏幕显示“停用”，上下按钮无法正常使用，表明电梯处于停运状态。若为故障停运且未及时维修，将影响居民出行，并可能伴随困人等次生风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯厅外呼面板处\",\n  \"rectification\": [\n    \"在电梯停运期间设置明显的停用警示和必要的围挡，防止误乘。\",\n    \"尽快排查停运原因并及时维修，恢复运行前加强巡查和应急值守。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯外呼面板屏幕显示“停用”，上下按钮无法正常使用，表明电梯处于停运状态。若为故障停运且未及时维修，将影响居民出行，并可能伴随困人等次生风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯厅外呼面板处",
+    "rectification": [
+      "在电梯停运期间设置明显的停用警示和必要的围挡，防止误乘。",
+      "尽快排查停运原因并及时维修，恢复运行前加强巡查和应急值守。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

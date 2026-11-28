@@ -4,7 +4,7 @@
  * 前端统一维护与解析核心模块
  */
 
-// 1. 标准两级分类定义 (8 大一级类别 + 29 个标准二级子类)
+// 1. 标准两级分类定义 (8 大一级类别 + 33 个标准二级子类，v2b 新增 4 个独立小类)
 export const HAZARD_TAXONOMY = [
   {
     code: "traffic",
@@ -24,6 +24,7 @@ export const HAZARD_TAXONOMY = [
       { code: "road_surface_collapse", label: "路面塌陷" },
       { code: "drainage_flood", label: "排水/积水" },
       { code: "street_light_pole", label: "路灯/线杆损坏" },
+      { code: "tree_fall_hazard", label: "树木倒伏/断枝风险" },
     ],
   },
   {
@@ -32,7 +33,7 @@ export const HAZARD_TAXONOMY = [
     subcategories: [
       { code: "fire_lane_blocked", label: "消防通道占用" },
       { code: "fire_equipment_fault", label: "消防设施故障" },
-      { code: "fire_water_abnormal", label: "消防水源异常" },
+      { code: "ebike_hazard", label: "电动自行车违规停放/充电" },
     ],
   },
   {
@@ -40,8 +41,6 @@ export const HAZARD_TAXONOMY = [
     label: "建筑安全",
     subcategories: [
       { code: "dangerous_building", label: "危房" },
-      { code: "wall_crack_lean", label: "墙体开裂/倾斜" },
-      { code: "facade_fall", label: "外立面脱落" },
       { code: "falling_object", label: "高空坠物" },
       { code: "illegal_structure", label: "违规搭建" },
     ],
@@ -66,6 +65,7 @@ export const HAZARD_TAXONOMY = [
       { code: "scaffold_guard", label: "脚手架/临边防护" },
       { code: "deep_pit", label: "深基坑风险" },
       { code: "temporary_power", label: "施工临时用电" },
+      { code: "confined_space", label: "有限空间作业风险" },
     ],
   },
   {
@@ -83,6 +83,7 @@ export const HAZARD_TAXONOMY = [
     subcategories: [
       { code: "garbage_pile", label: "垃圾堆积" },
       { code: "sewage_odor", label: "污水/异味" },
+      { code: "hazmat_storage", label: "危化品/易燃易爆违规存运" },
       { code: "other", label: "其他" },
     ],
   },

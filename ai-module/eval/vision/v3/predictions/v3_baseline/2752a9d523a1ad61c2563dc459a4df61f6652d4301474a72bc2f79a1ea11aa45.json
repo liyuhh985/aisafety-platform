@@ -1,0 +1,27 @@
+{
+  "sha256": "2752a9d523a1ad61c2563dc459a4df61f6652d4301474a72bc2f79a1ea11aa45",
+  "file": "gas_leak_1_2752a9d523a1.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"gas_pipe_aging\",\"severity\":\"高\",\"description\":\"砖墙旁燃气管道及阀门锈蚀严重，接头处有黄褐色液体渗出并沿设备下流；左侧黑色软管疑似破损后以银色胶带缠绕，末端持续滴水，存在燃气泄漏、管件失效及火灾爆炸风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"砖墙旁燃气表/调压器及管道接头处\",\"rectification\":[\"立即联系燃气公司或物业停气检查，使用检漏仪检测阀门和接头，严禁明火试漏。\",\"更换锈蚀管道、阀门及破损软管，清除胶带临时修补，由专业人员规范施工。\",\"整改期间保持通风并设置警示，禁止无关人员操作，复检合格后再恢复使用。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "高",
+    "description": "砖墙旁燃气管道及阀门锈蚀严重，接头处有黄褐色液体渗出并沿设备下流；左侧黑色软管疑似破损后以银色胶带缠绕，末端持续滴水，存在燃气泄漏、管件失效及火灾爆炸风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "砖墙旁燃气表/调压器及管道接头处",
+    "rectification": [
+      "立即联系燃气公司或物业停气检查，使用检漏仪检测阀门和接头，严禁明火试漏。",
+      "更换锈蚀管道、阀门及破损软管，清除胶带临时修补，由专业人员规范施工。",
+      "整改期间保持通风并设置警示，禁止无关人员操作，复检合格后再恢复使用。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

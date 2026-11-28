@@ -1,0 +1,27 @@
+{
+  "sha256": "41ea7950c15db3140db304b107df3d61a0a683310d1ed078e7c6691726f3b7c3",
+  "file": "FAC0073.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"红色多层建筑整体严重倾斜，底层疑似结构破坏或下陷，存在随时倒塌风险，威胁周边人员、消防车辆及救援人员安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街红色多层建筑及底层受损区域\",\n  \"rectification\": [\n    \"立即疏散周边人员并设置警戒，禁止靠近倾斜建筑\",\n    \"组织结构专家评估，采取临时支撑、加固或拆除措施\",\n    \"持续监测建筑倾斜和沉降，防范次生坍塌风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "红色多层建筑整体严重倾斜，底层疑似结构破坏或下陷，存在随时倒塌风险，威胁周边人员、消防车辆及救援人员安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街红色多层建筑及底层受损区域",
+    "rectification": [
+      "立即疏散周边人员并设置警戒，禁止靠近倾斜建筑",
+      "组织结构专家评估，采取临时支撑、加固或拆除措施",
+      "持续监测建筑倾斜和沉降，防范次生坍塌风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

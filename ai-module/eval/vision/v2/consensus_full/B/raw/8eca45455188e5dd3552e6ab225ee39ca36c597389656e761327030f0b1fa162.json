@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"wire_fault\", \"evidence\": \"墙面垂落裸露电线，插线板悬吊私拉乱接\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "墙面垂落裸露电线，插线板悬吊私拉乱接"
+  }
+}

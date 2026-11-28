@@ -1,0 +1,23 @@
+{
+  "sha256": "cdb99f32dfac87bb075f4d9a9d47e585cbb47c1a2c0e722e8d02d817e0800a4b",
+  "file": "neg_24_cdb99f32dfac.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面为电梯厅，电梯设备外观正常，门关闭、楼层显示正常，未见人员被困、设备损坏、违规停放充电、通道堵塞或其他可见安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为电梯厅，电梯设备外观正常，门关闭、楼层显示正常，未见人员被困、设备损坏、违规停放充电、通道堵塞或其他可见安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

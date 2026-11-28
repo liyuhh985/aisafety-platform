@@ -1,0 +1,27 @@
+{
+  "sha256": "d12fe4c41769f293e53de68cda7526b646d4cd5dc2b70e877e393073d47cd4b0",
+  "file": "neg_39_d12fe4c41769.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"室内燃气管道及放散管法兰、阀门和螺栓存在明显锈蚀、油漆剥落；法兰防静电跨接线采用细铁丝，不符合规范，存在密封失效、燃气泄漏和静电积聚风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厂房内燃气管道与放散管法兰连接处\",\n  \"rectification\": [\n    \"对锈蚀法兰、阀门和螺栓进行除锈防腐处理，必要时更换\",\n    \"规范设置法兰防静电跨接线，采用符合要求的铜编织线\",\n    \"定期开展燃气检漏和维护保养\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "室内燃气管道及放散管法兰、阀门和螺栓存在明显锈蚀、油漆剥落；法兰防静电跨接线采用细铁丝，不符合规范，存在密封失效、燃气泄漏和静电积聚风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厂房内燃气管道与放散管法兰连接处",
+    "rectification": [
+      "对锈蚀法兰、阀门和螺栓进行除锈防腐处理，必要时更换",
+      "规范设置法兰防静电跨接线，采用符合要求的铜编织线",
+      "定期开展燃气检漏和维护保养"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

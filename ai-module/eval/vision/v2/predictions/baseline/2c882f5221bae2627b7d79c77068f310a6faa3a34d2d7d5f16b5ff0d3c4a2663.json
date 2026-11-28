@@ -1,0 +1,27 @@
+{
+  "sha256": "2c882f5221bae2627b7d79c77068f310a6faa3a34d2d7d5f16b5ff0d3c4a2663",
+  "file": "ELE0037.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯层门被打开，消防人员正在层门口实施救援，轿厢或井道区域昏暗，存在人员被困情况，可能引发挤压、坠落、缺氧及二次伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑电梯层门口及轿厢处\",\n  \"rectification\": [\n    \"立即按电梯困人应急预案安全救援，确认断电并防止轿厢误动。\",\n    \"由电梯维保单位排查停运、停层异常及门锁故障原因并修复。\",\n    \"救援后经检验合格方可恢复使用，并设置警示和故障告知。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯层门被打开，消防人员正在层门口实施救援，轿厢或井道区域昏暗，存在人员被困情况，可能引发挤压、坠落、缺氧及二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑电梯层门口及轿厢处",
+    "rectification": [
+      "立即按电梯困人应急预案安全救援，确认断电并防止轿厢误动。",
+      "由电梯维保单位排查停运、停层异常及门锁故障原因并修复。",
+      "救援后经检验合格方可恢复使用，并设置警示和故障告知。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

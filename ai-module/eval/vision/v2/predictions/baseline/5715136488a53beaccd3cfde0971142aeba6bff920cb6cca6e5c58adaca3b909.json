@@ -1,0 +1,27 @@
+{
+  "sha256": "5715136488a53beaccd3cfde0971142aeba6bff920cb6cca6e5c58adaca3b909",
+  "file": "VEH0004.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"多辆机动车斜向停放在人行道及商铺前铺装区域，挤占行人通行空间，可能迫使行人绕行至机动车道，存在碰撞安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"近景人行道及商铺门前铺装区域\",\n  \"rectification\": [\n    \"清理违停车辆，恢复人行道通行功能\",\n    \"在人行道边缘增设隔离桩或护栏，施划禁停标线\",\n    \"加强巡查执法，引导车辆停入正规停车位\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "多辆机动车斜向停放在人行道及商铺前铺装区域，挤占行人通行空间，可能迫使行人绕行至机动车道，存在碰撞安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "近景人行道及商铺门前铺装区域",
+    "rectification": [
+      "清理违停车辆，恢复人行道通行功能",
+      "在人行道边缘增设隔离桩或护栏，施划禁停标线",
+      "加强巡查执法，引导车辆停入正规停车位"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

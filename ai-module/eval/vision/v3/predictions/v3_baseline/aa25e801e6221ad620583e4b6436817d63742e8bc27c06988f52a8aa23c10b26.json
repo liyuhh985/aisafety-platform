@@ -1,0 +1,29 @@
+{
+  "sha256": "aa25e801e6221ad620583e4b6436817d63742e8bc27c06988f52a8aa23c10b26",
+  "file": "exposed_wire_2_aa25e801e622.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"中\",\"description\":\"道路旁电线杆上大量黑色线缆无序缠绕、成团下垂，疑似私拉乱接且未规范固定；易造成绝缘磨损、短路漏电或外力拉扯断落，存在触电、火灾及影响通行的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路旁电线杆上部及线缆汇集处（近路灯杆）\",\"rectification\":[\"由电力、通信等权属单位核查线缆来源，拆除废弃线缆并清理私拉乱接。\",\"对在用线路分束套管、规范固定并保持安全高度，排查绝缘破损和漏电风险。\",\"整改前在该区域设置警示，防止行人车辆触碰下垂线缆。\"],\"secondary_subcategories\":[\"exposed_wire\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "道路旁电线杆上大量黑色线缆无序缠绕、成团下垂，疑似私拉乱接且未规范固定；易造成绝缘磨损、短路漏电或外力拉扯断落，存在触电、火灾及影响通行的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁电线杆上部及线缆汇集处（近路灯杆）",
+    "rectification": [
+      "由电力、通信等权属单位核查线缆来源，拆除废弃线缆并清理私拉乱接。",
+      "对在用线路分束套管、规范固定并保持安全高度，排查绝缘破损和漏电风险。",
+      "整改前在该区域设置警示，防止行人车辆触碰下垂线缆。"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

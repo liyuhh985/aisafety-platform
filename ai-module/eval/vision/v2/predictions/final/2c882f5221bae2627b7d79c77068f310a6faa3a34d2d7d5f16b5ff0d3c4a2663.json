@@ -1,0 +1,27 @@
+{
+  "sha256": "2c882f5221bae2627b7d79c77068f310a6faa3a34d2d7d5f16b5ff0d3c4a2663",
+  "file": "ELE0037.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_trapped\",\"severity\":\"高\",\"description\":\"电梯发生故障，有人员被困，消防人员正利用梯子在电梯口实施救援。存在人员坠落、挤压及二次伤害风险，需立即处置。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"楼宇电梯口/电梯井\",\"rectification\":[\"立即启动电梯应急救援，联系专业维保单位排查故障\",\"救援期间设置警戒并防止无关人员靠近电梯口\",\"事后对电梯进行全面检修并核查检验有效期\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯发生故障，有人员被困，消防人员正利用梯子在电梯口实施救援。存在人员坠落、挤压及二次伤害风险，需立即处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼宇电梯口/电梯井",
+    "rectification": [
+      "立即启动电梯应急救援，联系专业维保单位排查故障",
+      "救援期间设置警戒并防止无关人员靠近电梯口",
+      "事后对电梯进行全面检修并核查检验有效期"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

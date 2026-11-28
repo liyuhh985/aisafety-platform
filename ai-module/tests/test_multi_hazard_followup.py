@@ -16,12 +16,12 @@ TWO_MUNICIPAL = {
     "locked_major": "municipal",
     "locked_subcategory": "manhole_damage",
     "category_slots": {"manhole_damage": {}, "street_light_pole": {}},
-    "missing": ["manhole_damage_defect", "street_light_pole_describe"],
+    "missing": ["manhole_damage_defect", "street_light_pole_pole_status"],
     "issues": [
         {"major_code": "municipal", "subcategory_code": "manhole_damage",
          "slots": {}, "missing": ["defect"]},
         {"major_code": "municipal", "subcategory_code": "street_light_pole",
-         "slots": {}, "missing": ["describe"]},
+         "slots": {}, "missing": ["pole_status"]},
     ],
     "next_action": "ask_critical_question",
     "clarification_question": "模型自己写的问句？",
@@ -30,7 +30,7 @@ TWO_MUNICIPAL = {
 EXPECTED_TWO = (
     "还想确认两件事："
     "①『井盖缺失/破损』井盖是缺失、破损还是松动？"
-    "②『路灯/线杆损坏』能再具体描述一下这个安全隐患是什么吗？"
+    "②『路灯/线杆损坏』是灯杆倾斜折断，还是路灯不亮？"
 )
 
 
@@ -69,7 +69,7 @@ def test_a_hazard_that_needs_nothing_does_not_take_a_clause(monkeypatch):
     state = copy.deepcopy(TWO_MUNICIPAL)
     state["missing"] = ["manhole_damage_defect"]
     state["issues"][1]["missing"] = []
-    state["category_slots"]["street_light_pole"] = {"describe": "已经说清了"}
+    state["category_slots"]["street_light_pole"] = {"pole_status": "灯杆已经歪了"}
     cmd = ag.ask_slot_question(state)
     assert cmd.update["clarification_question"] == "模型写的？"
     assert cmd.update["question_source"] == "ask_slot_question"
@@ -105,21 +105,25 @@ def test_only_the_first_missing_slot_of_each_hazard_is_asked(monkeypatch):
 
 def test_three_hazards_use_three_clause_numbers(monkeypatch):
     _no_model(monkeypatch)
-    codes = ["dangerous_building", "wall_crack_lean", "facade_fall"]
+    codes = ["dangerous_building", "falling_object", "illegal_structure"]
     state = {
-        "messages": [HumanMessage(content="危房、墙体开裂、外立面脱落")],
+        "messages": [HumanMessage(content="危房、高空坠物、违规搭建")],
         "locked_major": "building",
         "locked_subcategory": codes[0],
         "category_slots": {code: {} for code in codes},
-        "missing": [code + "_structure" if code != "facade_fall" else code + "_source"
-                    for code in codes],
+        "missing": [
+            "structure" if code == "dangerous_building"
+            else "source" if code == "falling_object"
+            else "structure_detail"
+            for code in codes
+        ],
         "issues": [
             {"major_code": "building", "subcategory_code": "dangerous_building",
              "slots": {}, "missing": ["structure"]},
-            {"major_code": "building", "subcategory_code": "wall_crack_lean",
-             "slots": {}, "missing": ["structure"]},
-            {"major_code": "building", "subcategory_code": "facade_fall",
+            {"major_code": "building", "subcategory_code": "falling_object",
              "slots": {}, "missing": ["source"]},
+            {"major_code": "building", "subcategory_code": "illegal_structure",
+             "slots": {}, "missing": ["structure_detail"]},
         ],
         "next_action": "ask_critical_question",
         "clarification_question": "",
@@ -128,7 +132,7 @@ def test_three_hazards_use_three_clause_numbers(monkeypatch):
     assert question.startswith("还想确认三件事：")
     assert question.count("①") == 1 and question.count("②") == 1 and question.count("③") == 1
     assert "①『危房』" in question
-    assert "③『外立面脱落』" in question
+    assert "③『违规搭建』" in question
 
 
 def test_the_question_is_still_asked_when_the_focus_needs_nothing(monkeypatch):
@@ -143,14 +147,14 @@ def test_the_question_is_still_asked_when_the_focus_needs_nothing(monkeypatch):
         "locked_subcategory": "manhole_damage",
         "category_slots": {"manhole_damage": {"defect": "整个盖子都没了"},
                            "street_light_pole": {}, "road_surface_collapse": {}},
-        "missing": ["street_light_pole_describe", "road_surface_collapse_defect"],
+        "missing": ["street_light_pole_pole_status", "road_surface_collapse_collapse_scale"],
         "issues": [
             {"major_code": "municipal", "subcategory_code": "manhole_damage",
              "slots": {"defect": "整个盖子都没了"}, "missing": []},
             {"major_code": "municipal", "subcategory_code": "street_light_pole",
-             "slots": {}, "missing": ["describe"]},
+             "slots": {}, "missing": ["pole_status"]},
             {"major_code": "municipal", "subcategory_code": "road_surface_collapse",
-             "slots": {}, "missing": ["defect"]},
+             "slots": {}, "missing": ["collapse_scale"]},
         ],
         "next_action": "ask_critical_question",
         "clarification_question": "",

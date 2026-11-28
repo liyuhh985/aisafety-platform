@@ -1,0 +1,27 @@
+{
+  "sha256": "09b1498c2b4b6d11c460cd6e3f6fe17099711b26dd4ccdd3b280a89ed5451428",
+  "file": "scaffold_guard_1_09b1498c2b4b.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"scaffold_guard\",\"severity\":\"高\",\"description\":\"建筑楼层临边区域防护不足，仅见稀疏钢筋、杂乱钢管和外露竖向钢筋，未见连续可靠的防护栏杆或安全网，存在人员高处坠落及钢筋刺伤风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑楼层边缘及外侧临边区域\",\"rectification\":[\"按规范设置连续牢固的临边防护栏杆和安全网\",\"对临边外露钢筋加设防护帽或采取隔离警示措施\",\"加强临边作业安全交底和现场巡查，及时整改防护缺陷\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "建筑楼层临边区域防护不足，仅见稀疏钢筋、杂乱钢管和外露竖向钢筋，未见连续可靠的防护栏杆或安全网，存在人员高处坠落及钢筋刺伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑楼层边缘及外侧临边区域",
+    "rectification": [
+      "按规范设置连续牢固的临边防护栏杆和安全网",
+      "对临边外露钢筋加设防护帽或采取隔离警示措施",
+      "加强临边作业安全交底和现场巡查，及时整改防护缺陷"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

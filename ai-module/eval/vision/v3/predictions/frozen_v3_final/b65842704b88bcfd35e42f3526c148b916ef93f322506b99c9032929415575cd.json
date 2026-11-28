@@ -1,0 +1,28 @@
+{
+  "sha256": "b65842704b88bcfd35e42f3526c148b916ef93f322506b99c9032929415575cd",
+  "file": "temporary_power_1_b65842704b88.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"temporary_power\",\n  \"severity\": \"高\",\n  \"description\": \"施工现场临时配电箱右侧密集插接多个工业插头，线缆杂乱拖地，箱门未可靠封闭，周边环境杂乱，存在触电、短路及火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工现场临时配电箱及周边线缆处\",\n  \"rectification\": [\n    \"按施工临时用电规范设置配电箱，落实一机一闸一漏保，禁止一箱多插和私拉乱接\",\n    \"整理并架空或穿管保护线缆，避免拖地、浸水、受碾压和机械损伤\",\n    \"由持证电工检查配电箱及插接负荷，箱门可靠关闭上锁并设置明显安全警示标识\",\n    \"清理配电箱周边杂物，保持操作通道和用电环境整洁\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "temporary_power",
+    "severity": "高",
+    "description": "施工现场临时配电箱右侧密集插接多个工业插头，线缆杂乱拖地，箱门未可靠封闭，周边环境杂乱，存在触电、短路及火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工现场临时配电箱及周边线缆处",
+    "rectification": [
+      "按施工临时用电规范设置配电箱，落实一机一闸一漏保，禁止一箱多插和私拉乱接",
+      "整理并架空或穿管保护线缆，避免拖地、浸水、受碾压和机械损伤",
+      "由持证电工检查配电箱及插接负荷，箱门可靠关闭上锁并设置明显安全警示标识",
+      "清理配电箱周边杂物，保持操作通道和用电环境整洁"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

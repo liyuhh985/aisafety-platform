@@ -1,0 +1,27 @@
+{
+  "sha256": "1351c39d5254dbc51cc64a78305aa53af648b068cca1b901fdb807e64eeaaf1f",
+  "file": "traffic_facility_damage_2_1351c39d5254.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"traffic_facility_damage\",\n  \"severity\": \"高\",\n  \"description\": \"白色金属护栏底部及立柱根部严重锈蚀、锈穿，结构强度明显下降，存在断裂、倾倒风险，可能失去隔离防护作用，危及行人安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道旁白色金属护栏，尤其右下立柱与基座连接处\",\n  \"rectification\": [\n    \"立即对锈蚀护栏设置警示并临时加固，防止倾倒伤人\",\n    \"除锈防腐或更换锈蚀严重的立柱和横杆\",\n    \"对该路段护栏开展全面排查，建立定期维护制度\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "高",
+    "description": "白色金属护栏底部及立柱根部严重锈蚀、锈穿，结构强度明显下降，存在断裂、倾倒风险，可能失去隔离防护作用，危及行人安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道旁白色金属护栏，尤其右下立柱与基座连接处",
+    "rectification": [
+      "立即对锈蚀护栏设置警示并临时加固，防止倾倒伤人",
+      "除锈防腐或更换锈蚀严重的立柱和横杆",
+      "对该路段护栏开展全面排查，建立定期维护制度"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "b65be725596701609d16ec71a33e888b08e1c550196528132e160da1a08bf9b7",
+  "file": "ROA0072.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"城市道路发生大面积塌陷，形成深坑并伴随涌水涌砂，路基被破坏且边缘悬空；现场虽已设置警戒线，但仍存在人员车辆坠落、地下管线进一步破损及周边塌陷扩大的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路中央（警戒线标有“西安”，塌陷坑邻近施工机械与人员）\",\"rectification\":[\"立即封闭塌陷区域及周边道路，扩大警戒围挡并安排专人值守，禁止车辆和人员进入。\",\"迅速排查地下管线、给排水及燃气电力设施，必要时关阀止水，防止次生灾害。\",\"组织专业队伍进行地质勘察、回填加固和路面修复，并持续监测周边沉降。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "城市道路发生大面积塌陷，形成深坑并伴随涌水涌砂，路基被破坏且边缘悬空；现场虽已设置警戒线，但仍存在人员车辆坠落、地下管线进一步破损及周边塌陷扩大的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路中央（警戒线标有“西安”，塌陷坑邻近施工机械与人员）",
+    "rectification": [
+      "立即封闭塌陷区域及周边道路，扩大警戒围挡并安排专人值守，禁止车辆和人员进入。",
+      "迅速排查地下管线、给排水及燃气电力设施，必要时关阀止水，防止次生灾害。",
+      "组织专业队伍进行地质勘察、回填加固和路面修复，并持续监测周边沉降。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

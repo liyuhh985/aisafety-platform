@@ -1,0 +1,23 @@
+{
+  "sha256": "0b8fb2c9ba175a98f16f47b893b32a886a0fbc22f69d540304266eed690edf6d",
+  "file": "neg_31_0b8fb2c9ba17.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"消防通道地面标线清晰，禁停标识完好，未见车辆、杂物等占用堵塞，小猫停留不构成安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "消防通道地面标线清晰，禁停标识完好，未见车辆、杂物等占用堵塞，小猫停留不构成安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

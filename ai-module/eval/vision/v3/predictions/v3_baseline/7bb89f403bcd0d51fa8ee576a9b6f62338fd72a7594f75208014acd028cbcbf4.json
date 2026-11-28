@@ -1,0 +1,27 @@
+{
+  "sha256": "7bb89f403bcd0d51fa8ee576a9b6f62338fd72a7594f75208014acd028cbcbf4",
+  "file": "no_barrier_4_7bb89f403bcd.png",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_warning\",\"severity\":\"中\",\"description\":\"施工现场可见一排新建金属立柱，周边地面碎石、金属构件散落，未设置明显安全警示标志和隔离措施；人员误入作业区或绊倒、碰撞立柱的风险较高。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"新建金属立柱施工区域及地面材料堆放处\",\"rectification\":[\"设置连续硬质围挡、警示牌和锥桶，明确施工区域边界\",\"及时清理散落金属构件和碎石，平整作业通道\",\"对未固定立柱采取临时支撑固定，并安排专人看护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "中",
+    "description": "施工现场可见一排新建金属立柱，周边地面碎石、金属构件散落，未设置明显安全警示标志和隔离措施；人员误入作业区或绊倒、碰撞立柱的风险较高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "新建金属立柱施工区域及地面材料堆放处",
+    "rectification": [
+      "设置连续硬质围挡、警示牌和锥桶，明确施工区域边界",
+      "及时清理散落金属构件和碎石，平整作业通道",
+      "对未固定立柱采取临时支撑固定，并安排专人看护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "da19822e39a0d00cee0fdcbac76109d4487047d4ac4695d3b320905d6312d15e",
+  "file": "NEGGAR05.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面为人行道与道路绿化场景，花箱沿路缘摆放，剩余通行空间充足；未见井盖破损、路面塌陷、设施损坏、占道堵塞等明确安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为人行道与道路绿化场景，花箱沿路缘摆放，剩余通行空间充足；未见井盖破损、路面塌陷、设施损坏、占道堵塞等明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

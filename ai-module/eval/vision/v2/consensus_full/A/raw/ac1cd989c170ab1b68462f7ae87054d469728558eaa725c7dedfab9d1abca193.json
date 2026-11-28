@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"市场摊位摆放于店铺前，是否属占道经营需确认是否为指定市场区域\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "市场摊位摆放于店铺前，是否属占道经营需确认是否为指定市场区域"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "9c4212a920fcd33cc87b149257b5f2ec79e4cd4a2e3a9e66cedc7bcea20824ef",
+  "file": "GAR0007.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"建筑旁垃圾分类台前及人行道边缘大量垃圾、塑料袋和枯枝落叶堆积，已形成明显堆放并占用部分通行空间，易滋生蚊虫、产生异味，影响环境卫生和行人通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑旁红色垃圾分类台前及人行道边缘\",\n  \"rectification\": [\n    \"立即清运堆积垃圾并清洗污染地面\",\n    \"规范垃圾分类收集点管理，增设密闭收集设施或围挡\",\n    \"加强日常巡查和清运频次，防止垃圾再次堆积\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "建筑旁垃圾分类台前及人行道边缘大量垃圾、塑料袋和枯枝落叶堆积，已形成明显堆放并占用部分通行空间，易滋生蚊虫、产生异味，影响环境卫生和行人通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑旁红色垃圾分类台前及人行道边缘",
+    "rectification": [
+      "立即清运堆积垃圾并清洗污染地面",
+      "规范垃圾分类收集点管理，增设密闭收集设施或围挡",
+      "加强日常巡查和清运频次，防止垃圾再次堆积"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

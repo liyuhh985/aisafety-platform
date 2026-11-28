@@ -1,0 +1,11 @@
+{
+  "raw": "```json\n{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"deep_pit\", \"evidence\": \"工人站在深基坑边缘作业，坑边无明显围挡防护\"}\n```",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "evidence": "工人站在深基坑边缘作业，坑边无明显围挡防护"
+  }
+}

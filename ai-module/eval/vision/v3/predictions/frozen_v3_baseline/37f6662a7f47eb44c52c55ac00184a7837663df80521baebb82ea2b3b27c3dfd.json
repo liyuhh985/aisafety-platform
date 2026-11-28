@@ -1,0 +1,27 @@
+{
+  "sha256": "37f6662a7f47eb44c52c55ac00184a7837663df80521baebb82ea2b3b27c3dfd",
+  "file": "hazmat_storage_2_37f6662a7f47.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"草丛中露天放置多个锈蚀金属桶，桶体腐蚀明显，疑似盛装油类或化工废液，存在渗漏污染土壤水体、人员中毒及燃爆风险；现场人员穿戴防护装备处置。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"户外草丛/湿地中的金属桶堆放处\",\n  \"rectification\": [\n    \"立即设置警戒隔离，限制无关人员靠近\",\n    \"鉴别桶内物质并按危废规范防渗收集、密封转运\",\n    \"由有资质单位清运处置，并检测周边土壤和水体\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "草丛中露天放置多个锈蚀金属桶，桶体腐蚀明显，疑似盛装油类或化工废液，存在渗漏污染土壤水体、人员中毒及燃爆风险；现场人员穿戴防护装备处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "户外草丛/湿地中的金属桶堆放处",
+    "rectification": [
+      "立即设置警戒隔离，限制无关人员靠近",
+      "鉴别桶内物质并按危废规范防渗收集、密封转运",
+      "由有资质单位清运处置，并检测周边土壤和水体"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

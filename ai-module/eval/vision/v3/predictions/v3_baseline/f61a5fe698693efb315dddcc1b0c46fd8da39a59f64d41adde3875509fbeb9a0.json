@@ -1,0 +1,28 @@
+{
+  "sha256": "f61a5fe698693efb315dddcc1b0c46fd8da39a59f64d41adde3875509fbeb9a0",
+  "file": "hazmat_storage_4_f61a5fe69869.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"金属笼内密集存放大量液化气/丙烷钢瓶，上下层叠放，部分阀门或瓶帽暴露，未见防倾倒措施和醒目禁火警示，地面有落叶等可燃物且紧邻建筑外墙；一旦泄漏、受热或倾倒，可能引发火灾爆炸。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙旁的金属笼内\",\n  \"rectification\": [\n    \"立即清点气瓶数量，按规定限量、分类、通风存放，严禁超量储存\",\n    \"设置禁火警示标志、防倾倒链条或支架，并清除周边落叶等可燃物\",\n    \"将上层气瓶移至地面稳妥位置，避免叠放和坠落风险\",\n    \"由燃气或应急管理部门核查储存资质、安全距离及消防器材配置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "金属笼内密集存放大量液化气/丙烷钢瓶，上下层叠放，部分阀门或瓶帽暴露，未见防倾倒措施和醒目禁火警示，地面有落叶等可燃物且紧邻建筑外墙；一旦泄漏、受热或倾倒，可能引发火灾爆炸。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙旁的金属笼内",
+    "rectification": [
+      "立即清点气瓶数量，按规定限量、分类、通风存放，严禁超量储存",
+      "设置禁火警示标志、防倾倒链条或支架，并清除周边落叶等可燃物",
+      "将上层气瓶移至地面稳妥位置，避免叠放和坠落风险",
+      "由燃气或应急管理部门核查储存资质、安全距离及消防器材配置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

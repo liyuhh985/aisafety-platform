@@ -1,0 +1,29 @@
+{
+  "sha256": "11726a3c3da619f9279689d0ea2e58995e763e590be2181c8aeba61eae1bc9ef",
+  "file": "GAS0050.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"高\",\n  \"description\": \"开挖沟槽周边未见连续硬质围挡和有效警示，坑边无临边防护，人员距坑边过近且有人员下坑作业，存在坠落、坍塌及夜间误入风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中央及下方开挖沟槽及周边作业区域\",\n  \"rectification\": [\n    \"立即沿沟槽周边设置连续硬质围挡，并增设警示标志和夜间警示灯。\",\n    \"完善坑边临边防护，设置安全通道或梯子，禁止非作业人员靠近。\",\n    \"下坑作业前落实放坡、支护和监护措施，作业人员规范佩戴安全帽。\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "开挖沟槽周边未见连续硬质围挡和有效警示，坑边无临边防护，人员距坑边过近且有人员下坑作业，存在坠落、坍塌及夜间误入风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中央及下方开挖沟槽及周边作业区域",
+    "rectification": [
+      "立即沿沟槽周边设置连续硬质围挡，并增设警示标志和夜间警示灯。",
+      "完善坑边临边防护，设置安全通道或梯子，禁止非作业人员靠近。",
+      "下坑作业前落实放坡、支护和监护措施，作业人员规范佩戴安全帽。"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

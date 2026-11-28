@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"gas_pipe_aging\", \"evidence\": \"燃气管道阀门锈蚀老化，管线裸露\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "evidence": "燃气管道阀门锈蚀老化，管线裸露"
+  }
+}

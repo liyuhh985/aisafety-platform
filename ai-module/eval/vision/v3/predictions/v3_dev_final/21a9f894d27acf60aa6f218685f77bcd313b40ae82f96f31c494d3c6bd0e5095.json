@@ -1,0 +1,27 @@
+{
+  "sha256": "21a9f894d27acf60aa6f218685f77bcd313b40ae82f96f31c494d3c6bd0e5095",
+  "file": "road_occupancy_3_21a9f894d27a.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"人行道被连排红色帐篷摊位、货架和纸箱杂物大量占用，通行空间明显变窄，行人需绕行，存在拥堵、绊倒及应急通行受阻风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"沿街人行道（红色帐篷摊位集中区域）\",\n  \"rectification\": [\n    \"责令清理占道摊位和乱堆杂物，恢复人行道通行宽度。\",\n    \"划定合规经营区域并加强巡查，防止占道反弹。\",\n    \"保持盲道和无障碍通道畅通。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "人行道被连排红色帐篷摊位、货架和纸箱杂物大量占用，通行空间明显变窄，行人需绕行，存在拥堵、绊倒及应急通行受阻风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街人行道（红色帐篷摊位集中区域）",
+    "rectification": [
+      "责令清理占道摊位和乱堆杂物，恢复人行道通行宽度。",
+      "划定合规经营区域并加强巡查，防止占道反弹。",
+      "保持盲道和无障碍通道畅通。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

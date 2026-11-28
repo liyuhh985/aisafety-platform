@@ -1,0 +1,28 @@
+{
+  "sha256": "6e8f46fd422b299d47afe079db2f68817867917b056522437d4a7ecd403a505c",
+  "file": "MAN0095.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"道路中央一处井盖缺失/被打开，井口裸露，旁边有碎石堆，虽放置锥桶警示，但车辆或行人仍有坠落、绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"机动车道中央、锥桶围挡处\",\n  \"rectification\": [\n    \"立即设置连续围挡和醒目警示，防止车辆行人靠近\",\n    \"尽快复位或更换井盖，确保井盖与井座稳固\",\n    \"清理井口周边碎石等杂物，恢复路面平整\",\n    \"排查周边同类井盖设施，防止再次发生\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "道路中央一处井盖缺失/被打开，井口裸露，旁边有碎石堆，虽放置锥桶警示，但车辆或行人仍有坠落、绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "机动车道中央、锥桶围挡处",
+    "rectification": [
+      "立即设置连续围挡和醒目警示，防止车辆行人靠近",
+      "尽快复位或更换井盖，确保井盖与井座稳固",
+      "清理井口周边碎石等杂物，恢复路面平整",
+      "排查周边同类井盖设施，防止再次发生"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

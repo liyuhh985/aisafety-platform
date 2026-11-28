@@ -1,0 +1,176 @@
+{
+ "_meta": {
+  "name": "gas_leak 真实图评测集",
+  "category": "utility/gas_leak",
+  "category_label": "电气与燃气/燃气泄漏",
+  "source": "百度图片 → 原站直链下载 → 自动筛选 → 粗筛 → 标注 → 严格复检",
+  "rebuild": "2026-10-31",
+  "positive": 8,
+  "negative": 0,
+  "audit_removed": 9
+ },
+ "rejected": [
+  {
+   "file": "GAS0025.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "高楼外立面，无可见燃气泄漏隐患"
+  },
+  {
+   "file": "GAS0029.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "模糊公路行车画面，无可见燃气泄漏隐患主体"
+  },
+  {
+   "file": "GAS0035.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "GAS0031.jpg",
+   "reason": "非该类别",
+   "detail": "无隐患"
+  },
+  {
+   "file": "GAS0018.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "高层住宅楼多层烧毁，窗口喷出明火浓烟，外墙焦黑"
+  },
+  {
+   "file": "GAS0033.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "GAS0067.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "GAS0076.jpg",
+   "reason": "正面案例",
+   "detail": "液化气罐装燃气报警器，红圈打勾示意装置合规正确"
+  }
+ ],
+ "items": {
+  "GAS0023.jpg": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "中",
+   "key_evidence": "夜间拍摄的黄色燃气管道阀门，法兰连接处锈蚀严重、漆面剥落",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "hard",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "GAS0038.jpg": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "高",
+   "key_evidence": "燃气管道接头处有白色泡沫液渗出滴落，管道与燃气表上布满泡沫，显示该处存在燃气泄漏",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "小红书",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "GAS0046.jpg": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "高",
+   "key_evidence": "航拍路面多个井盖大量白色蒸汽/气体喷出，周边有积水和斑马线",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "你以为地震最可",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "GAS0048.jpg": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "高",
+   "key_evidence": "高速路上一辆液化气槽罐车尾部正喷出大量白色气体，罐体标有红色「爆」字，周围多名穿防护服的救援人员在处置，路面铺满消防水带",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "爆、Enric、CIMC ENRIC、皖NE456挂、电子警察、湖北日报",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "GAS0051.jpg": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "高",
+   "key_evidence": "街边地面冒出大团白色浓烟/气团，笼罩停放车辆与人行道",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "三江……食品有限公司（店铺招牌）",
+   "difficulty": "hard",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "GAS0065.png": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "高",
+   "key_evidence": "老旧液化气钢瓶阀门连接处锈蚀老化，连接红色软管，周围堆放杂物，存在燃气泄漏风险",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "阀门刻字、阀门标签",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "GAS0059.jpg": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "中",
+   "key_evidence": "黄色液化气钢瓶阀门及减压阀特写，软管老化变色，瓶身锈蚀，周边堆放杂物塑料袋，室内近距离使用",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "GAS0056.jpg": {
+   "has_hazard": true,
+   "major_category": "utility",
+   "subcategory": "gas_leak",
+   "severity": "中",
+   "key_evidence": "橱柜内燃气表接橙色软管，管道接头多处缠绕胶带封堵，阀门挂黄色检验标签",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "黄色阀门标签文字、橙色软管印字、OPPO R15水印及拍摄日期地点",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  }
+ }
+}

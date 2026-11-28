@@ -1,0 +1,14 @@
+{
+  "baseline": {
+    "id": "baseline",
+    "path": "E:\\java\\newProject\\ai-module\\eval\\vision\\v2\\prompts\\v2b\\baseline.txt",
+    "sha256": "0d9eb65c442b1cab245c5e8e5ceced83ba31bec06aa91ac5f982d325c9d46718",
+    "characters": 4549
+  },
+  "final": {
+    "id": "final",
+    "path": "E:\\java\\newProject\\ai-module\\eval\\vision\\v2\\prompts\\v2b\\final.txt",
+    "sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+    "characters": 4819
+  }
+}

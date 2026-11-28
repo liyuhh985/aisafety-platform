@@ -1,0 +1,27 @@
+{
+  "sha256": "d8c39b68c7c2c656c1e4dff3e150ecc116c8ccc97780e2e7b45b3729489745e0",
+  "file": "DIS0003.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"exposed_wire\",\"severity\":\"高\",\"description\":\"配电箱或电缆沟内大量电线杂乱敷设，多处接头仅用绝缘胶带缠绕，部分线缆绝缘层脏污老化且疑似破损；易引发漏电、短路及电气火灾，存在触电风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电缆沟/配电箱内部，绿色盖板旁\",\"rectification\":[\"立即断电并由持证电工排查线路\",\"整理杂乱线缆，规范穿管敷设，接头置于合格接线盒内\",\"更换老化、破损线缆，做好防水防潮和接地保护，整改后检测验收\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "配电箱或电缆沟内大量电线杂乱敷设，多处接头仅用绝缘胶带缠绕，部分线缆绝缘层脏污老化且疑似破损；易引发漏电、短路及电气火灾，存在触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电缆沟/配电箱内部，绿色盖板旁",
+    "rectification": [
+      "立即断电并由持证电工排查线路",
+      "整理杂乱线缆，规范穿管敷设，接头置于合格接线盒内",
+      "更换老化、破损线缆，做好防水防潮和接地保护，整改后检测验收"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"scaffold_guard\", \"evidence\": \"高层临边作业无临边防护，竹木脚手架简陋\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "evidence": "高层临边作业无临边防护，竹木脚手架简陋"
+  }
+}

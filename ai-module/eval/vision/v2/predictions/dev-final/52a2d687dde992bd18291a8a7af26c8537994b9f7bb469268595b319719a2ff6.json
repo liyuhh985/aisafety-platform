@@ -1,0 +1,27 @@
+{
+  "sha256": "52a2d687dde992bd18291a8a7af26c8537994b9f7bb469268595b319719a2ff6",
+  "file": "DAN0051.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"建筑安全\",\"major_category\":\"building\",\"subcategory\":\"wall_crack_lean\",\"severity\":\"中\",\"description\":\"墙面/顶棚可见多条裂缝，其中一条较长且局部较宽，呈不规则延伸，存在面层开裂、渗水或继续扩展风险，需核查是否为结构性裂缝。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内白色墙面或顶棚，具体位置无法确定\",\"rectification\":[\"委托专业机构检测裂缝性质及结构安全影响\",\"记录裂缝宽度、长度变化并观察是否持续扩展\",\"排查渗水、基层空鼓等原因后按规范修补\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "wall_crack_lean",
+    "severity": "中",
+    "description": "墙面/顶棚可见多条裂缝，其中一条较长且局部较宽，呈不规则延伸，存在面层开裂、渗水或继续扩展风险，需核查是否为结构性裂缝。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内白色墙面或顶棚，具体位置无法确定",
+    "rectification": [
+      "委托专业机构检测裂缝性质及结构安全影响",
+      "记录裂缝宽度、长度变化并观察是否持续扩展",
+      "排查渗水、基层空鼓等原因后按规范修补"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

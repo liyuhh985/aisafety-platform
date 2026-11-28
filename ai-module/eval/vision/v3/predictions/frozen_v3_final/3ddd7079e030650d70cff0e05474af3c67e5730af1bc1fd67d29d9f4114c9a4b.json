@@ -1,0 +1,26 @@
+{
+  "sha256": "3ddd7079e030650d70cff0e05474af3c67e5730af1bc1fd67d29d9f4114c9a4b",
+  "file": "neg_46_3ddd7079e030.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"中\",\n  \"description\": \"道路井盖表面锈蚀、防滑纹磨损，左侧边缘可见破损/孔洞，周边沥青修补不平整。井盖承重可能下降，行人或车辆经过时有绊倒、塌陷风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央井盖处\",\n  \"rectification\": [\n    \"更换破损井盖并检查井圈固定情况\",\n    \"整改前设置警示锥或临时围挡，提醒车辆行人避让\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "道路井盖表面锈蚀、防滑纹磨损，左侧边缘可见破损/孔洞，周边沥青修补不平整。井盖承重可能下降，行人或车辆经过时有绊倒、塌陷风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央井盖处",
+    "rectification": [
+      "更换破损井盖并检查井圈固定情况",
+      "整改前设置警示锥或临时围挡，提醒车辆行人避让"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

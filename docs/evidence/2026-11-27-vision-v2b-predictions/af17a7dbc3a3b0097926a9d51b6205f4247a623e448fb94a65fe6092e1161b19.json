@@ -1,0 +1,29 @@
+{
+  "sha256": "af17a7dbc3a3b0097926a9d51b6205f4247a623e448fb94a65fe6092e1161b19",
+  "file": "DAN0004.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"中\",\n  \"description\": \"建筑外墙勒脚处可见明显水平裂缝，墙根与地面交接处脱开，周边地坪开裂、下沉、破碎并长有植物，提示地基沉降或散水失效，可能影响墙体稳定并造成人员绊倒。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙底部及周边地坪，窗台悬挑结构下方\",\n  \"rectification\": [\n    \"委托专业机构对墙体裂缝和地基沉降进行检测鉴定，明确是否需要结构加固。\",\n    \"修复破损散水和地坪，封堵裂缝并完善排水，清除植物根系。\",\n    \"设置临时警示，避免人员靠近裂缝和破损地面，直至完成修复。\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_surface_collapse\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "中",
+    "description": "建筑外墙勒脚处可见明显水平裂缝，墙根与地面交接处脱开，周边地坪开裂、下沉、破碎并长有植物，提示地基沉降或散水失效，可能影响墙体稳定并造成人员绊倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙底部及周边地坪，窗台悬挑结构下方",
+    "rectification": [
+      "委托专业机构对墙体裂缝和地基沉降进行检测鉴定，明确是否需要结构加固。",
+      "修复破损散水和地坪，封堵裂缝并完善排水，清除植物根系。",
+      "设置临时警示，避免人员靠近裂缝和破损地面，直至完成修复。"
+    ],
+    "secondary_subcategories": [
+      "road_surface_collapse"
+    ]
+  },
+  "error": ""
+}

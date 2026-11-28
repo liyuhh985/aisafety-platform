@@ -1,0 +1,29 @@
+{
+  "sha256": "559ff5d319e44be026762d2573f127b24bc5c094ae78b2f6905ffd6f556175b2",
+  "file": "ILL0054.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"商店门前人行道上搭设钢管框架进行施工或高处作业，未设置连续围挡封闭作业区，未见明显警示标志，行人在架体旁通行，存在坠物、碰撞和绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"武汉市国金天地肥肥虾庄门前人行道\",\n  \"rectification\": [\n    \"沿施工区域设置连续硬质围挡，将作业区与行人通行区隔离\",\n    \"增设安全警示标志和夜间警示灯，并安排专人引导行人绕行\",\n    \"清理占道材料和工具，保障人行道及盲道畅通\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "商店门前人行道上搭设钢管框架进行施工或高处作业，未设置连续围挡封闭作业区，未见明显警示标志，行人在架体旁通行，存在坠物、碰撞和绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "武汉市国金天地肥肥虾庄门前人行道",
+    "rectification": [
+      "沿施工区域设置连续硬质围挡，将作业区与行人通行区隔离",
+      "增设安全警示标志和夜间警示灯，并安排专人引导行人绕行",
+      "清理占道材料和工具，保障人行道及盲道畅通"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

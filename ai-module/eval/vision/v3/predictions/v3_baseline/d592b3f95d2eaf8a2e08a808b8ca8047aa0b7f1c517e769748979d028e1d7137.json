@@ -1,0 +1,23 @@
+{
+  "sha256": "d592b3f95d2eaf8a2e08a808b8ca8047aa0b7f1c517e769748979d028e1d7137",
+  "file": "neg_25_d592b3f95d2e.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"图片为电梯楼层按钮面板，按钮、显示屏及标识未见明显损坏、停运、异响或人员被困等安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为电梯楼层按钮面板，按钮、显示屏及标识未见明显损坏、停运、异响或人员被困等安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "ff0eec08a70d87a03e02aa585cacd44f7bde4bb132733c135b148e6876d2c95d",
+  "file": "NEGGAS05.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"燃气表上方两根燃气软管直接穿墙，穿墙孔未见套管及密封封堵；软管穿墙易受摩擦、鼠咬或老化破损，可能造成燃气泄漏积聚，遇火源有燃爆风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内燃气表上方穿墙处\",\n  \"rectification\": [\n    \"由燃气公司检查，燃气连接软管不得穿墙，应改为明敷并可靠固定\",\n    \"穿墙部位加装套管并用不燃材料密封封堵\",\n    \"定期检漏并更换为合规定尺不锈钢波纹软管\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "燃气表上方两根燃气软管直接穿墙，穿墙孔未见套管及密封封堵；软管穿墙易受摩擦、鼠咬或老化破损，可能造成燃气泄漏积聚，遇火源有燃爆风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内燃气表上方穿墙处",
+    "rectification": [
+      "由燃气公司检查，燃气连接软管不得穿墙，应改为明敷并可靠固定",
+      "穿墙部位加装套管并用不燃材料密封封堵",
+      "定期检漏并更换为合规定尺不锈钢波纹软管"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

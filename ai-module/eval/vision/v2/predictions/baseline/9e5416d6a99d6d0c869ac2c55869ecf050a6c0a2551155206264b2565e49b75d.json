@@ -1,0 +1,23 @@
+{
+  "sha256": "9e5416d6a99d6d0c869ac2c55869ecf050a6c0a2551155206264b2565e49b75d",
+  "file": "NEGTRA02.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"图片为交通标志图例合集，展示禁止通行、限制载重、限速等标志，属于规范说明或教学示意图，未发现实际道路设施损坏、占用或通行安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片为交通标志图例合集，展示禁止通行、限制载重、限速等标志，属于规范说明或教学示意图，未发现实际道路设施损坏、占用或通行安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "eaa3a2cfc974f7fcaf25217c285be07a5c09dab69c471aeb97b71efb07c50758",
+  "file": "NO0013.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"施工现场仅以红白警戒线隔离，未设置连续硬质围挡，大型装载机停放区域与外部道路未有效封闭，人员误入可能发生机械伤害。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工重地入口及装载机停放区\",\n  \"rectification\": [\n    \"沿施工边界设置连续硬质围挡并实行封闭管理\",\n    \"入口处设置门禁或安排专人看护，禁止无关人员进入\",\n    \"完善夜间警示灯和反光标识，定期检查隔离设施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "施工现场仅以红白警戒线隔离，未设置连续硬质围挡，大型装载机停放区域与外部道路未有效封闭，人员误入可能发生机械伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工重地入口及装载机停放区",
+    "rectification": [
+      "沿施工边界设置连续硬质围挡并实行封闭管理",
+      "入口处设置门禁或安排专人看护，禁止无关人员进入",
+      "完善夜间警示灯和反光标识，定期检查隔离设施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

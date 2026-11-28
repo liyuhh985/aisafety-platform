@@ -28,7 +28,7 @@ def test_option_words_are_not_echoes():
     assert is_echo_slot("缺失", "manhole_damage") is False
     assert is_echo_slot("破损", "manhole_damage") is False
     assert is_echo_slot("松动", "manhole_damage") is False
-    assert is_echo_slot("裂缝", "wall_crack_lean") is False
+    assert is_echo_slot("裂缝", "dangerous_building") is False
 
 
 def test_longer_names_are_still_echoes():

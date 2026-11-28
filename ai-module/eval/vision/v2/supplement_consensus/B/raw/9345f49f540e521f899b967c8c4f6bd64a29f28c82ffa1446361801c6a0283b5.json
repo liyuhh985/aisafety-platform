@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"building\", \"subcategory\": \"structural_damage\", \"evidence\": \"房屋墙体开裂坍塌，院内散落大量建筑残骸\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "building",
+    "subcategory": "structural_damage",
+    "evidence": "房屋墙体开裂坍塌，院内散落大量建筑残骸"
+  }
+}

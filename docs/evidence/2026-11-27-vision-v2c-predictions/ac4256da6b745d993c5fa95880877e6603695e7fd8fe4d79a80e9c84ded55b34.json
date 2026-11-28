@@ -1,0 +1,28 @@
+{
+  "sha256": "ac4256da6b745d993c5fa95880877e6603695e7fd8fe4d79a80e9c84ded55b34",
+  "file": "DIS0079.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"中\",\n  \"description\": \"设备旁墙角地面有多个插线板串联使用，插头密集且电线杂乱拖地，未固定、未穿管保护，并连接较大设备，易造成过载、短路、触电或绊倒，存在电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"设备右侧墙角及地面插线板处\",\n  \"rectification\": [\n    \"停止插线板串联使用，拆除临时接线\",\n    \"由专业电工按设备功率敷设专用回路和固定插座\",\n    \"线缆应穿管或固定敷设，远离地面通道并避免受压拖拽\",\n    \"核查设备功率与线路容量，加装漏电保护和过载保护\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "设备旁墙角地面有多个插线板串联使用，插头密集且电线杂乱拖地，未固定、未穿管保护，并连接较大设备，易造成过载、短路、触电或绊倒，存在电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "设备右侧墙角及地面插线板处",
+    "rectification": [
+      "停止插线板串联使用，拆除临时接线",
+      "由专业电工按设备功率敷设专用回路和固定插座",
+      "线缆应穿管或固定敷设，远离地面通道并避免受压拖拽",
+      "核查设备功率与线路容量，加装漏电保护和过载保护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

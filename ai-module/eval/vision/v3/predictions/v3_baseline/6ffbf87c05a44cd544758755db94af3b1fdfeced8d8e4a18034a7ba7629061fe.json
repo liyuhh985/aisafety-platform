@@ -1,0 +1,27 @@
+{
+  "sha256": "6ffbf87c05a44cd544758755db94af3b1fdfeced8d8e4a18034a7ba7629061fe",
+  "file": "temporary_power_4_6ffbf87c05a4.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"路边配电/控制箱内部线路杂乱裸露，防护不完整，箱旁有大量电缆盘绕，存在漏电、触电及短路起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"路边配电/控制箱处\",\n  \"rectification\": [\n    \"立即断电并安排专业电工检修\",\n    \"整理、规范箱内线路并恢复箱体防护\",\n    \"清理周边盘绕电缆，设置防触电警示\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "路边配电/控制箱内部线路杂乱裸露，防护不完整，箱旁有大量电缆盘绕，存在漏电、触电及短路起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "路边配电/控制箱处",
+    "rectification": [
+      "立即断电并安排专业电工检修",
+      "整理、规范箱内线路并恢复箱体防护",
+      "清理周边盘绕电缆，设置防触电警示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

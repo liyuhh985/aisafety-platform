@@ -1,0 +1,27 @@
+{
+  "sha256": "fda9ad2a9b57e8d655e73b7aff86f6d555cd61bc225b434f2f67aa7558f619ee",
+  "file": "neg_28_fda9ad2a9b57.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"消防栓箱内堆放黑色杂物，消火栓出水口附近被遮挡，消防水带未按要求盘挂和连接，紧急情况下可能无法快速取用，影响灭火救援。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内消防栓箱内\",\n  \"rectification\": [\n    \"立即清理消防栓箱内与消防器材无关的杂物，保持箱内整洁。\",\n    \"将消防水带按规范盘挂并可靠连接至消火栓接口，确保接口完好。\",\n    \"检查消火栓阀门、水枪、水带等配件是否齐全有效，并定期巡检。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "消防栓箱内堆放黑色杂物，消火栓出水口附近被遮挡，消防水带未按要求盘挂和连接，紧急情况下可能无法快速取用，影响灭火救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内消防栓箱内",
+    "rectification": [
+      "立即清理消防栓箱内与消防器材无关的杂物，保持箱内整洁。",
+      "将消防水带按规范盘挂并可靠连接至消火栓接口，确保接口完好。",
+      "检查消火栓阀门、水枪、水带等配件是否齐全有效，并定期巡检。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

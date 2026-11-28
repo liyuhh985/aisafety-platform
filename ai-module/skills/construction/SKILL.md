@@ -1,7 +1,7 @@
 ---
 name: construction
 category: construction
-description: 施工安全隐患，包括未设围挡、无安全警示、脚手架临边防护、深基坑和临时用电风险。
+description: 施工安全隐患，包括未设围挡、无安全警示、脚手架临边防护、深基坑、临时用电和有限空间作业风险。
 allowed_tools:
   - search_regulation
   - search_cases
@@ -10,6 +10,9 @@ routing_keywords:
   - 安全警示
   - 脚手架
   - 深基坑
+  - 有限空间
+  - 化粪池
+  - 硫化氢
   - 临时用电
 version: "1"
 ---
@@ -18,7 +21,7 @@ version: "1"
 
 ## 适用范围
 
-覆盖 no_barrier、no_warning、scaffold_guard、deep_pit、temporary_power。
+覆盖 no_barrier、no_warning、scaffold_guard、deep_pit、temporary_power、confined_space。
 
 ## 追问 SOP
 

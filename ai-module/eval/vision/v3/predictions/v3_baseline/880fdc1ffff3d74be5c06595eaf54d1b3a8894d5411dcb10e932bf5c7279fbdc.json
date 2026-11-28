@@ -1,0 +1,27 @@
+{
+  "sha256": "880fdc1ffff3d74be5c06595eaf54d1b3a8894d5411dcb10e932bf5c7279fbdc",
+  "file": "falling_object_4_880fdc1ffff3.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"车辆停放在建筑下方，后挡风玻璃被上方外墙脱落的大块水泥块/抹灰砸穿，车内及车身散落大量碎块。外立面存在持续掉落风险，可能砸伤行人或车辆，后果严重。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"黄色车辆停放处上方建筑外墙及后挡风玻璃处\",\n  \"rectification\": [\n    \"立即对上方外墙抹灰、瓷砖等松动部位进行排查并铲除，必要时搭设防护棚\",\n    \"在坠落影响范围内设置警戒线和警示牌，禁止人员车辆停放通行\",\n    \"清理坠落物并留存证据，对受损车辆定损理赔，同步建立外墙定期巡查制度\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "车辆停放在建筑下方，后挡风玻璃被上方外墙脱落的大块水泥块/抹灰砸穿，车内及车身散落大量碎块。外立面存在持续掉落风险，可能砸伤行人或车辆，后果严重。",
+    "reason_if_no_hazard": "",
+    "location_hint": "黄色车辆停放处上方建筑外墙及后挡风玻璃处",
+    "rectification": [
+      "立即对上方外墙抹灰、瓷砖等松动部位进行排查并铲除，必要时搭设防护棚",
+      "在坠落影响范围内设置警戒线和警示牌，禁止人员车辆停放通行",
+      "清理坠落物并留存证据，对受损车辆定损理赔，同步建立外墙定期巡查制度"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

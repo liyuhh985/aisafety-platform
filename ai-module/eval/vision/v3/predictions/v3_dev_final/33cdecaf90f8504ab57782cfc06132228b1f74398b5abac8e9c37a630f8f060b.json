@@ -1,0 +1,27 @@
+{
+  "sha256": "33cdecaf90f8504ab57782cfc06132228b1f74398b5abac8e9c37a630f8f060b",
+  "file": "blind_path_occupied_3_33cdecaf90f8.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"白色汽车左前轮及车头驶入并停放在人行道铺装砖面上，未见停车泊位标线，占用行人通行空间，行人需绕行；车辆碾压还易造成砖面松动、破损。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"白色汽车左前轮及车头下方的人行道砖面\",\"rectification\":[\"劝离占道车辆，恢复人行道正常通行\",\"在人行道入口设置隔离桩或石墩，防止机动车驶入\",\"加强巡查执法，并及时修复被碾压松动的铺装砖\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "白色汽车左前轮及车头驶入并停放在人行道铺装砖面上，未见停车泊位标线，占用行人通行空间，行人需绕行；车辆碾压还易造成砖面松动、破损。",
+    "reason_if_no_hazard": "",
+    "location_hint": "白色汽车左前轮及车头下方的人行道砖面",
+    "rectification": [
+      "劝离占道车辆，恢复人行道正常通行",
+      "在人行道入口设置隔离桩或石墩，防止机动车驶入",
+      "加强巡查执法，并及时修复被碾压松动的铺装砖"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

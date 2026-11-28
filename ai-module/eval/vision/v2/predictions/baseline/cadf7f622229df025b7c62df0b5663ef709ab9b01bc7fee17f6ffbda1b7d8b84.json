@@ -1,0 +1,27 @@
+{
+  "sha256": "cadf7f622229df025b7c62df0b5663ef709ab9b01bc7fee17f6ffbda1b7d8b84",
+  "file": "NEGSTR07.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"低\",\n  \"description\": \"室内地面堆放纸箱、包袋及装修材料，占用通行空间，易造成绊倒；纸箱等可燃物临时堆放也可能增加火灾风险。未见其他明显结构性或设施损坏隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内房间地面及门洞附近\",\n  \"rectification\": [\n    \"及时清理地面杂物，保持通道畅通\",\n    \"将纸箱等可燃物集中收纳并远离灯具、电源\",\n    \"装修材料分类码放，必要时设置临时警示\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "室内地面堆放纸箱、包袋及装修材料，占用通行空间，易造成绊倒；纸箱等可燃物临时堆放也可能增加火灾风险。未见其他明显结构性或设施损坏隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内房间地面及门洞附近",
+    "rectification": [
+      "及时清理地面杂物，保持通道畅通",
+      "将纸箱等可燃物集中收纳并远离灯具、电源",
+      "装修材料分类码放，必要时设置临时警示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

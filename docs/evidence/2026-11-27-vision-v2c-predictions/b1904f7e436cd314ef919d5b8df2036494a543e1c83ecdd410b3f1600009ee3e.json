@@ -1,0 +1,27 @@
+{
+  "sha256": "b1904f7e436cd314ef919d5b8df2036494a543e1c83ecdd410b3f1600009ee3e",
+  "file": "SCA0083.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"建筑工地脚手架绿色密目安全网出现明显破口，防护不完整，且有工人从缺口处探出身体，存在高处坠落及物料坠落伤人的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑工地脚手架安全网处\",\n  \"rectification\": [\n    \"立即封闭或更换破损安全网，恢复脚手架临边防护完整性\",\n    \"加强施工现场巡查，禁止人员从安全网缺口探出或违规作业\",\n    \"高处作业人员应规范佩戴安全带并系挂可靠，落实防坠落措施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "建筑工地脚手架绿色密目安全网出现明显破口，防护不完整，且有工人从缺口处探出身体，存在高处坠落及物料坠落伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑工地脚手架安全网处",
+    "rectification": [
+      "立即封闭或更换破损安全网，恢复脚手架临边防护完整性",
+      "加强施工现场巡查，禁止人员从安全网缺口探出或违规作业",
+      "高处作业人员应规范佩戴安全带并系挂可靠，落实防坠落措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

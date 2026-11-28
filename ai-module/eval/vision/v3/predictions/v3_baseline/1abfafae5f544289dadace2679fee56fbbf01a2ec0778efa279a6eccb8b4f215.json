@@ -1,0 +1,29 @@
+{
+  "sha256": "1abfafae5f544289dadace2679fee56fbbf01a2ec0778efa279a6eccb8b4f215",
+  "file": "street_light_pole_4_1abfafae5f54.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"street_light_pole\",\"severity\":\"高\",\"description\":\"人行道旁一根灰色方形杆件严重弯折倾斜，底部疑似断裂，存在倒塌伤人风险；旁边方形井盖破损缺失，内部碎玻璃和杂物裸露，易造成行人绊倒或坠落伤害。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道靠近车行道一侧，杆体底部及树池旁井盖处\",\"rectification\":[\"立即在弯折杆件和破损井盖周边设置围挡与警示标志，防止行人靠近\",\"联系市政或产权单位尽快更换、加固受损杆件，消除倒塌风险\",\"更换破损井盖并清理井内碎玻璃杂物，恢复平整通行面\"],\"secondary_subcategories\":[\"manhole_damage\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "人行道旁一根灰色方形杆件严重弯折倾斜，底部疑似断裂，存在倒塌伤人风险；旁边方形井盖破损缺失，内部碎玻璃和杂物裸露，易造成行人绊倒或坠落伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道靠近车行道一侧，杆体底部及树池旁井盖处",
+    "rectification": [
+      "立即在弯折杆件和破损井盖周边设置围挡与警示标志，防止行人靠近",
+      "联系市政或产权单位尽快更换、加固受损杆件，消除倒塌风险",
+      "更换破损井盖并清理井内碎玻璃杂物，恢复平整通行面"
+    ],
+    "secondary_subcategories": [
+      "manhole_damage"
+    ]
+  },
+  "error": ""
+}

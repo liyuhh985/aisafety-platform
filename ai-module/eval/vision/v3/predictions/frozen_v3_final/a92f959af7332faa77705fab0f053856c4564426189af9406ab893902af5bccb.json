@@ -1,0 +1,28 @@
+{
+  "sha256": "a92f959af7332faa77705fab0f053856c4564426189af9406ab893902af5bccb",
+  "file": "neg_54_a92f959af733.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"人行道铺装施工区域未设置连续封闭的实体围挡，仅左侧有一小段简易隔离网，右侧工人作业区直接临街和商铺门口开放，且缺乏锥桶等醒目警示标志。行人易误入，存在绊倒、踩踏未干地砖或被材料/工具磕碰的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街商铺门前及人行道铺装施工区域\",\n  \"rectification\": [\n    \"必须沿施工区域边界设置连续、封闭的实体围挡，将作业区与行人通道物理隔离\",\n    \"在施工区周边增设锥桶、警示带及安全提示标牌，引导行人绕行\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "人行道铺装施工区域未设置连续封闭的实体围挡，仅左侧有一小段简易隔离网，右侧工人作业区直接临街和商铺门口开放，且缺乏锥桶等醒目警示标志。行人易误入，存在绊倒、踩踏未干地砖或被材料/工具磕碰的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街商铺门前及人行道铺装施工区域",
+    "rectification": [
+      "必须沿施工区域边界设置连续、封闭的实体围挡，将作业区与行人通道物理隔离",
+      "在施工区周边增设锥桶、警示带及安全提示标牌，引导行人绕行"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

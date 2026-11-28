@@ -1,0 +1,27 @@
+{
+  "sha256": "cb53a12fd3f8852a6bc635caa706ba796eb5ff30fc567a0442d2d33fdff4e882",
+  "file": "ELE0009.png",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_trapped\",\"severity\":\"高\",\"description\":\"电梯门未正常开启，一名人员位于轿厢门内，两名工作人员正协助其脱困，存在人员被困电梯风险；强行扒门还可能造成夹伤、坠落等二次伤害。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯轿厢门口\",\"rectification\":[\"立即停止使用该电梯并联系电梯维保单位救援\",\"安抚被困人员，禁止强行扒门或自行攀爬脱困\",\"排查电梯门锁、平层及控制系统故障，整改验收合格后方可恢复运行\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯门未正常开启，一名人员位于轿厢门内，两名工作人员正协助其脱困，存在人员被困电梯风险；强行扒门还可能造成夹伤、坠落等二次伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢门口",
+    "rectification": [
+      "立即停止使用该电梯并联系电梯维保单位救援",
+      "安抚被困人员，禁止强行扒门或自行攀爬脱困",
+      "排查电梯门锁、平层及控制系统故障，整改验收合格后方可恢复运行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

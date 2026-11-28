@@ -1,0 +1,23 @@
+{
+  "sha256": "0d271b37d726b67adc563bc73741bdca483788e7ba3582d78b5387cc507cbb6e",
+  "file": "NEGFIR03.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面显示人员正在正常检查消防栓箱，箱内水带、阀门等设施可见且无明显缺失破损；旁边灭火器箱及灭火器摆放整齐，未见被遮挡、损坏或违规占用等安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示人员正在正常检查消防栓箱，箱内水带、阀门等设施可见且无明显缺失破损；旁边灭火器箱及灭火器摆放整齐，未见被遮挡、损坏或违规占用等安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

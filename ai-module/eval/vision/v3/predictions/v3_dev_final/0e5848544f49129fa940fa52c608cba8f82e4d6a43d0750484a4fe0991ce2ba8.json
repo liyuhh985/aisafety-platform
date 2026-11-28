@@ -1,0 +1,23 @@
+{
+  "sha256": "0e5848544f49129fa940fa52c608cba8f82e4d6a43d0750484a4fe0991ce2ba8",
+  "file": "neg_30_0e5848544f49.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"消火栓箱外观及标识完好，箱门关闭，未见明显破损、遮挡、缺失或故障迹象；玻璃反光无法进一步核验内部器材状态，但无客观隐患证据。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "消火栓箱外观及标识完好，箱门关闭，未见明显破损、遮挡、缺失或故障迹象；玻璃反光无法进一步核验内部器材状态，但无客观隐患证据。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

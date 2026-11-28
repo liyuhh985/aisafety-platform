@@ -24,6 +24,22 @@ def test_classify_errors_buckets_false_positive_and_major_confusion():
     assert errors["major_confusion"]["count"] == 1
 
 
+def test_interview_notes_do_not_claim_improvement_when_final_is_worse():
+    baseline = {
+        "binary": {"recall": 0.95, "fpr": 0.30, "precision": 0.76, "f1": 0.844, "accuracy": 0.825},
+        "major": {"macro_recall": 0.825},
+        "review_aware": {"review_rate": 0.275, "auto_recall": 0.625, "auto_fpr": 0.075, "critical_miss_rate": 0.05},
+    }
+    final = {
+        "binary": {"recall": 0.925, "fpr": 0.075, "precision": 0.925, "f1": 0.925, "accuracy": 0.925},
+        "major": {"macro_recall": 0.825},
+        "review_aware": {"review_rate": 0.20, "auto_recall": 0.625, "auto_fpr": 0.025, "critical_miss_rate": 0.075},
+    }
+    notes = gr.generate_interview_notes(baseline, final, {"winner": "baseline"})
+    assert "未通过" in notes or "未优于" in notes
+    assert "优化有效" not in notes
+
+
 def test_report_marks_model_consensus_as_not_human_gold():
     baseline = {
         "binary": {"recall": 0.95, "fpr": 0.30, "precision": 0.76, "f1": 0.844, "accuracy": 0.825},

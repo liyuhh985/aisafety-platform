@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"construction_prot\", \"evidence\": \"外墙施工仅架梯子，无防护网、围挡及脚手架\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "construction_prot",
+    "evidence": "外墙施工仅架梯子，无防护网、围挡及脚手架"
+  }
+}

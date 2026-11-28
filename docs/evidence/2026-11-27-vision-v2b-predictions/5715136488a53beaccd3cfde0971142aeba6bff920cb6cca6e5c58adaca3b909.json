@@ -1,0 +1,27 @@
+{
+  "sha256": "5715136488a53beaccd3cfde0971142aeba6bff920cb6cca6e5c58adaca3b909",
+  "file": "VEH0004.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"多辆机动车停放在人行道及商铺门前铺装区域，占压行人通行空间，可能导致行人绕行至机动车道，增加碰撞风险，并影响沿街商铺和应急通行。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"临街人行道及商铺门前铺装区域\",\"rectification\":[\"立即劝离占用人行道的车辆，恢复行人通行空间\",\"增设隔离设施或违停抓拍设备，防止机动车驶入人行道停放\",\"加强该路段巡查和违停执法，保障行人安全\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "多辆机动车停放在人行道及商铺门前铺装区域，占压行人通行空间，可能导致行人绕行至机动车道，增加碰撞风险，并影响沿街商铺和应急通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街人行道及商铺门前铺装区域",
+    "rectification": [
+      "立即劝离占用人行道的车辆，恢复行人通行空间",
+      "增设隔离设施或违停抓拍设备，防止机动车驶入人行道停放",
+      "加强该路段巡查和违停执法，保障行人安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

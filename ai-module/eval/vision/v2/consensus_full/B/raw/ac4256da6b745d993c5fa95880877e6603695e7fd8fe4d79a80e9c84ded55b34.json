@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"wire_fault\", \"evidence\": \"地面插线板私拉乱接多插头，电线散乱拖地\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "地面插线板私拉乱接多插头，电线散乱拖地"
+  }
+}

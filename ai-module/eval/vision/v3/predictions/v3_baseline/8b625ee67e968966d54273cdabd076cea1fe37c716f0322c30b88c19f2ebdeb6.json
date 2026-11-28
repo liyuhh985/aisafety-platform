@@ -1,0 +1,26 @@
+{
+  "sha256": "8b625ee67e968966d54273cdabd076cea1fe37c716f0322c30b88c19f2ebdeb6",
+  "file": "vehicle_occupancy_2_8b625ee67e96.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"blind_path_occupied\",\"severity\":\"中\",\"description\":\"人行道盲道被多辆机动车占压、夹挡，盲道连续性受到破坏，视障人士通行受阻，行人被迫绕行或穿行车辆之间，存在碰撞、刮擦风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道及盲道区域\",\"rectification\":[\"立即清理占压盲道的车辆，恢复盲道畅通；\",\"加强巡查执法，增设隔离设施或禁停标识，防止机动车驶入人行道。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "人行道盲道被多辆机动车占压、夹挡，盲道连续性受到破坏，视障人士通行受阻，行人被迫绕行或穿行车辆之间，存在碰撞、刮擦风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道及盲道区域",
+    "rectification": [
+      "立即清理占压盲道的车辆，恢复盲道畅通；",
+      "加强巡查执法，增设隔离设施或禁停标识，防止机动车驶入人行道。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

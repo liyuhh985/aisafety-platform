@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"vehicle_occupancy\", \"evidence\": \"多辆汽车停放在人行道砖面上，占用行人通行区域\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "多辆汽车停放在人行道砖面上，占用行人通行区域"
+  }
+}

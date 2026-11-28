@@ -1,0 +1,23 @@
+{
+  "sha256": "ff0eec08a70d87a03e02aa585cacd44f7bde4bb132733c135b148e6876d2c95d",
+  "file": "neg_37_ff0eec08a70d.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"燃气表及管道外观完好，设有燃气管道走向标识，未见泄漏、私接、老化、破损或遮挡等明显异常。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "燃气表及管道外观完好，设有燃气管道走向标识，未见泄漏、私接、老化、破损或遮挡等明显异常。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

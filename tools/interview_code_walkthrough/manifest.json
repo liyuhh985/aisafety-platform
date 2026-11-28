@@ -1,0 +1,1656 @@
+{
+  "title": "异步建单代码链路",
+  "subtitle": "从用户确认、Python Outbox、RabbitMQ 到 Java 幂等落库和前端轮询。每段代码都直接来自当前工作区，可离线阅读，也可在 VS Code 中跳回原文件。",
+  "chapters": [
+    {
+      "id": "java-sse-entry",
+      "title": "Java SSE 入口",
+      "summary": "先看浏览器请求怎样进入 Java，再由 Java 将 SSE 请求转发给 Python。这个节点不负责建单落库。",
+      "snippets": [
+        {
+          "file": "safety-web/src/main/java/com/safety/web/controller/AiController.java",
+          "method": "AiController.assistantStream",
+          "start": 78,
+          "end": 86,
+          "startAnchor": "@PostMapping(value = \"/assistant/stream\")",
+          "title": "确认请求进入 Java Controller",
+          "explain": "这个方法是前端进入 AI 助手链路的 HTTP 入口。它接收 message、session_id、interrupt_reply 和可选图片文件；interrupt_reply 表示前端正在恢复上一轮 LangGraph 的 interrupt 闸门。",
+          "interviewQuestions": [
+            "这个 Controller 为什么不能直接建单？",
+            "interrupt_reply 和普通聊天 message 有什么区别？"
+          ],
+          "pitfalls": [
+            "Controller 只做入口、登录态和参数处理，不在这里写 request/outbox。",
+            "不能把一次 HTTP 请求成功当成工单已经创建。"
+          ],
+          "interviewAnswers": [
+            "Controller 只负责接收请求、获取当前登录用户并转发给 AI 服务，真正的建单属于 Java 业务边界。让 Python 事务先写 request/outbox，再通过 MQ 交给 Java，才能同时保证流式体验和业务一致性。",
+            "interrupt_reply 是结构化确认 JSON，会恢复 LangGraph 的 interrupt 节点并携带 decision、draft、地址等字段；普通 message 只是对话文本，两者语义不同。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Java 注解：把下面的方法映射到 HTTP POST 路径。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 1,
+              "text": "方法作用：定义 SSE 助手入口，后续会把认证和参数交给服务层。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "读取前端回传的结构化确认 JSON。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 4,
+              "text": "message 是普通聊天内容，结构化确认时可以缺省。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/controller/AiController.java",
+          "method": "AiController.assistantStream",
+          "start": 92,
+          "end": 134,
+          "startAnchor": "String message = messageParam;",
+          "title": "解析参数、校验用户并转发 Python",
+          "explain": "Java 兼容表单和 JSON 两种请求体，最后从 Authentication 中取得当前 userId。无 sessionId 时会生成新会话。有图片时先上传文件，再把 fileId 和 URL 一起交给 AiService；无图片时直接转发文本确认。",
+          "interviewQuestions": [
+            "为什么 user_id 必须由 Java 注入，而不能相信前端随便传？",
+            "图片上传和建单幂等之间有什么关联？"
+          ],
+          "pitfalls": [
+            "userId 必须来自认证上下文，不能信任客户端自报身份。",
+            "sessionId 为空不代表可以跳过会话身份校验。"
+          ],
+          "interviewAnswers": [
+            "user_id 必须由 Java 从 JWT 认证上下文取得，前端传来的用户字段可以被伪造。Python 的 user_id 只是 Java 内部调用时传下来的身份参数。",
+            "图片和建单的关联需要校验 fileId 属于当前用户，并在工单事务中原子地把 TEMP 改为 ATTACHED，避免越权引用和孤儿图片。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 10,
+              "text": "Java 变量声明：new 创建对象，ObjectMapper 负责 JSON 序列化/反序列化。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 31,
+              "text": "Long 是包装类型，userId 来自认证上下文而不是请求参数。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 8,
+              "text": "方法作用：读取原始 JSON 请求体，兼容非表单调用。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 37,
+              "text": "先上传图片，取得受控 fileId 和访问 URL。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 31,
+              "text": "从 Spring Security 上下文获取当前登录用户。",
+              "kind": "method"
+            }
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/AiService.java",
+          "method": "AiService.assistantStream",
+          "start": 220,
+          "end": 236,
+          "startAnchor": "public SseEmitter assistantStream(String message, String sessionId, Long userId,",
+          "title": "Java 组装转发给 Python 的请求体",
+          "explain": "AiService 创建 SseEmitter，把浏览器请求转换成 Python 能识别的字段，并写入内部服务 Token。这里的 SseEmitter 是 Java 对浏览器保持单向流式输出的载体。",
+          "interviewQuestions": [
+            "为什么这里用 SSE，而不是普通同步 HTTP？",
+            "内部服务 Token 和用户 JWT 分别解决什么问题？"
+          ],
+          "pitfalls": [
+            "SSE 只解决服务端向浏览器持续推送，不等于建单任务本身是同步完成的。",
+            "内部 Token 不能代替用户身份。"
+          ],
+          "interviewAnswers": [
+            "SSE 适合服务端单向持续推送模型 token、interrupt 和 task_accepted；同步 HTTP 会让长任务占用请求线程，也无法逐步展示生成过程。",
+            "内部 Token 证明请求来自受信任的 Java 服务，用户 JWT 证明当前操作人身份；两者作用域不同，不能互相替代。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "Map<K,V> 表示键值映射；LinkedHashMap 保留插入顺序，方括号中的类型是泛型。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 10,
+              "text": "方法作用：把结构化确认原样传给 Python，普通聊天时为空字符串。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 8,
+              "text": "将认证后的用户 ID 传给内部 Python 服务。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 2,
+              "text": "创建最长等待 5 分钟的 SSE 发射器。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/AiService.java",
+          "method": "AiService.assistantStream",
+          "start": 242,
+          "end": 276,
+          "startAnchor": "Future<?> future = submitStreamTask(() -> {",
+          "title": "Java 读取 Python SSE 并转发",
+          "explain": "真正请求 Python 的工作被提交到线程池，避免占用当前 Web 请求线程。代码逐行读取 Python 返回的 data: 内容，再通过 SseEmitter 送回浏览器；浏览器断开时会通过 cancellation 关闭上游连接。",
+          "interviewQuestions": [
+            "如果浏览器断开，Java 和 Python 的连接会发生什么？",
+            "为什么不能因为 SSE 断开就取消已经提交的建单任务？"
+          ],
+          "pitfalls": [
+            "断开的是展示连接，不应把已提交的异步建单任务一起取消。",
+            "这里的 Future 是转发线程，不是建单消费者线程。"
+          ],
+          "interviewAnswers": [
+            "浏览器断开通常只会停止 Java 到 Python 的展示连接；一旦建单受理已提交，后台任务仍由数据库、MQ 和 worker 管理。",
+            "SSE 是展示通道，不是建单事务的所有者；取消展示不能让已经提交的 outbox 任务回滚，否则会破坏最终一致性。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Future<?> 表示异步任务句柄，? 是未知泛型；() -> { ... } 是 Java Lambda。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "try-with-resources 会在代码块结束时自动关闭 reader；var 由编译器推断类型。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 23,
+              "text": "方法作用：去掉上游 SSE 的 data: 前缀，再把事件推给浏览器。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 2,
+              "text": "向 Python 内部服务发起 HTTP 调用。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 30,
+              "text": "上游正常结束后关闭浏览器 SSE 连接。",
+              "kind": "call"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/server.py",
+          "method": "FastAPI.assistant_stream",
+          "start": 385,
+          "end": 423,
+          "startAnchor": "@app.post(\"/api/ai/assistant/stream\")",
+          "title": "Python FastAPI 接收 Java 转发",
+          "explain": "async def 表示这个接口是异步函数；Form 参数允许 Java 用 multipart 发送数据。没有 message 时，代码会 await request.json() 读取 JSON。2026-11-19 这天阅读时，把 await 理解为“把等待 I/O 的控制权暂时交回事件循环”，不是新开线程。",
+          "interviewQuestions": [
+            "FastAPI 的 async 接口里为什么不能直接执行长时间阻塞调用？",
+            "Java 已经鉴权后，Python 中间件还校验什么？"
+          ],
+          "pitfalls": [
+            "async 不等于自动并行；阻塞数据库或 HTTP 调用仍要放到线程池。",
+            "Python 仍要校验内部 Token 和 user_id。"
+          ],
+          "interviewAnswers": [
+            "async 接口运行在事件循环上，直接执行阻塞数据库、同步 HTTP 或大文件操作会卡住其他协程；项目因此把阻塞操作放入线程池。",
+            "Python 内部中间件仍要验证 X-Internal-Token，业务函数还会检查 user_id，形成服务间认证和业务身份的两层校验。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "async def 定义协程函数；await request.json() 会等待异步 I/O，不阻塞事件循环。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "方法作用：异步读取 JSON 请求体；await 让出事件循环等待网络数据。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 34,
+              "text": "校验内部调用必须携带 user_id。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 38,
+              "text": "没有消息、确认回复和文件时返回 400，避免空请求进入图。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/server.py",
+          "method": "assistant_stream.generate",
+          "start": 471,
+          "end": 489,
+          "startAnchor": "async def generate():",
+          "title": "async for 持续消费 LangGraph 事件",
+          "explain": "generate() 是 StreamingResponse 使用的异步生成器。async for 每次等待 LangGraph 产出 chunk、event 或 interrupt，再立即封装成 SSE。这样模型 token、确认卡片和 task_accepted 能按事件顺序到达浏览器。",
+          "interviewQuestions": [
+            "为什么不能等整份报告生成完再一次性返回？",
+            "task_accepted 为什么必须作为独立事件发送？"
+          ],
+          "pitfalls": [
+            "async for 不是普通 for；它消费的是异步事件流，中间可能长时间等待。",
+            "不能把 task_accepted 误讲成 task_created。"
+          ],
+          "interviewAnswers": [
+            "一次性返回要等完整报告和确认信息生成，首字延迟和等待时间都更长；流式事件能让前端及时显示进度和确认卡片。",
+            "task_accepted 只表示 Python 已把 request 和 outbox 写入数据库，Java 可能还没消费消息；SUCCESS 才代表 tb_hazard 已提交。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 10,
+              "text": "async for 用于消费异步迭代器；每次 await 到下一个事件后才进入循环体。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "方法作用：把结构化确认回复继续传入 LangGraph，恢复上一轮中断节点。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 11,
+              "text": "把本轮消息、历史和空槽位传给图执行器。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 12,
+              "text": "传入视觉摘要、会话 ID 和最大推理轮数。",
+              "kind": "data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "langgraph-confirm-submit",
+      "title": "LangGraph 确认与提交节点",
+      "summary": "LangGraph 用 interrupt 暂停等待用户确认；恢复后进入 submit_task。这里要特别讲清 interrupt 节点重跑和副作用边界。",
+      "snippets": [
+        {
+          "file": "ai-module/core/assistant_graph.py",
+          "method": "task_gate",
+          "start": 2322,
+          "end": 2358,
+          "startAnchor": "def task_gate(state: AssistantState) -> Command:",
+          "title": "interrupt 暂停并生成确认卡片",
+          "explain": "task_gate 读取 checkpoint 中的 task_phase、request_id 和 task_draft，调用 interrupt() 暂停图执行。发给前端的卡片包含确认问题、隐患列表、地址、稳定 request_id 和冻结草稿。interrupt() 之前的代码在恢复时可能重跑。",
+          "interviewQuestions": [
+            "为什么 request_id 要在 interrupt 之前生成？",
+            "为什么 interrupt() 前不能调用模型、写数据库或发消息？"
+          ],
+          "pitfalls": [
+            "interrupt 恢复时节点会整体重跑，前面不能有业务副作用。",
+            "request_id 是确认级幂等键，不是建单消息 ID。"
+          ],
+          "interviewAnswers": [
+            "request_id 在 interrupt 前生成并写入 checkpoint，用户确认、恢复节点和重复确认都复用它，才能建立稳定的幂等键。",
+            "interrupt 恢复时节点会重新执行，若在 interrupt() 前写库或发消息，恢复一次就可能重复产生副作用；有副作用的操作要放在 interrupt 之后。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "state 是 dict，.get(key) 取不到时返回 None；or 提供默认值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "interrupt() 是 LangGraph 的中断点，恢复时节点会重新执行到这里。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 18,
+              "text": "方法作用：把稳定 request_id 放进确认卡片，前端确认时必须原样回传。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "从 checkpoint 状态恢复并复制建单草稿。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 6,
+              "text": "恢复确认级稳定幂等键。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/core/assistant_graph.py",
+          "method": "task_gate",
+          "start": 2359,
+          "end": 2405,
+          "startAnchor": "if isinstance(answer, dict):",
+          "title": "校验确认值、草稿和大类范围",
+          "explain": "用户恢复后会回传 decision、request_id、地址、坐标和可能修改过的 draft。代码先校验 request_id 没有变化，再清洗草稿，拒绝不在当前会话锁定范围内的隐患大类，并把地址与图选坐标写回 state。",
+          "interviewQuestions": [
+            "为什么前端传上来的隐患大类不能直接相信？",
+            "确认 request_id 不一致时为什么要终止？"
+          ],
+          "pitfalls": [
+            "前端限制只是体验层，后端和 LangGraph 仍必须校验。",
+            "不能接受会话范围外的类别继续建单。"
+          ],
+          "interviewAnswers": [
+            "前端校验只是减少误操作，攻击者可以绕过页面直接发请求；后端校验才是安全边界。",
+            "request_id 不一致说明当前确认卡片已过期、被篡改或属于另一轮会话，继续提交会产生错误归属或重放风险。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "isinstance 检查运行时类型；dict 是 Python 字典。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 2,
+              "text": "链式调用：先取值，再用 or 兜底，最后转成字符串。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 14,
+              "text": "方法作用：清洗用户改过的草稿，并限制在当前会话锁定的大类范围内。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 4,
+              "text": "request_id 不一致说明确认卡片过期或被篡改。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 8,
+              "text": "读取用户在确认卡片中修改后的地址。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/core/assistant_graph.py",
+          "method": "submit_task",
+          "start": 2442,
+          "end": 2495,
+          "startAnchor": "def submit_task(state: AssistantState) -> Command:",
+          "title": "把确认结果提交为 MQ 受理请求",
+          "explain": "submit_task 汇总历史、地址、坐标、request_id、图片和草稿，调用 submit_from_history。拿到 accepted 后只发送 task_accepted 事件，表示 request 和 outbox 已受理，不代表 Java 已经写入 tb_hazard。",
+          "interviewQuestions": [
+            "accepted 和 SUCCESS 分别代表什么？",
+            "如果 task_accepted 响应丢了，前端为什么还能按 request_id 继续查？"
+          ],
+          "pitfalls": [
+            "accepted 不是建单成功。",
+            "这个节点成功后应清空会话建单草稿，但前端仍保留 request_id 用于轮询。"
+          ],
+          "interviewAnswers": [
+            "accepted 是受理态，表示 request/outbox 已落库；SUCCESS 是终态，表示 Java 已提交工单并回传 hazardId。",
+            "task_accepted 的 HTTP/SSE 响应可能丢失，但 request 已经持久化；前端只要保存 request_id，就能重新轮询同一条请求。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 27,
+              "text": "字典字面量；后续 **submit_kwargs 会把字典展开成关键字参数。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 45,
+              "text": "方法作用：向浏览器广播已受理事件，触发前端保存 requestId 并轮询。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 1,
+              "text": "在节点内延迟导入提交函数，避免模块加载期耦合。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 47,
+              "text": "受理完成后清理当前图的建单临时状态。",
+              "kind": "data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python-outbox-transaction",
+      "title": "Python request + outbox 事务",
+      "summary": "Python 不使用 @Transactional；它通过 autocommit=False 的连接手动 commit/rollback，把 request 和 outbox 作为同一个数据库事务写入。",
+      "snippets": [
+        {
+          "file": "ai-module/tools/hazard_submit.py",
+          "method": "submit_from_history",
+          "start": 313,
+          "end": 328,
+          "startAnchor": "def submit_from_history(user_id, history, latest, *, address_hint: str = \"\", coords=None,",
+          "title": "建单提交函数的输入和返回动作",
+          "explain": "函数接收用户、历史、最新文本、地址提示、坐标、session、图片和 request_id。签名里的 * 表示后面的参数必须按关键字传入。docstring 说明 accepted 是等待 MQ/Java 建单，不是已经创建。",
+          "interviewQuestions": [
+            "为什么 request_id 从上游一路传到入队函数？",
+            "address_hint 和 coords 为什么会同时存在？"
+          ],
+          "pitfalls": [
+            "不要把 action=accepted 说成 status=SUCCESS。",
+            "Python 类型注解只是提示，运行时仍要做数据校验。"
+          ],
+          "interviewAnswers": [
+            "同一个 request_id 从确认卡片进入 Python request、outbox、MQ payload 和 Java 唯一索引，保证整条链路指向同一次业务请求。",
+            "address_hint 是用户确认后的文本地址，coords 是用户在图上选的点；有 coords 时可直接定位，避免重复地理编码和地址漂移。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "* 后面的参数必须用关键字传入；类型标注只是提示，不是运行时强校验。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 3,
+              "text": "dict | None 是联合类型，表示草稿可能是字典或空值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 8,
+              "text": "方法作用：文档说明 accepted 只是受理，不是建单成功。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 0,
+              "text": "history 提供上下文，latest 是用户确认或地址补充文本。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 2,
+              "text": "稳定确认 ID，用来打通 request、outbox 和 Java 幂等。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_submit.py",
+          "method": "submit_from_history",
+          "start": 329,
+          "end": 375,
+          "startAnchor": "info = dict(draft) if draft else _extract(history, latest)",
+          "title": "清洗类别、地址、坐标并组装 payload",
+          "explain": "代码优先使用报告阶段冻结的 draft；没有 draft 才重新抽取。它规范类别列表，缺少类别时返回 no_category，缺少地址时返回 ask_address。用户在图选的点直接作为坐标，超过 200 字的地址会在更上层被限制。最后组装成 Java 消费端需要的字段。",
+          "interviewQuestions": [
+            "为什么地址抽取结果需要用户确认？",
+            "模型抽取失败时为什么要走 ask_address，而不是猜一个地址？"
+          ],
+          "pitfalls": [
+            "模型抽取是软约束，不能替代后端字段校验。",
+            "地址过长、类别越界或坐标非法时不能继续入队。"
+          ],
+          "interviewAnswers": [
+            "模型抽取地址可能误识别或不完整，用户确认能让人工兜底；地址是正式工单的必要字段，不能只依赖软性模型输出。",
+            "猜一个地址可能创建错误工单；返回 ask_address 让用户补全，宁可多一轮交互，也不把不确定数据写进正式业务。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "条件表达式；draft 为真时复制字典，否则调用抽取函数。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 1,
+              "text": ".get 是安全取字典字段，键不存在时不会抛出 KeyError。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 30,
+              "text": "方法作用：没有图选坐标时，把文本地址解析成经纬度。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 1,
+              "text": "统一清洗品类列表格式，挡住空值和非法大类。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 13,
+              "text": "地址缺失时直接返回 ask_address，不继续建单。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_submit.py",
+          "method": "submit_from_history",
+          "start": 376,
+          "end": 388,
+          "startAnchor": "LOGGER.info(\"AI hazard submit payload=%s\", payload)",
+          "title": "调用 enqueue 并返回 accepted",
+          "explain": "payload 组装完后调用 enqueue_hazard_create。只有该函数返回 ok，才向前端返回 accepted 和 requestId；异常会记录日志并返回 fail。这里体现了“先写库，后受理”的顺序。",
+          "interviewQuestions": [
+            "为什么不能先返回 accepted 再异步写 request/outbox？",
+            "日志为什么不能直接记录敏感图片内容或完整身份信息？"
+          ],
+          "pitfalls": [
+            "如果写库失败却返回 accepted，用户会看到永远不进入 MQ 的假任务。",
+            "生产日志要避免泄露敏感字段。"
+          ],
+          "interviewAnswers": [
+            "如果先返回 accepted 再写库，写库失败时前端会看到一条永远不会进入 MQ 的任务；因此必须事务提交成功后才能返回。",
+            "日志可能包含地址、图片 URL、报告正文等敏感信息；只记录必要的 request_id、状态和错误码，避免泄露用户数据。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "使用参数化日志而不是字符串拼接，便于延迟格式化和避免敏感信息误拼。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 5,
+              "text": "双星号把字典展开为函数的命名参数。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 10,
+              "text": "方法作用：把事务层结果转换成 LangGraph 可识别的 accepted 动作。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "写库异常时保留堆栈，便于排查 outbox 受理失败。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 9,
+              "text": "只有 enqueue 返回 ok 才转成 accepted。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "enqueue_hazard_create",
+          "start": 150,
+          "end": 184,
+          "startAnchor": "def enqueue_hazard_create(user_id, session_id, payload: dict, *, request_id=None,",
+          "title": "同一事务插入 request 和 outbox",
+          "explain": "先按 request_id 查已有记录，做确认级幂等。没有已有记录时，在同一个 autocommit=False 连接里先 INSERT ai_hazard_create_request，再 INSERT ai_hazard_create_outbox。with conn.cursor() as cur 是上下文管理器，离开代码块时自动关闭 cursor。",
+          "interviewQuestions": [
+            "为什么 request 和 outbox 必须在同一事务？",
+            "先查后插和 request_id 主键分别解决哪类重复？"
+          ],
+          "pitfalls": [
+            "先查后插是快速路径，并发正确性最终靠 request_id 主键/唯一约束。",
+            "Python 这里不是 Spring @Transactional。"
+          ],
+          "interviewAnswers": [
+            "request 和 outbox 是同一业务意图的两部分，分开提交会出现“有请求没消息”或“有消息没请求”的双写不一致。",
+            "先查是避免重复工作的快速路径；并发竞争时最终要靠 request_id 主键/唯一约束，否则两个线程可能同时通过查询。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 17,
+              "text": "with 是上下文管理器，代码块结束会自动关闭 cursor。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 25,
+              "text": "相邻字符串在括号中自动拼接；%s 是数据库参数占位符。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 9,
+              "text": "方法作用：复用上游稳定 requestId，没有时才新建。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 12,
+              "text": "组装后续投递到 RabbitMQ 的完整消息体。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 13,
+              "text": "把消息序列化为 JSON，并保持中文内容可读。",
+              "kind": "call"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "enqueue_hazard_create",
+          "start": 185,
+          "end": 202,
+          "startAnchor": "conn.commit()",
+          "title": "提交成功后才返回 accepted",
+          "explain": "两张表都插入后执行 commit。唯一键冲突会 rollback 并回查赢家记录；其他异常 rollback 后继续抛出。只有 try 块完整执行到 commit 之后，函数才返回 ok=True 和 PENDING。",
+          "interviewQuestions": [
+            "并发重复确认时，失败的那条事务怎样返回同一个 requestId？",
+            "commit 之后返回 accepted 丢包了怎么办？"
+          ],
+          "pitfalls": [
+            "commit 失败绝不能返回 accepted。",
+            "accepted HTTP 响应丢失后，重复确认应回查现有 request，而不是新建第二条。"
+          ],
+          "interviewAnswers": [
+            "唯一键冲突表示另一个并发事务已经插入同一 request；当前事务回滚后回查赢家记录，返回同一个 requestId，形成幂等成功。",
+            "accepted 响应丢失不会删除已提交数据；前端应保存 request_id 重新轮询，重复确认也应由 request 主键回查返回同一请求。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "except 捕获指定异常；事务异常时先 rollback，再按业务规则回查。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 13,
+              "text": "finally 无论成功或异常都会执行，用于归还连接。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 17,
+              "text": "方法作用：只有 commit 完成才返回受理成功。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 3,
+              "text": "异常或唯一键冲突时撤销未提交事务。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 9,
+              "text": "无法转换成幂等成功时继续抛出，避免假受理。",
+              "kind": "edge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "relay-outbox-publish",
+      "title": "Relay 扫描与 RabbitMQ 投递",
+      "summary": "RelayWorker 定时扫描 outbox，先用条件更新认领，再投递 RabbitMQ。它不是 RequestReconciler。",
+      "snippets": [
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "RelayWorker.run_once",
+          "start": 349,
+          "end": 391,
+          "startAnchor": "def run_once(self, *, connect=None) -> int:",
+          "title": "查询、认领、投递并更新 outbox 状态",
+          "explain": "run_once 查询 PENDING、RETRY，以及 locked_at 已超时、可被重新认领的 PUBLISHING 行。它先尝试批量 claim，再把 payload 发 RabbitMQ；发布失败标 RETRY，成功批量标 PUBLISHED，同时把 request 从 PENDING 推到 PUBLISHED。",
+          "interviewQuestions": [
+            "为什么多个 Relay 同时扫描时不能直接 SELECT 后发送？",
+            "PUBLISHING 超时后为什么能被重新认领？"
+          ],
+          "pitfalls": [
+            "RabbitMQ 是至少一次投递，发布成功不等于 Java 已消费。",
+            "Relay 的 PUBLISHED 不是 request 的 SUCCESS。"
+          ],
+          "interviewAnswers": [
+            "两个 Relay 先 SELECT 再发送会同时看到同一行并重复投递；应该用条件 UPDATE 先原子认领，只有 claim 成功的 worker 才能发送。",
+            "PUBLISHING 可能代表 worker 在发送前或发送后崩溃；超过锁租期后允许重新认领，用至少一次投递换取任务不会永久卡住。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "* 表示 connect 必须按关键字传入；-> int 是返回类型提示。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 25,
+              "text": "元组解包会把查询结果的一行拆成四个变量。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 29,
+              "text": "方法作用：把 outbox 里的 payload 真正发送到 RabbitMQ。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 20,
+              "text": "原子认领本批 outbox 行，防止多 worker 重复发送。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 31,
+              "text": "发布失败时记录错误并安排下一轮重试。",
+              "kind": "call"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "RelayWorker.run_forever/_claim",
+          "start": 393,
+          "end": 438,
+          "startAnchor": "def run_forever(self, stop_event=None, *, connect=None) -> None:",
+          "title": "循环保活和条件更新 claim",
+          "explain": "run_forever 定期调用 run_once 并保持 RabbitMQ 心跳。_claim 和 _claim_batch 用 UPDATE ... WHERE status=... 的条件更新原子抢占记录；只有 rowcount 匹配才说明当前 worker 拿到任务。",
+          "interviewQuestions": [
+            "条件更新怎样避免两个 worker 同时投递同一行？",
+            "claim 成功后 worker 崩溃会怎样？"
+          ],
+          "pitfalls": [
+            "先 SELECT 再 UPDATE 会有并发窗口。",
+            "claim 只是减少重复投递，不能代替 Java 消费端幂等。"
+          ],
+          "interviewAnswers": [
+            "条件更新把状态改成 PUBLISHING，并带上 locked_at 和状态条件；只有 rowcount 为 1 的 worker 才拿到该行。",
+            "claim 后 worker 崩溃时，任务留在 PUBLISHING；锁超时后其他 worker 可重新 claim，最终由重试和 RequestReconciler 兜底。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 8,
+              "text": "Event.wait(seconds) 等待指定秒数，同时可被停止事件提前唤醒。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 24,
+              "text": "rowcount 是条件 UPDATE 实际影响的行数，用来判断 claim 是否成功。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 5,
+              "text": "方法作用：每轮循环执行一次扫描和投递。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 4,
+              "text": "处理 RabbitMQ 心跳和连接事件，避免空闲断连。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 19,
+              "text": "只允许重新认领超过租期的 PUBLISHING 行。",
+              "kind": "data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "java-rabbit-listener",
+      "title": "Java RabbitMQ Listener",
+      "summary": "Java Consumer 解析 hazard.create 消息、校验必填字段、调用 HazardService，并在事务方法返回后补发结果回执。",
+      "snippets": [
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/HazardCreateConsumer.java",
+          "method": "HazardCreateConsumer.onMessage",
+          "start": 34,
+          "end": 52,
+          "startAnchor": "@RabbitListener(queues = \"${hazard.create.queue}\")",
+          "title": "监听消息并拒绝不可重试的坏 payload",
+          "explain": "@RabbitListener 绑定 hazard.create 队列。代码用原始字节读取 JSON，避免 Python 消息没有 content_type 导致转换异常。缺少 requestId、userId 或 category 时使用 AmqpRejectAndDontRequeueException，直接拒绝并不再 requeue。",
+          "interviewQuestions": [
+            "为什么这里拿原始 Message 自己解析，而不是直接接收转换后的对象？",
+            "什么错误应该重试，什么错误应该直接进 DLQ？"
+          ],
+          "pitfalls": [
+            "非法 JSON 和缺关键字段重试也不会成功。",
+            "ACK 是处理完成后确认；不是收到消息就 ACK。"
+          ],
+          "interviewAnswers": [
+            "Python 消息可能没有 content_type，Spring 的自动转换不可靠；直接读取 UTF-8 JSON 能让解析失败进入明确的拒绝/DLQ 分支。",
+            "瞬时网络错误、数据库临时不可用可以重试；非法 JSON、缺 requestId/userId/category 这类永久错误应直接拒绝并进入 DLQ。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Spring 注解：把方法注册为指定 RabbitMQ 队列的监听器。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 4,
+              "text": "用指定字符集把 byte[] 解成 String，避免平台默认编码不一致。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 5,
+              "text": "方法作用：把 JSON 反序列化成 Java 消息对象，后续才能读取字段。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 8,
+              "text": "非法 JSON 重试也不会成功，直接拒绝并进 DLQ。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 10,
+              "text": "空 requestId 无法建立幂等关系，必须拒绝。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/HazardCreateConsumer.java",
+          "method": "HazardCreateConsumer.onMessage",
+          "start": 54,
+          "end": 80,
+          "startAnchor": "AiHazardDTO dto = new AiHazardDTO();",
+          "title": "组装 DTO、调用 Java 事务并发送回执",
+          "explain": "Consumer 把消息字段复制到 AiHazardDTO，然后调用 hazardService.createAi。createAi 方法返回时 Spring 事务已经提交，随后 publisher.succeeded 才发送 SUCCESS 回执。若运行期异常抛出，Spring AMQP 会重试；耗尽后 Recoverer 发 FAILED 并进 DLQ。",
+          "interviewQuestions": [
+            "成功回执为什么必须在 createAi 返回后发送？",
+            "回执发送失败后原工单事务会回滚吗？"
+          ],
+          "pitfalls": [
+            "回执不能放进工单数据库事务内部提前发送。",
+            "事务提交后回执失败不会回滚已提交工单，MQ 会重新消费并依靠幂等回查。"
+          ],
+          "interviewAnswers": [
+            "如果事务还没提交就发成功回执，会出现前端显示建单成功但数据库没有工单；createAi 返回代表 Spring 事务已经提交。",
+            "createAi 的事务已经提交后发送回执失败，不会自动回滚已提交工单；MQ 重试会重新消费，先查 request_id 并再次补发回执。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 17,
+              "text": "声明 HazardVO 类型变量并接收 createAi 的返回值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 24,
+              "text": "rethrow 原异常，让上层事务和 MQ 框架继续处理。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 18,
+              "text": "方法作用：工单事务返回后补发 SUCCESS 回执。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 19,
+              "text": "成功消费打点，用于监控吞吐和成功率。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 20,
+              "text": "记录 requestId 与 hazardId 的对应关系，便于追踪。",
+              "kind": "call"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "java-create-transaction",
+      "title": "Java createAi 事务与幂等",
+      "summary": "真正写 tb_hazard 的边界在 Java。先查后插是快速路径，request_id 唯一索引是并发正确性边界，分布式锁进一步限制同一用户并发创建。",
+      "snippets": [
+        {
+          "file": "safety-service/src/main/java/com/safety/service/service/impl/HazardServiceImpl.java",
+          "method": "HazardServiceImpl.createAi",
+          "start": 151,
+          "end": 179,
+          "startAnchor": "@Transactional",
+          "title": "事务入口、先查已有工单和图片归属",
+          "explain": "@Transactional 表示方法运行在 Spring 事务中。requestId 非空时先按 request_id 查 tb_hazard；如果已有记录直接返回同一个工单。图片必须带受控 fileId，并校验当前用户拥有且状态为 TEMP。",
+          "interviewQuestions": [
+            "为什么先查后插不能单独保证并发幂等？",
+            "为什么不能只相信消息里传来的 imageUrl？"
+          ],
+          "pitfalls": [
+            "先查后插是快速路径，唯一索引才是并发正确性边界。",
+            "图片必须校验归属和临时状态，避免越权引用。"
+          ],
+          "interviewAnswers": [
+            "两个消费者可能同时先查不到记录，然后都尝试插入；唯一索引会让其中一个失败，从而兜住并发窗口。",
+            "imageUrl 是字符串，可被伪造或指向别人的资源；fileId 能绑定当前用户和受控文件状态，才适合做权限校验。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "Spring 注解：方法由事务代理包裹，正常返回时提交，运行期异常时回滚。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 7,
+              "text": "boolean 是基本类型；&& 表示短路与，前半段为 false 时不再执行后半段。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 9,
+              "text": "方法作用：重复消息先回查已有工单，是幂等的快速路径。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 23,
+              "text": "校验图片文件属于当前用户，防止越权引用。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 27,
+              "text": "用受控文件服务的访问路径覆盖客户端 imageUrl。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "safety-service/src/main/java/com/safety/service/service/impl/HazardServiceImpl.java",
+          "method": "HazardServiceImpl.createAi",
+          "start": 181,
+          "end": 199,
+          "startAnchor": "String lockKey = RedisConstant.KEY_PREFIX + \"lock:hazard:create:\" + dto.getUserId();",
+          "title": "同一用户创建锁和失败边界",
+          "explain": "代码使用 Redisson 按 userId 加创建锁，tryLock 最多等 3 秒、租期 10 秒。获取不到锁时返回操作频繁。锁降低同一用户并发压力，但跨用户仍可能相同 requestId 并发，所以后面的数据库唯一索引不可省。",
+          "interviewQuestions": [
+            "分布式锁和数据库唯一索引各自负责什么？",
+            "Java 进程崩溃后 Redisson 锁会怎样释放？"
+          ],
+          "pitfalls": [
+            "锁不能代替数据库约束。",
+            "锁租期过短可能在业务未完成时失效，因此还要依赖唯一索引兜底。"
+          ],
+          "interviewAnswers": [
+            "分布式锁按 userId 降低同一用户并发，数据库唯一索引按 requestId 保证跨线程/跨实例的业务幂等，两者保护维度不同。",
+            "tryLock 获取租期 10 秒的锁，正常调用 finally 释放；进程崩溃时租期到期后其他实例可继续创建，唯一索引仍负责最终幂等。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 11,
+              "text": "tryLock 的三个参数分别是最长等待、锁租期和时间单位；有租期时不会启用看门狗续期。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 3,
+              "text": "方法作用：按 userId 获取 Redisson 分布式锁。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 11,
+              "text": "最多等 3 秒获取 10 秒租期的用户创建锁。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 17,
+              "text": "没有抢到锁时快速失败，避免同一用户并发创建。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "safety-service/src/main/java/com/safety/service/service/impl/HazardServiceImpl.java",
+          "method": "HazardServiceImpl.createAi",
+          "start": 200,
+          "end": 228,
+          "startAnchor": "Hazard hazard = new Hazard();",
+          "title": "插入工单、冲突回查并完成事务",
+          "explain": "代码组装 Hazard、规范化大类并调用 hazardMapper.insert。捕获 DuplicateKeyException 后再次按 request_id 回查赢家记录；查到就直接返回。图片随后标记 ATTACHED，缓存失效后方法返回，Spring 事务在返回边界提交。",
+          "interviewQuestions": [
+            "唯一键冲突后为什么还要回查，而不是简单报错？",
+            "markAttached 和工单插入为什么在同一事务？"
+          ],
+          "pitfalls": [
+            "DuplicateKeyException 可能代表另一个消费者已经成功建单，回查后应返回同一 hazardId。",
+            "图片从 TEMP 转 ATTACHED 要和工单落库保持原子性。"
+          ],
+          "interviewAnswers": [
+            "唯一键冲突通常代表另一个消费者已经成功插入；回查能返回同一 hazardId，而不是把一次合法重试变成用户可见错误。",
+            "工单写库和图片 TEMP→ATTACHED 必须原子提交；否则可能出现工单成功但图片仍可被清理，或图片已占用但工单未建成。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "反射式属性复制，把 DTO 同名属性复制到实体；字段名不一致时不会自动映射。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 12,
+              "text": "捕获数据库唯一键冲突异常，再执行业务级幂等回查。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 11,
+              "text": "方法作用：执行真正的 tb_hazard 插入；唯一键在这里兜住并发。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 17,
+              "text": "冲突后返回赢家工单，形成幂等成功。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 24,
+              "text": "工单落库后把图片从 TEMP 改为 ATTACHED。",
+              "kind": "call"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "result-feedback",
+      "title": "成功回执与 Python 状态更新",
+      "summary": "Java 建单事务返回后发送结果消息，Python ResultConsumer 消费回执并幂等更新 ai_hazard_create_request。",
+      "snippets": [
+        {
+          "file": "safety-web/src/main/java/com/safety/web/service/HazardCreateResultPublisher.java",
+          "method": "HazardCreateResultPublisher",
+          "start": 26,
+          "end": 44,
+          "startAnchor": "public void succeeded(String requestId, Long hazardId) {",
+          "title": "Java 发送 SUCCESS/FAILED 回执",
+          "explain": "succeeded 和 failed 都调用 send，通过 RabbitTemplate 把 HazardCreateResult 发到结果路由键。发送异常不会吞掉，因为消费者必须重试，否则 request 可能永远停在 PUBLISHED。",
+          "interviewQuestions": [
+            "回执发送失败为什么不能吞异常直接 ACK？",
+            "失败回执和成功回执的语义有什么不同？"
+          ],
+          "pitfalls": [
+            "吞异常会导致前端长期卡在创建中。",
+            "成功回执只能携带真实已提交的 hazardId。"
+          ],
+          "interviewAnswers": [
+            "吞掉回执异常并 ACK 会让 request 永远停在 PUBLISHED；抛出异常才能触发 MQ 重试和日志/指标告警。",
+            "成功回执携带已提交的 hazardId；失败回执只表示最终失败，不应伪造 hazardId，也不能覆盖已经成功的记录。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 10,
+              "text": "RabbitTemplate 把对象转换后发送到交换机，并带上 routing key。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 1,
+              "text": "方法作用：成功回执携带真实 hazardId。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 10,
+              "text": "把回执对象发送到结果队列对应路由。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 16,
+              "text": "发送失败必须抛出，触发 MQ 重试而不是静默丢回执。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "apply_result",
+          "start": 497,
+          "end": 529,
+          "startAnchor": "def apply_result(message: dict, *, connect=None) -> bool:",
+          "title": "幂等更新 Python request 状态",
+          "explain": "回执必须是终态 SUCCESS 或 FAILED，并带 request_id。SQL 使用 WHERE status <> SUCCESS 保护，已成功的记录不会被后来错误状态覆盖。commit 后返回是否实际更新到行；异常会 rollback 后重新抛出。",
+          "interviewQuestions": [
+            "重复收到同一条 SUCCESS 回执会怎样？",
+            "FAILED 回执为什么不能覆盖已经 SUCCESS 的记录？"
+          ],
+          "pitfalls": [
+            "终态更新必须带条件，防止后到的失败消息覆盖成功事实。",
+            "Python 状态表是前端轮询的数据源，不能和 Java tb_hazard 说成同一张表。"
+          ],
+          "interviewAnswers": [
+            "重复 SUCCESS 会被 SQL 的 status <> SUCCESS 条件挡住，不会重复改状态；结果处理本身是幂等的。",
+            "成功是终态事实，后到的失败消息不能覆盖它；否则数据库已经有工单，前端却显示失败，破坏用户体验和状态一致性。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 3,
+              "text": "先防止 message 为 None，再安全取字段、转字符串、去空格并转大写。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 9,
+              "text": "with 管理数据库 cursor 的生命周期，异常时仍会释放。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 13,
+              "text": "方法作用：用 Java 回执中的终态和 hazardId 更新 Python request。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 12,
+              "text": "更新前端轮询所读取的 request 状态。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 26,
+              "text": "只有数据库更新成功才结束本次回执处理。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "ResultConsumer.run_forever",
+          "start": 539,
+          "end": 573,
+          "startAnchor": "def run_forever(self, stop_event=None) -> None:",
+          "title": "RabbitMQ 结果消息的 ACK/NACK",
+          "explain": "ResultConsumer 消费 hazard.create.result.q。解析和 apply_result 成功后 basic_ack；异常时记录日志并 basic_nack(requeue=False)，让坏消息进入结果队列的 DLQ，避免无限重投。",
+          "interviewQuestions": [
+            "ACK 是在消费开始前还是业务处理成功后发送？",
+            "这里为什么使用 requeue=False？"
+          ],
+          "pitfalls": [
+            "ACK 表示消费者处理完成，Broker 可删除消息。",
+            "坏消息无限 requeue 会形成重试风暴。"
+          ],
+          "interviewAnswers": [
+            "ACK 应在消费者完成业务处理并确认数据库操作成功后发送；收到消息立即 ACK 会在处理失败时丢掉可重试消息。",
+            "requeue=False 让坏消息进入结果队列的 DLQ，避免无限循环；瞬时异常通常由消息重试或对账补偿处理。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 1,
+              "text": "函数内 import 是延迟导入，只有真正启动消费者时才需要 pika 依赖。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 21,
+              "text": "ACK 使用 delivery_tag 告诉 Broker 这条消息已成功处理。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 12,
+              "text": "方法作用：建立 RabbitMQ 阻塞连接，供结果消费者使用。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 15,
+              "text": "限制未确认消息数量，避免单个消费者一次拿太多。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 24,
+              "text": "处理失败时拒绝并丢弃到 DLQ，避免无限重投。",
+              "kind": "call"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "request-reconciler",
+      "title": "RequestReconciler 超时对账",
+      "summary": "RequestReconciler 扫描超时未终态的 request，主动查 Java tb_hazard 是否已经落库，再补 SUCCESS 或把 outbox 重置为 RETRY。",
+      "snippets": [
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "reconcile_request",
+          "start": 587,
+          "end": 614,
+          "startAnchor": "def reconcile_request(request_id: str, *, connect=None, java_status=None) -> bool:",
+          "title": "先查 Java 真实状态，查询异常时本轮跳过",
+          "explain": "对账第一原则：先调用 Java 内部接口。若 Java 已查到 request_id 对应的工单，就把 Python request 补成 SUCCESS 和 hazardId。若 Java 查询本身报错，函数直接返回 False，不把网络异常误判成“没建单”。",
+          "interviewQuestions": [
+            "为什么 Java 查询异常时不能让 outbox 立即重投？",
+            "对账发现工单已存在时还需要发新回执吗？"
+          ],
+          "pitfalls": [
+            "查不到和查询失败不是一回事。",
+            "不能把网络异常当成确认未建单。"
+          ],
+          "interviewAnswers": [
+            "Java 查询报错只能说明本次无法确认，不能证明工单不存在；此时重投可能重复建单，所以本轮应跳过并等待下次对账。",
+            "对账重查 Java 已找到 request_id 对应工单时，只需把 Python request 补成 SUCCESS + hazardId，不应再次投递建单消息。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 11,
+              "text": "条件表达式：测试注入时用 java_status，生产时调用真实 HTTP 查询。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 18,
+              "text": "and 表示两个条件都成立；is not None 排除空值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 12,
+              "text": "方法作用：Java 查询异常时立即跳过，不能误判成未建单。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 11,
+              "text": "测试可注入状态，生产则调用 Java 内部接口。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 18,
+              "text": "只有真正查到 hazardId 才能补 SUCCESS。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "reconcile_request",
+          "start": 616,
+          "end": 659,
+          "startAnchor": "cur.execute(",
+          "title": "未落库时按重试余量重置 outbox",
+          "explain": "如果 Java 明确没查到工单，代码读取 outbox 的重试次数。达到上限或 outbox 已 FAILED 时把 request 标记 FAILED；否则将 outbox 改回 RETRY、next_retry_time 设为 NOW，并把 request 回退 PENDING，让 Relay 再次投递。",
+          "interviewQuestions": [
+            "为什么不是直接由 RequestReconciler 自己发 MQ？",
+            "重试耗尽后才 FAILED 的原因是什么？"
+          ],
+          "pitfalls": [
+            "RequestReconciler 只改状态，实际投递仍由 Relay 完成。",
+            "要防止确认未落库前过早终止。"
+          ],
+          "interviewAnswers": [
+            "RequestReconciler 的职责是查询真实状态和修正 request/outbox 状态，投递 MQ 仍由 Relay 统一执行，避免绕过 outbox claim 和重试规则。",
+            "重试耗尽后继续无限重置会让坏任务永久循环；达到上限应标记 FAILED，让前端得到明确终态并保留运维证据。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 15,
+              "text": "元组/下标取值并解包；int 把数据库值转整数，or 0 处理 NULL。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 1,
+              "text": "方法作用：读取 outbox 当前状态和剩余重试信息。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 27,
+              "text": "把仍有余额的任务重置为可再次投递的 RETRY。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 8,
+              "text": "同步把前端 request 退回 PENDING。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": "ai-module/tools/hazard_create_queue.py",
+          "method": "RequestReconciler",
+          "start": 662,
+          "end": 705,
+          "startAnchor": "class RequestReconciler:",
+          "title": "定时筛选超时 request",
+          "explain": "RequestReconciler.run_once 只扫描 PENDING/PUBLISHED 且 updated_at 超过阈值、同时存在 outbox 的 request。每条单独调用 reconcile_request，一条失败只记日志，不阻断其他请求。run_forever 按配置间隔循环。",
+          "interviewQuestions": [
+            "这个类和 RelayWorker 有什么职责区别？",
+            "为什么单条对账失败不能影响整批？"
+          ],
+          "pitfalls": [
+            "RequestReconciler 扫的是超时 request，不是待发送 outbox。",
+            "批量补偿要隔离单条异常。"
+          ],
+          "interviewAnswers": [
+            "RelayWorker 负责扫 outbox 并投递 MQ；RequestReconciler 负责查超时 request 的 Java 真实结果，两者一个管发送、一个管对账。",
+            "每条 request 有独立状态和 retry 信息，单条对账异常如果影响整批，会让其他健康任务也无法补偿，所以必须隔离异常。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "class 定义类；__init__ 和 run_once 的第一个参数 self 代表当前实例。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 26,
+              "text": "单元素元组解包，逗号表示只取查询结果第一列。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 28,
+              "text": "方法作用：逐条查询 Java 真实结果并修正 Python 状态。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 25,
+              "text": "读取本轮需要对账的超时请求列表。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 31,
+              "text": "单条对账失败只记日志，不阻断其他请求。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": "safety-web/src/main/java/com/safety/web/controller/HazardController.java",
+          "method": "HazardController.aiCreateRequestStatus",
+          "start": 128,
+          "end": 142,
+          "startAnchor": "/** Python 对账用：按 request_id 查询 Java 侧是否已落库。 */",
+          "title": "Java 内部对账接口",
+          "explain": "这个接口只给 Python 对账使用，必须携带 X-Internal-Token。它按 request_id 调 HazardService 查 tb_hazard，并返回 {found, hazardId}。它不创建工单，也不读 Python ai_* 表。",
+          "interviewQuestions": [
+            "为什么不能让 Python 直接查 tb_hazard？",
+            "这个内部接口为什么不能被普通用户直接调用？"
+          ],
+          "pitfalls": [
+            "读取权边界仍然保持：Python 通过受控 HTTP 间接查询 Java 数据。",
+            "内部 Token 不能为空，否则是越权查询入口。"
+          ],
+          "interviewAnswers": [
+            "Python 不直接读 Java 的 tb_hazard，是为了保持 Java 业务边界和数据所有权；它通过受控内部接口查询，避免跨层直写/直读。",
+            "内部接口能读取 request_id 与工单映射，若对普通用户开放会泄露工单存在性和内部数据；X-Internal-Token 用于限制调用范围。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 4,
+              "text": "读取请求头；required=false 表示缺头时得到 null，随后由代码主动拒绝。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 10,
+              "text": "创建可变键值对象，最后序列化成 found/hazardId 响应。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 9,
+              "text": "方法作用：按 requestId 回查 Java tb_hazard。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 6,
+              "text": "内部 Token 不匹配时直接拒绝查询。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 11,
+              "text": "返回 Python 对账所需的 found 和 hazardId。",
+              "kind": "data"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "frontend-confirm-poll",
+      "title": "前端确认、SSE 与分级轮询",
+      "summary": "前端把确认卡片回传给 SSE 接口，解析 task_accepted 后保存 request_id，并按可见时间分级轮询。前端断开只停止展示，不取消后端任务。",
+      "snippets": [
+        {
+          "file": ".frontend-work/src/utils/hazardPoll.js",
+          "method": "nextHazardPollDelay",
+          "start": 1,
+          "end": 22,
+          "startAnchor": "export const HAZARD_POLL_FAST_LIMIT_MS = 10 * 1000",
+          "title": "分级轮询间隔",
+          "explain": "函数按有效轮询时间返回下一次延迟：0–10 秒每 1 秒，10–60 秒每 3 秒，1–10 分钟每 30 秒，达到 10 分钟返回 -1 停止。最后一行还把延迟截断到十 分钟边界，避免超时后多跑一次。",
+          "interviewQuestions": [
+            "为什么前期轮询密、后期轮询疏？",
+            "为什么返回 -1 表示停止而不是固定更长间隔？"
+          ],
+          "pitfalls": [
+            "10 分钟只停止前端轮询，不等于后端任务失败。",
+            "页面不可见时不能继续把隐藏时间计入有效轮询时间。"
+          ],
+          "interviewAnswers": [
+            "前期用户刚提交，状态变化快，1 秒级轮询能给出及时反馈；后期任务大多在正常处理，30 秒间隔可减少无效请求和系统压力。",
+            "返回 -1 是明确的停止信号，前端应停止当前 request 的轮询；超过 10 分钟不代表后端任务一定失败，所以只停止展示层轮询并保留 request_id。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "export 导出模块成员，const 声明不可重新赋值的常量。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 11,
+              "text": "函数声明导出给其他模块使用，参数是有效轮询时间。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 20,
+              "text": "方法作用：避免最后一次延迟越过十分钟边界。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 12,
+              "text": "过滤非法负数或非有限时间值。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 14,
+              "text": "默认进入 60 秒后的 30 秒慢轮询。",
+              "kind": "data"
+            }
+          ]
+        },
+        {
+          "file": ".frontend-work/src/utils/request.js",
+          "method": "request",
+          "start": 43,
+          "end": 100,
+          "startAnchor": "// 2. 组装请求头（自动注入 JWT Token）",
+          "title": "统一请求封装注入 JWT 并处理错误",
+          "explain": "request.js 从 localStorage 读取 token，自动加 Bearer Authorization；FormData 不手写 Content-Type，让浏览器生成 boundary；JSON 才序列化。401 清登录态并跳登录页，非 2xx 解析后端错误信息并抛 ApiError。",
+          "interviewQuestions": [
+            "为什么 FormData 不能手动设置 Content-Type？",
+            "轮询时 401 和网络异常应分别怎样处理？"
+          ],
+          "pitfalls": [
+            "请求封装只能处理展示层登录态，真正的权限校验仍在 Java。",
+            "不要把 404、401 和临时网络失败混成同一种业务终态。"
+          ],
+          "interviewAnswers": [
+            "浏览器需要自己生成 multipart boundary；手动设置 Content-Type 会覆盖 boundary，导致后端解析失败。",
+            "401 说明登录态失效，应清 token 并重新登录；临时网络失败或 5xx 可以按退避继续轮询，不能直接判定建单失败。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "const 声明块级常量；localStorage 保存浏览器登录态。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 40,
+              "text": "throw 抛出异常；调用方可以统一捕获 ApiError。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 24,
+              "text": "方法作用：真正发起 HTTP 请求并等待响应。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 7,
+              "text": "自动为请求注入 JWT Bearer Token。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 32,
+              "text": "401 统一清理登录态并跳转登录页。",
+              "kind": "edge"
+            }
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "sendMessage FormData",
+          "start": 1112,
+          "end": 1139,
+          "startAnchor": "const fd = new FormData()",
+          "title": "确认为 SSE 请求携带 interrupt_reply",
+          "explain": "前端在 FormData 中放入 message、session_id、interrupt_reply、user_id、大类提示和图片。interrupt_reply 存在时 message 可以为空。fetch 携带 JWT 和 AbortController，停止的是当前浏览器展示请求。",
+          "interviewQuestions": [
+            "为什么结构化确认可以不带普通文本 message？",
+            "AbortController 取消后，已经提交的建单任务会回滚吗？"
+          ],
+          "pitfalls": [
+            "浏览器中断展示连接不能回滚数据库或 MQ 任务。",
+            "user_id 仍由 Java 认证上下文决定，不能把前端字段当最终身份。"
+          ],
+          "interviewAnswers": [
+            "结构化确认已经携带 decision、draft、地址等必要信息，message 可以为空；普通文本确认只是兼容旧前端。",
+            "AbortController 只取消当前浏览器的 fetch 展示，不会回滚已提交的 request/outbox 或已进入 MQ 的业务任务。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "FormData 用来构造 multipart 表单，浏览器自动生成 boundary。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 22,
+              "text": "await 等待 fetch 返回响应；fetch 的第二个参数是请求配置对象。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 3,
+              "text": "方法作用：把结构化确认 JSON 放进 multipart 请求体。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 21,
+              "text": "创建取消句柄，只取消当前浏览器请求。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 22,
+              "text": "调用 Java SSE 接口并等待响应头。",
+              "kind": "call"
+            }
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "task_accepted",
+          "start": 1207,
+          "end": 1225,
+          "startAnchor": "} else if (event.type === 'interrupt') {",
+          "title": "解析 interrupt 与 task_accepted",
+          "explain": "收到 interrupt 时把确认卡片挂到当前助手消息；收到 task_accepted 时从事件中取 request_id，保存到用户隔离的 localStorage，并启动轮询。这里 task_accepted 只表示受理，不立即显示工单创建成功。",
+          "interviewQuestions": [
+            "task_accepted、SUCCESS、FAILED 在前端分别怎样展示？",
+            "为什么 request_id 要按 userId 隔离保存？"
+          ],
+          "pitfalls": [
+            "不能把 task_accepted 渲染成“建单成功”。",
+            "页面刷新或重新登录后要恢复仍然存在的 pending request。"
+          ],
+          "interviewAnswers": [
+            "task_accepted 显示“创建中”，SUCCESS 显示工单号和查看入口，FAILED 显示失败原因并停止轮询。",
+            "按 userId 隔离可以防止另一个用户读取同一 request_id 的轮询记录；重新登录后仍能恢复自己的 pending request。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 0,
+              "text": "=== 是严格相等，避免隐式类型转换。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 11,
+              "text": "|| 提供字段名兼容兜底，但要注意空字符串也会触发右值。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 15,
+              "text": "方法作用：持久化 pending requestId，刷新或重登后继续轮询。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 10,
+              "text": "读取 task_accepted 事件体并兜底为空对象。",
+              "kind": "data"
+            },
+            {
+              "lineOffset": 16,
+              "text": "拿到 requestId 后立即启动分级轮询。",
+              "kind": "call"
+            }
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "pause/schedule hazard polling",
+          "start": 798,
+          "end": 834,
+          "startAnchor": "function pauseHazardPollingState(state) {",
+          "title": "暂停、恢复和调度下一次轮询",
+          "explain": "state.activeElapsedMs 只累计页面可见期间的时间；document.hidden 时不安排 timer。回到前台后重新设置 activeStartedAt 并立即 refresh。scheduleHazardPoll 根据当前有效耗时算下一次延迟，到 10 分钟调用超时收尾。",
+          "interviewQuestions": [
+            "页面切后台后为什么暂停计时？",
+            "回到前台为什么先立即查一次？"
+          ],
+          "pitfalls": [
+            "隐藏期间不计入有效等待时间。",
+            "刷新后先查一次，避免继续显示离开前的旧状态。"
+          ],
+          "interviewAnswers": [
+            "后台标签页不能计入用户可见等待时间，而且浏览器会节流 timer；暂停计时避免回到前台后误判已经超过 10 分钟。",
+            "回到前台后状态可能已经变化，立即查询一次能避免继续展示离开前的旧状态，也符合“可见时间”轮询契约。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 3,
+              "text": "+= 是复合赋值；Date.now() 返回毫秒时间戳。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 27,
+              "text": "箭头函数保留外层 this；setTimeout 在延迟后执行回调。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 34,
+              "text": "方法作用：到点后发起一次状态查询。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 19,
+              "text": "隐藏页面或已停止状态不再安排下一次查询。",
+              "kind": "edge"
+            },
+            {
+              "lineOffset": 22,
+              "text": "根据有效可见时间计算下一次轮询间隔。",
+              "kind": "call"
+            }
+          ]
+        },
+        {
+          "file": ".frontend-work/src/views/HomeView.vue",
+          "method": "handlePageVisibilityChange",
+          "start": 920,
+          "end": 930,
+          "startAnchor": "function handlePageVisibilityChange() {",
+          "title": "页面可见性变化时统一暂停和恢复",
+          "explain": "visibilitychange 是浏览器页面可见性事件。hidden 时暂停所有轮询计时并清除 timer；可见时恢复计时，并立即刷新每个未停止的 request。这样既避免后台无效请求，也避免回来后继续等待旧的 30 秒间隔。",
+          "interviewQuestions": [
+            "为什么不能只靠 setTimeout 自己判断页面隐藏？",
+            "多个并发建单请求如何一起恢复？"
+          ],
+          "pitfalls": [
+            "浏览器 timer 在后台可能被节流，不能依赖它精确计时。",
+            "恢复时要立即查询，而不是等待下一轮延迟。"
+          ],
+          "interviewAnswers": [
+            "setTimeout 在后台会被浏览器节流甚至暂停，不能依赖它精确计时；显式监听 visibilitychange 才能正确处理暂停和恢复。",
+            "每个 request 有独立 state，恢复时逐个更新 activeStartedAt 并立即刷新；这样多个并发建单不会互相覆盖计时。"
+          ],
+          "lineNotes": [
+            {
+              "lineOffset": 5,
+              "text": "Array.from 把 Map 的 values 迭代器转成数组；forEach 遍历每个轮询状态。",
+              "kind": "syntax"
+            },
+            {
+              "lineOffset": 8,
+              "text": "方法作用：回到前台后立即刷新，而不是等旧 timer。",
+              "kind": "method"
+            },
+            {
+              "lineOffset": 2,
+              "text": "进入后台时暂停所有 request 的计时和 timer。",
+              "kind": "call"
+            },
+            {
+              "lineOffset": 7,
+              "text": "恢复可见时重新记录有效计时起点。",
+              "kind": "data"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

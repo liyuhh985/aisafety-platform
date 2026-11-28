@@ -1,0 +1,30 @@
+{
+  "sha256": "fac69d1cce055c92b11d73948cb4c04178eb3ffac2ca65fc9f21c3568ed4f281",
+  "file": "exposed_wire_1_fac69d1cce05.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"电表及周边线路极其杂乱，多处电线绝缘层破损、线头裸露，未穿管保护且直接固定在破损木板上。极易引发短路、漏电火灾或人员触电，存在严重安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"墙面电表箱及周边线路\",\n  \"rectification\": [\n    \"请专业电工立即整理线路，对裸露线头进行绝缘包扎并规范穿管保护\",\n    \"更换破损的电表箱底板，将配电设施规范安装在阻燃材质的箱体内\",\n    \"排查并拆除私拉乱接的多余线路，消除触电及火灾风险\"\n  ],\n  \"secondary_subcategories\": [\n    \"distribution_box_fault\",\n    \"illegal_wiring\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "电表及周边线路极其杂乱，多处电线绝缘层破损、线头裸露，未穿管保护且直接固定在破损木板上。极易引发短路、漏电火灾或人员触电，存在严重安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "墙面电表箱及周边线路",
+    "rectification": [
+      "请专业电工立即整理线路，对裸露线头进行绝缘包扎并规范穿管保护",
+      "更换破损的电表箱底板，将配电设施规范安装在阻燃材质的箱体内",
+      "排查并拆除私拉乱接的多余线路，消除触电及火灾风险"
+    ],
+    "secondary_subcategories": [
+      "distribution_box_fault",
+      "illegal_wiring"
+    ]
+  },
+  "error": ""
+}

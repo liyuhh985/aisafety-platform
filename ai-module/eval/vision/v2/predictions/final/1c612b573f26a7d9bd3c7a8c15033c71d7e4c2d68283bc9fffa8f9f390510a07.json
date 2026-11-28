@@ -1,0 +1,26 @@
+{
+  "sha256": "1c612b573f26a7d9bd3c7a8c15033c71d7e4c2d68283bc9fffa8f9f390510a07",
+  "file": "GAR0003.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"低\",\n  \"description\": \"道路及人行道地面散落大量塑料袋、纸屑、塑料瓶等垃圾，影响环境卫生，并可能造成行人滑倒或堵塞排水口。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"夜间道路及人行道地面（画面中下部）\",\n  \"rectification\": [\n    \"及时清扫并清运路面及人行道垃圾\",\n    \"增设或维护垃圾收集设施，加强夜间保洁与巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "低",
+    "description": "道路及人行道地面散落大量塑料袋、纸屑、塑料瓶等垃圾，影响环境卫生，并可能造成行人滑倒或堵塞排水口。",
+    "reason_if_no_hazard": "",
+    "location_hint": "夜间道路及人行道地面（画面中下部）",
+    "rectification": [
+      "及时清扫并清运路面及人行道垃圾",
+      "增设或维护垃圾收集设施，加强夜间保洁与巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

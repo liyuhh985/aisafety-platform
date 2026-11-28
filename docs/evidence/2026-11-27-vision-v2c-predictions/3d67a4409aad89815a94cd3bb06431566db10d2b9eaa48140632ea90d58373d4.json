@@ -1,0 +1,27 @@
+{
+  "sha256": "3d67a4409aad89815a94cd3bb06431566db10d2b9eaa48140632ea90d58373d4",
+  "file": "NEGELE05.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"中\",\n  \"description\": \"电梯显示屏显示“E10”故障代码，非正常楼层信息，表明电梯可能发生故障停运。若未及时处理，可能影响乘客通行，甚至导致人员被困。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯门口显示屏位置\",\n  \"rectification\": [\n    \"立即联系电梯维保单位排查并修复E10故障\",\n    \"在电梯入口设置停用或故障警示，防止乘客误乘\",\n    \"修复后进行试运行和安全确认，合格后再投入使用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯显示屏显示“E10”故障代码，非正常楼层信息，表明电梯可能发生故障停运。若未及时处理，可能影响乘客通行，甚至导致人员被困。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯门口显示屏位置",
+    "rectification": [
+      "立即联系电梯维保单位排查并修复E10故障",
+      "在电梯入口设置停用或故障警示，防止乘客误乘",
+      "修复后进行试运行和安全确认，合格后再投入使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "e237429723b30f2fe99d41833f64c27d526ef5570927d394f4a34fbdd0fe0ebe",
+  "file": "gas_leak_2_e237429723b3.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"建筑前大型管道表面存在大面积液体流淌污迹、锈蚀和涂层剥落，局部黄色修补层周边有渗漏迹象，可能造成介质泄漏、腐蚀加剧或人员滑倒。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙前的大型架空管道\",\n  \"rectification\": [\n    \"隔离渗漏管段，排查介质和泄漏点并按规程修复或更换\",\n    \"清理管道表面腐蚀和油污，重新进行防腐处理\",\n    \"在检修区域设置警示和防滑措施，核查临时构件固定情况\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "建筑前大型管道表面存在大面积液体流淌污迹、锈蚀和涂层剥落，局部黄色修补层周边有渗漏迹象，可能造成介质泄漏、腐蚀加剧或人员滑倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙前的大型架空管道",
+    "rectification": [
+      "隔离渗漏管段，排查介质和泄漏点并按规程修复或更换",
+      "清理管道表面腐蚀和油污，重新进行防腐处理",
+      "在检修区域设置警示和防滑措施，核查临时构件固定情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

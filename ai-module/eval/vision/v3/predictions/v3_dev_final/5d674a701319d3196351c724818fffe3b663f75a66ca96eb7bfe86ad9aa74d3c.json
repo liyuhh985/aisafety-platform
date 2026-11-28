@@ -1,0 +1,27 @@
+{
+  "sha256": "5d674a701319d3196351c724818fffe3b663f75a66ca96eb7bfe86ad9aa74d3c",
+  "file": "sewage_odor_4_5d674a701319.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"sewage_odor\",\n  \"severity\": \"中\",\n  \"description\": \"河道水体发黑浑浊，桥涵出口处有垃圾杂物滞留，疑似污水直排或水体长期不流动，易散发异味、滋生蚊蝇，污染周边环境并影响居民生活。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"河道桥涵出口及下游水体\",\n  \"rectification\": [\n    \"清理桥涵及河道内垃圾、漂浮物和淤积物。\",\n    \"排查沿线排污口，实施截污纳管，防止污水直排。\",\n    \"加强河道日常巡查和水质监测，必要时清淤消杀。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "sewage_odor",
+    "severity": "中",
+    "description": "河道水体发黑浑浊，桥涵出口处有垃圾杂物滞留，疑似污水直排或水体长期不流动，易散发异味、滋生蚊蝇，污染周边环境并影响居民生活。",
+    "reason_if_no_hazard": "",
+    "location_hint": "河道桥涵出口及下游水体",
+    "rectification": [
+      "清理桥涵及河道内垃圾、漂浮物和淤积物。",
+      "排查沿线排污口，实施截污纳管，防止污水直排。",
+      "加强河道日常巡查和水质监测，必要时清淤消杀。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

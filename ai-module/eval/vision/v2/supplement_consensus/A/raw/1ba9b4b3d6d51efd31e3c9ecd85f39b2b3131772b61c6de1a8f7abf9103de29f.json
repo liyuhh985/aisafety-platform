@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"road_occupancy\", \"evidence\": \"人行道上有两辆摊贩推车占道售卖食品\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "人行道上有两辆摊贩推车占道售卖食品"
+  }
+}

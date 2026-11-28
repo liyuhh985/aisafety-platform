@@ -1,0 +1,27 @@
+{
+  "sha256": "dbac777e2356878a38ceb3aab918109932160f0e6e972553c5b8dff0069dcba6",
+  "file": "vehicle_occupancy_2_dbac777e2356.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"中\",\n  \"description\": \"一辆灰色轿车及一辆蓝色轿车停放在人行道砖铺区域，灰色车尾部压占黄色盲道，阻断视障人士通行，行人被迫绕行机动车道，存在碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"靠墙人行道及盲道处\",\n  \"rectification\": [\n    \"立即通知车主驶离并依法处理违停\",\n    \"在盲道及人行道入口设置隔离桩或禁停设施\",\n    \"加强该路段巡查与违停抓拍\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "一辆灰色轿车及一辆蓝色轿车停放在人行道砖铺区域，灰色车尾部压占黄色盲道，阻断视障人士通行，行人被迫绕行机动车道，存在碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "靠墙人行道及盲道处",
+    "rectification": [
+      "立即通知车主驶离并依法处理违停",
+      "在盲道及人行道入口设置隔离桩或禁停设施",
+      "加强该路段巡查与违停抓拍"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

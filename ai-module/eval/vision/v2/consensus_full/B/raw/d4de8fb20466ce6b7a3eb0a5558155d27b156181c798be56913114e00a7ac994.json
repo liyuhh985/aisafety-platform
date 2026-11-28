@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"wire_fault\", \"evidence\": \"墙面开槽内电线管裸露无盖板防护\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "墙面开槽内电线管裸露无盖板防护"
+  }
+}

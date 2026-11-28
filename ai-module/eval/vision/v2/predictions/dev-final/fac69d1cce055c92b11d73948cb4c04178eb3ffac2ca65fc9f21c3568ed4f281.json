@@ -1,0 +1,29 @@
+{
+  "sha256": "fac69d1cce055c92b11d73948cb4c04178eb3ffac2ca65fc9f21c3568ed4f281",
+  "file": "EXP0002.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内墙面电表及配电设施安装在破损木板上，接线杂乱，电表下方端子及线缆接头裸露，部分绝缘外护套缺失，木板有孔洞且固定不牢，存在触电、短路及电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内墙面电表/配电板处\",\n  \"rectification\": [\n    \"由持证电工对电表及配电线路进行检修，规范接线并封闭裸露端子。\",\n    \"将配电设施安装在阻燃、完好且固定牢固的箱体内，线路穿管保护。\",\n    \"排查绝缘破损和老化线路，必要时更换，并设置电气安全警示标识。\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "室内墙面电表及配电设施安装在破损木板上，接线杂乱，电表下方端子及线缆接头裸露，部分绝缘外护套缺失，木板有孔洞且固定不牢，存在触电、短路及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙面电表/配电板处",
+    "rectification": [
+      "由持证电工对电表及配电线路进行检修，规范接线并封闭裸露端子。",
+      "将配电设施安装在阻燃、完好且固定牢固的箱体内，线路穿管保护。",
+      "排查绝缘破损和老化线路，必要时更换，并设置电气安全警示标识。"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

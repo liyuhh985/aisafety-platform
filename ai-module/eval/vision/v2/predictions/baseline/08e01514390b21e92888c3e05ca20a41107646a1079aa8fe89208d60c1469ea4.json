@@ -1,0 +1,27 @@
+{
+  "sha256": "08e01514390b21e92888c3e05ca20a41107646a1079aa8fe89208d60c1469ea4",
+  "file": "NEGROA02.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"低\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"道路左侧路肩与矮墙之间可见裸露土沟或排水沟，无盖板或连续防护，行人、非机动车靠边时存在跌落风险；因图片无法确认沟深及设施权属，需现场核实。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"水泥道路左侧路肩，靠近矮砖墙及草丛处\",\n  \"rectification\": [\n    \"现场核实沟渠深度和用途，必要时加装盖板或防护栏\",\n    \"在临沟路段增设警示标识和夜间反光设施\",\n    \"清理路肩杂草，保持道路边缘清晰可辨\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "道路左侧路肩与矮墙之间可见裸露土沟或排水沟，无盖板或连续防护，行人、非机动车靠边时存在跌落风险；因图片无法确认沟深及设施权属，需现场核实。",
+    "reason_if_no_hazard": "",
+    "location_hint": "水泥道路左侧路肩，靠近矮砖墙及草丛处",
+    "rectification": [
+      "现场核实沟渠深度和用途，必要时加装盖板或防护栏",
+      "在临沟路段增设警示标识和夜间反光设施",
+      "清理路肩杂草，保持道路边缘清晰可辨"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

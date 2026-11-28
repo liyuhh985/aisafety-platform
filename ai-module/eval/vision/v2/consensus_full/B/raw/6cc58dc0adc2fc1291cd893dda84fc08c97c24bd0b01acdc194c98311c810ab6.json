@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"人员正在钻孔作业，场景疑为维修施工，无法确认目标隐患\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "人员正在钻孔作业，场景疑为维修施工，无法确认目标隐患"
+  }
+}

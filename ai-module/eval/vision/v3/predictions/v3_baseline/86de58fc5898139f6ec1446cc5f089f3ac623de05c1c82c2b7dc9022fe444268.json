@@ -1,0 +1,27 @@
+{
+  "sha256": "86de58fc5898139f6ec1446cc5f089f3ac623de05c1c82c2b7dc9022fe444268",
+  "file": "drainage_flood_1_86de58fc5898.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"高\",\n  \"description\": \"高架桥下道路大面积积水，水面覆盖整幅车道并漫至人行道边缘，排水不畅，车辆和行人通行受阻，存在车辆熄火、行人滑倒及涉水触电风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高架桥下道路及人行道边缘\",\n  \"rectification\": [\n    \"立即设置警示并封闭积水严重路段，疏导交通\",\n    \"排查雨水口、排水管网堵塞情况并组织抽排积水\",\n    \"雨后检修排水设施，评估低洼易涝点并实施改造\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "高",
+    "description": "高架桥下道路大面积积水，水面覆盖整幅车道并漫至人行道边缘，排水不畅，车辆和行人通行受阻，存在车辆熄火、行人滑倒及涉水触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高架桥下道路及人行道边缘",
+    "rectification": [
+      "立即设置警示并封闭积水严重路段，疏导交通",
+      "排查雨水口、排水管网堵塞情况并组织抽排积水",
+      "雨后检修排水设施，评估低洼易涝点并实施改造"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

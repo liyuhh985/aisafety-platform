@@ -1,0 +1,42 @@
+{
+  "599fa961eefa025229dfe2ab62073536c00b69be876681417fe9e18988fc506b": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "仅文字标题与卡通图标，无真实场景证据"
+  },
+  "1a495eff9168412e06ba29fa636d5e1378de0dba05be53cb44b253e7f2dcf3ff": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电梯按钮面板完好，无可见隐患"
+  },
+  "c011c462c2d9b8746705b5ef7831bd12dabf1f649f024e8f5860aff5ccb8eb65": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "evidence": "人员蹲于电梯轿厢内，工人戴盔在电梯门口施救"
+  },
+  "20e2cf513c20228b1e4ad2b3d1e25c6a78a1f8b1dc9f6b6c6018f72e8d356ed6": {
+    "status": "valid",
+    "has_hazard": false,
+    "uncertain": false,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": ""
+  },
+  "a0ea628e4dbcc5598507888992750c91f42d375447da2e56dd0c71acd4409834": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "evidence": "自动扶梯设护栏停用，标牌显示暂停使用"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "b6ceae9ee9dee922fd9c0f5a9e8def284a1ec3d6a23469158fce4f7e7b4e0c5c",
+  "file": "ELE0060.png",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯门口有消防人员使用破拆工具实施救援，表明发生电梯困人事件，可能因门锁、控制系统或供电故障导致人员被困，存在恐慌、窒息及救援过程中二次伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼电梯层门口\",\n  \"rectification\": [\n    \"立即由电梯维保单位排查门锁、控制系统和供电故障，修复前停用电梯并挂牌警示\",\n    \"救援时设置警戒区域，安抚被困人员，禁止强行扒门或盲目自救\",\n    \"按规定完成电梯定期检验和日常维保，确保应急报警装置有效\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯门口有消防人员使用破拆工具实施救援，表明发生电梯困人事件，可能因门锁、控制系统或供电故障导致人员被困，存在恐慌、窒息及救援过程中二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼电梯层门口",
+    "rectification": [
+      "立即由电梯维保单位排查门锁、控制系统和供电故障，修复前停用电梯并挂牌警示",
+      "救援时设置警戒区域，安抚被困人员，禁止强行扒门或盲目自救",
+      "按规定完成电梯定期检验和日常维保，确保应急报警装置有效"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

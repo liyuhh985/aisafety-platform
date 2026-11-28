@@ -1,0 +1,23 @@
+{
+  "sha256": "801349403c4e2b98d4294c1c7c20152c73058ea1d67a39fd593c4e9b9751a024",
+  "file": "NO0100.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"现场为施工围挡场景，围挡连续设置、面板完好，斜撑支撑齐全，无明显倾斜、缺失、破损或占道，未发现直接安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "现场为施工围挡场景，围挡连续设置、面板完好，斜撑支撑齐全，无明显倾斜、缺失、破损或占道，未发现直接安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

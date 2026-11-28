@@ -1,0 +1,27 @@
+{
+  "sha256": "ac85e91439e99d85f1f6c775b2bf6ab74aa9f9f11840dd5f2d7e4f72b4d2b6eb",
+  "file": "ELE0054.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"画面显示消防人员正在电梯门口实施救援，电梯门处于异常状态，表明发生电梯困人故障。可能导致乘客被困轿厢内，存在恐慌、缺氧或二次伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼宇电梯门口\",\n  \"rectification\": [\n    \"立即联系电梯维保单位到场检修，排查困人故障原因\",\n    \"检查电梯应急报警装置、门锁及控制系统是否正常\",\n    \"加强电梯日常维护保养和定期检验，完善应急处置预案\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "画面显示消防人员正在电梯门口实施救援，电梯门处于异常状态，表明发生电梯困人故障。可能导致乘客被困轿厢内，存在恐慌、缺氧或二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼宇电梯门口",
+    "rectification": [
+      "立即联系电梯维保单位到场检修，排查困人故障原因",
+      "检查电梯应急报警装置、门锁及控制系统是否正常",
+      "加强电梯日常维护保养和定期检验，完善应急处置预案"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

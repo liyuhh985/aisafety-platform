@@ -1,0 +1,27 @@
+{
+  "sha256": "c44a01e4a0d98414c79c16398061c1c0f8f510b4c6d6ded5e2845ed4ee89a617",
+  "file": "gas_pipe_aging_3_c44a01e4a0d9.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"黄色金属管道弯头处漆皮大面积剥落、锈蚀明显，疑似燃气管道；若为燃气管道，长期腐蚀可致管壁减薄、穿孔泄漏，遇火源可能引发火灾爆炸。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内墙角/管道弯头处（具体位置不明）\",\n  \"rectification\": [\n    \"核实管道用途及介质，若为燃气管道立即联系燃气公司检测\",\n    \"对锈蚀部位除锈防腐，必要时更换管段\",\n    \"设置清晰管道标识并纳入定期巡检\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "黄色金属管道弯头处漆皮大面积剥落、锈蚀明显，疑似燃气管道；若为燃气管道，长期腐蚀可致管壁减薄、穿孔泄漏，遇火源可能引发火灾爆炸。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙角/管道弯头处（具体位置不明）",
+    "rectification": [
+      "核实管道用途及介质，若为燃气管道立即联系燃气公司检测",
+      "对锈蚀部位除锈防腐，必要时更换管段",
+      "设置清晰管道标识并纳入定期巡检"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

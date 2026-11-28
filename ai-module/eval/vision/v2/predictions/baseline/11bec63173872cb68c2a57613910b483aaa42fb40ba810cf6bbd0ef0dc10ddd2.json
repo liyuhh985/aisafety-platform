@@ -1,0 +1,27 @@
+{
+  "sha256": "11bec63173872cb68c2a57613910b483aaa42fb40ba810cf6bbd0ef0dc10ddd2",
+  "file": "FAC0001.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"室内顶棚出现大面积抹灰/腻子层脱落，裸露基层且周边有裂缝，存在空鼓继续掉落砸伤人员的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内顶棚（天花板）\",\n  \"rectification\": [\n    \"立即设置警戒线并隔离下方区域，禁止人员停留\",\n    \"请专业人员铲除空鼓、松动层，重新修补加固\",\n    \"排查渗水、结构裂缝等诱因并修复\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "室内顶棚出现大面积抹灰/腻子层脱落，裸露基层且周边有裂缝，存在空鼓继续掉落砸伤人员的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内顶棚（天花板）",
+    "rectification": [
+      "立即设置警戒线并隔离下方区域，禁止人员停留",
+      "请专业人员铲除空鼓、松动层，重新修补加固",
+      "排查渗水、结构裂缝等诱因并修复"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

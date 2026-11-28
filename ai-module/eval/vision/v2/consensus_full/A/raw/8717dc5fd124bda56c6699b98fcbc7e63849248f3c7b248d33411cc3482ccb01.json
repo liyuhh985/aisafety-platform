@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"street_light_pole\", \"evidence\": \"路灯灯罩敞开，工人在高空作业车对其进行检修\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "evidence": "路灯灯罩敞开，工人在高空作业车对其进行检修"
+  }
+}

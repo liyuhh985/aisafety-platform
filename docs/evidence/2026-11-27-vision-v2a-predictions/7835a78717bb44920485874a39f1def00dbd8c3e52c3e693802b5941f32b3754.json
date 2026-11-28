@@ -1,0 +1,26 @@
+{
+  "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+  "file": "NEGELE03.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"低\",\n  \"description\": \"电梯楼层按钮面板中“6”按钮周边明显破损、翘起，可能导致按键失灵或划伤手指，影响正常选层使用。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内楼层按钮面板，6层按钮处\",\n  \"rectification\": [\n    \"及时报修并更换破损的电梯按钮面板\",\n    \"检修前张贴警示，测试按键功能是否正常\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "电梯楼层按钮面板中“6”按钮周边明显破损、翘起，可能导致按键失灵或划伤手指，影响正常选层使用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内楼层按钮面板，6层按钮处",
+    "rectification": [
+      "及时报修并更换破损的电梯按钮面板",
+      "检修前张贴警示，测试按键功能是否正常"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

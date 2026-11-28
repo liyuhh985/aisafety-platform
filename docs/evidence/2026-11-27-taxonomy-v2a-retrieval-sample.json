@@ -1,0 +1,224 @@
+{
+  "query_count": 10,
+  "merged_query_count": 3,
+  "schema": {
+    "hazard_cases": [
+      "content_hash",
+      "doc_id",
+      "embedding"
+    ],
+    "hazard_policies": [
+      "content_hash",
+      "doc_id",
+      "embedding"
+    ],
+    "hazard_regulations": [
+      "content_hash",
+      "doc_id",
+      "embedding"
+    ]
+  },
+  "knowledge_sync_queries_omit_category": true,
+  "samples": [
+    {
+      "query": "住宅楼外墙出现贯穿性裂缝，墙体明显倾斜",
+      "tag": "merged:dangerous_building",
+      "expected_category": "建筑安全/危房",
+      "doc_ids": [
+        190,
+        132,
+        191
+      ],
+      "categories": [
+        "建筑安全/危房",
+        "建筑安全/危房",
+        "建筑安全/危房"
+      ],
+      "scores": [
+        0.679624,
+        0.679538,
+        0.672074
+      ]
+    },
+    {
+      "query": "高层大厦外立面大理石瓷砖脱落砸坏车辆",
+      "tag": "merged:falling_object",
+      "expected_category": "建筑安全/高空坠物",
+      "doc_ids": [
+        120,
+        192,
+        133
+      ],
+      "categories": [
+        "建筑安全/高空坠物",
+        "建筑安全/高空坠物",
+        "建筑安全/高空坠物"
+      ],
+      "scores": [
+        0.743276,
+        0.716553,
+        0.703413
+      ]
+    },
+    {
+      "query": "厂区消防水池水位不足，室外消火栓放不出水",
+      "tag": "merged:fire_equipment_fault",
+      "expected_category": "消防安全/消防设施故障",
+      "doc_ids": [
+        127,
+        125,
+        178
+      ],
+      "categories": [
+        "消防安全/消防设施故障",
+        "消防安全/消防设施故障",
+        "消防安全/消防设施故障"
+      ],
+      "scores": [
+        0.694145,
+        0.67206,
+        0.661986
+      ]
+    },
+    {
+      "query": "暴雨夜雨水井盖缺失移位，行人涉水坠井",
+      "tag": "regular",
+      "expected_category": "市政设施/井盖缺失/破损",
+      "doc_ids": [
+        57,
+        225,
+        76
+      ],
+      "categories": [
+        "市政设施/井盖缺失/破损",
+        "市政设施/井盖缺失/破损",
+        "市政设施/井盖缺失/破损"
+      ],
+      "scores": [
+        0.687233,
+        0.686724,
+        0.642757
+      ]
+    },
+    {
+      "query": "主干道路面塌陷出现深坑，下方路基已空洞",
+      "tag": "regular",
+      "expected_category": "市政设施/路面塌陷",
+      "doc_ids": [
+        152,
+        254,
+        166
+      ],
+      "categories": [
+        "市政设施/路面塌陷",
+        "市政设施/路面塌陷",
+        "市政设施/路面塌陷"
+      ],
+      "scores": [
+        0.71414,
+        0.710881,
+        0.680751
+      ]
+    },
+    {
+      "query": "居民楼燃气管道泄漏，楼道里有明显煤气味",
+      "tag": "regular",
+      "expected_category": "电气与燃气/燃气泄漏",
+      "doc_ids": [
+        202,
+        197,
+        143
+      ],
+      "categories": [
+        "电气与燃气/燃气管道老化",
+        "电气与燃气/燃气管道老化",
+        "电气与燃气/燃气管道老化"
+      ],
+      "scores": [
+        0.673859,
+        0.667182,
+        0.656574
+      ]
+    },
+    {
+      "query": "电梯困人，轿厢停在楼层之间",
+      "tag": "regular",
+      "expected_category": "电梯与特种设备/电梯困人",
+      "doc_ids": [
+        148,
+        149,
+        173
+      ],
+      "categories": [
+        "电梯与特种设备/电梯困人",
+        "电梯与特种设备/电梯困人",
+        "电梯与特种设备/电梯困人"
+      ],
+      "scores": [
+        0.68019,
+        0.667997,
+        0.653697
+      ]
+    },
+    {
+      "query": "市政施工开挖路面未设置围挡，基坑敞口",
+      "tag": "regular",
+      "expected_category": "施工安全/未设置围挡",
+      "doc_ids": [
+        217,
+        51,
+        144
+      ],
+      "categories": [
+        "施工安全/未设置围挡",
+        "施工安全/未设置围挡",
+        "施工安全/无安全警示"
+      ],
+      "scores": [
+        0.68411,
+        0.635841,
+        0.634093
+      ]
+    },
+    {
+      "query": "小区垃圾长期堆积无人清运",
+      "tag": "regular",
+      "expected_category": "环境与其他/垃圾堆积",
+      "doc_ids": [
+        187,
+        121,
+        157
+      ],
+      "categories": [
+        "交通与通行/车辆占道",
+        "环境与其他/垃圾堆积",
+        "环境与其他/垃圾堆积"
+      ],
+      "scores": [
+        0.671396,
+        0.657642,
+        0.609027
+      ]
+    },
+    {
+      "query": "沿街商铺私拉乱接电线给电动车充电",
+      "tag": "regular",
+      "expected_category": "电气与燃气/私拉乱接",
+      "doc_ids": [
+        140,
+        255,
+        256
+      ],
+      "categories": [
+        "电气与燃气/私拉乱接",
+        "电气与燃气/私拉乱接",
+        "电气与燃气/私拉乱接"
+      ],
+      "scores": [
+        0.687554,
+        0.667282,
+        0.639212
+      ]
+    }
+  ]
+}

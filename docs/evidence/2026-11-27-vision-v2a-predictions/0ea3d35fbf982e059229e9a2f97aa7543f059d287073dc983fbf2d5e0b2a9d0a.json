@@ -1,0 +1,27 @@
+{
+  "sha256": "0ea3d35fbf982e059229e9a2f97aa7543f059d287073dc983fbf2d5e0b2a9d0a",
+  "file": "DIS0002.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内多台配电柜/机柜门板缺失、柜门敞开，顶部及内部电气元件、线路外露，防护结构损坏，存在人员误触触电、进尘受潮短路及设备故障风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内配电/机柜集中区域\",\n  \"rectification\": [\n    \"立即断电挂牌，设置临时隔离围挡并禁止无关人员靠近。\",\n    \"由持证电工检查柜内线路和元件，修复或更换缺失柜门、门锁及防护面板。\",\n    \"清理现场并完善防触电警示标识，整改完成前不得投入使用。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "室内多台配电柜/机柜门板缺失、柜门敞开，顶部及内部电气元件、线路外露，防护结构损坏，存在人员误触触电、进尘受潮短路及设备故障风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内配电/机柜集中区域",
+    "rectification": [
+      "立即断电挂牌，设置临时隔离围挡并禁止无关人员靠近。",
+      "由持证电工检查柜内线路和元件，修复或更换缺失柜门、门锁及防护面板。",
+      "清理现场并完善防触电警示标识，整改完成前不得投入使用。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

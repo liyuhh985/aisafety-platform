@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_lane_blocked\", \"evidence\": \"黄色标线消防车道两侧停满车辆，地面写禁止占用\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "evidence": "黄色标线消防车道两侧停满车辆，地面写禁止占用"
+  }
+}

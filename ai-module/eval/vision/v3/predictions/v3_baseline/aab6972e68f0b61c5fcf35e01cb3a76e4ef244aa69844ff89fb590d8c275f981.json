@@ -1,0 +1,23 @@
+{
+  "sha256": "aab6972e68f0b61c5fcf35e01cb3a76e4ef244aa69844ff89fb590d8c275f981",
+  "file": "gas_leak_4_aab6972e68f0.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面显示专业人员穿戴防护装备并使用检测仪器对气瓶阀门进行检测，属于规范的安全检查场景，未见泄漏、违规存放等明显隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示专业人员穿戴防护装备并使用检测仪器对气瓶阀门进行检测，属于规范的安全检查场景，未见泄漏、违规存放等明显隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

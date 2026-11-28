@@ -1,0 +1,27 @@
+{
+  "sha256": "af17a7dbc3a3b0097926a9d51b6205f4247a623e448fb94a65fe6092e1161b19",
+  "file": "DAN0004.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙底部及外挑窗台下方可见明显长横向裂缝，裂缝较宽并与地坪脱开，周边地面铺装也开裂破损，存在地基沉降或墙体结构失稳风险，可能继续扩展导致构件损坏或坠落伤人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙底部、外挑窗台下方及周边地面\",\n  \"rectification\": [\n    \"立即设置警戒区域并委托专业机构进行结构安全鉴定\",\n    \"对裂缝进行持续观测记录，查明原因后按鉴定意见加固修复\",\n    \"修复周边开裂破损地面并清理植物根系对铺装的影响\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "建筑外墙底部及外挑窗台下方可见明显长横向裂缝，裂缝较宽并与地坪脱开，周边地面铺装也开裂破损，存在地基沉降或墙体结构失稳风险，可能继续扩展导致构件损坏或坠落伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙底部、外挑窗台下方及周边地面",
+    "rectification": [
+      "立即设置警戒区域并委托专业机构进行结构安全鉴定",
+      "对裂缝进行持续观测记录，查明原因后按鉴定意见加固修复",
+      "修复周边开裂破损地面并清理植物根系对铺装的影响"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

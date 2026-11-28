@@ -1,0 +1,27 @@
+{
+  "sha256": "3d67a4409aad89815a94cd3bb06431566db10d2b9eaa48140632ea90d58373d4",
+  "file": "neg_23_3d67a4409aad.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"中\",\n  \"description\": \"电梯显示屏出现“F10”异常代码，疑似电梯故障停运或状态异常，可能导致乘客无法正常使用，并存在困人等次生风险，需维保单位尽快核查。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯显示屏处（FUJITEC，10人/800kg）\",\n  \"rectification\": [\n    \"立即联系电梯维保单位核查“F10”故障代码，排除故障并试运行合格后方可恢复使用。\",\n    \"在电梯口设置“故障停用/暂停使用”警示，防止乘客误入。\",\n    \"检查电梯应急报警装置和检验有效期，确保应急联络畅通。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯显示屏出现“F10”异常代码，疑似电梯故障停运或状态异常，可能导致乘客无法正常使用，并存在困人等次生风险，需维保单位尽快核查。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯显示屏处（FUJITEC，10人/800kg）",
+    "rectification": [
+      "立即联系电梯维保单位核查“F10”故障代码，排除故障并试运行合格后方可恢复使用。",
+      "在电梯口设置“故障停用/暂停使用”警示，防止乘客误入。",
+      "检查电梯应急报警装置和检验有效期，确保应急联络畅通。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

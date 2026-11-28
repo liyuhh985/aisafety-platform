@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_facility\", \"evidence\": \"消防栓被拆解，部件散落地面正在维修\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "消防栓被拆解，部件散落地面正在维修"
+  }
+}

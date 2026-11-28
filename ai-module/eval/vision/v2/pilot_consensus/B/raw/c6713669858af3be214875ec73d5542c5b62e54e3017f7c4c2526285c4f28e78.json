@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"road_occupancy\", \"evidence\": \"店外摆放桌椅占用人行道，城管正在清理\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "evidence": "店外摆放桌椅占用人行道，城管正在清理"
+  }
+}

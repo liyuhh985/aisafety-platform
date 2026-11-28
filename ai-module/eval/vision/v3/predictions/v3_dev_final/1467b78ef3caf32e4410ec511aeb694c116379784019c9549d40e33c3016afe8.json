@@ -1,0 +1,27 @@
+{
+  "sha256": "1467b78ef3caf32e4410ec511aeb694c116379784019c9549d40e33c3016afe8",
+  "file": "elevator_stopped_1_1467b78ef3ca.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"中\",\n  \"description\": \"画面中央金属线缆严重断股、散股，金属丝外露翘起，承力与绝缘性能下降，存在断裂坠落、割伤或触电风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中央的金属线缆\",\n  \"rectification\": [\n    \"立即设置警戒并隔离该线缆，禁止人员靠近\",\n    \"由专业电工或线路维护单位确认线缆用途并更换受损段\",\n    \"排查同线路或同批次线缆是否存在类似断股、老化问题\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "中",
+    "description": "画面中央金属线缆严重断股、散股，金属丝外露翘起，承力与绝缘性能下降，存在断裂坠落、割伤或触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中央的金属线缆",
+    "rectification": [
+      "立即设置警戒并隔离该线缆，禁止人员靠近",
+      "由专业电工或线路维护单位确认线缆用途并更换受损段",
+      "排查同线路或同批次线缆是否存在类似断股、老化问题"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

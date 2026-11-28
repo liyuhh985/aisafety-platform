@@ -1,0 +1,27 @@
+{
+  "sha256": "e701fbfbb35d8d48d387330dd4cc4307cb9a140a96bbe871de8bbabd0c1323b5",
+  "file": "ROA0002.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"road_occupancy\",\"severity\":\"高\",\"description\":\"多张竹木桌摆放在机动车道上，占据大面积路面，妨碍车辆和行人正常通行，夜间视线较差，易引发碰撞、刮擦等交通事故。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路机动车道及路侧\",\"rectification\":[\"立即清理占道桌椅等物品，恢复道路正常通行\",\"规范经营区域，禁止在机动车道及影响通行的区域摆放物品\",\"加强夜间巡查和现场警示，防止车辆行人误撞\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "高",
+    "description": "多张竹木桌摆放在机动车道上，占据大面积路面，妨碍车辆和行人正常通行，夜间视线较差，易引发碰撞、刮擦等交通事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路机动车道及路侧",
+    "rectification": [
+      "立即清理占道桌椅等物品，恢复道路正常通行",
+      "规范经营区域，禁止在机动车道及影响通行的区域摆放物品",
+      "加强夜间巡查和现场警示，防止车辆行人误撞"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

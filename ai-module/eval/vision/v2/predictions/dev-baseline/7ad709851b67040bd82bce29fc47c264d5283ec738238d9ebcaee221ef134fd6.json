@@ -1,0 +1,26 @@
+{
+  "sha256": "7ad709851b67040bd82bce29fc47c264d5283ec738238d9ebcaee221ef134fd6",
+  "file": "NEGFIR05.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"楼道/通道内停放电动自行车并设置充电区域，挤占疏散空间；电动车电池起火会产生有毒烟气并阻碍逃生，存在较高消防风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"贴有“电瓶车充电区域”标识的墙面及右侧通道\",\n  \"rectification\": [\n    \"立即移除楼道内电动车及充电设施，改设室外集中充电棚\",\n    \"清理并保持消防疏散通道畅通，设置禁停标识并加强巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "楼道/通道内停放电动自行车并设置充电区域，挤占疏散空间；电动车电池起火会产生有毒烟气并阻碍逃生，存在较高消防风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "贴有“电瓶车充电区域”标识的墙面及右侧通道",
+    "rectification": [
+      "立即移除楼道内电动车及充电设施，改设室外集中充电棚",
+      "清理并保持消防疏散通道畅通，设置禁停标识并加强巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

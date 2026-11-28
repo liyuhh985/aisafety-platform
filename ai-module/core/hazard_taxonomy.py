@@ -19,6 +19,7 @@ HAZARD_TAXONOMY = (
             ("road_surface_collapse", "路面塌陷"),
             ("drainage_flood", "排水/积水"),
             ("street_light_pole", "路灯/线杆损坏"),
+            ("tree_fall_hazard", "树木倒伏/断枝风险"),
         ),
     },
     {
@@ -27,7 +28,7 @@ HAZARD_TAXONOMY = (
         "subcategories": (
             ("fire_lane_blocked", "消防通道占用"),
             ("fire_equipment_fault", "消防设施故障"),
-            ("fire_water_abnormal", "消防水源异常"),
+            ("ebike_hazard", "电动自行车违规停放/充电"),
         ),
     },
     {
@@ -35,8 +36,6 @@ HAZARD_TAXONOMY = (
         "label": "建筑安全",
         "subcategories": (
             ("dangerous_building", "危房"),
-            ("wall_crack_lean", "墙体开裂/倾斜"),
-            ("facade_fall", "外立面脱落"),
             ("falling_object", "高空坠物"),
             ("illegal_structure", "违规搭建"),
         ),
@@ -61,6 +60,7 @@ HAZARD_TAXONOMY = (
             ("scaffold_guard", "脚手架/临边防护"),
             ("deep_pit", "深基坑风险"),
             ("temporary_power", "施工临时用电"),
+            ("confined_space", "有限空间作业风险"),
         ),
     },
     {
@@ -78,6 +78,7 @@ HAZARD_TAXONOMY = (
         "subcategories": (
             ("garbage_pile", "垃圾堆积"),
             ("sewage_odor", "污水/异味"),
+            ("hazmat_storage", "危化品/易燃易爆违规存运"),
             ("other", "其他"),
         ),
     },
@@ -100,6 +101,27 @@ SUBCATEGORY_TO_MAJOR = {
     for item in HAZARD_TAXONOMY
     for sub_code, _ in item["subcategories"]
 }
+HIGH_RISK_SUBCATEGORIES = frozenset({
+    "fire_lane_blocked", "fire_equipment_fault", "ebike_hazard",
+    "dangerous_building", "falling_object",
+    "exposed_wire", "distribution_box_fault", "illegal_wiring", "gas_leak", "gas_pipe_aging",
+    "road_surface_collapse", "scaffold_guard", "deep_pit", "temporary_power",
+    "confined_space", "elevator_trapped", "hazmat_storage",
+})
+MEDIUM_RISK_SUBCATEGORIES = frozenset({
+    "road_occupancy", "vehicle_occupancy", "blind_path_occupied", "traffic_facility_damage",
+    "manhole_damage", "drainage_flood", "street_light_pole", "tree_fall_hazard",
+    "illegal_structure", "no_barrier", "no_warning",
+    "elevator_stopped", "elevator_inspection", "sewage_odor", "other",
+})
+LOW_RISK_SUBCATEGORIES = frozenset({"garbage_pile"})
+SUBCATEGORY_DEFAULT_RISK = {
+    **{code: "high" for code in HIGH_RISK_SUBCATEGORIES},
+    **{code: "medium" for code in MEDIUM_RISK_SUBCATEGORIES},
+    **{code: "low" for code in LOW_RISK_SUBCATEGORIES},
+}
+assert set(SUBCATEGORY_DEFAULT_RISK) == set(SUBCATEGORY_LABELS)
+
 ALL_SUBCATEGORY_CODES = frozenset(SUBCATEGORY_LABELS)
 
 LEGACY_CATEGORY_MAP = {

@@ -1,0 +1,27 @@
+{
+  "sha256": "637004da0120fa3947f6383d89ad20d02455e854a9de0244b7c36d3ee977942a",
+  "file": "ILL0095.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"scaffold_guard\",\"severity\":\"高\",\"description\":\"两名施工人员站在高处模板、木方上搬运木杆，作业面周边未见连续临边防护栏杆或安全网，且人员未佩戴安全帽、安全带，存在高处坠落和物体打击风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"在建建筑楼层边缘模板支撑作业区\",\"rectification\":[\"立即停止无防护高处作业，设置连续临边防护栏杆和安全网\",\"作业人员必须佩戴安全帽、安全带，并做到高挂低用\",\"清理作业面杂乱材料，设置警戒区域并安排专人监护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "两名施工人员站在高处模板、木方上搬运木杆，作业面周边未见连续临边防护栏杆或安全网，且人员未佩戴安全帽、安全带，存在高处坠落和物体打击风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "在建建筑楼层边缘模板支撑作业区",
+    "rectification": [
+      "立即停止无防护高处作业，设置连续临边防护栏杆和安全网",
+      "作业人员必须佩戴安全帽、安全带，并做到高挂低用",
+      "清理作业面杂乱材料，设置警戒区域并安排专人监护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

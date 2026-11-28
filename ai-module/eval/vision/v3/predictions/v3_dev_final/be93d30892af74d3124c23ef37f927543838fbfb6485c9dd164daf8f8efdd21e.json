@@ -1,0 +1,27 @@
+{
+  "sha256": "be93d30892af74d3124c23ef37f927543838fbfb6485c9dd164daf8f8efdd21e",
+  "file": "road_surface_collapse_1_be93d30892af.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"水泥路面沿排水沟边缘出现长距离纵向开裂，路面板边缘破碎、局部悬空，紧邻沟渠，存在路面进一步塌陷及行人、车辆坠落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临排水沟的水泥路面边缘\",\n  \"rectification\": [\n    \"立即设置围挡、警示标志并限制车辆行人靠近\",\n    \"尽快封闭裂缝、加固路基并修复破损路面\",\n    \"排查排水沟冲刷和路基掏空情况，消除塌陷隐患\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "水泥路面沿排水沟边缘出现长距离纵向开裂，路面板边缘破碎、局部悬空，紧邻沟渠，存在路面进一步塌陷及行人、车辆坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临排水沟的水泥路面边缘",
+    "rectification": [
+      "立即设置围挡、警示标志并限制车辆行人靠近",
+      "尽快封闭裂缝、加固路基并修复破损路面",
+      "排查排水沟冲刷和路基掏空情况，消除塌陷隐患"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

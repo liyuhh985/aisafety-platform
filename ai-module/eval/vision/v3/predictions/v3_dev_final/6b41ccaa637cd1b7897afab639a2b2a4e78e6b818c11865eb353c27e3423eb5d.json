@@ -1,0 +1,27 @@
+{
+  "sha256": "6b41ccaa637cd1b7897afab639a2b2a4e78e6b818c11865eb353c27e3423eb5d",
+  "file": "dangerous_building_4_6b41ccaa637c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"中\",\n  \"description\": \"墙面出现明显横向裂缝，局部抹灰层空鼓、剥落，边缘裂缝继续延伸；若位于人员通行区域上方或外墙，抹灰块可能坠落伤人，裂缝也可能反映基层或结构缺陷。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"墙面/顶棚裂缝剥落处\",\n  \"rectification\": [\n    \"立即在下方设置警戒隔离，避免人员停留\",\n    \"铲除空鼓、松动抹灰层并修补，必要时加设防裂网\",\n    \"委托专业人员排查裂缝成因，确认是否涉及结构安全并制定加固方案\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "中",
+    "description": "墙面出现明显横向裂缝，局部抹灰层空鼓、剥落，边缘裂缝继续延伸；若位于人员通行区域上方或外墙，抹灰块可能坠落伤人，裂缝也可能反映基层或结构缺陷。",
+    "reason_if_no_hazard": "",
+    "location_hint": "墙面/顶棚裂缝剥落处",
+    "rectification": [
+      "立即在下方设置警戒隔离，避免人员停留",
+      "铲除空鼓、松动抹灰层并修补，必要时加设防裂网",
+      "委托专业人员排查裂缝成因，确认是否涉及结构安全并制定加固方案"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

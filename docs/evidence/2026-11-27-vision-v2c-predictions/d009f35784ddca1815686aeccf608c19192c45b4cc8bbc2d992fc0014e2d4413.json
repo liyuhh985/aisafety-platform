@@ -1,0 +1,27 @@
+{
+  "sha256": "d009f35784ddca1815686aeccf608c19192c45b4cc8bbc2d992fc0014e2d4413",
+  "file": "FIR0002.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"消防通道黄色禁停网格线内有银色SUV停放，旁边设有“消防通道 严禁停车”标牌，导致通道有效宽度被占用，紧急情况下可能阻碍消防车通行并延误救援。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面右侧消防通道标牌旁的黄色网格线区域\",\n  \"rectification\": [\n    \"立即联系车主将车辆驶离消防通道\",\n    \"在消防通道入口增设隔离桩、禁停设施或加强巡查\",\n    \"对消防通道违停行为及时劝阻并依法处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "消防通道黄色禁停网格线内有银色SUV停放，旁边设有“消防通道 严禁停车”标牌，导致通道有效宽度被占用，紧急情况下可能阻碍消防车通行并延误救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面右侧消防通道标牌旁的黄色网格线区域",
+    "rectification": [
+      "立即联系车主将车辆驶离消防通道",
+      "在消防通道入口增设隔离桩、禁停设施或加强巡查",
+      "对消防通道违停行为及时劝阻并依法处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

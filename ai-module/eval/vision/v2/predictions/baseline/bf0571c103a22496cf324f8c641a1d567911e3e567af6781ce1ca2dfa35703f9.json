@@ -1,0 +1,23 @@
+{
+  "sha256": "bf0571c103a22496cf324f8c641a1d567911e3e567af6781ce1ca2dfa35703f9",
+  "file": "NEGBLI02.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"图片显示公园或绿道盲道连续、路面平整，未见井盖破损、路面塌陷、盲道占用、设施损坏等明显安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示公园或绿道盲道连续、路面平整，未见井盖破损、路面塌陷、盲道占用、设施损坏等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

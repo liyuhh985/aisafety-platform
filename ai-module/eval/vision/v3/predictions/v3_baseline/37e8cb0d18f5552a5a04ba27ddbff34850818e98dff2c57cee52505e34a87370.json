@@ -1,0 +1,27 @@
+{
+  "sha256": "37e8cb0d18f5552a5a04ba27ddbff34850818e98dff2c57cee52505e34a87370",
+  "file": "traffic_facility_damage_2_37e8cb0d18f5.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"traffic_facility_damage\",\"severity\":\"中\",\"description\":\"人行道与道路交界处一段白色金属隔离护栏整体倒伏在路面上，底部水泥基座断裂并散落碎块，占用通行空间，易绊倒行人或影响非机动车通行，存在磕碰、摔倒风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"小区围墙外人行道与道路交界处，靠近圆形井盖的隔离护栏沿线\",\"rectification\":[\"立即清理倒伏护栏及碎裂基座，恢复路面通行空间\",\"设置临时警示锥桶或警戒带，防止行人靠近\",\"对破损基座和护栏进行修复或整体更换，并检查沿线固定情况\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "中",
+    "description": "人行道与道路交界处一段白色金属隔离护栏整体倒伏在路面上，底部水泥基座断裂并散落碎块，占用通行空间，易绊倒行人或影响非机动车通行，存在磕碰、摔倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区围墙外人行道与道路交界处，靠近圆形井盖的隔离护栏沿线",
+    "rectification": [
+      "立即清理倒伏护栏及碎裂基座，恢复路面通行空间",
+      "设置临时警示锥桶或警戒带，防止行人靠近",
+      "对破损基座和护栏进行修复或整体更换，并检查沿线固定情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

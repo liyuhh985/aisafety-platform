@@ -1,0 +1,27 @@
+{
+  "sha256": "0484709e13eb2176a261724ea97705dc8426b3785da070d1e0a018da0f478c5b",
+  "file": "NEGDEE04.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"施工现场深基坑/沟槽开挖，坑壁高陡且坑边未见连续防护栏杆和警示标志，坑底有积水，工人正在坑内作业，存在坍塌、坠落及积水浸泡导致边坡失稳的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"右侧排桩支护旁的深基坑/沟槽作业区\",\n  \"rectification\": [\n    \"沿基坑临边设置连续、牢固的防护栏杆并悬挂安全警示标志\",\n    \"及时排除坑内积水，检查基坑支护和边坡稳定性\",\n    \"设置安全上下通道，作业人员必须佩戴安全帽等防护用品\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "施工现场深基坑/沟槽开挖，坑壁高陡且坑边未见连续防护栏杆和警示标志，坑底有积水，工人正在坑内作业，存在坍塌、坠落及积水浸泡导致边坡失稳的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "右侧排桩支护旁的深基坑/沟槽作业区",
+    "rectification": [
+      "沿基坑临边设置连续、牢固的防护栏杆并悬挂安全警示标志",
+      "及时排除坑内积水，检查基坑支护和边坡稳定性",
+      "设置安全上下通道，作业人员必须佩戴安全帽等防护用品"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

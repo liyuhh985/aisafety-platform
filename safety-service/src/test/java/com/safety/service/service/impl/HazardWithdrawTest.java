@@ -33,7 +33,7 @@ import static org.mockito.Mockito.when;
 /**
  * 隐患撤回（status 0 -> 5）的规格测试。
  *
- * 规则（spec: 私有历史设计文档 §2）：
+ * 规则（spec: docs/superpowers/specs/2026-09-29-retract-and-image-hard-delete-design.md §2）：
  *   · 仅创建人本人可撤；非本人 → 404（视同不存在，不泄漏"这条存在但不属于你"）
  *   · 仅 status=0（未接单）可撤；已被受理 → 409
  *   · 不审核；重复撤 → 幂等

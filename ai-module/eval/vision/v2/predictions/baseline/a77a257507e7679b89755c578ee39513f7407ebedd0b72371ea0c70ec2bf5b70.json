@@ -1,0 +1,27 @@
+{
+  "sha256": "a77a257507e7679b89755c578ee39513f7407ebedd0b72371ea0c70ec2bf5b70",
+  "file": "SEW0008.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"沟渠/河道水面浑浊发绿，漂浮藻类、生活垃圾及杂物，水流停滞，可能滋生蚊蝇并产生异味，存在水体污染和环境卫生隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临路沟渠或河道水面及岸边\",\n  \"rectification\": [\n    \"及时清理水面漂浮物和岸边垃圾，保持水体通畅\",\n    \"排查周边污水排放口，防止生活污水直排入渠\",\n    \"加强日常巡查和水质监测，必要时进行清淤治理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "沟渠/河道水面浑浊发绿，漂浮藻类、生活垃圾及杂物，水流停滞，可能滋生蚊蝇并产生异味，存在水体污染和环境卫生隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临路沟渠或河道水面及岸边",
+    "rectification": [
+      "及时清理水面漂浮物和岸边垃圾，保持水体通畅",
+      "排查周边污水排放口，防止生活污水直排入渠",
+      "加强日常巡查和水质监测，必要时进行清淤治理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

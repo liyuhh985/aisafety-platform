@@ -1,0 +1,27 @@
+{
+  "sha256": "4138674a583f56436f644e2f3ad41ffb98a6ab6ff1587d915a87852aa570cc26",
+  "file": "NEGGAS03.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"高\",\n  \"description\": \"燃气软管外皮严重破损，内部金属波纹管裸露。这会导致管体易腐蚀、承压能力下降，极易引发燃气泄漏甚至爆炸事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内燃气管道连接处\",\n  \"rectification\": [\n    \"立即关闭燃气阀门，避免使用明火或电器开关\",\n    \"联系燃气公司或专业维修人员更换破损的燃气软管\",\n    \"日常定期检查燃气软管状况，避免其过度弯折或接触热源\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "高",
+    "description": "燃气软管外皮严重破损，内部金属波纹管裸露。这会导致管体易腐蚀、承压能力下降，极易引发燃气泄漏甚至爆炸事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内燃气管道连接处",
+    "rectification": [
+      "立即关闭燃气阀门，避免使用明火或电器开关",
+      "联系燃气公司或专业维修人员更换破损的燃气软管",
+      "日常定期检查燃气软管状况，避免其过度弯折或接触热源"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

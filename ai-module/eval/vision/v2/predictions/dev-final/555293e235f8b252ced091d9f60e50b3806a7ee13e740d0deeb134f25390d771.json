@@ -1,0 +1,23 @@
+{
+  "sha256": "555293e235f8b252ced091d9f60e50b3806a7ee13e740d0deeb134f25390d771",
+  "file": "NEGELE08.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面显示室内电梯与楼梯区域，电梯门、按钮屏、楼梯扶手及通道均完好，未见破损、堵塞、困人或设施故障等明显安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示室内电梯与楼梯区域，电梯门、按钮屏、楼梯扶手及通道均完好，未见破损、堵塞、困人或设施故障等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

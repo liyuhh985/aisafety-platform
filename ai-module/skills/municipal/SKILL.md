@@ -1,7 +1,7 @@
 ---
 name: municipal
 category: municipal
-description: 市政设施隐患，包括井盖缺失、路面塌陷、积水排水和路灯线杆损坏。
+description: 市政设施隐患，包括井盖缺失、路面塌陷、积水排水、路灯线杆损坏和树木倒伏断枝风险。
 allowed_tools:
   - search_regulation
   - search_cases
@@ -11,6 +11,9 @@ routing_keywords:
   - 积水
   - 排水
   - 路灯杆
+  - 树木倒伏
+  - 断枝
+  - 行道树
 version: "1"
 ---
 
@@ -18,7 +21,7 @@ version: "1"
 
 ## 适用范围
 
-覆盖 manhole_damage、road_surface_collapse、drainage_flood、street_light_pole。
+覆盖 manhole_damage、road_surface_collapse、drainage_flood、street_light_pole、tree_fall_hazard。
 
 ## 追问 SOP
 

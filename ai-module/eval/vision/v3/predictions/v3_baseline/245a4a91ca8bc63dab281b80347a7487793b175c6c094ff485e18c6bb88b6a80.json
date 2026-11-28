@@ -1,0 +1,27 @@
+{
+  "sha256": "245a4a91ca8bc63dab281b80347a7487793b175c6c094ff485e18c6bb88b6a80",
+  "file": "elevator_inspection_2_245a4a91ca8b.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_inspection\",\n  \"severity\": \"高\",\n  \"description\": \"电梯运营证书有效期至2004年9月15日，已明显超期，表明该电梯可能未按期检验，存在带病运行风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内张贴的运营证书处\",\n  \"rectification\": [\n    \"立即停用电梯并联系维保单位核查检验状态\",\n    \"向特种设备检验机构申报定期检验，取得有效证书后方可运行\",\n    \"在电梯内更新并公示有效运营证书，建立到期预警机制\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_inspection",
+    "severity": "高",
+    "description": "电梯运营证书有效期至2004年9月15日，已明显超期，表明该电梯可能未按期检验，存在带病运行风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内张贴的运营证书处",
+    "rectification": [
+      "立即停用电梯并联系维保单位核查检验状态",
+      "向特种设备检验机构申报定期检验，取得有效证书后方可运行",
+      "在电梯内更新并公示有效运营证书，建立到期预警机制"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

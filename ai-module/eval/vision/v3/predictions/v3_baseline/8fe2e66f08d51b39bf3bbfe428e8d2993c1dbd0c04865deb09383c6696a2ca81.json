@@ -1,0 +1,27 @@
+{
+  "sha256": "8fe2e66f08d51b39bf3bbfe428e8d2993c1dbd0c04865deb09383c6696a2ca81",
+  "file": "no_warning_2_8fe2e66f08d5.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"地面有一处无盖深井/深坑，井口敞开、边缘为松动泥土，周围无围挡或警示。行人、儿童或夜间通行时极易坠入，造成摔伤、骨折或更严重伤害。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"草地与泥土路面中的裸露井口\",\n  \"rectification\": [\n    \"立即在井口设置硬质围挡和醒目警示标志\",\n    \"尽快安装合格的井盖或对废弃井进行封填处理\",\n    \"排查周边是否存在类似无盖井口并登记整改\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "地面有一处无盖深井/深坑，井口敞开、边缘为松动泥土，周围无围挡或警示。行人、儿童或夜间通行时极易坠入，造成摔伤、骨折或更严重伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "草地与泥土路面中的裸露井口",
+    "rectification": [
+      "立即在井口设置硬质围挡和醒目警示标志",
+      "尽快安装合格的井盖或对废弃井进行封填处理",
+      "排查周边是否存在类似无盖井口并登记整改"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "af17a7dbc3a3b0097926a9d51b6205f4247a623e448fb94a65fe6092e1161b19",
+  "file": "DAN0004.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"wall_crack_lean\",\n  \"severity\": \"中\",\n  \"description\": \"建筑外墙底部可见一条较长水平裂缝，沿墙体延伸，附近有修补痕迹；地面铺装破损并堆积枯枝落叶。裂缝可能由沉降或结构变形引起，存在渗水、抹灰脱落及结构安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙底部、窗台下墙体及周边地面\",\n  \"rectification\": [\n    \"委托专业机构检测裂缝宽度、深度及成因，评估结构安全\",\n    \"按检测结论进行裂缝封闭、灌浆或加固处理，并修复周边破损地面、清理杂物\",\n    \"在检测修复前设置警示或隔离，避免人员靠近\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "wall_crack_lean",
+    "severity": "中",
+    "description": "建筑外墙底部可见一条较长水平裂缝，沿墙体延伸，附近有修补痕迹；地面铺装破损并堆积枯枝落叶。裂缝可能由沉降或结构变形引起，存在渗水、抹灰脱落及结构安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙底部、窗台下墙体及周边地面",
+    "rectification": [
+      "委托专业机构检测裂缝宽度、深度及成因，评估结构安全",
+      "按检测结论进行裂缝封闭、灌浆或加固处理，并修复周边破损地面、清理杂物",
+      "在检测修复前设置警示或隔离，避免人员靠近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

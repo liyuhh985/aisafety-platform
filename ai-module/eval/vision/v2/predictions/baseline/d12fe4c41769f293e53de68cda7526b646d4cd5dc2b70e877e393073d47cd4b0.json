@@ -1,0 +1,26 @@
+{
+  "sha256": "d12fe4c41769f293e53de68cda7526b646d4cd5dc2b70e877e393073d47cd4b0",
+  "file": "NEGGAS08.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"厂房墙面燃气管道支架及放散管表面明显锈蚀、漆面剥落，法兰螺栓亦有锈迹；长期腐蚀可能造成管壁减薄、密封失效，增加燃气泄漏风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厂房墙面燃气管道及放散管法兰、支架处\",\n  \"rectification\": [\n    \"对锈蚀管道、法兰和支架除锈并重新防腐，必要时进行测厚评估\",\n    \"检查法兰密封与跨接线连接，定期开展燃气泄漏检测\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "厂房墙面燃气管道支架及放散管表面明显锈蚀、漆面剥落，法兰螺栓亦有锈迹；长期腐蚀可能造成管壁减薄、密封失效，增加燃气泄漏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厂房墙面燃气管道及放散管法兰、支架处",
+    "rectification": [
+      "对锈蚀管道、法兰和支架除锈并重新防腐，必要时进行测厚评估",
+      "检查法兰密封与跨接线连接，定期开展燃气泄漏检测"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

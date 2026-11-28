@@ -1,0 +1,28 @@
+{
+  "sha256": "97f08aba6845f6fa3c94d0a298578feca640187c473df488996e2d48ea5fa39e",
+  "file": "ROA0022.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"城市道路发生大面积塌陷，形成深坑，地下管道和土体裸露，坑内有水流冲刷，且紧邻人行道、车流和人群，存在人员车辆坠落、管线断裂及次生坍塌风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路与人行道交界处，塌陷坑位于道路一侧并紧邻临街区域\",\n  \"rectification\": [\n    \"立即封闭塌陷区域并设置围挡、警示标志，疏散周边人员和车辆\",\n    \"迅速协调管线单位排查并切断受影响的水、电、燃气等管线\",\n    \"开展地质和地下空洞探测，防止周边继续塌陷\",\n    \"回填加固塌陷坑，修复破损管道和路面，验收合格后恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "城市道路发生大面积塌陷，形成深坑，地下管道和土体裸露，坑内有水流冲刷，且紧邻人行道、车流和人群，存在人员车辆坠落、管线断裂及次生坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路与人行道交界处，塌陷坑位于道路一侧并紧邻临街区域",
+    "rectification": [
+      "立即封闭塌陷区域并设置围挡、警示标志，疏散周边人员和车辆",
+      "迅速协调管线单位排查并切断受影响的水、电、燃气等管线",
+      "开展地质和地下空洞探测，防止周边继续塌陷",
+      "回填加固塌陷坑，修复破损管道和路面，验收合格后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

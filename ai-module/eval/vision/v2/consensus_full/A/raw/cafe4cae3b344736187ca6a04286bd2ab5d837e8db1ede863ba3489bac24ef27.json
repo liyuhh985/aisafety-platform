@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"traffic\", \"subcategory\": \"vehicle_occupancy\", \"evidence\": \"应急车道被粉色、黄色等普通车辆占用，引发事故\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "evidence": "应急车道被粉色、黄色等普通车辆占用，引发事故"
+  }
+}

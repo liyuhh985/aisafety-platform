@@ -1,0 +1,26 @@
+{
+  "sha256": "ea0f04f9f1f098916bc3a61407f1e9a95a5933cd9e8bf1fac0743902d84fe433",
+  "file": "NEGILL04.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"低\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"低\",\"description\":\"图片为住宅小区鸟瞰全景，距离较远，无法确认井盖、路面、消防通道、外立面及屋顶设备等具体安全隐患；建议现场核查。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"住宅小区楼顶、外立面及内部道路\",\"rectification\":[\"安排人员对小区屋顶设备、外立面附着物、消防通道和道路设施进行现场巡查。\",\"发现具体隐患后按相应类别登记并限期整改。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "图片为住宅小区鸟瞰全景，距离较远，无法确认井盖、路面、消防通道、外立面及屋顶设备等具体安全隐患；建议现场核查。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅小区楼顶、外立面及内部道路",
+    "rectification": [
+      "安排人员对小区屋顶设备、外立面附着物、消防通道和道路设施进行现场巡查。",
+      "发现具体隐患后按相应类别登记并限期整改。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

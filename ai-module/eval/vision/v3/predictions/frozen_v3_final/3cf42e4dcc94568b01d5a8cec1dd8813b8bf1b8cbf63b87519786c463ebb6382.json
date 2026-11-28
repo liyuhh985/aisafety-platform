@@ -1,0 +1,27 @@
+{
+  "sha256": "3cf42e4dcc94568b01d5a8cec1dd8813b8bf1b8cbf63b87519786c463ebb6382",
+  "file": "road_occupancy_1_3cf42e4dcc94.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"街道两侧摊位及商品大面积占用通行路面，行人被迫进入车行道，造成人车混行、通道狭窄，易引发拥堵和碰撞事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"沿街集市道路两侧摊位及货物区域\",\n  \"rectification\": [\n    \"清理占道摊位和货物，划定合规经营区域\",\n    \"加强巡查管控，保障道路有效通行宽度\",\n    \"设置人车分流和警示标志，引导行人安全通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "街道两侧摊位及商品大面积占用通行路面，行人被迫进入车行道，造成人车混行、通道狭窄，易引发拥堵和碰撞事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街集市道路两侧摊位及货物区域",
+    "rectification": [
+      "清理占道摊位和货物，划定合规经营区域",
+      "加强巡查管控，保障道路有效通行宽度",
+      "设置人车分流和警示标志，引导行人安全通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

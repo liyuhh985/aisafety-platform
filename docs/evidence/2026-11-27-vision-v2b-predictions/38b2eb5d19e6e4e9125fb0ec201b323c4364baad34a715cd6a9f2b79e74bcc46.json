@@ -1,0 +1,23 @@
+{
+  "sha256": "38b2eb5d19e6e4e9125fb0ec201b323c4364baad34a715cd6a9f2b79e74bcc46",
+  "file": "WAL0020.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"低\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面仅见围墙局部陈旧、墙根污渍及树木贴近墙体，未见明确的结构性裂缝、倾斜、倒塌或设施损坏；信息不足，建议人工复核。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "低",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面仅见围墙局部陈旧、墙根污渍及树木贴近墙体，未见明确的结构性裂缝、倾斜、倒塌或设施损坏；信息不足，建议人工复核。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

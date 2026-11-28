@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"配电箱门敞开露出内部接线，旁有电钻，疑为安装维修中，情况不明\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "配电箱门敞开露出内部接线，旁有电钻，疑为安装维修中，情况不明"
+  }
+}

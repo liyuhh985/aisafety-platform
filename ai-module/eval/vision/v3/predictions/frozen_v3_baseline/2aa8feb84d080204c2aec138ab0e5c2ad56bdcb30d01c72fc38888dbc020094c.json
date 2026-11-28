@@ -1,0 +1,31 @@
+{
+  "sha256": "2aa8feb84d080204c2aec138ab0e5c2ad56bdcb30d01c72fc38888dbc020094c",
+  "file": "neg_13_2aa8feb84d08.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"市政管道施工形成深沟槽，土壁高陡且木支护不连续，沟边未见连续围挡、临边护栏和安全警示，工人及机械在沟边/沟内作业，存在土方坍塌、人员坠落及机械伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路旁绿化带内的市政管道施工沟槽\",\n  \"rectification\": [\n    \"按规范放坡或采用连续可靠的沟槽支护，并安排专人监测边坡稳定。\",\n    \"沿沟槽设置连续硬质围挡、临边护栏及夜间警示灯，沟边1米内禁止堆土和停放机械。\",\n    \"施工区域设置安全警示标志，禁止无关人员进入，并加强作业人员安全交底。\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\",\n    \"no_warning\",\n    \"scaffold_guard\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "市政管道施工形成深沟槽，土壁高陡且木支护不连续，沟边未见连续围挡、临边护栏和安全警示，工人及机械在沟边/沟内作业，存在土方坍塌、人员坠落及机械伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路旁绿化带内的市政管道施工沟槽",
+    "rectification": [
+      "按规范放坡或采用连续可靠的沟槽支护，并安排专人监测边坡稳定。",
+      "沿沟槽设置连续硬质围挡、临边护栏及夜间警示灯，沟边1米内禁止堆土和停放机械。",
+      "施工区域设置安全警示标志，禁止无关人员进入，并加强作业人员安全交底。"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning",
+      "scaffold_guard"
+    ]
+  },
+  "error": ""
+}

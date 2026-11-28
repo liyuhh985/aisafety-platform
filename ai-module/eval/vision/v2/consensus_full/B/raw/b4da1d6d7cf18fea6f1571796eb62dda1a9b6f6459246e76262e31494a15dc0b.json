@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"画面仅见翻倒轿车与消防车，占道阻碍救援无法从画面确认\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面仅见翻倒轿车与消防车，占道阻碍救援无法从画面确认"
+  }
+}

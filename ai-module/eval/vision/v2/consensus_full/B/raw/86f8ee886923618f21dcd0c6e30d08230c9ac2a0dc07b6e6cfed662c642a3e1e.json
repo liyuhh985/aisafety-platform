@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"deep_pit\", \"evidence\": \"基坑边缘无临边防护，人员紧邻坑边作业\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "evidence": "基坑边缘无临边防护，人员紧邻坑边作业"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"elevator_special\", \"subcategory\": \"elevator_stopped\", \"evidence\": \"电梯门前放置不准靠近围挡，电梯停用\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "evidence": "电梯门前放置不准靠近围挡，电梯停用"
+  }
+}

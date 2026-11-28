@@ -1,0 +1,26 @@
+{
+  "sha256": "d4e2e8fdcc235dd0091b18cacb0e97949a34d0c32f421afac8ddb64297df20bc",
+  "file": "EXP0003.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"路面横跨一根黄色线缆，多处绝缘外皮破损，直接露出内部线芯。若带电极易引发触电事故，同时横穿路面的线缆也易绊倒行人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道地砖路面\",\n  \"rectification\": [\n    \"立即对破损线缆进行断电排查，并进行绝缘修复或整体更换。\",\n    \"将修复后的线缆埋入地下或穿管铺设，严禁直接裸露横跨人行道。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "路面横跨一根黄色线缆，多处绝缘外皮破损，直接露出内部线芯。若带电极易引发触电事故，同时横穿路面的线缆也易绊倒行人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道地砖路面",
+    "rectification": [
+      "立即对破损线缆进行断电排查，并进行绝缘修复或整体更换。",
+      "将修复后的线缆埋入地下或穿管铺设，严禁直接裸露横跨人行道。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

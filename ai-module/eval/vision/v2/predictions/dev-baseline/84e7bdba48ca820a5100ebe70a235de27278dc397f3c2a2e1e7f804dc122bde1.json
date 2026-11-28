@@ -1,0 +1,26 @@
+{
+  "sha256": "84e7bdba48ca820a5100ebe70a235de27278dc397f3c2a2e1e7f804dc122bde1",
+  "file": "NEGELE06.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"低\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"低\",\"description\":\"图片仅显示电梯外召楼层显示屏为88且上行箭头亮，旁有安全须知；无故障码、困人、异响或停运等明确证据，无法确认是否存在电梯异常，需现场核实。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯厅外召显示面板\",\"rectification\":[\"联系电梯维保单位核实楼层显示及运行状态是否正常\",\"现场检查电梯是否停运、停层异常、异响或困人，并记录处理结果\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "低",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "低",
+    "description": "图片仅显示电梯外召楼层显示屏为88且上行箭头亮，旁有安全须知；无故障码、困人、异响或停运等明确证据，无法确认是否存在电梯异常，需现场核实。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯厅外召显示面板",
+    "rectification": [
+      "联系电梯维保单位核实楼层显示及运行状态是否正常",
+      "现场检查电梯是否停运、停层异常、异响或困人，并记录处理结果"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

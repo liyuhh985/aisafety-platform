@@ -1,0 +1,27 @@
+{
+  "sha256": "593e5dc49cf6ebd42cb89a01a8ac006bd2e6839e1c5d802f3ce7464fbf00ffac",
+  "file": "road_occupancy_4_593e5dc49cf6.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"沿街餐饮店将大量桌椅、棚伞外摆至人行道，几乎占满通行空间，地面还有黄色管线横穿，行人易被绊倒或被迫绕行至车道，存在通行安全和管线受损风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"沿街餐饮商铺门前人行道\",\n  \"rectification\": [\n    \"清理超出经营区域的桌椅、棚伞，恢复人行通道有效通行宽度\",\n    \"规范地面管线敷设，横穿通道处加装防护或警示，避免绊倒和碾压破损\",\n    \"加强日常巡查，制止占道经营和乱拉管线行为\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "沿街餐饮店将大量桌椅、棚伞外摆至人行道，几乎占满通行空间，地面还有黄色管线横穿，行人易被绊倒或被迫绕行至车道，存在通行安全和管线受损风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街餐饮商铺门前人行道",
+    "rectification": [
+      "清理超出经营区域的桌椅、棚伞，恢复人行通道有效通行宽度",
+      "规范地面管线敷设，横穿通道处加装防护或警示，避免绊倒和碾压破损",
+      "加强日常巡查，制止占道经营和乱拉管线行为"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

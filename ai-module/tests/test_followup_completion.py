@@ -38,7 +38,7 @@ def _plan(**over):
 
 # 第 1 轮：describe 还空着，规划器自己带了一句问话
 PLAN_ASKING = _plan(
-    question="能再具体描述一下这个安全隐患是什么吗？",
+    question="那堆的是生活垃圾、建筑垃圾还是可燃杂物？",
     issues=[{"major_code": "environment_other", "subcategory_code": "garbage_pile",
              "slots": {}}],
     categories=["garbage_pile"],
@@ -48,9 +48,9 @@ PLAN_ASKING = _plan(
 # 第 2 轮：用户答了，槽位补齐
 PLAN_COMPLETE = _plan(
     issues=[{"major_code": "environment_other", "subcategory_code": "garbage_pile",
-             "slots": {"describe": "装修垃圾"}}],
+             "slots": {"waste_type": "装修垃圾", "impact": "长期堆积无人清运"}}],
     categories=["garbage_pile"],
-    category_slots={"garbage_pile": {"describe": "装修垃圾"}},
+    category_slots={"garbage_pile": {"waste_type": "装修垃圾", "impact": "长期堆积无人清运"}},
 )
 
 
@@ -58,7 +58,7 @@ def _stub(monkeypatch, plans):
     seq = [dict(p) for p in plans]
     monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: seq.pop(0))
     monkeypatch.setattr(ag, "_slot_question_llm", lambda **k: {
-        "question": "具体是些什么东西堆在这儿？", "target_slot": "describe"})
+        "question": "那堆的是生活垃圾、建筑垃圾还是可燃杂物？", "target_slot": "waste_type"})
     monkeypatch.setattr(ag, "_run_tool",
                         lambda name, keyword, cancellation=None: CASE_OK)
     monkeypatch.setattr(ag, "_probe_top1_score", lambda *a, **k: None)
@@ -85,15 +85,15 @@ def test_answering_the_follow_up_produces_a_full_report(monkeypatch):
     config = {"configurable": {"thread_id": "followup-completion"}}
 
     first = _run(app, config, "楼下垃圾堆成山了")
-    assert first["missing"] == ["garbage_pile_describe"]
+    assert first["missing"] == ["garbage_pile_waste_type", "garbage_pile_impact"]
     assert first["asked_question_last_turn"] is True
     assert "？" in first["messages"][-1].content      # 用户真的看见了那个问句
 
-    second = _run(app, config, "堆了半个月没人管，是装修垃圾")
+    second = _run(app, config, "堆了半个月没人管，是装修垃圾，还堵住通道有异味")
     assert second["missing"] == []
     assert second["asked_question_last_turn"] is False  # 本轮没问 → 下一轮读到的就是 False
-    assert second["next_action"] == "report_full"       # ← 修复前是 answer_now
-    assert second["report_mode"] == "full"
+    assert second["next_action"] == "report_preliminary"  # garbage_pile 为低风险，跨轮后走初步报告
+    assert second["report_mode"] == "preliminary"
 
 
 # 第 2 轮仍没补齐：规划器继续追问，而不是"因为上一轮问过就直接出报告"
@@ -119,6 +119,6 @@ def test_incomplete_facts_still_do_not_produce_a_report(monkeypatch):
     _run(app, config, "楼下垃圾堆成山了")
     second = _run(app, config, "还是那样，没人管")
 
-    assert second["missing"] == ["garbage_pile_describe"]
+    assert second["missing"] == ["garbage_pile_waste_type", "garbage_pile_impact"]
     assert second["next_action"] != "report_full"
     assert second["report_mode"] != "full"

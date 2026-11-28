@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_facility\", \"evidence\": \"消火栓柜前堆放收纳箱、婴儿车等杂物，阻碍取用\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "消火栓柜前堆放收纳箱、婴儿车等杂物，阻碍取用"
+  }
+}

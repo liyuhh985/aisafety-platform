@@ -1,0 +1,30 @@
+{
+  "sha256": "720bfb228d2be3f7c8d6add946312c1b04ec5d32d81e5c988f413a75d1043a1a",
+  "file": "distribution_box_fault_2_720bfb228d2b.png",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内配电柜/控制柜面板缺失、内部线缆裸露杂乱，底部可见烧焦痕迹和灰烬，存在漏电、短路、触电及电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内配电柜/控制柜处\",\n  \"rectification\": [\n    \"立即断电并设置警戒，禁止非专业人员靠近操作\",\n    \"由持证电工检修或更换损坏配电柜，恢复柜门和防护面板\",\n    \"清理烧灼物，检测线路绝缘、接地和漏电保护装置\",\n    \"加强日常巡检，发现异常发热、异味或破损及时处理\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "室内配电柜/控制柜面板缺失、内部线缆裸露杂乱，底部可见烧焦痕迹和灰烬，存在漏电、短路、触电及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内配电柜/控制柜处",
+    "rectification": [
+      "立即断电并设置警戒，禁止非专业人员靠近操作",
+      "由持证电工检修或更换损坏配电柜，恢复柜门和防护面板",
+      "清理烧灼物，检测线路绝缘、接地和漏电保护装置",
+      "加强日常巡检，发现异常发热、异味或破损及时处理"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

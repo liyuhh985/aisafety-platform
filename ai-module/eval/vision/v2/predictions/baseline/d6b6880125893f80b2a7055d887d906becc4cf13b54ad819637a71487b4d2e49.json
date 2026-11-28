@@ -1,0 +1,28 @@
+{
+  "sha256": "d6b6880125893f80b2a7055d887d906becc4cf13b54ad819637a71487b4d2e49",
+  "file": "ELE0057.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯轿厢与楼层地面明显错位，形成较大高差，人员正被工作人员搀扶撤离，存在绊倒、坠落及困人风险，且现场未见有效警戒隔离。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼层电梯门口\",\n  \"rectification\": [\n    \"立即停梯并设置警戒，禁止人员通行\",\n    \"通知电梯维保单位排查平层、门锁和制动系统\",\n    \"按规范开展救援，防止人员跨越轿厢与楼层间隙\",\n    \"修复并检验合格后方可恢复使用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯轿厢与楼层地面明显错位，形成较大高差，人员正被工作人员搀扶撤离，存在绊倒、坠落及困人风险，且现场未见有效警戒隔离。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼层电梯门口",
+    "rectification": [
+      "立即停梯并设置警戒，禁止人员通行",
+      "通知电梯维保单位排查平层、门锁和制动系统",
+      "按规范开展救援，防止人员跨越轿厢与楼层间隙",
+      "修复并检验合格后方可恢复使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

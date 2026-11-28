@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"utility\", \"subcategory\": \"wire_fault\", \"evidence\": \"多根电线缠绕，绝缘层破损，红蓝胶带缠绕接头裸露\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "utility",
+    "subcategory": "wire_fault",
+    "evidence": "多根电线缠绕，绝缘层破损，红蓝胶带缠绕接头裸露"
+  }
+}

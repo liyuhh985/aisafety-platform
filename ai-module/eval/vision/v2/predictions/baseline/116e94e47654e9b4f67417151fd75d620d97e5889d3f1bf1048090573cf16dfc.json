@@ -1,0 +1,29 @@
+{
+  "sha256": "116e94e47654e9b4f67417151fd75d620d97e5889d3f1bf1048090573cf16dfc",
+  "file": "NEGMAN01.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_warning\",\n  \"severity\": \"中\",\n  \"description\": \"道路井盖作业处未见警示锥、围挡及反光背心等防护，行人或车辆靠近时可能发生坠落、碰撞事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央井盖处\",\n  \"rectification\": [\n    \"立即在作业区域周边设置围挡、警示锥和警示标志\",\n    \"作业人员穿戴反光背心并安排专人监护\",\n    \"作业完成后及时复位井盖并确认盖实\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "中",
+    "description": "道路井盖作业处未见警示锥、围挡及反光背心等防护，行人或车辆靠近时可能发生坠落、碰撞事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央井盖处",
+    "rectification": [
+      "立即在作业区域周边设置围挡、警示锥和警示标志",
+      "作业人员穿戴反光背心并安排专人监护",
+      "作业完成后及时复位井盖并确认盖实"
+    ],
+    "secondary_subcategories": [
+      "no_barrier"
+    ]
+  },
+  "error": ""
+}

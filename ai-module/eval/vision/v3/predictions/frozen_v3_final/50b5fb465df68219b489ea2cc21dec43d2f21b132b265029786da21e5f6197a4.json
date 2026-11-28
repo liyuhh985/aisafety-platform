@@ -1,0 +1,27 @@
+{
+  "sha256": "50b5fb465df68219b489ea2cc21dec43d2f21b132b265029786da21e5f6197a4",
+  "file": "hazmat_storage_1_50b5fb465df6.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"hazmat_storage\",\"severity\":\"高\",\"description\":\"建筑外侧放置的大型蓝色化工桶横卧地面，桶旁地面可见液体污渍，两名人员穿重型防化服处置，疑似化学品泄漏或违规存放，存在人员中毒、环境污染及火灾爆炸风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外侧卷帘门附近地面，蓝色化工桶周边\",\"rectification\":[\"立即隔离现场并设置警戒线、警示标志，禁止无关人员靠近\",\"由专业人员确认桶内化学品性质，进行堵漏、吸附收集和密闭转移\",\"检查液体是否流入雨水管网，必要时封堵并交由危废资质单位处置\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "建筑外侧放置的大型蓝色化工桶横卧地面，桶旁地面可见液体污渍，两名人员穿重型防化服处置，疑似化学品泄漏或违规存放，存在人员中毒、环境污染及火灾爆炸风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外侧卷帘门附近地面，蓝色化工桶周边",
+    "rectification": [
+      "立即隔离现场并设置警戒线、警示标志，禁止无关人员靠近",
+      "由专业人员确认桶内化学品性质，进行堵漏、吸附收集和密闭转移",
+      "检查液体是否流入雨水管网，必要时封堵并交由危废资质单位处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

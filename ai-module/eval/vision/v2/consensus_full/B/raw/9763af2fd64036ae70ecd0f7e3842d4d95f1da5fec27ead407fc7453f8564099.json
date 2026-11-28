@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"地面有深坑无防护，但场景类别不明确\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "地面有深坑无防护，但场景类别不明确"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"street_light_pole\", \"evidence\": \"木质线杆明显倾斜，线缆缠绕\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "evidence": "木质线杆明显倾斜，线缆缠绕"
+  }
+}

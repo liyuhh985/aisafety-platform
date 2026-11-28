@@ -1,0 +1,27 @@
+{
+  "sha256": "c6306997e6417552896891b1597b152bee0748718424c169c904907012fd358b",
+  "file": "NEGFAC08.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙多扇外开窗处于敞开状态，未见明显限位或防坠措施。遇强风或五金件老化松动时，窗扇存在坠落风险，可能砸伤下方行人或车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙中上部左侧窗户及右侧窗户\",\n  \"rectification\": [\n    \"检查外开窗五金件、铰链和固定件，及时维修更换老化部件\",\n    \"为外开窗加装限位器、防坠链或安全撑杆，限制开启角度\",\n    \"在隐患消除前设置警示并避免窗下人员停留\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "建筑外墙多扇外开窗处于敞开状态，未见明显限位或防坠措施。遇强风或五金件老化松动时，窗扇存在坠落风险，可能砸伤下方行人或车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙中上部左侧窗户及右侧窗户",
+    "rectification": [
+      "检查外开窗五金件、铰链和固定件，及时维修更换老化部件",
+      "为外开窗加装限位器、防坠链或安全撑杆，限制开启角度",
+      "在隐患消除前设置警示并避免窗下人员停留"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

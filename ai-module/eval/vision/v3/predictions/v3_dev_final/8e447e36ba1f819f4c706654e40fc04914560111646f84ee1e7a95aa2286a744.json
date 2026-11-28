@@ -1,0 +1,27 @@
+{
+  "sha256": "8e447e36ba1f819f4c706654e40fc04914560111646f84ee1e7a95aa2286a744",
+  "file": "hazmat_storage_3_8e447e36ba1f.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"hazmat_storage\",\"severity\":\"高\",\"description\":\"仓库内大量金属化工桶多层堆叠，部分桶体锈蚀、污渍、凹陷，疑似渗漏；未见防泄漏托盘或围堰，桶装物料性质不明，存在泄漏、污染及火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"仓库内桶装物料堆放区\",\"rectification\":[\"立即核查桶内物料性质及标签，隔离破损、渗漏桶并安全转移\",\"设置防泄漏托盘或围堰，完善通风、防火和防静电措施\",\"降低堆叠层数并加固货架，定期巡检桶体与地面有无泄漏\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "仓库内大量金属化工桶多层堆叠，部分桶体锈蚀、污渍、凹陷，疑似渗漏；未见防泄漏托盘或围堰，桶装物料性质不明，存在泄漏、污染及火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "仓库内桶装物料堆放区",
+    "rectification": [
+      "立即核查桶内物料性质及标签，隔离破损、渗漏桶并安全转移",
+      "设置防泄漏托盘或围堰，完善通风、防火和防静电措施",
+      "降低堆叠层数并加固货架，定期巡检桶体与地面有无泄漏"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

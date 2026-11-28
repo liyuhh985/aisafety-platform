@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"电线杆倾斜，右侧滑坡土石堆积占道\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": true,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "电线杆倾斜，右侧滑坡土石堆积占道"
+  }
+}

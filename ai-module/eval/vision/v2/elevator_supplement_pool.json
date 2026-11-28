@@ -1,0 +1,77 @@
+{
+  "_meta": {
+    "version": "v2.1-elevator-supplement"
+  },
+  "items": [
+    {
+      "file": "ELE0007.png",
+      "source_path": "E:\\java\\newProject\\ai-module\\eval\\vision\\pool\\elevator_stopped\\ELE0007.png",
+      "source_category": "elevator_stopped",
+      "mapped_category": "elevator_stopped",
+      "major_category": "elevator_special",
+      "confuser_group": "elevator_special",
+      "candidate_kind": "positive",
+      "sha256": "599fa961eefa025229dfe2ab62073536c00b69be876681417fe9e18988fc506b",
+      "dhash64": 15485743613086583920,
+      "label_status": "pending_review",
+      "label_source": "",
+      "origin": "elevator_supplement"
+    },
+    {
+      "file": "ELE0008.jpg",
+      "source_path": "E:\\java\\newProject\\ai-module\\eval\\vision\\pool\\elevator_stopped\\ELE0008.jpg",
+      "source_category": "elevator_stopped",
+      "mapped_category": "elevator_stopped",
+      "major_category": "elevator_special",
+      "confuser_group": "elevator_special",
+      "candidate_kind": "positive",
+      "sha256": "1a495eff9168412e06ba29fa636d5e1378de0dba05be53cb44b253e7f2dcf3ff",
+      "dhash64": 10634009805242749907,
+      "label_status": "pending_review",
+      "label_source": "",
+      "origin": "elevator_supplement"
+    },
+    {
+      "file": "ELE0007.jpg",
+      "source_path": "E:\\java\\newProject\\ai-module\\eval\\vision\\pool\\elevator_trapped\\ELE0007.jpg",
+      "source_category": "elevator_trapped",
+      "mapped_category": "elevator_trapped",
+      "major_category": "elevator_special",
+      "confuser_group": "elevator_special",
+      "candidate_kind": "positive",
+      "sha256": "20e2cf513c20228b1e4ad2b3d1e25c6a78a1f8b1dc9f6b6c6018f72e8d356ed6",
+      "dhash64": 16710557586106620184,
+      "label_status": "pending_review",
+      "label_source": "",
+      "origin": "elevator_supplement"
+    },
+    {
+      "file": "ELE0008.jpg",
+      "source_path": "E:\\java\\newProject\\ai-module\\eval\\vision\\pool\\elevator_trapped\\ELE0008.jpg",
+      "source_category": "elevator_trapped",
+      "mapped_category": "elevator_trapped",
+      "major_category": "elevator_special",
+      "confuser_group": "elevator_special",
+      "candidate_kind": "positive",
+      "sha256": "c011c462c2d9b8746705b5ef7831bd12dabf1f649f024e8f5860aff5ccb8eb65",
+      "dhash64": 10979174728657440237,
+      "label_status": "pending_review",
+      "label_source": "",
+      "origin": "elevator_supplement"
+    },
+    {
+      "file": "ELE0005.jpg",
+      "source_path": "E:\\java\\newProject\\ai-module\\eval\\vision\\pool\\elevator_inspection\\ELE0005.jpg",
+      "source_category": "elevator_inspection",
+      "mapped_category": "elevator_inspection",
+      "major_category": "elevator_special",
+      "confuser_group": "elevator_special",
+      "candidate_kind": "positive",
+      "sha256": "a0ea628e4dbcc5598507888992750c91f42d375447da2e56dd0c71acd4409834",
+      "dhash64": 11284007636967169503,
+      "label_status": "pending_review",
+      "label_source": "",
+      "origin": "elevator_supplement"
+    }
+  ]
+}

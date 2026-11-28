@@ -1,0 +1,29 @@
+{
+  "sha256": "8b625ee67e968966d54273cdabd076cea1fe37c716f0322c30b88c19f2ebdeb6",
+  "file": "vehicle_occupancy_2_8b625ee67e96.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"图片中左侧罩车衣车辆和右侧轻型货车均停放在人行道上，挤占步行空间并紧邻盲道，影响行人尤其是视障人士正常通行，易发生碰撞或被迫绕行至机动车道。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道及盲道两侧\",\"rectification\":[\"立即劝离或拖移违停车辆，恢复人行道和盲道畅通\",\"在人行道入口设置隔离桩、禁停标志和盲道保护设施\",\"加强巡查执法，防止车辆再次占道停放\"],\"secondary_subcategories\":[\"blind_path_occupied\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "图片中左侧罩车衣车辆和右侧轻型货车均停放在人行道上，挤占步行空间并紧邻盲道，影响行人尤其是视障人士正常通行，易发生碰撞或被迫绕行至机动车道。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道及盲道两侧",
+    "rectification": [
+      "立即劝离或拖移违停车辆，恢复人行道和盲道畅通",
+      "在人行道入口设置隔离桩、禁停标志和盲道保护设施",
+      "加强巡查执法，防止车辆再次占道停放"
+    ],
+    "secondary_subcategories": [
+      "blind_path_occupied"
+    ]
+  },
+  "error": ""
+}

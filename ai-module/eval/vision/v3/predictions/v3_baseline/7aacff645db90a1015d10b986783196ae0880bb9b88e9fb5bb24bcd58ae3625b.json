@@ -1,0 +1,27 @@
+{
+  "sha256": "7aacff645db90a1015d10b986783196ae0880bb9b88e9fb5bb24bcd58ae3625b",
+  "file": "drainage_flood_4_7aacff645db9.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"中\",\n  \"description\": \"道路出现明显积水，车辆涉水行驶时水花四溅，积水深度可能影响通行安全。积水会掩盖路面坑洞、降低轮胎附着力，易导致车辆熄火、失控，也可能给行人和非机动车带来滑倒、涉水风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路低洼积水路段\",\n  \"rectification\": [\n    \"排查并疏通该路段排水管网和雨水口，清理堵塞物\",\n    \"在积水路段设置警示标志和绕行提示，必要时临时抽排积水\",\n    \"雨后加强巡查，评估路面是否存在因积水冲刷形成的坑洞或塌陷隐患\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "道路出现明显积水，车辆涉水行驶时水花四溅，积水深度可能影响通行安全。积水会掩盖路面坑洞、降低轮胎附着力，易导致车辆熄火、失控，也可能给行人和非机动车带来滑倒、涉水风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路低洼积水路段",
+    "rectification": [
+      "排查并疏通该路段排水管网和雨水口，清理堵塞物",
+      "在积水路段设置警示标志和绕行提示，必要时临时抽排积水",
+      "雨后加强巡查，评估路面是否存在因积水冲刷形成的坑洞或塌陷隐患"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

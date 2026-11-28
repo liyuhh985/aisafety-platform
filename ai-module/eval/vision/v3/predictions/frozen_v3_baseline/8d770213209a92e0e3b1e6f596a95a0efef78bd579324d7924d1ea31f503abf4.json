@@ -1,0 +1,27 @@
+{
+  "sha256": "8d770213209a92e0e3b1e6f596a95a0efef78bd579324d7924d1ea31f503abf4",
+  "file": "other_2_8d770213209a.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"公园步道旁木制长椅翻倒，横置于地面，易造成行人绊倒或碰撞，若木质构件破损还可能划伤人员。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"公园绿化带与碎石步道交界处\",\n  \"rectification\": [\n    \"及时扶正并修复或搬离翻倒长椅\",\n    \"在处置前设置临时警示标志\",\n    \"排查长椅固定及木质结构安全\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "公园步道旁木制长椅翻倒，横置于地面，易造成行人绊倒或碰撞，若木质构件破损还可能划伤人员。",
+    "reason_if_no_hazard": "",
+    "location_hint": "公园绿化带与碎石步道交界处",
+    "rectification": [
+      "及时扶正并修复或搬离翻倒长椅",
+      "在处置前设置临时警示标志",
+      "排查长椅固定及木质结构安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "788c14c1d28196796fd90fd845c4a51de9e75825251155d2cb567f600ab206a6",
+  "file": "road_surface_collapse_3_788c14c1d281.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"road_surface_collapse\",\"severity\":\"高\",\"description\":\"道路右侧隔音屏旁路面出现大面积开裂、板块破碎和明显下沉，形成不规则坑洼，边缘高差较大。行人或非机动车经过易绊倒、摔伤，车辆碾压可能加剧路基掏空和塌陷扩大。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路右侧隔音屏旁的路面及人行道边缘\",\"rectification\":[\"立即设置围挡、警示标志和反光锥，临时封闭破损区域\",\"凿除破损路面，检查路基和排水是否掏空，按规范修复基层并重铺面层\",\"修复期间加强巡查，防止车辆和行人误入危险区域\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路右侧隔音屏旁路面出现大面积开裂、板块破碎和明显下沉，形成不规则坑洼，边缘高差较大。行人或非机动车经过易绊倒、摔伤，车辆碾压可能加剧路基掏空和塌陷扩大。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路右侧隔音屏旁的路面及人行道边缘",
+    "rectification": [
+      "立即设置围挡、警示标志和反光锥，临时封闭破损区域",
+      "凿除破损路面，检查路基和排水是否掏空，按规范修复基层并重铺面层",
+      "修复期间加强巡查，防止车辆和行人误入危险区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

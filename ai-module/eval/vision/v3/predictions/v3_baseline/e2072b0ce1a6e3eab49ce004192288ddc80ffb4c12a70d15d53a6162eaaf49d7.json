@@ -1,0 +1,27 @@
+{
+  "sha256": "e2072b0ce1a6e3eab49ce004192288ddc80ffb4c12a70d15d53a6162eaaf49d7",
+  "file": "road_surface_collapse_2_e2072b0ce1a6.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"道路中央出现大面积不规则塌陷和深坑，路面严重开裂下沉，面积巨大且边缘不规则，行人和非机动车可从旁穿行，存在坠落、车辆倾覆和交通事故风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央车道，塌陷区域横跨多车道\",\n  \"rectification\": [\n    \"立即在塌陷区域周边设置硬质围挡和警示标志，禁行车辆行人\",\n    \"排查地下管线、地基和排水设施，查明塌陷原因\",\n    \"回填加固并修复路面，验收合格后恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路中央出现大面积不规则塌陷和深坑，路面严重开裂下沉，面积巨大且边缘不规则，行人和非机动车可从旁穿行，存在坠落、车辆倾覆和交通事故风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央车道，塌陷区域横跨多车道",
+    "rectification": [
+      "立即在塌陷区域周边设置硬质围挡和警示标志，禁行车辆行人",
+      "排查地下管线、地基和排水设施，查明塌陷原因",
+      "回填加固并修复路面，验收合格后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

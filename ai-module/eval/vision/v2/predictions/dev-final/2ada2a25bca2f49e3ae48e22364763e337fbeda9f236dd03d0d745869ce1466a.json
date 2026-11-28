@@ -1,0 +1,23 @@
+{
+  "sha256": "2ada2a25bca2f49e3ae48e22364763e337fbeda9f236dd03d0d745869ce1466a",
+  "file": "NEGILL08.jpg",
+  "arm": "dev-final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为住宅小区步道、绿化、路灯及建筑外立面，未见井盖破损、路面塌陷、占道、消防通道堵塞、设施损坏等明显安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为住宅小区步道、绿化、路灯及建筑外立面，未见井盖破损、路面塌陷、占道、消防通道堵塞、设施损坏等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

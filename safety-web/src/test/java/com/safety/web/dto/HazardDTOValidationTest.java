@@ -30,7 +30,7 @@ class HazardDTOValidationTest {
         tooMany.setCategoryList(List.of(
                 "消防安全/消防通道占用",
                 "消防安全/消防设施故障",
-                "消防安全/消防水源异常",
+                "建筑安全/危房",
                 "市政设施/井盖缺失/破损"));
         assertCategoryViolation(tooMany, "最多 3 个");
     }

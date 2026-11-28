@@ -1,0 +1,23 @@
+{
+  "sha256": "c7bb0bb9d16c41409a7ac467aea13a42c7d4a5c3f356676ae120032e22e763fc",
+  "file": "NEGSTR04.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面显示道路旁路灯杆及路面状态正常，杆体直立、检修门关闭，未发现破损、缺失、倾斜或线缆裸露等可见隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示道路旁路灯杆及路面状态正常，杆体直立、检修门关闭，未发现破损、缺失、倾斜或线缆裸露等可见隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

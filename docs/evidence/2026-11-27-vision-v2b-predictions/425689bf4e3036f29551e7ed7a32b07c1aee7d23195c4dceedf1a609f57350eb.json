@@ -1,0 +1,27 @@
+{
+  "sha256": "425689bf4e3036f29551e7ed7a32b07c1aee7d23195c4dceedf1a609f57350eb",
+  "file": "MAN0103.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"高\",\"description\":\"步行街盲道旁一处长方形井盖/盖板明显破损缺失，形成开口，周边地砖碎裂松动。该处人流密集，易导致行人绊倒、扭伤或踩空坠落，存在较高通行安全隐患。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"步行街盲道旁红圈处，井盖/盖板破损位置\",\"rectification\":[\"立即在破损井盖周边设置围挡和醒目的安全警示标志，防止行人靠近\",\"尽快更换或修复井盖/盖板，并加固周边松动碎裂的地砖\",\"对同类井盖和铺装开展排查，发现破损松动及时维修\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "步行街盲道旁一处长方形井盖/盖板明显破损缺失，形成开口，周边地砖碎裂松动。该处人流密集，易导致行人绊倒、扭伤或踩空坠落，存在较高通行安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "步行街盲道旁红圈处，井盖/盖板破损位置",
+    "rectification": [
+      "立即在破损井盖周边设置围挡和醒目的安全警示标志，防止行人靠近",
+      "尽快更换或修复井盖/盖板，并加固周边松动碎裂的地砖",
+      "对同类井盖和铺装开展排查，发现破损松动及时维修"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_facility\", \"evidence\": \"大量灭火器露天堆放地面，消防箱散置一旁\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_facility",
+    "evidence": "大量灭火器露天堆放地面，消防箱散置一旁"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "92dd1fc11e70a9ed93c8bf246fbc1cd9d727e38accac37b13ae9a5547331f97c",
+  "file": "MAN0097.png",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"人行道井盖严重破损并移位，井口大面积敞开，周边铺装碎裂。行人尤其是夜间通行时易踩空坠井，存在严重人身伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道上的井口处\",\n  \"rectification\": [\n    \"立即在井口周边设置围挡和醒目警示标志，防止行人靠近\",\n    \"尽快更换破损井盖并修复井口周边铺装\",\n    \"对周边同类井盖开展排查，发现破损、松动或缺失及时处理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "人行道井盖严重破损并移位，井口大面积敞开，周边铺装碎裂。行人尤其是夜间通行时易踩空坠井，存在严重人身伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道上的井口处",
+    "rectification": [
+      "立即在井口周边设置围挡和醒目警示标志，防止行人靠近",
+      "尽快更换破损井盖并修复井口周边铺装",
+      "对周边同类井盖开展排查，发现破损、松动或缺失及时处理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

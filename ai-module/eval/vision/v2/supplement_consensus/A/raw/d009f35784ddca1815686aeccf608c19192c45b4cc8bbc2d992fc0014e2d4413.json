@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"fire\", \"subcategory\": \"fire_lane_blocked\", \"evidence\": \"消防通道严禁停车标牌前停放多辆汽车占道\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "evidence": "消防通道严禁停车标牌前停放多辆汽车占道"
+  }
+}

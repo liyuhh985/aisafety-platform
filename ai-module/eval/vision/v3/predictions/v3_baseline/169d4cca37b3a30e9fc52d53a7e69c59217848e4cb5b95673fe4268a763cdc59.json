@@ -1,0 +1,27 @@
+{
+  "sha256": "169d4cca37b3a30e9fc52d53a7e69c59217848e4cb5b95673fe4268a763cdc59",
+  "file": "temporary_power_2_169d4cca37b3.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"配电箱门敞开，内部断路器、母排及带电导线裸露，旁置落地电风扇且地面有临时线缆盘绕，易发生触电、短路或电气火灾。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室外墙边配电箱及周边地面\",\n  \"rectification\": [\n    \"立即关闭并锁闭配电箱门，由持证电工检查整改内部线路和防护隔离\",\n    \"移走配电箱旁电风扇及地面临时线缆，清理周边可燃杂物\",\n    \"加装漏电保护并检测接地，设置“高压危险”警示标识\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "配电箱门敞开，内部断路器、母排及带电导线裸露，旁置落地电风扇且地面有临时线缆盘绕，易发生触电、短路或电气火灾。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室外墙边配电箱及周边地面",
+    "rectification": [
+      "立即关闭并锁闭配电箱门，由持证电工检查整改内部线路和防护隔离",
+      "移走配电箱旁电风扇及地面临时线缆，清理周边可燃杂物",
+      "加装漏电保护并检测接地，设置“高压危险”警示标识"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

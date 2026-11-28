@@ -1,0 +1,23 @@
+{
+  "sha256": "0e5848544f49129fa940fa52c608cba8f82e4d6a43d0750484a4fe0991ce2ba8",
+  "file": "NEGFIR03.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片显示室内消火栓箱外观完好，标识清晰，箱内水带等器材在位，未见明显破损、遮挡或无法使用的证据，暂未发现安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示室内消火栓箱外观完好，标识清晰，箱内水带等器材在位，未见明显破损、遮挡或无法使用的证据，暂未发现安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

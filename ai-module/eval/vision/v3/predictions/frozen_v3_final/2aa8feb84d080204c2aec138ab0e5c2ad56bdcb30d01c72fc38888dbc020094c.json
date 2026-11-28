@@ -1,0 +1,31 @@
+{
+  "sha256": "2aa8feb84d080204c2aec138ab0e5c2ad56bdcb30d01c72fc38888dbc020094c",
+  "file": "neg_13_2aa8feb84d08.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"道路旁开挖较深沟槽，沟壁仅见简易木板支撑，临边未见连续围挡、护栏和明显警示，工人下沟作业，存在沟壁坍塌、人员坠落及机械伤害风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路旁管道开挖施工沟槽区域\",\"rectification\":[\"沟槽临边设置连续硬质围挡和防护栏杆，并设置明显安全警示标志及夜间警示灯。\",\"按规范放坡或采用可靠支护措施，排查沟壁坍塌风险，禁止人员在无有效防护的深沟槽内作业。\",\"设置专用安全上下通道，及时抽排沟底积水，土方和材料远离槽边堆放。\",\"安排专人监护并封闭施工区域，加强机械作业与人员交叉作业管理。\"],\"secondary_subcategories\":[\"no_barrier\",\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路旁开挖较深沟槽，沟壁仅见简易木板支撑，临边未见连续围挡、护栏和明显警示，工人下沟作业，存在沟壁坍塌、人员坠落及机械伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁管道开挖施工沟槽区域",
+    "rectification": [
+      "沟槽临边设置连续硬质围挡和防护栏杆，并设置明显安全警示标志及夜间警示灯。",
+      "按规范放坡或采用可靠支护措施，排查沟壁坍塌风险，禁止人员在无有效防护的深沟槽内作业。",
+      "设置专用安全上下通道，及时抽排沟底积水，土方和材料远离槽边堆放。",
+      "安排专人监护并封闭施工区域，加强机械作业与人员交叉作业管理。"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

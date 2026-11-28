@@ -1,0 +1,27 @@
+{
+  "sha256": "2cc8e2c80095ec75d12b0bd737fbe895e82fe36b118f6f9d7204e663fa1417a1",
+  "file": "GAR0005.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"住宅楼单元入口旁及绿化带处堆放大量编织袋装装修垃圾、碎石和塑料薄膜，堆体较大，紧邻出入口和步道，可能影响通行和疏散，并存在绊倒、扬尘及可燃物火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼单元入口右侧绿化带及步道旁\",\n  \"rectification\": [\n    \"及时清运装修垃圾，恢复绿化和步道通行空间\",\n    \"设置规范的临时垃圾堆放点并采取围挡、覆盖措施\",\n    \"加强日常巡查，制止随意倾倒和长期堆放\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "住宅楼单元入口旁及绿化带处堆放大量编织袋装装修垃圾、碎石和塑料薄膜，堆体较大，紧邻出入口和步道，可能影响通行和疏散，并存在绊倒、扬尘及可燃物火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼单元入口右侧绿化带及步道旁",
+    "rectification": [
+      "及时清运装修垃圾，恢复绿化和步道通行空间",
+      "设置规范的临时垃圾堆放点并采取围挡、覆盖措施",
+      "加强日常巡查，制止随意倾倒和长期堆放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

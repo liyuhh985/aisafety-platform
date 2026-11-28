@@ -1,0 +1,23 @@
+{
+  "sha256": "73b995379fc31713b06b3ab953322220482ddd988a641933c1873c73df088dab",
+  "file": "NEGGAS07.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"图片显示的是户外大型黄色管道设施，法兰、螺栓、压力表及接地跨接线外观完好，地面整洁，未见泄漏、锈蚀、损坏、违规搭建或施工等明显安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示的是户外大型黄色管道设施，法兰、螺栓、压力表及接地跨接线外观完好，地面整洁，未见泄漏、锈蚀、损坏、违规搭建或施工等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

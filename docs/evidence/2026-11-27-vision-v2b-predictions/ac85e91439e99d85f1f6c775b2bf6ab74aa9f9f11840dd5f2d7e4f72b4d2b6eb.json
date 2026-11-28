@@ -1,0 +1,27 @@
+{
+  "sha256": "ac85e91439e99d85f1f6c775b2bf6ab74aa9f9f11840dd5f2d7e4f72b4d2b6eb",
+  "file": "ELE0054.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_stopped\",\"severity\":\"中\",\"description\":\"电梯层门呈关闭且无法正常开启状态，两名消防员正在门前手动处置，疑似电梯停层或门锁故障，未见轿厢内人员。该情况影响正常乘梯，并存在人员被困、夹伤或二次故障风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"楼宇电梯层站，楼层显示屏为3层\",\"rectification\":[\"立即联系电梯维保单位到场检修门锁、平层和控制系统\",\"在电梯口设置警戒线和停用标识，禁止乘客靠近或强行扒门\",\"确认轿厢内是否有人并安抚，必要时由专业人员实施安全救援\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯层门呈关闭且无法正常开启状态，两名消防员正在门前手动处置，疑似电梯停层或门锁故障，未见轿厢内人员。该情况影响正常乘梯，并存在人员被困、夹伤或二次故障风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼宇电梯层站，楼层显示屏为3层",
+    "rectification": [
+      "立即联系电梯维保单位到场检修门锁、平层和控制系统",
+      "在电梯口设置警戒线和停用标识，禁止乘客靠近或强行扒门",
+      "确认轿厢内是否有人并安抚，必要时由专业人员实施安全救援"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

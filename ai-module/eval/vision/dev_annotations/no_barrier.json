@@ -1,0 +1,271 @@
+{
+ "_meta": {
+  "name": "no_barrier 真实图评测集",
+  "category": "construction/no_barrier",
+  "category_label": "施工安全/未设置围挡",
+  "source": "百度图片 → 原站直链下载 → 自动筛选 → 粗筛 → 标注 → 严格复检",
+  "rebuild": "2026-10-31",
+  "positive": 14,
+  "negative": 0,
+  "audit_removed": 3
+ },
+ "rejected": [
+  {
+   "file": "NO0011.jpg",
+   "reason": "整改中",
+   "detail": "无隐患"
+  },
+  {
+   "file": "NO0018.jpg",
+   "reason": "正面案例",
+   "detail": "绿色围挡已规范设置，配红白警示带和禁止通行标牌"
+  },
+  {
+   "file": "NO0003.jpg",
+   "reason": "非该类别",
+   "detail": "施工入口场景，已摆放锥桶和施工公告，远处可见绿色围挡，无明显未设围挡隐患"
+  },
+  {
+   "file": "NO0027.jpg",
+   "reason": "非该类别",
+   "detail": "货车旁地面堆放大量黄色保温材料包裹"
+  },
+  {
+   "file": "NO0017.jpg",
+   "reason": "正面案例",
+   "detail": "已设置绿色围挡和红白警戒带，坑沟有警示标识，围挡已设置到位"
+  },
+  {
+   "file": "NO0023.jpg",
+   "reason": "整改中",
+   "detail": "多名工人正在基坑内施工，现场已设置红色围挡和锥筒"
+  },
+  {
+   "file": "NO0053.jpg",
+   "reason": "非该类别",
+   "detail": "无隐患"
+  },
+  {
+   "file": "NO0081.jpg",
+   "reason": "非该类别",
+   "detail": "昏暗积水地面、碎石杂物堆和垂落电缆，未见需设围挡的施工洞口或临边"
+  },
+  {
+   "file": "NO0096.jpg",
+   "reason": "正面案例",
+   "detail": "绿色临时围挡网格已竖立，蓝色施工告示牌规范设置，围挡设施到位"
+  }
+ ],
+ "items": {
+  "NO0010.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "中",
+   "key_evidence": "绿色施工围挡倒塌断裂，面板横倒在人行道上，围挡出现缺口无遮挡",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "茂",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0026.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "路面开挖深坑，坑内有工人作业，坑口四周无任何围挡隔离，紧邻通行路面，坠落风险极高",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "知乎 @Strictlyviolin",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0020.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "中",
+   "key_evidence": "人行道旁拆迁废墟裸露，倒塌板材和建筑垃圾堆放，未设任何围挡隔离行人",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0007.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "中",
+   "key_evidence": "桥下施工土方开挖，前沿仅设铁马和警戒带，未设完整围挡",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0029.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "路面挖开一大坑，边缘破碎无围挡，旁有施工设备",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0032.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "人行道旁长条深沟开挖，仅盖绿网，临路一侧无围挡隔离",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "雅迪电动车 中华小区西门店",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0039.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "人行道旁开挖深沟敷设管道，沟槽敞开，远处仅两个小锥桶，无围挡隔离",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0021.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "人行道上挖开长条土坑，工人正在挖掘，坑口无围挡，前景散落电镐和碎石",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "背景白底红字警示条幅（内容不清）、左下角时间水印",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0080.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "挖掘机停在深沟边缘，沟内积水，现场未设围挡或护栏，存在坠落风险",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0046.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "人行道边小型挖掘机破拆路面，碎石散落，作业区无围挡隔离，行人可通行",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "机器上的NMRH标识、沿街商铺招牌等",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0057.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "路边沙土地上挖出一个深方形坑，坑口无围挡无警示，紧邻通行道路",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "今天挖一个路灯方孔 人工挖对比方孔机哪个更快？一次成型无需支模修整 精准开孔机械快人工百倍",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0049.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "道路一侧开挖深沟埋设管道，沟槽紧邻人行道一侧无围挡或护栏，人员在沟内作业",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0066.png": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "中",
+   "key_evidence": "工地仅立起一排围挡立柱，面板散落地面未安装，场地土方坑洞完全外露，一名工人站在场内",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "NO0056.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "no_barrier",
+   "severity": "高",
+   "key_evidence": "绿色施工围挡大面积倾倒坍塌在路面，围挡后工地楼体裸露，车辆通行受阻",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  }
+ }
+}

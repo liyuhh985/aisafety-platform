@@ -1,0 +1,27 @@
+{
+  "sha256": "feea58e4a18831ad0d5fdf4bd02bb13f74fa07f4e45be9d4e14d7f15fffdde52",
+  "file": "exposed_wire_3_feea58e4a188.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"中\",\"description\":\"人行道上可见黑色线缆从立柱盘绕后沿地面横穿至树根附近并继续延伸，缺少规范敷设和防护，易绊倒行人，线缆磨损后存在漏电风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道及树干根部附近\",\"rectification\":[\"排查并拆除私拉乱接线缆，无法拆除的应入地或架空规范敷设\",\"整改前对横穿人行道部位设置警示和防绊倒防护\",\"加强日常巡查，及时处置线缆破损、松脱问题\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "人行道上可见黑色线缆从立柱盘绕后沿地面横穿至树根附近并继续延伸，缺少规范敷设和防护，易绊倒行人，线缆磨损后存在漏电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道及树干根部附近",
+    "rectification": [
+      "排查并拆除私拉乱接线缆，无法拆除的应入地或架空规范敷设",
+      "整改前对横穿人行道部位设置警示和防绊倒防护",
+      "加强日常巡查，及时处置线缆破损、松脱问题"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

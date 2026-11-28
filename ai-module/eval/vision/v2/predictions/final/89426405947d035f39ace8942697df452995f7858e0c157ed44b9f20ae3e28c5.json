@@ -1,0 +1,27 @@
+{
+  "sha256": "89426405947d035f39ace8942697df452995f7858e0c157ed44b9f20ae3e28c5",
+  "file": "FIR0026.jpg",
+  "arm": "final",
+  "prompt_sha256": "574cf4709070d1c58ebd33b001319ad2fd7ad063f5f758f961c4140aff1ccba6",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"公共走廊及电梯厅停放两辆电动自行车，占用疏散通道，阻碍通行；电动车室内停放存在起火风险，一旦起火将堵塞逃生路线。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"住宅楼电梯厅及公共走廊\",\n  \"rectification\": [\n    \"立即将电动自行车移至室外指定停放区域，保持疏散通道畅通\",\n    \"加强日常巡查，设置禁停标识或阻车设施，劝阻室内停放行为\",\n    \"开展消防安全宣传，明确电动自行车不得进楼入户停放\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "公共走廊及电梯厅停放两辆电动自行车，占用疏散通道，阻碍通行；电动车室内停放存在起火风险，一旦起火将堵塞逃生路线。",
+    "reason_if_no_hazard": "",
+    "location_hint": "住宅楼电梯厅及公共走廊",
+    "rectification": [
+      "立即将电动自行车移至室外指定停放区域，保持疏散通道畅通",
+      "加强日常巡查，设置禁停标识或阻车设施，劝阻室内停放行为",
+      "开展消防安全宣传，明确电动自行车不得进楼入户停放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

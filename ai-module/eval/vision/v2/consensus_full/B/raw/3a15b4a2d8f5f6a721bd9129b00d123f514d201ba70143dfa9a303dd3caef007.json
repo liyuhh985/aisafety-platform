@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"municipal\", \"subcategory\": \"manhole_damage\", \"evidence\": \"路面圆形井口敞开，井盖缺失，内有砖石杂物\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "evidence": "路面圆形井口敞开，井盖缺失，内有砖石杂物"
+  }
+}

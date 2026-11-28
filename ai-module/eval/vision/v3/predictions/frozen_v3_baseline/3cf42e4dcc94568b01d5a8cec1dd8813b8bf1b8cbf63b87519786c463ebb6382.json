@@ -1,0 +1,27 @@
+{
+  "sha256": "3cf42e4dcc94568b01d5a8cec1dd8813b8bf1b8cbf63b87519786c463ebb6382",
+  "file": "road_occupancy_1_3cf42e4dcc94.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"road_occupancy\",\"severity\":\"中\",\"description\":\"街道两侧摊贩搭建遮阳棚并将货架、衣物和杂物摆放到路面，占用通行空间，导致行人通行区域变窄，易造成拥挤、绊倒，并影响应急通行。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"街道两侧摊贩集中路段\",\"rectification\":[\"清理超出经营区域的货架和杂物，恢复道路通行空间\",\"划定规范经营区域并加强巡查管理\",\"高峰时段安排人员疏导人流，保障应急通行\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "街道两侧摊贩搭建遮阳棚并将货架、衣物和杂物摆放到路面，占用通行空间，导致行人通行区域变窄，易造成拥挤、绊倒，并影响应急通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "街道两侧摊贩集中路段",
+    "rectification": [
+      "清理超出经营区域的货架和杂物，恢复道路通行空间",
+      "划定规范经营区域并加强巡查管理",
+      "高峰时段安排人员疏导人流，保障应急通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

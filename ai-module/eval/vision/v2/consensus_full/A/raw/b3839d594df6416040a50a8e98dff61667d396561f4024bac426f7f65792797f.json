@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": false, \"uncertain\": true, \"major_category\": \"\", \"subcategory\": \"\", \"evidence\": \"画面模糊，红圈内物体性质不明，仅靠文字无法确认具体隐患类型\"}",
+  "label": {
+    "status": "uncertain",
+    "has_hazard": false,
+    "uncertain": true,
+    "major_category": "",
+    "subcategory": "",
+    "evidence": "画面模糊，红圈内物体性质不明，仅靠文字无法确认具体隐患类型"
+  }
+}

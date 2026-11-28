@@ -1,0 +1,29 @@
+{
+  "sha256": "559ff5d319e44be026762d2573f127b24bc5c094ae78b2f6905ffd6f556175b2",
+  "file": "ILL0054.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"no_barrier\",\"severity\":\"中\",\"description\":\"夜间店铺门前搭设金属架施工，梯子、材料置于人行道，未见连续围挡隔离，行人从旁穿行，存在碰撞、坠物及人员坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"武汉市国金天地店铺门前人行道\",\"rectification\":[\"立即设置连续硬质围挡，将施工区域与行人通道隔离\",\"增设安全警示标志和夜间警示灯，安排专人疏导行人\",\"规范高处作业和梯具使用，防止工具材料坠落\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "夜间店铺门前搭设金属架施工，梯子、材料置于人行道，未见连续围挡隔离，行人从旁穿行，存在碰撞、坠物及人员坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "武汉市国金天地店铺门前人行道",
+    "rectification": [
+      "立即设置连续硬质围挡，将施工区域与行人通道隔离",
+      "增设安全警示标志和夜间警示灯，安排专人疏导行人",
+      "规范高处作业和梯具使用，防止工具材料坠落"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

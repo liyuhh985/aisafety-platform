@@ -1,0 +1,29 @@
+{
+  "sha256": "633014a2f9635c1e73466776db83aa3b6e3aba375b77cf6a1082cb004862aa18",
+  "file": "garbage_pile_3_633014a2f963.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"大量碎瓷砖、混凝土块等建筑垃圾堆放在居民区道路旁，未围挡覆盖，侵占通行空间，存在绊倒、割伤、扬尘及堆体滑落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民区楼前道路旁空地\",\n  \"rectification\": [\n    \"尽快将建筑垃圾清运至指定消纳场所\",\n    \"清理期间设置围挡和警示标志，禁止人员靠近\",\n    \"及时清扫散落尖锐碎片，必要时洒水降尘\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "大量碎瓷砖、混凝土块等建筑垃圾堆放在居民区道路旁，未围挡覆盖，侵占通行空间，存在绊倒、割伤、扬尘及堆体滑落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民区楼前道路旁空地",
+    "rectification": [
+      "尽快将建筑垃圾清运至指定消纳场所",
+      "清理期间设置围挡和警示标志，禁止人员靠近",
+      "及时清扫散落尖锐碎片，必要时洒水降尘"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

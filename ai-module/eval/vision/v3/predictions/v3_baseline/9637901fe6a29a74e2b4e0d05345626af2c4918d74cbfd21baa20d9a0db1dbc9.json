@@ -1,0 +1,29 @@
+{
+  "sha256": "9637901fe6a29a74e2b4e0d05345626af2c4918d74cbfd21baa20d9a0db1dbc9",
+  "file": "gas_pipe_aging_2_9637901fe6a2.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"老旧建筑外墙抹灰层大面积脱落，红砖裸露，边缘砂浆风化严重，存在高空坠物伤人风险；角落垂直金属管道严重锈蚀剥落，若为燃气管道则有泄漏爆炸风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"老旧建筑外墙转角处\",\n  \"rectification\": [\n    \"立即对裸露松动的外墙抹灰层进行铲除和加固，消除坠物风险\",\n    \"对锈蚀严重的金属管道进行检修更换，若为燃气管道需由专业燃气公司处理\",\n    \"现场设置安全警示围挡，提醒行人避让\"\n  ],\n  \"secondary_subcategories\": [\n    \"utility/gas_pipe_aging\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "老旧建筑外墙抹灰层大面积脱落，红砖裸露，边缘砂浆风化严重，存在高空坠物伤人风险；角落垂直金属管道严重锈蚀剥落，若为燃气管道则有泄漏爆炸风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "老旧建筑外墙转角处",
+    "rectification": [
+      "立即对裸露松动的外墙抹灰层进行铲除和加固，消除坠物风险",
+      "对锈蚀严重的金属管道进行检修更换，若为燃气管道需由专业燃气公司处理",
+      "现场设置安全警示围挡，提醒行人避让"
+    ],
+    "secondary_subcategories": [
+      "utility/gas_pipe_aging"
+    ]
+  },
+  "error": ""
+}

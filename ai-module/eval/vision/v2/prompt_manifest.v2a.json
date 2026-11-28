@@ -1,0 +1,14 @@
+{
+  "baseline": {
+    "id": "baseline",
+    "path": "eval\\vision\\v2\\prompts\\v2a\\baseline.txt",
+    "sha256": "0e5651465eea4319e6c407b3bcb7399250d9e1898d291a0039a7b38e252d3cd9",
+    "characters": 3919
+  },
+  "final": {
+    "id": "final",
+    "path": "eval\\vision\\v2\\prompts\\v2a\\final.txt",
+    "sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+    "characters": 4189
+  }
+}

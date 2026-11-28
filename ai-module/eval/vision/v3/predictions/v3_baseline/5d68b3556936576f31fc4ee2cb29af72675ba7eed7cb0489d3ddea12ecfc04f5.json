@@ -1,0 +1,27 @@
+{
+  "sha256": "5d68b3556936576f31fc4ee2cb29af72675ba7eed7cb0489d3ddea12ecfc04f5",
+  "file": "hazmat_storage_1_5d68b3556936.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"铁栅栏内大量红绿液体桶露天集中堆叠，疑似化工桶或油桶，堆放过高且无分区、防泄漏围堰和明显警示。若桶内为易燃易爆或危化品，存在泄漏、火灾爆炸及桶体滚落伤人风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"铁栅栏门内、建筑物旁露天堆放区\",\n  \"rectification\": [\n    \"立即核实桶内物品名称、危险性及安全技术说明书，严禁超量违规存放\",\n    \"按危化品规范分区分类存放，设置防泄漏围堰、通风防晒和明显安全警示标识\",\n    \"控制堆叠高度并采取防滚落固定措施，及时清理或合规转运不明桶\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "铁栅栏内大量红绿液体桶露天集中堆叠，疑似化工桶或油桶，堆放过高且无分区、防泄漏围堰和明显警示。若桶内为易燃易爆或危化品，存在泄漏、火灾爆炸及桶体滚落伤人风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "铁栅栏门内、建筑物旁露天堆放区",
+    "rectification": [
+      "立即核实桶内物品名称、危险性及安全技术说明书，严禁超量违规存放",
+      "按危化品规范分区分类存放，设置防泄漏围堰、通风防晒和明显安全警示标识",
+      "控制堆叠高度并采取防滚落固定措施，及时清理或合规转运不明桶"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

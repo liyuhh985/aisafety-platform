@@ -1,0 +1,28 @@
+{
+  "sha256": "b0859c666b37346dccc8f1d185ae6fdd78e05f411b20de1e8b53f81dcdf44b38",
+  "file": "falling_object_1_b0859c666b37.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"建筑门口上方或外立面瓷砖大面积脱落，碎块散落在人行通道并砸中停放电动车，现场仍有破损边缘，存在继续坠落砸伤行人和车辆的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑门口通道旁电动车停放处\",\n  \"rectification\": [\n    \"立即设置警戒线和警示标志，疏散周边人员及车辆\",\n    \"排查外立面及门头瓷砖空鼓、松动部位并彻底清除\",\n    \"对破损区域进行修复加固，防止再次脱落\",\n    \"清理地面碎块，恢复通道安全通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "建筑门口上方或外立面瓷砖大面积脱落，碎块散落在人行通道并砸中停放电动车，现场仍有破损边缘，存在继续坠落砸伤行人和车辆的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑门口通道旁电动车停放处",
+    "rectification": [
+      "立即设置警戒线和警示标志，疏散周边人员及车辆",
+      "排查外立面及门头瓷砖空鼓、松动部位并彻底清除",
+      "对破损区域进行修复加固，防止再次脱落",
+      "清理地面碎块，恢复通道安全通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

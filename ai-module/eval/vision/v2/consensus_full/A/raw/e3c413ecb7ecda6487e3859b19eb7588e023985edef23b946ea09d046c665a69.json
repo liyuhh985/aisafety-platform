@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"construction_prot\", \"evidence\": \"拆除现场无围挡隔离，碎砖瓦散落路面，人员靠近作业\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "construction_prot",
+    "evidence": "拆除现场无围挡隔离，碎砖瓦散落路面，人员靠近作业"
+  }
+}

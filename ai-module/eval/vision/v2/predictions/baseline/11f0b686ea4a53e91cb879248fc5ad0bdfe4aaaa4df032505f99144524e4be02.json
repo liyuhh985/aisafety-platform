@@ -1,0 +1,27 @@
+{
+  "sha256": "11f0b686ea4a53e91cb879248fc5ad0bdfe4aaaa4df032505f99144524e4be02",
+  "file": "TEM0036.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"墙面竖向开槽内大量彩色电线杂乱裸露，未穿管保护，线头散落，开槽边缘破损；存在绝缘破损、短路、触电和电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内墙面竖向开槽内，电线集中裸露处\",\n  \"rectification\": [\n    \"立即断电并设置警示，禁止非专业人员接触。\",\n    \"由持证电工清理、整理线路，穿阻燃管或槽盒保护，规范接线盒与接头，检测绝缘和接地。\",\n    \"修复墙体前完成隐蔽工程验收，清除底部碎屑并恢复安全防护。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "墙面竖向开槽内大量彩色电线杂乱裸露，未穿管保护，线头散落，开槽边缘破损；存在绝缘破损、短路、触电和电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内墙面竖向开槽内，电线集中裸露处",
+    "rectification": [
+      "立即断电并设置警示，禁止非专业人员接触。",
+      "由持证电工清理、整理线路，穿阻燃管或槽盒保护，规范接线盒与接头，检测绝缘和接地。",
+      "修复墙体前完成隐蔽工程验收，清除底部碎屑并恢复安全防护。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

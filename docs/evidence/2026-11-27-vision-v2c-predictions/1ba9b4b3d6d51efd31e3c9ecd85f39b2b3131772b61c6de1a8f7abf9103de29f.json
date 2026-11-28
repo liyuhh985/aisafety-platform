@@ -1,0 +1,26 @@
+{
+  "sha256": "1ba9b4b3d6d51efd31e3c9ecd85f39b2b3131772b61c6de1a8f7abf9103de29f",
+  "file": "ROA0005.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"road_occupancy\",\"severity\":\"中\",\"description\":\"临街人行道及道路边缘停放多辆流动餐车占道经营，顾客聚集排队，占用公共通行空间，影响行人正常通行并可能造成拥挤、碰撞，紧急情况下还会妨碍疏散和救援通行。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"商业楼前人行道与道路交界处，绿色围挡旁\",\"rectification\":[\"清理违规占道经营，恢复人行道和道路通行空间\",\"划定合规临时经营区域并加强巡查管理，保障行人通道畅通\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "临街人行道及道路边缘停放多辆流动餐车占道经营，顾客聚集排队，占用公共通行空间，影响行人正常通行并可能造成拥挤、碰撞，紧急情况下还会妨碍疏散和救援通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商业楼前人行道与道路交界处，绿色围挡旁",
+    "rectification": [
+      "清理违规占道经营，恢复人行道和道路通行空间",
+      "划定合规临时经营区域并加强巡查管理，保障行人通道畅通"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

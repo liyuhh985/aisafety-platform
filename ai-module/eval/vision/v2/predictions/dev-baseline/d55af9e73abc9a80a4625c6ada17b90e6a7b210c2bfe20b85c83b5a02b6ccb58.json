@@ -1,0 +1,26 @@
+{
+  "sha256": "d55af9e73abc9a80a4625c6ada17b90e6a7b210c2bfe20b85c83b5a02b6ccb58",
+  "file": "NEGFIR04.jpg",
+  "arm": "dev-baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"消火栓出水口及阀体锈蚀严重，接口内部疑似有异物或损坏，可能导致水带连接不严、出水不畅或无法正常使用，影响火灾应急扑救。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内消火栓箱内消火栓接口处\",\n  \"rectification\": [\n    \"对锈蚀、损坏的消火栓接口进行除锈、维修或更换，并做启闭和出水试验。\",\n    \"建立消防设施定期巡检维护制度，及时清理接口异物并记录检查结果。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "消火栓出水口及阀体锈蚀严重，接口内部疑似有异物或损坏，可能导致水带连接不严、出水不畅或无法正常使用，影响火灾应急扑救。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内消火栓箱内消火栓接口处",
+    "rectification": [
+      "对锈蚀、损坏的消火栓接口进行除锈、维修或更换，并做启闭和出水试验。",
+      "建立消防设施定期巡检维护制度，及时清理接口异物并记录检查结果。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

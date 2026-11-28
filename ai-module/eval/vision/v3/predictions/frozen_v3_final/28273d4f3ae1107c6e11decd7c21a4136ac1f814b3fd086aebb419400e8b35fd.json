@@ -1,0 +1,27 @@
+{
+  "sha256": "28273d4f3ae1107c6e11decd7c21a4136ac1f814b3fd086aebb419400e8b35fd",
+  "file": "temporary_power_2_28273d4f3ae1.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"高\",\"description\":\"线缆竖井内大量线缆杂乱垂落、盘绕堆积，未规范固定或穿管，部分线头裸露并混有杂物，易造成绝缘破损、短路起火、触电，且妨碍检修通行。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"楼道线缆竖井/弱电井内\",\"rectification\":[\"由专业电工核查线缆用途和带电情况，断电后清理废弃线缆\",\"对在用线缆分类绑扎、穿管或入槽固定，修复破损绝缘并封堵井道孔洞\",\"设置当心触电警示，禁止无关人员进入和私自接线\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "线缆竖井内大量线缆杂乱垂落、盘绕堆积，未规范固定或穿管，部分线头裸露并混有杂物，易造成绝缘破损、短路起火、触电，且妨碍检修通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼道线缆竖井/弱电井内",
+    "rectification": [
+      "由专业电工核查线缆用途和带电情况，断电后清理废弃线缆",
+      "对在用线缆分类绑扎、穿管或入槽固定，修复破损绝缘并封堵井道孔洞",
+      "设置当心触电警示，禁止无关人员进入和私自接线"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

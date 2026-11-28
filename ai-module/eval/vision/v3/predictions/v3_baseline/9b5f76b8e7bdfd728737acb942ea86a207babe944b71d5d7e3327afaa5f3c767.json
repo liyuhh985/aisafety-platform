@@ -1,0 +1,28 @@
+{
+  "sha256": "9b5f76b8e7bdfd728737acb942ea86a207babe944b71d5d7e3327afaa5f3c767",
+  "file": "garbage_pile_2_9b5f76b8e7bd.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"建筑外墙角落大量碎砖、混凝土块、木板、编织袋和塑料筐等建筑垃圾与杂物露天堆积，占用地面，木板、塑料等可燃物混堆，存在绊倒、扬尘、鼠虫滋生及火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙转角地面处\",\n  \"rectification\": [\n    \"立即清运建筑垃圾和杂物，分类处置\",\n    \"规范设置垃圾临时堆放点，并采取围挡或遮盖措施\",\n    \"清理木板、塑料等可燃物，保持周边通道畅通\",\n    \"加强日常巡查，防止随意倾倒和长期堆积\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "建筑外墙角落大量碎砖、混凝土块、木板、编织袋和塑料筐等建筑垃圾与杂物露天堆积，占用地面，木板、塑料等可燃物混堆，存在绊倒、扬尘、鼠虫滋生及火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙转角地面处",
+    "rectification": [
+      "立即清运建筑垃圾和杂物，分类处置",
+      "规范设置垃圾临时堆放点，并采取围挡或遮盖措施",
+      "清理木板、塑料等可燃物，保持周边通道畅通",
+      "加强日常巡查，防止随意倾倒和长期堆积"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

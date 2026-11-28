@@ -1,0 +1,27 @@
+{
+  "sha256": "38c796aeaa21fec0bcedb393343287b43e9362febcca0f059cac68566ce1ef1c",
+  "file": "other_3_38c796aeaa21.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"中\",\"description\":\"草地旁绿色长椅坐面板条明显断裂、下垂并斜搭，坐面结构不完整，人员就坐时可能夹伤、跌落或导致长椅进一步损坏。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"围墙前草地上的绿色长椅\",\"rectification\":[\"立即在损坏长椅周边设置警示并暂停使用\",\"修复或更换断裂坐面板条，确认结构稳固后再开放\",\"排查周边同类公共座椅的破损情况并同步整改\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "草地旁绿色长椅坐面板条明显断裂、下垂并斜搭，坐面结构不完整，人员就坐时可能夹伤、跌落或导致长椅进一步损坏。",
+    "reason_if_no_hazard": "",
+    "location_hint": "围墙前草地上的绿色长椅",
+    "rectification": [
+      "立即在损坏长椅周边设置警示并暂停使用",
+      "修复或更换断裂坐面板条，确认结构稳固后再开放",
+      "排查周边同类公共座椅的破损情况并同步整改"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

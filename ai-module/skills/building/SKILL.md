@@ -1,7 +1,7 @@
 ---
 name: building
 category: building
-description: 建筑安全隐患，包括危房、墙体开裂倾斜、外立面脱落、高空坠物和违规搭建。
+description: 建筑安全隐患，包括危房/结构开裂倾斜、高空坠物/外立面脱落和违规搭建。
 allowed_tools:
   - search_regulation
   - search_cases
@@ -18,12 +18,12 @@ version: "1"
 
 ## 适用范围
 
-覆盖 dangerous_building、wall_crack_lean、facade_fall、falling_object、illegal_structure。
+覆盖 dangerous_building（含墙体开裂/倾斜）、falling_object（含外立面脱落）、illegal_structure。
 
 ## 追问 SOP
 
-- 危房和墙体问题优先确认结构表现和人员占用情况。
-- 外立面或高空坠物问题优先确认坠落来源和下方暴露情况。
+- 危房/结构问题（含墙体开裂、倾斜）优先确认结构表现和人员占用情况。
+- 高空坠物问题（含外立面脱落、外挂物和人为抛物）优先确认坠落来源和下方暴露情况。
 - 违规搭建优先确认搭建位置、结构和公共影响。
 - 每次只问一个代码判定为缺失的 A 类槽位；多隐患时由代码统一组织并列追问。
 

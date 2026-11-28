@@ -1,0 +1,26 @@
+{
+  "sha256": "370597ddaa32289e26c99d6eb6ba0379aa3a591cccd049594d127271cafae862",
+  "file": "VEH0001.jpg",
+  "arm": "v2b-final",
+  "prompt_sha256": "143eace353b9f0d8b284c0324536204133c0c70e37a948f186fcf5d32f8bfb89",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"图中多辆机动车在道路及路缘处并排停放，占用通行空间，导致道路变窄、会车困难，可能影响行人和应急车辆通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"商铺前城市道路及路缘区域\",\n  \"rectification\": [\n    \"及时劝离违停车辆，恢复道路正常通行空间。\",\n    \"在该路段增设禁停标志或规范停车泊位，并加强日常巡查执法。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "图中多辆机动车在道路及路缘处并排停放，占用通行空间，导致道路变窄、会车困难，可能影响行人和应急车辆通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "商铺前城市道路及路缘区域",
+    "rectification": [
+      "及时劝离违停车辆，恢复道路正常通行空间。",
+      "在该路段增设禁停标志或规范停车泊位，并加强日常巡查执法。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

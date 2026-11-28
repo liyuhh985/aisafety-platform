@@ -1,0 +1,27 @@
+{
+  "sha256": "eaa3a2cfc974f7fcaf25217c285be07a5c09dab69c471aeb97b71efb07c50758",
+  "file": "NO0013.jpg",
+  "arm": "v2c-final",
+  "prompt_sha256": "6ac6883c0dcc7bba2f9d4c0845a01aadecc3856188ec3a8631a3c4fee1fbd4a9",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"施工入口仅以红白警戒带和提示牌隔离，未见连续硬质围挡；重型机械、车辆与开放道路相邻，闲人易误入，存在机械伤害或人车碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工场地入口及道路封闭处\",\n  \"rectification\": [\n    \"沿施工区域边界设置连续、稳固的硬质围挡或隔离栏\",\n    \"完善入口警示、反光标识并安排人员值守，严禁无关人员进入\",\n    \"规范机械车辆进出与停放，保持道路通行安全\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "施工入口仅以红白警戒带和提示牌隔离，未见连续硬质围挡；重型机械、车辆与开放道路相邻，闲人易误入，存在机械伤害或人车碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工场地入口及道路封闭处",
+    "rectification": [
+      "沿施工区域边界设置连续、稳固的硬质围挡或隔离栏",
+      "完善入口警示、反光标识并安排人员值守，严禁无关人员进入",
+      "规范机械车辆进出与停放，保持道路通行安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

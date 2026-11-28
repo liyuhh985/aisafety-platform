@@ -1,0 +1,28 @@
+{
+  "sha256": "374e451f3909f97fb4000f9513da3fef00de6f07cd6c48084aaa85439c7cbd3c",
+  "file": "falling_object_1_374e451f3909.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外立面大面积饰面砖或幕墙板缺失，基层裸露，残留边缘板块存在继续脱落风险，可能造成高空坠物伤人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高层建筑外墙立面大面积脱落区域\",\n  \"rectification\": [\n    \"立即在建筑下方设置警戒线和隔离区，防止人员靠近\",\n    \"组织专业检测，清除松动、空鼓的外立面板块\",\n    \"对脱落区域及周边饰面进行修复加固\",\n    \"建立外立面定期巡查和维护制度\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "建筑外立面大面积饰面砖或幕墙板缺失，基层裸露，残留边缘板块存在继续脱落风险，可能造成高空坠物伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高层建筑外墙立面大面积脱落区域",
+    "rectification": [
+      "立即在建筑下方设置警戒线和隔离区，防止人员靠近",
+      "组织专业检测，清除松动、空鼓的外立面板块",
+      "对脱落区域及周边饰面进行修复加固",
+      "建立外立面定期巡查和维护制度"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,26 @@
+{
+  "sha256": "643a4acc436fe56bd4654f133bd7139427408ee8b6278ddf0ef259bbecc660e3",
+  "file": "neg_12_643a4acc436f.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_warning\",\n  \"severity\": \"高\",\n  \"description\": \"混凝土泵车臂架及软管下方有多名人员作业，作业区未见明显警戒隔离和警示标志。若臂架失稳、软管甩动或混凝土喷溅，可能造成物体打击、机械伤害。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工现场混凝土泵车臂架及软管作业区域\",\n  \"rectification\": [\n    \"立即划定泵送作业警戒区，设置锥桶、围栏和警示牌，禁止非作业人员进入。\",\n    \"严禁人员站在臂架及软管正下方，软管操作人员保持安全距离并安排专人指挥。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "高",
+    "description": "混凝土泵车臂架及软管下方有多名人员作业，作业区未见明显警戒隔离和警示标志。若臂架失稳、软管甩动或混凝土喷溅，可能造成物体打击、机械伤害。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工现场混凝土泵车臂架及软管作业区域",
+    "rectification": [
+      "立即划定泵送作业警戒区，设置锥桶、围栏和警示牌，禁止非作业人员进入。",
+      "严禁人员站在臂架及软管正下方，软管操作人员保持安全距离并安排专人指挥。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

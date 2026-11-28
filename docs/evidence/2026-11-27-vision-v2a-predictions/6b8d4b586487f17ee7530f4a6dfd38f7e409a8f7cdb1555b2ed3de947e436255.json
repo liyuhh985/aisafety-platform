@@ -1,0 +1,29 @@
+{
+  "sha256": "6b8d4b586487f17ee7530f4a6dfd38f7e409a8f7cdb1555b2ed3de947e436255",
+  "file": "SEW0002.jpg",
+  "arm": "v2a-final",
+  "prompt_sha256": "8e6ded4a2138a59f4858bce37de4a9fb7702583344939962b362c53b008f2130",
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"路边绿色垃圾桶旁及路面上大量生活垃圾散落堆积，垃圾桶满溢，未及时清运，影响通行和环境卫生，易滋生异味、招引虫鼠，并存在火灾隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁绿色垃圾桶周边及人行道路面\",\n  \"rectification\": [\n    \"立即清运散落和满溢垃圾，恢复路面整洁\",\n    \"增加垃圾桶清运频次并加强周边巡查\",\n    \"规范垃圾投放，必要时增设围挡或警示提示\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "路边绿色垃圾桶旁及路面上大量生活垃圾散落堆积，垃圾桶满溢，未及时清运，影响通行和环境卫生，易滋生异味、招引虫鼠，并存在火灾隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁绿色垃圾桶周边及人行道路面",
+    "rectification": [
+      "立即清运散落和满溢垃圾，恢复路面整洁",
+      "增加垃圾桶清运频次并加强周边巡查",
+      "规范垃圾投放，必要时增设围挡或警示提示"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

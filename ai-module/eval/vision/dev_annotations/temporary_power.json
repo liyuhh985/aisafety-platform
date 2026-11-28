@@ -1,0 +1,476 @@
+{
+ "_meta": {
+  "name": "temporary_power 真实图评测集",
+  "category": "construction/temporary_power",
+  "category_label": "施工安全/施工临时用电",
+  "source": "百度图片 → 原站直链下载 → 自动筛选 → 粗筛 → 标注 → 严格复检",
+  "rebuild": "2026-10-31",
+  "positive": 24,
+  "negative": 0,
+  "audit_removed": 3
+ },
+ "rejected": [
+  {
+   "file": "TEM0008.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "培训课件截图，绿色标注框和箭头指向配电箱，注明带电体裸露、一闸多机"
+  },
+  {
+   "file": "TEM0007.jpg",
+   "reason": "非该类别",
+   "detail": "人员手持黄色电线，非施工场景，疑似排查飞线"
+  },
+  {
+   "file": "TEM0004.jpg",
+   "reason": "非该类别",
+   "detail": "大量成卷电缆与架空线杂乱缠绕，无施工配电设施"
+  },
+  {
+   "file": "TEM0026.jpg",
+   "reason": "非该类别",
+   "detail": "墙面线缆凌乱垂落缠绕，非施工现场临时用电"
+  },
+  {
+   "file": "TEM0030.png",
+   "reason": "非该类别",
+   "detail": "室内环境疑似宿舍，工人正拆开插座面板接线，墙上有木棍绑灯泡和杂乱电线"
+  },
+  {
+   "file": "TEM0039.jpg",
+   "reason": "非该类别",
+   "detail": "固定配电箱及管道，非施工临时用电场景"
+  },
+  {
+   "file": "TEM0053.jpg",
+   "reason": "非该类别",
+   "detail": "电线杆上缠绕大量杂乱线缆，无施工临时用电设施"
+  },
+  {
+   "file": "TEM0038.jpg",
+   "reason": "非该类别",
+   "detail": "墙面电线凌乱缠绕、裸露垂落，无施工场景"
+  },
+  {
+   "file": "TEM0057.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "无隐患"
+  },
+  {
+   "file": "TEM0066.jpg",
+   "reason": "非该类别",
+   "detail": "电线杆上大量黑色线缆杂乱缠绕，非施工临时用电场景"
+  },
+  {
+   "file": "TEM0063.png",
+   "reason": "文字是唯一信息源",
+   "detail": "火灾废墟现场，红圈箭头指向线缆并配红色大字"
+  },
+  {
+   "file": "TEM0062.jpg",
+   "reason": "非该类别",
+   "detail": "居民楼门口乱拉黄色和黑色电线，无施工现场特征"
+  },
+  {
+   "file": "TEM0067.jpg",
+   "reason": "非该类别",
+   "detail": "建筑外墙通信线缆缠绕成团，无施工临时用电设施"
+  },
+  {
+   "file": "TEM0071.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "配电箱门用铁丝绑扎，箱内杂乱，地面线缆散乱"
+  },
+  {
+   "file": "TEM0069.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "蓝色电机接线处线头裸露，配红圈标注和大量说明文字"
+  },
+  {
+   "file": "TEM0074.png",
+   "reason": "产品广告",
+   "detail": "红色配电箱敞开，内装断路器电线；四周堆满纸箱和塑料箱，像商品展示"
+  },
+  {
+   "file": "TEM0068.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "图片为宣教海报排版，上方照片加红圈标注，下方附有红叉及大段法规文字说明。"
+  },
+  {
+   "file": "TEM0080.jpg",
+   "reason": "示意图",
+   "detail": "培训课件合成图，配电箱照片上叠加红圈编号1/2/3及下方大段规范条文说明"
+  },
+  {
+   "file": "TEM0075.jpg",
+   "reason": "示意图",
+   "detail": "培训课件截图拼成，红圈内小照片显示配电箱周围积水"
+  },
+  {
+   "file": "TEM0072.jpg",
+   "reason": "文字是唯一信息源",
+   "detail": "图文排版合成图，含大字标题及规范说明，遮挡文字无法判定隐患"
+  }
+ ],
+ "items": {
+  "TEM0014.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "中",
+   "key_evidence": "橙色配电箱敞开放置泥地木架上，线缆拖地无防护棚",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "中建七局",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0010.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱内布线极其凌乱，线头裸露，未规范敷设",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0013.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱门敞开，内部接线凌乱，部分线缆铜芯裸露",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "DELIXI、CHNT、DZ47LE",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0003.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱开关裸露，电线杂乱交织，部分线头外露",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "电表箱贴纸有模糊小字",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0012.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "电线未穿管直接拖在泥地面，白色插座/接线盒随意落地",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0015.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱内断路器接线杂乱，导线裸露无防护，线缆乱拉乱接",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "ANDELI DZ101-100/3300 塑料外壳式断路器 100A 等设备铭牌文字",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0009.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "临时插座及电线直接散落于脏乱潮湿地面，无任何防护",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "群众呼声",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0020.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱内接线杂乱，导线裸露、接头不规范",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "DELIXI、C63等设备标识",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0025.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "大量电缆线杂乱缠绕堆积地面，无任何整理或防护",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0018.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "中",
+   "key_evidence": "大量黑色电缆杂乱盘绕悬挂在建筑外墙前，未规范固定",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0021.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "中",
+   "key_evidence": "设备底部电缆接头仅用黑胶布缠绕，绝缘处理粗糙",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0033.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱断路器下方线缆绝缘层严重烧焦破损，铜芯裸露",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "SINGI, OFF",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0029.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "黄色电线从高处垂下拖地，盘绕地面，末端插排落地",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0034.png": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "电缆接头用红色塑料袋包扎，随意置于泥地沟槽",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0031.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱插满多个插头，大量线缆杂乱垂落拖地",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "部分标识及标语模糊不清",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0040.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "红色配电箱门敞开，内部接线裸露，多根电缆杂乱拖地",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "合格证",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0043.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "敞开的配电箱内有裸露带电部件，且违规接入风扇，地面线缆杂乱。",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0050.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "大量电缆杂乱悬挂缠绕，线头裸露并堆积在地面",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0051.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "黄色配电箱直接置于钢筋网上，无防护围栏，有电线随意拉出",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "有电危险",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0048.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "外墙大量电线杂乱缠绕悬垂，下方有多处配电箱",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "配电箱 严禁合闸",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0052.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "断路器下方接线端子裸露，多根导线绝缘层缺失、线头杂乱无防护。",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "HONOR 30 5G Matrix Camera，单相电子式电能表",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0045.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "中",
+   "key_evidence": "配电箱内断路器下方接线端子排裸露，右侧红圈处蓝色导线接入无防护罩",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "CHNT、ON、1、2、3、4",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0046.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱内线缆杂乱，多处线头裸露，绝缘胶布随意包裹",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": false,
+   "text_content": "",
+   "difficulty": "easy",
+   "label_confidence": "high",
+   "is_negative_sample": false,
+   "notes": ""
+  },
+  "TEM0083.jpg": {
+   "has_hazard": true,
+   "major_category": "construction",
+   "subcategory": "temporary_power",
+   "severity": "高",
+   "key_evidence": "配电箱内部接线杂乱，橙色圈出处导线违规连接，易漏电起火",
+   "multi_hazard": false,
+   "secondary_categories": [],
+   "text_in_image": true,
+   "text_content": "CHNT等断路器铭牌标签",
+   "difficulty": "medium",
+   "label_confidence": "medium",
+   "is_negative_sample": false,
+   "notes": ""
+  }
+ }
+}

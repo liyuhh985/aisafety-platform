@@ -1,0 +1,27 @@
+{
+  "sha256": "99953de737c925dabea24384cf47c6305eeb970f5fad612ab06b03b4f7d8b92f",
+  "file": "neg_17_99953de737c9.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"建筑工地大型深基坑土壁陡直裸露，坡面未见明显支护或防护，挖掘机在坑内作业，存在土体坍塌、机械及人员被埋压风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑工地深基坑坑壁及坑内作业区域\",\n  \"rectification\": [\n    \"按专项施工方案落实基坑支护和坡面防护，严禁超挖。\",\n    \"设置基坑临边防护、警示标志和安全通道，坑内作业前进行安全交底。\",\n    \"加强基坑变形监测和排水措施，发现裂缝、滑塌迹象立即停工撤人。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "建筑工地大型深基坑土壁陡直裸露，坡面未见明显支护或防护，挖掘机在坑内作业，存在土体坍塌、机械及人员被埋压风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑工地深基坑坑壁及坑内作业区域",
+    "rectification": [
+      "按专项施工方案落实基坑支护和坡面防护，严禁超挖。",
+      "设置基坑临边防护、警示标志和安全通道，坑内作业前进行安全交底。",
+      "加强基坑变形监测和排水措施，发现裂缝、滑塌迹象立即停工撤人。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

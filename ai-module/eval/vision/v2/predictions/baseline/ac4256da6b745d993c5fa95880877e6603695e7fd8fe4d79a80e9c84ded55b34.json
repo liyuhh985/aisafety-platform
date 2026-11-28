@@ -1,0 +1,27 @@
+{
+  "sha256": "ac4256da6b745d993c5fa95880877e6603695e7fd8fe4d79a80e9c84ded55b34",
+  "file": "DIS0079.jpg",
+  "arm": "baseline",
+  "prompt_sha256": "ebca2afdc54396014e769f072b179efc78ea8c22897a91cd558716b341cedf47",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"temporary_power\",\"severity\":\"高\",\"description\":\"设备旁地面放置多个插排并串接用电设备，线缆杂乱拖地，未见规范配电箱和漏电保护，存在触电、短路及火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"灰色设备左侧墙角地面插排及线缆处\",\"rectification\":[\"停止使用落地插排，改由带漏电保护的专用配电箱供电\",\"线缆架空或穿管敷设，清理地面线缆并远离积水\",\"由持证电工检查线路和负荷，设置警示并定期巡检\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "temporary_power",
+    "severity": "高",
+    "description": "设备旁地面放置多个插排并串接用电设备，线缆杂乱拖地，未见规范配电箱和漏电保护，存在触电、短路及火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "灰色设备左侧墙角地面插排及线缆处",
+    "rectification": [
+      "停止使用落地插排，改由带漏电保护的专用配电箱供电",
+      "线缆架空或穿管敷设，清理地面线缆并远离积水",
+      "由持证电工检查线路和负荷，设置警示并定期巡检"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

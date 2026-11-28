@@ -1,0 +1,27 @@
+{
+  "sha256": "f81132ef57a04d1d9e75ffc3e5c2a6b31f154e4b371b00fa42d45e4b29a17a3c",
+  "file": "ebike_hazard_4_f81132ef57a0.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"ebike_hazard\",\"severity\":\"高\",\"description\":\"4F楼层公共楼道/出口附近停放电动自行车，属于电动自行车进楼停放，占用疏散空间，一旦电池起火会浓烟封堵通道，影响人员逃生。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"4F楼层公共楼道/安全出口标识旁\",\"rectification\":[\"立即将电动自行车移至室外集中停放点，禁止进入楼道、电梯厅和架空层\",\"在楼层入口设置禁停标识，并加强巡查劝阻\",\"完善室外集中充电和停放设施，开展电动自行车火灾风险宣传\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "ebike_hazard",
+    "severity": "高",
+    "description": "4F楼层公共楼道/出口附近停放电动自行车，属于电动自行车进楼停放，占用疏散空间，一旦电池起火会浓烟封堵通道，影响人员逃生。",
+    "reason_if_no_hazard": "",
+    "location_hint": "4F楼层公共楼道/安全出口标识旁",
+    "rectification": [
+      "立即将电动自行车移至室外集中停放点，禁止进入楼道、电梯厅和架空层",
+      "在楼层入口设置禁停标识，并加强巡查劝阻",
+      "完善室外集中充电和停放设施，开展电动自行车火灾风险宣传"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

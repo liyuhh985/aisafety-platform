@@ -1,0 +1,11 @@
+{
+  "raw": "{\"has_hazard\": true, \"uncertain\": false, \"major_category\": \"construction\", \"subcategory\": \"scaffold_guard\", \"evidence\": \"工人站立于深井筒边缘作业，无临边防护措施\"}",
+  "label": {
+    "status": "valid",
+    "has_hazard": true,
+    "uncertain": false,
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "evidence": "工人站立于深井筒边缘作业，无临边防护措施"
+  }
+}

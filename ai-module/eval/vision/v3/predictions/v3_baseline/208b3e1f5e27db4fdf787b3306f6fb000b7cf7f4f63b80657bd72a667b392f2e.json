@@ -1,0 +1,26 @@
+{
+  "sha256": "208b3e1f5e27db4fdf787b3306f6fb000b7cf7f4f63b80657bd72a667b392f2e",
+  "file": "tree_fall_hazard_2_208b3e1f5e27.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"tree_fall_hazard\",\"severity\":\"中\",\"description\":\"林间步道被倒伏或断裂的树干、树枝横跨阻断，行人通行受阻，存在绊倒、刮伤甚至树枝坠落砸伤风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"林间步道中央及上方\",\"rectification\":[\"立即设置警戒线或警示牌，临时封闭受影响步道\",\"尽快清理倒伏断枝，并对周边树木进行排查修剪\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "中",
+    "description": "林间步道被倒伏或断裂的树干、树枝横跨阻断，行人通行受阻，存在绊倒、刮伤甚至树枝坠落砸伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "林间步道中央及上方",
+    "rectification": [
+      "立即设置警戒线或警示牌，临时封闭受影响步道",
+      "尽快清理倒伏断枝，并对周边树木进行排查修剪"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

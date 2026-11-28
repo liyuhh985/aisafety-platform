@@ -1,0 +1,3601 @@
+{
+  "total": 342,
+  "valid_pairs": 237,
+  "binary_agreement": 0.919831223628692,
+  "major_agreement": 0.8860759493670886,
+  "sub_agreement": 0.8523206751054853,
+  "kappa_major": 0.8079992798847815,
+  "kappa_sub": 0.7571579132267697,
+  "consensus": {
+    "binary_major": 210,
+    "exact": 202,
+    "yield": 0.6140350877192983
+  },
+  "rejected": {
+    "binary_disagreement": 19,
+    "invalid": 13,
+    "major_disagreement": 8,
+    "sub_disagreement": 8,
+    "uncertain": 92
+  },
+  "consensus_items": [
+    {
+      "sha256": "9f97114b3d7fdc89d947b45ba1dce145638dd1694e2a0b4351745c51dbd152b4",
+      "file": "BLI0072.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "construction_prot",
+        "evidence": "人行道地砖被挖开，砖块散落，裸土无围挡",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a20dda79f34bb5fb0d5cfb72c2951c81d8401dc89e30bf75b372baa6e9ecbd03",
+      "file": "VEH0027.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "traffic",
+        "subcategory": "vehicle_occupancy",
+        "evidence": "大量电动车沿路边停放占用道路空间",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "682e4f1f0e8617719fdd4beb41e4fb8c03043dd228453fde9f11d2f2e16e3c57",
+      "file": "TRA0084.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "人行信号灯正常显示红绿状态，未见损坏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f24e6f8b0fc2719e04f327d4554d296a39e4ea15eb180723319e568b123f7300",
+      "file": "BLI0032.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "traffic",
+        "subcategory": "blind_path_occupied",
+        "evidence": "两处井盖占据黄色盲道位置，截断盲道",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c804549371268c111b71b46661caa8d9fb9bbac091f09b1dffab4cc21dd071d8",
+      "file": "ROA0014.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "traffic",
+        "subcategory": "blind_path_occupied",
+        "evidence": "盲道上放有一块混凝土石块",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "4e156beb0cbe47259400f517017a43ac5ad3cb3867c3aefcd1fc0ee70bf29744",
+      "file": "TRA0070.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅摄像头抓拍规则文字说明，无隐患画面",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f8f71ff4c01bbf5adcd20b3c028c4ac2bb6ac3ac1c4b8c722d41cdb525f4e405",
+      "file": "BLI0099.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "traffic",
+        "subcategory": "vehicle_occupancy",
+        "evidence": "多辆电动车、自行车停放在人行道上",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "dc4ff465dc13221a5e4889eb0525ce516db2fc10cf8d990105d103349f7e8d5e",
+      "file": "ROA0012.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "72eb0caf4fcc22afa8a840d731f110d05727dd84a5f155f1bea26cfae53c5615",
+      "file": "TRA0088.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "bc1a855dab5e27474a37526fadd51b147d05aa654fcb893cc6e01da583c0d414",
+      "file": "TRA0076.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "交通信号灯显示正常，无损坏迹象",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "9894fe7b1f482c54f16d30c0c457e8cae035877ce3c10228ae4c0ee46684e180",
+      "file": "TRA0085.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅事故易发路段警示标志，无实际隐患可见",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "be70dd907d63aa96a82d2fa4dea11a6bf0fcc6bf34f41af767e98a25d3064dca",
+      "file": "TRA0097.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "卡通警示牌图案，无现实场景隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "62648749b217e60824cf9b339a4f52b1d825ab2028fa3564fdd187bbf3e1d9d1",
+      "file": "TRA0060.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "限速标志完好立于路旁，周围仅树木灌木，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "02ff92706e713ce116b74799e66144f72b695f0bcb067ff415c958849e2acbc8",
+      "file": "TRA0057.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "traffic",
+        "subcategory": "traffic_facility_damage",
+        "evidence": "道路隔离护栏多处弯折变形、断裂倒伏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "e0d770e4295bf6d0e92f1a20df02f68c24984e42a61cd98b9ee9b62a2159fcaa",
+      "file": "MAN0081.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面大范围塌陷，多辆汽车坠入坑中",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "425689bf4e3036f29551e7ed7a32b07c1aee7d23195c4dceedf1a609f57350eb",
+      "file": "MAN0103.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "人行道地砖大面积碎裂塌陷，露出泥土碎块",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "e06c042f716a618c7be301744edfec3668fa2d50365358da6d42cfc2a4df2d67",
+      "file": "ROA0060.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面出现大面积塌陷坑洞，道路结构严重损坏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a246489368e4990f4d47ee8c3eb52c9924bd564478670b2e09758d24f1062321",
+      "file": "SEW0090.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "drainage_flood",
+        "evidence": "路面大面积积水，车辆涉水通行",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "92dd1fc11e70a9ed93c8bf246fbc1cd9d727e38accac37b13ae9a5547331f97c",
+      "file": "MAN0097.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "manhole_damage",
+        "evidence": "井盖破损开裂，旁边有敞开的井口露出深水",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "5ef2b1beebc0184eb87a9a208885476930115bb76cc59059e23247341452747c",
+      "file": "MAN0053.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "manhole_damage",
+        "evidence": "路面井盖缺失，井口敞露，周围放置警示锥",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "61ed143191049037e427bc1ce630a3c9d09766800f2981abcd8912372d4cf3fe",
+      "file": "ROA0073.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面塌陷出大坑，男子正持工具填补路面凹坑",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "991d1b1cd466ef86930b7ad02b80b1eaf7649a91a778da3ca16b41b31f1788d7",
+      "file": "STR0025.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "wire_fault",
+        "evidence": "电线杆上大量线缆缠绕杂乱、私拉乱接",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3a15b4a2d8f5f6a721bd9129b00d123f514d201ba70143dfa9a303dd3caef007",
+      "file": "MAN0049.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "manhole_damage",
+        "evidence": "路面井口敞开无井盖，井内堆有碎砖块",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "97f08aba6845f6fa3c94d0a298578feca640187c473df488996e2d48ea5fa39e",
+      "file": "ROA0022.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面出现巨大塌陷坑洞，可见裸露管道与流水",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3146b9457b099a0cecb7131d7d9a4782a4774464fb0f1b659fb4ef039c1addba",
+      "file": "MAN0094.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面塌陷出深坑，一辆轿车坠入坑中",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "508d98132882218ad2d8a696dc1cb95157d1b5ba6b0c91431648b60f0d95d265",
+      "file": "ROA0001.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面出现大坑塌陷，混凝土灌注，水马围挡",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "6f87579e9877f5e823805b6a91da7c729d9140bc07e5ac04a4dbf4b1278583a9",
+      "file": "STR0089.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "df818894c2a51da27f49fec176312b12f14cc003f8dc968348d53ba9363f4355",
+      "file": "MAN0062.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面仅显示汽车车轮特写，无可见安全隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "b65be725596701609d16ec71a33e888b08e1c550196528132e160da1a08bf9b7",
+      "file": "ROA0072.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面大面积塌陷深坑，坑内泥水涌流，警戒带标路面塌陷",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "36d1baa320f8defc10b9ac36b64132af8d14dff4d1521fabdb03ac29d469f29e",
+      "file": "MAN0108.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "manhole_damage",
+        "evidence": "人行道井口无井盖，仅置网防护，井盖缺失",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "39a76560ef846275d96a99bbf5b19eecda25f3c5f6908f09cdf29fdc240b2a5e",
+      "file": "ROA0034.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面出现大面积塌陷坑洞，沥青路面开裂下陷",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "72cb9d09e7db316c71001cf0eada93aae37ad5650247976798278861eff43017",
+      "file": "STR0080.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "environment_other",
+        "subcategory": "garbage_pile",
+        "evidence": "人行道旁堆放多袋垃圾和废弃物",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3dc580869f8326de52ab7e461743daeb791a08ecafd3f36d3b7c1e0a8912dd7d",
+      "file": "MAN0118.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "manhole_damage",
+        "evidence": "左侧井盖碎裂塌落，露出洞口",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a40b49f9c410040215f4b3eb557c7e12dbac15089b83e142e63ff0798b9b6917",
+      "file": "ROA0033.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面大面积塌陷形成深坑，可见积水与施工人员",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "6e8f46fd422b299d47afe079db2f68817867917b056522437d4a7ecd403a505c",
+      "file": "MAN0095.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "manhole_damage",
+        "evidence": "路面井盖掀开，井口裸露，旁堆碎砖渣土",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "aac6e465acbac5ae69deafc1a59394e1ea6eefaf66e0118c6874dfff77e2ed36",
+      "file": "ELE0071.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯门关闭完好，呼梯面板正常，消防箱在位",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a95a0bcf9e3a41f3860f9f7e8c04360f53efd03ed1ee20afe9ee555addd60549",
+      "file": "GAR0101.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "fire",
+        "subcategory": "fire_facility",
+        "evidence": "消火栓柜前堆放收纳箱、婴儿车等杂物，阻碍取用",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "b8d0ed208ef02e8218bd114896454028f811923399f639aaac08259270ae2afc",
+      "file": "FIR0016.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "traffic",
+        "subcategory": "vehicle_occupancy",
+        "evidence": "银色面包车部分车身压上路沿石停放",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a5473b4b497ba4069419814a619a87e418ed4b580a7415861b8f5aedb1a86900",
+      "file": "FIR0012.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f20c1a5cba6caa87604f791d241ee7fb7d61d152811c6445a2045b4a1c97c6f8",
+      "file": "FIR0089.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "干裂河床与大坝，无清单内城市安全隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "681113e341d0727077578dd899f2b8c130bc3f16eaba91c34632988319b9013d",
+      "file": "FIR0010.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "灭火器箱内两具干粉灭火器齐全，配检查卡，无明显异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d9c4c6902ff22af128383789eeebe7e298bda2fb752303f6c2544b58d4f7725f",
+      "file": "FIR0067.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为消防员喷水演练，未见明确隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "34295fb0b532c742ed15309940c4ff523125ebcb863a5552cc905a9fd920b0e4",
+      "file": "FIR0053.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "灭火器压力表指针在绿色正常区域，仅为检查示意插图",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "e96aba632cbe7cf8d265633062df12d8a1aff02561a15bab082465415749a439",
+      "file": "FIR0003.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "车辆停在划线车位内，无明显占道或隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "fc260a0b644f16f0ca8abb117e8014f8dbb11adb36c880bf675664ef56989eb0",
+      "file": "FIR0061.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "墙面仅有消防取水口标识牌，无损坏或占用",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3b1c6b0000e719b46b1d2403d6d3c7dc37042f0002e97305b223777094e1dc42",
+      "file": "FIR0026.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "红色消防管道完整，阀门仪表正常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "774aab255f13a14a49629209e7f9d53701bc8b2c76d4cfe6e963e999af5f5d22",
+      "file": "FIR0031.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "building",
+        "subcategory": "",
+        "evidence": "天花板破损，大型管道/风管断裂悬挂，顶面有水渍剥落",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "89426405947d035f39ace8942697df452995f7858e0c157ed44b9f20ae3e28c5",
+      "file": "FIR0026.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "fire",
+        "subcategory": "fire_lane_blocked",
+        "evidence": "楼道内两辆电动车停放，旁有消防栓标识牌，通道被占",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3a252042d7856b7862b996462cc4b60fea7762d972552cb4b7979e40574d1a59",
+      "file": "FIR0008.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面大面积网状开裂、破损",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "0ac908b4a3c870581fa57ba5348459ba2c53ba5ac734865d2422abc1a1dd89e0",
+      "file": "FIR0023.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "全新的有衬里消防水带，带合格证，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3102427f08cbe692ce206c90c6702bc1d3f0d47671d7f85dd382df2a556f91fb",
+      "file": "FIR0075.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为消防水池盖板及警示标识，无明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "30af993a8fa21abce66d14d86b3245d130f74fafbac3df755284b11baed632d9",
+      "file": "FIR0078.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "fire",
+        "subcategory": "fire_facility",
+        "evidence": "大量红色灭火器杂乱堆放在昏暗仓库内",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "dad8c9e835c2577a9c02a6ae8d2e6831210ec0f4da33390b67c7ee418307a0ce",
+      "file": "WAL0060.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "building",
+        "subcategory": "structural_damage",
+        "evidence": "倾斜砖墙用多根木头临时支撑，墙体明显不稳",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "e3c413ecb7ecda6487e3859b19eb7588e023985edef23b946ea09d046c665a69",
+      "file": "DAN0044.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "construction_prot",
+        "evidence": "拆除现场无围挡隔离，碎砖瓦散落路面，人员靠近作业",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "41ea7950c15db3140db304b107df3d61a0a683310d1ed078e7c6691726f3b7c3",
+      "file": "FAC0073.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "building",
+        "subcategory": "structural_damage",
+        "evidence": "红色高楼整体明显倾斜，消防车在现场作业",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c2459eefe61bd825b1c64c58632f2ef1549917b17cf5fb4733f54a2104bc4384",
+      "file": "ILL0047.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "637004da0120fa3947f6383d89ad20d02455e854a9de0244b7c36d3ee977942a",
+      "file": "ILL0095.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "scaffold_guard",
+        "evidence": "工人在高空作业，脚手架边缘无临边防护栏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "52a2d687dde992bd18291a8a7af26c8537994b9f7bb469268595b319719a2ff6",
+      "file": "DAN0051.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "building",
+        "subcategory": "structural_damage",
+        "evidence": "墙面多条明显裂缝",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "814d0cd5f724660467c3aeb593f61a0cb616b488f71ecdc1f38608e55df21723",
+      "file": "FAC0079.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "厨房台面瓷砖涂胶，非城市隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "559ff5d319e44be026762d2573f127b24bc5c094ae78b2f6905ffd6f556175b2",
+      "file": "ILL0054.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "construction_prot",
+        "evidence": "人行道上金属框架施工，工人架梯高空作业，无围挡警示",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "963f9b293b118d47af27e863fa59dfe12fda43adc755eefaa2f76ec7572930ca",
+      "file": "FAC0063.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "building",
+        "subcategory": "facade_risk",
+        "evidence": "墙面瓷砖脱落碎裂散落地面，存在坠落风险",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "32dd40156eaf309b3bc58f952e5fe637f051c3f49b4d60641a2a04c90c763f5c",
+      "file": "ILL0010.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "38b2eb5d19e6e4e9125fb0ec201b323c4364baad34a715cd6a9f2b79e74bcc46",
+      "file": "WAL0020.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "building",
+        "subcategory": "",
+        "evidence": "围墙端部抹灰破损开裂、墙皮脱落",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c16dd8fa822ea4408ade4493e42a56feb58591dd0cc4bfb85c8c630cde5806fa",
+      "file": "DAN0094.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "",
+        "evidence": "工人在斜屋顶作业，未见临边防护栏或安全网",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "e0c9b560fbdfed780da2447eaf65c097901f58342c6c8ea31e1aeb3147ac1834",
+      "file": "FAL0010.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "大型广告牌结构完整，无可见损坏或隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f323c4af8a39f214a90b3ad4b0523169c0cb325cff43782601b954ad8331e354",
+      "file": "ILL0014.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "",
+        "evidence": "施工区域内多处开口/边缘无防护栏杆或警示",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f29bed08873e82d2c7c5a224b1af6d0bcf8134984e1fb599a68a41a0f8a901a5",
+      "file": "FAC0082.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "building",
+        "subcategory": "facade_risk",
+        "evidence": "楼体顶层檐口破损、外墙上晾晒物悬挂窗外",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "11726a3c3da619f9279689d0ea2e58995e763e590be2181c8aeba61eae1bc9ef",
+      "file": "GAS0050.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "deep_pit",
+        "evidence": "开挖深沟槽内有工人作业，槽边无防护",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a652ccd70ad0c0d54b029a444045d519b09cd429bae3403844a48d6f072f5889",
+      "file": "ILL0057.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "wire_fault",
+        "evidence": "墙面大量线缆缠绕私拉乱接，外露垂挂",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "11f0b686ea4a53e91cb879248fc5ad0bdfe4aaaa4df032505f99144524e4be02",
+      "file": "TEM0036.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "wire_fault",
+        "evidence": "墙体开槽内大量电线裸露纠缠，墙面破损",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "deec842977aa1a4b11a950fb963445fee8e48d46349725412ba63dbec6a3e31c",
+      "file": "GAS0066.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "燃气热水器安装现场，管道连接完整，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ab151b2d6ea0baba0ea9f7ae9c80926d8faaa5c4164ebffc0ab32ebcb111ad0e",
+      "file": "TEM0049.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "手持便携式配电箱，外观完好无破损裸露",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d40416711891d68e01a3ce3a91b5d889b652edc4609e43993b7dc946299591ce",
+      "file": "DIS0048.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "配电箱模型外观完好无破损",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "768eb15f004371ef3e7f721e8ffc5428ce8d8ee87d2dfa5de63c38c8f137e7a1",
+      "file": "EXP0040.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "示意图：电烧伤急救要点科普插画，非实际隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d44664f5e6214c9986ab3010ce386090064ae2f776fe6e718d98d8ff981a2022",
+      "file": "GAS0042.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "工业火炬正常燃烧，管道设施完整，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "5021c0b60d4599720a81ac5f1c9b4b430701aa7067c418d4b495cf7ad7ed48c2",
+      "file": "GAS0060.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "作业人员佩戴安全帽，设有三脚架、安全绳及通风管防护",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a46873c76508bd70e65bf10b7e8508eaa9444dc4eff214f513d9d4e99b1e70d0",
+      "file": "ILL0053.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "wire_fault",
+        "evidence": "插座串联多个插排，墙面电线私拉乱接缠绕",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "75adc9d18384dbf650a949c5cd1f705ab0ede4ac244fa97727e81535dcde4919",
+      "file": "TEM0070.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "",
+        "evidence": "配电箱内线路接线混乱无序",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ac4256da6b745d993c5fa95880877e6603695e7fd8fe4d79a80e9c84ded55b34",
+      "file": "DIS0079.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "wire_fault",
+        "evidence": "地面多条电线杂乱私拉，插排外露接电",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "9fcda15275fbbe24db8b513c3da34e47038ec1973fda86e2d9ea800b7a632557",
+      "file": "EXP0042.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a1da6dd69002d7809771d17169737e641e2719ea08c66789f706ae654c76d3da",
+      "file": "TEM0024.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "配电箱有防护棚围栏及警示标识，设施完好无异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "494b2eddd8fdf06de82f5fbca15861248cd4459ee0380855bb7f0bb1bf1444bb",
+      "file": "DIS0087.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "bee3f2d7cad24e892c24c59a81e9f185982582163312f0b814e6530566f8ab2b",
+      "file": "GAS0078.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为燃气抢修及消防演练培训活动，无实际隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "8eca45455188e5dd3552e6ab225ee39ca36c597389656e761327030f0b1fa162",
+      "file": "ILL0035.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "wire_fault",
+        "evidence": "墙面插座引出白色电线悬垂为电动车充电",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "86f8ee886923618f21dcd0c6e30d08230c9ac2a0dc07b6e6cfed662c642a3e1e",
+      "file": "DEE0055.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "deep_pit",
+        "evidence": "多个方形基坑敞开无防护围栏，工人在坑边作业",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f380dbe2ef3507209a2e2dc1d38df3d4410418129d1f0d9aec2e643ddcf68a66",
+      "file": "SCA0047.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "脚手架设有蓝色安全网及多层防护栏杆，防护较完整",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c719676f1115b64b74f6990cbf968b1c5c1f815dd7df374a39c31862da218af9",
+      "file": "NO0022.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "施工围挡完整规范，路面通畅无明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "e9a1088038ceedc8f3850b09524bb979f58e9eccb5ed47d46a9b75a575b36352",
+      "file": "NO0017.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为野外人员用铁锹挖土，无城市安全隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "b1904f7e436cd314ef919d5b8df2036494a543e1c83ecdd410b3f1600009ee3e",
+      "file": "SCA0083.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "scaffold_guard",
+        "evidence": "脚手架安全网破损，工人在破口处",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "801349403c4e2b98d4294c1c7c20152c73058ea1d67a39fd593c4e9b9751a024",
+      "file": "NO0100.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "施工围挡整齐稳固，支撑完好，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d49eae3e6a87c56e927b9fc6b6491ec697dbfb0e3c03bcdcb3584ddf49d91526",
+      "file": "NO0072.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "road_surface_collapse",
+        "evidence": "路面塌陷形成大坑，周围设警示围挡",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "59f4f079943464064d5823cbb3dafd5164582fc25c454e440523c8732a95ca49",
+      "file": "SCA0042.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "黄色吊装架结构完好，工人佩戴安全帽和安全带",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3cfcddf9bfe523fdd29388c675840ea86c6643521f947f143dfca3c34c24aec2",
+      "file": "NO0038.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "施工围挡完好，警示条纹清晰，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "618ab666b495310a06cc8344b854890b03de66bdb8842bc9109fa23545cf5889",
+      "file": "SCA0090.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "施工围挡完整、绿网齐全，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c28c9f3608d94da4c7e3b4c78fa179acedc3e15db2bdecba50773fead94abc53",
+      "file": "NO0086.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为完好施工围挡，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "eaa3a2cfc974f7fcaf25217c285be07a5c09dab69c471aeb97b71efb07c50758",
+      "file": "NO0013.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "施工区域设有警示牌和警戒线，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "48330772f52a76626a6200bea3324ba088a7c0b59ea8dd9def0d2b20d890f9b7",
+      "file": "NO0074.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅为安全警示牌商品展示图，非真实场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "8300e596b2ae51a5902cbe02f0e474224fd0e3ccd858c7f8694986f166a228a7",
+      "file": "SCA0088.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3f714b0a3c7d034416e531ee65ee9bd0fd02379c95a63a0d2e387f30ba62776f",
+      "file": "SCA0039.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "黄色防护栏完好，标有严禁抛物禁止跨越",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "13f18bf70c04a549242f3ca9c617c7b5ff24deefc8b5fde39390c9e2c8b48515",
+      "file": "NO0085.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "锥桶警示牌齐全，工人穿反光服规范施工",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "4f5a331962f1218711030f4c30393984fb17e4ff430accb64795b089bb415e40",
+      "file": "SCA0050.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "商品宣传图，仅展示安全带装备，无隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "721344f2a44175437624ceb5059e4b13ccdb1b3a36a418e1567715a0b69e6e72",
+      "file": "NO0068.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "",
+        "evidence": "工人站在深基坑边缘作业，坑边无明显围挡防护",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "403905621d06ee69d7c93a28b65f32b044a4590e85f937eae0c13aff7d8e6c1c",
+      "file": "NO0056.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "",
+        "evidence": "路面松散碎石未铺装，井盖周边凹凸不平",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "831ac2eb1d0a365f62ba186096bc0784d045622198daced6e5eae13ee4c19ea1",
+      "file": "SCA0074.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "安全通道设有完整黄色护栏和警示标牌，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "317ed5f06f734673b6efcbe59a48a96d64b7f9fe22b3da2f0c71802098f6aa15",
+      "file": "ELE0061.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅为电梯乘坐须知标识，未见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "88339c669d52fd0338a4271b7276726b1176f09c7498ced4350110a2000139ee",
+      "file": "ELE0069.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯呼梯面板正常显示楼层11，无故障异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d6b6880125893f80b2a7055d887d906becc4cf13b54ad819637a71487b4d2e49",
+      "file": "ELE0057.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "elevator_special",
+        "subcategory": "elevator_trapped",
+        "evidence": "人员戴安全帽从电梯口跨越搀扶出来，电梯似停于楼层间",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "334a1d12f9e601e378b8c1e57c3946c00861900a8b717025ddfb913bca27c12e",
+      "file": "ELE0042.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯按钮面板正常，楼层按钮亮起，未见异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ac56d3245b2f688f12f73dc0a0d60989c5ba6193cdaaac4ac02fb1f94d10d32b",
+      "file": "ELE0034.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为科普海报，机房照片未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a46248ba25d597d5601b877ad3be79d2ffbbe56bc54e26681c3f5297df00adb2",
+      "file": "ELE0064.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f0fc7e2478045cccbbaf1094fe18a6579e409ff7cc9ada768b6d6c30fdbb3ceb",
+      "file": "ELE0063.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "工人在机房内正常操作设备，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ac85e91439e99d85f1f6c775b2bf6ab74aa9f9f11840dd5f2d7e4f72b4d2b6eb",
+      "file": "ELE0054.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "elevator_special",
+        "subcategory": "elevator_trapped",
+        "evidence": "消防员正在强行开启电梯门实施救援",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "9a0b7888e3791fe4cabe803c7469de06aa8b51bb90ff9bd66f83751ad1dc7e75",
+      "file": "ELE0062.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯门贴安全警示贴纸，无电梯故障可见证据",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "6a16d262088b57b768d3819e164d51fa68e7698f7ac0a87e08f550aab677d6c8",
+      "file": "ELE0041.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯按钮面板完好，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "4c1a8cb607fe33d13beafe7a92447f0058dbaa153a26b7b22f7d15c94a0e784e",
+      "file": "ELE0043.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "elevator_special",
+        "subcategory": "elevator_trapped",
+        "evidence": "消防员在3号电梯门口开展救援作业",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "b6ceae9ee9dee922fd9c0f5a9e8def284a1ec3d6a23469158fce4f7e7b4e0c5c",
+      "file": "ELE0060.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "elevator_special",
+        "subcategory": "elevator_trapped",
+        "evidence": "消防员正在撬开电梯门实施救援",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "2c882f5221bae2627b7d79c77068f310a6faa3a34d2d7d5f16b5ff0d3c4a2663",
+      "file": "ELE0037.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "elevator_special",
+        "subcategory": "elevator_trapped",
+        "evidence": "消防员在电梯门口架梯救援，轿厢内有人被困",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ca1b11bc84662d4bcf899c0d00d43a480c37fdfb037b340dd1164ab80d978e41",
+      "file": "ELE0017.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯内显示楼层正常，按钮完好，无困人或故障迹象",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "1c612b573f26a7d9bd3c7a8c15033c71d7e4c2d68283bc9fffa8f9f390510a07",
+      "file": "GAR0003.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "environment_other",
+        "subcategory": "garbage_pile",
+        "evidence": "路面和人行道散落塑料袋、瓶子、纸屑等大量垃圾",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "def8d1fbda4e308bcd6663dbc1a7181561107590cc2690183ed0789d5cf2a43a",
+      "file": "SEW0087.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅为日常清洁与除味文字说明图，无现场隐患画面",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c583c5fa9ccb1d2fbdaabf41634733ca6930b10c411f50051cd11bae693943e8",
+      "file": "SEW0100.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "纯文字海报，无实际隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "184ac31b3ea74c1ad1fc54a67d5a5baa545c181a2e870ebbda58b112359995ab",
+      "file": "SEW0067.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "室内更换地漏施工过程，新地漏待安装，无匹配隐患类别",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "0feb9520354b7567103c466700484edede12cb64804cfe7d933a097c6ff6dcde",
+      "file": "SEW0069.png",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "疏通剂产品广告，下水口正常排水无隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "bf0571c103a22496cf324f8c641a1d567911e3e567af6781ce1ca2dfa35703f9",
+      "file": "NEGBLI02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "盲道清晰无占用，路面整洁无隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "9e5416d6a99d6d0c869ac2c55869ecf050a6c0a2551155206264b2565e49b75d",
+      "file": "NEGTRA02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅为交通标志图表，无实际隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "58d921fb462abe95819e4f55ecd8772d5170ed1a106e8919bf4d533df1900b20",
+      "file": "NEGVEH06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "规范停车宣传海报，非实际隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "547efe8dda118bb93adbf5b446ea80f592b9fbd095bf818d3a007479ba6bfe07",
+      "file": "NEGBLI08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "红色步道整洁，盲道完好，无占道或损坏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "2dd13142007de69c489d195c8f2b561bd91250d291527a41b400fc35bfe85e88",
+      "file": "NEGROA06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "人行道整洁，盲道完好，路面无损坏，无占道堆积",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "4662e210d82253d9171b308b0610cd985779ddae124f650589391bacd4f49b7c",
+      "file": "NEGTRA03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为交通禁令标志图示，无实际隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "04c38dd519920b3b333dd849afa29ed701544ff4efb31e73ce593c56a593d734",
+      "file": "NEGVEH05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "划定停车位整齐，路面完好，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3748df6b233782a23a8b8a59f79ef96a040f16701975cf10ce798c79f63911b6",
+      "file": "NEGBLI05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "人行道整洁，护栏完好，盲道无占用，无明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "e84b7b15904733d828798ad111a5d4a25f2459f0e854493cd2096eaaa74a34c4",
+      "file": "NEGROA05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ede2540d70aec132d2bb9026641a600b2db7646cbf0110df12399dd6efababfc",
+      "file": "NEGTRA08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为警告标志图例表，非实际场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "fffa3d2e1a73923dbad5c8180ba8d0a74ea71482f2ffe4d8fc474dce35e68df7",
+      "file": "NEGVEH08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "停车位CAD设计图纸，非实景，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "bcac887aa6a1ac46e36b82c92caeaec7449ded0f591ef9de33e0480cb5870d06",
+      "file": "NEGROA04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "路面整洁无破损、占道或积水，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "b45814e2eb1afd2dee7eabd3414b31706b846185585ba6d767c10550a9e28d2c",
+      "file": "NEGTRA06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仅为交通指示标志图例展示，无实际隐患画面",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ea5ac639cb6717afeb6e5b266adff3ac5e4d03a5b77e859c41727166be609fb8",
+      "file": "NEGDRA04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "drainage_flood",
+        "evidence": "雨天道路有大面积积水，人员在清理下水口",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "116e94e47654e9b4f67417151fd75d620d97e5889d3f1bf1048090573cf16dfc",
+      "file": "NEGMAN01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "井盖完好在位，路面正常，无破损缺失",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "08e01514390b21e92888c3e05ca20a41107646a1079aa8fe89208d60c1469ea4",
+      "file": "NEGROA02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "道路新建完好，护栏完整，无明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "07ccc69e2034791f0a0edc35a49c01075ff596c8f60202521938acc0b9a3a1fc",
+      "file": "NEGSTR07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "夜间路灯正常照明，道路及设施无明显损坏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "034e32f1bed06cac8ed8115c243e7da2bdab29746a21f71801543977def62cee",
+      "file": "NEGDRA02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "drainage_flood",
+        "evidence": "落叶堵塞排水井篦，路面积水",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "adb4a04ca46a04eb9d6b29fd8b780f9379450c89e74e0844238d0bac302eca39",
+      "file": "NEGMAN08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为完整井盖刷漆堆放，无缺失破损",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "deb425b606174c9ade97cf87c1abfe08410e1a91e87453edc70af6a7a9ea3199",
+      "file": "NEGROA01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c7bb0bb9d16c41409a7ac467aea13a42c7d4a5c3f356676ae120032e22e763fc",
+      "file": "NEGSTR04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "路灯完好，道路整洁无隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "8ad3abc92a2effdff0b6faed7e98cd79239fbb515132d8660c0229dfd47d6400",
+      "file": "NEGDRA01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "drainage_flood",
+        "evidence": "整条路面大面积积水，水流漫过车道",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a8a5eb54ec3b9767e6d11e580b7ac792d0f5e8d4ed68a8d2ec65197b55e29aa6",
+      "file": "NEGMAN07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "井盖完整堆放，无缺失破损",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c73a35164da702e62a10de74c2b3c908dbdc48b4914e73a4279f7d904a1ae971",
+      "file": "NEGROA07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为平整乡村公路，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "485698d12294a9d2e501ab2a5b614545856d5a771dfb4950f67a69b8a055538b",
+      "file": "NEGSTR06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "路灯杆完好无损，道路整洁，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "25567fa0df805f3770b0ca33e918887d3d0412c816411e889888f3ab1e97ce59",
+      "file": "NEGDRA06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "municipal",
+        "subcategory": "drainage_flood",
+        "evidence": "路面大面积积水淹没道路",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "18f1a54ac2aa33ef829d169cf133726a2a98ac088d6c006a780fb6108da3cd13",
+      "file": "NEGROA04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "路面完好整洁，道路两侧树木整齐，无可见安全隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "0e5848544f49129fa940fa52c608cba8f82e4d6a43d0750484a4fe0991ce2ba8",
+      "file": "NEGFIR03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "消火栓柜完好，无破损遮挡",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "8fb146505fa037c9b2ae14252015f000b7e168caa50492f32c48341b4f3901ac",
+      "file": "NEGFIR07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "地面标线为消防通道演示区，通道内无占用",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "5967c274102ffbb184d39fc604acc75304b2473041178ea63c6a830cef333b93",
+      "file": "NEGFIR08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "红色消防栓外观完好，无损坏或异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "0d271b37d726b67adc563bc73741bdca483788e7ba3582d78b5387cc507cbb6e",
+      "file": "NEGFIR03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "消防柜内水带、灭火器齐全，人员正常检查，未见异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d55af9e73abc9a80a4625c6ada17b90e6a7b210c2bfe20b85c83b5a02b6ccb58",
+      "file": "NEGFIR04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "fire",
+        "subcategory": "fire_facility",
+        "evidence": "消防阀门接口锈蚀破损，法兰连接处锈蚀严重",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "7ad709851b67040bd82bce29fc47c264d5283ec738238d9ebcaee221ef134fd6",
+      "file": "NEGFIR05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为张贴消防宣传海报，通道整洁无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "fccf583d0f7950f3060a2fa7bcfb043d3293f845e814119a993ca3e52597036c",
+      "file": "NEGFIR01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d6ffc696ceccf81f7c7bc6c4ae0c8c04642a1d97fc8ad957fc08564bb9df057a",
+      "file": "NEGFIR04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "消防车道标线清晰，通道无占用，路面完好",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d804c250b9552c9d0ab75a97e34912bd4cbd90083d63b281a72bcf824050c01b",
+      "file": "NEGFIR05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "红色消防栓外观完整无损坏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "eb5c21d9c770805a8e838d5557a338a4d1fb81f5d4a59956b7eb1fb1ce26182f",
+      "file": "NEGFIR01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3bd0fe31e32f8caf053a718e82ba87277c5da781e92807ce831025985e114748",
+      "file": "NEGFAC03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "environment_other",
+        "subcategory": "garbage_pile",
+        "evidence": "楼前地面堆积大量碎砖瓦砾建筑垃圾",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "2ea96b8fd953634ba632ee47037033533397596160c71a35638527de96ff6446",
+      "file": "NEGILL02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f3a7567793bba4fe05341e30dd3505e117c504eca5f42b779a3078e926c37dbc",
+      "file": "NEGILL03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "楼体外立面完好，树木整齐，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "c6306997e6417552896891b1597b152bee0748718424c169c904907012fd358b",
+      "file": "NEGFAC08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "外立面完好，无破损坠落痕迹",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ea0f04f9f1f098916bc3a61407f1e9a95a5933cd9e8bf1fac0743902d84fe433",
+      "file": "NEGILL04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "cadf7f622229df025b7c62df0b5663ef709ab9b01bc7fee17f6ffbda1b7d8b84",
+      "file": "NEGSTR07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "室内房间装修场景，无明显可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "57b546972f2a05caed5fc5211a21d16e7db6748043974368f0b619511d7a8b07",
+      "file": "NEGFAC02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "8e74c274895bce4cc6ba641df7a3e837ec70ced429c66b007458f126e56cb0d6",
+      "file": "NEGILL01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "高层住宅楼外观完好，绿化整洁无明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "47c6e8f8ff7134ab8160a43a08a85bf3f2e80bb2e0c22e8c65c4282bea4a65e5",
+      "file": "NEGSTR06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "毛坯室内墙面地面完整，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "0703bd146c164531ffb7444ad7453ed8647be0ac19a9ee12d8175429216c2975",
+      "file": "NEGFAC06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "建筑外立面完好，无破损坠落迹象",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "2ada2a25bca2f49e3ae48e22364763e337fbeda9f236dd03d0d745869ce1466a",
+      "file": "NEGILL08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "小区绿地整洁，步道、路灯、楼宇外观均完好无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "0a6bec877575c599f09d67121dcaa3448afc49fac26f156202e047499101dc16",
+      "file": "NEGSTR08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "建筑外立面整洁完好无破损",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "cdf5c62551865ae611da858b11e0f13cc8e631caadf58f5a66e9c882eb65954c",
+      "file": "NEGDIS03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "distribution_box_fault",
+        "evidence": "电表箱门敞开，箱内接线端子与电线裸露可见",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "87363f135ccbeaec09c784e49cf47b096cc9b08576fae81320be6e346b08afb1",
+      "file": "NEGGAS06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "燃气热水器及黄色软管连接完好，阀门齐全，无明显泄漏老化",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a09fcae8437e1be7389802231e75538d6a7234805733e0909cfa166fad427d00",
+      "file": "NEGWIR07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "货架整齐存放盘装管材，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f7f819e32772a30a499ef5775dec0feb270ae17ffe87472421a882824aa3cbac",
+      "file": "NEGGAS01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "5015b347d164fd748e3892a1fed552e5af409905b5859e35d5715def54300cc1",
+      "file": "NEGWIR05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "仓库内电缆盘整齐堆放，未见明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "f430737c2543bdd2763a28922a2982bfb0dbc7354ef35ab8a1efd8aa03095612",
+      "file": "NEGDIS07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "配电箱完好，产品展示图，无破损故障",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "73b995379fc31713b06b3ab953322220482ddd988a641933c1873c73df088dab",
+      "file": "NEGGAS07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "黄色燃气管道完好，无泄漏老化破损迹象",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d12fe4c41769f293e53de68cda7526b646d4cd5dc2b70e877e393073d47cd4b0",
+      "file": "NEGGAS08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "6f70a601bf31f5be1d39be7b09752f0a35661f7667511ed1a447be24bc8a1f57",
+      "file": "NEGWIR01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "线缆整理有序，固定整齐，未见裸露或私拉乱接",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "711816f2cdabb183db567a9a4dedfd5d065c3e302ecce5f4a0ba584718f52e54",
+      "file": "NEGDIS08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "配电箱门关闭完好，无破损漏电迹象",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "4138674a583f56436f644e2f3ad41ffb98a6ab6ff1587d915a87852aa570cc26",
+      "file": "NEGGAS03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "utility",
+        "subcategory": "gas_pipe_aging",
+        "evidence": "黄色燃气管道外皮破损开裂，内部波纹管裸露",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "ff0eec08a70d87a03e02aa585cacd44f7bde4bb132733c135b148e6876d2c95d",
+      "file": "NEGGAS05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "燃气管道、表具无可见破损或泄漏等异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "2aa8feb84d080204c2aec138ab0e5c2ad56bdcb30d01c72fc38888dbc020094c",
+      "file": "NEGCON07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "deep_pit",
+        "evidence": "露天深沟开挖，工人在沟内作业，沟边无临边防护护栏或警示设施",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "0484709e13eb2176a261724ea97705dc8426b3785da070d1e0a018da0f478c5b",
+      "file": "NEGDEE04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "deep_pit",
+        "evidence": "深基坑开挖现场，坑底积水，边缘未见防护栏杆",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "1b0eeb22ec920e7e6560b8231a4da5749cd438a7b7b81cf447d1eb97ef3ba414",
+      "file": "NEGSCA01.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "教学幻灯片展示脚手架规范搭设要求，画面无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "8862f3df1138b8e3c73eeecd045e2b2032163e0048c15e16a3fe9265af6b84ce",
+      "file": "NEGCON02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面为安全检查标准书籍，无城市现场隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d76deb66ac0c909b3207e55493c78676c5cf82515bce65f1997ce67142d1ca59",
+      "file": "NEGDEE08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "deep_pit",
+        "evidence": "道路旁深长基坑开挖，临边无防护栏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "6864b7deb8bda1223e09c10dffa06c0693f7ec1fa31479e5ff6cd44e13bb78d0",
+      "file": "NEGSCA03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "示意图展示规范脚手架防护，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "2c1246da0d934bc4f85b164e6de8c47a3247f8cb0cdbbae69d04cea7bbe1f20e",
+      "file": "NEGDEE07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "construction",
+        "subcategory": "deep_pit",
+        "evidence": "道路旁开挖深长基坑，坑口未见临边防护栏杆",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "b6ce6bb268e5d27542a93a3a3f6f550f767378583761b9f02df7611b3ba98294",
+      "file": "NEGELE02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯正常显示楼层，无困人/停运/超期未检等可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "a07b33fc17d4320cb5b99a60ebbc4f0ee67edf9b45a52e2aac6f373ac47afc40",
+      "file": "NEGELE02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "画面中电梯外观完整无可见损坏故障",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d592b3f95d2eaf8a2e08a808b8ca8047aa0b7f1c517e769748979d028e1d7137",
+      "file": "NEGELE07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "555293e235f8b252ced091d9f60e50b3806a7ee13e740d0deeb134f25390d771",
+      "file": "NEGELE08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯门关闭正常，屏幕亮起，无可见异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3d67a4409aad89815a94cd3bb06431566db10d2b9eaa48140632ea90d58373d4",
+      "file": "NEGELE05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯楼层显示屏正常，无困人或停运迹象",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "84e7bdba48ca820a5100ebe70a235de27278dc397f3c2a2e1e7f804dc122bde1",
+      "file": "NEGELE06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯楼层显示正常亮起，轿厢完好，无可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+      "file": "NEGELE03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯按钮面板正常，18层已亮灯",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "74b495180eb609d1079632b8ec5c0adeb10b17ab614db658e1f3a8d50bf40369",
+      "file": "NEGELE07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "卡通插画标题电梯知识解读，无真实隐患场景",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "cdb99f32dfac87bb075f4d9a9d47e585cbb47c1a2c0e722e8d02d817e0800a4b",
+      "file": "NEGELE06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "电梯门关闭外观完好，无可见异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "3cdb629df3d3cef64d312c8581b7dcf9d97e2f90bd2a785adae177ae8db5e1c2",
+      "file": "NEGGAR02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "道路正常通行，无明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "9709c41dfb0d69b27065b6c3f4316e3cf3414510018454b02087f5ff8e2ad13a",
+      "file": "NEGSEW05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "地面存放的新型排水沟构件，完好无损坏",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "011fc89893892aa0f4ae743f366caefffa1f01762856409fdeba12f705a2c354",
+      "file": "NEGGAR08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "道路整洁，无占道、损坏或堆积等可见隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "34f0b73f7fbde8a30c14ee554d8388fa7998f043d8a9b07f4f394b53e8d648d6",
+      "file": "NEGGAR06.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "9cd5ae6b6b18ba4c9c01e599081bda765ab36eb582b3a4ca95b82e66a86b251d",
+      "file": "NEGSEW08.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "28e949760dea6298638127bf4908ce0b360060b143d5515ef562de7cfa92edf6",
+      "file": "NEGGAR03.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "道路整洁无占道无损坏无积水",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "1afa27e2b63ec3fb5b8255b6a69a4d5af76d6b98982750d64499561e83425783",
+      "file": "NEGSEW02.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "排水沟格栅完整无破损，路面无积水等异常",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "284f9bd4ce768a8451dcc0c1be39d30f63f1bb1b8e15405cd478698746f10a34",
+      "file": "NEGGAR04.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "道路整洁，车辆停放于划定车位内，无明显隐患",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "d683a89d152757bfcfb7bca165bc806fe58c6162467105ff51782520c5b8a317",
+      "file": "NEGGAR07.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": true,
+        "uncertain": false,
+        "major_category": "traffic",
+        "subcategory": "",
+        "evidence": "多辆电动车停放在人行道盲道上，占用盲道通行空间",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    },
+    {
+      "sha256": "da19822e39a0d00cee0fdcbac76109d4487047d4ac4695d3b320905d6312d15e",
+      "file": "NEGGAR05.jpg",
+      "label": {
+        "status": "valid",
+        "has_hazard": false,
+        "uncertain": false,
+        "major_category": "",
+        "subcategory": "",
+        "evidence": "人行道整洁无明显隐患，花箱为装饰性设施",
+        "label_source": "model_consensus",
+        "annotation_models": [
+          "A",
+          "B"
+        ]
+      }
+    }
+  ],
+  "annotators": {
+    "A": "mimo-v2.6-flash",
+    "B": "glm-5.3-flash",
+    "provider": "opendesign",
+    "temperature": 0.0,
+    "prompt_sha256": "6ee868659b4075174913e8ed6688cbd211379241c13916bd97757dfba6f44482",
+    "created_at": "2026-11-06T14:32:12.023856+00:00"
+  }
+}

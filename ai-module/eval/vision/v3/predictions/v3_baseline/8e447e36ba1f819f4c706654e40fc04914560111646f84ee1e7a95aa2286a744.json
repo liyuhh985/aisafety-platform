@@ -1,0 +1,28 @@
+{
+  "sha256": "8e447e36ba1f819f4c706654e40fc04914560111646f84ee1e7a95aa2286a744",
+  "file": "hazmat_storage_3_8e447e36ba1f.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"仓库或简易棚下密集多层堆叠大量金属桶，桶体有油污，标签疑似化工品或溶剂，现场未见防泄漏托盘、分区隔离及明显危化品警示，若桶内为易燃有毒物料，存在泄漏、火灾爆炸和人员中毒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"仓库或简易棚内桶装物料堆放区\",\n  \"rectification\": [\n    \"立即核实桶内物料名称、数量及危险性，查阅MSDS并建立台账\",\n    \"按危化品属性分区分类存放，设置防泄漏托盘或围堰，控制堆高并加固\",\n    \"完善通风、防火防爆和禁火措施，设置危化品警示标识并配备适用灭火器材\",\n    \"对不明或废弃物料交由有资质单位安全处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "仓库或简易棚下密集多层堆叠大量金属桶，桶体有油污，标签疑似化工品或溶剂，现场未见防泄漏托盘、分区隔离及明显危化品警示，若桶内为易燃有毒物料，存在泄漏、火灾爆炸和人员中毒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "仓库或简易棚内桶装物料堆放区",
+    "rectification": [
+      "立即核实桶内物料名称、数量及危险性，查阅MSDS并建立台账",
+      "按危化品属性分区分类存放，设置防泄漏托盘或围堰，控制堆高并加固",
+      "完善通风、防火防爆和禁火措施，设置危化品警示标识并配备适用灭火器材",
+      "对不明或废弃物料交由有资质单位安全处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,7 +1,7 @@
-"""分类评测：understand 节点在 32 个小类上的判定准确率。
+"""分类评测：understand 节点在 29 个小类上的判定准确率。
 
 数据源直接 import eval_queries，避免查询集漂移：
-  QUERY_SET    64 条（32 小类 x 2 种问法：explicit / colloquial）
+  QUERY_SET    58 条（29 小类 x 2 种问法：explicit / colloquial，v2a 独立口径）
   NEGATIVE_SET 10 条（真无关，期望被范围护栏拦下）
 
 链路走真实图节点 core.assistant_graph.understand(state)，再跑 scope_guard
