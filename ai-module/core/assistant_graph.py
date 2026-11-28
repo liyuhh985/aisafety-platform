@@ -624,6 +624,36 @@ def _active_issues(focus, in_major) -> list:
     return out
 
 
+def _merge_previous_issues(current_issues, previous_issues, locked_majors,
+                           category_slots, correction: bool=False) -> list:
+    """Keep previously active issues when the planner omits one on a later turn."""
+    if correction:
+        return list(current_issues)
+    out = list(current_issues)
+    seen = {
+        str((issue or {}).get("subcategory_code") or "")
+        for issue in current_issues
+        if (issue or {}).get("subcategory_code")
+    }
+    for issue in previous_issues or []:
+        code = str((issue or {}).get("subcategory_code") or "")
+        if not code or code in seen:
+            continue
+        major = SUBCATEGORY_TO_MAJOR.get(code) or str((issue or {}).get("major_code") or "")
+        if locked_majors and major not in locked_majors:
+            continue
+        carried = dict(issue)
+        carried["major_code"] = major
+        carried["slots"] = dict(
+            (category_slots or {}).get(code) or carried.get("slots") or {}
+        )
+        out.append(carried)
+        seen.add(code)
+        if len(out) >= MAX_ACTIVE_HAZARDS:
+            break
+    return out
+
+
 def skill_route(state: AssistantState) -> dict:
     """Choose active hazard-major Skills before this turn's fact extraction."""
     selected = _major_codes(state.get("selected_major_codes") or [])
@@ -841,6 +871,13 @@ def understand(state: AssistantState, config=None) -> dict:
                  "subcategory_code": locked_subcategory,
                  "slots": dict((state.get("category_slots") or {}).get(locked_subcategory) or {})}
     issues = _active_issues(focus, in_major)
+    issues = _merge_previous_issues(
+        issues,
+        state.get("issues") or [],
+        locked_majors,
+        state.get("category_slots") or {},
+        correction=correction,
+    )
 
     if out_of_major:
         _emit_chunk(_scope_notice(

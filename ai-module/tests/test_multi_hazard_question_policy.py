@@ -97,6 +97,35 @@ def test_focus_complete_non_focus_missing_is_not_sent_to_search():
     assert "请确认" not in out["question"]
 
 
+def test_previous_active_issue_survives_when_planner_omits_it(monkeypatch):
+    state = _multi_state()
+    state["messages"] = [ag.HumanMessage(content="消防通道这次是长期占用")]
+    state["issues"][1]["slots"] = {"occupancy": "有人居住"}
+    state["issues"][1]["missing"] = ["structure"]
+    state["category_slots"]["dangerous_building"] = {"occupancy": "有人居住"}
+    plan = {
+        "ok": True,
+        "intent": "report_hazard",
+        "risk_level": "high",
+        "issues": [{
+            "major_code": "fire",
+            "subcategory_code": "fire_lane_blocked",
+            "slots": {"blocker": "私家车", "persistence": "长期"},
+        }],
+        "categories": ["fire_lane_blocked"],
+        "category_slots": {"fire_lane_blocked": {"blocker": "私家车", "persistence": "长期"}},
+        "question": "",
+        "answer": "",
+        "needs_search": True,
+    }
+    monkeypatch.setattr(ag, "_understand_plan", lambda *a, **k: plan)
+    out = ag.understand(state)
+    assert [issue["subcategory_code"] for issue in out["issues"]] == [
+        "fire_lane_blocked", "dangerous_building"
+    ]
+    assert "dangerous_building_structure" in out["missing"]
+
+
 def test_understand_stop_phrase_with_missing_slot_stays_out_of_search(monkeypatch):
     plan = {
         "ok": True,
