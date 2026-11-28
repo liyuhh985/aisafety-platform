@@ -1,0 +1,27 @@
+{
+  "sha256": "c536197a6560a4b08b73d52d9f43a7f5cc6f40394c1e569077c1b9387c99dd76",
+  "file": "temporary_power_1_c536197a6560.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"大量线缆杂乱缠绕并散落于狭窄通道地面，未使用桥架、线槽或理线设施，接头与线缆无序堆放，通道被占用。易造成人员绊倒，线缆被踩踏破损、接头松脱，存在短路、火灾及通信中断风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内狭窄通道/机柜或弱电间地面\",\n  \"rectification\": [\n    \"由专业人员清理废弃线缆，按强弱电和业务类型分类整理。\",\n    \"使用桥架、线槽或理线架规范敷设并绑扎、挂牌标识，确保接头绝缘可靠。\",\n    \"清理通道并保持检修空间畅通，整改后复查线缆绝缘及运行状态。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "大量线缆杂乱缠绕并散落于狭窄通道地面，未使用桥架、线槽或理线设施，接头与线缆无序堆放，通道被占用。易造成人员绊倒，线缆被踩踏破损、接头松脱，存在短路、火灾及通信中断风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内狭窄通道/机柜或弱电间地面",
+    "rectification": [
+      "由专业人员清理废弃线缆，按强弱电和业务类型分类整理。",
+      "使用桥架、线槽或理线架规范敷设并绑扎、挂牌标识，确保接头绝缘可靠。",
+      "清理通道并保持检修空间畅通，整改后复查线缆绝缘及运行状态。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

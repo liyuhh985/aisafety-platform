@@ -1,0 +1,27 @@
+{
+  "sha256": "1e479fe168f0a7f5198902bf1c4db067c80e28a69843ca76b23d544045f3c8c4",
+  "file": "no_barrier_2_1e479fe168f0.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"高架桥下施工土方堆紧邻人行铺装广场，仅用低矮铁马简单围挡，围挡不连续且高度不足，裸土未覆盖，行人易误入，存在扬尘、土体滑塌及绊倒掩埋风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"高架桥下、人行铺装广场旁的土方堆放处\",\n  \"rectification\": [\n    \"立即设置连续、稳固的硬质围挡，封闭施工区域并留出安全通道。\",\n    \"对裸露土方进行覆盖或洒水降尘，清理散落渣土。\",\n    \"增设明显的安全警示标志和夜间警示灯，禁止行人进入。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "高架桥下施工土方堆紧邻人行铺装广场，仅用低矮铁马简单围挡，围挡不连续且高度不足，裸土未覆盖，行人易误入，存在扬尘、土体滑塌及绊倒掩埋风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "高架桥下、人行铺装广场旁的土方堆放处",
+    "rectification": [
+      "立即设置连续、稳固的硬质围挡，封闭施工区域并留出安全通道。",
+      "对裸露土方进行覆盖或洒水降尘，清理散落渣土。",
+      "增设明显的安全警示标志和夜间警示灯，禁止行人进入。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

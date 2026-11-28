@@ -1,0 +1,27 @@
+{
+  "sha256": "99953de737c925dabea24384cf47c6305eeb970f5fad612ab06b03b4f7d8b92f",
+  "file": "neg_17_99953de737c9.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"深基坑内有多台挖掘机作业，基坑边坡高陡，边缘未见连续防护栏杆、安全警示或可靠临边防护，存在人员坠落及土体坍塌风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"深基坑开挖区域及基坑边坡\",\"rectification\":[\"按专项施工方案落实基坑支护和放坡，严禁超挖\",\"沿基坑临边设置连续、牢固的防护栏杆和安全警示标志\",\"加强基坑边坡变形监测，发现裂缝、渗水或坍塌征兆立即停工撤人\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "深基坑内有多台挖掘机作业，基坑边坡高陡，边缘未见连续防护栏杆、安全警示或可靠临边防护，存在人员坠落及土体坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "深基坑开挖区域及基坑边坡",
+    "rectification": [
+      "按专项施工方案落实基坑支护和放坡，严禁超挖",
+      "沿基坑临边设置连续、牢固的防护栏杆和安全警示标志",
+      "加强基坑边坡变形监测，发现裂缝、渗水或坍塌征兆立即停工撤人"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

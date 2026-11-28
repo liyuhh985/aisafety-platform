@@ -1,0 +1,29 @@
+{
+  "sha256": "082b4403cc4340d9317884e0bbec108053a294c8e2a80050a159c607d0ebc0b0",
+  "file": "confined_space_2_082b4403cc43.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"confined_space\",\"severity\":\"高\",\"description\":\"井盖被移开露出井口，一名穿工装人员正弯腰靠近井口查看，现场未见围挡、警示标志、通风检测设备、三脚架或安全带，存在人员坠落及有限空间中毒窒息风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"房屋前地面井口处\",\"rectification\":[\"立即停止靠近井口的作业，设置硬质围挡和醒目警示标志\",\"有限空间作业须履行审批，先通风、检测，并配备监护人员和三脚架、安全带等防护装备\",\"作业结束后及时复位井盖或采取可靠临时封闭措施\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "confined_space",
+    "severity": "高",
+    "description": "井盖被移开露出井口，一名穿工装人员正弯腰靠近井口查看，现场未见围挡、警示标志、通风检测设备、三脚架或安全带，存在人员坠落及有限空间中毒窒息风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "房屋前地面井口处",
+    "rectification": [
+      "立即停止靠近井口的作业，设置硬质围挡和醒目警示标志",
+      "有限空间作业须履行审批，先通风、检测，并配备监护人员和三脚架、安全带等防护装备",
+      "作业结束后及时复位井盖或采取可靠临时封闭措施"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

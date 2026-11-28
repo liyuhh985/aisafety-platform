@@ -1,0 +1,23 @@
+{
+  "sha256": "cd5915f3dc6359b88d1d14ba6fc70577f6ef19b3cf7004c1a3640a65c003414f",
+  "file": "neg_01_cd5915f3dc63.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为雕像基座、建筑外墙、围栏及自行车停放区域，未见井盖破损、路面塌陷、消防通道堵塞、电线裸露等明显安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为雕像基座、建筑外墙、围栏及自行车停放区域，未见井盖破损、路面塌陷、消防通道堵塞、电线裸露等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

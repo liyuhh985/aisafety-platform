@@ -1,0 +1,27 @@
+{
+  "sha256": "35028295f4d7e969c4b5d50aeda34337b5476c51e5769d5d2e58ca2fc58e55e1",
+  "file": "sewage_odor_1_35028295f4d7.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"沟渠水体发黑浑浊，水面漂浮大量垃圾、枯枝和藻类，岸边也有散落垃圾，易滋生蚊蝇、产生异味并污染周边环境，也可能影响沟渠排水。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城郊排水沟渠，电线杆附近及沟渠水面\",\"rectification\":[\"清理沟渠内及岸边漂浮垃圾和散落垃圾\",\"清淤疏浚沟渠，保持排水通畅\",\"排查沿线污水和垃圾倾倒来源，设置禁止倾倒标识并加强日常巡查\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "沟渠水体发黑浑浊，水面漂浮大量垃圾、枯枝和藻类，岸边也有散落垃圾，易滋生蚊蝇、产生异味并污染周边环境，也可能影响沟渠排水。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城郊排水沟渠，电线杆附近及沟渠水面",
+    "rectification": [
+      "清理沟渠内及岸边漂浮垃圾和散落垃圾",
+      "清淤疏浚沟渠，保持排水通畅",
+      "排查沿线污水和垃圾倾倒来源，设置禁止倾倒标识并加强日常巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "0e7f17d137be42cfc25de56108ad5d7dc74ae783056c2b8cd1e4ca7d41d9354c",
+  "file": "illegal_structure_2_0e7f17d137be.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"建筑顶层露台栏杆边密集摆放盆栽，且外墙窗户处有灰色篷布/布料悬挂，未见可靠防坠固定；遇大风或外力可能坠落，危及楼下行人、车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑顶层露台栏杆及窗户外侧\",\n  \"rectification\": [\n    \"将栏杆边缘花盆移入室内或移至安全区域，并采取固定、防坠措施。\",\n    \"拆除或加固悬挂篷布，检查外挂物固定情况，必要时设置防坠网。\",\n    \"加强楼顶露台日常巡查，大风天气前清理易坠物。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "建筑顶层露台栏杆边密集摆放盆栽，且外墙窗户处有灰色篷布/布料悬挂，未见可靠防坠固定；遇大风或外力可能坠落，危及楼下行人、车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑顶层露台栏杆及窗户外侧",
+    "rectification": [
+      "将栏杆边缘花盆移入室内或移至安全区域，并采取固定、防坠措施。",
+      "拆除或加固悬挂篷布，检查外挂物固定情况，必要时设置防坠网。",
+      "加强楼顶露台日常巡查，大风天气前清理易坠物。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

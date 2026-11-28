@@ -1,0 +1,29 @@
+{
+  "sha256": "5e7e6463a1b1adc5b826a520416c6bbf4e4d76799dc33121a49a3bc81df8b077",
+  "file": "illegal_structure_1_5e7e6463a1b1.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"高\",\n  \"description\": \"建筑外墙和电表箱周边存在大量未穿管、凌乱低垂并相互缠绕的线缆，疑似私拉乱接，紧邻行人通道和易燃棚布，易发生触电、短路及火灾。旁边用黑色塑料布搭设的棚体占压巷道，材料易燃且妨碍通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"狭窄巷道建筑外墙、电表箱及黑色棚体周边\",\n  \"rectification\": [\n    \"立即排查并拆除违规私接线路，由专业单位对线缆规范整理、穿管并固定，消除低垂缠绕。\",\n    \"拆除或整改巷道内黑色塑料布棚体等违规搭建，恢复通道宽度和通行安全。\",\n    \"加强日常巡查，发现私拉乱接和占道搭建及时处置。\"\n  ],\n  \"secondary_subcategories\": [\n    \"illegal_structure\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "建筑外墙和电表箱周边存在大量未穿管、凌乱低垂并相互缠绕的线缆，疑似私拉乱接，紧邻行人通道和易燃棚布，易发生触电、短路及火灾。旁边用黑色塑料布搭设的棚体占压巷道，材料易燃且妨碍通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "狭窄巷道建筑外墙、电表箱及黑色棚体周边",
+    "rectification": [
+      "立即排查并拆除违规私接线路，由专业单位对线缆规范整理、穿管并固定，消除低垂缠绕。",
+      "拆除或整改巷道内黑色塑料布棚体等违规搭建，恢复通道宽度和通行安全。",
+      "加强日常巡查，发现私拉乱接和占道搭建及时处置。"
+    ],
+    "secondary_subcategories": [
+      "illegal_structure"
+    ]
+  },
+  "error": ""
+}

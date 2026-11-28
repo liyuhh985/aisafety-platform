@@ -1,0 +1,27 @@
+{
+  "sha256": "5b2ced98f291dc2655af2c0e39036545132c1e19030b864e1ddba6e61ca76e80",
+  "file": "illegal_wiring_1_5b2ced98f291.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"高\",\"description\":\"建筑外墙及窗外大量线缆杂乱缠绕、成卷悬垂，部分用扎带或铁丝固定，存在私拉乱接、线路受力磨损风险，可能引发短路、火灾或线缆坠落伤人。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙及窗外线缆密集悬挂处\",\"rectification\":[\"由供电、通信等产权单位排查并清理废弃线缆，拆除违规私接线缆\",\"对在用线缆进行规整、套管保护并可靠固定，避免悬垂受力\",\"设置线缆标识和定期巡检，发现绝缘破损、松脱及时处理\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "建筑外墙及窗外大量线缆杂乱缠绕、成卷悬垂，部分用扎带或铁丝固定，存在私拉乱接、线路受力磨损风险，可能引发短路、火灾或线缆坠落伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙及窗外线缆密集悬挂处",
+    "rectification": [
+      "由供电、通信等产权单位排查并清理废弃线缆，拆除违规私接线缆",
+      "对在用线缆进行规整、套管保护并可靠固定，避免悬垂受力",
+      "设置线缆标识和定期巡检，发现绝缘破损、松脱及时处理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

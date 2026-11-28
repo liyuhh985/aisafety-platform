@@ -1,0 +1,26 @@
+{
+  "sha256": "25cb633a6d197646d6df1921e6658154561b1069742e64daf6af770ea540a3a9",
+  "file": "dangerous_building_1_25cb633a6d19.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"建筑安全\",\"major_category\":\"building\",\"subcategory\":\"dangerous_building\",\"severity\":\"高\",\"description\":\"白色墙体明显污损，右侧可见土石、混凝土构件坍塌或滑落迹象，现场仅张贴“此处危险 请勿逗留”告示，未设硬质围挡，存在墙体或护坡失稳、落石伤人的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"白色墙体及右侧坍塌土石区域\",\"rectification\":[\"立即在危险区域周边设置硬质围挡和警戒线，禁止人员靠近逗留。\",\"组织专业机构排查墙体及护坡结构安全，清理松散土石并加固、维修或拆除危险部位。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "白色墙体明显污损，右侧可见土石、混凝土构件坍塌或滑落迹象，现场仅张贴“此处危险 请勿逗留”告示，未设硬质围挡，存在墙体或护坡失稳、落石伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "白色墙体及右侧坍塌土石区域",
+    "rectification": [
+      "立即在危险区域周边设置硬质围挡和警戒线，禁止人员靠近逗留。",
+      "组织专业机构排查墙体及护坡结构安全，清理松散土石并加固、维修或拆除危险部位。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

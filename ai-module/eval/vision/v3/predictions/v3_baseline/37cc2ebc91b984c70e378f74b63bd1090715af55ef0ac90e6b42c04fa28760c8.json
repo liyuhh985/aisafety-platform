@@ -1,0 +1,29 @@
+{
+  "sha256": "37cc2ebc91b984c70e378f74b63bd1090715af55ef0ac90e6b42c04fa28760c8",
+  "file": "illegal_structure_1_37cc2ebc91b9.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"施工现场楼层/平台临边开口处未见连续防护栏杆，地面砖块、管材杂乱堆放，存在人员坠落及物料坠落、绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑施工现场临边开口及砖堆区域\",\n  \"rectification\": [\n    \"在临边开口设置符合要求的防护栏杆、安全网和挡脚板\",\n    \"砖块、管材分类稳固堆放并清理通道\",\n    \"增设安全警示标志，加强现场巡查\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "施工现场楼层/平台临边开口处未见连续防护栏杆，地面砖块、管材杂乱堆放，存在人员坠落及物料坠落、绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑施工现场临边开口及砖堆区域",
+    "rectification": [
+      "在临边开口设置符合要求的防护栏杆、安全网和挡脚板",
+      "砖块、管材分类稳固堆放并清理通道",
+      "增设安全警示标志，加强现场巡查"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

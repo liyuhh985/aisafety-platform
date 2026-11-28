@@ -1,0 +1,27 @@
+{
+  "sha256": "dc1bf1e5416fa8537a1861facfb2d5df7a9620593700891ab056231038ff9e78",
+  "file": "elevator_inspection_2_dc1bf1e5416f.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_inspection\",\n  \"severity\": \"高\",\n  \"description\": \"电梯内公示的检验证书签发日期为1997年9月11日，明显超期，未见近期检验合格标志，存在电梯未按规定定期检验仍继续运行的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电梯轿厢内公示栏\",\n  \"rectification\": [\n    \"立即核实电梯当前检验状态，超期未检应停用\",\n    \"联系检验机构安排定期检验并取得合格标志\",\n    \"更新电梯内公示的有效检验证书和合格标志\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_inspection",
+    "severity": "高",
+    "description": "电梯内公示的检验证书签发日期为1997年9月11日，明显超期，未见近期检验合格标志，存在电梯未按规定定期检验仍继续运行的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢内公示栏",
+    "rectification": [
+      "立即核实电梯当前检验状态，超期未检应停用",
+      "联系检验机构安排定期检验并取得合格标志",
+      "更新电梯内公示的有效检验证书和合格标志"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

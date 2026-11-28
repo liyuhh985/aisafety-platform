@@ -1,0 +1,27 @@
+{
+  "sha256": "0464e8f9b18c87d901078ea571c3db37eb327478745b6b49e62e5484d88e8462",
+  "file": "other_1_0464e8f9b18c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"公园长椅右侧混凝土支撑柱断裂并与底座分离，内部钢筋裸露锈蚀，长椅结构失稳。人员倚坐或碰撞时可能倾倒、砸伤。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"公园步道旁绿色长椅右侧混凝土支撑柱\",\n  \"rectification\": [\n    \"立即设置警示并停用该长椅\",\n    \"维修或更换损坏的支撑柱并加固连接\",\n    \"排查相邻长椅的固定和锈蚀情况\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "公园长椅右侧混凝土支撑柱断裂并与底座分离，内部钢筋裸露锈蚀，长椅结构失稳。人员倚坐或碰撞时可能倾倒、砸伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "公园步道旁绿色长椅右侧混凝土支撑柱",
+    "rectification": [
+      "立即设置警示并停用该长椅",
+      "维修或更换损坏的支撑柱并加固连接",
+      "排查相邻长椅的固定和锈蚀情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,29 @@
+{
+  "sha256": "6905810a2cd3d39d820861ab2e4cdb2a49632ca0d4ae661ce01ebe62ca940c46",
+  "file": "sewage_odor_2_6905810a2cd3.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"sewage_odor\",\"severity\":\"中\",\"description\":\"河道水体发黑，水面漂浮大量污物和浮沫，岸边有垃圾杂物堆积，疑似污水直排或水体黑臭，可能污染环境、滋生蚊虫并影响居民健康。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"村内河道/水渠水面及两岸\",\"rectification\":[\"清理水面漂浮物和岸边垃圾杂物\",\"排查沿岸排污口，实施截污纳管和污染源整治\",\"开展清淤、活水循环并建立河道日常保洁与水质监测机制\"],\"secondary_subcategories\":[\"garbage_pile\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "sewage_odor",
+    "severity": "中",
+    "description": "河道水体发黑，水面漂浮大量污物和浮沫，岸边有垃圾杂物堆积，疑似污水直排或水体黑臭，可能污染环境、滋生蚊虫并影响居民健康。",
+    "reason_if_no_hazard": "",
+    "location_hint": "村内河道/水渠水面及两岸",
+    "rectification": [
+      "清理水面漂浮物和岸边垃圾杂物",
+      "排查沿岸排污口，实施截污纳管和污染源整治",
+      "开展清淤、活水循环并建立河道日常保洁与水质监测机制"
+    ],
+    "secondary_subcategories": [
+      "garbage_pile"
+    ]
+  },
+  "error": ""
+}

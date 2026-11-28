@@ -1,0 +1,23 @@
+{
+  "sha256": "3a131aaa6399d07c0253d5bb18181d88db8de292878672993411540077952e55",
+  "file": "ebike_hazard_2_3a131aaa6399.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面显示电动车在室外墙边停放，灭火器箱标识完好且未被完全遮挡，未见飞线充电、消防通道堵塞、设施损坏或其他明确安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面显示电动车在室外墙边停放，灭火器箱标识完好且未被完全遮挡，未见飞线充电、消防通道堵塞、设施损坏或其他明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

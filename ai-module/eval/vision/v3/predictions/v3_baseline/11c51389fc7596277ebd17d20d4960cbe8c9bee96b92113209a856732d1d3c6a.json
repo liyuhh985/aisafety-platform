@@ -1,0 +1,30 @@
+{
+  "sha256": "11c51389fc7596277ebd17d20d4960cbe8c9bee96b92113209a856732d1d3c6a",
+  "file": "no_warning_4_11c51389fc75.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"人工开挖沟槽周边未设置连续围挡或临边防护，也无明显安全警示标志，人员靠近沟边作业，存在跌落、崴伤及土体坍塌风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"泥土地面人工开挖沟槽处及沟槽边缘\",\n  \"rectification\": [\n    \"在沟槽四周设置连续围挡或临时护栏\",\n    \"增设安全警示标志，夜间加设警示灯\",\n    \"根据土质和深度采取放坡、支撑等防坍塌措施\",\n    \"施工完成后及时回填或覆盖沟槽\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "人工开挖沟槽周边未设置连续围挡或临边防护，也无明显安全警示标志，人员靠近沟边作业，存在跌落、崴伤及土体坍塌风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "泥土地面人工开挖沟槽处及沟槽边缘",
+    "rectification": [
+      "在沟槽四周设置连续围挡或临时护栏",
+      "增设安全警示标志，夜间加设警示灯",
+      "根据土质和深度采取放坡、支撑等防坍塌措施",
+      "施工完成后及时回填或覆盖沟槽"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

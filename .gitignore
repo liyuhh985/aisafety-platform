@@ -120,3 +120,9 @@ ai-module/db/question_source.txt
 
 # 个人简历/面试材料
 /output/
+
+# v3 视觉评测原始图片与本地审核产物（体积 >500MB，不入库）
+ai-module/eval/vision/v3/candidates_raw/
+ai-module/eval/vision/v3/frozen_images/
+ai-module/eval/vision/v3/images/
+ai-module/eval/vision/v3/previews/

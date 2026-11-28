@@ -1,0 +1,27 @@
+{
+  "sha256": "eb7c1daacf3eaf716db3cba7e1d57213a696dc373a48d80022a98078ce310ef4",
+  "file": "no_warning_1_eb7c1daacf3e.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"中\",\n  \"description\": \"现场砖块等施工材料大量堆放在通行区域，黄色围挡倒伏未形成连续有效隔离，防尘布散落地面，易造成行人绊倒、磕碰，砖垛受碰撞存在倾倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼前院内通道，砖堆与倒伏黄色围挡旁\",\n  \"rectification\": [\n    \"沿施工材料堆放区设置连续、稳固的围挡，并修复倒伏护栏\",\n    \"砖块分类码放并控制堆高，覆盖防尘布，及时清理散落物\",\n    \"在作业区周边增设醒目的安全警示标志，保障通行空间\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "中",
+    "description": "现场砖块等施工材料大量堆放在通行区域，黄色围挡倒伏未形成连续有效隔离，防尘布散落地面，易造成行人绊倒、磕碰，砖垛受碰撞存在倾倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼前院内通道，砖堆与倒伏黄色围挡旁",
+    "rectification": [
+      "沿施工材料堆放区设置连续、稳固的围挡，并修复倒伏护栏",
+      "砖块分类码放并控制堆高，覆盖防尘布，及时清理散落物",
+      "在作业区周边增设醒目的安全警示标志，保障通行空间"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "95108c1bd01cb1cf969e67767b9fcdf2db0832b2db05a7eb8385f1e00a8663c5",
+  "file": "blind_path_occupied_1_95108c1bd01c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"中\",\n  \"description\": \"白墙存在明显竖向裂缝和顶部开裂，局部抹灰层空鼓、剥落，墙根有水渍霉变；墙面紧邻盲道和人行通道，抹灰块或墙皮脱落可能砸伤行人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"白墙墙面、墙根及盲道尽头旁\",\n  \"rectification\": [\n    \"铲除空鼓、开裂的抹灰层，重新修补并做好防水处理\",\n    \"对墙体裂缝进行观测和结构鉴定，必要时加固\",\n    \"施工期间设置围挡和警示标志，防止落物伤人\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "中",
+    "description": "白墙存在明显竖向裂缝和顶部开裂，局部抹灰层空鼓、剥落，墙根有水渍霉变；墙面紧邻盲道和人行通道，抹灰块或墙皮脱落可能砸伤行人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "白墙墙面、墙根及盲道尽头旁",
+    "rectification": [
+      "铲除空鼓、开裂的抹灰层，重新修补并做好防水处理",
+      "对墙体裂缝进行观测和结构鉴定，必要时加固",
+      "施工期间设置围挡和警示标志，防止落物伤人"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

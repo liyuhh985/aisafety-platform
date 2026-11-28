@@ -1,0 +1,27 @@
+{
+  "sha256": "0ef31e8fd5906c015e8650922355af8b65ce6d72f3778e6d32c6cf3eaa270a1b",
+  "file": "traffic_facility_damage_4_0ef31e8fd590.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"traffic_facility_damage\",\"severity\":\"中\",\"description\":\"人行道金属护栏横杆断裂脱开，端头裸露形成锐边和孔洞，护栏失去连续防护，行人倚靠或经过时可能被刮伤、绊倒，存在通行安全隐患。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道边缘金属护栏中段\",\"rectification\":[\"立即对断裂护栏进行修复或更换，消除裸露锐边\",\"修复前设置临时警示和隔离，防止行人靠近倚靠\",\"排查沿线同类护栏的固定和锈蚀情况\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "中",
+    "description": "人行道金属护栏横杆断裂脱开，端头裸露形成锐边和孔洞，护栏失去连续防护，行人倚靠或经过时可能被刮伤、绊倒，存在通行安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道边缘金属护栏中段",
+    "rectification": [
+      "立即对断裂护栏进行修复或更换，消除裸露锐边",
+      "修复前设置临时警示和隔离，防止行人靠近倚靠",
+      "排查沿线同类护栏的固定和锈蚀情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "603072944bf773c57eaea8ac7559eb4ba14c9037d685bb582e5361b0af05cddb",
+  "file": "sewage_odor_3_603072944bf7.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"中\",\n  \"description\": \"路边排水沟内积存发黑污水和污泥，沟槽边缘破损、杂草砖块堆积，白色排水管横跨沟槽，存在排水不畅、积水发臭及路缘进一步损坏风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路边缘排水沟处\",\n  \"rectification\": [\n    \"清理疏通排水沟内淤泥、污水和杂物，恢复排水能力\",\n    \"修复破损沟槽边缘，必要时加盖排水篦子\",\n    \"规范白色排水管接入方式，避免横跨沟槽造成堵塞或绊倒风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "路边排水沟内积存发黑污水和污泥，沟槽边缘破损、杂草砖块堆积，白色排水管横跨沟槽，存在排水不畅、积水发臭及路缘进一步损坏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘排水沟处",
+    "rectification": [
+      "清理疏通排水沟内淤泥、污水和杂物，恢复排水能力",
+      "修复破损沟槽边缘，必要时加盖排水篦子",
+      "规范白色排水管接入方式，避免横跨沟槽造成堵塞或绊倒风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

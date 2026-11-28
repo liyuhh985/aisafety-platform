@@ -1,0 +1,29 @@
+{
+  "sha256": "b4f987a7194df97db6170ba9f77439c59efd5ca0db9c52a9989c26e489a522ca",
+  "file": "neg_14_b4f987a7194d.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"高\",\n  \"description\": \"室内施工现场挖掘机开挖作业区未设置连续围挡或警戒隔离，工人站在铲斗附近，存在机械伤害风险；现场未见安全警示标志，易造成人员误入。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内钢结构厂房内挖掘机开挖作业区\",\n  \"rectification\": [\n    \"对开挖及机械作业区域设置连续硬质围挡和警戒线，禁止无关人员进入。\",\n    \"在挖掘机作业半径外设置警示牌、锥桶，并安排专人监护指挥。\",\n    \"加强作业人员与机械协调，保持安全距离，必要时停止作业后再进行测量。\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "室内施工现场挖掘机开挖作业区未设置连续围挡或警戒隔离，工人站在铲斗附近，存在机械伤害风险；现场未见安全警示标志，易造成人员误入。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内钢结构厂房内挖掘机开挖作业区",
+    "rectification": [
+      "对开挖及机械作业区域设置连续硬质围挡和警戒线，禁止无关人员进入。",
+      "在挖掘机作业半径外设置警示牌、锥桶，并安排专人监护指挥。",
+      "加强作业人员与机械协调，保持安全距离，必要时停止作业后再进行测量。"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,29 @@
+{
+  "sha256": "dcf871c78ac05dfe7b87f8eabba3c06f7932ce2580d22af3c6a01e938ac05c21",
+  "file": "distribution_box_fault_2_dcf871c78ac0.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"配电箱内部元件及导线有明显烧蚀、炭化痕迹，部分线缆绝缘层破损、铜线外露，存在短路、电弧及电气火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"配电箱/控制柜内部\",\"rectification\":[\"立即断电并设置警示，禁止非专业人员触碰\",\"由持证电工更换烧损元件、破损线缆及绝缘件\",\"检修后测试绝缘和接地，确认无短路隐患再恢复供电\"],\"secondary_subcategories\":[\"exposed_wire\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "配电箱内部元件及导线有明显烧蚀、炭化痕迹，部分线缆绝缘层破损、铜线外露，存在短路、电弧及电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "配电箱/控制柜内部",
+    "rectification": [
+      "立即断电并设置警示，禁止非专业人员触碰",
+      "由持证电工更换烧损元件、破损线缆及绝缘件",
+      "检修后测试绝缘和接地，确认无短路隐患再恢复供电"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "e237429723b30f2fe99d41833f64c27d526ef5570927d394f4a34fbdd0fe0ebe",
+  "file": "gas_leak_2_e237429723b3.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"other\",\"severity\":\"高\",\"description\":\"厂房外墙前大型架空管道出现大面积锈蚀、防腐层剥落，黄色修补/包覆处边缘不整并有流淌污渍，疑似保温层破损或介质渗漏；长期腐蚀可致管壁减薄、承压失效，存在泄漏、烫伤或结构坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"厂区外墙前架空大型管道中段（黄色修补处及锈蚀段）\",\"rectification\":[\"立即设置警戒并安排专业检测，重点检查腐蚀减薄、渗漏及支架受力。\",\"停用或降压后清除锈蚀和失效防腐层，按工艺规范修复保温、防腐与支撑。\",\"建立定期巡检和测厚记录，发现泄漏立即处置。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "高",
+    "description": "厂房外墙前大型架空管道出现大面积锈蚀、防腐层剥落，黄色修补/包覆处边缘不整并有流淌污渍，疑似保温层破损或介质渗漏；长期腐蚀可致管壁减薄、承压失效，存在泄漏、烫伤或结构坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厂区外墙前架空大型管道中段（黄色修补处及锈蚀段）",
+    "rectification": [
+      "立即设置警戒并安排专业检测，重点检查腐蚀减薄、渗漏及支架受力。",
+      "停用或降压后清除锈蚀和失效防腐层，按工艺规范修复保温、防腐与支撑。",
+      "建立定期巡检和测厚记录，发现泄漏立即处置。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

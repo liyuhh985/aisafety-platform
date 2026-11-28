@@ -1,0 +1,27 @@
+{
+  "sha256": "14624641ca19f322bf3b5b39b401bf4a88895191b089952c566f4ad9e88bfdee",
+  "file": "exposed_wire_1_14624641ca19.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"地面电缆绝缘层严重烧蚀、剥落，内部多股导线裸露，存在触电及短路起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中地面上的破损电缆处\",\n  \"rectification\": [\n    \"立即断开电源并隔离现场，设置警示，禁止人员触碰\",\n    \"由持证电工更换或修复破损线路，并做穿管保护\",\n    \"排查线路带电情况及破损原因，清理地面遗留线缆\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "地面电缆绝缘层严重烧蚀、剥落，内部多股导线裸露，存在触电及短路起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中地面上的破损电缆处",
+    "rectification": [
+      "立即断开电源并隔离现场，设置警示，禁止人员触碰",
+      "由持证电工更换或修复破损线路，并做穿管保护",
+      "排查线路带电情况及破损原因，清理地面遗留线缆"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

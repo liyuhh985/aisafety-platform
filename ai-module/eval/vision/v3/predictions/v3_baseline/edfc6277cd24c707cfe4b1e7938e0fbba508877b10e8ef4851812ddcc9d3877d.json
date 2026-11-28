@@ -1,0 +1,26 @@
+{
+  "sha256": "edfc6277cd24c707cfe4b1e7938e0fbba508877b10e8ef4851812ddcc9d3877d",
+  "file": "illegal_structure_4_edfc6277cd24.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"illegal_structure\",\n  \"severity\": \"中\",\n  \"description\": \"居民楼一层窗户下方擅自搭建蓝色金属棚屋，紧贴外墙且未见审批标识，可能占用疏散和通风空间，并影响建筑外观及周边安全；旁边靠墙玻璃存在倾倒破碎伤人风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼一层外墙窗户下方\",\n  \"rectification\": [\n    \"核查该金属棚屋是否取得规划审批，未批则依法拆除\",\n    \"清理棚屋周边堆物，固定或移走靠墙玻璃，保持通道畅通\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "illegal_structure",
+    "severity": "中",
+    "description": "居民楼一层窗户下方擅自搭建蓝色金属棚屋，紧贴外墙且未见审批标识，可能占用疏散和通风空间，并影响建筑外观及周边安全；旁边靠墙玻璃存在倾倒破碎伤人风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼一层外墙窗户下方",
+    "rectification": [
+      "核查该金属棚屋是否取得规划审批，未批则依法拆除",
+      "清理棚屋周边堆物，固定或移走靠墙玻璃，保持通道畅通"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

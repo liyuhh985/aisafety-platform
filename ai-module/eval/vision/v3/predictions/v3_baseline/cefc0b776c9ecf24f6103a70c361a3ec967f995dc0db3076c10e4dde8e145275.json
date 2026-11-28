@@ -1,0 +1,28 @@
+{
+  "sha256": "cefc0b776c9ecf24f6103a70c361a3ec967f995dc0db3076c10e4dde8e145275",
+  "file": "distribution_box_fault_1_cefc0b776c9e.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"墙面配电控制箱内接线杂乱，多根导线绝缘层缺失或端头铜线裸露，接触器等元件安装不规范，箱体未见可靠防护。易引发短路、触电及电气火灾。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"墙面配电控制箱内部及周边接线区域\",\"rectification\":[\"立即断电并设置警示，由持证电工按规范整理线路、恢复绝缘和端子防护。\",\"更换老化破损导线及故障元件，完善配电箱盖板、接地和漏电保护，整改后检测验收。\"],\"secondary_subcategories\":[\"exposed_wire\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "墙面配电控制箱内接线杂乱，多根导线绝缘层缺失或端头铜线裸露，接触器等元件安装不规范，箱体未见可靠防护。易引发短路、触电及电气火灾。",
+    "reason_if_no_hazard": "",
+    "location_hint": "墙面配电控制箱内部及周边接线区域",
+    "rectification": [
+      "立即断电并设置警示，由持证电工按规范整理线路、恢复绝缘和端子防护。",
+      "更换老化破损导线及故障元件，完善配电箱盖板、接地和漏电保护，整改后检测验收。"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

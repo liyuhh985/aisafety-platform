@@ -1,0 +1,27 @@
+{
+  "sha256": "50be7c014f81c17c1b4fda305329cef5dd45e1dd8b71718644d8fb50a01fa300",
+  "file": "manhole_damage_2_50be7c014f81.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"道路边缘的井盖中部严重破损，形成较大空洞并露出井内黑暗空间，周边有车辆轮胎经过，行人和骑行人员可能踏空坠落，车辆轮胎也可能卡入导致事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路边缘井盖处\",\n  \"rectification\": [\n    \"立即在破损井盖周围设置围挡和警示标志，禁止行人车辆靠近\",\n    \"尽快更换破损井盖并修复井座，确保承载稳固\",\n    \"排查周边井盖和路面空洞，消除同类次生风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "道路边缘的井盖中部严重破损，形成较大空洞并露出井内黑暗空间，周边有车辆轮胎经过，行人和骑行人员可能踏空坠落，车辆轮胎也可能卡入导致事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘井盖处",
+    "rectification": [
+      "立即在破损井盖周围设置围挡和警示标志，禁止行人车辆靠近",
+      "尽快更换破损井盖并修复井座，确保承载稳固",
+      "排查周边井盖和路面空洞，消除同类次生风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

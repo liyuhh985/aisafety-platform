@@ -1,0 +1,27 @@
+{
+  "sha256": "23813d1bb8b4e36fdb0608d1d74758ebeb75cee5d7fb1b01a98886e6093dd9d2",
+  "file": "neg_45_23813d1bb8b4.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"中\",\n  \"description\": \"人行道金属井盖表面存在明显孔洞破损，盖板边缘与地面间有缝隙且局部不平整。行人踩踏时可能卡脚、绊倒，存在通行安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道金属井盖处\",\n  \"rectification\": [\n    \"及时更换或修复破损井盖，确保盖面完整平整\",\n    \"在修复前设置警示标志或临时围挡，提醒行人绕行\",\n    \"排查周边井盖及盖板固定情况，防止类似问题\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "人行道金属井盖表面存在明显孔洞破损，盖板边缘与地面间有缝隙且局部不平整。行人踩踏时可能卡脚、绊倒，存在通行安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道金属井盖处",
+    "rectification": [
+      "及时更换或修复破损井盖，确保盖面完整平整",
+      "在修复前设置警示标志或临时围挡，提醒行人绕行",
+      "排查周边井盖及盖板固定情况，防止类似问题"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

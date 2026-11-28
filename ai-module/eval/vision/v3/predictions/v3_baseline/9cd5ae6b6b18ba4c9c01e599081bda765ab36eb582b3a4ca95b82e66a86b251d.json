@@ -1,0 +1,27 @@
+{
+  "sha256": "9cd5ae6b6b18ba4c9c01e599081bda765ab36eb582b3a4ca95b82e66a86b251d",
+  "file": "neg_56_9cd5ae6b6b18.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"中\",\n  \"description\": \"道路旁长条排水沟的黑色格栅盖板多处横条缺失、断裂、边缘翘起，形成较大缝隙；行人、自行车或轮椅经过时可能绊倒、卡入，存在人身伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道与机动车道之间的长条排水沟盖板处\",\n  \"rectification\": [\n    \"立即在破损区域设置警示锥和临时围挡，提醒行人车辆避让。\",\n    \"更换或修复缺失、断裂、翘起的排水沟格栅盖板，确保与路面平顺牢固。\",\n    \"对该路段同类盖板开展排查，及时处理松动、锈蚀和缺失问题。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "道路旁长条排水沟的黑色格栅盖板多处横条缺失、断裂、边缘翘起，形成较大缝隙；行人、自行车或轮椅经过时可能绊倒、卡入，存在人身伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道与机动车道之间的长条排水沟盖板处",
+    "rectification": [
+      "立即在破损区域设置警示锥和临时围挡，提醒行人车辆避让。",
+      "更换或修复缺失、断裂、翘起的排水沟格栅盖板，确保与路面平顺牢固。",
+      "对该路段同类盖板开展排查，及时处理松动、锈蚀和缺失问题。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

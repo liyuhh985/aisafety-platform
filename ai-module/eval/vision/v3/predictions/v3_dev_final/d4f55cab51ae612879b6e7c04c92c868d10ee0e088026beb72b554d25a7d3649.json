@@ -1,0 +1,27 @@
+{
+  "sha256": "d4f55cab51ae612879b6e7c04c92c868d10ee0e088026beb72b554d25a7d3649",
+  "file": "fire_equipment_fault_3_d4f55cab51ae.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室内消火栓手轮脱落、缺失，阀杆裸露，人员无法正常开启阀门；一旦发生火情将影响消火栓取水灭火，延误初期处置。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内消火栓箱内消火栓阀门处\",\n  \"rectification\": [\n    \"立即安装匹配的消火栓手轮并测试阀门启闭是否灵活有效\",\n    \"检查消火栓水带、接口及供水压力，确保完整可用\",\n    \"落实消防设施定期巡检，发现缺失损坏及时维修并记录\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室内消火栓手轮脱落、缺失，阀杆裸露，人员无法正常开启阀门；一旦发生火情将影响消火栓取水灭火，延误初期处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内消火栓箱内消火栓阀门处",
+    "rectification": [
+      "立即安装匹配的消火栓手轮并测试阀门启闭是否灵活有效",
+      "检查消火栓水带、接口及供水压力，确保完整可用",
+      "落实消防设施定期巡检，发现缺失损坏及时维修并记录"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

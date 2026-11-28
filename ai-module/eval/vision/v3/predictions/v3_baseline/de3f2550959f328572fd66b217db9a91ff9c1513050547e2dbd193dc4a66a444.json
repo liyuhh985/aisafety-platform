@@ -1,0 +1,27 @@
+{
+  "sha256": "de3f2550959f328572fd66b217db9a91ff9c1513050547e2dbd193dc4a66a444",
+  "file": "garbage_pile_4_de3f2550959f.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"老旧房屋木门前及周边地面大量废弃轮胎、塑料垃圾、碎石和枯枝杂草堆积，长期未清理，易滋生蚊虫、积水，存在绊倒、火灾及环境卫生隐患。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"老旧房屋木门前及周边地面\",\"rectification\":[\"清理并分类处置废旧轮胎、生活垃圾和枯枝杂草\",\"加强该区域日常保洁与巡查，设置禁止乱倒垃圾标识\",\"清理后检查门前地面及木门结构，排除其他安全风险\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "老旧房屋木门前及周边地面大量废弃轮胎、塑料垃圾、碎石和枯枝杂草堆积，长期未清理，易滋生蚊虫、积水，存在绊倒、火灾及环境卫生隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "老旧房屋木门前及周边地面",
+    "rectification": [
+      "清理并分类处置废旧轮胎、生活垃圾和枯枝杂草",
+      "加强该区域日常保洁与巡查，设置禁止乱倒垃圾标识",
+      "清理后检查门前地面及木门结构，排除其他安全风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "ab0df63f6e35ec5fa02acb55e4aa9f024dbb2be3f74c87b5ed4a5ed5dd2f8013",
+  "file": "neg_09_ab0df63f6e35.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"hazmat_storage\",\"severity\":\"高\",\"description\":\"室内水处理加药间内多只贴有危险化学品标识的蓝色塑料桶集中放在木托盘上，未见防泄漏托盘或围堰，桶体直接置于地面/木托；周围有管道和电气设施。若发生泄漏、倾倒或混存反应，可能造成腐蚀、中毒、火灾及环境污染。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内水处理加药间，蓝色化学品桶存放区\",\"rectification\":[\"将化学品桶置于防泄漏托盘或围堰内，明确分区分类存放并设置MSDS/警示标识\",\"检查桶盖密封、标签完整性，避免混存和超量存放；配备吸附材料及洗眼器\",\"保持通风，泄漏时隔离并妥善处置；电气设备与腐蚀性化学品保持安全距离或采取防护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "室内水处理加药间内多只贴有危险化学品标识的蓝色塑料桶集中放在木托盘上，未见防泄漏托盘或围堰，桶体直接置于地面/木托；周围有管道和电气设施。若发生泄漏、倾倒或混存反应，可能造成腐蚀、中毒、火灾及环境污染。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内水处理加药间，蓝色化学品桶存放区",
+    "rectification": [
+      "将化学品桶置于防泄漏托盘或围堰内，明确分区分类存放并设置MSDS/警示标识",
+      "检查桶盖密封、标签完整性，避免混存和超量存放；配备吸附材料及洗眼器",
+      "保持通风，泄漏时隔离并妥善处置；电气设备与腐蚀性化学品保持安全距离或采取防护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

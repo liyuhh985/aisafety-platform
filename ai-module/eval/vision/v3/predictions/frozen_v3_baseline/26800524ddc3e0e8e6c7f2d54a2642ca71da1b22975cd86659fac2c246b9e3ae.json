@@ -1,0 +1,26 @@
+{
+  "sha256": "26800524ddc3e0e8e6c7f2d54a2642ca71da1b22975cd86659fac2c246b9e3ae",
+  "file": "tree_fall_hazard_1_26800524ddc3.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"道路中央有大型枯树枝干倒伏，完全阻断了小路通行，行人或非机动车经过时极易发生碰撞或绊倒危险，且存在进一步折断伤人的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"林间小路前方中央，横跨路面\",\n  \"rectification\": [\n    \"立即在倒伏树木两端设置安全警示标志和警戒线，禁止人员通行。\",\n    \"尽快安排专业园林绿化人员清理倒伏树木，恢复道路畅通。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "道路中央有大型枯树枝干倒伏，完全阻断了小路通行，行人或非机动车经过时极易发生碰撞或绊倒危险，且存在进一步折断伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "林间小路前方中央，横跨路面",
+    "rectification": [
+      "立即在倒伏树木两端设置安全警示标志和警戒线，禁止人员通行。",
+      "尽快安排专业园林绿化人员清理倒伏树木，恢复道路畅通。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

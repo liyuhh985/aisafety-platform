@@ -1,0 +1,29 @@
+{
+  "sha256": "b0859c666b37346dccc8f1d185ae6fdd78e05f411b20de1e8b53f81dcdf44b38",
+  "file": "falling_object_1_b0859c666b37.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"建筑入口前通道散落大量破碎瓷砖及装修废料，边缘锋利并占压路面，未设置围挡或警示，易导致行人绊倒、割伤及车辆轮胎受损。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑入口前地坪及院内通道\",\n  \"rectification\": [\n    \"立即清扫并清运破碎瓷砖和装修废料，恢复通道平整畅通\",\n    \"装修材料及建筑垃圾集中覆盖存放，并设置围挡和警示标志\",\n    \"规范建筑垃圾临时堆放点，做到及时清运、不得占压公共通道\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "建筑入口前通道散落大量破碎瓷砖及装修废料，边缘锋利并占压路面，未设置围挡或警示，易导致行人绊倒、割伤及车辆轮胎受损。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑入口前地坪及院内通道",
+    "rectification": [
+      "立即清扫并清运破碎瓷砖和装修废料，恢复通道平整畅通",
+      "装修材料及建筑垃圾集中覆盖存放，并设置围挡和警示标志",
+      "规范建筑垃圾临时堆放点，做到及时清运、不得占压公共通道"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

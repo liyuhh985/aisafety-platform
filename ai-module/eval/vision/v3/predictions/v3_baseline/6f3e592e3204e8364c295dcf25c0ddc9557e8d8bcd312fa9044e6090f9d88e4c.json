@@ -1,0 +1,30 @@
+{
+  "sha256": "6f3e592e3204e8364c295dcf25c0ddc9557e8d8bcd312fa9044e6090f9d88e4c",
+  "file": "distribution_box_fault_4_6f3e592e3204.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"户外配电箱柜门敞开，内部断路器及接线凌乱，部分导线绝缘缺失或裸露，箱体锈蚀且缺少防护隔离，易导致人员误触触电、线路短路、过热起火。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"户外配电箱（具体位置不明）\",\n  \"rectification\": [\n    \"立即关闭并锁闭配电箱柜门，设置触电危险警示标识\",\n    \"由持证电工整理线路、修复绝缘破损和裸露接头，规范接线\",\n    \"更换锈蚀严重的箱体及损坏元件，落实防雨防潮和接地保护\",\n    \"整改前对该配电箱采取断电或隔离防护措施，防止人员靠近\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "户外配电箱柜门敞开，内部断路器及接线凌乱，部分导线绝缘缺失或裸露，箱体锈蚀且缺少防护隔离，易导致人员误触触电、线路短路、过热起火。",
+    "reason_if_no_hazard": "",
+    "location_hint": "户外配电箱（具体位置不明）",
+    "rectification": [
+      "立即关闭并锁闭配电箱柜门，设置触电危险警示标识",
+      "由持证电工整理线路、修复绝缘破损和裸露接头，规范接线",
+      "更换锈蚀严重的箱体及损坏元件，落实防雨防潮和接地保护",
+      "整改前对该配电箱采取断电或隔离防护措施，防止人员靠近"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "8ad3abc92a2effdff0b6faed7e98cd79239fbb515132d8660c0229dfd47d6400",
+  "file": "neg_18_8ad3abc92a2e.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"高\",\n  \"description\": \"道路大面积积水，水面覆盖整幅路面，路面可见裂缝，排水不畅。可能导致行人滑倒、车辆涉水熄火，长期积水还会加剧路基损坏。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"图中道路低洼段及整幅路面\",\n  \"rectification\": [\n    \"立即设置警示标志并抽排积水\",\n    \"排查清理排水口、雨水篦子和管道堵塞\",\n    \"修复路面裂缝并检查路基与排水坡度\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "高",
+    "description": "道路大面积积水，水面覆盖整幅路面，路面可见裂缝，排水不畅。可能导致行人滑倒、车辆涉水熄火，长期积水还会加剧路基损坏。",
+    "reason_if_no_hazard": "",
+    "location_hint": "图中道路低洼段及整幅路面",
+    "rectification": [
+      "立即设置警示标志并抽排积水",
+      "排查清理排水口、雨水篦子和管道堵塞",
+      "修复路面裂缝并检查路基与排水坡度"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

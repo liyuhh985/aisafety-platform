@@ -1,0 +1,29 @@
+{
+  "sha256": "f897c7240b2faae08c488229a84990c4608be42fb5a18d9d492ea86ae7831033",
+  "file": "temporary_power_3_f897c7240b2f.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"配电柜内断路器及接线端子区域线路杂乱，部分导线绝缘破损或裸露，柜内底部有杂物和碎屑，防护不完整；易发生触电、短路、电弧或电气火灾。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"配电柜内部断路器及接线端子区域\",\n  \"rectification\": [\n    \"断电挂牌后由持证电工整理柜内线路，紧固接线端子并恢复绝缘防护和隔弧板。\",\n    \"清理柜内杂物和碎屑，检查导线绝缘、漏电保护及接地情况，消除裸露带电部位。\",\n    \"检修时操作人员应穿戴绝缘防护用品，并设置安全警示。\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "配电柜内断路器及接线端子区域线路杂乱，部分导线绝缘破损或裸露，柜内底部有杂物和碎屑，防护不完整；易发生触电、短路、电弧或电气火灾。",
+    "reason_if_no_hazard": "",
+    "location_hint": "配电柜内部断路器及接线端子区域",
+    "rectification": [
+      "断电挂牌后由持证电工整理柜内线路，紧固接线端子并恢复绝缘防护和隔弧板。",
+      "清理柜内杂物和碎屑，检查导线绝缘、漏电保护及接地情况，消除裸露带电部位。",
+      "检修时操作人员应穿戴绝缘防护用品，并设置安全警示。"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "980e0a2b6bcdef82f066c2180c5e5e6cd32a4385988ee78897d36501af66aad6",
+  "file": "elevator_stopped_3_980e0a2b6bcd.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_stopped\",\n  \"severity\": \"高\",\n  \"description\": \"电梯门处于敞开状态，轿厢/井道内壁存在大面积破损脱落，未见有效闭合防护，易造成人员误入、坠落、夹伤或碎屑伤人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼电梯门口及轿厢内部\",\n  \"rectification\": [\n    \"立即停用该电梯并设置警戒线和警示标志，禁止人员进入。\",\n    \"联系电梯维保单位检修门锁、轿厢及井道防护，排除故障后方可恢复使用。\",\n    \"修复破损内壁和脱落部位，清理碎屑并复核电梯安全保护装置。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "高",
+    "description": "电梯门处于敞开状态，轿厢/井道内壁存在大面积破损脱落，未见有效闭合防护，易造成人员误入、坠落、夹伤或碎屑伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼电梯门口及轿厢内部",
+    "rectification": [
+      "立即停用该电梯并设置警戒线和警示标志，禁止人员进入。",
+      "联系电梯维保单位检修门锁、轿厢及井道防护，排除故障后方可恢复使用。",
+      "修复破损内壁和脱落部位，清理碎屑并复核电梯安全保护装置。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

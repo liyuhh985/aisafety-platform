@@ -1,0 +1,841 @@
+{
+  "scaffold_guard": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\scaffold_guard\\review\\SCA0038.png",
+      "file": "SCA0038.png",
+      "sha256": "869612ec9811c20c25356e9fe170e0649a02890d305765796148794c108dec37",
+      "text": false,
+      "ev": "近距离拍摄脚手架，钢管大面积锈蚀，扣件老化，木跳板陈旧"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\scaffold_guard\\review\\SCA0080.jpg",
+      "file": "SCA0080.jpg",
+      "sha256": "09b1498c2b4b6d11c460cd6e3f6fe17099711b26dd4ccdd3b280a89ed5451428",
+      "text": false,
+      "ev": "楼层临边仅竖向钢筋外露，无规范临边防护栏杆，外侧可直接坠落"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\scaffold_guard\\review\\SCA0086.jpg",
+      "file": "SCA0086.jpg",
+      "sha256": "64838de03024be52ded1d96f7ffb3a69231e5debaed5bba29bc6e6dd35bb8385",
+      "text": false,
+      "ev": "施工楼外搭设钢管脚手架支撑模板，作业层无临边护栏，架体结构简易"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\scaffold_guard\\review\\SCA0087.jpg",
+      "file": "SCA0087.jpg",
+      "sha256": "f8a9961b14f87367f7c9d2f4a1f18fa86965c4f965ec0c8b635868e393662af7",
+      "text": false,
+      "ev": "楼板上多个方形预留洞口仅铺钢筋网未做盖板封闭，长条缝隙铺绿色安全网防护"
+    }
+  ],
+  "ebike_hazard": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0027.jpg",
+      "file": "FIR0027.jpg",
+      "sha256": "a5fdde6e1b39e1a2991be73588c4f7a86122c4e8a4859b8b719f796b972313cf",
+      "text": true,
+      "ev": "居民楼出入口及门厅内停放多辆电动自行车、三轮车，占用疏散出入通道"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0040.jpg",
+      "file": "FIR0040.jpg",
+      "sha256": "3ca0d4585821d64fa55fb0c9d7a5f524cc7f59667d7e715d0cb05ce8068e6300",
+      "text": true,
+      "ev": "狭窄巷道墙边停满电动自行车和摩托车，挤占通道，旁边挂有消防通道禁停牌"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0062.jpg",
+      "file": "FIR0062.jpg",
+      "sha256": "57d55b6f5cf2a5dce90799ee037aa488728f0345c281179a6adedd8f23f7a6de",
+      "text": true,
+      "ev": "白色轿车停在消防铁门前完全堵住通道，两侧有电动车"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0105.jpg",
+      "file": "FIR0105.jpg",
+      "sha256": "3cfbd79524f40d2d0588c366a1aeb743f8471a552c80fdabe65c77ece0fbdf51",
+      "text": true,
+      "ev": "小区门口黄色禁停网格线上密集停放大量电动自行车和自行车，旁有垃圾桶占道"
+    }
+  ],
+  "exposed_wire": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\exposed_wire\\review\\EXP0039.jpg",
+      "file": "EXP0039.jpg",
+      "sha256": "14624641ca19f322bf3b5b39b401bf4a88895191b089952c566f4ad9e88bfdee",
+      "text": false,
+      "ev": "多根电线外皮烧焦脱落、铜丝裸露散开，堆放在水泥地面上，呈严重老化破损状态"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\exposed_wire\\review\\EXP0046.jpg",
+      "file": "EXP0046.jpg",
+      "sha256": "16ed707065eefa2a1314198407274d44b94481e99462534a5cbac4eaf43a7c0e",
+      "text": false,
+      "ev": "多根彩色电线从黑色护套中裸露散出，缠黑色胶带，无保护地铺设在人行道地面上"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\exposed_wire\\review\\EXP0052.jpg",
+      "file": "EXP0052.jpg",
+      "sha256": "48441999e80d67b86bc0ae5df1f63bfaf9e9354feec3041bf69e7d01d2d1b760",
+      "text": false,
+      "ev": "墙/杆上多股电线绝缘层烧焦破损，包胶布脱落，红蓝线缆裸露垂挂"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\exposed_wire\\review\\EXP0059.png",
+      "file": "EXP0059.png",
+      "sha256": "76fc651b515032ee9f7ad3600c6c4c298d05e4456dedd708a0a377145b26120d",
+      "text": false,
+      "ev": "桥边人行道上一根黑色电线大幅下垂，横跨护栏和路面，高度接近行人头部，远处还有多根杂乱架空线"
+    }
+  ],
+  "confined_space": [],
+  "illegal_structure": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_structure\\review\\ILL0019.jpg",
+      "file": "ILL0019.jpg",
+      "sha256": "c7cf1873f35ac83f0e79143cddcf76fa7cb4f364cfab6fd62caceea4beb60352",
+      "text": false,
+      "ev": "楼顶违规搭建玻璃顶棚阳光房，蓝色琉璃瓦屋顶上加盖封闭结构，绿色圈标注处清晰可见"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_structure\\review\\ILL0028.jpg",
+      "file": "ILL0028.jpg",
+      "sha256": "1b5cc404532a24be51d7645bfe345cdef16e187ab634107b77bdf74aa6fa413b",
+      "text": false,
+      "ev": "多层砖楼外墙大面积坍塌，楼板断裂悬空，室内家具裸露外露"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_structure\\review\\ILL0031.jpg",
+      "file": "ILL0031.jpg",
+      "sha256": "d9faa8a7e164e3b5e778ce609ba58eb0b3e6194da1dd2e2b33e472a9ff022e32",
+      "text": false,
+      "ev": "居民楼顶部建有巨型假山亭台式违建，体积庞大覆盖整个屋顶"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_structure\\review\\ILL0076.jpg",
+      "file": "ILL0076.jpg",
+      "sha256": "d04da20ab6c43ee108e1bb42b223502779b4834f156eabbcdf34bb06d3926dba",
+      "text": false,
+      "ev": "高层住宅中部多楼层外墙结构被改动，红色圈标注，疑似违规拆改承重结构"
+    }
+  ],
+  "fire_equipment_fault": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_equipment_fault\\review\\FIR0021.jpg",
+      "file": "FIR0021.jpg",
+      "sha256": "307210413e9e38b383c70c4b92268ad6124ed59d6c21aa37790567372609da2a",
+      "text": false,
+      "ev": "红色消防栓侧接口大量漏水喷涌至人行道地面"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_equipment_fault\\review\\FIR0038.jpg",
+      "file": "FIR0038.jpg",
+      "sha256": "104917f778907856bdee95e481e2fc8bbb31eb0245de8dc19b3e746fea343e83",
+      "text": false,
+      "ev": "红色消防栓出水口无盖，地面大面积积水，疑漏水"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_equipment_fault\\review\\FIR0040.jpg",
+      "file": "FIR0040.jpg",
+      "sha256": "8d8331f3c97abd33c1ed6ea4eddeea57f83fb2f72149bb6d1537330141eb08be",
+      "text": false,
+      "ev": "红色消防栓基座周围地面持续渗水积水，砖面湿滑长青苔"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_equipment_fault\\review\\FIR0067.jpg",
+      "file": "FIR0067.jpg",
+      "sha256": "75c2e3d83caf5287f5fa6b5c25193e51b6a6af175b90c914ff3e12dbb39cab42",
+      "text": false,
+      "ev": "消防栓阀门接口内塞满杂物虫蛀状堵塞物，无法正常连接使用"
+    }
+  ],
+  "no_barrier": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_barrier\\review\\NO0020.jpg",
+      "file": "NO0020.jpg",
+      "sha256": "664eb8928348171443049dc61f9061bbd9682c7f35636f1630579788c0843cfd",
+      "text": false,
+      "ev": "人行道旁拆迁废墟裸露，倒塌板材和建筑垃圾堆放，未设任何围挡隔离行人"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_barrier\\review\\NO0080.jpg",
+      "file": "NO0080.jpg",
+      "sha256": "0f33067f5b5acedb21828dd0139726adb26c99f8a227d2644300caffd97d4127",
+      "text": false,
+      "ev": "挖掘机停在深沟边缘，沟内积水，现场未设围挡或护栏，存在坠落风险"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_barrier\\review\\NO0007.jpg",
+      "file": "NO0007.jpg",
+      "sha256": "1e479fe168f0a7f5198902bf1c4db067c80e28a69843ca76b23d544045f3c8c4",
+      "text": false,
+      "ev": "桥下施工土方开挖，前沿仅设铁马和警戒带，未设完整围挡"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_barrier\\review\\NO0049.jpg",
+      "file": "NO0049.jpg",
+      "sha256": "2f1080b048b02cdf2c862c8d477dae670e55dab97cf30635a293e428b61fdf8e",
+      "text": false,
+      "ev": "道路一侧开挖深沟埋设管道，沟槽紧邻人行道一侧无围挡或护栏，人员在沟内作业"
+    }
+  ],
+  "garbage_pile": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\garbage_pile\\review\\GAR0026.jpg",
+      "file": "GAR0026.jpg",
+      "sha256": "2fe3e8b3b2a0985f516d05e74b29a6ca33384be2c3a3311aee2ffc334203cf57",
+      "text": false,
+      "ev": "农田边大堆混合垃圾，塑料瓶袋、砖块、枯枝混杂堆积成小山"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\garbage_pile\\review\\GAR0027.jpg",
+      "file": "GAR0027.jpg",
+      "sha256": "ffaf8a1a7b14f95a705903a807dda5087b6228aae67b70b2efc04f22dc8533d0",
+      "text": false,
+      "ev": "沟渠及岸边堆满大量塑料袋、瓶罐等生活垃圾"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\garbage_pile\\review\\GAR0028.jpg",
+      "file": "GAR0028.jpg",
+      "sha256": "a143d5cac56436cd3b4fca33c0032c902e52cc1d55adf4f6ca68498e33b221d6",
+      "text": false,
+      "ev": "大片废旧衣物、塑料等垃圾露天堆放于植被间"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\garbage_pile\\review\\GAR0035.jpg",
+      "file": "GAR0035.jpg",
+      "sha256": "872bd103deb8580f95de606225d4f2e8e8e785db15b1b7662cdab282d08e9544",
+      "text": false,
+      "ev": "空地上成堆彩色塑料筐篮、杂物与黑色垃圾袋散落遍地，堆放杂乱"
+    }
+  ],
+  "distribution_box_fault": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\distribution_box_fault\\review\\DIS0050.jpg",
+      "file": "DIS0050.jpg",
+      "sha256": "1e284b888ac5a85ad95ec54c0bcbb22e1947ab61ad203301b6e971679efc7077",
+      "text": false,
+      "ev": "户外配电箱门板脱落悬空，箱内断路器裸露，多根电缆杂乱垂落地面"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\distribution_box_fault\\review\\DIS0054.png",
+      "file": "DIS0054.png",
+      "sha256": "720bfb228d2be3f7c8d6add946312c1b04ec5d32d81e5c988f413a75d1043a1a",
+      "text": false,
+      "ev": "配电柜内部严重烧毁熔化，柜体焦黑变形，地面散落烧蚀残渣"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\distribution_box_fault\\review\\DIS0081.jpg",
+      "file": "DIS0081.jpg",
+      "sha256": "b7b925c9200c902641fa6bcdb4b3b11ae172f1f906faabc1a57c98a904b53b55",
+      "text": false,
+      "ev": "室外配电柜放置于人行通道旁，多根电缆从柜体顶部和底部垂落，线缆散乱悬挂，底部无防护且线缆直接接触地面"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\distribution_box_fault\\review\\DIS0005.jpg",
+      "file": "DIS0005.jpg",
+      "sha256": "3a1a37b46ddaebbe6ce788ad53d6bd460e2d70a5f060f31ac08562a993af04ba",
+      "text": false,
+      "ev": "野外露天配电箱箱门敞开，内部线路裸露，仅用布简易遮盖，橙色电缆随意拖在地面"
+    }
+  ],
+  "no_warning": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_warning\\review\\NO0019.jpg",
+      "file": "NO0019.jpg",
+      "sha256": "eb7c1daacf3eaf716db3cba7e1d57213a696dc373a48d80022a98078ce310ef4",
+      "text": false,
+      "ev": "居民区通道内堆放砖块和板材，橙色围挡被折起靠墙，未设警示牌和隔离带"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_warning\\review\\NO0056.jpg",
+      "file": "NO0056.jpg",
+      "sha256": "403905621d06ee69d7c93a28b65f32b044a4590e85f937eae0c13aff7d8e6c1c",
+      "text": false,
+      "ev": "大面积路面已铣刨拉毛，井盖周围粗糙不平，现场无锥桶围挡警示，车辆行人照常通行"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_warning\\review\\NO0058.jpg",
+      "file": "NO0058.jpg",
+      "sha256": "a8a8054d51273a5d103a86da52c90912f94e4e630dfd2f0c1602dd406e05a288",
+      "text": false,
+      "ev": "路边绿化带堆放大量碎混凝土块、砖块，无围挡无警示"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\no_warning\\review\\NO0063.jpg",
+      "file": "NO0063.jpg",
+      "sha256": "406290a1234a907474033e25eb20a97a16ff5c1cd38a996a9b2cf024abf345db",
+      "text": false,
+      "ev": "人行道上大面积敞开深坑，无围挡、无锥桶、无任何警示标识，行人就站在坑边"
+    }
+  ],
+  "deep_pit": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\deep_pit\\review\\DEE0003.jpg",
+      "file": "DEE0003.jpg",
+      "sha256": "f203dc87de58f99273e0a12f61286822580fd330ddb257a9cb7df5e489439c11",
+      "text": false,
+      "ev": "施工泥地上有敞开的深坑，四周无防护栏、盖板或警示标志。"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\deep_pit\\review\\DEE0012.jpg",
+      "file": "DEE0012.jpg",
+      "sha256": "6d07d00519bf834095475eb35367e5a90ac6e7fdbc1af51bae80ae4de52d7178",
+      "text": false,
+      "ev": "深基坑边坡裸露，坑边无防护栏杆，坑底有机械及积水"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\deep_pit\\review\\DEE0018.jpg",
+      "file": "DEE0018.jpg",
+      "sha256": "231c24ad13703c64e9e11412dadea728ad2c8b76c791973dc4ebe215de6adfb8",
+      "text": false,
+      "ev": "巨大深土坑边缘陡峭有塌方风险，坑底深邃，周围仅有简易细线围挡"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\deep_pit\\review\\DEE0021.jpg",
+      "file": "DEE0021.jpg",
+      "sha256": "3db8e7db1bda7748a6340fb9aede208d16b791240ddd20726e7d671c5117e72d",
+      "text": false,
+      "ev": "路边有方形深坑，无围挡防护，深不见底"
+    }
+  ],
+  "elevator_trapped": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\elevator_trapped\\review\\ELE0015.jpg",
+      "file": "ELE0015.jpg",
+      "sha256": "19dbe39d6b0da1774891703e5c5af6abfb2e3602927eb892e556448c231b0acf",
+      "text": true,
+      "ev": "消防员正从非平层电梯缝隙中救援被困人员"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\elevator_trapped\\review\\ELE0017.jpg",
+      "file": "ELE0017.jpg",
+      "sha256": "9e90568a49292c0c114c072018a05b310aa6538072eed4c3a498eefbe8818012",
+      "text": true,
+      "ev": "电梯轿厢内两人，一人伸手按紧急呼叫按钮，疑似被困"
+    }
+  ],
+  "drainage_flood": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\drainage_flood\\review\\DRA0011.jpg",
+      "file": "DRA0011.jpg",
+      "sha256": "3561d255be6c9922243fbacaeb028f1f32ed5f0ff00a5edd93490cebf8bc2bb0",
+      "text": false,
+      "ev": "人行道边沿路面积水成片，水面反射，紧邻路缘石与车道"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\drainage_flood\\review\\DRA0023.jpg",
+      "file": "DRA0023.jpg",
+      "sha256": "ae1e8ad83a9f9103c60ace50df9ebe1a84eb84c6e14b4bd065bf69b10fd8afd0",
+      "text": false,
+      "ev": "卫生间地面积水明显，水漫过地面反光，蹲便器旁有拖把桶等清洁工具未处置"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\drainage_flood\\review\\DRA0027.jpg",
+      "file": "DRA0027.jpg",
+      "sha256": "20ac8f381c77061829b731c020de7d6d3711d84964b02c7869bf0d2b540607d9",
+      "text": false,
+      "ev": "城市街道大面积积水，多辆轿车半淹没在水中，通行受阻"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\drainage_flood\\review\\DRA0051.jpg",
+      "file": "DRA0051.jpg",
+      "sha256": "f24ac07dba2c9e56bd9681a17752d97113bf355a5be7c3e31e08851e4a707427",
+      "text": false,
+      "ev": "路面大面积积水，雨点打出涟漪，车辆停在水中"
+    }
+  ],
+  "road_occupancy": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_occupancy\\review\\ROA0036.jpg",
+      "file": "ROA0036.jpg",
+      "sha256": "af0bd17c7d1928fcec129aca54c9de3d58ec8570ed3598de3bf4d46ae69adc6c",
+      "text": false,
+      "ev": "林间道路旁沿路缘石大量堆放垃圾塑料袋餐盒，散落路面，未被清理"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_occupancy\\review\\ROA0070.jpg",
+      "file": "ROA0070.jpg",
+      "sha256": "4d94d876803436443659a9be0df63c50f3d7d3a7c6954fa50365db9cb035ae0f",
+      "text": false,
+      "ev": "绿色垃圾桶满溢，桶盖被顶开，桶旁地面堆放多袋垃圾，占据人行通道"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_occupancy\\review\\ROA0079.png",
+      "file": "ROA0079.png",
+      "sha256": "af2903af7ea1fa4dd81fe87b97bdd852d4cbff71cd5c5201c75b9dad7981c8d6",
+      "text": false,
+      "ev": "楼道台阶旁椅上堆放大袋垃圾泡沫箱等杂物，占用通行空间"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_occupancy\\review\\ROA0080.png",
+      "file": "ROA0080.png",
+      "sha256": "6b5c39a9cdd9f16a21706cbbde21ef532bf47a7ed9a202163fb05bcdd1a7c4c1",
+      "text": false,
+      "ev": "楼道走廊一侧堆满大量纸箱包裹，占用通行空间，出口指示灯可见"
+    }
+  ],
+  "falling_object": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\facade_fall\\review\\FAC0011.jpg",
+      "file": "FAC0011.jpg",
+      "sha256": "65cea3ec02e4ac6166fcd3fd89b685540ab3a48b49ce7c380d8e23acd66731e3",
+      "text": false,
+      "ev": "砖墙表面砂浆面层大面积风化酥松、砖面剥落，碎屑掉落"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\facade_fall\\review\\FAC0013.jpg",
+      "file": "FAC0013.jpg",
+      "sha256": "b0859c666b37346dccc8f1d185ae6fdd78e05f411b20de1e8b53f81dcdf44b38",
+      "text": false,
+      "ev": "地砖/外墙饰面砖整片剥落碎裂散落地面，砸中停放摩托车，男子蹲旁查看"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\facade_fall\\review\\FAC0016.jpg",
+      "file": "FAC0016.jpg",
+      "sha256": "47831eda7d05268f369bb7966aff3428dab14bfb9dfd7ad29a019a8478ba000d",
+      "text": false,
+      "ev": "高层住宅外立面大片饰面脱落，露出内部水泥基层，边缘参差"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\facade_fall\\review\\FAC0018.png",
+      "file": "FAC0018.png",
+      "sha256": "f685693a5f7adbfc8198722e16b3af37960d7b92e34462566aaed075fcf204c2",
+      "text": false,
+      "ev": "住宅楼外立面大面积墙皮空鼓开裂、局部已脱落露出基层，多处翘起待坠"
+    }
+  ],
+  "other": [],
+  "hazmat_storage": [],
+  "blind_path_occupied": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\blind_path_occupied\\review\\BLI0086.jpg",
+      "file": "BLI0086.jpg",
+      "sha256": "0db3fae83d02f4cb9fedd4e8a2af80e9573a7ad3813ec0909395a1518430c1c6",
+      "text": false,
+      "ev": "人行道盲道上密集安装黑黄相间金属挡车杆，横跨占用盲道"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\blind_path_occupied\\review\\BLI0092.jpg",
+      "file": "BLI0092.jpg",
+      "sha256": "7b6caa9ba3e7b91ee1d45dca29a27d28a2afd8b920efc306608aaa22c8272061",
+      "text": false,
+      "ev": "人行道盲道正中竖立一根电线杆，直接阻断盲道通行，盲道被占断"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\blind_path_occupied\\review\\BLI0094.png",
+      "file": "BLI0094.png",
+      "sha256": "d67fd955785d1eb346a7d61f9d6c21a2c1618a8390af2d62962357b0465077ee",
+      "text": false,
+      "ev": "人行道上成排电动车沿盲道停放，车轮压占黄色条状盲道砖，盲道通行被阻断"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\blind_path_occupied\\review\\BLI0100.jpg",
+      "file": "BLI0100.jpg",
+      "sha256": "35017c0b3df8620cbaad774c7c7024950206f8d93d5567b38447250513fb5645",
+      "text": false,
+      "ev": "人行道边缘盲道旁放置多块铁板，旁边有交通锥，数辆汽车紧贴路沿停放"
+    }
+  ],
+  "road_surface_collapse": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_surface_collapse\\review\\ROA0014.jpg",
+      "file": "ROA0014.jpg",
+      "sha256": "0d4f255cb608580cc04b193e7d11a16d638b4c54576eb7bd5cf8522e05aa7889",
+      "text": false,
+      "ev": "混凝土路面严重断裂塌陷，形成深缝与错台，碎石裸露，危险明显"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_surface_collapse\\review\\ROA0016.png",
+      "file": "ROA0016.png",
+      "sha256": "3621bd93b9593d2bc8a5301deb5e66ca0d51e51e84308d7769574e4b585435bb",
+      "text": false,
+      "ev": "路面大面积龟裂下陷，露出坑洞与钢筋"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_surface_collapse\\review\\ROA0023.jpg",
+      "file": "ROA0023.jpg",
+      "sha256": "544f3ccf54dd2aa84d7fa06619867b6a8d9f2b5aecc32800fee1703012915cc0",
+      "text": false,
+      "ev": "路面出现巨大深坑，沥青与路基断裂塌落，坑内有坠落的红色机械，行人绕行"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\road_surface_collapse\\review\\ROA0027.jpg",
+      "file": "ROA0027.jpg",
+      "sha256": "41c1096b8fe17590f129f18aa6c0a8f67e82759a95fb7055b2616a9bbb0fa23b",
+      "text": false,
+      "ev": "沥青路面整体塌出巨大坑洞，路基碎石裸露，一辆红色工程车坠入坑内"
+    }
+  ],
+  "temporary_power": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\temporary_power\\review\\TEM0018.jpg",
+      "file": "TEM0018.jpg",
+      "sha256": "a984a1461dff7da4861bae463f6f9d7c20b58589792e9411079d873e57161cd2",
+      "text": false,
+      "ev": "大量黑色电缆杂乱盘绕悬挂在建筑外墙前，未规范固定"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\temporary_power\\review\\TEM0050.jpg",
+      "file": "TEM0050.jpg",
+      "sha256": "28273d4f3ae1107c6e11decd7c21a4136ac1f814b3fd086aebb419400e8b35fd",
+      "text": false,
+      "ev": "大量电缆杂乱悬挂缠绕，线头裸露并堆积在地面"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\temporary_power\\review\\TEM0021.jpg",
+      "file": "TEM0021.jpg",
+      "sha256": "afade2d27dce8c9d470c088910bd68375ef6ba2b2aa8aedf40beccf63ebe209d",
+      "text": false,
+      "ev": "设备底部电缆接头仅用黑胶布缠绕，绝缘处理粗糙"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\temporary_power\\review\\TEM0034.png",
+      "file": "TEM0034.png",
+      "sha256": "2e8f7f55ccdbef6df137b6d28a78e6de70a9f9856f61aa443413759cb4c48806",
+      "text": false,
+      "ev": "电缆接头用红色塑料袋包扎，随意置于泥地沟槽"
+    }
+  ],
+  "elevator_stopped": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\elevator_stopped\\review\\ELE0005.jpg",
+      "file": "ELE0005.jpg",
+      "sha256": "61d28ec0c1bbea8d7d7f95dd5a104897870548c67748fd2fe5422423434d45aa",
+      "text": true,
+      "ev": "电梯门面严重破损剥落，贴有停运提示纸张"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\elevator_stopped\\review\\ELE0011.jpg",
+      "file": "ELE0011.jpg",
+      "sha256": "d4c7bd8625f018743b3ab789bd3ca6828f3d2f5b77b79087f91e0bc77e0c30c0",
+      "text": true,
+      "ev": "电梯呼叫面板屏幕显示停用，按键旁有红色封条和破损标签"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\elevator_stopped\\review\\ELE0037.png",
+      "file": "ELE0037.png",
+      "sha256": "2fb304cfce0cd3b8c325f0c0a338378c3e24daafce036d16aa593b128f411641",
+      "text": true,
+      "ev": "电梯门前放置黄色推车阻挡，导致电梯门无法关闭运行"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\elevator_stopped\\review\\ELE0044.png",
+      "file": "ELE0044.png",
+      "sha256": "9cc458c2f46f180b9fbcd377620baac23d7459611f5aff9ed71c9d3bcca7b23a",
+      "text": true,
+      "ev": "电梯门面大面积破损剥落，门前摆放黄色停用警示围挡。"
+    }
+  ],
+  "tree_fall_hazard": [],
+  "traffic_facility_damage": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\traffic_facility_damage\\review\\TRA0002.jpg",
+      "file": "TRA0002.jpg",
+      "sha256": "937d98290b870dc7f625a3d48ac40fdabd07c4a8465b54803834f555d5225f34",
+      "text": false,
+      "ev": "人行道地砖路面井盖破损缺失，露出黑洞和断裂钢筋，周围碎石裸露"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\traffic_facility_damage\\review\\TRA0006.jpg",
+      "file": "TRA0006.jpg",
+      "sha256": "bc410668a7ee41313d9ff91a2bd3ce7b426403fc30bf99b308e1c1041f4d5b4f",
+      "text": false,
+      "ev": "路边公告栏钢化玻璃面板碎裂，中心破洞，地面散落大量玻璃碎片"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\traffic_facility_damage\\review\\TRA0007.jpg",
+      "file": "TRA0007.jpg",
+      "sha256": "650816a8cec1a42243f4b4b0c783aa47db29cccc7dc92e9719257ca2400b13a9",
+      "text": false,
+      "ev": "人行道与路面交界处路缘石破损松动，碎石裸露，砖块翘起"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\traffic_facility_damage\\review\\TRA0008.jpg",
+      "file": "TRA0008.jpg",
+      "sha256": "70202a66223ab3f1a2b23b4a1f6a8b1d39416f0000cea98037107a300c7b3e59",
+      "text": false,
+      "ev": "沥青路面大面积碎裂翘起，板块错位形成坑槽裂缝，黄色标线断裂"
+    }
+  ],
+  "illegal_wiring": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_wiring\\review\\ILL0025.jpg",
+      "file": "ILL0025.jpg",
+      "sha256": "d17bec2675a32faf116e3ab2524317b42da0f5ca93a6123437e4336f01274c15",
+      "text": false,
+      "ev": "黄色电线从防盗窗内私拉出室外，沿墙垂落，末端插排直接放在地面走道上"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_wiring\\review\\ILL0029.jpg",
+      "file": "ILL0029.jpg",
+      "sha256": "d7eb144093d241aec513f3202825a642121e4fa7275a6b51c93fff5319931d5b",
+      "text": false,
+      "ev": "电线接头仅用黑胶带缠绕，悬挂于金属杆挂钩上，无固定保护盒"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_wiring\\review\\ILL0033.jpg",
+      "file": "ILL0033.jpg",
+      "sha256": "6cf8dd14e38a703345f48ab9501728898e8e3d26cb01eef2621317f1f00ece63",
+      "text": false,
+      "ev": "墙角处大量电线与管线私拉乱接，缠绕悬挂，部分线头裸露，紧邻窗户和入户门"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\illegal_wiring\\review\\ILL0045.jpg",
+      "file": "ILL0045.jpg",
+      "sha256": "4234d77b01680196c0945c93fa7e5f01c6caade556e3da7776f918c2c8925610",
+      "text": false,
+      "ev": "楼体外墙大量电缆私拉乱接缠绕成团，绝缘子上杂乱接线，紧邻阳台可燃物"
+    }
+  ],
+  "gas_pipe_aging": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_pipe_aging\\review\\GAS0040.jpg",
+      "file": "GAS0040.jpg",
+      "sha256": "33f5c4e6bd106e93154e7ddae3b4407e29564006e3508c5296a4962bf3430a1b",
+      "text": false,
+      "ev": "金属管道截面内部严重锈蚀，内壁积满红褐色锈垢，管径几乎被堵塞"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_pipe_aging\\review\\GAS0054.jpg",
+      "file": "GAS0054.jpg",
+      "sha256": "769707b8311eba141a7bc8f96b62662f67c523790bef45a51be9dde6e3034b79",
+      "text": false,
+      "ev": "手持金属螺纹管接头，内部密封料老化碎裂脱落，堆积在螺纹内"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_pipe_aging\\review\\GAS0077.jpg",
+      "file": "GAS0077.jpg",
+      "sha256": "11985fbaa9543be55997ed4ea691286c9db05b9b0c395ea2bcfb37932c847d13",
+      "text": false,
+      "ev": "管道穿墙孔洞周围密封材料发黑焦化，金属管严重锈蚀，连接件老化"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_pipe_aging\\review\\GAS0078.jpg",
+      "file": "GAS0078.jpg",
+      "sha256": "d109760ab838f8722751413077444ad518c356685892125f2243469fe1805539",
+      "text": false,
+      "ev": "管道接头处严重锈蚀，保温层破损脱落，金属表面腐蚀老化"
+    }
+  ],
+  "manhole_damage": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\manhole_damage\\review\\MAN0015.jpg",
+      "file": "MAN0015.jpg",
+      "sha256": "60cd62e12618dac1ff10042f2d3e9a988cb46b4b1d606021aea42a50c758c337",
+      "text": false,
+      "ev": "圆形井圈内盖板严重破损塌陷，表面长满青苔及堆积杂物，结构已解体"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\manhole_damage\\review\\MAN0016.jpg",
+      "file": "MAN0016.jpg",
+      "sha256": "50be7c014f81c17c1b4fda305329cef5dd45e1dd8b71718644d8fb50a01fa300",
+      "text": false,
+      "ev": "井盖大面积破损穿孔，出现黑洞状缺口，周边碎裂带苔藓落叶"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\manhole_damage\\review\\MAN0026.jpg",
+      "file": "MAN0026.jpg",
+      "sha256": "59b55d54acc754018e3cb45fbdf85b406263b5cf77cd6dd9d1859c9d0dd4f99a",
+      "text": false,
+      "ev": "轿车后轮陷入路边无井盖的深井口，井口敞开无遮挡"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\manhole_damage\\review\\MAN0037.jpg",
+      "file": "MAN0037.jpg",
+      "sha256": "b981f4426f01d6b5d93ac22d9c8294a96b5ec7db4ea3152d0512bb54f183916c",
+      "text": false,
+      "ev": "井盖大面积破碎缺失，露出钢筋与井口空洞，孔洞可见"
+    }
+  ],
+  "vehicle_occupancy": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\vehicle_occupancy\\review\\VEH0021.jpg",
+      "file": "VEH0021.jpg",
+      "sha256": "c28a886adff71af37d3ea1bf9587d717193dcf160facf747ec3e99660737a48a",
+      "text": false,
+      "ev": "电动自行车停放在人行道盲道上，占用通行空间"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\vehicle_occupancy\\review\\VEH0034.jpg",
+      "file": "VEH0034.jpg",
+      "sha256": "d9aba81d95a8297bbccec786afef84cc7c5e48870efb8944d470039bdb746c7c",
+      "text": false,
+      "ev": "红色轿车与白色SUV停在人行道地砖上，紧贴配电箱和路沿，挤占行人通行空间"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\vehicle_occupancy\\review\\VEH0076.jpg",
+      "file": "VEH0076.jpg",
+      "sha256": "f41a1246c538e2e0bab0a7476d53d0b1411805b83b18ee0091e43fc22ef5760a",
+      "text": false,
+      "ev": "公交站旁人行道上密集停放大量共享单车，几乎占满行人通行空间"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\vehicle_occupancy\\review\\VEH0079.jpg",
+      "file": "VEH0079.jpg",
+      "sha256": "dbac777e2356878a38ceb3aab918109932160f0e6e972553c5b8dff0069dcba6",
+      "text": false,
+      "ev": "两辆轿车违停在人行道盲道上，挤占行人通行空间"
+    }
+  ],
+  "elevator_inspection": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\elevator_inspection\\review\\ELE0010.jpg",
+      "file": "ELE0010.jpg",
+      "sha256": "270b55469175958bebea4a92dd2cdd0c6097d11bd6a6054ce144d0904a2d2ad2",
+      "text": true,
+      "ev": "电梯特种设备使用标志，下次检验日期为2025年05月"
+    }
+  ],
+  "fire_lane_blocked": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0041.jpg",
+      "file": "FIR0041.jpg",
+      "sha256": "ab6a0f0a0d40a79cdbcd276042f3970e374c7b258e392f8dbb7d6643473a58d0",
+      "text": false,
+      "ev": "银色轿车停在居民楼单元门通道旁，消防人员现场查看处理"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0087.jpg",
+      "file": "FIR0087.jpg",
+      "sha256": "6b96afa70fe16109633b5d711a901ff9734e6f7b0967db76f2b3239290e4c7b5",
+      "text": false,
+      "ev": "窄巷两侧停放多辆轿车，远端白色车堵住通道，红圈标注处通行受阻"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0008.jpg",
+      "file": "FIR0008.jpg",
+      "sha256": "5550d86be6d0652d12270e0f47e9417aaee9e6baf27d1ea4edf520bab8119ff0",
+      "text": true,
+      "ev": "三辆轿车并排停在居民楼间通道上，完全堵住通行"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\fire_lane_blocked\\review\\FIR0014.jpg",
+      "file": "FIR0014.jpg",
+      "sha256": "08dabc53fd04e91355dfd8c98c8ddffa5b896c1540fb5589535fe94fdbf5171a",
+      "text": true,
+      "ev": "多辆轿车斜停占用车行道路口，路中摆红白锥桶，阻碍车辆通行"
+    }
+  ],
+  "dangerous_building": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\dangerous_building\\review\\DAN0015.jpg",
+      "file": "DAN0015.jpg",
+      "sha256": "d8d1994c008c5e77185fddc3c54ec62342e7a1b58f591b005ab374ca69e4ef7b",
+      "text": false,
+      "ev": "橙白色老旧多层楼房，多扇窗户玻璃破损缺失，外墙涂料剥落，楼下杂草丛生，建筑疑似废弃失修"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\dangerous_building\\review\\DAN0019.jpg",
+      "file": "DAN0019.jpg",
+      "sha256": "41c59c558383107023dab8987e27a9711ab18fe0d50e8bc1b23a73263972439a",
+      "text": false,
+      "ev": "废弃房屋墙体大面积剥落，门窗洞口敞开无门窗，砖体外露，墙根堆积碎砖杂物"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\dangerous_building\\review\\DAN0023.jpg",
+      "file": "DAN0023.jpg",
+      "sha256": "cea68e9eed56633f7b6664eee8f78ad5bd51d1e4ce9274d3b6aeeeada55d2d9e",
+      "text": false,
+      "ev": "破旧房屋墙体贯穿裂缝、墙皮大面积脱落、门窗洞口破损，屋内有坍落构件"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\dangerous_building\\review\\DAN0028.jpg",
+      "file": "DAN0028.jpg",
+      "sha256": "ea40412c2c822088c92af76ed539d5cbd3b923f31b1b6736cf76d9785f3b0dc9",
+      "text": false,
+      "ev": "老旧房屋墙面大面积剥落，红砖外露，墙根砖块散落坍塌，屋顶檐部破损，窗户木百叶朽坏"
+    }
+  ],
+  "street_light_pole": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\street_light_pole\\review\\STR0023.jpg",
+      "file": "STR0023.jpg",
+      "sha256": "aacb1bc0feb8bb52b57bd0014c1e96d075b3b44b35c5ddc95ddca58a6525ae0b",
+      "text": false,
+      "ev": "水泥线杆侧面纵向贯通裂缝，表层剥落露筋状，杆身有红色箭头标记"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\street_light_pole\\review\\STR0024.jpg",
+      "file": "STR0024.jpg",
+      "sha256": "a274c7cdbe22b61bca9625c01a5b593f8072cf9791c3c64d4969c8bd43591acb",
+      "text": false,
+      "ev": "草坪上一盏景观照明灯，顶部灯罩破损破裂，内部灯体和线路裸露在外"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\street_light_pole\\review\\STR0028.jpg",
+      "file": "STR0028.jpg",
+      "sha256": "338835e5d9cca7457ff9050dd4e9035ff56b1edce608b9039be63ae1d46a2c40",
+      "text": false,
+      "ev": "夜间人行道上路灯灯杆倾倒倒地，灯罩玻璃碎裂散落地面，灯泡仍亮"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\street_light_pole\\review\\STR0034.jpg",
+      "file": "STR0034.jpg",
+      "sha256": "cd58b29bca11a8351518122ce0afd17a6baec87b0b2f77ccb4e8759e04cad6e4",
+      "text": false,
+      "ev": "混凝土杆身纵向长裂缝，混凝土剥落露出生锈钢筋，底部锈蚀"
+    }
+  ],
+  "gas_leak": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_leak\\review\\GAS0059.jpg",
+      "file": "GAS0059.jpg",
+      "sha256": "441fd78644370290f9e41baefc428ebade74de50583c173b5d0d422de8d434ed",
+      "text": false,
+      "ev": "黄色液化气钢瓶阀门及减压阀特写，软管老化变色，瓶身锈蚀，周边堆放杂物塑料袋，室内近距离使用"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_leak\\review\\GAS0023.jpg",
+      "file": "GAS0023.jpg",
+      "sha256": "e85049de5e71a0916228fce9ee2bbb034abc5ef1bd67390d5c5227c7d9d8cd31",
+      "text": false,
+      "ev": "夜间拍摄的黄色燃气管道阀门，法兰连接处锈蚀严重、漆面剥落"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_leak\\review\\GAS0065.png",
+      "file": "GAS0065.png",
+      "sha256": "a91e81679ac3338d9c8986f8526a21d2439ac063e0a99f98aea041239ca5c597",
+      "text": true,
+      "ev": "老旧液化气钢瓶阀门连接处锈蚀老化，连接红色软管，周围堆放杂物，存在燃气泄漏风险"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\gas_leak\\review\\GAS0046.jpg",
+      "file": "GAS0046.jpg",
+      "sha256": "03f70a5330da21549a3fc344da89c5b5a1c1c9d179e7245e094cac3c8b98b482",
+      "text": true,
+      "ev": "航拍路面多个井盖大量白色蒸汽/气体喷出，周边有积水和斑马线"
+    }
+  ],
+  "sewage_odor": [
+    {
+      "path": "ai-module\\eval\\vision\\pool\\sewage_odor\\review\\SEW0019.jpg",
+      "file": "SEW0019.jpg",
+      "sha256": "c6bfc8a2c257e9c8b2ed2b2517319812a4d0deb76248592c09364091e9aa9779",
+      "text": false,
+      "ev": "河道水体发黑浑浊，水面有油膜反光，沿岸泥坡杂草，无处理迹象"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\sewage_odor\\review\\SEW0029.jpg",
+      "file": "SEW0029.jpg",
+      "sha256": "65ccdbfa7bda07886a955eeea78edb50bd8328e95fbd74f432bf0a41c0e44a64",
+      "text": false,
+      "ev": "路面大面积深色污水积存横流，边缘路缘石破损"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\sewage_odor\\review\\SEW0032.jpg",
+      "file": "SEW0032.jpg",
+      "sha256": "d163d38cdf898e86b052b88c047fdc67ebafd7d1ed00e6a65b434f1bb0c80900",
+      "text": false,
+      "ev": "路面大片灰黑积水，边缘有青苔污泥，旁放橙色交通锥"
+    },
+    {
+      "path": "ai-module\\eval\\vision\\pool\\sewage_odor\\review\\SEW0033.jpg",
+      "file": "SEW0033.jpg",
+      "sha256": "1d1989d4cd703d9d24af1bc6386a302810f028247c48843b837c5ec755bd03c3",
+      "text": false,
+      "ev": "沟渠内水体发黑发暗，水面漂浮白色垃圾，两侧石岸长满杂草"
+    }
+  ]
+}

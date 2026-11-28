@@ -1,0 +1,28 @@
+{
+  "sha256": "59bbda16cbb6ec2cdee0adae77f3ffda2a53cec48e54e40671e836c21a0659f3",
+  "file": "road_occupancy_1_59bbda16cbb6.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"中\",\n  \"description\": \"多辆共享单车倒伏堆放在人行道上，压占黄色盲道，妨碍行人和视障人士通行，存在绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道盲道处\",\n  \"rectification\": [\n    \"立即清理倒伏和堆积的共享单车，恢复盲道畅通\",\n    \"在周边设置规范停车区并加强运维巡查，及时搬离违规停放车辆\"\n  ],\n  \"secondary_subcategories\": [\n    \"road_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "多辆共享单车倒伏堆放在人行道上，压占黄色盲道，妨碍行人和视障人士通行，存在绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道盲道处",
+    "rectification": [
+      "立即清理倒伏和堆积的共享单车，恢复盲道畅通",
+      "在周边设置规范停车区并加强运维巡查，及时搬离违规停放车辆"
+    ],
+    "secondary_subcategories": [
+      "road_occupancy"
+    ]
+  },
+  "error": ""
+}

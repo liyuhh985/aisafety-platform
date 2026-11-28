@@ -1,0 +1,28 @@
+{
+  "sha256": "6d07d00519bf834095475eb35367e5a90ac6e7fdbc1af51bae80ae4de52d7178",
+  "file": "deep_pit_1_6d07d00519bf.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"深基坑坑底大面积积水、泥泞，右侧仅靠一部长梯上下，梯脚泡水且未见固定，存在边坡失稳、人员滑倒坠落等风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑工地深基坑内，坑底及右侧坑壁\",\n  \"rectification\": [\n    \"立即抽排坑底积水并清理泥浆，保持作业面干燥\",\n    \"设置连续、稳固的临边防护和安全警示标志\",\n    \"使用符合规范的上下通道，梯子应固定并避免设在积水松软处\",\n    \"加强基坑边坡监测，发现变形、渗水及时处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "深基坑坑底大面积积水、泥泞，右侧仅靠一部长梯上下，梯脚泡水且未见固定，存在边坡失稳、人员滑倒坠落等风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑工地深基坑内，坑底及右侧坑壁",
+    "rectification": [
+      "立即抽排坑底积水并清理泥浆，保持作业面干燥",
+      "设置连续、稳固的临边防护和安全警示标志",
+      "使用符合规范的上下通道，梯子应固定并避免设在积水松软处",
+      "加强基坑边坡监测，发现变形、渗水及时处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

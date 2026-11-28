@@ -1,0 +1,27 @@
+{
+  "sha256": "aacb1bc0feb8bb52b57bd0014c1e96d075b3b44b35c5ddc95ddca58a6525ae0b",
+  "file": "street_light_pole_1_aacb1bc0feb8.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"street_light_pole\",\n  \"severity\": \"高\",\n  \"description\": \"混凝土线杆存在明显纵向贯穿裂缝，裂缝较长且局部扩展，杆体结构受损，存在断裂、倒伏风险，可能危及周边通行及附属线路安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁绿化带内的混凝土线杆本体\",\n  \"rectification\": [\n    \"立即在杆体周边设置警示和临时隔离，防止人员靠近\",\n    \"安排专业机构检测线杆结构强度，视情况加固或更换\",\n    \"对同路段线杆开展裂缝、倾斜等隐患排查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "混凝土线杆存在明显纵向贯穿裂缝，裂缝较长且局部扩展，杆体结构受损，存在断裂、倒伏风险，可能危及周边通行及附属线路安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁绿化带内的混凝土线杆本体",
+    "rectification": [
+      "立即在杆体周边设置警示和临时隔离，防止人员靠近",
+      "安排专业机构检测线杆结构强度，视情况加固或更换",
+      "对同路段线杆开展裂缝、倾斜等隐患排查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

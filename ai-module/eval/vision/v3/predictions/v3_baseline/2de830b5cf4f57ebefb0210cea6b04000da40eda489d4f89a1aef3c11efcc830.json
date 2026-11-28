@@ -1,0 +1,27 @@
+{
+  "sha256": "2de830b5cf4f57ebefb0210cea6b04000da40eda489d4f89a1aef3c11efcc830",
+  "file": "falling_object_3_2de830b5cf4f.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"墙面瓷砖饰面层明显翘起、与基层分离，形成竖向缝隙，存在整片或局部脱落坠落风险，可能砸伤行人或损坏设施。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面中部偏右墙面瓷砖边缘与管线相邻处\",\n  \"rectification\": [\n    \"立即设置警戒围挡，防止人员靠近\",\n    \"铲除松动饰面层，检查空鼓并重新锚固或粘贴\",\n    \"对同区域墙面开展空鼓排查与修复\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "墙面瓷砖饰面层明显翘起、与基层分离，形成竖向缝隙，存在整片或局部脱落坠落风险，可能砸伤行人或损坏设施。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面中部偏右墙面瓷砖边缘与管线相邻处",
+    "rectification": [
+      "立即设置警戒围挡，防止人员靠近",
+      "铲除松动饰面层，检查空鼓并重新锚固或粘贴",
+      "对同区域墙面开展空鼓排查与修复"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

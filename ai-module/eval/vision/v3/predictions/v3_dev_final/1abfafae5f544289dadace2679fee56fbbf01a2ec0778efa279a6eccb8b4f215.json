@@ -1,0 +1,28 @@
+{
+  "sha256": "1abfafae5f544289dadace2679fee56fbbf01a2ec0778efa279a6eccb8b4f215",
+  "file": "street_light_pole_4_1abfafae5f54.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"street_light_pole\",\"severity\":\"高\",\"description\":\"人行道上灰色金属立杆严重弯折变形，存在倒伏或砸伤风险；右下方方形井盖/盖板破损缺失，内有碎玻璃，形成跌落绊倒隐患。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道近路缘、树木支撑架旁\",\"rectification\":[\"立即对弯折立杆设置围挡和警示，尽快更换或加固\",\"清理破损井盖处碎玻璃，临时覆盖并尽快修复或更换盖板\"],\"secondary_subcategories\":[\"manhole_damage\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "人行道上灰色金属立杆严重弯折变形，存在倒伏或砸伤风险；右下方方形井盖/盖板破损缺失，内有碎玻璃，形成跌落绊倒隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道近路缘、树木支撑架旁",
+    "rectification": [
+      "立即对弯折立杆设置围挡和警示，尽快更换或加固",
+      "清理破损井盖处碎玻璃，临时覆盖并尽快修复或更换盖板"
+    ],
+    "secondary_subcategories": [
+      "manhole_damage"
+    ]
+  },
+  "error": ""
+}

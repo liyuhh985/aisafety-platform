@@ -1,0 +1,26 @@
+{
+  "sha256": "0ef31e8fd5906c015e8650922355af8b65ce6d72f3778e6d32c6cf3eaa270a1b",
+  "file": "traffic_facility_damage_4_0ef31e8fd590.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"traffic_facility_damage\",\"severity\":\"中\",\"description\":\"人行道边缘金属隔离护栏横杆连接处脱开、端头敞开悬空，护栏倾斜松动。可能导致行人绊倒、刮碰受伤，并削弱人车隔离防护作用。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道与车行道之间、靠近雨水篦子的铺装路面旁\",\"rectification\":[\"立即在损坏护栏周边设置临时警示和隔离，防止行人靠近\",\"尽快修复或更换脱开、断裂的护栏构件，封闭外露管口并复查整段护栏牢固性\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "中",
+    "description": "人行道边缘金属隔离护栏横杆连接处脱开、端头敞开悬空，护栏倾斜松动。可能导致行人绊倒、刮碰受伤，并削弱人车隔离防护作用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道与车行道之间、靠近雨水篦子的铺装路面旁",
+    "rectification": [
+      "立即在损坏护栏周边设置临时警示和隔离，防止行人靠近",
+      "尽快修复或更换脱开、断裂的护栏构件，封闭外露管口并复查整段护栏牢固性"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "8d8331f3c97abd33c1ed6ea4eddeea57f83fb2f72149bb6d1537330141eb08be",
+  "file": "fire_equipment_fault_2_8d8331f3c97a.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": true, \"confidence\": \"高\", \"hazard_category\": \"消防安全\", \"major_category\": \"fire\", \"subcategory\": \"fire_equipment_fault\", \"severity\": \"高\", \"description\": \"室外消火栓顶部出水口盖缺失或损坏，底座周围出现白色泡沫状渗漏物并伴地面积水，表明消火栓部件缺失、密封失效或漏水，可能影响紧急灭火供水及冬季防冻。\", \"reason_if_no_hazard\": \"\", \"location_hint\": \"红色消火栓本体顶部及底座周边地面\", \"rectification\": [\"立即由消防维保单位更换缺失或损坏的出水口盖及密封件，并进行试水检测\", \"排查底座渗漏点并修复，清理现场积水，避免锈蚀和冻裂\", \"在维修完成前设置警示标识，并加强消防设施日常巡检\"], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室外消火栓顶部出水口盖缺失或损坏，底座周围出现白色泡沫状渗漏物并伴地面积水，表明消火栓部件缺失、密封失效或漏水，可能影响紧急灭火供水及冬季防冻。",
+    "reason_if_no_hazard": "",
+    "location_hint": "红色消火栓本体顶部及底座周边地面",
+    "rectification": [
+      "立即由消防维保单位更换缺失或损坏的出水口盖及密封件，并进行试水检测",
+      "排查底座渗漏点并修复，清理现场积水，避免锈蚀和冻裂",
+      "在维修完成前设置警示标识，并加强消防设施日常巡检"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

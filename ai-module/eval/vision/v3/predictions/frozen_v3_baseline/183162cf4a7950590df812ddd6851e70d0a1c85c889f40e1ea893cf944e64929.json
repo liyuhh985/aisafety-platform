@@ -1,0 +1,29 @@
+{
+  "sha256": "183162cf4a7950590df812ddd6851e70d0a1c85c889f40e1ea893cf944e64929",
+  "file": "other_1_183162cf4a79.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"建筑安全\",\"major_category\":\"building\",\"subcategory\":\"dangerous_building\",\"severity\":\"高\",\"description\":\"混凝土挡墙存在大面积开裂、错位和破损，上方金属箱体/管道由锈蚀钢架支撑，支撑构件与墙体连接处损坏，存在结构失稳、坍塌及坠物风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"混凝土挡墙及上方金属箱体支撑处\",\"rectification\":[\"立即划定警戒区域并封闭现场，禁止人员靠近\",\"委托专业机构进行结构安全鉴定，必要时临时支护或拆除\",\"对锈蚀支撑、开裂墙体进行加固修复，并清除松动混凝土及坠落物\"],\"secondary_subcategories\":[\"falling_object\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "混凝土挡墙存在大面积开裂、错位和破损，上方金属箱体/管道由锈蚀钢架支撑，支撑构件与墙体连接处损坏，存在结构失稳、坍塌及坠物风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "混凝土挡墙及上方金属箱体支撑处",
+    "rectification": [
+      "立即划定警戒区域并封闭现场，禁止人员靠近",
+      "委托专业机构进行结构安全鉴定，必要时临时支护或拆除",
+      "对锈蚀支撑、开裂墙体进行加固修复，并清除松动混凝土及坠落物"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "33f5c4e6bd106e93154e7ddae3b4407e29564006e3508c5296a4962bf3430a1b",
+  "file": "gas_pipe_aging_1_33f5c4e6bd10.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"gas_pipe_aging\",\"severity\":\"中\",\"description\":\"金属管道开口内壁严重锈蚀，红褐色腐蚀物大量堆积，管径明显缩小，疑为燃气或金属管道老化。可能造成管道堵塞、强度下降，若为燃气管还存在泄漏、破裂风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"管道开口处内壁\",\"rectification\":[\"由燃气或管道专业人员确认管道用途并检测泄漏、腐蚀程度\",\"更换严重锈蚀管段并清理堵塞物\",\"维修前设置警戒，避免明火和擅自拆动\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "金属管道开口内壁严重锈蚀，红褐色腐蚀物大量堆积，管径明显缩小，疑为燃气或金属管道老化。可能造成管道堵塞、强度下降，若为燃气管还存在泄漏、破裂风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "管道开口处内壁",
+    "rectification": [
+      "由燃气或管道专业人员确认管道用途并检测泄漏、腐蚀程度",
+      "更换严重锈蚀管段并清理堵塞物",
+      "维修前设置警戒，避免明火和擅自拆动"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

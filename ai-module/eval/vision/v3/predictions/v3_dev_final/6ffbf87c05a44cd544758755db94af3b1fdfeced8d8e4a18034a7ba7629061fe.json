@@ -1,0 +1,28 @@
+{
+  "sha256": "6ffbf87c05a44cd544758755db94af3b1fdfeced8d8e4a18034a7ba7629061fe",
+  "file": "temporary_power_4_6ffbf87c05a4.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"路边配电箱玻璃门内线路凌乱，多色导线和接线端子密集外露，右侧地面电缆盘绕并伴有杂物。存在人员误触漏电、短路起火及雨天进水风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"路边玻璃门配电箱内部及右侧地面\",\n  \"rectification\": [\n    \"立即由持证电工断电检查，整理并规范固定内部线缆。\",\n    \"修复或更换破损门锁与防护面板，确保配电箱封闭上锁。\",\n    \"清理箱体周边电缆和杂物，设置防触电警示标志。\",\n    \"加装漏电保护并检测接地、绝缘，雨后重点巡查。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "路边配电箱玻璃门内线路凌乱，多色导线和接线端子密集外露，右侧地面电缆盘绕并伴有杂物。存在人员误触漏电、短路起火及雨天进水风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "路边玻璃门配电箱内部及右侧地面",
+    "rectification": [
+      "立即由持证电工断电检查，整理并规范固定内部线缆。",
+      "修复或更换破损门锁与防护面板，确保配电箱封闭上锁。",
+      "清理箱体周边电缆和杂物，设置防触电警示标志。",
+      "加装漏电保护并检测接地、绝缘，雨后重点巡查。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

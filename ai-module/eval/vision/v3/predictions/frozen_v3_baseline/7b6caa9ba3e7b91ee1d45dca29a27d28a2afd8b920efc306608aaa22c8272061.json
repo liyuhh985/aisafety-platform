@@ -1,0 +1,27 @@
+{
+  "sha256": "7b6caa9ba3e7b91ee1d45dca29a27d28a2afd8b920efc306608aaa22c8272061",
+  "file": "blind_path_occupied_2_7b6caa9ba3e7.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"中\",\n  \"description\": \"灰色立杆直接设置在黄色盲道上，柱基占用盲道空间，导致盲道通行中断，视障人士通行时存在碰撞、绊倒风险；周边部分地砖缝隙长草、铺装不平整，进一步增加行走隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道盲道处，灰色立杆底部及右侧盲道砖区域\",\n  \"rectification\": [\n    \"迁改该立杆或调整盲道走向，确保盲道连续、无障碍通行。\",\n    \"对柱基周边松动、破损地砖进行修复，清理缝隙杂草并恢复平整铺装。\",\n    \"在整改完成前设置临时警示标志，提醒行人注意避让。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "灰色立杆直接设置在黄色盲道上，柱基占用盲道空间，导致盲道通行中断，视障人士通行时存在碰撞、绊倒风险；周边部分地砖缝隙长草、铺装不平整，进一步增加行走隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道盲道处，灰色立杆底部及右侧盲道砖区域",
+    "rectification": [
+      "迁改该立杆或调整盲道走向，确保盲道连续、无障碍通行。",
+      "对柱基周边松动、破损地砖进行修复，清理缝隙杂草并恢复平整铺装。",
+      "在整改完成前设置临时警示标志，提醒行人注意避让。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

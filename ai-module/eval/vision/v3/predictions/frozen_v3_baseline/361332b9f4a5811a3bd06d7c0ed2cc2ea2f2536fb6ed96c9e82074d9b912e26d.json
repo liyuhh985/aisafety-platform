@@ -1,0 +1,23 @@
+{
+  "sha256": "361332b9f4a5811a3bd06d7c0ed2cc2ea2f2536fb6ed96c9e82074d9b912e26d",
+  "file": "neg_50_361332b9f4a5.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为正常城市人行道与道路，盲道、护栏、铺装和交通设施基本完好，未见明显破损、占用或可确认的安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为正常城市人行道与道路，盲道、护栏、铺装和交通设施基本完好，未见明显破损、占用或可确认的安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

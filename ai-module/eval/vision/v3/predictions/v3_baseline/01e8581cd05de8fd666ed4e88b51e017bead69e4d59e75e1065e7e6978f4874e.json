@@ -1,0 +1,28 @@
+{
+  "sha256": "01e8581cd05de8fd666ed4e88b51e017bead69e4d59e75e1065e7e6978f4874e",
+  "file": "exposed_wire_4_01e8581cd05d.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"exposed_wire\",\n  \"severity\": \"高\",\n  \"description\": \"岩石缝隙间线缆外皮严重破损，铜芯裸露，且处于潮湿泥水环境中。存在漏电、短路和触电风险，雨天或积水时危险性更高。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"岩石缝隙下方潮湿泥水处\",\n  \"rectification\": [\n    \"立即断电并隔离该线路，禁止人员靠近\",\n    \"由专业电工更换破损线缆并做好防水绝缘保护\",\n    \"排查线路走向和电源来源，消除漏电隐患\",\n    \"修复前设置明显警示标志\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "高",
+    "description": "岩石缝隙间线缆外皮严重破损，铜芯裸露，且处于潮湿泥水环境中。存在漏电、短路和触电风险，雨天或积水时危险性更高。",
+    "reason_if_no_hazard": "",
+    "location_hint": "岩石缝隙下方潮湿泥水处",
+    "rectification": [
+      "立即断电并隔离该线路，禁止人员靠近",
+      "由专业电工更换破损线缆并做好防水绝缘保护",
+      "排查线路走向和电源来源，消除漏电隐患",
+      "修复前设置明显警示标志"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,29 @@
+{
+  "sha256": "95108c1bd01cb1cf969e67767b9fcdf2db0832b2db05a7eb8385f1e00a8663c5",
+  "file": "blind_path_occupied_1_95108c1bd01c.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"中\",\n  \"description\": \"盲道行进砖直接通向灰色墙体，提示砖紧贴墙根，形成断头盲道，未设置绕行或警示，视障人士沿盲道行走可能碰撞墙体；墙面局部开裂、墙皮脱落，存在坠物风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行通道灰色墙体前，盲道尽头处\",\n  \"rectification\": [\n    \"调整盲道走向，在墙体前设置连续绕行盲道和提示砖\",\n    \"在墙体近端设置防撞警示或隔离设施，避免视障人士误撞\",\n    \"排查并修复墙面空鼓、开裂和脱落部位\"\n  ],\n  \"secondary_subcategories\": [\"falling_object\"]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "中",
+    "description": "盲道行进砖直接通向灰色墙体，提示砖紧贴墙根，形成断头盲道，未设置绕行或警示，视障人士沿盲道行走可能碰撞墙体；墙面局部开裂、墙皮脱落，存在坠物风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行通道灰色墙体前，盲道尽头处",
+    "rectification": [
+      "调整盲道走向，在墙体前设置连续绕行盲道和提示砖",
+      "在墙体近端设置防撞警示或隔离设施，避免视障人士误撞",
+      "排查并修复墙面空鼓、开裂和脱落部位"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

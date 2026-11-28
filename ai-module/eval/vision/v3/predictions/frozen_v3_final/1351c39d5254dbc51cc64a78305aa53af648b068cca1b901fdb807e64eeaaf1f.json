@@ -1,0 +1,27 @@
+{
+  "sha256": "1351c39d5254dbc51cc64a78305aa53af648b068cca1b901fdb807e64eeaaf1f",
+  "file": "traffic_facility_damage_2_1351c39d5254.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"traffic_facility_damage\",\n  \"severity\": \"中\",\n  \"description\": \"人行道旁白色金属护栏多处锈蚀，底部横杆与立柱连接处严重锈穿并断开，结构松动失效，失去防护作用，行人倚靠或碰撞时可能坠落、绊倒。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道与绿化带交界处的金属护栏\",\n  \"rectification\": [\n    \"对锈断、松动的护栏构件及时更换或加固焊接\",\n    \"对整段护栏除锈防腐并检查连接牢固性\",\n    \"维修前设置临时警示或隔离，防止行人倚靠\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "traffic_facility_damage",
+    "severity": "中",
+    "description": "人行道旁白色金属护栏多处锈蚀，底部横杆与立柱连接处严重锈穿并断开，结构松动失效，失去防护作用，行人倚靠或碰撞时可能坠落、绊倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道与绿化带交界处的金属护栏",
+    "rectification": [
+      "对锈断、松动的护栏构件及时更换或加固焊接",
+      "对整段护栏除锈防腐并检查连接牢固性",
+      "维修前设置临时警示或隔离，防止行人倚靠"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "16ed0fbdbbbf9efc141d07a785590a08a5d330cdbb72bcb6c010ed3fec7f737d",
+  "file": "fire_equipment_fault_2_16ed0fbdbbbf.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"室内消火栓接口被胶布缠绕，出水口被泥块杂物堵塞，箱内积尘明显，火灾时无法正常出水，延误灭火救援。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内消火栓箱内（红色箱体）\",\"rectification\":[\"清理消火栓接口及箱内杂物，拆除缠绕物\",\"检修或更换受损消火栓阀口，确保出水正常\",\"测试水压并纳入消防设施定期巡检维护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室内消火栓接口被胶布缠绕，出水口被泥块杂物堵塞，箱内积尘明显，火灾时无法正常出水，延误灭火救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内消火栓箱内（红色箱体）",
+    "rectification": [
+      "清理消火栓接口及箱内杂物，拆除缠绕物",
+      "检修或更换受损消火栓阀口，确保出水正常",
+      "测试水压并纳入消防设施定期巡检维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

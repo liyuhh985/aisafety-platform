@@ -1,0 +1,26 @@
+{
+  "sha256": "fda9ad2a9b57e8d655e73b7aff86f6d555cd61bc225b434f2f67aa7558f619ee",
+  "file": "neg_28_fda9ad2a9b57.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"消火栓箱内栓口被黑色袋状杂物遮挡，消防水带、水枪未规范盘挂放置，紧急情况下会影响快速取用和连接，延误灭火处置。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"消火栓箱内消火栓栓口及箱底\",\"rectification\":[\"立即移除消火栓栓口及箱内的遮挡杂物，保持接口和操作空间畅通。\",\"按规范将消防水带、水枪盘挂或放置到位，定期检查消火栓箱内器材完好可用。\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "消火栓箱内栓口被黑色袋状杂物遮挡，消防水带、水枪未规范盘挂放置，紧急情况下会影响快速取用和连接，延误灭火处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "消火栓箱内消火栓栓口及箱底",
+    "rectification": [
+      "立即移除消火栓栓口及箱内的遮挡杂物，保持接口和操作空间畅通。",
+      "按规范将消防水带、水枪盘挂或放置到位，定期检查消火栓箱内器材完好可用。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,28 @@
+{
+  "sha256": "66c764164f1871ecca6c686578d9754c8f7814b1806a94ce5e957216a1da4756",
+  "file": "scaffold_guard_2_66c764164f18.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"scaffold_guard\",\"severity\":\"高\",\"description\":\"桥墩旁脚手架作业层脚手板铺设稀疏、不严密，存在较大空隙，且临边未见完整防护栏杆、挡脚板和安全网；平台上放置的卷材等材料未可靠固定，存在人员高处坠落及物体打击风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"桥墩旁脚手架作业区\",\"rectification\":[\"作业层脚手板应满铺、固定，不得留有孔洞和空隙\",\"按规范设置防护栏杆、挡脚板并挂设安全网\",\"材料应妥善固定，及时清理作业平台边缘物料\",\"脚手架搭设完成后应验收合格再投入使用\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "桥墩旁脚手架作业层脚手板铺设稀疏、不严密，存在较大空隙，且临边未见完整防护栏杆、挡脚板和安全网；平台上放置的卷材等材料未可靠固定，存在人员高处坠落及物体打击风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "桥墩旁脚手架作业区",
+    "rectification": [
+      "作业层脚手板应满铺、固定，不得留有孔洞和空隙",
+      "按规范设置防护栏杆、挡脚板并挂设安全网",
+      "材料应妥善固定，及时清理作业平台边缘物料",
+      "脚手架搭设完成后应验收合格再投入使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

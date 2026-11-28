@@ -1,0 +1,27 @@
+{
+  "sha256": "4f5bace4f63dc05df84a7e49a2632f66747159bd05ef405d8f1cbaf995a2ba42",
+  "file": "neg_38_4f5bace4f63d.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"exposed_wire\",\"severity\":\"中\",\"description\":\"厨房吊顶内可见线缆外露、接线凌乱，部分线缆悬垂于检修人员操作区域附近，未见穿管或封闭保护；若线路带电或绝缘破损，存在触电、短路及火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内厨房吊顶内、窗边设备操作点附近\",\"rectification\":[\"检修前先断电并验电，必要时由持证电工配合处理\",\"将吊顶内线缆整理固定，穿管或入接线盒保护，封闭裸露接头\",\"作业区域设置监护，避免人员同时接触燃气设施与电气线路\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "exposed_wire",
+    "severity": "中",
+    "description": "厨房吊顶内可见线缆外露、接线凌乱，部分线缆悬垂于检修人员操作区域附近，未见穿管或封闭保护；若线路带电或绝缘破损，存在触电、短路及火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内厨房吊顶内、窗边设备操作点附近",
+    "rectification": [
+      "检修前先断电并验电，必要时由持证电工配合处理",
+      "将吊顶内线缆整理固定，穿管或入接线盒保护，封闭裸露接头",
+      "作业区域设置监护，避免人员同时接触燃气设施与电气线路"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

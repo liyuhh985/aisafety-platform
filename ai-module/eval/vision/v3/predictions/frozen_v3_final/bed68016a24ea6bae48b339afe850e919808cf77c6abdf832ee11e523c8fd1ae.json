@@ -1,0 +1,29 @@
+{
+  "sha256": "bed68016a24ea6bae48b339afe850e919808cf77c6abdf832ee11e523c8fd1ae",
+  "file": "road_occupancy_2_bed68016a24e.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"斑马线旁及道路右侧水果摊直接摆放在路面，蓝色三轮车和货车占道停靠，货车所载长竹竿明显伸出车外，压缩行人通行空间，行人被迫绕行机动车道，存在碰撞、刮擦风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"斑马线旁及道路右侧水果摊、蓝色三轮车、货车处\",\n  \"rectification\": [\n    \"清理占道水果摊，引导至市场或划定区域规范经营\",\n    \"劝离违停三轮车和货车，保障斑马线及人行通道畅通\",\n    \"对货车超长外伸货物进行整改并设置必要警示\"\n  ],\n  \"secondary_subcategories\": [\n    \"vehicle_occupancy\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "斑马线旁及道路右侧水果摊直接摆放在路面，蓝色三轮车和货车占道停靠，货车所载长竹竿明显伸出车外，压缩行人通行空间，行人被迫绕行机动车道，存在碰撞、刮擦风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "斑马线旁及道路右侧水果摊、蓝色三轮车、货车处",
+    "rectification": [
+      "清理占道水果摊，引导至市场或划定区域规范经营",
+      "劝离违停三轮车和货车，保障斑马线及人行通道畅通",
+      "对货车超长外伸货物进行整改并设置必要警示"
+    ],
+    "secondary_subcategories": [
+      "vehicle_occupancy"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "c7bb0bb9d16c41409a7ac467aea13a42c7d4a5c3f356676ae120032e22e763fc",
+  "file": "neg_59_c7bb0bb9d16c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中路灯杆及道路设施外观完好，未见破损、倾斜、缺失或影响通行的异常，无客观安全隐患证据。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中路灯杆及道路设施外观完好，未见破损、倾斜、缺失或影响通行的异常，无客观安全隐患证据。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

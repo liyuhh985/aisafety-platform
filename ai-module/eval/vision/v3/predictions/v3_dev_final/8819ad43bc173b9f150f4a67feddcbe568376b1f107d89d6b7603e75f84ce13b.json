@@ -1,0 +1,27 @@
+{
+  "sha256": "8819ad43bc173b9f150f4a67feddcbe568376b1f107d89d6b7603e75f84ce13b",
+  "file": "fire_lane_blocked_3_8819ad43bc17.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_lane_blocked\",\"severity\":\"高\",\"description\":\"公共通道或楼梯间内摆放大型晾衣架并挂满衣物，占用疏散通道；衣物属可燃物，可能阻碍应急疏散、绊倒行人并增加火灾荷载。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"楼梯间或公共通道（疑似）\",\"rectification\":[\"立即移除晾衣架和衣物，保持疏散通道畅通\",\"在指定晾晒区域晾晒衣物\",\"物业加强巡查和消防宣传，制止占用公共通道行为\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "公共通道或楼梯间内摆放大型晾衣架并挂满衣物，占用疏散通道；衣物属可燃物，可能阻碍应急疏散、绊倒行人并增加火灾荷载。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼梯间或公共通道（疑似）",
+    "rectification": [
+      "立即移除晾衣架和衣物，保持疏散通道畅通",
+      "在指定晾晒区域晾晒衣物",
+      "物业加强巡查和消防宣传，制止占用公共通道行为"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

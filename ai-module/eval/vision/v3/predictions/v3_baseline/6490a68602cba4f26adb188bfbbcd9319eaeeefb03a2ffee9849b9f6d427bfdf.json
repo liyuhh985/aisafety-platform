@@ -1,0 +1,26 @@
+{
+  "sha256": "6490a68602cba4f26adb188bfbbcd9319eaeeefb03a2ffee9849b9f6d427bfdf",
+  "file": "road_occupancy_2_6490a68602cb.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"多名摊贩在人行道上占道经营，摆放手推车、水果筐及塑料袋等物品，挤占行人通行空间，部分物品可能影响盲道使用。行人被迫绕行，存在绊倒或走入机动车道的安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道及盲道附近\",\n  \"rectification\": [\n    \"劝离占道摊贩，引导其进入指定市场或规范经营区\",\n    \"清理人行道上的推车、果筐等杂物，恢复盲道及行人通道畅通\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "多名摊贩在人行道上占道经营，摆放手推车、水果筐及塑料袋等物品，挤占行人通行空间，部分物品可能影响盲道使用。行人被迫绕行，存在绊倒或走入机动车道的安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道及盲道附近",
+    "rectification": [
+      "劝离占道摊贩，引导其进入指定市场或规范经营区",
+      "清理人行道上的推车、果筐等杂物，恢复盲道及行人通道畅通"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

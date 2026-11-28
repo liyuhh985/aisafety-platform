@@ -1,0 +1,27 @@
+{
+  "sha256": "5e4b3fd672ee486dc1b798b9fb69c783e967136fe2813c39c10e9595c643bc24",
+  "file": "manhole_damage_2_5e4b3fd672ee.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"高\",\"description\":\"草地边缘一方形井盖/盖板严重破损，多块盖板碎裂、塌陷并缺失，内部结构外露，周边落叶覆盖不易发现。行人踩踏可能坠落或绊倒受伤，存在较高安全风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"草地边缘的方形井盖/盖板处\",\"rectification\":[\"立即在破损井盖周边设置围挡和醒目警示标志，防止行人靠近\",\"尽快更换或修复破损井盖/盖板，恢复完整承载能力\",\"清理井盖周边落叶和杂物，避免遮挡隐患并便于巡查发现\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "草地边缘一方形井盖/盖板严重破损，多块盖板碎裂、塌陷并缺失，内部结构外露，周边落叶覆盖不易发现。行人踩踏可能坠落或绊倒受伤，存在较高安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "草地边缘的方形井盖/盖板处",
+    "rectification": [
+      "立即在破损井盖周边设置围挡和醒目警示标志，防止行人靠近",
+      "尽快更换或修复破损井盖/盖板，恢复完整承载能力",
+      "清理井盖周边落叶和杂物，避免遮挡隐患并便于巡查发现"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

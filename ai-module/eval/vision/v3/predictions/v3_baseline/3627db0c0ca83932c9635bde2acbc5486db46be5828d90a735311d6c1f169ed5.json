@@ -1,0 +1,28 @@
+{
+  "sha256": "3627db0c0ca83932c9635bde2acbc5486db46be5828d90a735311d6c1f169ed5",
+  "file": "distribution_box_fault_3_3627db0c0ca8.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"temporary_power\",\n  \"severity\": \"高\",\n  \"description\": \"多个红色配电箱倒伏在土坡下，箱门敞开，内部开关及线路裸露，人员易触碰，存在触电、短路和电气火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临时板房前土坡下方\",\n  \"rectification\": [\n    \"立即断电并隔离现场，由持证电工修复或更换配电箱，规范固定、接地并配置漏电保护。\",\n    \"设置围挡和警示标志，禁止无关人员靠近，全面排查线路绝缘及临时用电安全。\"\n  ],\n  \"secondary_subcategories\": [\n    \"construction/no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "temporary_power",
+    "severity": "高",
+    "description": "多个红色配电箱倒伏在土坡下，箱门敞开，内部开关及线路裸露，人员易触碰，存在触电、短路和电气火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临时板房前土坡下方",
+    "rectification": [
+      "立即断电并隔离现场，由持证电工修复或更换配电箱，规范固定、接地并配置漏电保护。",
+      "设置围挡和警示标志，禁止无关人员靠近，全面排查线路绝缘及临时用电安全。"
+    ],
+    "secondary_subcategories": [
+      "construction/no_warning"
+    ]
+  },
+  "error": ""
+}

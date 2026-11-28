@@ -1,0 +1,23 @@
+{
+  "sha256": "02fd62872060995d993b391d6f97eff2f98143eb858c00c3e3f40814ac1ca31e",
+  "file": "neg_66_02fd62872060.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面为秋季林荫道路与木屋，地面落叶属自然现象，未见树木倒伏/断枝、路面塌陷、设施损坏等明确安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为秋季林荫道路与木屋，地面落叶属自然现象，未见树木倒伏/断枝、路面塌陷、设施损坏等明确安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

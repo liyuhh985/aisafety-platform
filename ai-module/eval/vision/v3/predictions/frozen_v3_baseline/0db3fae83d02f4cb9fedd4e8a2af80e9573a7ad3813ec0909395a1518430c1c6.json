@@ -1,0 +1,26 @@
+{
+  "sha256": "0db3fae83d02f4cb9fedd4e8a2af80e9573a7ad3813ec0909395a1518430c1c6",
+  "file": "blind_path_occupied_1_0db3fae83d02.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"blind_path_occupied\",\n  \"severity\": \"高\",\n  \"description\": \"人行道多处黄黑金属隔离栏直接设置在盲道及通行路径上，连续占用、阻断盲道，导致视障人士无法正常通行，并存在碰撞、绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道盲道中央及右侧区域\",\n  \"rectification\": [\n    \"立即移除或迁移占用盲道的隔离栏，恢复盲道连续畅通\",\n    \"按规范重设隔离设施并预留足够通行宽度，增设必要提示\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "blind_path_occupied",
+    "severity": "高",
+    "description": "人行道多处黄黑金属隔离栏直接设置在盲道及通行路径上，连续占用、阻断盲道，导致视障人士无法正常通行，并存在碰撞、绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道盲道中央及右侧区域",
+    "rectification": [
+      "立即移除或迁移占用盲道的隔离栏，恢复盲道连续畅通",
+      "按规范重设隔离设施并预留足够通行宽度，增设必要提示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

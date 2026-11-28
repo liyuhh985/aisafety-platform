@@ -1,0 +1,32 @@
+{
+  "sha256": "7ac77c87eea11b39bf5fc8434e98e87da8d52014f162682c6b7cef2ecc1555bf",
+  "file": "deep_pit_3_7ac77c87eea1.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"建筑前存在大型深基坑，边坡土体裸露且局部坍塌，护坡面破损，坑边未见连续围挡和明显警示，紧邻房屋基础，存在人员坠落及建筑基础失稳风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"两层建筑前方的大型开挖基坑及坍塌边坡处\",\n  \"rectification\": [\n    \"立即停工并封闭基坑周边危险区域，禁止人员靠近\",\n    \"按规范对基坑边坡进行支护、放坡和加固，清除坍塌松散土体\",\n    \"设置连续硬质围挡及醒目安全警示标志\",\n    \"对紧邻建筑基础、边坡和地下管线开展监测，必要时组织人员撤离\",\n    \"完成隐患消除前不得恢复施工，必要时尽快回填或加固\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\",\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "建筑前存在大型深基坑，边坡土体裸露且局部坍塌，护坡面破损，坑边未见连续围挡和明显警示，紧邻房屋基础，存在人员坠落及建筑基础失稳风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "两层建筑前方的大型开挖基坑及坍塌边坡处",
+    "rectification": [
+      "立即停工并封闭基坑周边危险区域，禁止人员靠近",
+      "按规范对基坑边坡进行支护、放坡和加固，清除坍塌松散土体",
+      "设置连续硬质围挡及醒目安全警示标志",
+      "对紧邻建筑基础、边坡和地下管线开展监测，必要时组织人员撤离",
+      "完成隐患消除前不得恢复施工，必要时尽快回填或加固"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

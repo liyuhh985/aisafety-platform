@@ -1,0 +1,28 @@
+{
+  "sha256": "307210413e9e38b383c70c4b92268ad6124ed59d6c21aa37790567372609da2a",
+  "file": "fire_equipment_fault_1_307210413e9e.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"路边红色消火栓侧接口大量喷水，疑似阀门或接口密封失效，导致周边地面积水湿滑，浪费水资源，并可能降低消防管网压力，影响应急灭火。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路旁人行道上的红色消火栓\",\"rectification\":[\"立即关闭消火栓阀门并联系水务/消防维保单位处置\",\"在喷水区域设置警示围挡，防止行人滑倒\",\"检修或更换损坏的接口、阀门及密封件，测试合格后恢复使用\",\"清理周边积水，必要时采取防滑措施\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "路边红色消火栓侧接口大量喷水，疑似阀门或接口密封失效，导致周边地面积水湿滑，浪费水资源，并可能降低消防管网压力，影响应急灭火。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁人行道上的红色消火栓",
+    "rectification": [
+      "立即关闭消火栓阀门并联系水务/消防维保单位处置",
+      "在喷水区域设置警示围挡，防止行人滑倒",
+      "检修或更换损坏的接口、阀门及密封件，测试合格后恢复使用",
+      "清理周边积水，必要时采取防滑措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

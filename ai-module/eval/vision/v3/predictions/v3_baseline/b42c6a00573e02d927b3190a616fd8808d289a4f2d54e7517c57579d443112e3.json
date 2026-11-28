@@ -1,0 +1,27 @@
+{
+  "sha256": "b42c6a00573e02d927b3190a616fd8808d289a4f2d54e7517c57579d443112e3",
+  "file": "gas_leak_3_b42c6a00573e.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"高\",\n  \"description\": \"临街人行道处大量白色烟雾或蒸汽从地面冒出，紧邻商铺、电动三轮车和停放车辆，影响视线和通行；可能为地下管线、电缆故障或燃气泄漏，存在火灾、爆炸及中毒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街商铺前人行道，电动三轮车旁\",\n  \"rectification\": [\n    \"立即设置警戒并疏散人员，禁止烟火和围观\",\n    \"联系消防、燃气、电力及市政部门排查烟雾来源\",\n    \"必要时切断相关电源或气源并抢修，确认安全后恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "高",
+    "description": "临街人行道处大量白色烟雾或蒸汽从地面冒出，紧邻商铺、电动三轮车和停放车辆，影响视线和通行；可能为地下管线、电缆故障或燃气泄漏，存在火灾、爆炸及中毒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街商铺前人行道，电动三轮车旁",
+    "rectification": [
+      "立即设置警戒并疏散人员，禁止烟火和围观",
+      "联系消防、燃气、电力及市政部门排查烟雾来源",
+      "必要时切断相关电源或气源并抢修，确认安全后恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

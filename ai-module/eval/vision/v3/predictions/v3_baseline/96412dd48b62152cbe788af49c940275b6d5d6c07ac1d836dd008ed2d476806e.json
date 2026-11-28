@@ -1,0 +1,27 @@
+{
+  "sha256": "96412dd48b62152cbe788af49c940275b6d5d6c07ac1d836dd008ed2d476806e",
+  "file": "gas_pipe_aging_1_96412dd48b62.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"高\",\n  \"description\": \"墙角穿地金属管道根部严重锈蚀、破损，周边散落锈屑并可见孔洞，存在管壁穿孔导致燃气或介质泄漏的风险，可能引发中毒、爆炸或设施损坏。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"墙角管道穿入地面处\",\n  \"rectification\": [\n    \"立即检测管道是否泄漏，必要时关闭阀门并疏散人员\",\n    \"更换锈蚀破损管段，做好防腐和穿地套管保护\",\n    \"定期巡检并记录管道锈蚀情况\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "高",
+    "description": "墙角穿地金属管道根部严重锈蚀、破损，周边散落锈屑并可见孔洞，存在管壁穿孔导致燃气或介质泄漏的风险，可能引发中毒、爆炸或设施损坏。",
+    "reason_if_no_hazard": "",
+    "location_hint": "墙角管道穿入地面处",
+    "rectification": [
+      "立即检测管道是否泄漏，必要时关闭阀门并疏散人员",
+      "更换锈蚀破损管段，做好防腐和穿地套管保护",
+      "定期巡检并记录管道锈蚀情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

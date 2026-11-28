@@ -1,0 +1,27 @@
+{
+  "sha256": "5b2ced98f291dc2655af2c0e39036545132c1e19030b864e1ddba6e61ca76e80",
+  "file": "illegal_wiring_1_5b2ced98f291.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"高\",\"description\":\"建筑外墙与线杆处大量线缆杂乱缠绕、盘绕悬垂，部分线缆低垂易接触，存在绝缘磨损、短路漏电及火灾风险，也可能因固定不牢坠落伤人。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙与线杆之间的架空线缆集中悬挂处\",\"rectification\":[\"梳理并清除废弃线缆，按规范分类敷设、穿管固定\",\"对低垂、受力磨损线段进行整改，确保与人员活动区域保持安全距离\",\"开展漏电和绝缘检测，并设置必要的安全警示\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "建筑外墙与线杆处大量线缆杂乱缠绕、盘绕悬垂，部分线缆低垂易接触，存在绝缘磨损、短路漏电及火灾风险，也可能因固定不牢坠落伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙与线杆之间的架空线缆集中悬挂处",
+    "rectification": [
+      "梳理并清除废弃线缆，按规范分类敷设、穿管固定",
+      "对低垂、受力磨损线段进行整改，确保与人员活动区域保持安全距离",
+      "开展漏电和绝缘检测，并设置必要的安全警示"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

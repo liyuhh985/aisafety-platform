@@ -1,0 +1,31 @@
+{
+  "sha256": "f8d73918535db9f3bbae2013f02c2dce7e2f22ad25e8a2478683a8afd40fbc6c",
+  "file": "deep_pit_2_f8d73918535d.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"现场开挖形成较深基坑，边坡土体裸露陡直且局部坍塌，木撑凌乱、混凝土板悬空，未见可靠支护和临边防护，易发生坍塌、坠物伤人，并危及周边人员及建筑安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼前建筑工地基坑边坡\",\n  \"rectification\": [\n    \"立即停工并设置警戒，禁止无关人员靠近基坑边缘。\",\n    \"按规范进行放坡或可靠支护，清除悬空混凝土板及松动土体。\",\n    \"沿基坑周边设置连续围挡、临边防护和明显安全警示标志。\",\n    \"安排专人监测边坡及周边建筑变形，发现异常及时撤人处置。\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_barrier\",\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "现场开挖形成较深基坑，边坡土体裸露陡直且局部坍塌，木撑凌乱、混凝土板悬空，未见可靠支护和临边防护，易发生坍塌、坠物伤人，并危及周边人员及建筑安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼前建筑工地基坑边坡",
+    "rectification": [
+      "立即停工并设置警戒，禁止无关人员靠近基坑边缘。",
+      "按规范进行放坡或可靠支护，清除悬空混凝土板及松动土体。",
+      "沿基坑周边设置连续围挡、临边防护和明显安全警示标志。",
+      "安排专人监测边坡及周边建筑变形，发现异常及时撤人处置。"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

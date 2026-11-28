@@ -1,0 +1,30 @@
+{
+  "sha256": "0f33067f5b5acedb21828dd0139726adb26c99f8a227d2644300caffd97d4127",
+  "file": "no_barrier_1_0f33067f5b5a.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"道路旁开挖形成较深沟槽，沟槽内有积水，边坡土体裸露且未见支护或放坡；挖掘机履带直接跨越沟槽边缘作业，沟边未设连续围挡和警示，存在机械倾覆、边坡坍塌及人员坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路旁施工沟槽及挖掘机跨越处\",\"rectification\":[\"立即停止挖掘机跨沟作业，机械与沟槽边缘保持安全距离\",\"按规范对沟槽放坡或支护，并抽排积水、检查边坡稳定\",\"沿沟槽设置连续硬质围挡、警示标志及夜间警示灯，安排专人监护\"],\"secondary_subcategories\":[\"no_barrier\",\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路旁开挖形成较深沟槽，沟槽内有积水，边坡土体裸露且未见支护或放坡；挖掘机履带直接跨越沟槽边缘作业，沟边未设连续围挡和警示，存在机械倾覆、边坡坍塌及人员坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁施工沟槽及挖掘机跨越处",
+    "rectification": [
+      "立即停止挖掘机跨沟作业，机械与沟槽边缘保持安全距离",
+      "按规范对沟槽放坡或支护，并抽排积水、检查边坡稳定",
+      "沿沟槽设置连续硬质围挡、警示标志及夜间警示灯，安排专人监护"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

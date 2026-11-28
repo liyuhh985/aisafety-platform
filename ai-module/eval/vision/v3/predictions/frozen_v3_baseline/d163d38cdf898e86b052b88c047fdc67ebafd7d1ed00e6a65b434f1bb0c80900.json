@@ -1,0 +1,27 @@
+{
+  "sha256": "d163d38cdf898e86b052b88c047fdc67ebafd7d1ed00e6a65b434f1bb0c80900",
+  "file": "sewage_odor_2_d163d38cdf89.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"drainage_flood\",\"severity\":\"中\",\"description\":\"道路与草坪交界处存在大面积积水，排水不畅，路面湿滑，旁有橙色警示锥。行人、非机动车易滑倒，车辆通行可能溅水或打滑，长期积水还可能加剧路面破损。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路与草坪交界处、橙色警示锥附近的低洼积水区域\",\"rectification\":[\"排查并疏通雨水口、排水沟，及时清除积水\",\"修复低洼和破损路面，完善排水坡度\",\"积水未消除前设置警示锥和临时提示，必要时隔离该区域\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "道路与草坪交界处存在大面积积水，排水不畅，路面湿滑，旁有橙色警示锥。行人、非机动车易滑倒，车辆通行可能溅水或打滑，长期积水还可能加剧路面破损。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路与草坪交界处、橙色警示锥附近的低洼积水区域",
+    "rectification": [
+      "排查并疏通雨水口、排水沟，及时清除积水",
+      "修复低洼和破损路面，完善排水坡度",
+      "积水未消除前设置警示锥和临时提示，必要时隔离该区域"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

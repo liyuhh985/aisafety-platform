@@ -1,0 +1,27 @@
+{
+  "sha256": "f22af713e27c135df52371e1208b470d822e28364b839eed2d34f624ca638386",
+  "file": "illegal_wiring_3_f22af713e27c.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"高\",\n  \"description\": \"墙脚缝隙处私拉电线连接白色插排/接线板，直接置于泥土地面，线路无穿管、无防水防机械保护，且临近通行区域，存在触电、短路起火及绊倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"墙脚/门框下方至绿色地面通道边缘\",\n  \"rectification\": [\n    \"拆除临时私拉线路，由持证电工按规范重新敷设并加装漏电保护\",\n    \"插座、插排应远离地面并采取防水、防机械损伤和穿管保护措施\",\n    \"清理地面泥土杂物，避免线路横穿通行区域造成绊倒或碾压破损\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "墙脚缝隙处私拉电线连接白色插排/接线板，直接置于泥土地面，线路无穿管、无防水防机械保护，且临近通行区域，存在触电、短路起火及绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "墙脚/门框下方至绿色地面通道边缘",
+    "rectification": [
+      "拆除临时私拉线路，由持证电工按规范重新敷设并加装漏电保护",
+      "插座、插排应远离地面并采取防水、防机械损伤和穿管保护措施",
+      "清理地面泥土杂物，避免线路横穿通行区域造成绊倒或碾压破损"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

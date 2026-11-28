@@ -1,0 +1,27 @@
+{
+  "sha256": "21a9f894d27acf60aa6f218685f77bcd313b40ae82f96f31c494d3c6bd0e5095",
+  "file": "road_occupancy_3_21a9f894d27a.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"沿街人行道被连排红色遮阳棚、货架和成箱货物占用，可通行宽度明显变窄，行人需侧身或绕行，易发生绊倒、碰撞，并可能被迫走上车行道。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"沿街人行道及摊位支撑架周边\",\n  \"rectification\": [\n    \"清除占道货架、箱体和多余遮阳棚，恢复人行道通行宽度\",\n    \"划定合规经营区域，禁止占用行人通道\",\n    \"加强日常巡查，发现占道经营及时劝导整改\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "沿街人行道被连排红色遮阳棚、货架和成箱货物占用，可通行宽度明显变窄，行人需侧身或绕行，易发生绊倒、碰撞，并可能被迫走上车行道。",
+    "reason_if_no_hazard": "",
+    "location_hint": "沿街人行道及摊位支撑架周边",
+    "rectification": [
+      "清除占道货架、箱体和多余遮阳棚，恢复人行道通行宽度",
+      "划定合规经营区域，禁止占用行人通道",
+      "加强日常巡查，发现占道经营及时劝导整改"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

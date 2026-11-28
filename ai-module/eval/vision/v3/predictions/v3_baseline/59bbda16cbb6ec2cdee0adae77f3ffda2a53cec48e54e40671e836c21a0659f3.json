@@ -1,0 +1,27 @@
+{
+  "sha256": "59bbda16cbb6ec2cdee0adae77f3ffda2a53cec48e54e40671e836c21a0659f3",
+  "file": "road_occupancy_1_59bbda16cbb6.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"road_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"多辆共享单车倾倒、堆叠在人行道上，占用通行空间，行人需绕行，存在绊倒风险；若压占盲道还会影响视障人士通行。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道靠近绿化带一侧\",\n  \"rectification\": [\n    \"立即清理倒伏、堆叠的共享单车，规范摆放\",\n    \"加强共享单车停放管理和日常巡查\",\n    \"设置规范停车区并制止占压盲道行为\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "多辆共享单车倾倒、堆叠在人行道上，占用通行空间，行人需绕行，存在绊倒风险；若压占盲道还会影响视障人士通行。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道靠近绿化带一侧",
+    "rectification": [
+      "立即清理倒伏、堆叠的共享单车，规范摆放",
+      "加强共享单车停放管理和日常巡查",
+      "设置规范停车区并制止占压盲道行为"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,29 @@
+{
+  "sha256": "fd8db4f9870e18525aa9b1ef9f1f1faec2f09cb40702a2686a6eb44408638235",
+  "file": "vehicle_occupancy_3_fd8db4f9870e.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"银色轿车违停在人行道上，车身挤占行人通行空间并靠近盲道，迫使行人绕行至机动车道，存在碰撞风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行横道标志牌旁的人行道及盲道区域\",\"rectification\":[\"立即劝离或拖移违停车辆，恢复人行道通行\",\"在人行道入口增设隔离桩或违停抓拍设施，防止车辆驶入\",\"加强该路段巡查和违停执法\"],\"secondary_subcategories\":[\"blind_path_occupied\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "银色轿车违停在人行道上，车身挤占行人通行空间并靠近盲道，迫使行人绕行至机动车道，存在碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行横道标志牌旁的人行道及盲道区域",
+    "rectification": [
+      "立即劝离或拖移违停车辆，恢复人行道通行",
+      "在人行道入口增设隔离桩或违停抓拍设施，防止车辆驶入",
+      "加强该路段巡查和违停执法"
+    ],
+    "secondary_subcategories": [
+      "blind_path_occupied"
+    ]
+  },
+  "error": ""
+}

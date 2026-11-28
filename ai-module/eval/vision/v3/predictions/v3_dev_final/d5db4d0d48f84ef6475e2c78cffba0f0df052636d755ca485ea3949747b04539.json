@@ -1,0 +1,29 @@
+{
+  "sha256": "d5db4d0d48f84ef6475e2c78cffba0f0df052636d755ca485ea3949747b04539",
+  "file": "ebike_hazard_2_d5db4d0d48f8.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"ebike_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"居民楼窗外垂下白色电线连接楼下电动自行车充电，属于飞线充电。线路长期暴露易破损漏电短路，可能引发火灾或触电事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼一层外墙窗下\",\n  \"rectification\": [\n    \"立即拔除飞线，停止违规充电\",\n    \"引导车辆到集中充电棚或充电桩充电\",\n    \"清理周边可燃物并加强日常巡查宣传\"\n  ],\n  \"secondary_subcategories\": [\n    \"illegal_wiring\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "ebike_hazard",
+    "severity": "高",
+    "description": "居民楼窗外垂下白色电线连接楼下电动自行车充电，属于飞线充电。线路长期暴露易破损漏电短路，可能引发火灾或触电事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼一层外墙窗下",
+    "rectification": [
+      "立即拔除飞线，停止违规充电",
+      "引导车辆到集中充电棚或充电桩充电",
+      "清理周边可燃物并加强日常巡查宣传"
+    ],
+    "secondary_subcategories": [
+      "illegal_wiring"
+    ]
+  },
+  "error": ""
+}

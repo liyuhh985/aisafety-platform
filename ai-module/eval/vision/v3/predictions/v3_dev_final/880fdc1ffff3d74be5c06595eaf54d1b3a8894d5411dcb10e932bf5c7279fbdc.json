@@ -1,0 +1,27 @@
+{
+  "sha256": "880fdc1ffff3d74be5c06595eaf54d1b3a8894d5411dcb10e932bf5c7279fbdc",
+  "file": "falling_object_4_880fdc1ffff3.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"高\",\n  \"description\": \"汽车后挡风玻璃被大量水泥块/混凝土块砸穿，车顶及车身散落碎块。明显为高空坠物所致，已造成财产损失，对下方行人及车辆构成严重生命威胁。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"车辆停放区域及上方建筑外墙/高空区域\",\n  \"rectification\": [\n    \"立即对上方建筑外立面、屋檐、外墙抹灰等部位进行全面排查，消除松动脱落隐患\",\n    \"清理散落的坠落物，并在隐患区域下方设置警戒线，防止二次坠物伤人\",\n    \"督促物业或建筑产权方加强高空坠物防范及日常巡查\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "高",
+    "description": "汽车后挡风玻璃被大量水泥块/混凝土块砸穿，车顶及车身散落碎块。明显为高空坠物所致，已造成财产损失，对下方行人及车辆构成严重生命威胁。",
+    "reason_if_no_hazard": "",
+    "location_hint": "车辆停放区域及上方建筑外墙/高空区域",
+    "rectification": [
+      "立即对上方建筑外立面、屋檐、外墙抹灰等部位进行全面排查，消除松动脱落隐患",
+      "清理散落的坠落物，并在隐患区域下方设置警戒线，防止二次坠物伤人",
+      "督促物业或建筑产权方加强高空坠物防范及日常巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

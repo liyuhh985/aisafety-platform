@@ -1,0 +1,27 @@
+{
+  "sha256": "2bfdc28e68f19cce33e07204c7609ea72fb954ed442d524cbb106ab2fb6ce74d",
+  "file": "scaffold_guard_3_2bfdc28e68f1.png",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"高\",\n  \"description\": \"脚手架立杆底部直接置于松土碎石上，未见垫板或底座，局部安全网破损、下摆未封闭，架体稳定性与防坠落、防坠物防护不足，存在架体失稳坍塌及人员或物体坠落风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"施工工地脚手架外侧及底部\",\n  \"rectification\": [\n    \"立杆底部加设底座和垫板，并夯实基础，按规范设置扫地杆和剪刀撑。\",\n    \"修复并封闭破损密目安全网，确保架体底部封闭、连墙件可靠。\",\n    \"设置警戒区域和安全警示标志，脚手架验收合格后方可使用。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "脚手架立杆底部直接置于松土碎石上，未见垫板或底座，局部安全网破损、下摆未封闭，架体稳定性与防坠落、防坠物防护不足，存在架体失稳坍塌及人员或物体坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "施工工地脚手架外侧及底部",
+    "rectification": [
+      "立杆底部加设底座和垫板，并夯实基础，按规范设置扫地杆和剪刀撑。",
+      "修复并封闭破损密目安全网，确保架体底部封闭、连墙件可靠。",
+      "设置警戒区域和安全警示标志，脚手架验收合格后方可使用。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

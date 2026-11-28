@@ -1,0 +1,29 @@
+{
+  "sha256": "3a131aaa6399d07c0253d5bb18181d88db8de292878672993411540077952e55",
+  "file": "ebike_hazard_2_3a131aaa6399.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"ebike_hazard\",\"severity\":\"中\",\"description\":\"建筑外墙灭火器箱旁停放电动自行车，并有黑色线缆从墙体/上方拉至车辆附近，疑似飞线充电。存在线路短路、触电及起火风险，且车辆停放靠近灭火器箱，影响应急取用。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙灭火器箱旁及电动车停放处\",\"rectification\":[\"立即停止飞线充电并移除临时充电线路，引导车辆到集中充电区域充电。\",\"清理灭火器箱前及周边停放的电动车，保持消防器材取用通道畅通。\",\"对墙体引出线路进行排查，规范固定或拆除，并加强日常巡查和宣传。\"],\"secondary_subcategories\":[\"illegal_wiring\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "ebike_hazard",
+    "severity": "中",
+    "description": "建筑外墙灭火器箱旁停放电动自行车，并有黑色线缆从墙体/上方拉至车辆附近，疑似飞线充电。存在线路短路、触电及起火风险，且车辆停放靠近灭火器箱，影响应急取用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙灭火器箱旁及电动车停放处",
+    "rectification": [
+      "立即停止飞线充电并移除临时充电线路，引导车辆到集中充电区域充电。",
+      "清理灭火器箱前及周边停放的电动车，保持消防器材取用通道畅通。",
+      "对墙体引出线路进行排查，规范固定或拆除，并加强日常巡查和宣传。"
+    ],
+    "secondary_subcategories": [
+      "illegal_wiring"
+    ]
+  },
+  "error": ""
+}

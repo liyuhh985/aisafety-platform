@@ -1,0 +1,26 @@
+{
+  "sha256": "b4f987a7194df97db6170ba9f77439c59efd5ca0db9c52a9989c26e489a522ca",
+  "file": "neg_14_b4f987a7194d.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_warning\",\n  \"severity\": \"中\",\n  \"description\": \"挖掘机作业时，一名测量人员紧邻铲斗和作业区站立，现场未见警戒隔离、锥桶或警示标志，人员可能处于机械回转或土石飞溅影响范围，存在机械伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"钢结构厂房内挖掘机开挖作业区右侧\",\n  \"rectification\": [\n    \"立即设置警戒线、锥桶和明显的施工警示标志，将无关人员清退出作业影响范围。\",\n    \"安排专人指挥监护，明确挖掘机回转半径内禁止站人，并对作业人员进行安全交底。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_warning",
+    "severity": "中",
+    "description": "挖掘机作业时，一名测量人员紧邻铲斗和作业区站立，现场未见警戒隔离、锥桶或警示标志，人员可能处于机械回转或土石飞溅影响范围，存在机械伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "钢结构厂房内挖掘机开挖作业区右侧",
+    "rectification": [
+      "立即设置警戒线、锥桶和明显的施工警示标志，将无关人员清退出作业影响范围。",
+      "安排专人指挥监护，明确挖掘机回转半径内禁止站人，并对作业人员进行安全交底。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

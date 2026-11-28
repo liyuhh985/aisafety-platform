@@ -1,0 +1,26 @@
+{
+  "sha256": "8fe2e66f08d51b39bf3bbfe428e8d2993c1dbd0c04865deb09383c6696a2ca81",
+  "file": "no_warning_2_8fe2e66f08d5.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"野外泥土地面出现巨大且深的不规则坑洞，边缘土质松散，疑似地面塌陷或废弃深井。周边完全没有任何围挡或安全警示，行人不慎靠近极易发生坠落危险，存在严重伤亡风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"草地与泥土地面交界处\",\n  \"rectification\": [\n    \"立即在坑洞周围设置硬质围挡和醒目的安全警示标志，夜间需加装反光警示设施\",\n    \"迅速查明坑洞成因，并采取回填、夯实或加盖等工程措施彻底消除坠落隐患\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "野外泥土地面出现巨大且深的不规则坑洞，边缘土质松散，疑似地面塌陷或废弃深井。周边完全没有任何围挡或安全警示，行人不慎靠近极易发生坠落危险，存在严重伤亡风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "草地与泥土地面交界处",
+    "rectification": [
+      "立即在坑洞周围设置硬质围挡和醒目的安全警示标志，夜间需加装反光警示设施",
+      "迅速查明坑洞成因，并采取回填、夯实或加盖等工程措施彻底消除坠落隐患"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

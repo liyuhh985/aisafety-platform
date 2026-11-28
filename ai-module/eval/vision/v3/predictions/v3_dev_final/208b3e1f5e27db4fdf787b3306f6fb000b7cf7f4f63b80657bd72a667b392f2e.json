@@ -1,0 +1,27 @@
+{
+  "sha256": "208b3e1f5e27db4fdf787b3306f6fb000b7cf7f4f63b80657bd72a667b392f2e",
+  "file": "tree_fall_hazard_2_208b3e1f5e27.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"中\",\n  \"description\": \"小路中央有粗大树木倒伏横跨路面，阻断通行，枝干低垂易绊倒行人，若继续断裂可能砸伤经过人员。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"林间步道中央，两侧树木之间\",\n  \"rectification\": [\n    \"及时清理倒伏树木和断枝，恢复步道通行\",\n    \"在倒伏树木周边设置警示标志或临时隔离\",\n    \"排查沿线树木倾斜、枯枝等倒伏断枝风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "中",
+    "description": "小路中央有粗大树木倒伏横跨路面，阻断通行，枝干低垂易绊倒行人，若继续断裂可能砸伤经过人员。",
+    "reason_if_no_hazard": "",
+    "location_hint": "林间步道中央，两侧树木之间",
+    "rectification": [
+      "及时清理倒伏树木和断枝，恢复步道通行",
+      "在倒伏树木周边设置警示标志或临时隔离",
+      "排查沿线树木倾斜、枯枝等倒伏断枝风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

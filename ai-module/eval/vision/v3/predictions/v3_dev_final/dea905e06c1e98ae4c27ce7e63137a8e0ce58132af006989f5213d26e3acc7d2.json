@@ -1,0 +1,27 @@
+{
+  "sha256": "dea905e06c1e98ae4c27ce7e63137a8e0ce58132af006989f5213d26e3acc7d2",
+  "file": "elevator_trapped_2_dea905e06c1e.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电梯与特种设备\",\n  \"major_category\": \"elevator_special\",\n  \"subcategory\": \"elevator_trapped\",\n  \"severity\": \"高\",\n  \"description\": \"两名北京消防员正在电梯口处置，电梯内可见一名人员（面部已打码），疑似人员被困电梯轿厢，存在受困、恐慌及二次伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼电梯口/电梯轿厢内\",\n  \"rectification\": [\n    \"立即联动电梯维保单位安全救援，禁止强行扒门\",\n    \"安抚被困人员情绪并确认身体状况\",\n    \"排查电梯故障，设置停用警示，检验合格后恢复使用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "两名北京消防员正在电梯口处置，电梯内可见一名人员（面部已打码），疑似人员被困电梯轿厢，存在受困、恐慌及二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼电梯口/电梯轿厢内",
+    "rectification": [
+      "立即联动电梯维保单位安全救援，禁止强行扒门",
+      "安抚被困人员情绪并确认身体状况",
+      "排查电梯故障，设置停用警示，检验合格后恢复使用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

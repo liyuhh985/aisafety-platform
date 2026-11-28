@@ -1,0 +1,27 @@
+{
+  "sha256": "ac424339d7fce1fc0e954e852c7ccadff49fb70addfc1bcec5f625018dfbe2c2",
+  "file": "drainage_flood_2_ac424339d7fc.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"drainage_flood\",\"severity\":\"中\",\"description\":\"道路边缘及路面出现大面积积水、泥沙淤积，排水不畅，影响行人和车辆通行，易导致湿滑摔倒、车辆打滑及路面病害加重。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路边缘与人行道交界处及前方路面\",\"rectification\":[\"及时清理积水、淤泥和杂物，恢复路面整洁\",\"排查并疏通排水管道、雨水箅子，确保排水畅通\",\"对积水反复路段开展排水系统改造或路面找坡修复\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "道路边缘及路面出现大面积积水、泥沙淤积，排水不畅，影响行人和车辆通行，易导致湿滑摔倒、车辆打滑及路面病害加重。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘与人行道交界处及前方路面",
+    "rectification": [
+      "及时清理积水、淤泥和杂物，恢复路面整洁",
+      "排查并疏通排水管道、雨水箅子，确保排水畅通",
+      "对积水反复路段开展排水系统改造或路面找坡修复"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

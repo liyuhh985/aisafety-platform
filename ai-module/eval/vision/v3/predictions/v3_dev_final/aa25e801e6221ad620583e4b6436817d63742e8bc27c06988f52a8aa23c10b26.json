@@ -1,0 +1,26 @@
+{
+  "sha256": "aa25e801e6221ad620583e4b6436817d63742e8bc27c06988f52a8aa23c10b26",
+  "file": "exposed_wire_2_aa25e801e622.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"高\",\"description\":\"城市道路旁电线杆上部大量线缆杂乱缠绕成团，并有线圈松垮悬垂，架设不规范，存在绝缘破损、短路、坠落或触电风险，可能危及行人和车辆通行安全。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路旁水泥电线杆上部\",\"rectification\":[\"由电力、通信等权属单位排查并梳理线缆，规范捆扎固定，清理废弃线路\",\"对松垂线缆加装保护并设置必要警示，定期巡检维护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "城市道路旁电线杆上部大量线缆杂乱缠绕成团，并有线圈松垮悬垂，架设不规范，存在绝缘破损、短路、坠落或触电风险，可能危及行人和车辆通行安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路旁水泥电线杆上部",
+    "rectification": [
+      "由电力、通信等权属单位排查并梳理线缆，规范捆扎固定，清理废弃线路",
+      "对松垂线缆加装保护并设置必要警示，定期巡检维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "116e94e47654e9b4f67417151fd75d620d97e5889d3f1bf1048090573cf16dfc",
+  "file": "neg_45_116e94e47654.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面中井盖外观完整，未见缺失、破损、塌陷或周边明显沉陷；人员使用专用工具进行井盖检查/操作，未见井口敞开、有限空间作业或缺防护等可确认隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中井盖外观完整，未见缺失、破损、塌陷或周边明显沉陷；人员使用专用工具进行井盖检查/操作，未见井口敞开、有限空间作业或缺防护等可确认隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

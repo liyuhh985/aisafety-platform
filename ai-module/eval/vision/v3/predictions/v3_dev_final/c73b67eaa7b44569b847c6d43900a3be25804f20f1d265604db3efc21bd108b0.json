@@ -1,0 +1,27 @@
+{
+  "sha256": "c73b67eaa7b44569b847c6d43900a3be25804f20f1d265604db3efc21bd108b0",
+  "file": "drainage_flood_3_c73b67eaa7b4.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"高\",\n  \"description\": \"城市街道被浑浊积水严重淹没，水位接近临街商铺门面，行人涉水通行；内涝可能掩盖坑洞、井盖缺失，并带来溺水、触电及交通阻断风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"临街商铺前的城市道路\",\n  \"rectification\": [\n    \"立即封闭积水路段，设置警示标志并疏导行人和车辆\",\n    \"排查排水管网、泵站及井盖，清理堵塞并组织强排积水\",\n    \"退水后对受淹区域开展消杀，并检测涉水电气设施安全\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "高",
+    "description": "城市街道被浑浊积水严重淹没，水位接近临街商铺门面，行人涉水通行；内涝可能掩盖坑洞、井盖缺失，并带来溺水、触电及交通阻断风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "临街商铺前的城市道路",
+    "rectification": [
+      "立即封闭积水路段，设置警示标志并疏导行人和车辆",
+      "排查排水管网、泵站及井盖，清理堵塞并组织强排积水",
+      "退水后对受淹区域开展消杀，并检测涉水电气设施安全"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

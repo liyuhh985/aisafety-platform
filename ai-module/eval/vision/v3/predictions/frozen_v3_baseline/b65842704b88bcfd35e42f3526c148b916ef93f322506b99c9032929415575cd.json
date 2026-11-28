@@ -1,0 +1,27 @@
+{
+  "sha256": "b65842704b88bcfd35e42f3526c148b916ef93f322506b99c9032929415575cd",
+  "file": "temporary_power_1_b65842704b88.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"temporary_power\",\n  \"severity\": \"高\",\n  \"description\": \"施工现场临时配电箱周边线缆凌乱拖地，多路插头集中插接，箱体及线路缺乏规范防护，地面泥泞并有杂物，存在漏电、触电及短路起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"前景临时配电箱及周边线缆区域\",\n  \"rectification\": [\n    \"按施工临时用电规范整理并架空线缆，禁止拖地、泡水和乱拉乱接\",\n    \"检查配电箱漏电保护、接地和防雨防砸措施，落实一机一闸一漏保\",\n    \"清理配电箱周边杂物和积水，设置绝缘垫及安全警示标志\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "temporary_power",
+    "severity": "高",
+    "description": "施工现场临时配电箱周边线缆凌乱拖地，多路插头集中插接，箱体及线路缺乏规范防护，地面泥泞并有杂物，存在漏电、触电及短路起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "前景临时配电箱及周边线缆区域",
+    "rectification": [
+      "按施工临时用电规范整理并架空线缆，禁止拖地、泡水和乱拉乱接",
+      "检查配电箱漏电保护、接地和防雨防砸措施，落实一机一闸一漏保",
+      "清理配电箱周边杂物和积水，设置绝缘垫及安全警示标志"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

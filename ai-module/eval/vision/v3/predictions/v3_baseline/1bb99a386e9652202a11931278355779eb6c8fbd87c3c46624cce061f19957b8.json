@@ -1,0 +1,26 @@
+{
+  "sha256": "1bb99a386e9652202a11931278355779eb6c8fbd87c3c46624cce061f19957b8",
+  "file": "manhole_damage_1_1bb99a386e96.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"人行道红色铺装面上有一处矩形排水沟盖板缺失或破损，形成敞开洞口，边缘不平整。行人尤其是夜间、雨天易绊倒或踏空跌落，存在人身伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"近景红色铺装人行道排水沟处\",\n  \"rectification\": [\n    \"立即在洞口周边设置围挡和警示标志，并用牢固临时盖板覆盖\",\n    \"尽快更换或修复缺失、破损的排水沟盖板，并排查周边同类设施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "人行道红色铺装面上有一处矩形排水沟盖板缺失或破损，形成敞开洞口，边缘不平整。行人尤其是夜间、雨天易绊倒或踏空跌落，存在人身伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "近景红色铺装人行道排水沟处",
+    "rectification": [
+      "立即在洞口周边设置围挡和警示标志，并用牢固临时盖板覆盖",
+      "尽快更换或修复缺失、破损的排水沟盖板，并排查周边同类设施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

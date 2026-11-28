@@ -1,0 +1,26 @@
+{
+  "sha256": "4ec92f9ff6762d9d01b4d1b378780ce86d1d7c7211773a9141f5a4265e06ac18",
+  "file": "tree_fall_hazard_4_4ec92f9ff676.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"tree_fall_hazard\",\"severity\":\"高\",\"description\":\"粗大树枝倒伏横跨通道和道闸栏杆，已阻断车辆与行人通行，存在砸伤人员、损坏车辆及道闸的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"小区/单位出入口道闸处\",\"rectification\":[\"立即设置警示并清理倒伏树枝，恢复通道通行\",\"排查周边树木稳定性，对倾斜或枯枝进行修剪加固，防止再次倒伏\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "粗大树枝倒伏横跨通道和道闸栏杆，已阻断车辆与行人通行，存在砸伤人员、损坏车辆及道闸的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区/单位出入口道闸处",
+    "rectification": [
+      "立即设置警示并清理倒伏树枝，恢复通道通行",
+      "排查周边树木稳定性，对倾斜或枯枝进行修剪加固，防止再次倒伏"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,28 @@
+{
+  "sha256": "20ac8f381c77061829b731c020de7d6d3711d84964b02c7869bf0d2b540607d9",
+  "file": "drainage_flood_1_20ac8f381c77.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"高\",\n  \"description\": \"城市道路严重积水，多辆汽车被淹至轮胎或车门以上，交通中断，存在车辆熄火、人员被困、漏电及次生事故风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路路口，临近高层建筑和行道树\",\n  \"rectification\": [\n    \"立即封闭积水路段，疏导车辆和行人绕行\",\n    \"启动排涝泵站并疏通雨水口、排水管网\",\n    \"排查积水区域漏电、井盖缺失等次生风险\",\n    \"雨后清淤并检修排水设施，完善易涝点预警\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "高",
+    "description": "城市道路严重积水，多辆汽车被淹至轮胎或车门以上，交通中断，存在车辆熄火、人员被困、漏电及次生事故风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路路口，临近高层建筑和行道树",
+    "rectification": [
+      "立即封闭积水路段，疏导车辆和行人绕行",
+      "启动排涝泵站并疏通雨水口、排水管网",
+      "排查积水区域漏电、井盖缺失等次生风险",
+      "雨后清淤并检修排水设施，完善易涝点预警"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

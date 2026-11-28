@@ -1,0 +1,27 @@
+{
+  "sha256": "84836e69a27d5166a84c52be78482a5a7b109ee076192b2f0d5deed084e174d5",
+  "file": "hazmat_storage_2_84836e69a27d.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"hazmat_storage\",\n  \"severity\": \"高\",\n  \"description\": \"多只化工桶露天堆放，锈蚀严重、桶体变形，部分桶口敞开，桶上放置盛有深色液体的敞口容器，桶身有腐蚀性标识及“CONSULT”等字样，疑似危废或化工废液违规暂存，存在渗漏污染土壤地下水、挥发中毒及燃爆风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厂区或空地露天堆放区，紧邻货车与树木，缺乏围挡与防渗设施\",\n  \"rectification\": [\n    \"立即对桶内物质进行危废鉴别检测并登记造册，由有资质单位密闭封装、合规转运处置\",\n    \"对敞开容器和渗漏桶先行围堵吸附，设置防渗托盘、围堰与危险品警示标识\",\n    \"清理场地并检测周边土壤及地下水是否受污染，必要时开展修复\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "多只化工桶露天堆放，锈蚀严重、桶体变形，部分桶口敞开，桶上放置盛有深色液体的敞口容器，桶身有腐蚀性标识及“CONSULT”等字样，疑似危废或化工废液违规暂存，存在渗漏污染土壤地下水、挥发中毒及燃爆风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厂区或空地露天堆放区，紧邻货车与树木，缺乏围挡与防渗设施",
+    "rectification": [
+      "立即对桶内物质进行危废鉴别检测并登记造册，由有资质单位密闭封装、合规转运处置",
+      "对敞开容器和渗漏桶先行围堵吸附，设置防渗托盘、围堰与危险品警示标识",
+      "清理场地并检测周边土壤及地下水是否受污染，必要时开展修复"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

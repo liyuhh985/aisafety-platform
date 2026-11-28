@@ -1,0 +1,27 @@
+{
+  "sha256": "d17bec2675a32faf116e3ab2524317b42da0f5ca93a6123437e4336f01274c15",
+  "file": "illegal_wiring_1_d17bec2675a3.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"中\",\n  \"description\": \"建筑外墙处有一条黄色电线从高处私拉垂下，末端插排直接盘放在地面。线路长期暴露、拖地，易受踩踏、受潮或破损，存在漏电、触电及短路起火风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙窗户旁及地面通道处\",\n  \"rectification\": [\n    \"立即拆除私拉电线，停止在室外拖地使用插排\",\n    \"由专业人员按规范敷设固定线路，插座应远离地面并做好防水防漏电保护\",\n    \"如需充电或临时用电，应设置专用安全充电设施，严禁飞线充电\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "建筑外墙处有一条黄色电线从高处私拉垂下，末端插排直接盘放在地面。线路长期暴露、拖地，易受踩踏、受潮或破损，存在漏电、触电及短路起火风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙窗户旁及地面通道处",
+    "rectification": [
+      "立即拆除私拉电线，停止在室外拖地使用插排",
+      "由专业人员按规范敷设固定线路，插座应远离地面并做好防水防漏电保护",
+      "如需充电或临时用电，应设置专用安全充电设施，严禁飞线充电"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

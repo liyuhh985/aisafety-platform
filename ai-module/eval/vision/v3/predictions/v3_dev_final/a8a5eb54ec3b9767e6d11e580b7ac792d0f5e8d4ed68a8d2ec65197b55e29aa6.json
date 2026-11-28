@@ -1,0 +1,23 @@
+{
+  "sha256": "a8a5eb54ec3b9767e6d11e580b7ac792d0f5e8d4ed68a8d2ec65197b55e29aa6",
+  "file": "neg_47_a8a5eb54ec3b.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"图片显示的为崭新的井盖成品堆放在仓库或工厂内，井盖表面花纹清晰、结构完整，无破损、缺失或塌陷，且未处于道路使用场景中，不存在安全隐患。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "图片显示的为崭新的井盖成品堆放在仓库或工厂内，井盖表面花纹清晰、结构完整，无破损、缺失或塌陷，且未处于道路使用场景中，不存在安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

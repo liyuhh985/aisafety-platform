@@ -1,0 +1,29 @@
+{
+  "sha256": "57d55b6f5cf2a5dce90799ee037aa488728f0345c281179a6adedd8f23f7a6de",
+  "file": "fire_lane_blocked_2_57d55b6f5cf2.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"高\",\n  \"description\": \"白色轿车停放在标有消防通道禁止停车的黄色网格线及大门前，堵塞消防车通道；两侧架空层内还停放电动自行车。若发生火灾将阻碍消防车辆进入和人员疏散，延误救援。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑底层架空层消防通道大门前及黄色网格线区域\",\n  \"rectification\": [\n    \"立即移走占用消防通道的白色轿车及两侧停放的电动自行车\",\n    \"在消防通道大门前和黄色网格线区域增设禁停标识、隔离设施并加强巡查\",\n    \"对架空层电动自行车停放进行清理规范，设置合规集中停放充电区域\"\n  ],\n  \"secondary_subcategories\": [\n    \"ebike_hazard\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "高",
+    "description": "白色轿车停放在标有消防通道禁止停车的黄色网格线及大门前，堵塞消防车通道；两侧架空层内还停放电动自行车。若发生火灾将阻碍消防车辆进入和人员疏散，延误救援。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑底层架空层消防通道大门前及黄色网格线区域",
+    "rectification": [
+      "立即移走占用消防通道的白色轿车及两侧停放的电动自行车",
+      "在消防通道大门前和黄色网格线区域增设禁停标识、隔离设施并加强巡查",
+      "对架空层电动自行车停放进行清理规范，设置合规集中停放充电区域"
+    ],
+    "secondary_subcategories": [
+      "ebike_hazard"
+    ]
+  },
+  "error": ""
+}

@@ -1,0 +1,26 @@
+{
+  "sha256": "2868cf4f2fe4fc5747d00b28e26746ed6cdc47a53012c7aa68820089ddeee8cd",
+  "file": "deep_pit_4_2868cf4f2fe4.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"deep_pit\",\n  \"severity\": \"高\",\n  \"description\": \"现场为大型土质深坑，坑壁陡直且未见支护，坑口周边无连续围挡、护栏或警示，坑底有一名人员，存在坍塌、坠落及人员被困伤害风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"土质深坑坑口周边及坑底\",\n  \"rectification\": [\n    \"立即停止坑内作业并疏散人员，设置连续硬质围挡、警示标志和夜间警示灯。\",\n    \"按规范对坑壁放坡或支护，设置安全上下通道和临边护栏，安排专人监护并落实应急预案。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "现场为大型土质深坑，坑壁陡直且未见支护，坑口周边无连续围挡、护栏或警示，坑底有一名人员，存在坍塌、坠落及人员被困伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "土质深坑坑口周边及坑底",
+    "rectification": [
+      "立即停止坑内作业并疏散人员，设置连续硬质围挡、警示标志和夜间警示灯。",
+      "按规范对坑壁放坡或支护，设置安全上下通道和临边护栏，安排专人监护并落实应急预案。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

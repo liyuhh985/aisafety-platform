@@ -1,0 +1,27 @@
+{
+  "sha256": "09b1498c2b4b6d11c460cd6e3f6fe17099711b26dd4ccdd3b280a89ed5451428",
+  "file": "scaffold_guard_1_09b1498c2b4b.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"scaffold_guard\",\"severity\":\"中\",\"description\":\"在建楼层临边防护不完善，边梁处未见连续防护栏杆和挡脚板，外侧虽有脚手架及安全网，但结构边缘存在高处坠落风险；另有竖向钢筋、预埋管外露，易造成绊倒或刺伤。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"在建楼层临边、混凝土柱及外侧脚手架交接处\",\"rectification\":[\"在楼层临边设置连续、牢固的定型化防护栏杆（高度不低于1.2m），并设置挡脚板\",\"对裸露竖向钢筋加设护帽或进行折弯处理，清理边缘散落杂物\",\"封闭脚手架与结构之间的空隙，增设安全警示标志并加强巡查\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "中",
+    "description": "在建楼层临边防护不完善，边梁处未见连续防护栏杆和挡脚板，外侧虽有脚手架及安全网，但结构边缘存在高处坠落风险；另有竖向钢筋、预埋管外露，易造成绊倒或刺伤。",
+    "reason_if_no_hazard": "",
+    "location_hint": "在建楼层临边、混凝土柱及外侧脚手架交接处",
+    "rectification": [
+      "在楼层临边设置连续、牢固的定型化防护栏杆（高度不低于1.2m），并设置挡脚板",
+      "对裸露竖向钢筋加设护帽或进行折弯处理，清理边缘散落杂物",
+      "封闭脚手架与结构之间的空隙，增设安全警示标志并加强巡查"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "6f7c6a62dccb2398eabe3ce94ba110dfe1429d67933fccd6d22ef9c8b47820fb",
+  "file": "neg_02_6f7c6a62dccb.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"高\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"未发现明显安全隐患：井盖完整，自行车规范停放在车棚内，未见路面塌陷、设施损坏或违规充电等情况。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "未发现明显安全隐患：井盖完整，自行车规范停放在车棚内，未见路面塌陷、设施损坏或违规充电等情况。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

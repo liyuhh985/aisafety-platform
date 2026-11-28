@@ -1,0 +1,29 @@
+{
+  "sha256": "6490a68602cba4f26adb188bfbbcd9319eaeeefb03a2ffee9849b9f6d427bfdf",
+  "file": "road_occupancy_2_6490a68602cb.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"road_occupancy\",\"severity\":\"中\",\"description\":\"人行道上有摊贩摆摊售卖水果，手推车和果筐占压通行空间，并靠近或占用盲道，影响行人特别是视障人士通行，可能导致绕行、碰撞或绊倒风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路旁人行道，盲道附近\",\"rectification\":[\"劝离占道摊贩，清理手推车和果筐等占道物品\",\"保障人行道及盲道连续畅通，设置必要的隔离或引导\",\"加强日常巡查，防止占道经营反复发生\"],\"secondary_subcategories\":[\"blind_path_occupied\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "road_occupancy",
+    "severity": "中",
+    "description": "人行道上有摊贩摆摊售卖水果，手推车和果筐占压通行空间，并靠近或占用盲道，影响行人特别是视障人士通行，可能导致绕行、碰撞或绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路旁人行道，盲道附近",
+    "rectification": [
+      "劝离占道摊贩，清理手推车和果筐等占道物品",
+      "保障人行道及盲道连续畅通，设置必要的隔离或引导",
+      "加强日常巡查，防止占道经营反复发生"
+    ],
+    "secondary_subcategories": [
+      "blind_path_occupied"
+    ]
+  },
+  "error": ""
+}

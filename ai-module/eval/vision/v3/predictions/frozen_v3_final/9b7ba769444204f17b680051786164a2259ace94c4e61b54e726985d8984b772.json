@@ -1,0 +1,27 @@
+{
+  "sha256": "9b7ba769444204f17b680051786164a2259ace94c4e61b54e726985d8984b772",
+  "file": "neg_20_9b7ba7694442.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"distribution_box_fault\",\"severity\":\"高\",\"description\":\"动力柜柜门敞开，内部断路器、铜排及接线端子裸露，柜前无绝缘围栏或专人监护，人员可接近并误触带电部位，存在触电、短路及电弧灼伤风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"室内XL-21动力柜前\",\"rectification\":[\"立即关闭柜门并上锁，确保门锁和防护挡板完好\",\"若需检修，应设置绝缘围栏、悬挂“禁止合闸”等警示标志并安排专人监护\",\"清理柜前杂物，保持操作通道畅通，禁止非专业人员接近\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "动力柜柜门敞开，内部断路器、铜排及接线端子裸露，柜前无绝缘围栏或专人监护，人员可接近并误触带电部位，存在触电、短路及电弧灼伤风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内XL-21动力柜前",
+    "rectification": [
+      "立即关闭柜门并上锁，确保门锁和防护挡板完好",
+      "若需检修，应设置绝缘围栏、悬挂“禁止合闸”等警示标志并安排专人监护",
+      "清理柜前杂物，保持操作通道畅通，禁止非专业人员接近"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "e2072b0ce1a6e3eab49ce004192288ddc80ffb4c12a70d15d53a6162eaaf49d7",
+  "file": "road_surface_collapse_2_e2072b0ce1a6.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"道路中央出现大面积严重塌陷和纵横裂缝，形成不规则深坑。塌陷区域边缘缺乏连续硬质围挡，且有行人和电动车在附近穿行，存在极高的人员坠落及交通事故风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央\",\n  \"rectification\": [\n    \"立即扩大硬质围挡范围，彻底封闭塌陷区域，禁止人员和车辆通行\",\n    \"组织市政专业人员进行抢修，全面排查周边路基是否存在空洞隐患\",\n    \"完善夜间警示灯和反光标志，安排专人疏导交通\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路中央出现大面积严重塌陷和纵横裂缝，形成不规则深坑。塌陷区域边缘缺乏连续硬质围挡，且有行人和电动车在附近穿行，存在极高的人员坠落及交通事故风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央",
+    "rectification": [
+      "立即扩大硬质围挡范围，彻底封闭塌陷区域，禁止人员和车辆通行",
+      "组织市政专业人员进行抢修，全面排查周边路基是否存在空洞隐患",
+      "完善夜间警示灯和反光标志，安排专人疏导交通"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,23 @@
+{
+  "sha256": "1f024487fc7b67cb9be845552e5fb2cdcb49ba603c7969c5a3de814a1a4332b7",
+  "file": "neg_03_1f024487fc7b.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":false,\"confidence\":\"中\",\"hazard_category\":\"\",\"major_category\":\"\",\"subcategory\":\"\",\"severity\":\"\",\"description\":\"\",\"reason_if_no_hazard\":\"画面中仅为户外电动车充电站及废旧电池回收箱，未见设备破损、私拉乱接、违规充电或通道堵塞等明显安全隐患。\",\"location_hint\":\"\",\"rectification\":[],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面中仅为户外电动车充电站及废旧电池回收箱，未见设备破损、私拉乱接、违规充电或通道堵塞等明显安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

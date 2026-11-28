@@ -1,0 +1,26 @@
+{
+  "sha256": "dbac777e2356878a38ceb3aab918109932160f0e6e972553c5b8dff0069dcba6",
+  "file": "vehicle_occupancy_2_dbac777e2356.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"交通与通行\",\"major_category\":\"traffic\",\"subcategory\":\"vehicle_occupancy\",\"severity\":\"中\",\"description\":\"两辆汽车停放在人行道及黄色禁停网格线上，路侧设有禁停标志，占用行人通行空间并可能阻断盲道，迫使行人绕行，增加人车冲突风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道与围墙之间的黄色网格线区域\",\"rectification\":[\"立即劝离违停车辆，恢复人行道通行空间\",\"在禁停区域增设隔离桩或监控，加强巡查执法\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "两辆汽车停放在人行道及黄色禁停网格线上，路侧设有禁停标志，占用行人通行空间并可能阻断盲道，迫使行人绕行，增加人车冲突风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道与围墙之间的黄色网格线区域",
+    "rectification": [
+      "立即劝离违停车辆，恢复人行道通行空间",
+      "在禁停区域增设隔离桩或监控，加强巡查执法"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

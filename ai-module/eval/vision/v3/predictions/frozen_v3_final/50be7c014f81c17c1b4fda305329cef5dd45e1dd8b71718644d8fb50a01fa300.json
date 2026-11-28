@@ -1,0 +1,26 @@
+{
+  "sha256": "50be7c014f81c17c1b4fda305329cef5dd45e1dd8b71718644d8fb50a01fa300",
+  "file": "manhole_damage_2_50be7c014f81.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"路边方形井盖严重破损，形成较大不规则洞口，下方悬空且紧邻车辆通行区域，容易导致行人踩空坠落或非机动车车轮卡入，存在严重安全隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"路边草地旁的井盖\",\n  \"rectification\": [\n    \"立即在破损井盖周围设置安全警示标志和临时围挡，防止行人车辆靠近\",\n    \"尽快更换符合承重标准的新井盖，彻底修复破损部位\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "路边方形井盖严重破损，形成较大不规则洞口，下方悬空且紧邻车辆通行区域，容易导致行人踩空坠落或非机动车车轮卡入，存在严重安全隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "路边草地旁的井盖",
+    "rectification": [
+      "立即在破损井盖周围设置安全警示标志和临时围挡，防止行人车辆靠近",
+      "尽快更换符合承重标准的新井盖，彻底修复破损部位"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

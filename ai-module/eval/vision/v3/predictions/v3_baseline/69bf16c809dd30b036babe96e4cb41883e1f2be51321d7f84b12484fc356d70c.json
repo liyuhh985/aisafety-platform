@@ -1,0 +1,27 @@
+{
+  "sha256": "69bf16c809dd30b036babe96e4cb41883e1f2be51321d7f84b12484fc356d70c",
+  "file": "scaffold_guard_4_69bf16c809dd.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"scaffold_guard\",\"severity\":\"高\",\"description\":\"在建楼顶临边区域有工人近距离作业，临边防护栏杆不连续、固定不牢，且未见人员规范系挂安全带，存在高处坠落风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"在建楼顶混凝土平台临边及外挑钢梁作业区\",\"rectification\":[\"补齐并加固临边防护栏杆，确保连续、稳固、符合高度要求\",\"高处作业人员必须正确佩戴并系挂安全带\",\"设置明显安全警示标志并安排专人监护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "高",
+    "description": "在建楼顶临边区域有工人近距离作业，临边防护栏杆不连续、固定不牢，且未见人员规范系挂安全带，存在高处坠落风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "在建楼顶混凝土平台临边及外挑钢梁作业区",
+    "rectification": [
+      "补齐并加固临边防护栏杆，确保连续、稳固、符合高度要求",
+      "高处作业人员必须正确佩戴并系挂安全带",
+      "设置明显安全警示标志并安排专人监护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

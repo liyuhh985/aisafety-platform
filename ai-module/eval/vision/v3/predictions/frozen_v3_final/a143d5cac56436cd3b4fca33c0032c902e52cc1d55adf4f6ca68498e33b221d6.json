@@ -1,0 +1,27 @@
+{
+  "sha256": "a143d5cac56436cd3b4fca33c0032c902e52cc1d55adf4f6ca68498e33b221d6",
+  "file": "garbage_pile_2_a143d5cac564.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"大量废弃衣物、织物及杂物露天成堆倾倒于植被边坡，未见围挡或收集设施；易滋生虫鼠、污染土壤水体，且可燃物聚集存在火灾风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"植被边坡处\",\n  \"rectification\": [\n    \"立即组织清运废弃衣物和杂物，按规定分类处置\",\n    \"在该区域设置禁止倾倒警示牌、围挡或监控，加强日常巡查\",\n    \"排查倾倒来源并依法处理，防止再次违规堆放\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "大量废弃衣物、织物及杂物露天成堆倾倒于植被边坡，未见围挡或收集设施；易滋生虫鼠、污染土壤水体，且可燃物聚集存在火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "植被边坡处",
+    "rectification": [
+      "立即组织清运废弃衣物和杂物，按规定分类处置",
+      "在该区域设置禁止倾倒警示牌、围挡或监控，加强日常巡查",
+      "排查倾倒来源并依法处理，防止再次违规堆放"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

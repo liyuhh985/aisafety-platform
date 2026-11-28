@@ -1,0 +1,29 @@
+{
+  "sha256": "6909493b880fbfa66d83e69b7a04eb70915fadc6e3079cdc6e5929315de3cbd5",
+  "file": "confined_space_3_6909493b880f.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"道路中央井盖被移开，井口敞开，周边未见围挡或警示，行人和车辆经过存在坠落、绊倒及交通事故风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路中央井口处\",\n  \"rectification\": [\n    \"立即在井口周边设置围挡和警示标志\",\n    \"尽快复位或更换井盖，临时覆盖并加固\",\n    \"排查井盖移位原因并加强日常巡查\"\n  ],\n  \"secondary_subcategories\": [\n    \"construction/no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "道路中央井盖被移开，井口敞开，周边未见围挡或警示，行人和车辆经过存在坠落、绊倒及交通事故风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路中央井口处",
+    "rectification": [
+      "立即在井口周边设置围挡和警示标志",
+      "尽快复位或更换井盖，临时覆盖并加固",
+      "排查井盖移位原因并加强日常巡查"
+    ],
+    "secondary_subcategories": [
+      "construction/no_warning"
+    ]
+  },
+  "error": ""
+}

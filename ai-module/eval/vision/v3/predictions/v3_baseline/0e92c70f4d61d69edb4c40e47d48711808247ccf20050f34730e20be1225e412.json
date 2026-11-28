@@ -1,0 +1,27 @@
+{
+  "sha256": "0e92c70f4d61d69edb4c40e47d48711808247ccf20050f34730e20be1225e412",
+  "file": "other_2_0e92c70f4d61.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"other\",\n  \"severity\": \"中\",\n  \"description\": \"公园长椅多处木板断裂、横梁脱开，结构失稳，周边地面有积雪结冰；人员倚坐可能发生坍塌、夹伤或滑倒。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"积雪覆盖的公园或公共绿地长椅处\",\n  \"rectification\": [\n    \"立即在破损长椅周边设置警示并暂停使用\",\n    \"修复或更换断裂木板及损坏支架，恢复结构稳定\",\n    \"清理长椅周边积雪结冰并采取防滑措施\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "other",
+    "severity": "中",
+    "description": "公园长椅多处木板断裂、横梁脱开，结构失稳，周边地面有积雪结冰；人员倚坐可能发生坍塌、夹伤或滑倒。",
+    "reason_if_no_hazard": "",
+    "location_hint": "积雪覆盖的公园或公共绿地长椅处",
+    "rectification": [
+      "立即在破损长椅周边设置警示并暂停使用",
+      "修复或更换断裂木板及损坏支架，恢复结构稳定",
+      "清理长椅周边积雪结冰并采取防滑措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

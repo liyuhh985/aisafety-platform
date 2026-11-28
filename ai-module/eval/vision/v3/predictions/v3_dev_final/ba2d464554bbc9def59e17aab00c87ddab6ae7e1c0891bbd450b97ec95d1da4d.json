@@ -1,0 +1,23 @@
+{
+  "sha256": "ba2d464554bbc9def59e17aab00c87ddab6ae7e1c0891bbd450b97ec95d1da4d",
+  "file": "neg_10_ba2d464554bb.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"中\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"画面仅显示多瓶带GHS标识的化学品试剂置于通风柜或储存柜内，瓶体排列稳定、无破损渗漏，未见超量堆放、混放、泄漏等明显违规迹象，不能据此确认安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面仅显示多瓶带GHS标识的化学品试剂置于通风柜或储存柜内，瓶体排列稳定、无破损渗漏，未见超量堆放、混放、泄漏等明显违规迹象，不能据此确认安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

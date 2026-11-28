@@ -1,0 +1,27 @@
+{
+  "sha256": "3bd0fe31e32f8caf053a718e82ba87277c5da781e92807ce831025985e114748",
+  "file": "neg_16_3bd0fe31e32f.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"房屋入口前方及外墙边堆积大量建筑垃圾、碎砖和装修废料，占用出入通道，存在绊倒、尖锐物划伤风险，并可能造成扬尘和排水受阻。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑一层入口前方及外墙底部散水处\",\"rectification\":[\"及时清运建筑垃圾和装修废料，保持入口通道畅通\",\"清运前设置临时围挡或警示标志，防止人员靠近\",\"对垃圾进行分类收集，避免尖锐物外露和扬尘扩散\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "房屋入口前方及外墙边堆积大量建筑垃圾、碎砖和装修废料，占用出入通道，存在绊倒、尖锐物划伤风险，并可能造成扬尘和排水受阻。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑一层入口前方及外墙底部散水处",
+    "rectification": [
+      "及时清运建筑垃圾和装修废料，保持入口通道畅通",
+      "清运前设置临时围挡或警示标志，防止人员靠近",
+      "对垃圾进行分类收集，避免尖锐物外露和扬尘扩散"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

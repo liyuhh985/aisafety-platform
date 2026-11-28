@@ -1,0 +1,28 @@
+{
+  "sha256": "c8849fb183acce3bc35e38ee7658d66767c409b7865bbb4abafd59989c556558",
+  "file": "elevator_trapped_1_c8849fb183ac.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_trapped\",\"severity\":\"高\",\"description\":\"电梯轿厢内人员被困，消防人员正在搀扶被困女子撤离，存在被困人员身体不适、恐慌及救援过程中二次伤害风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑电梯轿厢及出入口\",\"rectification\":[\"立即联系电梯维保单位排查故障并修复\",\"检查电梯应急报警、通话和照明装置是否有效\",\"救援后对电梯进行全面安全检验并公告恢复情况\",\"加强电梯日常巡查和困人应急演练\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_trapped",
+    "severity": "高",
+    "description": "电梯轿厢内人员被困，消防人员正在搀扶被困女子撤离，存在被困人员身体不适、恐慌及救援过程中二次伤害风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑电梯轿厢及出入口",
+    "rectification": [
+      "立即联系电梯维保单位排查故障并修复",
+      "检查电梯应急报警、通话和照明装置是否有效",
+      "救援后对电梯进行全面安全检验并公告恢复情况",
+      "加强电梯日常巡查和困人应急演练"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

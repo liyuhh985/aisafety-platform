@@ -1,0 +1,27 @@
+{
+  "sha256": "feea58e4a18831ad0d5fdf4bd02bb13f74fa07f4e45be9d4e14d7f15fffdde52",
+  "file": "exposed_wire_3_feea58e4a188.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"高\",\"description\":\"人行道上黑色线缆杂乱拖地、缠绕树干并连接立柱附近设施，疑似私拉乱接，未穿管保护，易绊倒行人，且存在漏电、触电风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道树干及白色立柱附近\",\"rectification\":[\"立即清除拖地线缆，改由权属单位规范架空或穿管固定，禁止横跨人行道\",\"排查线缆是否带电及绝缘状况，加装漏电保护并设置醒目警示\",\"明确线缆权属和用途，取缔违规私拉乱接，整改完成前做好现场防护\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "高",
+    "description": "人行道上黑色线缆杂乱拖地、缠绕树干并连接立柱附近设施，疑似私拉乱接，未穿管保护，易绊倒行人，且存在漏电、触电风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道树干及白色立柱附近",
+    "rectification": [
+      "立即清除拖地线缆，改由权属单位规范架空或穿管固定，禁止横跨人行道",
+      "排查线缆是否带电及绝缘状况，加装漏电保护并设置醒目警示",
+      "明确线缆权属和用途，取缔违规私拉乱接，整改完成前做好现场防护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

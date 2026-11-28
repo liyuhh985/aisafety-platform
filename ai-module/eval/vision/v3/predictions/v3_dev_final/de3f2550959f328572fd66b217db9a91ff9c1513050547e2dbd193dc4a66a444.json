@@ -1,0 +1,27 @@
+{
+  "sha256": "de3f2550959f328572fd66b217db9a91ff9c1513050547e2dbd193dc4a66a444",
+  "file": "garbage_pile_4_de3f2550959f.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"废弃建筑门前空地长期堆放大量废旧轮胎、碎石、塑料垃圾及枯枝败叶，杂草丛生，易滋生蚊虫、藏匿蛇鼠，废轮胎积水还会增加病媒传播风险，且存在火灾隐患。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"废弃建筑木门前及其周边空地\",\n  \"rectification\": [\n    \"及时清运废旧轮胎、碎石及生活垃圾，规范处置废弃物\",\n    \"清除杂草并平整或硬化空地，保持环境整洁\",\n    \"设置禁止倾倒垃圾警示标识，加强日常巡查管理\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "废弃建筑门前空地长期堆放大量废旧轮胎、碎石、塑料垃圾及枯枝败叶，杂草丛生，易滋生蚊虫、藏匿蛇鼠，废轮胎积水还会增加病媒传播风险，且存在火灾隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "废弃建筑木门前及其周边空地",
+    "rectification": [
+      "及时清运废旧轮胎、碎石及生活垃圾，规范处置废弃物",
+      "清除杂草并平整或硬化空地，保持环境整洁",
+      "设置禁止倾倒垃圾警示标识，加强日常巡查管理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

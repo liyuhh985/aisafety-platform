@@ -1,0 +1,27 @@
+{
+  "sha256": "c8cf83741231b1cf662ca265bacd2741cd518151dee483104e73c141c03b5a8a",
+  "file": "neg_13_c8cf83741231.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"中\",\n  \"description\": \"人行道右侧近景行道树树干明显向人行道和车道一侧倾斜，树池狭小，未见支撑加固措施，存在倒伏、断枝风险，可能砸伤行人或车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道右侧树池，紧邻机动车道\",\n  \"rectification\": [\n    \"对倾斜树木进行安全评估，必要时设置支撑加固或扶正、移植\",\n    \"修剪枯枝并加强日常巡查，设置警示标识\",\n    \"修复或扩大树池，避免根系生长受限\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "中",
+    "description": "人行道右侧近景行道树树干明显向人行道和车道一侧倾斜，树池狭小，未见支撑加固措施，存在倒伏、断枝风险，可能砸伤行人或车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道右侧树池，紧邻机动车道",
+    "rectification": [
+      "对倾斜树木进行安全评估，必要时设置支撑加固或扶正、移植",
+      "修剪枯枝并加强日常巡查，设置警示标识",
+      "修复或扩大树池，避免根系生长受限"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

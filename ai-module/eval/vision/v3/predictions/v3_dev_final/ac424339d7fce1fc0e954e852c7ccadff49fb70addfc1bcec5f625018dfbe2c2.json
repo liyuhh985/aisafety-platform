@@ -1,0 +1,28 @@
+{
+  "sha256": "ac424339d7fce1fc0e954e852c7ccadff49fb70addfc1bcec5f625018dfbe2c2",
+  "file": "drainage_flood_2_ac424339d7fc.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"中\",\n  \"description\": \"道路边缘与人行道交界处存在较长带状积水，水体浑浊并夹带泥浆、杂物，疑似排水口堵塞或排水不畅。可能造成行人滑倒、非机动车打滑，长期积水还易滋生蚊虫并影响通行环境。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路边缘与人行道交界处，沿路缘石一带\",\n  \"rectification\": [\n    \"排查并清理雨水口、排水管道及边沟堵塞物，尽快疏通排水。\",\n    \"清除路面积水、淤泥和杂物，恢复路面整洁并防止二次积水。\",\n    \"积水未排除前设置警示标志，提醒行人和车辆注意安全。\",\n    \"检查该路段排水坡度与管网能力，必要时进行改造避免反复积水。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "道路边缘与人行道交界处存在较长带状积水，水体浑浊并夹带泥浆、杂物，疑似排水口堵塞或排水不畅。可能造成行人滑倒、非机动车打滑，长期积水还易滋生蚊虫并影响通行环境。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路边缘与人行道交界处，沿路缘石一带",
+    "rectification": [
+      "排查并清理雨水口、排水管道及边沟堵塞物，尽快疏通排水。",
+      "清除路面积水、淤泥和杂物，恢复路面整洁并防止二次积水。",
+      "积水未排除前设置警示标志，提醒行人和车辆注意安全。",
+      "检查该路段排水坡度与管网能力，必要时进行改造避免反复积水。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

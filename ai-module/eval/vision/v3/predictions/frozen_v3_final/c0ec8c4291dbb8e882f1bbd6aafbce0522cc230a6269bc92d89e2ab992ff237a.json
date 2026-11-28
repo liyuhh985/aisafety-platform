@@ -1,0 +1,27 @@
+{
+  "sha256": "c0ec8c4291dbb8e882f1bbd6aafbce0522cc230a6269bc92d89e2ab992ff237a",
+  "file": "confined_space_2_c0ec8c4291db.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"manhole_damage\",\n  \"severity\": \"高\",\n  \"description\": \"一处矩形检查井井盖缺失或敞开，井底有积水，一名儿童正处于井内。极易发生溺水、窒息、磕碰摔伤等严重安全事故。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"矩形检查井处\",\n  \"rectification\": [\n    \"立即组织施救，将井内儿童安全救出\",\n    \"对缺失井盖的井口进行补装或设置防坠网、硬质临时围挡\",\n    \"排查周边区域同类井盖缺失隐患，并加强日常巡检\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "一处矩形检查井井盖缺失或敞开，井底有积水，一名儿童正处于井内。极易发生溺水、窒息、磕碰摔伤等严重安全事故。",
+    "reason_if_no_hazard": "",
+    "location_hint": "矩形检查井处",
+    "rectification": [
+      "立即组织施救，将井内儿童安全救出",
+      "对缺失井盖的井口进行补装或设置防坠网、硬质临时围挡",
+      "排查周边区域同类井盖缺失隐患，并加强日常巡检"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

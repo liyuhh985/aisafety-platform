@@ -1,0 +1,27 @@
+{
+  "sha256": "f24ac07dba2c9e56bd9681a17752d97113bf355a5be7c3e31e08851e4a707427",
+  "file": "drainage_flood_2_f24ac07dba2c.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"drainage_flood\",\"severity\":\"中\",\"description\":\"城市道路大面积积水，排水不畅，积水覆盖行车道和停车区域，影响车辆与行人通行，可能导致车辆打滑熄火、行人滑倒，并可能掩盖井盖缺失或漏电等次生风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"城市道路行车道及左侧停车区域\",\"rectification\":[\"立即疏通雨水箅子和排水管道，排除路面积水\",\"在积水路段设置警示标志，提醒车辆和行人绕行\",\"雨后排查排水系统，必要时增设排水设施，防止再次内涝\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "城市道路大面积积水，排水不畅，积水覆盖行车道和停车区域，影响车辆与行人通行，可能导致车辆打滑熄火、行人滑倒，并可能掩盖井盖缺失或漏电等次生风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路行车道及左侧停车区域",
+    "rectification": [
+      "立即疏通雨水箅子和排水管道，排除路面积水",
+      "在积水路段设置警示标志，提醒车辆和行人绕行",
+      "雨后排查排水系统，必要时增设排水设施，防止再次内涝"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

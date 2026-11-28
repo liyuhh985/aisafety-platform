@@ -1,0 +1,26 @@
+{
+  "sha256": "aa72e4b04e123b9554ddcb70ef2568278bdbbee032f7aaf44500b8f8834e6618",
+  "file": "illegal_structure_3_aa72e4b04e12.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"falling_object\",\n  \"severity\": \"中\",\n  \"description\": \"屋顶露台女儿墙边摆放多盆绿植花盆，未见固定或防坠措施，遇强风、碰撞或摆放不稳时可能倾倒，从高处坠落砸伤行人或损坏财物。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑屋顶露台靠近女儿墙处\",\n  \"rectification\": [\n    \"将花盆移离女儿墙边缘并加固固定，或移至室内安全位置\",\n    \"加高或设置防坠护栏、挡板，定期检查花盆及支架稳定性\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "falling_object",
+    "severity": "中",
+    "description": "屋顶露台女儿墙边摆放多盆绿植花盆，未见固定或防坠措施，遇强风、碰撞或摆放不稳时可能倾倒，从高处坠落砸伤行人或损坏财物。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑屋顶露台靠近女儿墙处",
+    "rectification": [
+      "将花盆移离女儿墙边缘并加固固定，或移至室内安全位置",
+      "加高或设置防坠护栏、挡板，定期检查花盆及支架稳定性"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

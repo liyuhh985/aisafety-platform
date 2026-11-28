@@ -1,0 +1,27 @@
+{
+  "sha256": "738731d24370e1db98795c195d3085805c1f64e24d2e28a08023132bf5db5731",
+  "file": "street_light_pole_1_738731d24370.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"street_light_pole\",\n  \"severity\": \"高\",\n  \"description\": \"道路旁线杆严重倾斜，横担和电线随之松动下垂，存在倒伏、拉断线路及影响车辆行人通行的风险，临近道路护栏，后果可能较严重。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁护栏边线杆处\",\n  \"rectification\": [\n    \"立即设置警示标志和临时防护，提醒车辆行人避让\",\n    \"联系线杆产权单位到场核查，尽快扶正、加固或更换线杆\",\n    \"同步检查并规整松弛下垂的线路，消除断线及触电风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "道路旁线杆严重倾斜，横担和电线随之松动下垂，存在倒伏、拉断线路及影响车辆行人通行的风险，临近道路护栏，后果可能较严重。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁护栏边线杆处",
+    "rectification": [
+      "立即设置警示标志和临时防护，提醒车辆行人避让",
+      "联系线杆产权单位到场核查，尽快扶正、加固或更换线杆",
+      "同步检查并规整松弛下垂的线路，消除断线及触电风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,26 @@
+{
+  "sha256": "8d8331f3c97abd33c1ed6ea4eddeea57f83fb2f72149bb6d1537330141eb08be",
+  "file": "fire_equipment_fault_2_8d8331f3c97a.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_equipment_fault\",\n  \"severity\": \"高\",\n  \"description\": \"室外消火栓顶部接口盖缺失，且底部连接处持续渗漏，导致地面大面积积水。消火栓损坏及漏水将严重影响其灭火出水效能，在紧急情况下无法正常使用。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"画面左侧的室外消火栓\",\n  \"rectification\": [\n    \"立即维修或更换损坏的消火栓，补齐缺失的接口盖\",\n    \"排查并修复底部漏水点，确保消火栓管网压力正常可用\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "室外消火栓顶部接口盖缺失，且底部连接处持续渗漏，导致地面大面积积水。消火栓损坏及漏水将严重影响其灭火出水效能，在紧急情况下无法正常使用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "画面左侧的室外消火栓",
+    "rectification": [
+      "立即维修或更换损坏的消火栓，补齐缺失的接口盖",
+      "排查并修复底部漏水点，确保消火栓管网压力正常可用"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

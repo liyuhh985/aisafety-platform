@@ -1,0 +1,27 @@
+{
+  "sha256": "8ad3abc92a2effdff0b6faed7e98cd79239fbb515132d8660c0229dfd47d6400",
+  "file": "neg_18_8ad3abc92a2e.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"drainage_flood\",\"severity\":\"中\",\"description\":\"雨后道路大面积积水，排水不畅，影响车辆和行人通行，易造成滑倒、车辆溅水，严重时形成短时内涝。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路入口至中段大面积路面\",\"rectification\":[\"清理雨水篦子和排水口堵塞物，尽快排除积水\",\"检查并疏通排水管网，修复破损或淤堵管段\",\"积水期间设置警示标志，提醒车辆和行人绕行\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "雨后道路大面积积水，排水不畅，影响车辆和行人通行，易造成滑倒、车辆溅水，严重时形成短时内涝。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路入口至中段大面积路面",
+    "rectification": [
+      "清理雨水篦子和排水口堵塞物，尽快排除积水",
+      "检查并疏通排水管网，修复破损或淤堵管段",
+      "积水期间设置警示标志，提醒车辆和行人绕行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

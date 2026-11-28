@@ -1,0 +1,30 @@
+{
+  "sha256": "ef76784aade77d2e534e0280889f1df968ab3fd3236694e2eadfafa2b6534b0a",
+  "file": "street_light_pole_2_ef76784aade7.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"street_light_pole\",\n  \"severity\": \"高\",\n  \"description\": \"道路旁线杆明显倾斜，杆上及周边线缆大量缠绕、下垂并有断线悬空，存在线杆倒伏、线缆坠落带电伤人或引发火灾的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁绿色围挡上方的线杆及线缆处\",\n  \"rectification\": [\n    \"立即设置警戒线和警示标志，禁止人员靠近\",\n    \"安排供电/通信产权单位断电排查并抢修倾斜线杆\",\n    \"清理、固定下垂和断落线缆，规范线缆架设\",\n    \"修复后复查线杆稳固性和线缆绝缘情况\"\n  ],\n  \"secondary_subcategories\": [\n    \"exposed_wire\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "street_light_pole",
+    "severity": "高",
+    "description": "道路旁线杆明显倾斜，杆上及周边线缆大量缠绕、下垂并有断线悬空，存在线杆倒伏、线缆坠落带电伤人或引发火灾的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁绿色围挡上方的线杆及线缆处",
+    "rectification": [
+      "立即设置警戒线和警示标志，禁止人员靠近",
+      "安排供电/通信产权单位断电排查并抢修倾斜线杆",
+      "清理、固定下垂和断落线缆，规范线缆架设",
+      "修复后复查线杆稳固性和线缆绝缘情况"
+    ],
+    "secondary_subcategories": [
+      "exposed_wire"
+    ]
+  },
+  "error": ""
+}

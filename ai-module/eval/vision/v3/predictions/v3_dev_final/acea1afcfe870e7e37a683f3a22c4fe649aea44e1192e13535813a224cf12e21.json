@@ -1,0 +1,27 @@
+{
+  "sha256": "acea1afcfe870e7e37a683f3a22c4fe649aea44e1192e13535813a224cf12e21",
+  "file": "illegal_wiring_4_acea1afcfe87.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"电气与燃气\",\"major_category\":\"utility\",\"subcategory\":\"illegal_wiring\",\"severity\":\"中\",\"description\":\"建筑外墙窗户旁及上方大量线缆杂乱盘绕、成捆悬垂，未规范穿管固定，部分线缆相互缠绕并下垂。长期风吹振动可能造成绝缘磨损、接头松动，存在短路起火、触电及线缆坠落伤人的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"建筑外墙窗户旁及上方线缆汇集处\",\"rectification\":[\"联系供电、通信等线缆权属单位核查并清理废弃线缆\",\"对在用线缆进行规范捆扎、穿管保护并牢固固定，消除悬垂\",\"在整改前设置警示，防止人员触碰或线缆坠落伤人\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "建筑外墙窗户旁及上方大量线缆杂乱盘绕、成捆悬垂，未规范穿管固定，部分线缆相互缠绕并下垂。长期风吹振动可能造成绝缘磨损、接头松动，存在短路起火、触电及线缆坠落伤人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙窗户旁及上方线缆汇集处",
+    "rectification": [
+      "联系供电、通信等线缆权属单位核查并清理废弃线缆",
+      "对在用线缆进行规范捆扎、穿管保护并牢固固定，消除悬垂",
+      "在整改前设置警示，防止人员触碰或线缆坠落伤人"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

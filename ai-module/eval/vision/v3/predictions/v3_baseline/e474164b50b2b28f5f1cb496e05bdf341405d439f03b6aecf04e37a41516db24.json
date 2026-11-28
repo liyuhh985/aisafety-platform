@@ -1,0 +1,26 @@
+{
+  "sha256": "e474164b50b2b28f5f1cb496e05bdf341405d439f03b6aecf04e37a41516db24",
+  "file": "road_surface_collapse_4_e474164b50b2.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"道路路面出现巨大不规则塌陷坑洞，深度较大，坑内碎石裸露，邻近锥桶仅作临时警示，车辆或行人误入可能坠落受伤，存在严重通行安全风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路近景中央路面（锥桶围挡前方）\",\n  \"rectification\": [\n    \"立即对塌陷区域设置连续硬质围挡和夜间警示，禁止车辆行人进入\",\n    \"尽快回填夯实并修复路面，排查地下管线、路基及排水设施是否损坏\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路路面出现巨大不规则塌陷坑洞，深度较大，坑内碎石裸露，邻近锥桶仅作临时警示，车辆或行人误入可能坠落受伤，存在严重通行安全风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路近景中央路面（锥桶围挡前方）",
+    "rectification": [
+      "立即对塌陷区域设置连续硬质围挡和夜间警示，禁止车辆行人进入",
+      "尽快回填夯实并修复路面，排查地下管线、路基及排水设施是否损坏"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

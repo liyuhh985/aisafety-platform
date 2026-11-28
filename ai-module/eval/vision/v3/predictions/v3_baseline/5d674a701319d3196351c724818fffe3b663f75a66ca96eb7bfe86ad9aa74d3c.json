@@ -1,0 +1,30 @@
+{
+  "sha256": "5d674a701319d3196351c724818fffe3b663f75a66ca96eb7bfe86ad9aa74d3c",
+  "file": "sewage_odor_4_5d674a701319.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"环境与其他\",\n  \"major_category\": \"environment_other\",\n  \"subcategory\": \"garbage_pile\",\n  \"severity\": \"中\",\n  \"description\": \"桥下排水沟及涵洞内堆积大量垃圾、杂物，河道水体发黑，存在涵洞堵塞和黑臭水体污染风险，可能影响排水排洪并滋生蚊蝇。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"居民楼旁桥下排水沟及涵洞处\",\n  \"rectification\": [\n    \"立即清理河道、桥涵内垃圾杂物和淤积物，恢复排水通畅\",\n    \"排查沿河排污口，实施截污纳管，治理黑臭水体\",\n    \"加强河道日常巡查和保洁，设置禁止倾倒垃圾警示标识\"\n  ],\n  \"secondary_subcategories\": [\n    \"sewage_odor\",\n    \"drainage_flood\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "桥下排水沟及涵洞内堆积大量垃圾、杂物，河道水体发黑，存在涵洞堵塞和黑臭水体污染风险，可能影响排水排洪并滋生蚊蝇。",
+    "reason_if_no_hazard": "",
+    "location_hint": "居民楼旁桥下排水沟及涵洞处",
+    "rectification": [
+      "立即清理河道、桥涵内垃圾杂物和淤积物，恢复排水通畅",
+      "排查沿河排污口，实施截污纳管，治理黑臭水体",
+      "加强河道日常巡查和保洁，设置禁止倾倒垃圾警示标识"
+    ],
+    "secondary_subcategories": [
+      "sewage_odor",
+      "drainage_flood"
+    ]
+  },
+  "error": ""
+}

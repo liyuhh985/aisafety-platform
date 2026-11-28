@@ -1,0 +1,27 @@
+{
+  "sha256": "c44a01e4a0d98414c79c16398061c1c0f8f510b4c6d6ded5e2845ed4ee89a617",
+  "file": "gas_pipe_aging_3_c44a01e4a0d9.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"黄色管道弯头表面大面积漆面剥落、锈蚀，金属基体暴露。若为燃气管道，长期腐蚀可能造成管壁减薄、接口渗漏，增加燃气泄漏风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"黄色管道弯头及邻近管段\",\n  \"rectification\": [\n    \"对该管段除锈并重新涂刷燃气管道专用黄色防腐漆\",\n    \"检查管壁厚度、弯头及接口腐蚀情况，必要时更换\",\n    \"纳入燃气管道定期巡检，发现泄漏迹象立即处置\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "黄色管道弯头表面大面积漆面剥落、锈蚀，金属基体暴露。若为燃气管道，长期腐蚀可能造成管壁减薄、接口渗漏，增加燃气泄漏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "黄色管道弯头及邻近管段",
+    "rectification": [
+      "对该管段除锈并重新涂刷燃气管道专用黄色防腐漆",
+      "检查管壁厚度、弯头及接口腐蚀情况，必要时更换",
+      "纳入燃气管道定期巡检，发现泄漏迹象立即处置"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

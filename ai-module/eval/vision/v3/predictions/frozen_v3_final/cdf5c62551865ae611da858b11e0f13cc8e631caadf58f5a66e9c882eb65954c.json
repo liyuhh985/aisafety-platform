@@ -1,0 +1,27 @@
+{
+  "sha256": "cdf5c62551865ae611da858b11e0f13cc8e631caadf58f5a66e9c882eb65954c",
+  "file": "neg_18_cdf5c6255186.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"distribution_box_fault\",\n  \"severity\": \"高\",\n  \"description\": \"电表箱/配电箱门敞开，内部断路器、接线端子等带电部位直接外露，进线孔洞未封堵，周边墙面严重开裂剥落。人员误触有触电风险，潮气、灰尘或墙皮脱落也可能引发电气故障。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"电表箱安装处及周边墙面\",\n  \"rectification\": [\n    \"立即关闭并锁闭配电箱门，修复门锁和铰链，确保箱体防护完整\",\n    \"封堵进线孔洞，清理箱内杂物，由专业电工检查接线、绝缘和漏电保护装置\",\n    \"在箱体明显位置设置触电警示标识，并修复周边开裂剥落墙面\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "distribution_box_fault",
+    "severity": "高",
+    "description": "电表箱/配电箱门敞开，内部断路器、接线端子等带电部位直接外露，进线孔洞未封堵，周边墙面严重开裂剥落。人员误触有触电风险，潮气、灰尘或墙皮脱落也可能引发电气故障。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电表箱安装处及周边墙面",
+    "rectification": [
+      "立即关闭并锁闭配电箱门，修复门锁和铰链，确保箱体防护完整",
+      "封堵进线孔洞，清理箱内杂物，由专业电工检查接线、绝缘和漏电保护装置",
+      "在箱体明显位置设置触电警示标识，并修复周边开裂剥落墙面"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "d9aba81d95a8297bbccec786afef84cc7c5e48870efb8944d470039bdb746c7c",
+  "file": "vehicle_occupancy_1_d9aba81d95a8.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"交通与通行\",\n  \"major_category\": \"traffic\",\n  \"subcategory\": \"vehicle_occupancy\",\n  \"severity\": \"中\",\n  \"description\": \"红色轿车违规停放在人行道上，挤占行人通行空间，导致行人绕行至机动车道，存在人车混行及碰撞风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路旁人行道，红色轿车停放处及前方路段\",\n  \"rectification\": [\n    \"对违停车辆进行劝离或依法处置\",\n    \"在人行道边缘增设隔离设施，防止车辆驶入\",\n    \"加强该路段巡查与违停抓拍\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "交通与通行",
+    "major_category": "traffic",
+    "subcategory": "vehicle_occupancy",
+    "severity": "中",
+    "description": "红色轿车违规停放在人行道上，挤占行人通行空间，导致行人绕行至机动车道，存在人车混行及碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路旁人行道，红色轿车停放处及前方路段",
+    "rectification": [
+      "对违停车辆进行劝离或依法处置",
+      "在人行道边缘增设隔离设施，防止车辆驶入",
+      "加强该路段巡查与违停抓拍"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

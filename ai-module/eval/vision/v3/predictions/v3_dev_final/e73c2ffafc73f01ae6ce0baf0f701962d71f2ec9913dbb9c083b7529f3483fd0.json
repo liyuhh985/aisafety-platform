@@ -1,0 +1,30 @@
+{
+  "sha256": "e73c2ffafc73f01ae6ce0baf0f701962d71f2ec9913dbb9c083b7529f3483fd0",
+  "file": "no_barrier_1_e73c2ffafc73.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"施工安全\",\"major_category\":\"construction\",\"subcategory\":\"deep_pit\",\"severity\":\"高\",\"description\":\"道路混凝土路面被开挖形成较大较深坑洞，坑口临边无硬质围挡、盖板或连续防护，未见明显警示标志，底部有管道裸露。行人和车辆靠近时有坠落、磕碰及管线损坏风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路混凝土路面开挖坑口及周边\",\"rectification\":[\"立即在坑口周边设置连续硬质围挡和警示标志，夜间加设警示灯\",\"对坑口临边采取盖板、护栏等防坠落措施，禁止无关人员车辆靠近\",\"核实地下雨污管线情况并采取支护保护，施工完成后及时回填恢复路面\"],\"secondary_subcategories\":[\"no_barrier\",\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "deep_pit",
+    "severity": "高",
+    "description": "道路混凝土路面被开挖形成较大较深坑洞，坑口临边无硬质围挡、盖板或连续防护，未见明显警示标志，底部有管道裸露。行人和车辆靠近时有坠落、磕碰及管线损坏风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路混凝土路面开挖坑口及周边",
+    "rectification": [
+      "立即在坑口周边设置连续硬质围挡和警示标志，夜间加设警示灯",
+      "对坑口临边采取盖板、护栏等防坠落措施，禁止无关人员车辆靠近",
+      "核实地下雨污管线情况并采取支护保护，施工完成后及时回填恢复路面"
+    ],
+    "secondary_subcategories": [
+      "no_barrier",
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

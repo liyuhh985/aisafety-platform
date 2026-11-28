@@ -1,0 +1,27 @@
+{
+  "sha256": "fae74161698833dccfe0bdb97d2c54ac9436d970e4d99fccb28393905a0039ad",
+  "file": "elevator_stopped_2_fae741616988.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_stopped\",\"severity\":\"中\",\"description\":\"电梯门口设置“不准靠近”围挡，呼梯面板显示“--”等异常状态，表明电梯停运或故障，无法正常使用，影响通行；若警示防护失效，可能导致乘客误入或困人。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯厅电梯门口\",\"rectification\":[\"立即联系电梯维保单位检修，排查显示异常和停运原因\",\"修复前保持围挡和警示，防止乘客误入\",\"恢复运行前进行安全测试并公示维修情况\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯门口设置“不准靠近”围挡，呼梯面板显示“--”等异常状态，表明电梯停运或故障，无法正常使用，影响通行；若警示防护失效，可能导致乘客误入或困人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯厅电梯门口",
+    "rectification": [
+      "立即联系电梯维保单位检修，排查显示异常和停运原因",
+      "修复前保持围挡和警示，防止乘客误入",
+      "恢复运行前进行安全测试并公示维修情况"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,26 @@
+{
+  "sha256": "7aacff645db90a1015d10b986783196ae0880bb9b88e9fb5bb24bcd58ae3625b",
+  "file": "drainage_flood_4_7aacff645db9.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"drainage_flood\",\n  \"severity\": \"中\",\n  \"description\": \"道路出现明显积水，车辆涉水行驶溅起大片水花。积水可能掩盖路面坑洞或井盖异常，影响车辆制动和行人通行，存在车辆熄火、打滑及行人跌倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"城市道路积水路段\",\n  \"rectification\": [\n    \"排查并疏通雨水口、排水管网，尽快排除积水\",\n    \"积水期间设置警示标志，必要时采取临时交通管制\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "道路出现明显积水，车辆涉水行驶溅起大片水花。积水可能掩盖路面坑洞或井盖异常，影响车辆制动和行人通行，存在车辆熄火、打滑及行人跌倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "城市道路积水路段",
+    "rectification": [
+      "排查并疏通雨水口、排水管网，尽快排除积水",
+      "积水期间设置警示标志，必要时采取临时交通管制"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

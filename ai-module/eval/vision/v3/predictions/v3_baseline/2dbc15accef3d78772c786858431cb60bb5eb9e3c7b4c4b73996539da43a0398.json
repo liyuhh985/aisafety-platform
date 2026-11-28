@@ -1,0 +1,27 @@
+{
+  "sha256": "2dbc15accef3d78772c786858431cb60bb5eb9e3c7b4c4b73996539da43a0398",
+  "file": "traffic_facility_damage_1_2dbc15accef3.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"台阶边缘及黑色金属栏杆立柱底部混凝土、砖块破损脱落，形成明显孔洞，地砖松动翘起，栏杆基础失稳。行人易绊倒、踏空，栏杆存在倾倒风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道台阶与黑色金属栏杆底部交接处\",\n  \"rectification\": [\n    \"立即设置警示围挡，防止行人靠近破损区域\",\n    \"清除松动砖块和破损混凝土，重新浇筑修复台阶及栏杆基础\",\n    \"检查并加固栏杆立柱，确认牢固后再恢复通行\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "台阶边缘及黑色金属栏杆立柱底部混凝土、砖块破损脱落，形成明显孔洞，地砖松动翘起，栏杆基础失稳。行人易绊倒、踏空，栏杆存在倾倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道台阶与黑色金属栏杆底部交接处",
+    "rectification": [
+      "立即设置警示围挡，防止行人靠近破损区域",
+      "清除松动砖块和破损混凝土，重新浇筑修复台阶及栏杆基础",
+      "检查并加固栏杆立柱，确认牢固后再恢复通行"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

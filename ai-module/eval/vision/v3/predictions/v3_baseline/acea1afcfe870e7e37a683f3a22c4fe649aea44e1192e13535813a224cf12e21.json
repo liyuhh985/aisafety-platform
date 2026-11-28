@@ -1,0 +1,27 @@
+{
+  "sha256": "acea1afcfe870e7e37a683f3a22c4fe649aea44e1192e13535813a224cf12e21",
+  "file": "illegal_wiring_4_acea1afcfe87.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"illegal_wiring\",\n  \"severity\": \"中\",\n  \"description\": \"建筑外墙转角处大量通信、电力线缆被随意缠绕成大圈悬垂，缺少桥架、线槽和固定支撑，走向杂乱且部分线缆下垂。长期受力摩擦易致绝缘破损、放电短路引发火灾；悬垂线束也可能坠落伤及行人或车辆。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"建筑外墙转角处，线缆汇集悬垂位置\",\n  \"rectification\": [\n    \"组织电信、电力等产权单位核查线缆归属，清除废弃线缆\",\n    \"对在用线缆加装线槽或桥架，规范捆扎并可靠固定，消除大圈悬垂\",\n    \"排查绝缘破损、接头裸露情况，整改后定期巡查维护\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "illegal_wiring",
+    "severity": "中",
+    "description": "建筑外墙转角处大量通信、电力线缆被随意缠绕成大圈悬垂，缺少桥架、线槽和固定支撑，走向杂乱且部分线缆下垂。长期受力摩擦易致绝缘破损、放电短路引发火灾；悬垂线束也可能坠落伤及行人或车辆。",
+    "reason_if_no_hazard": "",
+    "location_hint": "建筑外墙转角处，线缆汇集悬垂位置",
+    "rectification": [
+      "组织电信、电力等产权单位核查线缆归属，清除废弃线缆",
+      "对在用线缆加装线槽或桥架，规范捆扎并可靠固定，消除大圈悬垂",
+      "排查绝缘破损、接头裸露情况，整改后定期巡查维护"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

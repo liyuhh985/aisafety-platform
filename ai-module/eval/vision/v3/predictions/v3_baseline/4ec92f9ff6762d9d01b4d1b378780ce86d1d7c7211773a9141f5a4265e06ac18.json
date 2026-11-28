@@ -1,0 +1,28 @@
+{
+  "sha256": "4ec92f9ff6762d9d01b4d1b378780ce86d1d7c7211773a9141f5a4265e06ac18",
+  "file": "tree_fall_hazard_4_4ec92f9ff676.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"tree_fall_hazard\",\n  \"severity\": \"高\",\n  \"description\": \"小区出入口处有大型树木倒伏/断枝，横跨并压住道闸横杆，阻断进出通道，存在断枝坠落、刮碰行人车辆及阻碍应急通行风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"小区出入口道闸处\",\n  \"rectification\": [\n    \"立即设置警戒并封闭受影响区域，防止行人车辆靠近\",\n    \"联系园林或物业尽快清理倒伏树木和断枝，恢复通道畅通\",\n    \"检查道闸、围栏及周边线路是否受损，及时修复\",\n    \"对周边树木进行稳定性评估和修剪，消除后续倒伏断枝风险\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "tree_fall_hazard",
+    "severity": "高",
+    "description": "小区出入口处有大型树木倒伏/断枝，横跨并压住道闸横杆，阻断进出通道，存在断枝坠落、刮碰行人车辆及阻碍应急通行风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "小区出入口道闸处",
+    "rectification": [
+      "立即设置警戒并封闭受影响区域，防止行人车辆靠近",
+      "联系园林或物业尽快清理倒伏树木和断枝，恢复通道畅通",
+      "检查道闸、围栏及周边线路是否受损，及时修复",
+      "对周边树木进行稳定性评估和修剪，消除后续倒伏断枝风险"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

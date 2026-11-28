@@ -1,0 +1,27 @@
+{
+  "sha256": "45930b2c21dc1c4f1e71e382186a8b12b6b577de43f220928c6e7677e36bceff",
+  "file": "manhole_damage_3_45930b2c21dc.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"高\",\"description\":\"车行道内矩形井盖周边沥青破损、淘空，盖板下沉并与路面形成明显高差和缝隙，车辆碾压时可能造成盖板翘起、断裂或车辆颠簸，行人经过有绊倒风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"斑马线附近车行道上的矩形井盖处\",\"rectification\":[\"立即设置警示围挡，临时处置井盖高差和缝隙\",\"清除破损沥青，回填夯实，按规范修复井口及周边路面\",\"检查井盖、井圈是否松动破损，必要时更换加固，并排查周边地下空洞\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "高",
+    "description": "车行道内矩形井盖周边沥青破损、淘空，盖板下沉并与路面形成明显高差和缝隙，车辆碾压时可能造成盖板翘起、断裂或车辆颠簸，行人经过有绊倒风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "斑马线附近车行道上的矩形井盖处",
+    "rectification": [
+      "立即设置警示围挡，临时处置井盖高差和缝隙",
+      "清除破损沥青，回填夯实，按规范修复井口及周边路面",
+      "检查井盖、井圈是否松动破损，必要时更换加固，并排查周边地下空洞"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

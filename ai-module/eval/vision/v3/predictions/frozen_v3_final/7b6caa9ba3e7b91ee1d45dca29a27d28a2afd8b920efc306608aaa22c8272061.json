@@ -1,0 +1,27 @@
+{
+  "sha256": "7b6caa9ba3e7b91ee1d45dca29a27d28a2afd8b920efc306608aaa22c8272061",
+  "file": "blind_path_occupied_2_7b6caa9ba3e7.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"中\",\n  \"description\": \"人行道盲道及相邻地砖在金属立柱底部周围出现碎裂、缺失和下陷，形成不平整坑洞，行人尤其是视障人士通行时易绊倒或崴脚。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"人行道金属立柱底部及黄色盲道砖附近\",\n  \"rectification\": [\n    \"及时更换破损、松动的地砖，回填夯实基层并修复下陷区域\",\n    \"检查并加固立柱基座，确保与周边路面平顺衔接\",\n    \"修复前在破损区域设置临时警示或围挡\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "中",
+    "description": "人行道盲道及相邻地砖在金属立柱底部周围出现碎裂、缺失和下陷，形成不平整坑洞，行人尤其是视障人士通行时易绊倒或崴脚。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道金属立柱底部及黄色盲道砖附近",
+    "rectification": [
+      "及时更换破损、松动的地砖，回填夯实基层并修复下陷区域",
+      "检查并加固立柱基座，确保与周边路面平顺衔接",
+      "修复前在破损区域设置临时警示或围挡"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

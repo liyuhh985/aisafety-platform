@@ -1,0 +1,26 @@
+{
+  "sha256": "7835a78717bb44920485874a39f1def00dbd8c3e52c3e693802b5941f32b3754",
+  "file": "neg_22_7835a78717bb.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"电梯与特种设备\",\"major_category\":\"elevator_special\",\"subcategory\":\"elevator_stopped\",\"severity\":\"中\",\"description\":\"电梯轿厢楼层按钮面板上5F按键明显破损，表面缺失并露出内部，容易导致按键失灵、选层异常，影响电梯在该层正常停靠，存在设备故障和乘客使用不便风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电梯轿厢楼层按钮面板5F按键处\",\"rectification\":[\"联系电梯维保单位更换破损的楼层按钮面板，恢复按键功能\",\"维修前在按钮旁设置醒目提示，避免乘客反复按压破损部位\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "电梯与特种设备",
+    "major_category": "elevator_special",
+    "subcategory": "elevator_stopped",
+    "severity": "中",
+    "description": "电梯轿厢楼层按钮面板上5F按键明显破损，表面缺失并露出内部，容易导致按键失灵、选层异常，影响电梯在该层正常停靠，存在设备故障和乘客使用不便风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电梯轿厢楼层按钮面板5F按键处",
+    "rectification": [
+      "联系电梯维保单位更换破损的楼层按钮面板，恢复按键功能",
+      "维修前在按钮旁设置醒目提示，避免乘客反复按压破损部位"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

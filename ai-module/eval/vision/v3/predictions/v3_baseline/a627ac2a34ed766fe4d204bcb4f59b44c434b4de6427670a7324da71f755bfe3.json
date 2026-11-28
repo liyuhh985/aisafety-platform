@@ -1,0 +1,29 @@
+{
+  "sha256": "a627ac2a34ed766fe4d204bcb4f59b44c434b4de6427670a7324da71f755bfe3",
+  "file": "no_barrier_3_a627ac2a34ed.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"no_barrier\",\n  \"severity\": \"高\",\n  \"description\": \"道路旁施工绿色围挡大面积倾倒、垮塌，形成缺口并侵入路面边缘，未形成连续有效围挡。可能遮挡车辆和行人视线，绊倒或砸伤过往人员，并影响临时交通通行安全。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁施工围挡处，靠近白色皮卡车及路口\",\n  \"rectification\": [\n    \"立即在倾倒围挡周边设置警戒线、锥桶和警示标志，并安排专人看护\",\n    \"拆除或扶正加固倾倒围挡，恢复连续、稳固的实体围挡\",\n    \"检查围挡基础、支撑和连接件，防止二次倾倒\"\n  ],\n  \"secondary_subcategories\": [\n    \"no_warning\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "no_barrier",
+    "severity": "高",
+    "description": "道路旁施工绿色围挡大面积倾倒、垮塌，形成缺口并侵入路面边缘，未形成连续有效围挡。可能遮挡车辆和行人视线，绊倒或砸伤过往人员，并影响临时交通通行安全。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁施工围挡处，靠近白色皮卡车及路口",
+    "rectification": [
+      "立即在倾倒围挡周边设置警戒线、锥桶和警示标志，并安排专人看护",
+      "拆除或扶正加固倾倒围挡，恢复连续、稳固的实体围挡",
+      "检查围挡基础、支撑和连接件，防止二次倾倒"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

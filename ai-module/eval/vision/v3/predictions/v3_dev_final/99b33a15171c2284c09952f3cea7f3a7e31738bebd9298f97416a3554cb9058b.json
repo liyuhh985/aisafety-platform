@@ -1,0 +1,23 @@
+{
+  "sha256": "99b33a15171c2284c09952f3cea7f3a7e31738bebd9298f97416a3554cb9058b",
+  "file": "neg_29_99b33a15171c.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\": false, \"confidence\": \"高\", \"hazard_category\": \"\", \"major_category\": \"\", \"subcategory\": \"\", \"severity\": \"\", \"description\": \"\", \"reason_if_no_hazard\": \"消防栓与灭火器箱外观完好、标识清晰，未见明显损坏、遮挡或缺失，无法确认安全隐患。\", \"location_hint\": \"\", \"rectification\": [], \"secondary_subcategories\": []}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "高",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "消防栓与灭火器箱外观完好、标识清晰，未见明显损坏、遮挡或缺失，无法确认安全隐患。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

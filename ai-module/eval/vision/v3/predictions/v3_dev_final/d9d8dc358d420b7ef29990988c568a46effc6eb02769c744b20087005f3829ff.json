@@ -1,0 +1,30 @@
+{
+  "sha256": "d9d8dc358d420b7ef29990988c568a46effc6eb02769c744b20087005f3829ff",
+  "file": "dangerous_building_2_d9d8dc358d42.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"建筑安全\",\n  \"major_category\": \"building\",\n  \"subcategory\": \"dangerous_building\",\n  \"severity\": \"高\",\n  \"description\": \"灰色砖砌围墙存在从顶部延伸至下部的贯穿性裂缝，顶部压顶开裂错位，局部砖块脱落、墙体鼓裂，结构整体性受损，遇风雨或外力可能继续开裂、倒塌或坠砖伤人。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路旁灰色砖砌围墙中上部及顶部\",\n  \"rectification\": [\n    \"立即设置警戒线和警示标志，禁止人员靠近\",\n    \"委托专业机构鉴定墙体结构安全\",\n    \"对开裂、松动部位进行临时支护并尽快加固或拆除重建\",\n    \"清理松动砖块，防止坠落伤人\"\n  ],\n  \"secondary_subcategories\": [\n    \"falling_object\"\n  ]\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "dangerous_building",
+    "severity": "高",
+    "description": "灰色砖砌围墙存在从顶部延伸至下部的贯穿性裂缝，顶部压顶开裂错位，局部砖块脱落、墙体鼓裂，结构整体性受损，遇风雨或外力可能继续开裂、倒塌或坠砖伤人。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路旁灰色砖砌围墙中上部及顶部",
+    "rectification": [
+      "立即设置警戒线和警示标志，禁止人员靠近",
+      "委托专业机构鉴定墙体结构安全",
+      "对开裂、松动部位进行临时支护并尽快加固或拆除重建",
+      "清理松动砖块，防止坠落伤人"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

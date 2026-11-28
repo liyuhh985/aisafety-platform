@@ -1,0 +1,23 @@
+{
+  "sha256": "adb4a04ca46a04eb9d6b29fd8b780f9379450c89e74e0844238d0bac302eca39",
+  "file": "neg_36_adb4a04ca46a.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": false,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"\",\n  \"major_category\": \"\",\n  \"subcategory\": \"\",\n  \"severity\": \"\",\n  \"description\": \"\",\n  \"reason_if_no_hazard\": \"画面为井盖集中摆放和涂装/加工场景，未见井盖缺失、破损、塌陷或公共区域通行隐患，无明确客观异常。\",\n  \"location_hint\": \"\",\n  \"rectification\": [],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": false,
+    "confidence": "中",
+    "hazard_category": "",
+    "major_category": "",
+    "subcategory": "",
+    "severity": "",
+    "description": "",
+    "reason_if_no_hazard": "画面为井盖集中摆放和涂装/加工场景，未见井盖缺失、破损、塌陷或公共区域通行隐患，无明确客观异常。",
+    "location_hint": "",
+    "rectification": [],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

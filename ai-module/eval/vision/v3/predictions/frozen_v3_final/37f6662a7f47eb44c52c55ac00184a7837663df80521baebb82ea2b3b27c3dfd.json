@@ -1,0 +1,28 @@
+{
+  "sha256": "37f6662a7f47eb44c52c55ac00184a7837663df80521baebb82ea2b3b27c3dfd",
+  "file": "hazmat_storage_2_37f6662a7f47.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"hazmat_storage\",\"severity\":\"高\",\"description\":\"草丛中露天放置多个严重锈蚀金属桶，疑似不明化工废液或危险废物，存在渗漏、污染土壤水体及人员中毒、燃爆风险；现场人员需穿戴防化装备处置。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"野外杂草丛中，锈蚀金属桶附近\",\"rectification\":[\"立即设置警戒区域，禁止无关人员靠近\",\"检测桶内物质性质并评估泄漏污染范围\",\"对锈蚀桶进行防渗收集和规范包装\",\"交由有资质单位安全转运处置，并清理受污染土壤\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "hazmat_storage",
+    "severity": "高",
+    "description": "草丛中露天放置多个严重锈蚀金属桶，疑似不明化工废液或危险废物，存在渗漏、污染土壤水体及人员中毒、燃爆风险；现场人员需穿戴防化装备处置。",
+    "reason_if_no_hazard": "",
+    "location_hint": "野外杂草丛中，锈蚀金属桶附近",
+    "rectification": [
+      "立即设置警戒区域，禁止无关人员靠近",
+      "检测桶内物质性质并评估泄漏污染范围",
+      "对锈蚀桶进行防渗收集和规范包装",
+      "交由有资质单位安全转运处置，并清理受污染土壤"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

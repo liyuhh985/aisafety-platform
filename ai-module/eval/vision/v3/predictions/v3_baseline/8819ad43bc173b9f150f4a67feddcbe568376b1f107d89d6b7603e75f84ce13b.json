@@ -1,0 +1,27 @@
+{
+  "sha256": "8819ad43bc173b9f150f4a67feddcbe568376b1f107d89d6b7603e75f84ce13b",
+  "file": "fire_lane_blocked_3_8819ad43bc17.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"消防安全\",\n  \"major_category\": \"fire\",\n  \"subcategory\": \"fire_lane_blocked\",\n  \"severity\": \"中\",\n  \"description\": \"楼道/公共通道内放置落地晾衣架并悬挂大量衣物，挤占通行与疏散空间，紧急情况下易阻碍人员逃生，也存在衣架倾倒绊倒行人的风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"楼道/楼梯间公共通道（疑似）\",\n  \"rectification\": [\n    \"立即移除公共通道内的晾衣架和悬挂衣物，恢复通道畅通\",\n    \"加强楼道巡查与宣传，禁止在疏散通道晾晒、堆放物品\",\n    \"引导居民在户内阳台等专用区域晾晒，并确保衣架稳固\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_lane_blocked",
+    "severity": "中",
+    "description": "楼道/公共通道内放置落地晾衣架并悬挂大量衣物，挤占通行与疏散空间，紧急情况下易阻碍人员逃生，也存在衣架倾倒绊倒行人的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼道/楼梯间公共通道（疑似）",
+    "rectification": [
+      "立即移除公共通道内的晾衣架和悬挂衣物，恢复通道畅通",
+      "加强楼道巡查与宣传，禁止在疏散通道晾晒、堆放物品",
+      "引导居民在户内阳台等专用区域晾晒，并确保衣架稳固"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

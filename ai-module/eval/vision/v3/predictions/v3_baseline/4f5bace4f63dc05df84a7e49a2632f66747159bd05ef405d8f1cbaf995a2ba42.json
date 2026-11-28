@@ -1,0 +1,26 @@
+{
+  "sha256": "4f5bace4f63dc05df84a7e49a2632f66747159bd05ef405d8f1cbaf995a2ba42",
+  "file": "neg_38_4f5bace4f63d.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"施工安全\",\n  \"major_category\": \"construction\",\n  \"subcategory\": \"scaffold_guard\",\n  \"severity\": \"中\",\n  \"description\": \"一名工人站在人字梯上探入吊顶内作业，未见安全带、防坠器或可靠挂点，梯脚固定和专人扶梯情况不明确，存在高处坠落、梯子失稳风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"室内厨房/阳台吊顶下方燃气表安装或检修处\",\n  \"rectification\": [\n    \"高处作业人员应正确佩戴安全带并设置可靠挂点。\",\n    \"固定梯脚并安排专人扶梯，禁止站在梯子高处探身作业，必要时改用合规作业平台。\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "施工安全",
+    "major_category": "construction",
+    "subcategory": "scaffold_guard",
+    "severity": "中",
+    "description": "一名工人站在人字梯上探入吊顶内作业，未见安全带、防坠器或可靠挂点，梯脚固定和专人扶梯情况不明确，存在高处坠落、梯子失稳风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "室内厨房/阳台吊顶下方燃气表安装或检修处",
+    "rectification": [
+      "高处作业人员应正确佩戴安全带并设置可靠挂点。",
+      "固定梯脚并安排专人扶梯，禁止站在梯子高处探身作业，必要时改用合规作业平台。"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

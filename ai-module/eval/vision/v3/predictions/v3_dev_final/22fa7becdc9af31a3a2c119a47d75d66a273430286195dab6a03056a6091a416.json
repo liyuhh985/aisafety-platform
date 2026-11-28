@@ -1,0 +1,29 @@
+{
+  "sha256": "22fa7becdc9af31a3a2c119a47d75d66a273430286195dab6a03056a6091a416",
+  "file": "ebike_hazard_1_22fa7becdc9a.jpg",
+  "arm": "v3_dev_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"ebike_hazard\",\"severity\":\"高\",\"description\":\"电动车脚踏板处放置黄色移动插排，黄色电线从外部拉入并连接车辆充电，属于电动自行车飞线/违规充电，存在线路过载、短路引发火灾的风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"电动车脚踏板处\",\"rectification\":[\"立即停止飞线充电，移除插排和临时电线\",\"引导至集中充电棚或充电桩规范充电\",\"检查充电线路、插排和电池，避免过载或破损\"],\"secondary_subcategories\":[\"utility/illegal_wiring\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "ebike_hazard",
+    "severity": "高",
+    "description": "电动车脚踏板处放置黄色移动插排，黄色电线从外部拉入并连接车辆充电，属于电动自行车飞线/违规充电，存在线路过载、短路引发火灾的风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "电动车脚踏板处",
+    "rectification": [
+      "立即停止飞线充电，移除插排和临时电线",
+      "引导至集中充电棚或充电桩规范充电",
+      "检查充电线路、插排和电池，避免过载或破损"
+    ],
+    "secondary_subcategories": [
+      "utility/illegal_wiring"
+    ]
+  },
+  "error": ""
+}

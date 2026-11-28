@@ -1,0 +1,27 @@
+{
+  "sha256": "406290a1234a907474033e25eb20a97a16ff5c1cd38a996a9b2cf024abf345db",
+  "file": "no_warning_2_406290a1234a.jpg",
+  "arm": "frozen_v3_final",
+  "prompt_sha256": "9f2c3e1ecb745af4646bda4d5ce296ed3b86e6753764c323f451e6e1bd06f6cf",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"高\",\n  \"hazard_category\": \"市政设施\",\n  \"major_category\": \"municipal\",\n  \"subcategory\": \"road_surface_collapse\",\n  \"severity\": \"高\",\n  \"description\": \"道路边缘出现大面积深坑塌陷，坑口不规则且较深，周围未见围挡或警示，行人和电动车临近，存在人员坠落、车辆受损风险。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"道路右侧人行道与路面交界处\",\n  \"rectification\": [\n    \"立即在塌陷区域周边设置硬质围挡和警示标志，封闭危险范围\",\n    \"安排人员引导行人和车辆绕行，防止坠落或车辆陷入\",\n    \"尽快排查路基及地下管线情况，回填加固并修复路面\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "road_surface_collapse",
+    "severity": "高",
+    "description": "道路边缘出现大面积深坑塌陷，坑口不规则且较深，周围未见围挡或警示，行人和电动车临近，存在人员坠落、车辆受损风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路右侧人行道与路面交界处",
+    "rectification": [
+      "立即在塌陷区域周边设置硬质围挡和警示标志，封闭危险范围",
+      "安排人员引导行人和车辆绕行，防止坠落或车辆陷入",
+      "尽快排查路基及地下管线情况，回填加固并修复路面"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

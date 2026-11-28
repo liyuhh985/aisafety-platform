@@ -1,0 +1,27 @@
+{
+  "sha256": "3ddd7079e030650d70cff0e05474af3c67e5730af1bc1fd67d29d9f4114c9a4b",
+  "file": "neg_46_3ddd7079e030.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"manhole_damage\",\"severity\":\"中\",\"description\":\"图中圆形排水井盖左下边缘存在明显缺口破损，表面锈蚀，周围为新铺沥青。破损可能卡绊行人或自行车轮胎，并可能进一步扩展导致井盖失稳。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路上的排水井盖处（黑色沥青修补圈内）\",\"rectification\":[\"及时更换或修复破损井盖，确保井盖与井圈贴合稳固\",\"维修前在井盖周边设置警示标志，提醒行人和车辆避让\",\"同步检查井圈及周边路面，必要时重新加固处理\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "manhole_damage",
+    "severity": "中",
+    "description": "图中圆形排水井盖左下边缘存在明显缺口破损，表面锈蚀，周围为新铺沥青。破损可能卡绊行人或自行车轮胎，并可能进一步扩展导致井盖失稳。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路上的排水井盖处（黑色沥青修补圈内）",
+    "rectification": [
+      "及时更换或修复破损井盖，确保井盖与井圈贴合稳固",
+      "维修前在井盖周边设置警示标志，提醒行人和车辆避让",
+      "同步检查井圈及周边路面，必要时重新加固处理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

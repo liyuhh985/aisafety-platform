@@ -1,0 +1,27 @@
+{
+  "sha256": "87363f135ccbeaec09c784e49cf47b096cc9b08576fae81320be6e346b08afb1",
+  "file": "neg_38_87363f135ccb.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\n  \"has_hazard\": true,\n  \"confidence\": \"中\",\n  \"hazard_category\": \"电气与燃气\",\n  \"major_category\": \"utility\",\n  \"subcategory\": \"gas_pipe_aging\",\n  \"severity\": \"中\",\n  \"description\": \"燃气热水器连接的黄色燃气软管过长且明显悬垂，横跨水槽上方，未可靠固定，易受潮、碰撞和磨损，长期存在软管破损漏气风险，可能引发燃气泄漏、火灾或爆炸。\",\n  \"reason_if_no_hazard\": \"\",\n  \"location_hint\": \"厨房内燃气热水器与燃气表之间的墙面及水槽上方\",\n  \"rectification\": [\n    \"请燃气公司或专业人员将软管更换为长度合规的专用燃气软管，并可靠固定，避免横跨水槽和长期悬垂\",\n    \"软管接头处定期用肥皂水检漏，安装燃气报警器并保持厨房通风\",\n    \"禁止私接、暗埋或穿越墙体，发现软管老化、破损、硬化应立即更换\"\n  ],\n  \"secondary_subcategories\": []\n}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "电气与燃气",
+    "major_category": "utility",
+    "subcategory": "gas_pipe_aging",
+    "severity": "中",
+    "description": "燃气热水器连接的黄色燃气软管过长且明显悬垂，横跨水槽上方，未可靠固定，易受潮、碰撞和磨损，长期存在软管破损漏气风险，可能引发燃气泄漏、火灾或爆炸。",
+    "reason_if_no_hazard": "",
+    "location_hint": "厨房内燃气热水器与燃气表之间的墙面及水槽上方",
+    "rectification": [
+      "请燃气公司或专业人员将软管更换为长度合规的专用燃气软管，并可靠固定，避免横跨水槽和长期悬垂",
+      "软管接头处定期用肥皂水检漏，安装燃气报警器并保持厨房通风",
+      "禁止私接、暗埋或穿越墙体，发现软管老化、破损、硬化应立即更换"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

@@ -1,0 +1,27 @@
+{
+  "sha256": "2fe3e8b3b2a0985f516d05e74b29a6ca33384be2c3a3311aee2ffc334203cf57",
+  "file": "garbage_pile_1_2fe3e8b3b2a0.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"环境与其他\",\"major_category\":\"environment_other\",\"subcategory\":\"garbage_pile\",\"severity\":\"中\",\"description\":\"田间空地树旁存在大量生活垃圾、塑料、砖块及枯枝等混合堆积，体量较大，易滋生蚊蝇、污染土壤水体，且含可燃物存在火灾风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"郊外田间空地、树干旁\",\"rectification\":[\"立即组织清运并分类处置垃圾\",\"设置禁止倾倒标识和围挡，加强日常巡查\",\"清理后对地面进行平整和必要的消杀处理\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "环境与其他",
+    "major_category": "environment_other",
+    "subcategory": "garbage_pile",
+    "severity": "中",
+    "description": "田间空地树旁存在大量生活垃圾、塑料、砖块及枯枝等混合堆积，体量较大，易滋生蚊蝇、污染土壤水体，且含可燃物存在火灾风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "郊外田间空地、树干旁",
+    "rectification": [
+      "立即组织清运并分类处置垃圾",
+      "设置禁止倾倒标识和围挡，加强日常巡查",
+      "清理后对地面进行平整和必要的消杀处理"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

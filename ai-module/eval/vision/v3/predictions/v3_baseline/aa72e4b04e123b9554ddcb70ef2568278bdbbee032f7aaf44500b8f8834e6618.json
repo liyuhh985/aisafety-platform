@@ -1,0 +1,29 @@
+{
+  "sha256": "aa72e4b04e123b9554ddcb70ef2568278bdbbee032f7aaf44500b8f8834e6618",
+  "file": "illegal_structure_3_aa72e4b04e12.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"中\",\"hazard_category\":\"建筑安全\",\"major_category\":\"building\",\"subcategory\":\"illegal_structure\",\"severity\":\"中\",\"description\":\"屋顶存在明显加建玻璃房及金属棚架，疑似未经审批的违规搭建，可能增加结构荷载，遇大风、暴雨时有构件松动坠落风险；露台女儿墙边摆放多盆绿植，也存在高空坠物隐患。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"楼顶露台及屋顶加建区域\",\"rectification\":[\"核查屋顶加建及棚架的审批手续和结构安全，违规加建应拆除或加固\",\"清理女儿墙边缘花盆等易坠物，或移至安全区域并可靠固定\",\"检查空调外机、棚架等外挂设施固定情况，锈蚀松动部位及时维修加固\"],\"secondary_subcategories\":[\"falling_object\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "中",
+    "hazard_category": "建筑安全",
+    "major_category": "building",
+    "subcategory": "illegal_structure",
+    "severity": "中",
+    "description": "屋顶存在明显加建玻璃房及金属棚架，疑似未经审批的违规搭建，可能增加结构荷载，遇大风、暴雨时有构件松动坠落风险；露台女儿墙边摆放多盆绿植，也存在高空坠物隐患。",
+    "reason_if_no_hazard": "",
+    "location_hint": "楼顶露台及屋顶加建区域",
+    "rectification": [
+      "核查屋顶加建及棚架的审批手续和结构安全，违规加建应拆除或加固",
+      "清理女儿墙边缘花盆等易坠物，或移至安全区域并可靠固定",
+      "检查空调外机、棚架等外挂设施固定情况，锈蚀松动部位及时维修加固"
+    ],
+    "secondary_subcategories": [
+      "falling_object"
+    ]
+  },
+  "error": ""
+}

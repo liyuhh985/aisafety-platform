@@ -1,0 +1,27 @@
+{
+  "sha256": "dd325c3749696eaf8ee6b57cce1785d5ca08c15a1fa42d713a128b9dcbd7feb1",
+  "file": "fire_equipment_fault_1_dd325c374969.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"高\",\"description\":\"夜间路边室外消火栓大量喷水漏水，周边地面积水，消防设施疑似损坏，可能造成水资源浪费、路面湿滑结冰，并影响紧急灭火供水。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"人行道旁红色消防栓及周边路面\",\"rectification\":[\"立即关闭上游阀门并设置围挡警示\",\"由专业单位检修或更换损坏部件\",\"清理积水并采取防滑防冻措施\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "高",
+    "description": "夜间路边室外消火栓大量喷水漏水，周边地面积水，消防设施疑似损坏，可能造成水资源浪费、路面湿滑结冰，并影响紧急灭火供水。",
+    "reason_if_no_hazard": "",
+    "location_hint": "人行道旁红色消防栓及周边路面",
+    "rectification": [
+      "立即关闭上游阀门并设置围挡警示",
+      "由专业单位检修或更换损坏部件",
+      "清理积水并采取防滑防冻措施"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}

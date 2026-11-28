@@ -1,0 +1,29 @@
+{
+  "sha256": "034e32f1bed06cac8ed8115c243e7da2bdab29746a21f71801543977def62cee",
+  "file": "neg_19_034e32f1bed0.jpg",
+  "arm": "v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"市政设施\",\"major_category\":\"municipal\",\"subcategory\":\"drainage_flood\",\"severity\":\"中\",\"description\":\"道路侧雨水篦子被大量落叶堵塞，排水通道受阻，雨天易造成路面积水、湿滑，影响行人和车辆通行；工作人员在车行道边缘清理，未见锥桶等警示，存在被过往车辆碰撞风险。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"道路侧边雨水篦子及路缘石附近\",\"rectification\":[\"立即清除雨水篦子及周边落叶，确保排水畅通\",\"清理作业时在来车方向设置锥桶或警示标志，并安排人员疏导\",\"雨天加强易堵塞路段巡查和清掏频次\"],\"secondary_subcategories\":[\"no_warning\"]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "市政设施",
+    "major_category": "municipal",
+    "subcategory": "drainage_flood",
+    "severity": "中",
+    "description": "道路侧雨水篦子被大量落叶堵塞，排水通道受阻，雨天易造成路面积水、湿滑，影响行人和车辆通行；工作人员在车行道边缘清理，未见锥桶等警示，存在被过往车辆碰撞风险。",
+    "reason_if_no_hazard": "",
+    "location_hint": "道路侧边雨水篦子及路缘石附近",
+    "rectification": [
+      "立即清除雨水篦子及周边落叶，确保排水畅通",
+      "清理作业时在来车方向设置锥桶或警示标志，并安排人员疏导",
+      "雨天加强易堵塞路段巡查和清掏频次"
+    ],
+    "secondary_subcategories": [
+      "no_warning"
+    ]
+  },
+  "error": ""
+}

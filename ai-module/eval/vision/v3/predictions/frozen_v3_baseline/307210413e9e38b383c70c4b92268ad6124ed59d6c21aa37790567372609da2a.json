@@ -1,0 +1,27 @@
+{
+  "sha256": "307210413e9e38b383c70c4b92268ad6124ed59d6c21aa37790567372609da2a",
+  "file": "fire_equipment_fault_1_307210413e9e.jpg",
+  "arm": "frozen_v3_baseline",
+  "prompt_sha256": "c089b06a05adc8b87076685066da92574b6cf0264561a6058e8f861b1c281416",
+  "model": "deepseek-v4.1-flash",
+  "temperature": 0.0,
+  "raw_response": "{\"has_hazard\":true,\"confidence\":\"高\",\"hazard_category\":\"消防安全\",\"major_category\":\"fire\",\"subcategory\":\"fire_equipment_fault\",\"severity\":\"中\",\"description\":\"室外消火栓侧接口持续大量喷水，疑似阀门或接口损坏、未关闭，造成水资源浪费和路面积水，并影响消火栓正常应急使用。\",\"reason_if_no_hazard\":\"\",\"location_hint\":\"路边人行道旁室外消火栓\",\"rectification\":[\"立即关闭消火栓阀门并止水\",\"检修或更换损坏的接口、阀门等部件\",\"设置临时警示并清理路面积水，排查管网是否异常\"],\"secondary_subcategories\":[]}",
+  "parsed": {
+    "has_hazard": true,
+    "confidence": "高",
+    "hazard_category": "消防安全",
+    "major_category": "fire",
+    "subcategory": "fire_equipment_fault",
+    "severity": "中",
+    "description": "室外消火栓侧接口持续大量喷水，疑似阀门或接口损坏、未关闭，造成水资源浪费和路面积水，并影响消火栓正常应急使用。",
+    "reason_if_no_hazard": "",
+    "location_hint": "路边人行道旁室外消火栓",
+    "rectification": [
+      "立即关闭消火栓阀门并止水",
+      "检修或更换损坏的接口、阀门等部件",
+      "设置临时警示并清理路面积水，排查管网是否异常"
+    ],
+    "secondary_subcategories": []
+  },
+  "error": ""
+}
