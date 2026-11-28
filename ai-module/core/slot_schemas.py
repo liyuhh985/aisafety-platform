@@ -32,6 +32,30 @@ REPORT_CLASS = "B"
 VALUE_CLASSES = (DECISION_CLASS, REPORT_CLASS)
 REPORT_CLASSES = (DECISION_CLASS, REPORT_CLASS)
 
+_PLACEHOLDER_EXACT = {
+    "未知", "不清楚", "不确定", "不明", "待确认", "待核实", "暂无",
+    "暂无信息", "无信息", "未提供", "未说明", "不详", "未提及",
+    "没有提到", "无法判断", "无法确认", "不知道", "尚不清楚", "尚不明确",
+    "unknown", "n/a", "na", "null", "none", "-", "--", "?",
+}
+_PLACEHOLDER_PREFIXES = (
+    "未知", "不清楚", "不确定", "待确认", "待核实", "暂无", "未提供",
+    "未说明", "不详", "未提及", "无法判断", "无法确认", "尚不清楚", "尚不明确",
+)
+
+
+def is_placeholder_slot_value(value) -> bool:
+    """Return true for planner placeholders that must not satisfy a slot."""
+    normalized = str(value or "").strip().lower()
+    normalized = "".join(
+        ch for ch in normalized if not ch.isspace() and ch not in "，。；;、（）()[]【】"
+    )
+    if not normalized:
+        return True
+    return normalized in _PLACEHOLDER_EXACT or normalized.startswith(
+        _PLACEHOLDER_PREFIXES
+    )
+
 
 @dataclass
 class Slot:
@@ -222,7 +246,8 @@ def get_slot_schema(value: str) -> list[Slot]:
 
 
 def _is_filled(filled, key: str) -> bool:
-    return bool(str((filled or {}).get(key) or "").strip())
+    value = (filled or {}).get(key)
+    return not is_placeholder_slot_value(value)
 
 
 def unfilled_slots(value: str, filled, classes=REPORT_CLASSES) -> list[Slot]:

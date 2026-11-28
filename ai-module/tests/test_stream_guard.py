@@ -342,14 +342,14 @@ def test_preliminary_report_chunks_carry_at_most_one_question(monkeypatch):
 
 
 def test_full_report_chunks_carry_no_question(monkeypatch):
-    """完整报告零个问句：多出来的问句只去问号、不丢整句（正文内容仍在）。"""
+    """完整报告不得出现问句：问题句整句丢弃。"""
     tokens = ["楼下通道被占。", "仍需确认：被什么东西占用了？", "堆了多久了？", "建议先拍照留证。"]
     draft, sent = _run_report(monkeypatch, lambda _sent: list(tokens), **FULL_OVERRIDES)
     body = "".join(str(item["chunk"]) for item in sent)
 
     assert body == draft                              # 拼接等于落库文本
     assert body.count("？") + body.count("?") == 0     # 一个问号都没有
-    assert "被什么东西占用" in draft and "堆了多久了" in draft   # 只去问号，内容还在
+    assert "被什么东西占用" not in draft and "堆了多久了" not in draft
     assert "被什么东西占用了？" not in draft and "堆了多久了？" not in draft
     assert "建议先拍照留证。" in draft
 
@@ -358,6 +358,14 @@ def test_full_report_chunks_carry_no_question(monkeypatch):
 # 必须在流上按句判定，而项目原则是「同一个约束不要两套判定」—— 所以完整报告也走同一套
 # 逐句执行器（不再为它单开一条 token 粒度剥问号的旁路）。保住的不变式：
 # 三段式标题照原样出去、任意 chunk 拼接等于落库文本、首块不必等整篇生成完。
+def test_full_report_drops_question_like_sentence_without_question_mark(monkeypatch):
+    tokens = ["### 一、触犯法规\n消防法第28条。", "请问消防栓的产权单位是哪一家。", "建议先拍照留证。"]
+    draft, sent = _run_report(monkeypatch, lambda _sent: list(tokens), **FULL_OVERRIDES)
+    body = "".join(str(item["chunk"]) for item in sent)
+    assert "请问消防栓" not in body
+    assert "建议先拍照留证。" in body
+
+
 def test_full_report_streams_sentence_by_sentence_and_keeps_headings(monkeypatch):
     def tokens(sent):
         yield "### 一、触犯法规\n"

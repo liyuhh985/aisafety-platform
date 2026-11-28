@@ -234,7 +234,7 @@ def _full_state():
 
 
 def test_full_report_forbids_any_question(monkeypatch):
-    """完整报告里不许出现任何问句：模型自己写的问句一律只去问号、不丢整句。
+    """完整报告里不许出现任何问句：问题句直接丢弃。
 
     线上实测完整报告末尾混进了模型生成的问句，用户明确要求「完整报告里不许出现
     任何问句」—— 所以上限从 1 收紧到 0（初步报告那一档仍是 1，要带一个追问）。
@@ -247,8 +247,7 @@ def test_full_report_forbids_any_question(monkeypatch):
 
     assert "".join(item["chunk"] for item in sent) == body      # 拼接等于落库文本
     assert body.count("？") + body.count("?") == 0              # 一个问号都没有
-    assert "能实测一下吗" in body and "物业收到过通知吗" in body   # 只去问号，句子保留
-    assert "能实测一下吗？" not in body and "物业收到过通知吗？" not in body
+    assert "能实测一下吗" not in body and "物业收到过通知吗" not in body
     assert "最多只能提一个问句" not in captured[0][-1]["content"]
 
 
@@ -261,7 +260,7 @@ def test_full_report_strips_the_question_mark_from_a_model_question(monkeypatch)
     body = update["draft_report"]
 
     assert "？" not in body and "?" not in body
-    assert "这个消防栓的产权或者管理责任单位是哪一家" in body   # 句子保留，只去问号
+    assert "这个消防栓的产权或者管理责任单位是哪一家" not in body
 
 
 def test_full_report_rules_forbid_questions_and_followup_wording():

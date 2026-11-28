@@ -178,6 +178,12 @@ def test_planner_prompt_excludes_routine_ebike_charging_from_immediate_danger():
     assert "immediate_danger 必须为 false" in prompt
 
 
+def test_planner_prompt_forbids_unknown_placeholders():
+    prompt = dialogue_understanding._planner_system_prompt()
+    assert "槽位信息未知时必须留空" in prompt
+    assert "未知/不清楚/待确认/暂无" in prompt
+
+
 def test_planner_prompt_lists_subcategory_slots():
     prompt = dialogue_understanding._planner_system_prompt()
     assert "fire_equipment_fault" in prompt

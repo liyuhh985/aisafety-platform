@@ -170,14 +170,15 @@ def _run_report(monkeypatch, state, reply):
     return update, sent, captured["prompt"]
 
 
-def test_report_node_warns_when_the_body_is_redundant(monkeypatch, caplog):
-    # 完整报告的问号会被 question_limiter(0) 去掉，但「吗/呢」结尾的问句去不掉 ——
-    # 观测侧对它仍要给出线索（BODY_ONLINE 里那句改成「吗」结尾以留在交付正文里）。
+def test_full_report_drops_question_like_before_redundancy_warning(monkeypatch, caplog):
+    # 完整报告必须是非交互文档：即使模型用「吗」结尾绕过问号检测，
+    # 这一句也应整句丢弃，不能作为“正文里的问句”交付给用户。
     body = BODY_ONLINE.replace("消防车通行？", "消防车通行吗")
     with caplog.at_level(logging.WARNING, logger="core.assistant_graph"):
         update, sent, _prompt = _run_report(monkeypatch, _state(), body)
     assert "".join(item["chunk"] for item in sent) == update["draft_report"]
-    assert [r for r in caplog.records if "report_question_redundancy" in r.getMessage()]
+    assert "消防车通行吗" not in update["draft_report"]
+    assert not [r for r in caplog.records if "report_question_redundancy" in r.getMessage()]
 
 
 def test_preliminary_report_path_also_warns(monkeypatch, caplog):
