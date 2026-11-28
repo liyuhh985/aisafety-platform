@@ -71,7 +71,7 @@ from core.slot_schemas import (
     missing_decision_slots,
     missing_report_slots,
 )
-from core.stream_guard import QUESTION_DROP, guard_stream, question_limiter
+from core.stream_guard import QUESTION_DROP, QUESTION_DROP_LIKE, guard_stream, question_limiter
 from core.uncertainty import active_danger_term, assess, echo_slots
 from core.semantic_verifier import verify_weak_slots
 from tools.assistant_tools import ASSISTANT_TOOLS
@@ -1991,15 +1991,14 @@ def _issue_label(code: str) -> str:
     return SUBCATEGORY_LABELS.get(pair[1], code) if pair else code
 
 
-def _ensure_report_issue_coverage(state: AssistantState, body: str) -> str:
-    """Append deterministic sections only when the model omitted an active issue."""
+def _missing_report_issue_entries(state: AssistantState, body: str) -> list[tuple[int, dict]]:
+    """Return active issues whose section is absent from the generated report."""
     text = str(body or "")
     normalized_text = text.replace("/", "").replace(" ", "")
     issues = _report_issues(state)
     if len(issues) < 2:
-        return body
-    results = state.get("category_results") or {}
-    additions = []
+        return []
+    entries = []
     for index, issue in enumerate(issues, 1):
         code = str((issue or {}).get("subcategory_code") or "")
         if not code:
@@ -2007,23 +2006,49 @@ def _ensure_report_issue_coverage(state: AssistantState, body: str) -> str:
         label = _issue_label(code)
         if f"隐患{index}" in text and label.replace("/", "") in normalized_text:
             continue
-        slots = [str(value).strip() for value in ((issue or {}).get("slots") or {}).values() if str(value).strip()]
-        facts = "；".join(slots) or "用户未提供更多细节"
-        result = results.get(code) or {}
-        regulation = filter_by_major(result.get("regulation") or "库内暂未检索到",
-                                     (issue or {}).get("major_code") or "")
-        case = filter_by_major(result.get("case") or "库内暂未检索到",
-                               (issue or {}).get("major_code") or "")
-        prefix = "### " if not _is_preliminary(state) else ""
-        additions.append(
-            f"\n\n{prefix}隐患{index}：{label}\n\n"
-            f"**现场事实**：{facts}\n\n"
-            f"**法规依据**：{regulation}\n\n"
-            f"**类似案例**：{case}"
-        )
-    if not additions:
+        entries.append((index, issue))
+    return entries
+
+
+def _supplemental_report_prompt(state: AssistantState, entries, preliminary: bool) -> str:
+    blocks = []
+    results = state.get("category_results") or {}
+    for index, issue in entries:
+        code = str((issue or {}).get("subcategory_code") or "")
+        single = dict(state)
+        single["issues"] = [issue]
+        single["categories"] = [code]
+        single["category_results"] = {code: results.get(code) or {}}
+        block = _issue_blocks(single)[0]
+        block = block.replace("[隐患1]", f"[隐患{index}]", 1)
+        blocks.append(block)
+    mode = "初步报告" if preliminary else "完整报告"
+    return (
+        "前文{}漏掉了以下 active 隐患。请只补写这些漏掉的隐患，不要重复已经输出的内容。\n"
+        "每一条都用自然语言写清楚现场事实、法规依据、类似案例和处置建议。\n"
+        "不要输出内部方括号标签、法规编号数组或检索结果数组；不要提问；"
+        "不要询问地址，也不要邀请用户建单。\n\n{}\n"
+    ).format(mode, "\n\n".join(blocks))
+
+
+def _append_supplemental_report(state: AssistantState, body: str, dict_msgs,
+                                preliminary: bool, cancellation) -> str:
+    entries = _missing_report_issue_entries(state, body)
+    if not entries:
         return body
-    return text.rstrip() + "".join(additions)
+    prompt = _supplemental_report_prompt(state, entries, preliminary)
+    messages = list(dict_msgs[:-1]) + [{"role": "user", "content": prompt}]
+    _emit_chunk("\n\n")
+    parts = []
+    events = _report_llm._call_llm_stream_events(messages, cancellation=cancellation)
+    tokens = (text for kind, text in events if kind == "chunk")
+    for piece in guard_stream(tokens, strip_headings=False, questions=QUESTION_DROP_LIKE):
+        parts.append(piece)
+        _emit_chunk(piece)
+    if _missing_report_issue_entries(state, body + "\n\n" + "".join(parts)):
+        logger.warning("report_coverage_still_missing codes=%s",
+                       [code for _, code in entries])
+    return body + "\n\n" + "".join(parts)
 
 
 def _issue_blocks(state: AssistantState) -> list[str]:
@@ -2525,11 +2550,10 @@ def report(state: AssistantState, config=None) -> dict:
                         decision_missing_keys(state, str(state.get("locked_subcategory") or "")))
             _emit_chunk(tail)
             body += tail
-        covered_body = _ensure_report_issue_coverage(state, body)
-        if covered_body != body:
-            addition = covered_body[len(body):] if covered_body.startswith(body) else covered_body
-            _emit_chunk(addition)
-            body = covered_body
+        body = _append_supplemental_report(
+            state, body, dict_msgs, preliminary=True,
+            cancellation=_cancel_token(config),
+        )
         _warn_empty_talk(state, body)
         _warn_redundancy(state, body)
         coverage = preliminary_coverage(body)
@@ -2548,15 +2572,14 @@ def report(state: AssistantState, config=None) -> dict:
     if prefix:
         buf.append(prefix)
         _emit_chunk(prefix)
-    for piece in guard_stream(tokens, strip_headings=False, questions=question_limiter(0)):
+    for piece in guard_stream(tokens, strip_headings=False, questions=QUESTION_DROP_LIKE):
         buf.append(piece)
         _emit_chunk(piece)
     body = "".join(buf)
-    covered_body = _ensure_report_issue_coverage(state, body)
-    if covered_body != body:
-        addition = covered_body[len(body):] if covered_body.startswith(body) else covered_body
-        _emit_chunk(addition)
-        body = covered_body
+    body = _append_supplemental_report(
+        state, body, dict_msgs, preliminary=False,
+        cancellation=_cancel_token(config),
+    )
     _warn_empty_talk(state, body)
     _warn_redundancy(state, body)
     return _finish_task_draft(

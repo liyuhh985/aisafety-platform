@@ -20,10 +20,11 @@ SENTENCE_ENDS = "。！!；;？?\n"
 QUESTION_MARKS = ("？", "?")
 
 QUESTION_DROP = "drop"      # 含问号的整句丢掉
+QUESTION_DROP_LIKE = "drop_like"  # 含问号或明显疑问句式的整句丢掉
 QUESTION_STRIP = "strip"    # 只去掉问号字符，句子留下
 QUESTION_KEEP = "keep"      # 原样保留
 
-_QUESTION_POLICIES = (QUESTION_DROP, QUESTION_STRIP, QUESTION_KEEP)
+_QUESTION_POLICIES = (QUESTION_DROP, QUESTION_DROP_LIKE, QUESTION_STRIP, QUESTION_KEEP)
 
 
 def question_limiter(limit: int = 1):
@@ -77,6 +78,19 @@ def _heading_prefix_len(buf: str, start: int, final: bool):
     return end - start, False
 
 
+_QUESTION_START_WORDS = ("请问", "是否", "能不能", "可否", "要不要", "有没有", "是不是")
+
+
+def _looks_like_question(sentence: str) -> bool:
+    text = str(sentence or "").strip()
+    if any(mark in text for mark in QUESTION_MARKS):
+        return True
+    core = text.rstrip("。！!；;\n ")
+    if core.endswith(("吗", "呢")):
+        return True
+    return any(text.startswith(word) for word in _QUESTION_START_WORDS)
+
+
 def _apply_questions(sentence: str, questions) -> str:
     """按策略处理一个整句里的问号。返回空串表示这一句被丢掉。
 
@@ -96,6 +110,8 @@ def _apply_questions(sentence: str, questions) -> str:
         if any(mark in sentence for mark in QUESTION_MARKS):
             return ""
         return sentence
+    if questions == QUESTION_DROP_LIKE:
+        return "" if _looks_like_question(sentence) else sentence
     raise ValueError("未知的问号策略：%r（可选 %r）" % (questions, _QUESTION_POLICIES))
 
 

@@ -37,12 +37,16 @@ def _capture_prompt(monkeypatch, state):
 
     monkeypatch.setattr(ag._report_llm, "_call_llm_stream_events", fake_stream)
     monkeypatch.setattr(ag, "get_stream_writer", lambda: None)
+    monkeypatch.setattr(
+        ag, "_append_supplemental_report",
+        lambda state, body, dict_msgs, preliminary, cancellation: body,
+    )
     ag.report(state)
     return captured["prompt"]
 
 
-def test_missing_issue_section_is_appended_to_the_report_body():
-    state = _state(
+def _multi_issue_state():
+    return _state(
         issues=[
             {"major_code": "fire", "subcategory_code": "ebike_hazard",
              "slots": {"hazard_mode": "楼梯间飞线充电", "charging_state": "正在充电"},
@@ -57,26 +61,50 @@ def test_missing_issue_section_is_appended_to_the_report_body():
             "fire_lane_blocked": {"regulation": "消防法第28条", "case": "萍乡案例"},
         },
     )
-    body = "### 隐患2：消防通道占用\n\n### 相关法规与责任归属\n消防法第28条。"
-    covered = ag._ensure_report_issue_coverage(state, body)
-    assert "### 隐患1：电动自行车违规停放/充电" in covered
-    assert "楼梯间飞线充电" in covered
-    assert "高层民用建筑消防安全管理规定第37条" in covered
-    assert "南京案例" in covered
 
 
-def test_issue_coverage_does_not_duplicate_an_existing_section():
-    state = _state(
-        issues=[
-            {"major_code": "fire", "subcategory_code": "ebike_hazard",
-             "slots": {"hazard_mode": "楼梯间飞线充电", "charging_state": "正在充电"},
-             "missing": []},
-        ],
-        categories=["ebike_hazard"],
-        category_results={"ebike_hazard": {"regulation": "法规A", "case": "案例A"}},
+def test_missing_issue_entries_are_detected_without_raw_material_append():
+    state = _multi_issue_state()
+    body = "### 隐患2：消防通道占用\n\n现场事实和法规分析。"
+    entries = ag._missing_report_issue_entries(state, body)
+    assert [(index, issue["subcategory_code"]) for index, issue in entries] == [
+        (1, "ebike_hazard")
+    ]
+
+
+def test_supplement_prompt_requests_natural_language_and_no_questions():
+    state = _multi_issue_state()
+    entries = ag._missing_report_issue_entries(
+        state, "### 隐患2：消防通道占用\n\n现场事实。"
     )
-    body = "### 隐患1：电动自行车违规停放/充电\n现场事实完整。"
-    assert ag._ensure_report_issue_coverage(state, body) == body
+    prompt = ag._supplemental_report_prompt(state, entries, preliminary=False)
+    assert "请只补写" in prompt
+    assert "电动自行车违规停放/充电" in prompt
+    assert "不要输出内部方括号标签" in prompt
+    assert "不要提问" in prompt
+
+
+def test_report_requests_a_natural_language_supplement_for_missing_issue(monkeypatch):
+    state = _multi_issue_state()
+    responses = iter([
+        "### 隐患2：消防通道占用\n\n现场事实和法规分析。",
+        "### 隐患1：电动自行车违规停放/充电\n\n现场事实和法规分析。",
+    ])
+    calls = []
+
+    def fake_stream(messages, cancellation=None):
+        calls.append(messages[-1]["content"])
+        yield ("chunk", next(responses))
+
+    monkeypatch.setattr(ag._report_llm, "_call_llm_stream_events", fake_stream)
+    monkeypatch.setattr(ag, "get_stream_writer", lambda: None)
+    monkeypatch.setattr(ag, "can_offer_task_creation", lambda _state: False)
+    update = ag.report(state)
+    assert len(calls) == 2
+    assert "请只补写" in calls[1]
+    assert "### 隐患1：电动自行车违规停放/充电" in update["draft_report"]
+    assert "### 隐患2：消防通道占用" in update["draft_report"]
+
 
 def _block(prompt):
     return prompt.split("\n请逐个")[0].split("本次对话只跟踪这一个隐患")[0]
